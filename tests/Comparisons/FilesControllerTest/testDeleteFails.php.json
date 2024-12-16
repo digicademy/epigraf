@@ -1,0 +1,16 @@
+{
+    "id": 4,
+    "deleted": 0,
+    "published": 1,
+    "created": "2020-11-11T14:17:34+01:00",
+    "modified": "2020-11-11T14:17:34+01:00",
+    "created_by": null,
+    "modified_by": null,
+    "name": "",
+    "description": "Shared root folder",
+    "type": "",
+    "size": null,
+    "root": "shared",
+    "path": "",
+    "isfolder": 1
+}

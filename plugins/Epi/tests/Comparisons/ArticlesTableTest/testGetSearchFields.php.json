@@ -1,0 +1,13 @@
+{
+    "captions": "Bezeichner",
+    "signature": "- Signatur",
+    "ID": "- ID",
+    "name": "- Titel",
+    "norm_iri": "- IRI",
+    "norm_data": "- Normdaten",
+    "status": "Status",
+    "text": "Text",
+    "text.comment": "- Comment",
+    "text.content": "- Content",
+    "text.translation": "- Translation"
+}

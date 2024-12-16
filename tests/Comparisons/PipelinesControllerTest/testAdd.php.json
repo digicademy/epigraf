@@ -1,0 +1,14 @@
+{
+    "id": 22,
+    "deleted": 0,
+    "published": null,
+    "version_id": null,
+    "created": "2020-10-29T13:00:58+01:00",
+    "modified": "2020-10-29T13:00:58+01:00",
+    "created_by": 2,
+    "modified_by": 2,
+    "name": "testpipeline",
+    "description": "do something",
+    "tasks": [],
+    "norm_iri": "testpipeline"
+}

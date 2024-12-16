@@ -1,0 +1,348 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+@import 'leaflet/leaflet.css';
+@import 'leaflet/markercluster.default.css';
+@import 'leaflet/easy-button.css';
+@import 'leaflet/leaflet-gesture-handling.min.css';
+
+:root {
+    --rgb-user-pos: 66, 133, 244;
+
+    --cluster-outer: rgba(48, 142, 151, 0.6);
+    --cluster-inner: rgba(28, 111, 119, 0.6);
+
+    --opacity-cluster-marker: 0.6;
+    --opacity-area-marker: 0.6;
+
+    --rgb-data-qual-2: 73, 192, 80;
+    --rgb-data-qual-1: 255, 194, 86;
+    --rgb-data-qual-0: 255, 100, 140;
+
+    --rgb-data-qual-outer-2: 73, 192, 80;
+    --rgb-data-qual-outer-1: 255, 194, 86;
+    --rgb-data-qual-outer-0: 255, 100, 140;
+
+    --rgb-data-qual-border-2: 55, 150, 60;
+    --rgb-data-qual-border-1: 190, 145, 65;
+    --rgb-data-qual-border-0: 190, 75, 100;
+
+}
+
+.widget-map {
+    height:100%;
+    z-index: 1;
+    margin-bottom: 1em;
+}
+
+.leaflet-tile-pane {
+    filter: saturate(0.5);
+}
+
+/** Legend **/
+.legend {
+    background-color: var(--content-bg-color);
+    padding: 0.5em;
+    border: 2px solid rgba(28, 111, 119, 0.6);
+}
+
+.legend h4 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    text-align: center;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.legend span {
+    position: relative;
+    margin-left: 3em;
+    margin-right: 1em;
+}
+
+.legend .data-quality {
+    cursor: pointer;
+}
+
+.legend .data-quality::before {
+    content: attr(data-quality-content);
+    color: white;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -2em;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+.legend .data-quality.disabled::before {
+    background-color: gray;
+}
+
+.legend .data-quality.disabled {
+    color: gray;
+}
+
+.leaflet-bar button {
+    padding: 0;
+}
+
+/** Buttons **/
+.btn-geolocation-active {
+    background-image: url('../img/leaflet/crosshairs.svg');
+}
+
+.btn-geolocation-inactive {
+    background-image: url('../img/leaflet/crosshairs_inactive.svg');
+}
+
+.btn-geolocation-active,
+.btn-geolocation-inactive {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-toggle-radius.active {
+    background-image: url('../img/leaflet/radius_visible.svg');
+}
+
+.btn-toggle-radius:not(.active) {
+    background-image: url('../img/leaflet/radius_hidden.svg');
+}
+
+.btn-toggle-radius {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    width: 100%;
+    height: 100%;
+}
+
+.btn-zoom-to-marker {
+    background-image: url('../img/leaflet/marker.svg');
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Markers */
+
+.user-position-marker {
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: rgb(var(--rgb-user-pos));
+    box-shadow: 0 0 36px 18px var(--rgb-user-pos);
+}
+
+.item-marker {
+    color: white;
+    border-radius: 50%;
+    line-height: 18px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid black;
+}
+
+.item-marker-label::before {
+    content: attr(data-quality-content);
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.item-marker.area-marker.zoomed-in{
+    border: 1px dotted black;
+}
+
+.item-marker.area-marker-big.zoomed-in {
+    border: 0;
+}
+
+
+/* Cluster */
+
+.marker-cluster {
+    color:white;
+}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large,
+.marker-cluster-very-large {
+    background-color: var(--cluster-outer);
+    border-radius: 50%;
+}
+
+.marker-cluster-small div {
+    background-color: var(--cluster-inner);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.marker-cluster-small div span {
+    display: block;
+    line-height: 20px;
+}
+
+.marker-cluster-medium div {
+    background-color: var(--cluster-inner);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.marker-cluster-medium div span {
+    display: block;
+    line-height: 30px;
+}
+
+.marker-cluster-large div {
+    background-color: var(--cluster-inner);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.marker-cluster-large div span {
+    display: block;
+    line-height: 40px;
+}
+
+.marker-cluster-very-large div {
+    background-color: var(--cluster-inner);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+}
+
+.marker-cluster-very-large div span {
+    line-height: 45px;
+}
+
+/* Popups */
+
+
+ol.popup-article-list {
+    margin-left: 1.5em;
+}
+
+.popup-article-list li {
+    position: relative;
+    list-style-type: none;
+    margin: 1em 0;
+    padding-left: 1.2em;
+}
+
+.popup-article-list li::before {
+    content: attr(data-quality-content);
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 0.75em;
+    transform: translateY(-50%);
+    left: -1em;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+/* Data quality colors */
+
+/** - high quality **/
+.marker-cluster.data-quality-4,
+.marker-cluster.data-quality-3,
+.marker-cluster.data-quality-2 {
+    background-color: rgba(var(--rgb-data-qual-outer-2), var(--opacity-cluster-marker));
+}
+
+.marker-cluster.data-quality-4 div,
+.marker-cluster.data-quality-3 div,
+.marker-cluster.data-quality-2 div {
+    background-color: rgb(var(--rgb-data-qual-2));
+}
+
+.item-marker.data-quality-4,
+span.data-quality-4::before,
+li.data-quality-4::before,
+.item-marker.data-quality-3,
+span.data-quality-3::before,
+li.data-quality-3::before,
+.item-marker.data-quality-2,
+span.data-quality-2::before,
+li.data-quality-2::before {
+    background-color: rgb(var(--rgb-data-qual-2));
+    border-color: rgb(var(--rgb-data-qual-border-2));
+}
+
+.data-quality-4.area-marker.zoomed-in,
+.data-quality-3.area-marker.zoomed-in,
+.data-quality-2.area-marker.zoomed-in {
+    background-color: rgba(var(--rgb-data-qual-2), var(--opacity-area-marker));
+}
+
+/** - mid quality **/
+
+.marker-cluster.data-quality-1 {
+    background-color: rgba(var(--rgb-data-qual-outer-1), var(--opacity-cluster-marker));
+}
+
+.marker-cluster.data-quality-1 div {
+    background-color: rgb(var(--rgb-data-qual-1));
+}
+
+
+.item-marker.data-quality-1,
+span.data-quality-1::before,
+li.data-quality-1::before {
+    background-color: rgb(var(--rgb-data-qual-1));
+    border-color: rgb(var(--rgb-data-qual-border-1));
+}
+
+.data-quality-1.area-marker.zoomed-in {
+    background-color: rgba(var(--rgb-data-qual-1), var(--opacity-area-marker));
+}
+
+
+/** - low quality **/
+
+.marker-cluster.data-quality-0 {
+    background-color: rgba(var(--rgb-data-qual-outer-0), var(--opacity-cluster-marker));
+}
+
+.marker-cluster.data-quality-0 div {
+    background-color: rgb(var(--rgb-data-qual-0));
+}
+
+.item-marker.data-quality-0,
+span.data-quality-0::before,
+li.data-quality-0::before {
+    background-color: rgb(var(--rgb-data-qual-0));
+    border-color: rgb(var(--rgb-data-qual-border-0));
+}
+
+.data-quality-0.area-marker.zoomed-in {
+    background-color: rgba(var(--rgb-data-qual-0), var(--opacity-area-marker));
+}

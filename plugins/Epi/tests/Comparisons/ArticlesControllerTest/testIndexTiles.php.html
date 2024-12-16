@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Epigraf 4     </title>
+
+    <link href="/favicon.png" type="image/x-icon" rel="icon"/><link href="/favicon.png" type="image/x-icon" rel="shortcut icon"/>    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS -->
+    <!-- CSS frameworks -->
+        <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+    <link rel="stylesheet" href="/widgets/css/widgets.css"/><link rel="stylesheet" href="/widgets/css/filter.css"/><link rel="stylesheet" href="/widgets/css/layout.css"/><link rel="stylesheet" href="/widgets/css/popup.css"/><link rel="stylesheet" href="/widgets/css/tablewidget.css"/><link rel="stylesheet" href="/widgets/css/dropzone/dropzone.css"/>
+    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet.css"/>    <link rel="stylesheet" href="/widgets/css/leaflet/markercluster.default.css"/>    <link rel="stylesheet" href="/widgets/css/leaflet/easy-button.css"/>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-gesture-handling.min.css"/>    <link rel="stylesheet" href="/widgets/css/map.css"/>
+    <!-- CSS additional -->
+        <style data-snippet="article-css">.xml_tag_rec_lit { color:#0066ff }
+.xml_tag_quot { font-style: italic }
+.xml_tag_spatium_v { color:#0066ff; font-size: 0.8em }
+.xml_tag_rec_ma { color:#0066ff }
+.xml_tag_folge > .xml_bracket_open, .xml_tag_folge > .xml_bracket_close { color:#c00000ff; font-weight: bold }
+.xml_tag_p .xml_bracket_open, .xml_tag_p .xml_bracket_close { color: #8627ab; background-color:#e2de90 }
+.xml_tag_insec { text-decoration: underline; text-decoration-color: #33cc33; text-decoration-style: dotted }
+.xml_tag_rec_extern { color:#0066ff }
+.xml_tag_h .xml_bracket_open, .xml_tag_h .xml_bracket_close { color: #8627ab; background-color:#e2de90 }
+.xml_tag_sup { color:#e87a59; vertical-align: super; font-size: 0.75em }
+.xml_tag_rec_intern { color:#0066ff }
+.xlm_tag_b { font-weight: bold }
+.xml_tag_abr > .xml_bracket_open, .xml_tag_abr > .xml_bracket_close { color:#0066ff }
+.xml_tag_loc_ten { color: #6abc6a }
+.xml_tag_i { font-style: italic }
+.xml_tag_reg { color: #6abc6a }
+.xml_tag_u { text-decoration: underline }
+.xml_tag_cpl > .xml_bracket_open, .xml_tag_cpl > .xml_bracket_close { color:#0066ff }
+.xml_tag_g { color: #adadad; font-family: "Courier New", serif; font-weight: bold; }
+.xml_tag_del { color:#0066ff }
+.xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }
+.xml_tag_add > .xml_bracket_open, .xml_tag_add > .xml_bracket_close { color:#0066ff }
+.xml_tag_wunsch .xml_bracket_open, .xml_tag_wunsch .xml_bracket_close { color:#1464AA; background-color:#e2de90 }
+.xml_tag_all > .xml_bracket_open, .xml_tag_all > .xml_bracket_close { color:#0066ff }
+.xml_tag_a { color:#0066ff }
+.xml_tag_oms > .xml_bracket_open, .xml_tag_oms > .xml_bracket_close { color:#0066ff }
+.xml_tag_z { color:#ffffff;background-color:#c1c1c1; padding: 0 0.2em; } .xml_tag_z:after {content: "\A" ;white-space: pre;}
+.xml_tag_vz { color:#ffffff; background-color:#c1c1c1; padding: 0 0.2em;}  .xml_tag_vz:after {content: "\A" ;white-space: pre;}
+.xml_tag_bl > .xml_bracket_open, .xml_tag_bl > .xml_bracket_close { color:#FFFFFF; background-color:#c1c1c1; font-size:0.7em;display:inline-block;width:100%;} .xml_tag_bl > .xml_bracket_open {margin-bottom:1em;} .xml_tag_bl > .xml_bracket_close {margin-top:1em;}
+.xml_tag_wtr { color: #6abc6a; font-weight: bold }
+.xml_tag_ini { color: #8f503d; font-size: 1.5em }
+.xml_tag_kap { color: #1ccaaa; font-size: 1em; font-variant: small-caps }
+.xml_tag_vsl { color: #66bb66; font-size: 1.5em }
+.xml_tag_chr { color: #0066ff; font-size: 1.3em }
+.xml_tag_app1 { color:#0066ff;position: relative;bottom: 0.5em;font-size: 0.8em; }
+.xml_tag_app2 { color:#0066ff;position: relative;bottom: 0.5em;font-size: 0.8em; }</style>
+    <!-- JS -->
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jquery/jquery.mousewheel.js"></script>    <script src="/js/jquery/jquery.ajaxqueue.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+    <script src="/js/app.min.js"></script>    <script>App.baseUrl = "http://localhost/";</script>
+        <script>App.databaseUrl = "https://localhost/epi/projects/";</script>
+    <script>App.debug = true;</script>    <script>App.data = [];</script>    <script>App.user = {"role":"admin","scope":"web","settings":{"columns":{"epi.articles":[]}}};</script>
+    <!-- JS widgets and plugins -->
+    <script src="/widgets/js/dropzone/dropzone.js"></script><script src="/widgets/js/paginator.js"></script><script src="/widgets/js/filter.js"></script><script src="/widgets/js/layout.js"></script><script src="/widgets/js/pipeline.js"></script><script src="/widgets/js/popups.js"></script><script src="/widgets/js/treewidget.js"></script><script src="/widgets/js/tablewidget.js"></script><script src="/widgets/js/dragitemswidget.js"></script><script src="/widgets/js/dropdowns.js"></script><script src="/widgets/js/choose-window.js"></script><script src="/widgets/js/uploadwidget.js"></script><script src="/widgets/js/widgets.js"></script>
+    <script src="/widgets/js/ckeditor/epieditor.js"></script>
+    <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/map.js"></script>
+    <script src="/epi/js/models.js"></script>    <link rel="stylesheet" href="/epi/css/models.css"/>
+    <!-- JS additional -->
+    </head>
+
+<body class="controller_articles             action_index             template_default             userrole_admin">
+
+<div id="page-wrapper" class="accordion">
+
+            <nav class="actions-main topmenu">
+
+            <div class="topmenu-left  widget-sandwich-menu">
+                <div class="sandwich-menu-items">
+
+
+
+
+
+    <ul class="horizontal" >
+
+
+
+        <li class="menu_database first dropdown" >
+                                                <button class="widget-dropdown widget-dropdown-toggle"
+                            data-toggle="databasemenu-dropdown" >projects &raquo; </button>
+   	                <div id="databasemenu-dropdown"
+                         class="widget-dropdown-pane dropdown-menu">
+
+
+
+
+
+    <ul class="vertical" >
+
+
+
+        <li class="first" >
+                            <a href="/databanks?database=projects"><i>Datenbanken verwalten</i></a>
+                    </li>
+
+
+
+        <li class="" >
+                            <a href="/settings/show/vars?database=projects"><i>System settings</i></a>
+                    </li>
+
+
+
+        <li class="" >
+                            <a href="/epi/projects/articles">projects</a>
+                    </li>
+
+
+    </ul>
+
+           	        </div>
+
+                    </li>
+
+
+
+        <li class="menu_database" >
+                            <a href="/epi/projects/projects">Projekte</a>
+                    </li>
+
+
+
+        <li class="menu_database active" >
+                            <a href="/epi/projects/articles?redirect=1">Artikel</a>
+                    </li>
+
+
+
+        <li class="menu_database" >
+                            <a href="/epi/projects/properties?redirect=1">Kategorien</a>
+                    </li>
+
+
+
+        <li class="menu_database" >
+                            <a href="/epi/projects/files">Dateien</a>
+                    </li>
+
+
+
+        <li class="menu_database" >
+                            <a href="/epi/projects/notes">Notizen</a>
+                    </li>
+
+
+
+        <li class="menu_database" >
+                            <a href="/epi/projects/types">Config</a>
+                    </li>
+
+
+
+        <li class="menu_database spacer" >
+                            <span>&nbsp;|&nbsp;</span>
+
+			        </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/pipelines?database=projects">Pipelines</a>
+                    </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/users?database=projects">Benutzer</a>
+                    </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/files?root=shared&amp;database=projects">Repositorium</a>
+                    </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/help?database=projects">Hilfe</a>
+                    </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/wiki?database=projects">Wiki</a>
+                    </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/docs/index/pages?database=projects">Seiten</a>
+                    </li>
+
+
+
+        <li class="menu_global" >
+                            <a href="/users/logout">Logout</a>
+                    </li>
+
+
+    </ul>
+
+                </div>
+
+                <div class="sandwich-menu-button hidden">
+                    <button class="widget-dropdown widget-dropdown-toggle"
+                            data-toggle="topmenu-left-sandwich-pane">☰</button>
+                    <div id="topmenu-left-sandwich-pane"
+                         class="widget-dropdown-pane dropdown-menu widget-dropdown-pos-bottomright">
+                        <ul class="vertical"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+                                    <span class="menu-home">
+                            <a href="/">Epigraf</a>
+                        </span>
+                            </div>
+
+        </nav>
+
+    <div id="content-wrapper">
+
+
+            <!-- Fill sidebars -->
+
+
+
+            <!-- Right sidebar -->
+
+
+                    <!-- Left sidebar -->
+                            <nav id="sidebar-menu" class="sidebar sidebar-left sidebar-size-3 accordion-item" data-snippet="sidebar-menu">
+                    <div id="sidebar-menu-content" class="sidebar-content">
+                        <div class="sidebar-title">
+                            Kategorien                            <button class="btn-close show-small"></button>
+                                                    </div>
+
+    <div class="widget-filter-item widget-filter-item-properties widget-filter-item-facets-container" data-filter-group="articles">
+        <form method="get" accept-charset="utf-8" class="select-properties" action="/epi/projects/properties/select">
+        <!-- The property selector -->
+        <ul class="tabs-selector">
+            <li class="button-settings">
+                <button type="button"
+                        class="button-settings widget-dropdown widget-dropdown-toggle"
+                        data-toggle="select-propertytype-pane">⚙</button>
+            </li>
+        </ul>
+
+        <div id="select-propertytype-pane" class="widget-dropdown-pane widget-dropdown-left select-pane">
+            <div id="" class=""><div><span class="selector-grouplabel widget-switch" data-switch-element="#selector-group-_entities"data-switch-class="toggle-hide">Entities</span><ul class="selector-actionlist" id="selector-group-_entities">
+<li data-value="initials"><a href="#">Initialen</a></li>
+<li data-value="formulas"><a href="#">Formeln</a></li>
+<li data-value="sources"><a href="#">Quellen</a></li>
+<li data-value="icons"><a href="#">Ikonografie</a></li>
+<li data-value="placenames"><a href="#">Ortsnamen</a></li>
+<li data-value="manufacturers"><a href="#">Hersteller</a></li>
+<li data-value="locations"><a href="#">Standorte</a></li>
+<li data-value="incipits"><a href="#">Initien</a></li>
+<li data-value="personnames"><a href="#">Personennamen</a></li>
+<li data-value="literature"><a href="#">Literatur</a></li>
+<li data-value="brands"><a href="#">Marken</a></li>
+<li data-value="heraldry"><a href="#">Wappen</a></li>
+</ul><span class="selector-grouplabel widget-switch" data-switch-element="#selector-group-_formats"data-switch-class="toggle-hide">Formats</span><ul class="selector-actionlist" id="selector-group-_formats">
+<li data-value="outputoptions"><a href="#">Darstellungen</a></li>
+<li data-value="headers"><a href="#">Überschriften</a></li>
+<li data-value="captions"><a href="#">Kategorien</a></li>
+<li data-value="datakeys"><a href="#">Datenschlüssel</a></li>
+</ul><span class="selector-grouplabel widget-switch" data-switch-element="#selector-group-_markup"data-switch-class="toggle-hide">Markup</span><ul class="selector-actionlist" id="selector-group-_markup">
+<li data-value="paragraphs"><a href="#">Absätze</a></li>
+<li data-value="alignments"><a href="#">Bereichsausrichtungen</a></li>
+<li data-value="ligatures"><a href="#">Buchstabenverbindungen</a></li>
+<li data-value="indentations"><a href="#">Verszeileneinzüge</a></li>
+<li data-value="verticalalignments"><a href="#">Vertikale Ausrichtungen</a></li>
+<li data-value="wordseparators"><a href="#">Worttrenner</a></li>
+<li data-value="linebindings"><a href="#">Zeilenanschlüsse</a></li>
+<li data-value="abbreviations"><a href="#">Abkürzungen</a></li>
+</ul><span class="selector-grouplabel widget-switch" data-switch-element="#selector-group-_vocabulary"data-switch-class="toggle-hide">Vocabulary</span><ul class="selector-actionlist" id="selector-group-_vocabulary">
+<li data-value="imagetypes"><a href="#">Abbildungskategorien</a></li>
+<li data-value="measures"><a href="#">Abmessungen</a></li>
+<li data-value="conditions"><a href="#">Zustände</a></li>
+<li data-value="metres"><a href="#">Versmaße</a></li>
+<li data-value="texttypes"><a href="#">Textsorten</a></li>
+<li data-value="fonttypes"><a href="#">Schriftarten</a></li>
+<li data-value="epithets"><a href="#">Epitheta</a></li>
+<li data-value="subjects"><a href="#">Sachregister</a></li>
+<li data-value="objecttypes"><a href="#">Objekttypen</a></li>
+<li data-value="materials"><a href="#">Materialien</a></li>
+<li data-value="languages"><a href="#">Sprachen</a></li>
+<li data-value="techniques"><a href="#">Ausführung</a></li>
+<li data-value="brandtypes"><a href="#">Markentyp</a></li>
+</ul></div></div>        </div>
+
+        <!-- The properties panels -->
+        <div class="tabs-panes">
+                                        <div id="panel_objecttypes"
+                     class="tab-properties panel-default"
+                     data-segment="objecttypes"
+                     data-caption="Objekttypen"
+                     data-selected="">
+                </div>
+
+                    </div>
+
+        <!-- Template for the propertiy selector inside the pane -->
+        <template class="tabs-template">
+            <div class="properties-selector">
+                <div class="results widget-scrollbox">
+                    <ul class="widget-tree" data-snippet="rows"></ul>
+                </div>
+                <input class="filter" type="text" placeholder="Filter properties">
+            </div>
+        </template>
+
+        </form>    </div>
+
+                    </div>
+
+                </nav>
+
+        <!-- Content -->
+                <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+            <div class="content-header">
+                <div class="content-header-title">
+                                                        </div>
+
+
+                            </div>
+
+            <div class="content-flash"></div>
+
+            <div class="content-content widget-scrollsync-content">
+
+
+
+<!-- Right sidebar -->
+
+<!-- Left sidebar -->
+
+<!-- Search -->
+
+
+<div class="content-searchbar">
+
+    <div class="content-searchbar-item widget-filter-item widget-filter-item-searchbar content-searchbar-item-main" data-filter-group="articles" data-filter-param="term" data-filter-prefix="articles."><form method="get" accept-charset="utf-8" class="search widget-filter" data-filter-group="articles" data-action="/epi/projects/articles/index" action="/epi/projects/articles/?template=tiles"><div class="input-group input-group-filter first"><div class="input-group-label">Suche</div><div class="input-group-field"><div class="input text"><input type="text" name="term" placeholder="Search articles" class="search-term" id="term"/></div></div><div class="input-group-button"><select name="field" class="search-field"><option value="captions">Bezeichner</option><option value="signature">Signatur</option><option value="name">Titel</option><option value="norm_iri">IRI</option><option value="norm_data">Normdaten</option><option value="status">Status</option><option value="text">Text</option></select></div></div></form></div>
+    <div class="content-searchbar-item widget-filter-item widget-filter-item-selector content-searchbar-item" data-filter-group="articles" data-filter-param="articles.articletypes"><div class="input-group input-group-filter"><div class="input-group-label">Article types</div><div class="input-group-field"><div class="widget-dropdown-selector" data-pane-id="select-pane-articles-articletypes" data-pane-align-to=".input-group"><input type="hidden" name="select-input-articles-articletypes" value="" class="input-reference-value"/><input type="text" name="select-input-articles-articletypes-epi-book" value="" autocomplete="off" class="input-reference-text" readonly="readonly" data-label="selected"/><div id="select-pane-articles-articletypes" class="widget-dropdown-pane widget-checkboxlist"><div><span class="selector-reset">Reset selection</span><ul class="selector-checkboxes" id="selector-group-select-pane-articles-articletypes_">
+<li data-value="epi-article"><div class="input checkbox"><input type="hidden" name="select-pane-articles-articletypes__epi-article" value="0"/><label for="select-pane-articles-articletypes-epi-article"><input type="checkbox" name="select-pane-articles-articletypes__epi-article" value="1" id="select-pane-articles-articletypes-epi-article">Inschrift</label></div></li>
+<li data-value="epi-book"><div class="input checkbox"><input type="hidden" name="select-pane-articles-articletypes__epi-book" value="0"/><label for="select-pane-articles-articletypes-epi-book"><input type="checkbox" name="select-pane-articles-articletypes__epi-book" value="1" id="select-pane-articles-articletypes-epi-book">Band</label></div></li>
+</ul></div></div></div></div></div></div>
+    <div class="content-searchbar-item widget-filter-item widget-filter-item-selector content-searchbar-item" data-filter-group="articles" data-filter-param="articles.projects"><div class="input-group input-group-filter"><div class="input-group-label">Projekte</div><div class="input-group-field"><div class="widget-dropdown-selector" data-pane-id="select-pane-articles-projects" data-pane-align-to=".input-group"><input type="hidden" name="select-input-articles-projects" value="" class="input-reference-value"/><input type="text" name="select-input-articles-projects-text" value="" autocomplete="off" class="input-reference-text"  data-label="selected"/><div id="select-pane-articles-projects" class="widget-dropdown-pane widget-checkboxlist"><div><span class="selector-reset">Reset selection</span><span class="selector-grouplabel widget-switch" data-switch-element="#selector-group-select-pane-articles-projects_epi"data-switch-class="toggle-hide">Epi</span><ul class="selector-checkboxes" id="selector-group-select-pane-articles-projects_epi">
+<li data-value="1"><div class="input checkbox"><input type="hidden" name="select-pane-articles-projects_epi_1" value="0"/><label for="select-pane-articles-projects-epi-1"><input type="checkbox" name="select-pane-articles-projects_epi_1" value="1" id="select-pane-articles-projects-epi-1">Testprojekt [TP]</label></div></li>
+</ul></div></div></div></div></div></div>
+
+        <div class="content-searchbar-item widget-filter-item widget-filter-item-sort content-searchbar-item" data-filter-group="articles" data-filter-param="sort"><div class="input-group input-group-filter"><div class="input-group-label">Sort by</div><div class="input-group-field"><select name="sort" class="widget-filter-item-sort-field"><option value="Projects.signature">Projekt</option><option value="signature" selected="selected">Signatur</option><option value="name">Titel</option><option value="status">Status</option><option value="modified">Verändert</option><option value="created">Angelegt</option><option value="items_date">Objektdatierung</option><option value="inscriptions_date">Inschriftendatierungen</option><option value="images_count">Abbildungen</option><option value="cluster_sil">Silhouette</option><option value="norm_iri">IRI fragment</option></select></div></div></div>
+    <div class="content-searchbar-item content-searchbar-item-sub show-small">
+        <div class="input-group">
+            <button  class="accordion-toggle"  data-toggle-accordion="sidebar-menu">
+                Kategorien            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Content area -->
+
+
+<div class="content-main widget-scrollbox widget-filter-item widget-filter-item-template"
+     data-snippet="rows"
+     data-filter-group="articles"
+     data-filter-template="tiles">
+
+    <div class="recordlist recordlist-tiles actions-toframe widget-tiles"
+         data-sortdir="asc"
+         data-sortkey="signature"
+         data-list-name="articles"
+         data-list-action-next=""
+         data-model="epi.articles">
+
+
+            <div class="recordlist-tile" data-id="2" data-list-itemof="articles">
+                <a class="frame" href="/epi/projects/articles/view/2">
+
+<!-- Title -->
+<div class="doc-preview-title">
+    Bandartikel für das Testsystem</div>
+
+<div class="doc-preview-content">
+    <!-- Image -->
+
+
+    <!-- Inscription -->
+        </div>
+
+<div class="doc-preview-basics">
+    <!-- Object types -->
+            <div class="doc-preview-objecttype">
+        <span class="doc-icon">🪦</span>&nbsp;    </div>
+
+    <!-- Dateings -->
+            <div class="doc-preview-datings">
+        <span class="doc-icon">⌛</span>&nbsp;    </div>
+
+
+    <!-- Location -->
+            <div class="doc-preview-location">
+        <span class="doc-icon">📍</span>&nbsp;
+            Testprojekt:     </div>
+</div>
+                </a>
+            </div>
+
+            <div class="recordlist-tile" data-id="1" data-list-itemof="articles">
+                <a class="frame" href="/epi/projects/articles/view/1">
+
+<!-- Title -->
+<div class="doc-preview-title">
+    Artikel 1 für das Testsystem</div>
+
+<div class="doc-preview-content">
+    <!-- Image -->
+
+
+    <!-- Inscription -->
+                <div class="doc-preview-inscription">
+            <div class="doc-field doc-fieldname-content"
+            data-row-field="content"
+            data-row-format="xml"><div class="doc-field-content"><span class="xml_tag xml_tag_bl xml_bracket" data-tagid="000004489204293021990740747062" data-type="bl"><span class="xml_bracket_open">╟─</span><span class="xml_bracket_content"><br><br></span><span class="xml_bracket_close"> ─╢</span></span></div></div>            <div class="doc-field doc-fieldname-translation doc-field-empty"
+            data-row-field="translation"
+            data-row-format="xml"><div class="doc-field-content"></div></div>                    </div>
+    </div>
+
+<div class="doc-preview-basics">
+    <!-- Object types -->
+            <div class="doc-preview-objecttype">
+        <span class="doc-icon">🪦</span>&nbsp;Träger 1 , Träger 2a    </div>
+
+    <!-- Dateings -->
+            <div class="doc-preview-datings">
+        <span class="doc-icon">⌛</span>&nbsp;1234    </div>
+
+
+    <!-- Location -->
+            <div class="doc-preview-location">
+        <span class="doc-icon">📍</span>&nbsp;
+            Testprojekt: Standort A, Standort B1    </div>
+</div>
+                </a>
+            </div>
+
+            <div class="recordlist-tile" data-id="3" data-list-itemof="articles">
+                <a class="frame" href="/epi/projects/articles/view/3">
+
+<!-- Title -->
+<div class="doc-preview-title">
+    Artikel 2 für das Testsystem</div>
+
+<div class="doc-preview-content">
+    <!-- Image -->
+
+
+    <!-- Inscription -->
+                <div class="doc-preview-inscription">
+            <div class="doc-field doc-fieldname-content doc-field-empty"
+            data-row-field="content"
+            data-row-format="xml"><div class="doc-field-content"></div></div>            <div class="doc-field doc-fieldname-translation doc-field-empty"
+            data-row-field="translation"
+            data-row-format="xml"><div class="doc-field-content"></div></div>                    </div>
+    </div>
+
+<div class="doc-preview-basics">
+    <!-- Object types -->
+            <div class="doc-preview-objecttype">
+        <span class="doc-icon">🪦</span>&nbsp;    </div>
+
+    <!-- Dateings -->
+            <div class="doc-preview-datings">
+        <span class="doc-icon">⌛</span>&nbsp;    </div>
+
+
+    <!-- Location -->
+            <div class="doc-preview-location">
+        <span class="doc-icon">📍</span>&nbsp;
+            Testprojekt:     </div>
+</div>
+                </a>
+            </div>
+
+            <div class="recordlist-tile" data-id="4" data-list-itemof="articles">
+                <a class="frame" href="/epi/projects/articles/view/4">
+
+<!-- Title -->
+<div class="doc-preview-title">
+    Artikel 3 für das Testsystem - Geodaten</div>
+
+<div class="doc-preview-content">
+    <!-- Image -->
+
+
+    <!-- Inscription -->
+                <div class="doc-preview-inscription">
+            <div class="doc-field doc-fieldname-content doc-field-empty"
+            data-row-field="content"
+            data-row-format="xml"><div class="doc-field-content"></div></div>            <div class="doc-field doc-fieldname-translation doc-field-empty"
+            data-row-field="translation"
+            data-row-format="xml"><div class="doc-field-content"></div></div>                    </div>
+    </div>
+
+<div class="doc-preview-basics">
+    <!-- Object types -->
+            <div class="doc-preview-objecttype">
+        <span class="doc-icon">🪦</span>&nbsp;    </div>
+
+    <!-- Dateings -->
+            <div class="doc-preview-datings">
+        <span class="doc-icon">⌛</span>&nbsp;    </div>
+
+
+    <!-- Location -->
+            <div class="doc-preview-location">
+        <span class="doc-icon">📍</span>&nbsp;
+            Testprojekt:     </div>
+</div>
+                </a>
+            </div>
+
+    </div>
+</div>
+
+
+<!-- Actions -->
+
+
+
+
+
+                            </div>
+            <div class="content-footer"></div>
+        </div>
+
+
+
+
+
+                            <nav id="sidebar-right" class="sidebar sidebar-right sidebar-init-collapsed sidebar-size-3 accordion-item" data-accordion-item="sidebar-right" data-snippet="sidebar-right">
+                    <div id="sidebar-right-content" class="sidebar-content">
+                                                    <div class="sidebar-title">Details</div>
+                                                <div class="sidebar-frame"></div>                    </div>
+                </nav>
+
+            </div>
+
+            <footer>
+                            <nav class="actions-bottom widget-sandwich-menu" data-snippet="actions-bottom"><div class="sandwich-menu-button hidden"><button class="widget-dropdown widget-dropdown-toggle"
+                                data-toggle="actions-bottom-sandwich-pane">☰</button><div id="actions-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu widget-dropdown-pos-topleft"><ul class="vertical"></ul></div></div><div class="sandwich-menu-items"><ul class="action-menu">
+<li><span class="label">4 records</span></li>
+<li><a href="/epi/projects/articles/add">Add</a></li>
+<li><a href="/epi/projects/articles/recovertree">Recover trees</a></li>
+<li><a href="/epi/projects/articles/import">Import</a></li>
+<li><a href="/epi/projects/articles/transfer?template=tiles" data-shortcuts="F7" title="Exportieren (F7)" aria-label="Exportieren" aria-keyshortcuts="F7" class="popup widget-shortcut" data-list-select="epi_articles" data-list-param="articles" data-popup-modal="1">Transfer</a></li>
+</ul></div></nav>
+                                                                    <nav class="actions-bottom-right widget-sandwich-menu" data-snippet="actions-bottom-right"><div class="sandwich-menu-items"><ul class="action-menu">
+<li><a href="/epi/projects/articles?template=coding">Editing</a></li>
+<li><a href="/epi/projects/articles?template=table">Table</a></li>
+<li><a href="/epi/projects/articles?template=lanes">Lanes</a></li>
+<li><a href="/epi/projects/articles?template=map&amp;sort=distance&amp;direction=asc">Map</a></li>
+<li><a href="/epi/projects/articles.csv?template=tiles" target="_blank" data-list-select="epi_articles" data-list-param="articles">CSV</a></li>
+<li><a href="/epi/projects/articles.xml?template=tiles" target="_blank" data-list-select="epi_articles" data-list-param="articles">XML</a></li>
+<li><a href="/epi/projects/articles.json?template=tiles" target="_blank" data-list-select="epi_articles" data-list-param="articles">JSON</a></li>
+<li><a href="/export?template=tiles&amp;database=projects" data-shortcuts="F7" title="Exportieren (F7)" aria-label="Exportieren" aria-keyshortcuts="F7" class="popup widget-shortcut" data-list-select="epi_articles" data-list-param="articles" data-popup-modal="1">Exportieren</a></li>
+<li><a href="/help/epiweb-epi-articles-index?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Hilfe">?</a></li>
+</ul></div><div class="sandwich-menu-button hidden"><button class="widget-dropdown widget-dropdown-toggle"
+                                data-toggle="actions-bottom-right-sandwich-pane">☰</button><div id="actions-bottom-right-sandwich-pane" class="widget-dropdown-pane dropdown-menu widget-dropdown-pos-topright"><ul class="vertical"></ul></div></div></nav>                    </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Wiki    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/projects/";window.App.debug = false;window.App.user.load({"role":"editor","scope":"web","settings":{"columns":{"docs":[]}},"session":{"ui":[]}});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_wiki             action_index             template_default             theme_default             userrole_editor">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_database" ><a href="/epi/projects/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/projects/articles?load=1">Articles</a></li><li class="menu_database" ><a href="/epi/projects/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/projects/files?load=1">Files</a></li><li class="menu_database" ><a href="/epi/projects/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/projects/types?load=1">Types</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=projects">Pipelines</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=projects">Repository</a></li><li class="menu_global" ><a href="/help?database=projects">Help</a></li><li class="menu_global active" ><a href="/wiki?database=projects">Wiki</a></li><li class="menu_global" ><a href="/?database=projects">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/4?database=projects" class="btn-profile" title="editor"></a>                                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+                <div class="frame-title">
+                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
+                </div>
+
+                <div class="frame-content">
+                    <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first active node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/wiki?database=projects">List all</a></div><div class="tree-meta"></div></li><li class="category-meta node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/wiki?category=&amp;database=projects">Without category</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=A.+Inschriften+Online&amp;database=projects">A. Inschriften Online</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=B.+Hilfsmittel&amp;database=projects">B. Hilfsmittel</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="4" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=C.+Repositorium&amp;database=projects">C. Repositorium</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="5" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=D.+Recherche&amp;database=projects">D. Recherche</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="6" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=E.+Organisation&amp;database=projects">E. Organisation</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-id="7" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=F.+Entwicklung&amp;database=projects">F. Entwicklung</a></div><div class="tree-meta"></div></li></ul></div>                </div>
+                <div class="frame-footer">
+                                            <form method="get" accept-charset="utf-8" id="search" action="/docs/index/wiki?database=projects"><input type="hidden" name="database" value="projects"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
+                </div></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/docs/index/wiki?database=projects">Wiki</a></li></ul>                            </nav>
+                                            </div>
+
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+<!-- Breadcrumbs -->
+
+<!-- Sidebars -->
+
+<!-- Content -->
+
+<div class="content-main widget-scrollbox">
+    <table class="recordlist widget-table actions-toframe" data-filter-group="wiki" data-snippet="rows" data-model="wiki" data-sortdir="asc"><thead><tr>
+<th scope="col" data-col="name"><a href="/docs/index/wiki?database=projects&amp;sort=name&amp;direction=asc">Name</a></th>
+<th scope="col" data-col="category"><a href="/docs/index/wiki?database=projects">Category</a></th>
+<th scope="col" data-col="norm_iri" data-width="150" style="position: relative; width: 150px; max-width: 150px;"><a href="/docs/index/wiki?database=projects&amp;sort=norm_iri&amp;direction=asc">IRI-Fragment</a></th>
+<th scope="col" data-col="sortkey" data-width="50" style="position: relative; width: 50px; max-width: 50px;"><a href="/docs/index/wiki?database=projects&amp;sort=sortkey&amp;direction=asc">Order</a></th>
+<th scope="col" data-col="modified"><a href="/docs/index/wiki?database=projects&amp;sort=modified&amp;direction=asc">Last modified</a></th>
+<th scope="col" data-col="created"><a href="/docs/index/wiki?database=projects&amp;sort=created&amp;direction=asc">Created on</a></th>
+<th scope="col" class="actions">Actions</th></tr></thead><tbody data-list-name="wiki" data-list-action-next="" data-list-action-get="/docs/index/wiki?database=projects"><tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="117" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Wiki</div></td><td ></td><td >start</td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/117?database=projects" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="118" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Inschriften Online</div></td><td >A. Inschriften Online</td><td ></td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/118?database=projects" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="96" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Hilfsmittel</div></td><td >B. Hilfsmittel</td><td ></td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/96?database=projects" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="103" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Wiki » Repositorium</div></td><td >C. Repositorium</td><td ></td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/103?database=projects" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="120" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Web-Recherchen</div></td><td >D. Recherche</td><td ></td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/120?database=projects" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="104" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Epigraf Wiki &gt;&gt; Organisation</div></td><td >E. Organisation</td><td ></td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/104?database=projects" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="wiki" data-id="125" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Abgeschlossen</div></td><td >F. Entwicklung</td><td ></td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/wiki/125?database=projects" data-role="view">View</a></td></tr></tbody></table></div>
+
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default">7 records</span></li><li><a href="/docs/add/wiki?database=projects" data-shortcuts="Ctrl+M" title="Create page (Ctrl+M)" aria-label="Create page" aria-keyshortcuts="Ctrl+M" class="popup actions-set-default widget-shortcut" data-role="add" popup="1" data-popup-modal="1">Create page</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><a href="/docs/index/wiki.csv?database=projects" target="_blank" rel="nofollow" data-list-select="wiki" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/docs/index/wiki.xml?database=projects" target="_blank" rel="nofollow" data-list-select="wiki" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/docs/index/wiki.json?database=projects" target="_blank" rel="nofollow" data-list-select="wiki" data-list-param="id" class="">JSON</a></li><li><a href="/help/epiweb-wiki-index?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

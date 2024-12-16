@@ -1,0 +1,581 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+/* Resizable sidebar */
+.sidebar-exploder {
+    position: absolute;
+    top: 50%;
+    width: 2rem;
+    height: 2rem;
+    z-index: 100;
+    cursor: pointer;
+    opacity: 0.8;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-image: url("../img/arrow_left.svg");
+    transition: all 0.5s ease-in-out;
+}
+
+.sidebar-imploder {
+    position: absolute;
+    top: 50%;
+    width: 2rem;
+    height: 2rem;
+    z-index: 100;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-image: url("../img/arrow_left.svg");
+}
+
+.sidebar-exploder-left {
+	transform: scaleX(-1);
+	left:0;
+}
+
+.sidebar-imploder-left {
+	right:0;
+}
+
+.sidebar-exploder-right  {
+	right:0;
+}
+
+.sidebar-imploder-right  {
+	transform: scaleX(-1);
+	left:0;
+}
+
+.sidebar-exploder {
+	display:none;
+}
+
+.sidebar-imploder {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s, opacity 0.5s linear;
+}
+
+.sidebar-resizer:hover .sidebar-imploder {
+	visibility: visible;
+	opacity: 1;
+}
+
+.sidebar-resizer {
+	height:100%;
+	width:0.66rem;
+	position: absolute;
+	z-index: 2;
+	cursor: col-resize;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.sidebar-resizer.is-resizing,
+.sidebar-resizer:hover {
+    background-color: var(--sidebar-resizer-color-hover);
+}
+
+.sidebar-resizer-left {
+	right: 0;
+}
+
+.sidebar-resizer-right {
+	left: 0;
+}
+
+
+.sidebar-content {
+	padding: 1rem 1rem 1rem 1rem;
+	font-size: 0.9rem;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+}
+
+.sidebar-left .sidebar-content {
+	transform: scaleX(-1);
+}
+
+.sidebar-left .sidebar-content > * {
+	transform: scaleX(-1);
+}
+
+.sidebar-init-collapsed,
+.sidebar-collapsed {
+    display: none;
+}
+
+.sidebar-expanded {
+	display: inherit;
+}
+
+
+.sidebar-expanded.sidebar-exploder {
+	display: none;
+}
+
+.sidebar-init-collapsed.sidebar-exploder,
+.sidebar-collapsed.sidebar-exploder {
+	display: block;
+}
+
+.sidebar-collapsed.sidebar-empty.sidebar-exploder {
+    display: none;
+}
+
+.sidebar-collapsed.sidebar-full.sidebar-exploder {
+    background-image: url("../img/arrow_left_green.svg");
+}
+
+.accordion {
+    background-color: var(--content-bg-color);
+}
+.accordion-toggle {
+	display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 767.98px) {
+
+	.accordion {
+		flex-direction: column;
+	}
+
+	.accordion .sidebar-exploder,
+	.accordion .sidebar-imploder {
+		display: none;
+	}
+
+	.accordion-toggle {
+		display: block;
+
+		font-size: 0.9rem;
+		padding: 0.3rem;
+		margin: 0 0 0 1rem;
+		height: 1.8rem;
+
+		/*color: var(--nav-fontcolor);*/
+		background-color: var(--button-bg-color);
+
+        white-space: nowrap;
+	}
+
+	.accordion-toggle:before {
+		content:'≡';
+		margin-right:0.5em;
+	}
+
+
+	.accordion-toggle.accordion-active {
+		background-color: var(--nav-bg-color-active);
+		color: var(--nav-font-color-active);
+	}
+
+	.accordion .sidebar {
+		display: none;
+	}
+
+	/* Hide by reducing the height. Note that "display: none" can't be used
+	  because the hidden elements don't have dimensions,
+	  preventing the table layout mechanism (including resizable columns)
+	  to calculate column and table widths.
+	 */
+	.accordion .accordion-collapsed {
+		overflow:hidden !important;
+		height:0 !important;
+		flex:0 !important;
+
+		padding-top:0 !important;
+		padding-bottom:0 !important;
+		margin-top:0 !important;
+		margin-bottom:0 !important;
+	}
+
+	.accordion .accordion-expanded {
+		display:inherit !important;
+		flex:1;
+	}
+}
+
+
+/* Popup dialog */
+.popup-window {
+    display: flex;
+    flex-direction: column;
+    padding: 1em 0.5em;
+    background-color: white;
+}
+
+.popup-window nav.breadcrumbs ul li {
+    padding-bottom: 0;
+    line-height: 1.1em;
+    float: left;
+}
+
+
+.ui-icon, .ui-button .ui-icon, .ui-widget-header .ui-icon, .ui-widget-content .ui-icon,
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon, .ui-button:hover .ui-icon, .ui-button:focus .ui-icon
+{
+    /* Downloaded from https://download.jqueryui.com/themeroller/images/ui-icons_116d76_256x240.png  (adjust color if necessary) */
+    background-image: url(../img/jqueryui-icons_116d76_256x240.png);
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus, .ui-button:hover, .ui-button:focus {
+    border:1px solid var(--button-submit-bg-color-hover);
+}
+
+.ui-dialog {
+    padding: 0.1em;
+}
+
+.ui-dialog, .ui-dialog-content {
+    box-sizing: content-box;
+}
+
+.ui-dialog .ui-widget-content {
+    background:var(--content-bg-color);
+    color:var(--text-font-color);
+    /*position: initial;*/
+    position: relative;
+}
+
+.ui-dialog .ui-widget-header {
+    font-weight: normal;
+    padding-right: 2em;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    background:var(--pane-bg-color);
+    margin:0;
+    font-size: 0.9rem;
+}
+
+.ui-dialog-titlebar {
+    font-size: 0.9rem;
+    padding: 0.25em 0.5em;
+
+}
+.ui-dialog .ui-dialog-title {
+    width:inherit;
+}
+
+.ui-dialog-titlebar button {
+
+    width:20px;
+    height: 20px;
+    margin: 0.15em 0.2em;
+    float:right;
+
+    /*position: absolute;*/
+    /*right:2em;*/
+    /*top:50%;    */
+    /*margin:-10px 0 0 0;*/
+    /*padding:1px;*/
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+    text-align: right;
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+    background: inherit;
+    background-color: var(--button-bg-color);
+    border-color: var(--button-bg-color);
+    border-radius: 0;
+    border-style: solid;
+    border-width: 0;
+    color: #fff;
+    transition: background-color 300ms ease-out 0s;
+}
+
+.ui-dialog .ui-dialog-buttonpane button:hover {
+    background-color: var(--button-bg-color-hover);
+    color: #fff;
+}
+
+.ui-dialog .ui-dialog-buttonpane button.role-apply,
+.ui-dialog .ui-dialog-buttonpane button.role-submit,
+.ui-dialog .ui-dialog-buttonpane button.role-save {
+    background: var(--button-submit-bg-color);
+    /*float:none;*/
+}
+
+.ui-dialog .ui-dialog-buttonpane button.role-apply:hover,
+.ui-dialog .ui-dialog-buttonpane button.role-submit:hover,
+.ui-dialog .ui-dialog-buttonpane button.role-save:hover{
+    background: var(--button-submit-bg-color-hover);
+}
+
+
+/*.ui-dialog-titlebar .ui-button,*/
+.btn-close, .btn-open, .btn-collapse {
+    background-repeat: no-repeat;
+    background-size: 65%;
+    background-position: center;
+    padding: 0.6em;
+    margin: 0 0.2em;
+    width:1.5em;
+}
+
+.ui-dialog-titlebar .ui-dialog-titlebar-close {
+  margin: -10px 0 0 0;
+}
+
+
+.btn-open {
+    background-image: url('../img/new_tab.svg');
+}
+
+.btn-close {
+    background-image: url('../img/close.svg');
+}
+
+
+
+/*  --------- Tabsheets --------- */
+
+.widget-tabsheets {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-tabsheets-sheets {
+    flex:1;
+    overflow: auto;
+}
+
+.widget-tabsheets-selectors {
+    display: flex;
+    margin:1em 0;
+}
+
+
+.widget-tabsheets.simple:not(.extendable) .widget-tabsheets-selectors,
+.widget-tabsheets.empty:not(.extendable) .widget-tabsheets-selectors {
+    display: none;
+}
+
+.widget-tabsheets-selectors-tabs {
+    flex:1;
+}
+
+.widget-tabsheets-button {
+    display: inline-block;
+
+    font-size: 0.875rem;
+    line-height: 1.875em;
+    white-space: nowrap;
+
+    padding: 0;
+    margin: 0 1em 0.5em 0;
+
+    background-color: var(--button-bg-color-inactive);
+    color: var(--button-font-color);
+}
+
+.widget-tabsheets-button button {
+    background-color: var(--button-bg-color-inactive);
+    color: var(--button-font-color);
+
+    font-size: 0.875rem;
+    line-height: 1.875em;
+
+    padding:0 0.5em;
+}
+
+.widget-tabsheets-button:hover,
+.widget-tabsheets-button:hover button {
+    background-color: var(--nav-bg-color-hover);
+    color:var(--button-font-color);
+}
+
+.widget-tabsheets-button.active,
+.widget-tabsheets-button.active button {
+    background-color: var(--nav-bg-color);
+    color:var(--button-font-color);
+}
+
+.widget-tabsheets-button button.caption {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.widget-tabsheets-button button.btn-remove:hover {
+    background-color: var(--button-remove-bg-color);
+}
+
+.widget-tabsheets:not(.extendable) .widget-tabsheets-button.empty,
+.widget-tabsheets.simple:not(.extendable) .widget-tabsheets-button {
+    display: none;
+}
+
+.widget-tabsheets-sheet {
+    display: none;
+}
+
+.widget-tabsheets-sheet.active {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-tabsheets-selectors-manage {
+    padding:0;
+}
+
+.widget-tabsheets-selectors-manage button {
+    background-color: var(--button-bg-color-inactive);
+    background-size: 50%;
+
+    display:inline-block;
+
+    font-weight: bold;
+
+    vertical-align: top;
+    height: 2em;
+    width: 2em;
+    padding:0;
+    margin:0 0 0.2em 0.2em;
+}
+
+.widget-tabsheets-selectors-manage button.btn-add:hover {
+    background-color: var(--button-add-bg-color);
+}
+
+.widget-tabsheets-selectors-manage button.btn-close:hover,
+.widget-tabsheets-selectors-manage button.btn-apply:hover {
+    background-color: var(--button-remove-bg-color);
+}
+
+
+.frame-title-manage button {
+    background-color: var(--button-bg-color-inactive);
+    vertical-align: text-top;
+    height: 1.5em;
+    min-width: 1.5em;
+    padding: 0;
+}
+
+.frame-title-manage button:hover {
+    background-color: var(--nav-border-color);
+}
+
+.frame-title-manage button.btn-close:hover {
+    background-color: var(--button-remove-bg-color);
+}
+
+/* ------------- Overlay ------------- */
+
+
+.overlay-header-buttons .btn-open,
+.overlay-header-buttons .btn-close {
+    background-size: 50%;
+    padding: 1em;
+}
+
+.overlay {
+    position:absolute;
+    left:0;
+    top:0;
+    height: 100%;
+    width: 100%;
+    background:white;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+}
+
+.overlay-header {
+    display: flex;
+    background-color: var(--top-menu-app-bg-color);
+    color: var(--button-font-color);
+}
+
+.overlay-header-title {
+    padding-left: 1em;
+    line-height: 2.2em;
+    flex:1;
+}
+
+.overlay-header-buttons button {
+    margin:0 0.5em 0 0;
+    background-color: var(--button-bg-color);
+}
+
+.overlay-header-buttons button:hover {
+    background-color: var(--button-bg-color);
+}
+
+.overlay-header-buttons button:first-child {
+    margin-left:0.5em;
+}
+
+.overlay-content {
+    flex:1;
+    display: flex;
+    overflow:auto;
+}
+
+.overlay-footer {
+
+}
+
+
+/* Confirmation dialog */
+.popup-confirm .ui-dialog-titlebar,
+.popup-message .ui-dialog-titlebar {
+    display: none;
+}
+
+.popup-confirm .ui-dialog-content,
+.popup-message .ui-dialog-content {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.popup-confirm .ui-dialog-buttonpane,
+.popup-message .ui-dialog-buttonpane {
+    border:0;
+    background:#fff;
+}
+
+.popup-confirm .ui-dialog-buttonpane button.role-confirm,
+.popup-message .ui-dialog-buttonpane button.role-confirm {
+    background: var(--button-submit-bg-color);
+}
+
+/* Tooltips */
+
+
+.doc-content-help[data-help]:hover:after,
+.doc-content-help[data-help]:focus:after {
+
+    content: attr(data-help);
+
+    position: absolute;
+    z-index: 1000;
+    top: 2em;
+    right: 0;
+    min-width: 10em;
+
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 4px 8px;
+
+}

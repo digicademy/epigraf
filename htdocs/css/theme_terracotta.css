@@ -1,0 +1,36 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+/** Custom Properties **/
+:root {
+    --primary-200: hsl(35, 100%, 97%);
+    --primary-300: hsl(30, 100%, 89%);
+    --primary-400: hsl(25, 100%, 81%);
+    --primary-500: hsl(23, 90%, 75%);
+    --primary-600: hsl(19, 73%, 57%);
+    --primary-700: hsl(18, 85%, 39%);
+    --primary-800: hsl(17, 89%, 28%);
+    --primary-900: hsl(10, 87%, 13%);
+
+    --accent-button-normal: hsl(24, 60%, 55%);
+    --accent-button-hover: hsl(8, 98%, 8%);
+
+    --accent-open-normal: #3b6d1d;
+    --accent-open-hover: #1f440d;
+
+    --accent-submit-normal: #003E01;
+    --accent-submit-hover: #022600;
+
+    --function-highlight: #F2FFF8;
+    --function-warning: #005506;
+    --function-remove: hsl(3, 89%, 39%);
+    --function-title: hsl(3, 89%, 35%);
+    --function-home: hsl(8, 97%, 18%);
+
+}

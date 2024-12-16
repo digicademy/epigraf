@@ -1,0 +1,123 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+:root {
+    --ck-color-base-background: var(--content-bg-color);
+    --ck-color-text: var(--text-font-color);
+    /*--ck-color-button-default-hover-background: var(--nav-bg-color-hover);*/
+    /*--ck-color-split-button-hover-background: var(--nav-bg-color-hover);*/
+}
+
+/* copied from app.css */
+.ck.ck-editor__editable_inline {
+    background-color: var(--content-bg-color); /*#fefefe;*/
+    color: var(--text-font-color);
+
+    display: block;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    /*margin: 0 0 1rem;*/
+    border: 1px solid var(--input-border-color);
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
+    box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-transition: border-color .25s ease-in-out,-webkit-box-shadow .5s;
+    transition: border-color .25s ease-in-out,-webkit-box-shadow .5s;
+    transition: box-shadow .5s,border-color .25s ease-in-out;
+    transition: box-shadow .5s,border-color .25s ease-in-out,-webkit-box-shadow .5s;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    min-height: 2rem;
+    padding: 0 0.5rem;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+    background-color: var(--content-bg-color); /*#fefefe;*/
+    color: var(--text-font-color);
+
+    outline: 0;
+    border: 1px solid #8a8a8a;
+    -webkit-box-shadow: 0 0 5px #cacaca;
+    box-shadow: 0 0 5px #cacaca;
+    -webkit-transition: border-color .25s ease-in-out,-webkit-box-shadow .5s;
+    transition: border-color .25s ease-in-out,-webkit-box-shadow .5s;
+    transition: box-shadow .5s,border-color .25s ease-in-out;
+    transition: box-shadow .5s,border-color .25s ease-in-out,-webkit-box-shadow .5s;
+
+    min-height: 1.5rem;
+    /* TODO:This should also be 0.3rem 0.5rem (like in previous rule) for transcription fields
+        but not for input fields in tables...proble: Rules from <style>-Tag override everything
+   */
+    /*padding: 0 0.5rem;*/
+}
+
+/* Inspector */
+.ck-inspector button {
+    color: black;
+}
+
+/* Reset ck editor default styles */
+.ck.ck-editor__editable:not(.ck-editor__nested-editable),
+.ck-rounded-corners .ck.ck-editor__editable:not(.ck-editor__nested-editable),
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-rounded-corners {
+    border-radius: 3px;
+}
+
+br + br[data-cke-filler] {
+    display: none;
+}
+
+.ck.ck-editor__editable_inline > br[data-cke-filler] {
+    margin: 0;
+}
+
+
+/* Images and tables */
+.ck-content .image,
+.ck-content .table {
+    margin:0.9em;
+}
+
+/* Dropdown width */
+.ck.ck-dropdown .ck-button.ck-dropdown__button .ck-button__label {
+    width: auto;
+}
+
+.ck-button_with-text > .ck-button__label {
+    margin: 0 0.5em;
+}
+
+/* Font Awesome buttons*/
+.ck-button__symbol.font_awesome {
+    font-family: "Font Awesome 6 Free";
+}
+
+/* XML Editor */
+
+.widget-xmleditor,
+.widget-xmleditor.ck.ck-editor__editable_inline,
+.widget-xmleditor.ck.ck-editor__editable_inline.ck-focused,
+.widget-xmleditor.ck.ck-editor__editable_inline.ck-blurred {
+    height: inherit;
+    min-height: 1.5rem;
+    max-height: 30rem;
+    overflow: auto;
+}
+
+.widget-xmleditor br[data-cke-filler]:first-child {
+    display: none;
+}
+

@@ -1,0 +1,16 @@
+{
+    "id": 1,
+    "deleted": 0,
+    "published": null,
+    "created": "2020-11-11T14:17:34+01:00",
+    "modified": "2020-11-11T14:17:34+01:00",
+    "created_by": null,
+    "modified_by": null,
+    "name": "downloads",
+    "description": "Download folder",
+    "type": null,
+    "size": null,
+    "root": "shared",
+    "path": "",
+    "isfolder": 1
+}

@@ -1,0 +1,3368 @@
+[
+    {
+        "id": 3,
+        "projects_id": 1,
+        "deleted": 0,
+        "version_id": null,
+        "job_id": null,
+        "published": null,
+        "created": "2022-04-01T12:04:46+02:00",
+        "modified": "2023-05-04T22:59:26+02:00",
+        "modified_by": 1,
+        "created_by": 1,
+        "articletype": "epi-article",
+        "signature": "Signatur 2",
+        "name": "Artikel 2 f\u00fcr das Testsystem",
+        "sortno": null,
+        "status": "Status 2",
+        "norm_data": "normdata_2",
+        "norm_iri": "normiri_2",
+        "norm_type": null,
+        "lastopen_id": null,
+        "lastopen_tab": null,
+        "lastopen_field": null,
+        "lastopen_tagid": null,
+        "type": {
+            "id": 161,
+            "deleted": 0,
+            "version_id": null,
+            "job_id": 60781,
+            "published": 1,
+            "created": null,
+            "modified": "2024-11-09T17:14:05+01:00",
+            "created_by": null,
+            "modified_by": 4,
+            "scope": "articles",
+            "mode": "default",
+            "preset": "default",
+            "name": "epi-article",
+            "sortno": 5,
+            "category": "EPI",
+            "caption": "EPI-Artikel",
+            "description": "In Epigraf editierte Artikel",
+            "config": {
+                "preview": {
+                    "images": [
+                        "images"
+                    ],
+                    "text": [
+                        "transcriptions"
+                    ],
+                    "summary": [
+                        "source",
+                        "location",
+                        "date"
+                    ]
+                },
+                "fields": {
+                    "created": "Erstellt",
+                    "modified": "Ge\u00e4ndert",
+                    "created_by": "Erstellt von",
+                    "modified_by": "Bearbeitet von",
+                    "norm_data": "Normdaten",
+                    "iri_path": "IRI-Pfad",
+                    "published": "Ver\u00f6ffentlicht",
+                    "status": "Status",
+                    "sortno": "Sortierung",
+                    "signature": {
+                        "caption": "Signatur",
+                        "help": "Wird automatisch aus der ersten Signatur \u00fcbernommen",
+                        "autofill": {
+                            "source": "items[signatures].value",
+                            "force": true
+                        }
+                    },
+                    "name": "Titel",
+                    "projects_id": "Projekt"
+                },
+                "header": [
+                    {
+                        "key": "{signature}"
+                    },
+                    {
+                        "key": "{name}",
+                        "grow": true
+                    },
+                    {
+                        "key": "{sections.*.items.*[itemtype=locations].property.path|first}"
+                    },
+                    {
+                        "key": "{sections.*.items.*[itemtype=conditions].date_value|first}"
+                    }
+                ],
+                "columns": {
+                    "signature": {
+                        "caption": "Signatur",
+                        "default": true
+                    },
+                    "name": {
+                        "caption": "Titel",
+                        "default": true
+                    },
+                    "items_locations": {
+                        "key": "items.{*}[itemtype=locations].property.name",
+                        "caption": "Standorte",
+                        "aggregate": "collapse",
+                        "default": true
+                    },
+                    "items_date": {
+                        "key": "items.{*}[itemtype=conditions].date_value",
+                        "caption": "Objektdatierung",
+                        "default": true,
+                        "aggregate": "collapse",
+                        "sort": {
+                            "table": "items",
+                            "type": "conditions,dio-conditions-raw",
+                            "field": "date_sort",
+                            "aggregate": "min"
+                        }
+                    },
+                    "items_conditions": {
+                        "key": "items.{*}[itemtype=conditions].property.name",
+                        "caption": "Zustand",
+                        "aggregate": "collapse"
+                    },
+                    "items_objecttypes": {
+                        "key": "items.{*}[itemtype=objecttypes].property.name",
+                        "caption": "Inschriftentr\u00e4ger",
+                        "aggregate": "collapse",
+                        "default": true
+                    },
+                    "items_materials": {
+                        "key": "items.{*}[itemtype=materials].property.name",
+                        "caption": "Materialien",
+                        "aggregate": "collapse"
+                    },
+                    "status": {
+                        "caption": "Status"
+                    },
+                    "published": "Ver\u00f6ffentlicht",
+                    "modified": {
+                        "default": false,
+                        "caption": "Ver\u00e4ndert"
+                    },
+                    "created": {
+                        "default": false,
+                        "caption": "Angelegt"
+                    },
+                    "modifier_name": {
+                        "default": false,
+                        "key": "modifier.name",
+                        "caption": "Ver\u00e4ndert von"
+                    },
+                    "creator_name": {
+                        "default": false,
+                        "key": "creator.name",
+                        "caption": "Angelegt von"
+                    },
+                    "id": "ID",
+                    "sortno": "Artikelsortierung",
+                    "articletype": "Artikeltyp",
+                    "iri": {
+                        "caption": "IRI-Pfad",
+                        "key": "iri_path",
+                        "default": false
+                    },
+                    "url": {
+                        "caption": "URL",
+                        "selectable": false
+                    },
+                    "project_id": {
+                        "key": "project.id",
+                        "caption": "Projekt-ID"
+                    },
+                    "project_signature": {
+                        "key": "project.signature",
+                        "caption": "Projekt",
+                        "sort": "Projects.signature"
+                    },
+                    "project_name": {
+                        "key": "project.name",
+                        "caption": "Projektname",
+                        "sort": "Projects.name"
+                    },
+                    "project_sortno": {
+                        "key": "project.sortno",
+                        "caption": "Projektsortierung",
+                        "sort": {
+                            "table": "projects",
+                            "field": "sortno",
+                            "cast": "INTEGER"
+                        }
+                    },
+                    "project_type": {
+                        "key": "project.type.caption",
+                        "caption": "Projekttyp",
+                        "sort": "Projects.projecttype"
+                    },
+                    "project_url": {
+                        "key": "project.url",
+                        "caption": "Projekt-URL",
+                        "selectable": false
+                    },
+                    "inscriptions_date": {
+                        "key": "items.{*}[itemtype=transcriptions].date_value",
+                        "caption": "Inschriftendatierungen",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "transcriptions",
+                            "field": "date_sort",
+                            "aggregate": "min"
+                        }
+                    },
+                    "images_count": {
+                        "key": "items.{*}[itemtype=images]",
+                        "caption": "Abbildungen",
+                        "aggregate": "count",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "images",
+                            "field": "id",
+                            "aggregate": "count"
+                        }
+                    },
+                    "inscriptions_count": {
+                        "key": "sections.{*}[sectiontype=inscription]",
+                        "caption": "Inschriften",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "inscriptionparts_count": {
+                        "key": "sections.{*}[sectiontype=inscriptionpart]",
+                        "caption": "Inschriftenteile",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "inscriptiontexts_count": {
+                        "key": "sections.{*}[sectiontype=inscriptiontext]",
+                        "caption": "Bearbeitungen",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "topics": {
+                        "key": "items.{*}[itemtype=topics].property.lemma",
+                        "caption": "Themen",
+                        "aggregate": "collapse",
+                        "selectable": false
+                    },
+                    "topics_priority": {
+                        "key": "items.{*}[itemtype=topics].value",
+                        "caption": "Priorit\u00e4t",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "topics",
+                            "field": "value",
+                            "cast": "INTEGER",
+                            "aggregate": "min"
+                        }
+                    },
+                    "summary": {
+                        "caption": "summary",
+                        "selectable": false,
+                        "aggregate": false
+                    },
+                    "source": {
+                        "key": "project.name",
+                        "icon": "\ud83d\udd6e",
+                        "selectable": false
+                    },
+                    "location": {
+                        "key": "items.{*}[itemtype=locations].property.lemma",
+                        "icon": "\ud83d\udccd",
+                        "selectable": false
+                    },
+                    "date": {
+                        "key": "items.{*}[itemtype=conditions].date_value",
+                        "icon": "\u231b",
+                        "selectable": false
+                    }
+                },
+                "sections": {
+                    "text[Beschreibung]": {
+                        "type": "text",
+                        "caption": "Beschreibung"
+                    },
+                    "locations": {
+                        "type": "locations"
+                    },
+                    "conditions": {
+                        "type": "conditions"
+                    },
+                    "measures": {
+                        "type": "measures"
+                    },
+                    "materials": {
+                        "type": "materials"
+                    },
+                    "objecttypes": {
+                        "type": "objecttypes"
+                    },
+                    "inscription": {
+                        "type": "inscription",
+                        "collapsed": true,
+                        "caption": "A",
+                        "count": "*"
+                    },
+                    "inscriptionpart": {
+                        "type": "inscriptionpart",
+                        "caption": "1",
+                        "parent": "inscription",
+                        "count": "*",
+                        "collapsed": true
+                    },
+                    "inscriptiontext": {
+                        "type": "inscriptiontext",
+                        "caption": "1",
+                        "parent": "inscriptionpart",
+                        "count": "*"
+                    },
+                    "text[Kommentar]": {
+                        "type": "text",
+                        "caption": "Kommentar"
+                    },
+                    "heraldry": {
+                        "type": "heraldry"
+                    },
+                    "brands": {
+                        "type": "brands"
+                    },
+                    "images": {
+                        "type": "images"
+                    },
+                    "index": {
+                        "type": "index"
+                    },
+                    "references": {
+                        "type": "references"
+                    },
+                    "signatures": {
+                        "type": "signatures"
+                    },
+                    "cluster": {
+                        "type": "cluster",
+                        "default": false
+                    },
+                    "geolocation": {
+                        "type": "geolocation",
+                        "default": false
+                    },
+                    "outputoptions": {
+                        "type": "outputoptions"
+                    },
+                    "text": {
+                        "type": "text",
+                        "caption": "Textabschnitt",
+                        "default": false,
+                        "count": "*"
+                    },
+                    "collections": {
+                        "type": "collections",
+                        "caption": "Kollektionen",
+                        "count": "*"
+                    }
+                },
+                "namespaces": {
+                    "urn": {
+                        "button": "DIO",
+                        "baseurl": "https:\/\/nbn-resolving.de\/urn:"
+                    }
+                },
+                "pipelines": {
+                    "di-articles-doc": {
+                        "caption": "Word",
+                        "scope": "article"
+                    },
+                    "di-articles-doc-munich": {
+                        "caption": "M\u00fcnchen",
+                        "button": false
+                    },
+                    "di-epidoc": {
+                        "caption": "EpiDoc"
+                    },
+                    "di-book-doc": {
+                        "caption": "Band",
+                        "scope": "book",
+                        "button": false
+                    },
+                    "di-images": {
+                        "button": false
+                    },
+                    "di-articles-xlsx": {
+                        "button": false
+                    },
+                    "dio-export-book": {
+                        "button": false
+                    },
+                    "dio-export-img-wismar": {
+                        "button": false
+                    },
+                    "dio-export-img-magdeburg": {
+                        "button": false
+                    }
+                },
+                "footnotes": [
+                    "app1",
+                    "app2"
+                ],
+                "triples": {
+                    "base": "http:\/\/epigraf.inschriften.net\/iri\/",
+                    "namespaces": {
+                        "epi": "http:\/\/epigraf.inschriften.net\/iri\/",
+                        "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                        "schema": "http:\/\/schema.org\/",
+                        "crm": "http:\/\/www.cidoc-crm.org\/cidoc-crm\/"
+                    },
+                    "templates": [
+                        {
+                            "comment": "The article is an academic article.",
+                            "subject": "epi:{iri}",
+                            "predicate": "rdf:type",
+                            "object": "schema:ScholarlyArticle"
+                        },
+                        {
+                            "comment": "The article has a title.",
+                            "subject": "epi:{iri}",
+                            "predicate": "schema:title",
+                            "object": "{name}"
+                        },
+                        {
+                            "comment": "The article is about inscriptions.",
+                            "subject": "epi:{iri}",
+                            "predicate": "schema:about",
+                            "object": "epi:{iri}#inscriptions"
+                        },
+                        {
+                            "comment": "The inscriptions are a collection.",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "rdf:type",
+                            "object": "schema:Collection"
+                        },
+                        {
+                            "comment": "When was the inscription collection created?",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "schema:dateCreated",
+                            "object": "{sections.*[sectiontype=conditions].items.*[itemtype=conditions].date_value}"
+                        },
+                        {
+                            "comment": "The inscription collection exists of inscriptions.",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "schema:hasPart",
+                            "object": "epi:{sections.*[sectiontype=inscription].iri}#"
+                        },
+                        {
+                            "comment": "The inscription collection is described by comments.",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "schema:description",
+                            "object": "{sections.*[name=Kommentar].items.*[itemtype=text].content}"
+                        },
+                        {
+                            "comment": "The article is about an object.",
+                            "subject": "epi:{iri}",
+                            "predicate": "schema:about",
+                            "object": "epi:{iri}#object"
+                        },
+                        {
+                            "comment": "The object is a physical object.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "rdf:type",
+                            "object": "crm:E19_Physical_Object"
+                        },
+                        {
+                            "comment": "The object has object types",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "schema:additionalType",
+                            "object": "{sections.*[sectiontype=objecttypes].items.*[itemtype=objecttypes].property.path}"
+                        },
+                        {
+                            "comment": "The object has locations.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "schema:location",
+                            "object": "{sections.*[sectiontype=locations].items.*[itemtype=locations].property.path}"
+                        },
+                        {
+                            "comment": "The object is described by descriptions.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "schema:description",
+                            "object": "{sections.*[name=Beschreibung].items.*[itemtype=text].content}"
+                        },
+                        {
+                            "comment": "The object carries the inscriptions.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "crm:P128_carries",
+                            "object": "epi:{sections.*[sectiontype=inscription].iri}#"
+                        }
+                    ]
+                },
+                "epidesktop": true
+            },
+            "norm_iri": "epi-article"
+        },
+        "links": [
+            {
+                "id": 66,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 4,
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "rec_extern",
+                "from_tagid": "000004473043968245370370449713",
+                "to_id": 1,
+                "to_tab": "articles",
+                "to_field": "",
+                "to_tagid": "",
+                "norm_iri": null,
+                "footnote": null,
+                "section": null,
+                "article": {
+                    "id": 1,
+                    "projects_id": 1,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": null,
+                    "published": null,
+                    "created": "2021-06-13T18:10:25+02:00",
+                    "modified": "2023-08-17T21:27:27+02:00",
+                    "modified_by": 1,
+                    "created_by": 1,
+                    "articletype": "epi-article",
+                    "signature": "Signatur 1",
+                    "name": "Artikel 1 f\u00fcr das Testsystem",
+                    "sortno": null,
+                    "status": "Status 1 in progress",
+                    "norm_data": "normdata_1",
+                    "norm_iri": "normiri_1",
+                    "norm_type": null,
+                    "lastopen_id": 1,
+                    "lastopen_tab": "items",
+                    "lastopen_field": "content",
+                    "lastopen_tagid": "",
+                    "project": {
+                        "id": 1,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": 0,
+                        "created": "2021-06-15T00:42:26+02:00",
+                        "modified": "2023-03-27T01:51:59+02:00",
+                        "modified_by": 1,
+                        "created_by": 1,
+                        "projecttype": "epi",
+                        "sortno": null,
+                        "name": "Testprojekt 1",
+                        "signature": "TP1",
+                        "description": "",
+                        "norm_data": null,
+                        "norm_iri": "bookiri",
+                        "database": "projects"
+                    },
+                    "database": "projects"
+                },
+                "property": null
+            },
+            {
+                "id": 67,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 4,
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "rec_extern",
+                "from_tagid": "000004473043941553240740720340",
+                "to_id": 19,
+                "to_tab": "sections",
+                "to_field": "",
+                "to_tagid": "",
+                "norm_iri": null,
+                "footnote": null,
+                "section": {
+                    "id": 19,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": null,
+                    "published": null,
+                    "created": "2021-06-14T16:42:15+02:00",
+                    "modified": "2023-08-17T21:27:23+02:00",
+                    "modified_by": 1,
+                    "created_by": 1,
+                    "sortno": 46,
+                    "layout_cols": 0,
+                    "layout_rows": 0,
+                    "sectiontype": "inscriptionpart",
+                    "number": 2,
+                    "name": "2",
+                    "alias": "Alias Inschrift B",
+                    "comment": "Notizen Inschr B Teil 2",
+                    "status": 2,
+                    "parent_id": 22,
+                    "level": 1,
+                    "lft": 46,
+                    "rght": 51,
+                    "norm_iri": null,
+                    "articles_id": 1,
+                    "article": {
+                        "id": 1,
+                        "projects_id": 1,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2021-06-13T18:10:25+02:00",
+                        "modified": "2023-08-17T21:27:27+02:00",
+                        "modified_by": 1,
+                        "created_by": 1,
+                        "articletype": "epi-article",
+                        "signature": "Signatur 1",
+                        "name": "Artikel 1 f\u00fcr das Testsystem",
+                        "sortno": null,
+                        "status": "Status 1 in progress",
+                        "norm_data": "normdata_1",
+                        "norm_iri": "normiri_1",
+                        "norm_type": null,
+                        "lastopen_id": 1,
+                        "lastopen_tab": "items",
+                        "lastopen_field": "content",
+                        "lastopen_tagid": "",
+                        "project": {
+                            "id": 1,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": null,
+                            "published": 0,
+                            "created": "2021-06-15T00:42:26+02:00",
+                            "modified": "2023-03-27T01:51:59+02:00",
+                            "modified_by": 1,
+                            "created_by": 1,
+                            "projecttype": "epi",
+                            "sortno": null,
+                            "name": "Testprojekt 1",
+                            "signature": "TP1",
+                            "description": "",
+                            "norm_data": null,
+                            "norm_iri": "bookiri",
+                            "database": "projects"
+                        },
+                        "database": "projects"
+                    },
+                    "ancestors": [
+                        {
+                            "id": 22,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": null,
+                            "published": null,
+                            "created": "2021-06-14T16:42:16+02:00",
+                            "modified": "2023-08-17T21:27:24+02:00",
+                            "modified_by": 1,
+                            "created_by": 1,
+                            "sortno": 39,
+                            "layout_cols": 0,
+                            "layout_rows": 0,
+                            "sectiontype": "inscription",
+                            "number": 2,
+                            "name": "B",
+                            "alias": "Alias Inschrift B",
+                            "comment": "Notizen Inschrift B",
+                            "status": 2,
+                            "parent_id": null,
+                            "level": 0,
+                            "lft": 39,
+                            "rght": 52,
+                            "norm_iri": null,
+                            "articles_id": 1
+                        }
+                    ]
+                },
+                "article": null,
+                "property": null
+            },
+            {
+                "id": 68,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 4,
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "rec_extern",
+                "from_tagid": "000004473043911023148148167183",
+                "to_id": 1,
+                "to_tab": "footnotes",
+                "to_field": "",
+                "to_tagid": "",
+                "norm_iri": null,
+                "footnote": {
+                    "id": 1,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": null,
+                    "published": null,
+                    "created": "2022-03-15T21:50:04+01:00",
+                    "modified": "2022-11-27T02:45:53+01:00",
+                    "modified_by": 1,
+                    "created_by": 1,
+                    "sortno": 13,
+                    "fntype": true,
+                    "name": "1",
+                    "segment": null,
+                    "content": "Fu\u00dfnotentext mit &amp;-Zeichen. Und mit spitzer &lt; Klammer.",
+                    "root_id": 1,
+                    "root_tab": "articles",
+                    "from_id": 4,
+                    "from_tab": "items",
+                    "from_field": "content",
+                    "from_tagname": "app1",
+                    "from_tagid": "000004463586776180555555628924",
+                    "from_sort": 0,
+                    "norm_iri": null,
+                    "article": {
+                        "id": 1,
+                        "projects_id": 1,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2021-06-13T18:10:25+02:00",
+                        "modified": "2023-08-17T21:27:27+02:00",
+                        "modified_by": 1,
+                        "created_by": 1,
+                        "articletype": "epi-article",
+                        "signature": "Signatur 1",
+                        "name": "Artikel 1 f\u00fcr das Testsystem",
+                        "sortno": null,
+                        "status": "Status 1 in progress",
+                        "norm_data": "normdata_1",
+                        "norm_iri": "normiri_1",
+                        "norm_type": null,
+                        "lastopen_id": 1,
+                        "lastopen_tab": "items",
+                        "lastopen_field": "content",
+                        "lastopen_tagid": "",
+                        "project": {
+                            "id": 1,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": null,
+                            "published": 0,
+                            "created": "2021-06-15T00:42:26+02:00",
+                            "modified": "2023-03-27T01:51:59+02:00",
+                            "modified_by": 1,
+                            "created_by": 1,
+                            "projecttype": "epi",
+                            "sortno": null,
+                            "name": "Testprojekt 1",
+                            "signature": "TP1",
+                            "description": "",
+                            "norm_data": null,
+                            "norm_iri": "bookiri",
+                            "database": "projects"
+                        },
+                        "database": "projects"
+                    }
+                },
+                "section": null,
+                "article": null,
+                "property": null
+            },
+            {
+                "id": 69,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:37:47+02:00",
+                "modified": "2022-06-18T12:37:47+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 369,
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "rec_intern",
+                "from_tagid": "000004473044199158564814866960",
+                "to_id": 4,
+                "to_tab": "footnotes",
+                "to_field": "",
+                "to_tagid": "",
+                "norm_iri": null,
+                "footnote": {
+                    "id": 4,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": null,
+                    "published": null,
+                    "created": "2022-06-18T12:33:18+02:00",
+                    "modified": "2022-06-18T12:33:18+02:00",
+                    "modified_by": 1,
+                    "created_by": 1,
+                    "sortno": null,
+                    "fntype": true,
+                    "name": "1",
+                    "segment": null,
+                    "content": "Verweis auf anderen Artikel: <rec_extern id=\"000004473043968245370370449713\" value=\"Signatur 1[Artikel]\"><\/rec_extern><nl><\/nl>Verweis auf Fu\u00dfnote in anderem Artikel: <rec_extern id=\"000004473043911023148148167183\" value=\"Signatur 1[Fu\u00dfnote 1]\"><\/rec_extern><nl><\/nl>Verweis auf Inschriftenteil in anderem Artikel: <rec_extern id=\"000004473043941553240740720340\" value=\"Signatur 1[Inschrift B2]\"><\/rec_extern><nl><\/nl>",
+                    "root_id": 3,
+                    "root_tab": "articles",
+                    "from_id": 369,
+                    "from_tab": "items",
+                    "from_field": "content",
+                    "from_tagname": "app1",
+                    "from_tagid": "000004473043894201388888948548",
+                    "from_sort": 0,
+                    "norm_iri": null,
+                    "article": {
+                        "id": 3,
+                        "projects_id": 1,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2022-04-01T12:04:46+02:00",
+                        "modified": "2023-05-04T22:59:26+02:00",
+                        "modified_by": 1,
+                        "created_by": 1,
+                        "articletype": "epi-article",
+                        "signature": "Signatur 2",
+                        "name": "Artikel 2 f\u00fcr das Testsystem",
+                        "sortno": null,
+                        "status": "Status 2",
+                        "norm_data": "normdata_2",
+                        "norm_iri": "normiri_2",
+                        "norm_type": null,
+                        "lastopen_id": null,
+                        "lastopen_tab": null,
+                        "lastopen_field": null,
+                        "lastopen_tagid": null,
+                        "project": {
+                            "id": 1,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": null,
+                            "published": 0,
+                            "created": "2021-06-15T00:42:26+02:00",
+                            "modified": "2023-03-27T01:51:59+02:00",
+                            "modified_by": 1,
+                            "created_by": 1,
+                            "projecttype": "epi",
+                            "sortno": null,
+                            "name": "Testprojekt 1",
+                            "signature": "TP1",
+                            "description": "",
+                            "norm_data": null,
+                            "norm_iri": "bookiri",
+                            "database": "projects"
+                        },
+                        "database": "projects"
+                    }
+                },
+                "section": null,
+                "article": null,
+                "property": null
+            },
+            {
+                "id": 70,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:37:47+02:00",
+                "modified": "2022-06-18T12:37:47+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 369,
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "rec_intern",
+                "from_tagid": "000004473044169535879629651934",
+                "to_id": 145,
+                "to_tab": "sections",
+                "to_field": "",
+                "to_tagid": "",
+                "norm_iri": null,
+                "footnote": null,
+                "section": {
+                    "id": 145,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": null,
+                    "published": null,
+                    "created": "2022-06-18T12:33:17+02:00",
+                    "modified": "2022-06-18T12:37:46+02:00",
+                    "modified_by": 1,
+                    "created_by": 1,
+                    "sortno": 29,
+                    "layout_cols": 0,
+                    "layout_rows": 0,
+                    "sectiontype": "inscription",
+                    "number": 1,
+                    "name": "A",
+                    "alias": "",
+                    "comment": null,
+                    "status": 0,
+                    "parent_id": null,
+                    "level": 0,
+                    "lft": 29,
+                    "rght": 34,
+                    "norm_iri": null,
+                    "articles_id": 3,
+                    "article": {
+                        "id": 3,
+                        "projects_id": 1,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2022-04-01T12:04:46+02:00",
+                        "modified": "2023-05-04T22:59:26+02:00",
+                        "modified_by": 1,
+                        "created_by": 1,
+                        "articletype": "epi-article",
+                        "signature": "Signatur 2",
+                        "name": "Artikel 2 f\u00fcr das Testsystem",
+                        "sortno": null,
+                        "status": "Status 2",
+                        "norm_data": "normdata_2",
+                        "norm_iri": "normiri_2",
+                        "norm_type": null,
+                        "lastopen_id": null,
+                        "lastopen_tab": null,
+                        "lastopen_field": null,
+                        "lastopen_tagid": null,
+                        "project": {
+                            "id": 1,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": null,
+                            "published": 0,
+                            "created": "2021-06-15T00:42:26+02:00",
+                            "modified": "2023-03-27T01:51:59+02:00",
+                            "modified_by": 1,
+                            "created_by": 1,
+                            "projecttype": "epi",
+                            "sortno": null,
+                            "name": "Testprojekt 1",
+                            "signature": "TP1",
+                            "description": "",
+                            "norm_data": null,
+                            "norm_iri": "bookiri",
+                            "database": "projects"
+                        },
+                        "database": "projects"
+                    },
+                    "ancestors": []
+                },
+                "article": null,
+                "property": null
+            },
+            {
+                "id": 71,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:37:47+02:00",
+                "modified": "2022-06-18T12:37:47+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 369,
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "rec_lit",
+                "from_tagid": "000004473044154935185185215539",
+                "to_id": null,
+                "to_tab": null,
+                "to_field": null,
+                "to_tagid": null,
+                "norm_iri": null,
+                "footnote": null,
+                "section": null,
+                "article": null,
+                "property": null
+            }
+        ],
+        "footnotes": [
+            {
+                "id": 4,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": null,
+                "fntype": true,
+                "name": "1",
+                "segment": null,
+                "content": "Verweis auf anderen Artikel: <rec_extern id=\"000004473043968245370370449713\" value=\"Signatur 1[Artikel]\"><\/rec_extern><nl><\/nl>Verweis auf Fu\u00dfnote in anderem Artikel: <rec_extern id=\"000004473043911023148148167183\" value=\"Signatur 1[Fu\u00dfnote 1]\"><\/rec_extern><nl><\/nl>Verweis auf Inschriftenteil in anderem Artikel: <rec_extern id=\"000004473043941553240740720340\" value=\"Signatur 1[Inschrift B2]\"><\/rec_extern><nl><\/nl>",
+                "root_id": 3,
+                "root_tab": "articles",
+                "from_id": 369,
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "app1",
+                "from_tagid": "000004473043894201388888948548",
+                "from_sort": 0,
+                "norm_iri": null
+            }
+        ],
+        "items": [],
+        "sections": [
+            {
+                "id": 159,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 1,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "outputoptions",
+                "number": 1,
+                "name": "Artikel",
+                "alias": null,
+                "comment": null,
+                "status": 0,
+                "parent_id": null,
+                "level": 1,
+                "lft": 1,
+                "rght": 2,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 142,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": null,
+                    "created": null,
+                    "modified": "2024-10-24T02:18:12+02:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "outputoptions",
+                    "sortno": 16,
+                    "category": "EPI",
+                    "caption": "Darstellung",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "outputoptions",
+                                "count": "*"
+                            }
+                        ],
+                        "view": "table"
+                    },
+                    "norm_iri": "outputoptions"
+                },
+                "path": [
+                    {
+                        "id": 159,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 1,
+                        "rght": 2,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 1,
+                        "number": 1,
+                        "sectiontype": "outputoptions",
+                        "name": "Artikel",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 158,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 3,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "signatures",
+                "number": 1,
+                "name": "Signaturen",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 3,
+                "rght": 4,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 144,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:37+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "signatures",
+                    "sortno": 15,
+                    "category": "EPI",
+                    "caption": "Signaturen",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "signatures",
+                                "count": "*"
+                            }
+                        ],
+                        "view": "table",
+                        "links": {
+                            "comment": [
+                                "text",
+                                "transcription",
+                                "references",
+                                "links"
+                            ]
+                        }
+                    },
+                    "norm_iri": "signatures"
+                },
+                "path": [
+                    {
+                        "id": 158,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 3,
+                        "rght": 4,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 3,
+                        "number": 1,
+                        "sectiontype": "signatures",
+                        "name": "Signaturen",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 157,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 5,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "locations",
+                "number": 1,
+                "name": "Standorte",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 5,
+                "rght": 6,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 138,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:36+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "locations",
+                    "sortno": 2,
+                    "category": "EPI",
+                    "caption": "Standorte",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "geolocations",
+                                "count": "*",
+                                "display": true
+                            },
+                            {
+                                "type": "locations",
+                                "count": "*"
+                            }
+                        ],
+                        "view": {
+                            "name": "table",
+                            "grouped": false,
+                            "widgets": {
+                                "map": true
+                            }
+                        }
+                    },
+                    "norm_iri": "locations"
+                },
+                "path": [
+                    {
+                        "id": 157,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 5,
+                        "rght": 6,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 5,
+                        "number": 1,
+                        "sectiontype": "locations",
+                        "name": "Standorte",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 156,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 7,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "references",
+                "number": 1,
+                "name": "Nachweise",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 7,
+                "rght": 8,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 143,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:37+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "references",
+                    "sortno": 14,
+                    "category": "EPI",
+                    "caption": "Nachweise",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "literature",
+                                "count": "*"
+                            }
+                        ],
+                        "view": "table"
+                    },
+                    "norm_iri": "references"
+                },
+                "path": [
+                    {
+                        "id": 156,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 7,
+                        "rght": 8,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 7,
+                        "number": 1,
+                        "sectiontype": "references",
+                        "name": "Nachweise",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 155,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:18+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 9,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "conditions",
+                "number": 1,
+                "name": "Beschaffenheit",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 9,
+                "rght": 10,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 131,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:34+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "conditions",
+                    "sortno": 3,
+                    "category": "EPI",
+                    "caption": "Beschaffenheit",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            "conditions"
+                        ],
+                        "view": "table"
+                    },
+                    "norm_iri": "conditions"
+                },
+                "path": [
+                    {
+                        "id": 155,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 9,
+                        "rght": 10,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 9,
+                        "number": 1,
+                        "sectiontype": "conditions",
+                        "name": "Beschaffenheit",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 154,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 11,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "materials",
+                "number": 1,
+                "name": "Material",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 11,
+                "rght": 12,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 139,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:36+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "materials",
+                    "sortno": 5,
+                    "category": "EPI",
+                    "caption": "Materialien",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "materials",
+                                "count": "*"
+                            }
+                        ],
+                        "view": "table"
+                    },
+                    "norm_iri": "materials"
+                },
+                "path": [
+                    {
+                        "id": 154,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 11,
+                        "rght": 12,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 11,
+                        "number": 1,
+                        "sectiontype": "materials",
+                        "name": "Material",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 153,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:17+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 13,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "objecttypes",
+                "number": 1,
+                "name": "Inschriftentr\u00e4ger",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 13,
+                "rght": 14,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 141,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:37+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "objecttypes",
+                    "sortno": 6,
+                    "category": "EPI",
+                    "caption": "Inschriftentr\u00e4ger",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "objecttypes",
+                                "count": "*"
+                            }
+                        ],
+                        "view": "table"
+                    },
+                    "norm_iri": "objecttypes"
+                },
+                "path": [
+                    {
+                        "id": 153,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 13,
+                        "rght": 14,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 13,
+                        "number": 1,
+                        "sectiontype": "objecttypes",
+                        "name": "Inschriftentr\u00e4ger",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 152,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:17+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 15,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "measures",
+                "number": 1,
+                "name": "Ma\u00dfangaben",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 15,
+                "rght": 16,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 140,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:36+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "measures",
+                    "sortno": 4,
+                    "category": "EPI",
+                    "caption": "Abmessungen",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "measures",
+                                "count": "*"
+                            }
+                        ],
+                        "view": "table"
+                    },
+                    "norm_iri": "measures"
+                },
+                "path": [
+                    {
+                        "id": 152,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 15,
+                        "rght": 16,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 15,
+                        "number": 1,
+                        "sectiontype": "measures",
+                        "name": "Ma\u00dfangaben",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 151,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:17+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 17,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "heraldry",
+                "number": 1,
+                "name": "Wappen",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 17,
+                "rght": 18,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 132,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": null,
+                    "created": null,
+                    "modified": "2024-10-30T23:47:45+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "heraldry",
+                    "sortno": 10,
+                    "category": "EPI",
+                    "caption": "Wappen",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "heraldry",
+                                "count": "*",
+                                "default": false
+                            }
+                        ],
+                        "view": {
+                            "name": "table",
+                            "widgets": {
+                                "grid": {
+                                    "itemtype": "heraldry",
+                                    "fields": [
+                                        "sortno",
+                                        "property"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "norm_iri": "heraldry"
+                },
+                "path": [
+                    {
+                        "id": 151,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 17,
+                        "rght": 18,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 17,
+                        "number": 1,
+                        "sectiontype": "heraldry",
+                        "name": "Wappen",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 150,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:17+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 19,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "brands",
+                "number": 1,
+                "name": "Marken",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 19,
+                "rght": 20,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 130,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": null,
+                    "created": null,
+                    "modified": "2024-10-30T23:47:45+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "brands",
+                    "sortno": 11,
+                    "category": "EPI",
+                    "caption": "Marken",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "brands",
+                                "count": "*"
+                            }
+                        ],
+                        "view": {
+                            "name": "table",
+                            "widgets": {
+                                "thumbs": {
+                                    "itemtype": "brands",
+                                    "property": true,
+                                    "link": false,
+                                    "size": "small",
+                                    "fields": [
+                                        "sortno",
+                                        "property"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "norm_iri": "brands"
+                },
+                "path": [
+                    {
+                        "id": 150,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 19,
+                        "rght": 20,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 19,
+                        "number": 1,
+                        "sectiontype": "brands",
+                        "name": "Marken",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 149,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:37:47+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 21,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "images",
+                "number": 1,
+                "name": "Abbildungen",
+                "alias": null,
+                "comment": null,
+                "status": 0,
+                "parent_id": null,
+                "level": 1,
+                "lft": 21,
+                "rght": 22,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 133,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:34+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "images",
+                    "sortno": 12,
+                    "category": "EPI",
+                    "caption": "Abbildungen",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "images",
+                                "count": "*"
+                            }
+                        ],
+                        "view": {
+                            "name": "table",
+                            "widgets": {
+                                "thumbs": {
+                                    "itemtype": "images",
+                                    "link": true,
+                                    "fields": [
+                                        "sortno",
+                                        "file"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "norm_iri": "images"
+                },
+                "path": [
+                    {
+                        "id": 149,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 21,
+                        "rght": 22,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 21,
+                        "number": 1,
+                        "sectiontype": "images",
+                        "name": "Abbildungen",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 148,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:37:47+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 23,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "index",
+                "number": 1,
+                "name": "Register",
+                "alias": null,
+                "comment": null,
+                "status": 0,
+                "parent_id": null,
+                "level": 1,
+                "lft": 23,
+                "rght": 24,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 134,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:35+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "index",
+                    "sortno": 13,
+                    "category": "EPI",
+                    "caption": "Register",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "icons",
+                                "count": "*"
+                            },
+                            {
+                                "type": "manufacturers",
+                                "count": "*"
+                            },
+                            {
+                                "type": "personnames",
+                                "count": "*"
+                            },
+                            {
+                                "type": "placenames",
+                                "count": "*"
+                            },
+                            {
+                                "type": "subjects",
+                                "count": "*"
+                            }
+                        ],
+                        "view": {
+                            "name": "table",
+                            "grouped": true
+                        }
+                    },
+                    "norm_iri": "index"
+                },
+                "path": [
+                    {
+                        "id": 148,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 23,
+                        "rght": 24,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 23,
+                        "number": 1,
+                        "sectiontype": "index",
+                        "name": "Register",
+                        "alias": null
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 147,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:37:47+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 25,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "text",
+                "number": 1,
+                "name": "Beschreibung",
+                "alias": null,
+                "comment": null,
+                "status": 0,
+                "parent_id": null,
+                "level": 1,
+                "lft": 25,
+                "rght": 26,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 146,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:38+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "text",
+                    "sortno": 1,
+                    "category": "EPI",
+                    "caption": "Textabschnitt",
+                    "description": "Textabschnitt in Inschriftenartikeln, insbesondere Beschreibung und Kommentar.",
+                    "config": {
+                        "fields": {
+                            "name": {
+                                "caption": "Bezeichnung",
+                                "edit": true,
+                                "options": "captions"
+                            },
+                            "alias": {
+                                "caption": "Alias",
+                                "edit": true
+                            },
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            "text",
+                            {
+                                "type": "search",
+                                "display": false,
+                                "default": false
+                            }
+                        ],
+                        "sections": [
+                            "text"
+                        ],
+                        "view": "stack"
+                    },
+                    "norm_iri": "text"
+                },
+                "path": [
+                    {
+                        "id": 147,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 25,
+                        "rght": 26,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 25,
+                        "number": 1,
+                        "sectiontype": "text",
+                        "name": "Beschreibung",
+                        "alias": null
+                    }
+                ],
+                "items": [
+                    {
+                        "id": 369,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2022-06-18T12:33:17+02:00",
+                        "modified": "2022-06-18T12:37:47+02:00",
+                        "created_by": 1,
+                        "modified_by": 1,
+                        "sortno": null,
+                        "itemtype": "text",
+                        "properties_id": null,
+                        "value": null,
+                        "content": "Fu\u00dfnote mit Verweisen: <app1 id=\"000004473043894201388888948548\"><\/app1><nl><\/nl><nl><\/nl>Interner Verweis auf Inschrift: <rec_intern id=\"000004473044169535879629651934\" value=\"A\"><\/rec_intern><nl><\/nl>Interner Verweis auf Fu\u00dfnote: <rec_intern id=\"000004473044199158564814866960\" value=\"Fu\u00dfnote 1\"><\/rec_intern><nl><\/nl>",
+                        "translation": null,
+                        "flagged": null,
+                        "links_id": null,
+                        "links_tab": null,
+                        "links_field": null,
+                        "links_tagid": null,
+                        "file_name": null,
+                        "file_type": null,
+                        "file_path": null,
+                        "file_source": null,
+                        "file_copyright": null,
+                        "file_meta": null,
+                        "file_online": null,
+                        "date_sort": null,
+                        "date_value": null,
+                        "date_add": null,
+                        "date_start": null,
+                        "date_end": null,
+                        "source_autopsy": null,
+                        "source_from": null,
+                        "source_addition": null,
+                        "pos_x": null,
+                        "pos_y": null,
+                        "pos_z": null,
+                        "norm_iri": null,
+                        "articles_id": 3,
+                        "sections_id": 147,
+                        "property": null,
+                        "links_section": null,
+                        "links_article": null,
+                        "type": {
+                            "id": 204,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": 61013,
+                            "published": 1,
+                            "created": "2022-01-16T00:40:26+01:00",
+                            "modified": "2024-07-09T13:30:29+02:00",
+                            "created_by": null,
+                            "modified_by": null,
+                            "scope": "items",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "text",
+                            "sortno": 1,
+                            "category": "EPI",
+                            "caption": "Text",
+                            "description": "",
+                            "config": {
+                                "fulltext": true,
+                                "fields": {
+                                    "property": {
+                                        "caption": "\u00dcberschrift",
+                                        "showcaption": false,
+                                        "format": "sectionname",
+                                        "types": "captions"
+                                    },
+                                    "content": {
+                                        "caption": "Inhalt",
+                                        "showcaption": false,
+                                        "fulltext": "Text",
+                                        "format": "xml",
+                                        "height": 10,
+                                        "types": [
+                                            "app1",
+                                            "app2",
+                                            "links",
+                                            "transcription",
+                                            "references",
+                                            "text",
+                                            "h",
+                                            "character"
+                                        ]
+                                    }
+                                }
+                            },
+                            "norm_iri": "text"
+                        },
+                        "sectionpath": [
+                            {
+                                "id": 147,
+                                "parent_id": null,
+                                "articles_id": 3,
+                                "lft": 25,
+                                "rght": 26,
+                                "children": 0,
+                                "siblings": 15,
+                                "level": 1,
+                                "sortno": 25,
+                                "number": 1,
+                                "sectiontype": "text",
+                                "name": "Beschreibung",
+                                "alias": null
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 146,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 27,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "text",
+                "number": 2,
+                "name": "Kommentar",
+                "alias": null,
+                "comment": null,
+                "status": null,
+                "parent_id": null,
+                "level": 1,
+                "lft": 27,
+                "rght": 28,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 146,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:38+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "text",
+                    "sortno": 1,
+                    "category": "EPI",
+                    "caption": "Textabschnitt",
+                    "description": "Textabschnitt in Inschriftenartikeln, insbesondere Beschreibung und Kommentar.",
+                    "config": {
+                        "fields": {
+                            "name": {
+                                "caption": "Bezeichnung",
+                                "edit": true,
+                                "options": "captions"
+                            },
+                            "alias": {
+                                "caption": "Alias",
+                                "edit": true
+                            },
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            "text",
+                            {
+                                "type": "search",
+                                "display": false,
+                                "default": false
+                            }
+                        ],
+                        "sections": [
+                            "text"
+                        ],
+                        "view": "stack"
+                    },
+                    "norm_iri": "text"
+                },
+                "path": [
+                    {
+                        "id": 146,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 27,
+                        "rght": 28,
+                        "children": 0,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 27,
+                        "number": 2,
+                        "sectiontype": "text",
+                        "name": "Kommentar",
+                        "alias": null
+                    }
+                ],
+                "items": [
+                    {
+                        "id": 367,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2022-06-18T12:33:17+02:00",
+                        "modified": "2022-06-18T12:33:18+02:00",
+                        "created_by": 1,
+                        "modified_by": 1,
+                        "sortno": null,
+                        "itemtype": "text",
+                        "properties_id": null,
+                        "value": null,
+                        "content": null,
+                        "translation": null,
+                        "flagged": null,
+                        "links_id": null,
+                        "links_tab": null,
+                        "links_field": null,
+                        "links_tagid": null,
+                        "file_name": null,
+                        "file_type": null,
+                        "file_path": null,
+                        "file_source": null,
+                        "file_copyright": null,
+                        "file_meta": null,
+                        "file_online": null,
+                        "date_sort": null,
+                        "date_value": null,
+                        "date_add": null,
+                        "date_start": null,
+                        "date_end": null,
+                        "source_autopsy": null,
+                        "source_from": null,
+                        "source_addition": null,
+                        "pos_x": null,
+                        "pos_y": null,
+                        "pos_z": null,
+                        "norm_iri": null,
+                        "articles_id": 3,
+                        "sections_id": 146,
+                        "property": null,
+                        "links_section": null,
+                        "links_article": null,
+                        "type": {
+                            "id": 204,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": 61013,
+                            "published": 1,
+                            "created": "2022-01-16T00:40:26+01:00",
+                            "modified": "2024-07-09T13:30:29+02:00",
+                            "created_by": null,
+                            "modified_by": null,
+                            "scope": "items",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "text",
+                            "sortno": 1,
+                            "category": "EPI",
+                            "caption": "Text",
+                            "description": "",
+                            "config": {
+                                "fulltext": true,
+                                "fields": {
+                                    "property": {
+                                        "caption": "\u00dcberschrift",
+                                        "showcaption": false,
+                                        "format": "sectionname",
+                                        "types": "captions"
+                                    },
+                                    "content": {
+                                        "caption": "Inhalt",
+                                        "showcaption": false,
+                                        "fulltext": "Text",
+                                        "format": "xml",
+                                        "height": 10,
+                                        "types": [
+                                            "app1",
+                                            "app2",
+                                            "links",
+                                            "transcription",
+                                            "references",
+                                            "text",
+                                            "h",
+                                            "character"
+                                        ]
+                                    }
+                                }
+                            },
+                            "norm_iri": "text"
+                        },
+                        "sectionpath": [
+                            {
+                                "id": 146,
+                                "parent_id": null,
+                                "articles_id": 3,
+                                "lft": 27,
+                                "rght": 28,
+                                "children": 0,
+                                "siblings": 15,
+                                "level": 1,
+                                "sortno": 27,
+                                "number": 2,
+                                "sectiontype": "text",
+                                "name": "Kommentar",
+                                "alias": null
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 145,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:37:46+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 29,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "inscription",
+                "number": 1,
+                "name": "A",
+                "alias": "",
+                "comment": null,
+                "status": 0,
+                "parent_id": null,
+                "level": 1,
+                "lft": 29,
+                "rght": 34,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 135,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-10-31T01:59:38+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "inscription",
+                    "sortno": 7,
+                    "category": "EPI",
+                    "caption": "Inschrift",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            {
+                                "type": "epithets",
+                                "count": "*"
+                            },
+                            {
+                                "type": "fontheights",
+                                "count": "*"
+                            },
+                            {
+                                "type": "fonttypes",
+                                "count": "*"
+                            },
+                            {
+                                "type": "formulas",
+                                "count": "*"
+                            },
+                            {
+                                "type": "incipits",
+                                "count": "*"
+                            },
+                            {
+                                "type": "initials",
+                                "count": "*"
+                            },
+                            {
+                                "type": "languages",
+                                "count": "*"
+                            },
+                            {
+                                "type": "metres",
+                                "count": "*"
+                            },
+                            {
+                                "type": "sources",
+                                "count": "*"
+                            },
+                            {
+                                "type": "techniques",
+                                "count": "*"
+                            },
+                            {
+                                "type": "texttypes",
+                                "count": "*"
+                            },
+                            {
+                                "type": "search",
+                                "count": "*",
+                                "default": false,
+                                "display": false
+                            }
+                        ],
+                        "sections": [
+                            "inscriptionpart"
+                        ],
+                        "name": {
+                            "prefix": "Inschrift ",
+                            "number": "alphabetic",
+                            "scoped": true
+                        },
+                        "view": {
+                            "name": "table",
+                            "grouped": true,
+                            "collapsed": true
+                        },
+                        "triples": {
+                            "namespaces": {
+                                "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                                "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                                "schema": "https:\/\/schema.org\/"
+                            },
+                            "templates": [
+                                {
+                                    "comment": "The inscription is an inscription.",
+                                    "subject": "epi:{iri}#",
+                                    "predicate": "rdf:type",
+                                    "object": "crm:E34_Inscription"
+                                },
+                                {
+                                    "comment": "An inscription uses one or several languages.",
+                                    "subject": "epi:{iri}#",
+                                    "predicate": "schema:inLanguages",
+                                    "object": "{items.*[itemtype=languages].property.path}"
+                                },
+                                {
+                                    "comment": "An inscription uses a font.",
+                                    "subject": "epi:{iri}#",
+                                    "predicate": "schema:pattern",
+                                    "object": "{items.*[itemtype=fonttypes].property.path}"
+                                }
+                            ]
+                        }
+                    },
+                    "norm_iri": "inscription"
+                },
+                "path": [
+                    {
+                        "id": 145,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 29,
+                        "rght": 34,
+                        "children": 1,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 29,
+                        "number": 1,
+                        "sectiontype": "inscription",
+                        "name": "A",
+                        "alias": ""
+                    }
+                ],
+                "items": []
+            },
+            {
+                "id": 144,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:17+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 30,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "inscriptionpart",
+                "number": 1,
+                "name": "1",
+                "alias": "",
+                "comment": null,
+                "status": 0,
+                "parent_id": 145,
+                "level": 2,
+                "lft": 30,
+                "rght": 33,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 136,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-01-27T19:09:35+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "inscriptionpart",
+                    "sortno": 8,
+                    "category": "EPI",
+                    "caption": "Inschriftenteil",
+                    "description": "",
+                    "config": {
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            "lost"
+                        ],
+                        "sections": [
+                            "inscriptiontext"
+                        ],
+                        "name": {
+                            "prefix": "Teil ",
+                            "number": "numeric",
+                            "path": true,
+                            "scoped": true
+                        },
+                        "showpath": true,
+                        "view": "stack"
+                    },
+                    "norm_iri": "inscriptionpart"
+                },
+                "path": [
+                    {
+                        "id": 145,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 29,
+                        "rght": 34,
+                        "children": 1,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 29,
+                        "number": 1,
+                        "sectiontype": "inscription",
+                        "name": "A",
+                        "alias": ""
+                    },
+                    {
+                        "id": 144,
+                        "parent_id": 145,
+                        "articles_id": 3,
+                        "lft": 30,
+                        "rght": 33,
+                        "children": 1,
+                        "siblings": 1,
+                        "level": 2,
+                        "sortno": 30,
+                        "number": 1,
+                        "sectiontype": "inscriptionpart",
+                        "name": "1",
+                        "alias": ""
+                    }
+                ],
+                "items": [
+                    {
+                        "id": 365,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2022-06-18T12:33:17+02:00",
+                        "modified": "2022-06-18T12:33:18+02:00",
+                        "created_by": 1,
+                        "modified_by": 1,
+                        "sortno": null,
+                        "itemtype": "lost",
+                        "properties_id": null,
+                        "value": "",
+                        "content": null,
+                        "translation": null,
+                        "flagged": null,
+                        "links_id": null,
+                        "links_tab": null,
+                        "links_field": null,
+                        "links_tagid": null,
+                        "file_name": null,
+                        "file_type": null,
+                        "file_path": null,
+                        "file_source": null,
+                        "file_copyright": null,
+                        "file_meta": null,
+                        "file_online": null,
+                        "date_sort": null,
+                        "date_value": null,
+                        "date_add": null,
+                        "date_start": null,
+                        "date_end": null,
+                        "source_autopsy": null,
+                        "source_from": null,
+                        "source_addition": null,
+                        "pos_x": null,
+                        "pos_y": null,
+                        "pos_z": null,
+                        "norm_iri": null,
+                        "articles_id": 3,
+                        "sections_id": 144,
+                        "property": null,
+                        "links_section": null,
+                        "links_article": null,
+                        "type": {
+                            "id": 202,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": 61013,
+                            "published": 1,
+                            "created": "2022-01-16T00:36:06+01:00",
+                            "modified": "2024-01-27T19:09:46+01:00",
+                            "created_by": null,
+                            "modified_by": null,
+                            "scope": "items",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "lost",
+                            "sortno": 20,
+                            "category": "EPI",
+                            "caption": "Original verloren",
+                            "description": "",
+                            "config": {
+                                "fields": {
+                                    "value": {
+                                        "caption": "Original verloren",
+                                        "format": "check"
+                                    }
+                                }
+                            },
+                            "norm_iri": "lost"
+                        },
+                        "sectionpath": [
+                            {
+                                "id": 145,
+                                "parent_id": null,
+                                "articles_id": 3,
+                                "lft": 29,
+                                "rght": 34,
+                                "children": 1,
+                                "siblings": 15,
+                                "level": 1,
+                                "sortno": 29,
+                                "number": 1,
+                                "sectiontype": "inscription",
+                                "name": "A",
+                                "alias": ""
+                            },
+                            {
+                                "id": 144,
+                                "parent_id": 145,
+                                "articles_id": 3,
+                                "lft": 30,
+                                "rght": 33,
+                                "children": 1,
+                                "siblings": 1,
+                                "level": 2,
+                                "sortno": 30,
+                                "number": 1,
+                                "sectiontype": "inscriptionpart",
+                                "name": "1",
+                                "alias": ""
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": 143,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": null,
+                "published": null,
+                "created": "2022-06-18T12:33:16+02:00",
+                "modified": "2022-06-18T12:33:18+02:00",
+                "modified_by": 1,
+                "created_by": 1,
+                "sortno": 31,
+                "layout_cols": 0,
+                "layout_rows": 0,
+                "sectiontype": "inscriptiontext",
+                "number": 1,
+                "name": "1",
+                "alias": "",
+                "comment": null,
+                "status": 0,
+                "parent_id": 144,
+                "level": 3,
+                "lft": 31,
+                "rght": 32,
+                "norm_iri": null,
+                "articles_id": 3,
+                "type": {
+                    "id": 137,
+                    "deleted": 0,
+                    "version_id": null,
+                    "job_id": 60781,
+                    "published": 1,
+                    "created": null,
+                    "modified": "2024-10-31T01:59:49+01:00",
+                    "created_by": null,
+                    "modified_by": null,
+                    "scope": "sections",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "inscriptiontext",
+                    "sortno": 9,
+                    "category": "EPI",
+                    "caption": "Inschriftenbearbeitung",
+                    "description": "",
+                    "config": {
+                        "help": "usecases-di-toolbar",
+                        "fields": {
+                            "published": "Ver\u00f6ffentlicht",
+                            "comment": {
+                                "types": [
+                                    "links",
+                                    "transcription",
+                                    "references",
+                                    "text",
+                                    "character"
+                                ]
+                            }
+                        },
+                        "items": [
+                            "transcriptions"
+                        ],
+                        "name": {
+                            "prefix": "Bearbeitung ",
+                            "number": "numeric",
+                            "path": true,
+                            "scoped": true
+                        },
+                        "showpath": true,
+                        "view": "stack",
+                        "display": "highlight",
+                        "triples": {
+                            "namespaces": {
+                                "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                                "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                                "schema": "https:\/\/schema.org\/"
+                            },
+                            "templates": [
+                                {
+                                    "comment": "An inscription has text",
+                                    "subject": "epi:{parent.parent.iri}#",
+                                    "predicate": "schema:text",
+                                    "object": "{items.*[itemtype=transcriptions].content}"
+                                }
+                            ]
+                        }
+                    },
+                    "norm_iri": "inscriptiontext"
+                },
+                "path": [
+                    {
+                        "id": 145,
+                        "parent_id": null,
+                        "articles_id": 3,
+                        "lft": 29,
+                        "rght": 34,
+                        "children": 1,
+                        "siblings": 15,
+                        "level": 1,
+                        "sortno": 29,
+                        "number": 1,
+                        "sectiontype": "inscription",
+                        "name": "A",
+                        "alias": ""
+                    },
+                    {
+                        "id": 144,
+                        "parent_id": 145,
+                        "articles_id": 3,
+                        "lft": 30,
+                        "rght": 33,
+                        "children": 1,
+                        "siblings": 1,
+                        "level": 2,
+                        "sortno": 30,
+                        "number": 1,
+                        "sectiontype": "inscriptionpart",
+                        "name": "1",
+                        "alias": ""
+                    },
+                    {
+                        "id": 143,
+                        "parent_id": 144,
+                        "articles_id": 3,
+                        "lft": 31,
+                        "rght": 32,
+                        "children": 0,
+                        "siblings": 1,
+                        "level": 3,
+                        "sortno": 31,
+                        "number": 1,
+                        "sectiontype": "inscriptiontext",
+                        "name": "1",
+                        "alias": ""
+                    }
+                ],
+                "items": [
+                    {
+                        "id": 363,
+                        "deleted": 0,
+                        "version_id": null,
+                        "job_id": null,
+                        "published": null,
+                        "created": "2022-06-18T12:33:17+02:00",
+                        "modified": "2022-06-18T12:33:18+02:00",
+                        "created_by": 1,
+                        "modified_by": 1,
+                        "sortno": null,
+                        "itemtype": "transcriptions",
+                        "properties_id": null,
+                        "value": null,
+                        "content": null,
+                        "translation": null,
+                        "flagged": null,
+                        "links_id": null,
+                        "links_tab": null,
+                        "links_field": null,
+                        "links_tagid": null,
+                        "file_name": null,
+                        "file_type": null,
+                        "file_path": null,
+                        "file_source": null,
+                        "file_copyright": null,
+                        "file_meta": null,
+                        "file_online": null,
+                        "date_sort": null,
+                        "date_value": "",
+                        "date_add": null,
+                        "date_start": null,
+                        "date_end": null,
+                        "source_autopsy": false,
+                        "source_from": null,
+                        "source_addition": null,
+                        "pos_x": null,
+                        "pos_y": null,
+                        "pos_z": null,
+                        "norm_iri": null,
+                        "articles_id": 3,
+                        "sections_id": 143,
+                        "property": null,
+                        "links_section": null,
+                        "links_article": null,
+                        "type": {
+                            "id": 201,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": 61013,
+                            "published": 1,
+                            "created": "2022-01-16T00:34:54+01:00",
+                            "modified": "2024-07-09T13:30:18+02:00",
+                            "created_by": null,
+                            "modified_by": null,
+                            "scope": "items",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "transcriptions",
+                            "sortno": 21,
+                            "category": "EPI",
+                            "caption": "Transkription",
+                            "description": "",
+                            "config": {
+                                "fulltext": true,
+                                "fields": {
+                                    "content": {
+                                        "caption": "Transkription",
+                                        "fulltext": "Transkription",
+                                        "format": "xml",
+                                        "height": 10,
+                                        "types": [
+                                            "app1",
+                                            "app2",
+                                            "links",
+                                            "transcription",
+                                            "references",
+                                            "nl",
+                                            "character"
+                                        ]
+                                    },
+                                    "translation": {
+                                        "caption": "\u00dcbersetzung",
+                                        "fulltext": "\u00dcbersetzung",
+                                        "format": "xml",
+                                        "height": 10,
+                                        "types": [
+                                            "app1",
+                                            "app2",
+                                            "links",
+                                            "transcription",
+                                            "references",
+                                            "character"
+                                        ]
+                                    },
+                                    "date": {
+                                        "caption": "Datierung",
+                                        "group": "date",
+                                        "format": "date"
+                                    },
+                                    "date_add": {
+                                        "caption": "Erg\u00e4nzung zur Datierung",
+                                        "group": "date",
+                                        "format": "text"
+                                    },
+                                    "source_from": {
+                                        "caption": "Quelle",
+                                        "group": "source",
+                                        "format": "xml",
+                                        "types": [
+                                            "references",
+                                            "links",
+                                            "text",
+                                            "app2",
+                                            "h",
+                                            "character"
+                                        ]
+                                    },
+                                    "source_addition": {
+                                        "caption": "Erg\u00e4nzungen nach",
+                                        "group": "source",
+                                        "format": "xml",
+                                        "types": [
+                                            "app2",
+                                            "links",
+                                            "text",
+                                            "h",
+                                            "references",
+                                            "character"
+                                        ]
+                                    },
+                                    "source_autopsy": {
+                                        "caption": "Autopsie",
+                                        "group": "source",
+                                        "format": "check"
+                                    }
+                                }
+                            },
+                            "norm_iri": "transcriptions"
+                        },
+                        "sectionpath": [
+                            {
+                                "id": 145,
+                                "parent_id": null,
+                                "articles_id": 3,
+                                "lft": 29,
+                                "rght": 34,
+                                "children": 1,
+                                "siblings": 15,
+                                "level": 1,
+                                "sortno": 29,
+                                "number": 1,
+                                "sectiontype": "inscription",
+                                "name": "A",
+                                "alias": ""
+                            },
+                            {
+                                "id": 144,
+                                "parent_id": 145,
+                                "articles_id": 3,
+                                "lft": 30,
+                                "rght": 33,
+                                "children": 1,
+                                "siblings": 1,
+                                "level": 2,
+                                "sortno": 30,
+                                "number": 1,
+                                "sectiontype": "inscriptionpart",
+                                "name": "1",
+                                "alias": ""
+                            },
+                            {
+                                "id": 143,
+                                "parent_id": 144,
+                                "articles_id": 3,
+                                "lft": 31,
+                                "rght": 32,
+                                "children": 0,
+                                "siblings": 1,
+                                "level": 3,
+                                "sortno": 31,
+                                "number": 1,
+                                "sectiontype": "inscriptiontext",
+                                "name": "1",
+                                "alias": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "project": {
+            "id": 1,
+            "deleted": 0,
+            "version_id": null,
+            "job_id": null,
+            "published": 0,
+            "created": "2021-06-15T00:42:26+02:00",
+            "modified": "2023-03-27T01:51:59+02:00",
+            "modified_by": 1,
+            "created_by": 1,
+            "projecttype": "epi",
+            "sortno": null,
+            "name": "Testprojekt 1",
+            "signature": "TP1",
+            "description": "",
+            "norm_data": null,
+            "norm_iri": "bookiri",
+            "type": {
+                "id": 895,
+                "deleted": 0,
+                "version_id": null,
+                "job_id": 60761,
+                "published": 0,
+                "created": "2022-12-03T11:01:24+01:00",
+                "modified": "2024-10-30T23:47:45+01:00",
+                "created_by": null,
+                "modified_by": null,
+                "scope": "projects",
+                "mode": "default",
+                "preset": "default",
+                "name": "epi",
+                "sortno": 1,
+                "category": "EPI",
+                "caption": "EPI",
+                "description": "Mit Epigraf erstellte Projekte.",
+                "config": {
+                    "fields": {
+                        "name": "Name",
+                        "signature": "Kurztitel",
+                        "description": "Beschreibung",
+                        "norm_data": "Normdaten",
+                        "sortno": "Sortierung",
+                        "published": "Ver\u00f6ffentlicht",
+                        "norm_iri": {
+                            "caption": "IRI-Fragment",
+                            "autofill": {
+                                "source": "signature",
+                                "process": [
+                                    "irifragment"
+                                ]
+                            }
+                        },
+                        "iri_path": "IRI-Pfad"
+                    },
+                    "columns": {
+                        "sortno": "Sortierung",
+                        "signature": "Kurztitel",
+                        "name": "Name",
+                        "articles": "Artikel",
+                        "published_label": "Ver\u00f6ffentlicht",
+                        "iri_path": "IRI"
+                    }
+                },
+                "norm_iri": "epi"
+            },
+            "database": "projects"
+        },
+        "modifier": {
+            "id": 1,
+            "deleted": 0,
+            "version_id": null,
+            "job_id": null,
+            "created": "2022-04-01T10:45:59+02:00",
+            "modified": "2023-03-15T01:09:29+01:00",
+            "modified_by": null,
+            "created_by": null,
+            "usertype": "human",
+            "name": "Testuser",
+            "acronym": "TU",
+            "userrole": 1,
+            "norm_iri": null
+        },
+        "creator": {
+            "id": 1,
+            "deleted": 0,
+            "version_id": null,
+            "job_id": null,
+            "created": "2022-04-01T10:45:59+02:00",
+            "modified": "2023-03-15T01:09:29+01:00",
+            "modified_by": null,
+            "created_by": null,
+            "usertype": "human",
+            "name": "Testuser",
+            "acronym": "TU",
+            "userrole": 1,
+            "norm_iri": null
+        },
+        "database": "projects"
+    }
+]

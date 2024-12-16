@@ -1,0 +1,16 @@
+{
+    "id": 2,
+    "deleted": 0,
+    "published": 0,
+    "created": "2020-11-11T14:17:34+01:00",
+    "modified": "2020-11-11T14:17:34+01:00",
+    "created_by": null,
+    "modified_by": null,
+    "name": "test_private.doc",
+    "description": "Private test file",
+    "type": "doc",
+    "size": 33381,
+    "root": "shared",
+    "path": "downloads",
+    "isfolder": 0
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Categories [public]    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/public/";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_properties             action_transfer             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >public &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks?database=public"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li><li class="" ><a href="/epi/public/articles">public</a></li></ul></div></li><li class="menu_database" ><a href="/epi/public/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/public/articles?load=1">Articles</a></li><li class="menu_database active" ><a href="/epi/public/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/public/files?load=1">Files</a></li><li class="menu_database" ><a href="/epi/public/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/public/types?load=1">Types</a></li><li class="menu_database" ><a href="/epi/public/users?load=1">Users</a></li><li class="menu_database" ><a href="/epi/public/analytics?load=1">Analytics</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=public">Pipelines</a></li><li class="menu_global" ><a href="/users?database=public">Users</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=public">Repository</a></li><li class="menu_global" ><a href="/help?database=public">Help</a></li><li class="menu_global" ><a href="/wiki?database=public">Wiki</a></li><li class="menu_global" ><a href="/?database=public">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2?database=public" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars?database=public" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><span>Transfer from projects into public</span></li></ul></nav>                    </div>
+
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+<!-- Breadcrumbs -->
+
+<!-- Content area -->
+
+
+
+<div class="content-main widget-scrollbox">
+    <!-- Paginator -->
+
+    <table class="recordlist widget-table">
+        <thead>
+        <tr>
+            <th data-col="rownumber" data-width="40">#</th>
+            <th data-col="table" data-width="100">table</th>
+                            <th scope="col" data-col="id" data-width=100>id</th>
+                            <th scope="col" data-col="norm_iri" data-width=100>norm_iri</th>
+                            <th scope="col" data-col="parent_id" data-width=100>parent_id</th>
+                            <th scope="col" data-col="related_id" data-width=100>related_id</th>
+                            <th scope="col" data-col="properties_id" data-width=100>properties_id</th>
+                            <th scope="col" data-col="created" data-width=100>created</th>
+                            <th scope="col" data-col="modified" data-width=100>modified</th>
+                            <th scope="col" data-col="propertytype" data-width=100>propertytype</th>
+                            <th scope="col" data-col="sortno" data-width=100>sortno</th>
+                            <th scope="col" data-col="sortkey" data-width=100>sortkey</th>
+                            <th scope="col" data-col="lemma" data-width=100>lemma</th>
+                            <th scope="col" data-col="name" data-width=100>name</th>
+                            <th scope="col" data-col="unit" data-width=100>unit</th>
+                            <th scope="col" data-col="comment" data-width=100>comment</th>
+                            <th scope="col" data-col="content" data-width=100>content</th>
+                            <th scope="col" data-col="elements" data-width=100>elements</th>
+                            <th scope="col" data-col="iscategory" data-width=100>iscategory</th>
+                            <th scope="col" data-col="ishidden" data-width=100>ishidden</th>
+                            <th scope="col" data-col="keywords" data-width=100>keywords</th>
+                            <th scope="col" data-col="signature" data-width=100>signature</th>
+                            <th scope="col" data-col="norm_type" data-width=100>norm_type</th>
+                            <th scope="col" data-col="norm_data" data-width=100>norm_data</th>
+                            <th scope="col" data-col="file_name" data-width=100>file_name</th>
+                            <th scope="col" data-col="file_type" data-width=100>file_type</th>
+                            <th scope="col" data-col="file_path" data-width=100>file_path</th>
+                            <th scope="col" data-col="source_from" data-width=100>source_from</th>
+                    </tr>
+        </thead>
+        <tbody data-list-name="import"
+               data-list-action-next="/epi/public/properties/transfer/materials?source=projects&amp;snippets=editors%2Cpublished&amp;stage=preview&amp;page=2">
+
+                    <tr data-list-itemof="import" data-id="properties-1-1-1">
+                <td>1</td>
+                <td>properties</td>
+
+                                        <td class="table-id-solved">1</td>
+
+                                        <td class="table-id-solved">holz</td>
+
+                                        <td class="table-id-unsolved"></td>
+
+                                        <td class="table-id-unsolved"></td>
+
+                                        <td></td>
+
+                                        <td>#TIME#</td>
+
+                                        <td>#TIME#</td>
+
+                                        <td>materials</td>
+
+                                        <td>26</td>
+
+                                        <td>HolzProjects</td>
+
+                                        <td>HolzProjects</td>
+
+                                        <td>HolzProjects</td>
+
+                                        <td></td>
+
+                                        <td>Do some wooden comments arrive from the project database?</td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+                            </tr>
+                    <tr data-list-itemof="import" data-id="properties-1-2-new">
+                <td>2</td>
+                <td>properties</td>
+
+                                        <td class="table-id-unsolved">properties-tmp2</td>
+
+                                        <td>projects~2</td>
+
+                                        <td class="table-id-unsolved"></td>
+
+                                        <td class="table-id-unsolved"></td>
+
+                                        <td></td>
+
+                                        <td>#TIME#</td>
+
+                                        <td>#TIME#</td>
+
+                                        <td>materials</td>
+
+                                        <td>1</td>
+
+                                        <td>ProjectsSortUnknownMaterial</td>
+
+                                        <td>ProjectsLemmaUnknownMaterial</td>
+
+                                        <td>ProjectsNameUnknownMaterial</td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+                            </tr>
+                    <tr data-list-itemof="import" data-id="properties-1-3-3">
+                <td>3</td>
+                <td>properties</td>
+
+                                        <td class="table-id-solved">3</td>
+
+                                        <td class="table-id-solved">knownmaterial</td>
+
+                                        <td class="table-id-unsolved"></td>
+
+                                        <td class="table-id-unsolved"></td>
+
+                                        <td></td>
+
+                                        <td>#TIME#</td>
+
+                                        <td>#TIME#</td>
+
+                                        <td>materials</td>
+
+                                        <td>2</td>
+
+                                        <td>ProjectsSortKnownMaterial</td>
+
+                                        <td>ProjectsLemmaKnownMaterial</td>
+
+                                        <td>ProjectsNameKnownMaterial</td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+
+                                        <td></td>
+                            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<form method="post" accept-charset="utf-8" id="form-import" action="/epi/public/properties/transfer/materials?source=projects&amp;snippets=editors,published&amp;stage=preview">
+
+</form>
+<div class="confirm">
+
+    </div>
+
+
+                                            <nav class="actions-content" data-snippet="actions-content">
+                            <ul class="action-menu"><li><a href="/epi/public/properties/index/materials" data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="button button_cancel widget-shortcut" data-role="cancel">Cancel</a></li><li><button data-shortcuts="Ctrl+S F10" title="Import (Ctrl+S F10)" aria-label="Import" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" autofocus="autofocus" form="form-import" data-role="submit" type="submit">Import</button></li></ul>                        </nav>
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label">3 records</span></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-epi-properties-transfer?database=public" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

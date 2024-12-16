@@ -1,0 +1,6 @@
+table;id;type;name;articles_id;sections_id;to_id;value;properties_id
+properties;properties-new-1;clusters;Cluster 1;;;;;
+sections;sections-new-162;clusters;Ähnliche Artikel;articles-162;;;;
+items;;clusters;;articles-162;sections-new-162;;0,5;properties-new-1
+items;;related;;articles-162;sections-new-162;articles-160;0,8;
+items;;related;;articles-162;sections-new-162;articles-161;0,67;

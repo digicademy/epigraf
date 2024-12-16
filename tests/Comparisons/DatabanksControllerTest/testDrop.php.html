@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Epigraf 4 - Databanks    </title>
+
+    <link href="/favicon.png" type="image/x-icon" rel="icon"/><link href="/favicon.png" type="image/x-icon" rel="shortcut icon"/>
+        <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.css"/>    <link rel="stylesheet" href="/widgets/css/filter.css"/>	<link rel="stylesheet" href="/widgets/css/layout.css"/>	<link rel="stylesheet" href="/widgets/css/popup.css"/>	<link rel="stylesheet" href="/widgets/css/tablewidget.css"/>
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jquery/jquery.mousewheel.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script src="/js/app.min.js"></script>    <script>App.baseUrl = "http://localhost/";</script>    <script>App.data = [];</script>	<script>App.user = [];</script>
+    <script src="/widgets/js/paginator.js"></script>    <script src="/widgets/js/filter.js"></script>	<script src="/widgets/js/layout.js"></script>	<script src="/widgets/js/tablewidget.js"></script>	<script src="/widgets/js/pipeline.js"></script>	<script src="/widgets/js/popups.js"></script>    <script src="/widgets/js/ckeditor/epieditor.js"></script>	    <script src="/widgets/js/dropdowns.js"></script>    <script src="/widgets/js/widgets.js"></script>
+    </head>
+
+<body class="controller_databanks action_drop userrole_admin">
+
+    <div id="page-wrapper">
+
+        <nav class="actions-main topmenu">
+
+            <div class="topmenu-left">
+                    <div class="topmenu-left-items">
+                      <ul class=" horizontal">
+
+
+                    <li class="menu_database first active dropdown">
+
+	                    <button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Datenbanken &raquo; </button>
+    	                <div class="widget-dropdown-pane dropdown-menu" id="databasemenu-dropdown">
+        	                <ul class=" vertical">
+
+
+                    <li class="first">
+                            <a href="/databanks"><i>Manage databases</i></a>
+
+        </li>
+
+</ul>
+
+
+            	        </div>
+
+
+
+
+        </li>
+                <li class="menu_global">
+                            <a href="/pipelines">Pipelines</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/users">Benutzer</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/files?root=shared">Repositorium</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/help">Hilfe</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/wiki">Wiki</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/users/logout">Logout</a>
+
+        </li>
+
+</ul>
+
+
+                    </div>
+
+                    <div class="topmenu-left-dots">
+						<button class="widget-dropdown widget-dropdown-toggle" data-toggle="dotmenu-dropdown">☰</button>
+						<div class="widget-dropdown-pane dropdown-menu widget-dropdown-pos-bottomright" id="dotmenu-dropdown">
+							<ul class="vertical"></ul>
+						</div>
+                    </div>
+            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+                                    <span class="menu-home">
+                        <a href="/">Epigraf</a>
+                    </span>
+                            </div>
+
+        </nav>
+
+
+        <div id="content-wrapper" class="accordion">
+
+                <!-- Fill sidebars -->
+
+
+                <!-- Right sidebar -->
+
+                <!-- Toggles -->
+
+
+                <!-- Left sidebar -->
+
+                <!-- Content -->
+                <div id="content" class="accordion-item accordion-main">
+
+                    <div class="content-header">
+                        <div class="content-header-title">
+                                                                                    <nav class="breadcrumbs">
+								<ul class="breadcrumbs-trail"><li><a href="/databanks">Datenbanken</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>projects</span></li></ul>							</nav>
+                                                    </div>
+
+
+                    </div>
+
+                    <div class="content-flash"></div>
+
+                    <div class="content-content widget-scrollsync-content">
+                        <div class="message danger">
+	Gefahrenbereich! Operationen auf dieser Seite können Inhalt empfindlich beschädigen. Daten können für immer verloren gehen!</div>
+
+<!-- Breadcrumbs -->
+
+
+<!-- Content area -->
+<div class="content-extratight">
+    <form method="post" accept-charset="utf-8" id="form-edit" action="/databanks/drop/1"><div style="display:none;"><input type="hidden" name="_method" value="PUT"/></div>    <fieldset>
+        <input type="hidden" name="id" value="1"/>        <p>
+            Dies wird die Datenbank projects vom Server löschen. Alle Daten werden für immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?        </p>
+    </fieldset>
+    <div style="display:none;"></div></form></div>
+    <!-- Actions -->
+                                                    <nav class="actions-content">
+                                <ul class="action-menu">
+<li><a href="/databanks/view/1" class="button button_cancel">Abbrechen</a></li>
+<li><button form="form-edit" data-role="submit" type="submit">Ja</button></li>
+</ul>                            </nav>
+                                            </div>
+
+					<div class="content-footer">
+					    					</div>
+				</div>
+
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+/** Custom palette **/
+
+:root {
+    /* primary */
+    --primary-200: hsl(185, 97%, 18%);
+    --primary-300: hsl(185, 74%, 26%);
+    --primary-400: hsl(185, 75%, 29%);
+    --primary-500: hsl(185, 74%, 32%);
+    --primary-600: hsl(185, 75%, 36%);
+    --primary-700: hsl(185, 64%, 40%);
+    --primary-800: hsl(185, 43%, 80%);
+    --primary-900: hsl(185, 68%, 91%);
+
+    /* neutral */
+    --neutral-100: #000000;
+    --neutral-150: #0A0A0A;
+    --neutral-200: #303030;
+    --neutral-250: #8D8D8D;
+    --neutral-300: #B3B3B3;
+    --neutral-350: #CACACA;
+    --neutral-400: #D1D1D1;
+    --neutral-450: #DDDDDD;
+    --neutral-500: #E6E6E6;
+    --neutral-550: #E8E8E8;
+    --neutral-600: #EFEFEF;
+    --neutral-650: #F1F1F1;
+    --neutral-700: #F3F3F3;
+    --neutral-750: #F6F6F6;
+    --neutral-800: #FAFAFA;
+    --neutral-850: #FEFEFE;
+    --neutral-900: #FFFFFF;
+
+    /* functions */
+    --function-highlight: hsl(93, 100%, 60%); /* Highlighted text background color */
+    --function-warning: hsl(40, 100%, 50%);   /* Background of warnings, link color in messages */
+    --function-remove: hsl(3, 89%, 39%);      /* Error message background, remove button background */
+    --function-title: hsl(3, 89%, 50%);       /* Breadcrumbs */
+    --function-home: hsl(195, 100%, 31%);     /* Background of top left home and the database button */
+}
+
+/** Overwrite properties **/
+:root {
+    --pane-bg-color: var(--neutral-200);
+
+    --section-header-bg-color: var(--neutral-200);
+    --section-header-sidebar-bg-color: var(--neutral-250);
+
+    --button-font-color: var(--neutral-800);
+    --button-font-color-hover: var(--neutral-850);
+    --button-bg-color-inactive: var(--neutral-300);
+
+    --nav-bg-color: var(--primary-400);
+    --link-font-color: var(--primary-800);
+
+    --table-thead-font-color: var(--primary-800);
+    --table-border-color: var(--neutral-200);
+    --table-inpane-border-color: var(--neutral-100);
+
+    --top-menu-user-bg-color: var(--primary-200);
+    --top-menu-app-bg-color: var(--primary-300);
+    --top-menu-db-bg-color: var(--primary-400);
+    --top-menu-button-bg-color: var(--primary-300);
+
+    --metrics-font-color: var(--neutral-750);
+    --problems-font-color: var(--neutral-750);
+}

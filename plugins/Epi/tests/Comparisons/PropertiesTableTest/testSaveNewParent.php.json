@@ -1,0 +1,44 @@
+[
+    {
+        "id": 165,
+        "parent_id": 167,
+        "lft": 12,
+        "rght": 13,
+        "level": 1
+    },
+    {
+        "id": 166,
+        "parent_id": 170,
+        "lft": 7,
+        "rght": 9,
+        "level": 1
+    },
+    {
+        "id": 167,
+        "parent_id": null,
+        "lft": 11,
+        "rght": 14,
+        "level": 0
+    },
+    {
+        "id": 168,
+        "parent_id": 170,
+        "lft": 5,
+        "rght": 6,
+        "level": 1
+    },
+    {
+        "id": 169,
+        "parent_id": 170,
+        "lft": 2,
+        "rght": 4,
+        "level": 1
+    },
+    {
+        "id": 170,
+        "parent_id": null,
+        "lft": 1,
+        "rght": 10,
+        "level": 0
+    }
+]

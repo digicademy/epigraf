@@ -1,0 +1,470 @@
+[
+    {
+        "id": 775,
+        "deleted": 0,
+        "job_id": null,
+        "value": null,
+        "content": null,
+        "sections_id": 379,
+        "articles_id": 4
+    },
+    {
+        "id": 787,
+        "deleted": 0,
+        "job_id": null,
+        "value": null,
+        "content": null,
+        "sections_id": 397,
+        "articles_id": 4
+    },
+    {
+        "id": 835,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Datensatz",
+        "sections_id": 17,
+        "articles_id": 1
+    },
+    {
+        "id": 837,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Signaturen",
+        "sections_id": 16,
+        "articles_id": 1
+    },
+    {
+        "id": 839,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Standorte",
+        "sections_id": 15,
+        "articles_id": 1
+    },
+    {
+        "id": 841,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Nachweise",
+        "sections_id": 14,
+        "articles_id": 1
+    },
+    {
+        "id": 843,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Beschaffenheit",
+        "sections_id": 13,
+        "articles_id": 1
+    },
+    {
+        "id": 845,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Material",
+        "sections_id": 12,
+        "articles_id": 1
+    },
+    {
+        "id": 847,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschriftentr\u00e4ger",
+        "sections_id": 11,
+        "articles_id": 1
+    },
+    {
+        "id": 849,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Ma\u00dfangaben",
+        "sections_id": 10,
+        "articles_id": 1
+    },
+    {
+        "id": 851,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Wappen",
+        "sections_id": 9,
+        "articles_id": 1
+    },
+    {
+        "id": 853,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Marken",
+        "sections_id": 8,
+        "articles_id": 1
+    },
+    {
+        "id": 855,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Abbildungen",
+        "sections_id": 7,
+        "articles_id": 1
+    },
+    {
+        "id": 857,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Register",
+        "sections_id": 6,
+        "articles_id": 1
+    },
+    {
+        "id": 859,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.[1]\n\nText Text Text\nText Text Text\nText Text Text\nText Text Text\nLINK \nText Text Text\nText Text Text\nLiteraturverweis im Text: Unterautor \n\nExterne Verweise\n- auf einen Artikel: Signatur 2\n- auf eine Inschrift: Signatur 2[A]\n- auf einen Inschriftenteil: Signatur 2[A.1]\n- auf eine Fu\u00dfnote: Signatur 2[1]\n\nInterne Verweise\n- auf Inschrift B: B\n- auf Inschriftenteil B2: B.2\n- auf Fu\u00dfnote a: a\n- auf Fu\u00dfnote 2: 2\n- auf Marke: hm001.1121",
+        "sections_id": 5,
+        "articles_id": 1
+    },
+    {
+        "id": 861,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Abschnitt 1",
+        "sections_id": 5,
+        "articles_id": 1
+    },
+    {
+        "id": 863,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "TEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT LINK  \n\nTEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \n\n\n\nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT",
+        "sections_id": 4,
+        "articles_id": 1
+    },
+    {
+        "id": 865,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Abschnitt 2a",
+        "sections_id": 4,
+        "articles_id": 1
+    },
+    {
+        "id": 867,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschrift A",
+        "sections_id": 3,
+        "articles_id": 1
+    },
+    {
+        "id": 869,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notzien Inschriftenteil 1",
+        "sections_id": 2,
+        "articles_id": 1
+    },
+    {
+        "id": 871,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Transkription",
+        "content": "Zwischenraum von 1: \u251c1\u2524\nUnbestimmter Verlust: [---]\nErg[\u00e4nz\u00e9ng] \nAusla [(ss\u00f0ung)] \nVerzeilenumbruh | \n<Nachtrag>\nAbk(\u00fcrzung)\nVersalie \nZeilenumbruch \/\n\n\nHann bj\u00f3 \u00ed Raums \u2022 dal \u00ed Raumsd{\u00e6}lafylk\n\nAlphabetische Fu\u00dfnote: [a]\nNumerische Fu\u00dfnote: [2]",
+        "sections_id": 1,
+        "articles_id": 1
+    },
+    {
+        "id": 873,
+        "deleted": 0,
+        "job_id": null,
+        "value": "\u00dcbersetzung",
+        "content": "\u00dcbersetzung Inschrift A - Teil 1 - Bearbeitung 1",
+        "sections_id": 1,
+        "articles_id": 1
+    },
+    {
+        "id": 875,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschrift A - Inschriftenteil 1 - Bearbeitung 1",
+        "sections_id": 1,
+        "articles_id": 1
+    },
+    {
+        "id": 877,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschr A Teil 2",
+        "sections_id": 24,
+        "articles_id": 1
+    },
+    {
+        "id": 879,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Transkription",
+        "content": "\u00ednitiale\nChronogrammbuchstabe\nVh\u00e9rsalie\nAb(ma\u00f0r ) \/\n<Nachtrag>\n[(Auslassung)]\n{Bu}chstabenverbindung\nUns\u00f0cherer Text\nZwischenraum von drei \u251c3\u2524 Zeichen\nUnbestimmte Anzahl [---] verlorener Zeichen\n[Erg]\u00f0nzung\nWort\u2022trenner\nHochgestellt |",
+        "sections_id": 23,
+        "articles_id": 1
+    },
+    {
+        "id": 881,
+        "deleted": 0,
+        "job_id": null,
+        "value": "\u00dcbersetzung",
+        "content": "\u00dcbersetzung \u00d6rvar-Odds saga",
+        "sections_id": 23,
+        "articles_id": 1
+    },
+    {
+        "id": 883,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Inschrift A Teil 2 Bearbeitungsnotizen",
+        "sections_id": 23,
+        "articles_id": 1
+    },
+    {
+        "id": 885,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschrift B",
+        "sections_id": 22,
+        "articles_id": 1
+    },
+    {
+        "id": 887,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschrift B Teil 1",
+        "sections_id": 21,
+        "articles_id": 1
+    },
+    {
+        "id": 889,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Transkription",
+        "content": "\u00deat var eitt sumar, \/\nat Gr\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V{\u00ed}k austr |\neptir Harald dau\u2022\u00f0an, m\u00e1g sinn, \u251c1\u2524\nfyrir \u00fev\u00ed <at>[(hann)] [(\u00e1tti )] [\u00fear] m[---]iklar eignir.",
+        "sections_id": 20,
+        "articles_id": 1
+    },
+    {
+        "id": 891,
+        "deleted": 0,
+        "job_id": null,
+        "value": "\u00dcbersetzung",
+        "content": "\u00dcbersetzung Inschrift B Teil 1",
+        "sections_id": 20,
+        "articles_id": 1
+    },
+    {
+        "id": 893,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschrift B Teil 1 Bearbeitung 1",
+        "sections_id": 20,
+        "articles_id": 1
+    },
+    {
+        "id": 895,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschr B Teil 2",
+        "sections_id": 19,
+        "articles_id": 1
+    },
+    {
+        "id": 897,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Transkription",
+        "content": "Gr\u00edmr unni henni mikit, ok l{\u00e6}tr [(hann)] \u00feat eptir henni. \/\nH\u00fan <var hverri >konu v\u00e6nni\u251c1\u2524 ok betr[---] at s\u00e9r [um] alla hluti,|\n \u00feeira( er) \u00ed Nor\u2022egi v\u00e1ru. \n\u00deeira f\u00f6r var b\u00fain vir\u00f0uliga.",
+        "sections_id": 18,
+        "articles_id": 1
+    },
+    {
+        "id": 899,
+        "deleted": 0,
+        "job_id": null,
+        "value": "\u00dcbersetzung",
+        "content": "\u00dcbersetzung Inschrift B Teil 2",
+        "sections_id": 18,
+        "articles_id": 1
+    },
+    {
+        "id": 901,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Notizen Inschrift B Teil 2 Bearbeitung 1",
+        "sections_id": 18,
+        "articles_id": 1
+    },
+    {
+        "id": 903,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Transkription",
+        "content": "Transkription in B.2.2",
+        "sections_id": 377,
+        "articles_id": 1
+    },
+    {
+        "id": 905,
+        "deleted": 0,
+        "job_id": null,
+        "value": "\u00dcbersetzung",
+        "content": "\u00dcbersetzung in B.2.2",
+        "sections_id": 377,
+        "articles_id": 1
+    },
+    {
+        "id": 907,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "vor der Online-Publikation erg\u00e4nzen",
+        "sections_id": 160,
+        "articles_id": 2
+    },
+    {
+        "id": 909,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "hier nur Ziffern angeben",
+        "sections_id": 162,
+        "articles_id": 2
+    },
+    {
+        "id": 911,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Die Deutschen Inschriften",
+        "sections_id": 168,
+        "articles_id": 2
+    },
+    {
+        "id": 913,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "000. Band",
+        "sections_id": 170,
+        "articles_id": 2
+    },
+    {
+        "id": 915,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Herausgegeben \nvon den Akademien der Wissenschaften in \nD\u00fcsseldorf \u00b7 G\u00f6ttingen \u00b7 Heidelberg \u00b7 \nLeipzig \u00b7 Mainz \u00b7 M\u00fcnchen \nund der \u00d6sterreichischen Akademie der \nWissenschaften in Wien",
+        "sections_id": 172,
+        "articles_id": 2
+    },
+    {
+        "id": 917,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "XXXer Reihe 00. Band",
+        "sections_id": 174,
+        "articles_id": 2
+    },
+    {
+        "id": 919,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Gesammelt und bearbeitet von ...",
+        "sections_id": 180,
+        "articles_id": 2
+    },
+    {
+        "id": 921,
+        "deleted": 0,
+        "job_id": null,
+        "value": "notes",
+        "content": "Die Kapitel der Einleitung erhalten keinen Datenschl\u00fcssel (Dropdownfeld neben dem Feld \"Name\").",
+        "sections_id": 202,
+        "articles_id": 2
+    },
+    {
+        "id": 923,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Ein Katalogartikel fasst alle Inschriften eines Objekts zusammen. Die Artikel sind chronologisch angeordnet. Die Entstehungszeit undatierter Inschriften wurde m\u00f6glichst eng eingegrenzt; sie sind jeweils an das Ende des ermittelten Zeitraums gestellt. Die Katalogartikel sind untergliedert in Kopfzeile, Beschreibung, Editionsteil mit Wiedergabe des Inschriftentextes, ggf. eine \u00dcbersetzung und eine Wappenzeile, den Sachkommentar und den Anmerkungsapparat.\n\nDie Kopfzeile enth\u00e4lt die laufende Katalog-Nummer (Kat.-Nr.), die Bezeichnung des Standortes und die Datierung(en) der Inschrift(en). Bei erhaltenen Inschriften ist der aktuelle, bei verlorenen der letzte nachweisbare Standort genannt.",
+        "sections_id": 206,
+        "articles_id": 2
+    },
+    {
+        "id": 925,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "\u2020#Ein Kreuz neben der laufenden Nummer kennzeichnet Inschriftentr\u00e4ger, deren Original verloren ist.\n(\u2020)#Ein Kreuz in Klammern steht, wenn 1. der Inschriftentr\u00e4ger zwar vorhanden, die Inschrift als ganze jedoch nicht original \u00fcberliefert ist. Zu dieser Kategorie geh\u00f6ren vor allem erneuerte gemalte Inschriften. Ein Kreuz in Klammern steht auch, wenn 2. der Tr\u00e4ger eines Inschriftenensembles verloren, aber ein Teil der Inschrift(en) im Original vorhanden ist; oder 3. wenn ein erheblicher Teil der Inschriften eines erhaltenen Tr\u00e4gers nur kopial, d. h. abschriftlich oder fotografisch \u00fcberliefert ist.\n\u2020?#Ein Kreuz mit Fragezeichen steht bei abschriftlich oder im Bild \u00fcberlieferten Inschriften, deren Original m\u00f6glicherweise noch erhalten ist, aber nicht zug\u00e4nglich war und folglich nicht nach Autopsie wiedergegeben werden kann.\n1465?#Ein Fragezeichen bezeichnet eine zweifelhafte Datierung.",
+        "sections_id": 208,
+        "articles_id": 2
+    },
+    {
+        "id": 927,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Die Beschreibung enth\u00e4lt Angaben zur Ausf\u00fchrung des Inschriftentr\u00e4gers und der Inschrift(en), zu bekannten Erneuerungsma\u00dfnahmen, ggf. zu fr\u00fcheren Standorten und Verlustumst\u00e4nden. Mehrere Inschriften auf einem Objekt werden mit A, B, C etc. bezeichnet. Lie\u00df sich keine zuverl\u00e4ssige Textfassung einer Inschrift erstellen, wurden in Einzelf\u00e4llen auch zwei Versionen als Aa und Ab etc. ediert. Die Beschreibung erfolgt in aller Regel ...\n\nIm Transkriptionsteil ...",
+        "sections_id": 210,
+        "articles_id": 2
+    },
+    {
+        "id": 929,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "\u2020#Vor einzelnen verlorenen Inschriften steht ein Kreuz.\n[  ]#Eckige Klammern markieren Textverlust bei einer original \u00fcberlieferten Inschrift und schlie\u00dfen Erg\u00e4nzungen ein.|\n[...]#Punkte in eckigen Klammern bezeichnen Textverlust, der nicht erg\u00e4nzt werden kann. L\u00e4sst sich die L\u00e4nge des verlorenen Textes feststellen, markiert ein Punkt jeweils einen ausgefallenen Buchstaben.\n[---]#L\u00e4sst sich die L\u00e4nge des verlorenen Textes nicht feststellen, stehen drei durch Spatien getrennte Striche.\n(  )#Runde Klammern schlie\u00dfen aufgel\u00f6ste Abk\u00fcrzungen ein.\n<  >#Spitze Klammern bezeichnen sp\u00e4tere Nachtr\u00e4ge auf einem Inschriftentr\u00e4ger oder schlie\u00dfen f\u00fcr Nachtr\u00e4ge freigelassene Stellen ein.\n\/#Ein Schr\u00e4gstrich markiert das Zeilenende.\n\/\/#Doppelte Schr\u00e4gstriche markieren den Wechsel des Inschriftenfeldes oder die Unterbrechung der Zeile.\n{AE}#Ein unter mehrere Buchstaben gesetzter Bogen bezeichnet eine Ligatur von zwei oder mehreren Buchstaben.",
+        "sections_id": 212,
+        "articles_id": 2
+    },
+    {
+        "id": 931,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Einer lateinischen, niederdeutschen oder auch hebr\u00e4ischen Inschrift schlie\u00dft sich die \u00dcbersetzung an. Runde Klammern bezeichnen Zus\u00e4tze, die dem Textverst\u00e4ndnis dienen, aber keine w\u00f6rtliche Entsprechung im Ausgangstext haben. Niederdeutsche Inschriften auf Grabplatten werden nur dann \u00fcbersetzt, wenn sie Aussagen enthalten, die \u00fcber das \u00fcbliche Grabinschriftenformular wie \u201aDieser Stein geh\u00f6rt ...\u2018 hinausgehen.\n\nBei metrischen Inschriften wird im Anschluss an die \u00dcbersetzung das Versma\u00df und ggf. die Reimform genannt.\n\nDie Wappenzeile verzeichnet die im Zusammenhang mit den Inschriften \u00fcberlieferten Wappen. Diese werden so wiedergegeben, wie es ihrer Anordnung auf dem Inschriftentr\u00e4ger entspricht. Nicht identifizierte Wappen werden in Ziffernanmerkungen blasoniert, alle identifizierten Wappen werden im Reg. 3a beschrieben und nachgewiesen.\n\nDer Kommentar  enth\u00e4lt Erl\u00e4uterungen zu verschiedenen mit den Inschriften oder dem Inschriftentr\u00e4ger zusammenh\u00e4ngenden Fragen. Diese k\u00f6nnen sich auf Besonderheiten der Schrift, der Sprache oder des Inhalts der Inschriften beziehen, historische und biografische Angaben bieten sowie Probleme der Datierung diskutieren. Die biografischen Informationen zu den bis 1650 inschriftlich genannten Personen wurden mit dem vorrangigen Ziel zusammengestellt, diese Personen st\u00e4ndisch-sozial und im Hinblick auf ihre geografische Herkunft in das Gef\u00fcge der Stadt einzuordnen. Diese Angaben erheben daher keinen Anspruch auf Vollst\u00e4ndigkeit.\n\nDer Apparat gliedert sich in Buchstaben- und Ziffernanmerkungen sowie Nachweise der kopialen \u00dcberlieferung.\nDie Buchstabenanmerkungen beziehen sich auf textkritische Probleme der Inschriften. Sie enthalten abweichende Lesarten der Parallel\u00fcberlieferung, soweit diese bedeutungstragend sind, und weisen auf orthografische Besonderheiten oder fehlerhafte Stellen hin.\nDie Ziffernanmerkungen enthalten inhaltliche Erl\u00e4uterungen und Literaturhinweise.\nDie am Schluss eines Katalogartikels angef\u00fchrten Quellenangaben stellen in chronologischer Folge die wichtigsten kopialen \u00dcberlieferungen und Abbildungen zusammen.",
+        "sections_id": 214,
+        "articles_id": 2
+    },
+    {
+        "id": 933,
+        "deleted": 0,
+        "job_id": null,
+        "value": "Text",
+        "content": "Fu\u00dfnote mit Verweisen: [3]\n\nInterner Verweis auf Inschrift: A\nInterner Verweis auf Fu\u00dfnote: 1",
+        "sections_id": 147,
+        "articles_id": 3
+    }
+]

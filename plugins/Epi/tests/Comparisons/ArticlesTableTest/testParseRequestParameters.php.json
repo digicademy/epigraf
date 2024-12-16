@@ -1,0 +1,14 @@
+{
+    "articletypes": [
+        "epi-article"
+    ],
+    "field": "status",
+    "term": "neu angelegt",
+    "projects": [
+        5
+    ],
+    "properties": {
+        "id": 341
+    },
+    "action": ""
+}

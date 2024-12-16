@@ -1,0 +1,132 @@
+{
+    "281dbcd9efcdc35704107a3aa4bb7ad0": {
+        "sql": "FROM items WHERE sections_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "clear": "UPDATE items SET deleted = 3 WHERE sections_id IS NULL AND deleted = 0",
+        "type": "Items with null Section",
+        "target": 0,
+        "no": 5,
+        "deleted": {}
+    },
+    "0d564b31ae5b8e54c22f630fec08227c": {
+        "sql": "FROM items WHERE deleted = 0 AND sections_id NOT IN (SELECT id FROM sections WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "clear": "UPDATE items SET deleted = 3 WHERE deleted = 0 AND sections_id NOT IN (SELECT id FROM sections WHERE deleted = 0)",
+        "type": "Items with invalid Section",
+        "target": 0,
+        "no": 6,
+        "deleted": {}
+    },
+    "23f1f89cd00e87ad22b99aa3e9a3edbe": {
+        "sql": "FROM footnotes WHERE root_tab IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "clear": "UPDATE footnotes SET deleted = 3 WHERE root_tab IS NULL and root_id IS NULL and from_tab IS NULL and from_id IS NULL AND deleted = 0",
+        "type": "Footnotes with null root_tab",
+        "target": 0,
+        "no": 23,
+        "deleted": {}
+    },
+    "198b844516bbe5e49ae4f42e056ebdcc": {
+        "sql": "FROM footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
+        "clear": "UPDATE footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") SET footnotes.deleted = 3 WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", footnotes.id, root_tab, root_id",
+        "type": "Footnotes with invalid from_tagid (from_tab = items, from_field = content)",
+        "target": 0,
+        "no": 29,
+        "deleted": {}
+    },
+    "0353d6b8ac374f0fc5790beeeda32eea": {
+        "sql": "FROM links WHERE root_tab IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "clear": "UPDATE links SET deleted = 3 WHERE root_tab IS NULL and root_id IS NULL and from_tab IS NULL and from_id IS NULL AND deleted = 0",
+        "type": "Links with null root_tab",
+        "target": 0,
+        "no": 30,
+        "deleted": {}
+    },
+    "11e18b22c218cca0a0d1d02663effcd1": {
+        "sql": "FROM links LEFT JOIN items ON items.deleted = 0 AND links.from_id = items.id AND items.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND items.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN items ON items.deleted = 0 AND links.from_id = items.id AND items.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND items.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = items, from_field = content)",
+        "target": 0,
+        "no": 42,
+        "deleted": {}
+    },
+    "c4ecc3dac87b6ff72c2db067f533d3a7": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN items ON items.deleted = 0 AND links.from_id = items.id WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN items ON items.deleted = 0 AND links.from_id = items.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = items, from_field = content)",
+        "target": 0,
+        "no": 43,
+        "deleted": {}
+    },
+    "f51c2ad2b0f6f9ec7a8ab30fcde927a6": {
+        "sql": "FROM links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.elements LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.elements LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND properties.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = properties, from_field = elements)",
+        "target": 0,
+        "no": 44,
+        "deleted": {}
+    },
+    "917a5788e4e757bb252dd6ffe603d835": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = properties, from_field = elements)",
+        "target": 0,
+        "no": 45,
+        "deleted": {}
+    },
+    "cef10e0b947086e201124882c2558d32": {
+        "sql": "FROM links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND properties.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = properties, from_field = content)",
+        "target": 0,
+        "no": 46,
+        "deleted": {}
+    },
+    "e298ba8ace3ba6c42de8fd74a7db35f2": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = properties, from_field = content)",
+        "target": 0,
+        "no": 47,
+        "deleted": {}
+    },
+    "3c56a3c0ed5e692a86a50d7cd7048813": {
+        "sql": "FROM links LEFT JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id AND footnotes.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND footnotes.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id AND footnotes.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND footnotes.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = footnotes, from_field = content)",
+        "target": 0,
+        "no": 48,
+        "deleted": {}
+    },
+    "4e253fae5a1c12a6039159b73ea6d8a2": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = footnotes, from_field = content)",
+        "target": 0,
+        "no": 49,
+        "deleted": {}
+    }
+}

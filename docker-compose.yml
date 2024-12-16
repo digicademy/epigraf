@@ -1,0 +1,51 @@
+name: epi
+services:
+    apache:
+        build: ./docker/apache/
+        container_name: "epi_apache"
+        restart: unless-stopped
+        volumes:
+            - /etc/localtime:/etc/localtime:ro   # Sync timezone between container and wsl
+            - ./htdocs:/var/www/html:ro          # Folder with static assets
+        networks:
+            - epinet
+        ports:
+            - "80:80"
+            - "443:443"
+        depends_on:
+            - php
+    php:
+        build: ./docker/php/
+        container_name: "epi_php"
+        restart: unless-stopped
+        volumes:
+            - /etc/localtime:/etc/localtime:ro  # Sync timezone between container and wsl
+            - ".:/var/www/html:rw"              # Folder for epigraf app
+            - "./data:/var/www/data:rw"         # Folder for epigraf data
+            - "./docker/php/app.php:/var/www/html/config/app.php:rw" #  Epigraf settings
+        networks:
+            - epinet
+        depends_on:
+            - sql
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+    sql:
+        image: mariadb:10.11.6
+        container_name: "epi_sql"
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        volumes:
+            - "episqldata:/var/lib/mysql"
+        networks:
+            - epinet
+        environment:
+            MYSQL_ROOT_PASSWORD: "root"
+        command: --sql_mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,STRICT_ALL_TABLES"
+
+volumes:
+    episqldata:
+
+networks:
+  epinet:
+        driver: bridge

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="20"
+   height="20"
+   viewBox="0 0 5.2916665 5.2916668"
+   version="1.1"
+   id="svg348636"
+   sodipodi:docname="button_newline.svg"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   shape-rendering="crispEdges">
+  <sodipodi:namedview
+     id="namedview348638"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="12.101347"
+     inkscape:cx="6.6934698"
+     inkscape:cy="15.866003"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg348636"
+     inkscape:showpageshadow="false"
+     showborder="true"
+     viewbox-width="1e-05"
+     viewbox-height="1e-05" />
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs348633">
+    <rect
+       id="rect370686"
+       height="58.423249"
+       width="56.439999"
+       y="47.845914"
+       x="45.449487" />
+    <rect
+       id="rect102972-7"
+       height="27.813667"
+       width="36.461617"
+       y="51.186497"
+       x="193.76076" />
+    <rect
+       id="rect102972-9-8"
+       height="27.681273"
+       width="17.264389"
+       y="51.186497"
+       x="193.76076" />
+    <rect
+       id="rect102972-7-5"
+       height="27.813667"
+       width="36.461617"
+       y="51.186497"
+       x="193.76076" />
+    <rect
+       id="rect102972-9-8-8"
+       height="27.681273"
+       width="17.264389"
+       y="51.186497"
+       x="193.76076" />
+    <rect
+       id="rect189400-0"
+       height="32.723633"
+       width="87.263016"
+       y="44.953674"
+       x="330.21118" />
+    <rect
+       id="rect189400-3-3"
+       height="32.723633"
+       width="87.263016"
+       y="44.953674"
+       x="330.21118" />
+  </defs>
+  <text
+     style="font-variant-ligatures:none;font-size:24px;-inkscape-font-specification:'Arial, Normal';shape-inside:url(#rect370686);white-space:pre;font-family:Arial;line-height:1.25"
+     id="text370684"
+     transform="matrix(0.264583,0.000000,0.000000,0.264583,0.000001,0.000000)"
+     xml:space="preserve" />
+  <text
+     transform="matrix(0.205966,0.000000,0.000000,0.205966,-36.381886,14.313619)"
+     id="text202617-7"
+     y="-50.970913"
+     x="186.15172"
+     style="font-size:20.64806938px;-inkscape-font-specification:'Source Sans 3, Bold';font-variant-numeric:normal;font-variant:normal;font-variant-ligatures:none;font-variant-caps:normal;stroke-width:0.86030656;font-style:normal;text-align:start;font-family:'Source Sans 3';writing-mode:lr-tb;text-anchor:start;font-stretch:normal;font-feature-settings:normal;font-weight:bold;line-height:1.25"
+     xml:space="preserve"><tspan
+       y="-50.970913"
+       x="186.15172"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:20.64806938px;font-family:'Source Sans 3';-inkscape-font-specification:'Source Sans 3, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#0070c0;fill-opacity:1;stroke-width:0.86030656"
+       id="tspan202615-6"
+       sodipodi:role="line">/</tspan></text>
+</svg>

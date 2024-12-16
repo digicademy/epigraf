@@ -1,0 +1,27 @@
+[
+    {
+        "id": 3,
+        "projects_id": 1,
+        "deleted": 0,
+        "version_id": null,
+        "job_id": null,
+        "published": null,
+        "created": "2022-04-01T12:04:46+02:00",
+        "modified": "2023-05-04T22:59:26+02:00",
+        "modified_by": 1,
+        "created_by": 1,
+        "articletype": "epi-article",
+        "signature": "Signatur 2",
+        "name": "Artikel 2 f\u00fcr das Testsystem",
+        "sortno": null,
+        "status": "Status 2",
+        "norm_data": "normdata_2",
+        "norm_iri": "normiri_2",
+        "norm_type": null,
+        "lastopen_id": null,
+        "lastopen_tab": null,
+        "lastopen_field": null,
+        "lastopen_tagid": null,
+        "database": "projects"
+    }
+]

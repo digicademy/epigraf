@@ -1,0 +1,10 @@
+{
+    "properties": [],
+    "pagination": {
+        "count": 0,
+        "page": 1,
+        "page_prev": false,
+        "page_next": false,
+        "perpage": 100
+    }
+}

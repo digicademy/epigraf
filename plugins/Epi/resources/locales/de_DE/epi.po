@@ -1,0 +1,844 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2022-09-27 13:59+0000\n"
+"PO-Revision-Date: 2022-10-16 10:39+0200\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: Controller/AnalyticsController.php:183
+msgid "Orphans cleared"
+msgstr "Waisen gelöscht"
+
+#: Controller/AnalyticsController.php:185
+msgid "Orphans could not be cleared."
+msgstr "Die Waisen konnten nicht gelöscht werden."
+
+#: Controller/ArticlesController.php:84
+msgid "The article contains {0} items outside of a section. Ask your personal SQL hacker for help."
+msgstr "Der Artikel enthält {0} Einträge außerhalb eines Abschnitts. Bitten Sie Ihren persönlichen SQL-Hacker um Hilfe."
+
+#: Controller/ArticlesController.php:165
+msgid "Skipped {0} not geocoded records."
+msgstr "{0} Einträge ohne Geokodierung ausgelassen."
+
+#: Controller/ArticlesController.php:335
+#: Controller/PropertiesController.php:480
+#: Controller/PropertiesController.php:517
+msgid "The property has been saved."
+msgstr "Die Eigenschaft wurde gespeichert."
+
+#: Controller/ArticlesController.php:342
+#: Controller/PropertiesController.php:524
+msgid "Could not save property, please try again."
+msgstr "Die Eigenschaft konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ArticlesController.php:370
+msgid "The article has been created."
+msgstr "Der Artikel wurde erstellt."
+
+#: Controller/ArticlesController.php:374
+msgid "The article could not be created. Please, try again."
+msgstr "Der Artikel konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ArticlesController.php:397
+msgid "The article has been deleted."
+msgstr "Der Artikel wurde gelöscht."
+
+#: Controller/ArticlesController.php:402
+msgid "The article could not be deleted. Please, try again."
+msgstr "Der Artikel konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ArticlesController.php:439
+msgid "The record is open in EpiDesktop. You must not change data in EpiWeb."
+msgstr "Der Datensatz ist in EpiDesktop geöffnet. Sie dürfen keine Daten in EpiWeb ändern."
+
+#: Controller/ArticlesController.php:474
+#: Controller/Component/TransferComponent.php:225
+#: Controller/Component/TransferComponent.php:342
+msgid "The job could not be created. Please, try again."
+msgstr "Der Job konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ArticlesController.php:486
+msgid "Recovered tree of article {0}"
+msgstr "Baumstruktur von Artikel {0} wiederhergestellt"
+
+#: Controller/Component/TransferComponent.php:161
+msgid "The file has been uploaded."
+msgstr "Die Datei wurde hochgeladen."
+
+#: Controller/Component/TransferComponent.php:170
+msgid "The file could not be uploaded: {0}"
+msgstr "Die Datei konnte nicht hochgeladen werden: {0}"
+
+#: Controller/NotesController.php:70 Sections/view_meta.php:15
+msgid "Notes"
+msgstr "Notizen"
+
+#: Controller/NotesController.php:146 Controller/NotesController.php:178
+msgid "The note has been saved."
+msgstr "Die Notiz wurde gespeichert."
+
+#: Controller/NotesController.php:152 Controller/NotesController.php:185
+msgid "The note could not be saved. Please, try again."
+msgstr "Die Notiz konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: Controller/NotesController.php:241
+msgid "The note has been deleted."
+msgstr "Die Notiz wurde gelöscht."
+
+#: Controller/NotesController.php:245
+msgid "The note could not be deleted. Please, try again."
+msgstr "Die Notiz konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ProjectsController.php:115 Controller/ProjectsController.php:137
+msgid "The project has been saved."
+msgstr "Das Projekt wurde gespeichert."
+
+#: Controller/ProjectsController.php:121
+msgid "Could not save project, please try again."
+msgstr "Das Projekt konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ProjectsController.php:140
+msgid "The project could not be saved. Please, try again."
+msgstr "Das Projekt konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ProjectsController.php:161
+msgid "The project has been deleted."
+msgstr "Das Projekt wurde gelöscht."
+
+#: Controller/ProjectsController.php:166
+msgid "The project could not be deleted. Please, try again."
+msgstr "Das Projekt konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: Controller/ProjectsController.php:177
+#: Controller/PropertiesController.php:471
+#: Controller/PropertiesController.php:547
+#: Controller/PropertiesController.php:692
+msgid "The table is open in EpiDesktop. You must not change data in EpiWeb."
+msgstr "Die Tabelle ist in EpiDesktop geöffnet. Sie dürfen in EpiWeb keine Daten ändern."
+
+#: Controller/PropertiesController.php:234
+msgid "The propertytype {0} does not exist in the types table."
+msgstr "Der Eigenschaftstyp {0} ist in der Typentabelle nicht vorhanden."
+
+#: Controller/PropertiesController.php:417
+msgid "Recovered tree of property type {0}"
+msgstr "Baum des Eigenschaftstyps {0} widerhergestellt"
+
+#: Controller/PropertiesController.php:424
+msgid "Recovered tree of all properties"
+msgstr "Baum aller Eigenschaften wiederhergestellt"
+
+#: Controller/PropertiesController.php:484
+msgid "The property could not be saved. Please, try again."
+msgstr "Die Eigenschaft konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: Controller/PropertiesController.php:570
+#: Controller/PropertiesController.php:628
+msgid "Only post requests are allowed."
+msgstr "Es sind nur Post-Anfragen erlaubt."
+
+#: Controller/TypesController.php:149 Controller/TypesController.php:179
+msgid "The type has been saved."
+msgstr "Der Typ wurde gespeichert."
+
+#: Controller/TypesController.php:155 Controller/TypesController.php:182
+msgid "The type could not be saved. Please, try again."
+msgstr "Der Typ konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: Controller/TypesController.php:202
+msgid "The type has been deleted."
+msgstr "Der Typ wurde gelöscht."
+
+#: Controller/TypesController.php:205
+msgid "The type could not be deleted. Please, try again."
+msgstr "Der Typ konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: Model/Analytics/Analytics.php:171 Model/Analytics/Analytics.php:176
+msgid "yes"
+msgstr "ja"
+
+#: Model/Analytics/Analytics.php:171 Model/Analytics/Analytics.php:176
+msgid "no"
+msgstr "nein"
+
+#: Model/Analytics/Analytics.php:367
+msgid "{0} articles"
+msgstr "{0} Artikel"
+
+#: Model/Analytics/Analytics.php:370
+msgid "{0} paths"
+msgstr "{0} Pfade"
+
+#: Model/Entity/Article.php:180
+msgid "Sections"
+msgstr "Abschnitte"
+
+#: Model/Entity/Article.php:274
+msgid "None"
+msgstr "Keine"
+
+#: Model/Entity/Article.php:404
+msgid "Section"
+msgstr "Abschnitt"
+
+#: Model/Entity/Article.php:535
+msgid "Last modified"
+msgstr "Zuletzt bearbeitet"
+
+#: Model/Entity/Article.php:539
+msgid "Modified by"
+msgstr "Bearbeitet von"
+
+#: Model/Entity/Article.php:544
+msgid "Created on"
+msgstr "Erstellt am"
+
+#: Model/Entity/Article.php:549
+msgid "Created by"
+msgstr "Erstellt von"
+
+#: Model/Entity/Article.php:554 Articles/index.php:141
+msgid "Article type"
+msgstr "Artikeltyp"
+
+#: Model/Entity/Article.php:561
+msgid "Project"
+msgstr "Projekt"
+
+#: Model/Entity/Article.php:568 View/Helper/TypesHelper.php:192
+msgid "Title"
+msgstr "Titel"
+
+#: Model/Entity/Article.php:572
+msgid "Article number"
+msgstr "Artikelnummer"
+
+#: Model/Entity/Article.php:575
+msgid "Status"
+msgstr "Status"
+
+#: Model/Entity/Article.php:577 Sections/view_metrics.php:38
+msgid "Publication state"
+msgstr "Veröffentlichungsstatus"
+
+#: Model/Entity/Article.php:582 Model/Entity/Property.php:282
+#: Model/Entity/Property.php:292 Model/Entity/Type.php:201
+#: View/Helper/TypesHelper.php:193 Projects/index.php:30 Types/index.php:83
+msgid "IRI fragment"
+msgstr "IRI-Fragment"
+
+#: Model/Entity/Article.php:583
+msgid "Norm data"
+msgstr "Normdaten"
+
+#: Model/Entity/BaseEntity.php:417
+msgid "Error parsing XML: {0}"
+msgstr "Fehler beim Parsen von XML: {0}"
+
+#: Model/Entity/BaseEntity.php:426 Model/Entity/BaseEntity.php:489
+#: Model/Entity/Type.php:117
+msgid "Error parsing JSON: {0}"
+msgstr "Fehler beim Parsen von JSON: {0}"
+
+#: Model/Entity/BaseEntity.php:468 Model/Entity/BaseEntity.php:498
+#: Model/Entity/BaseEntity.php:552
+msgid "Error encoding JSON: {0}"
+msgstr "Fehler während der JSON-Kodierung: {0}"
+
+#: Model/Entity/BaseEntity.php:482
+msgid "Error injecting IDs: {0}"
+msgstr "Fehler beim Einfügen von IDs: {0}"
+
+#: Model/Entity/BaseEntity.php:544
+msgid "Error encoding XML: {0}"
+msgstr "Fehler während der XML-Kodierung: {0}"
+
+#: Model/Entity/BaseEntity.php:564
+msgid "Drafted"
+msgstr "Entwurf"
+
+#: Model/Entity/BaseEntity.php:565
+msgid "In progress"
+msgstr "In Bearbeitung"
+
+#: Model/Entity/BaseEntity.php:566
+msgid "Complete"
+msgstr "Vollständig"
+
+#: Model/Entity/BaseEntity.php:567 Projects/index.php:29
+msgid "Published"
+msgstr "Veröffentlicht"
+
+#: Model/Entity/BaseEntity.php:568
+msgid "Searchable"
+msgstr "Suchbar"
+
+#: Model/Entity/Project.php:110 Model/Entity/Property.php:257
+#: Model/Entity/Type.php:175 Projects/index.php:27 Types/index.php:75
+msgid "Name"
+msgstr "Name"
+
+#: Model/Entity/Project.php:111
+msgid "Shortname"
+msgstr "Kurzname"
+
+#: Model/Entity/Project.php:112 Model/Entity/Type.php:192 Types/index.php:76
+msgid "Description"
+msgstr "Beschreibung"
+
+#: Model/Entity/Project.php:114
+msgid "Veröffentlicht"
+msgstr "Veröffentlicht"
+
+#: Model/Entity/Project.php:115
+msgid "Created"
+msgstr "Erstellt"
+
+#: Model/Entity/Project.php:116
+msgid "Modified"
+msgstr "Bearbeitet"
+
+#: Model/Entity/Property.php:226
+msgid "Image"
+msgstr "Bild"
+
+#: Model/Entity/Property.php:228 Model/Entity/Property.php:290
+msgid "Parent"
+msgstr "Elternknoten"
+
+#: Model/Entity/Property.php:241 Model/Entity/Property.php:289
+msgid "Ancestors"
+msgstr "Vorfahren"
+
+#: Model/Entity/Property.php:245
+msgid "Lemma"
+msgstr "Lemma"
+
+#: Model/Entity/Property.php:247 Model/Entity/Property.php:291
+msgid "Related"
+msgstr "Verweis"
+
+#: Model/Entity/Property.php:259
+msgid "Meta property"
+msgstr "Meta-Eigenschaft"
+
+#: Model/Entity/Property.php:269
+msgid "Sort Key"
+msgstr "Sortierschlüssel"
+
+#: Model/Entity/Property.php:270
+msgid "Unit"
+msgstr "Einheit"
+
+#: Model/Entity/Property.php:272
+msgid "Elements"
+msgstr "Elemente"
+
+#: Model/Entity/Property.php:273
+msgid "Source"
+msgstr "Quelle"
+
+#: Model/Entity/Property.php:278 Model/Entity/Type.php:183
+#: Analytics/integrity.php:40
+msgid "Number"
+msgstr "Nummer"
+
+#: Model/Entity/Type.php:177 Types/index.php:77 element/transfer.php:61
+msgid "Scope"
+msgstr "Bereich"
+
+#: Model/Entity/Type.php:185
+msgid "Category"
+msgstr "Kategorie"
+
+#: Model/Entity/Type.php:190 Types/index.php:74
+msgid "Caption"
+msgstr "Überschrift"
+
+#: Model/Entity/Type.php:195 Types/view.php:46
+msgid "Config"
+msgstr "Konfiguration"
+
+#: Model/Table/PropertiesTable.php:237
+msgid "Self-links will collapse the universe. Don't."
+msgstr "Selbstbezüge lassen das Universum kollabieren. Nicht."
+
+#: View/Helper/TypesHelper.php:191
+msgid "Signature"
+msgstr "Signatur"
+
+#: Analytics/files.php:36
+msgid "Item type"
+msgstr "Itemtyp"
+
+#: Analytics/files.php:37 Analytics/files.php:60
+msgid "File type"
+msgstr "Dateityp"
+
+#: Analytics/files.php:38 Analytics/files.php:61
+msgid "Wanted"
+msgstr "Erwünscht"
+
+#: Analytics/files.php:39
+msgid "Online"
+msgstr "Online"
+
+#: Analytics/files.php:40
+msgid "Available"
+msgstr "Verfügbar"
+
+#: Analytics/files.php:41 Analytics/files.php:62
+msgid "Missing"
+msgstr "Fehlend"
+
+#: Analytics/files_cases.php:39 Analytics/files_cases.php:65
+#: Analytics/integrity.php:44 Analytics/integrity_cases.php:34
+#: Articles/index_table.php:69 Projects/index.php:31 Properties/index.php:127
+#: Types/index.php:84
+msgid "Actions"
+msgstr "Aktionen"
+
+#: Analytics/files_cases.php:52 Analytics/files_cases.php:75
+#: Articles/index_table.php:89 Properties/index.php:219 Types/index.php:121
+msgid "View"
+msgstr "Ansicht"
+
+#: Analytics/files_cases.php:86 Articles/index.php:248 Properties/index.php:254
+msgid " records"
+msgstr " Datensätze"
+
+#: Analytics/files_cases.php:89 Articles/index.php:269 Articles/view.php:163
+#: Properties/index.php:265
+msgid "CSV"
+msgstr "CSV"
+
+#: Analytics/files_cases.php:90 Articles/index.php:270 Articles/view.php:149
+#: Properties/index.php:266
+msgid "XML"
+msgstr "XML"
+
+#: Analytics/files_cases.php:91 Articles/index.php:271 Articles/view.php:156
+#: Properties/index.php:267
+msgid "JSON"
+msgstr "JSON"
+
+#: Analytics/integrity.php:25
+msgid "Clear orphans"
+msgstr "Waisen bereinigen"
+
+#: Analytics/integrity.php:27
+msgid "Are you sure you want to clear all orphans?"
+msgstr "Sind Sie sicher, dass Sie alle Waisen löschen wollen?"
+
+#: Analytics/integrity.php:32
+msgid "Danger zone! Operations on this page may severely damage content.<br> Data can get lost forever!"
+msgstr "Achtung! Operationen auf dieser Seite können den Inhalt schwer beschädigen.<br> Daten können für immer verloren gehen!"
+
+#: Analytics/integrity.php:41
+msgid "Current"
+msgstr "Aktuell"
+
+#: Analytics/integrity.php:42
+msgid "Target"
+msgstr "Ziel"
+
+#: Analytics/integrity.php:43 Analytics/types.php:43
+msgid "Type"
+msgstr "Typ"
+
+#: Analytics/integrity.php:56
+msgid "Show"
+msgstr "Anzeigen"
+
+#: Analytics/integrity.php:59
+msgid "Clear"
+msgstr "Löschen"
+
+#: Analytics/integrity.php:60
+msgid "Are you sure you want to clear the selected orphans?"
+msgstr "Sind Sie sicher, dass Sie die ausgewählten Waisen löschen wollen?"
+
+#: Analytics/integrity_cases.php:28 Articles/index.php:260
+#: element/transfer.php:56
+msgid "Table"
+msgstr "Tabelle"
+
+#: Analytics/integrity_cases.php:29
+msgid "Id"
+msgstr "Id"
+
+#: Analytics/integrity_cases.php:31
+msgid "Linked table"
+msgstr "Verknüpfte Tabelle"
+
+#: Analytics/integrity_cases.php:32
+msgid "Linked Id"
+msgstr "Verknüpfte Id"
+
+#: Analytics/integrity_cases.php:47
+msgid "Open"
+msgstr "Öffnen"
+
+#: Analytics/integrity_cases.php:48
+msgid "Desktop"
+msgstr "Desktop"
+
+#: Analytics/types.php:59
+msgid "total"
+msgstr "gesamt"
+
+#: Articles/add.php:22
+msgid "Create article"
+msgstr "Artikel erstellen"
+
+#: Articles/add.php:33 Articles/delete.php:28 Articles/recovertree.php:31
+#: Articles/recovertree.php:36 Articles/view.php:181 Projects/add.php:33
+#: Projects/delete.php:28 Projects/edit.php:34 Properties/add.php:44
+#: Properties/edit.php:44 Properties/recovertree.php:31
+#: Properties/recovertree.php:36 Types/add.php:45 Types/delete.php:40
+#: Types/edit.php:49 element/import.php:34 element/import.php:99
+#: element/transfer.php:92 element/transfer.php:151
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: Articles/add.php:40
+msgid "Create"
+msgstr "Erstellen"
+
+#: Articles/delete.php:20
+msgid "Delete article"
+msgstr "Artikel löschen"
+
+#: Articles/delete.php:26
+msgid "Are you sure you want to delete the article \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie den Artikel \"{0}\" löschen wollen?"
+
+#: Articles/delete.php:29 Articles/recovertree.php:39 Projects/delete.php:29
+#: Projects/index.php:50 Properties/recovertree.php:39 Types/delete.php:41
+msgid "Yes"
+msgstr "Ja"
+
+#: Articles/images.php:66 Articles/index.php:41 Articles/view.php:79
+#: Projects/index.php:19 Projects/index.php:54 Properties/index.php:52
+#: Types/index.php:39
+msgid "Details"
+msgstr "Details"
+
+#: Articles/images.php:83
+msgid "View article"
+msgstr "Artikel anzeigen"
+
+#: Articles/index.php:45 Properties/add.php:29 Properties/choose.php:31
+#: Properties/edit.php:29 Properties/view.php:26
+msgid "Properties"
+msgstr "Eigenschaften"
+
+#: Articles/index.php:96
+msgid "Filter properties"
+msgstr "Eigenschaften filtern"
+
+#: Articles/index.php:113 Properties/index.php:60
+msgid "Search"
+msgstr "Suche"
+
+#: Articles/index.php:121
+msgid "Search articles"
+msgstr "Artikel suchen"
+
+#: Articles/index.php:164 Articles/index.php:173 Projects/add.php:20
+#: Projects/edit.php:20 Projects/view.php:21
+msgid "Projects"
+msgstr "Projekte"
+
+#: Articles/index.php:207
+msgid "Sort by"
+msgstr "Sortieren nach"
+
+#: Articles/index.php:249 Properties/index.php:255
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: Articles/index.php:250 element/transfer.php:70
+msgid "Recover trees"
+msgstr "Baumstrukturen wiederherstellen"
+
+#: Articles/index.php:251 Projects/index.php:70 Properties/index.php:256
+#: Types/index.php:141 element/import.php:22 element/import.php:98
+#: element/transfer.php:150
+msgid "Import"
+msgstr "Importieren"
+
+#: Articles/index.php:252 Properties/index.php:257 Types/index.php:140
+#: element/transfer.php:27
+msgid "Transfer"
+msgstr "Transfer"
+
+#: Articles/index.php:261
+msgid "Tiles"
+msgstr "Kacheln"
+
+#: Articles/index.php:262
+msgid "Map"
+msgstr "Karte"
+
+#: Articles/index.php:272 Articles/view.php:116 Projects/index.php:56
+msgid "Export"
+msgstr "Exportieren"
+
+#: Articles/recovertree.php:22 Properties/index.php:258
+#: Properties/recovertree.php:22
+msgid "Recover tree"
+msgstr "Baumstruktur wiederherstellen"
+
+#: Articles/recovertree.php:29
+msgid "Do you want to recover the tree structure of record {0}?"
+msgstr "Möchten Sie die Baumstruktur von Datensatz {0} wiederherstellen?"
+
+#: Articles/recovertree.php:34
+msgid "Do you want to recover the tree structure of all articles?"
+msgstr "Möchten Sie die Baumstruktur aller Artikel wiederherstellen?"
+
+#: Articles/view.php:86 Projects/index.php:55 Projects/view.php:29
+#: Properties/view.php:34 Types/index.php:122 Types/view.php:38
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: Articles/view.php:95
+msgid "Recover section tree"
+msgstr "Baumstruktur der Abschnitte wiederherstellen"
+
+#: Articles/view.php:109
+msgid "EpiDesktop"
+msgstr "EpiDesktop"
+
+#: Articles/view.php:129
+msgid "Download"
+msgstr "Herunterladen"
+
+#: Articles/view.php:141
+msgid "DIO"
+msgstr "DIO"
+
+#: Articles/view.php:174
+msgid "Save"
+msgstr "Speichern"
+
+#: Articles/view.php:187 Projects/edit.php:40 Types/edit.php:56
+msgid "Delete"
+msgstr "Löschen"
+
+#: Projects/add.php:21
+msgid "Create project"
+msgstr "Projekt erstellen"
+
+#: Projects/add.php:27 Projects/edit.php:28 Properties/add.php:38
+#: Properties/edit.php:38 Types/add.php:39 Types/edit.php:42
+msgid "Submit"
+msgstr "Absenden"
+
+#: Projects/delete.php:20
+msgid "Delete project"
+msgstr "Projekt löschen"
+
+#: Projects/delete.php:26
+msgid "Are you sure you want to delete the project \"{0}\" and all contained articles?"
+msgstr "Sind Sie sicher, dass Sie das Projekt \"{0}\" und alle enthaltenen Artikel löschen wollen?"
+
+#: Projects/index.php:26
+msgid "Short name"
+msgstr "Kurzname"
+
+#: Projects/index.php:28 Properties/index.php:38
+msgid "Articles"
+msgstr "Artikel"
+
+#: Projects/index.php:68
+msgid "New project"
+msgstr "Neues Projekt"
+
+#: Properties/index.php:39
+msgid "Items"
+msgstr "ITems"
+
+#: Properties/index.php:40
+msgid "Links"
+msgstr "Links"
+
+#: Properties/index.php:72
+msgid "Search properties"
+msgstr "Eigenschaften suchen"
+
+#: Properties/index.php:82
+msgid "Property type"
+msgstr "Eigenschaftstyp"
+
+#: Properties/index.php:174 Properties/index.php:177
+msgid "See {0}"
+msgstr "Siehe {0}"
+
+#: Properties/index.php:181 Properties/index.php:184
+msgid "Reference from {0}"
+msgstr "Verweis unter {0}"
+
+#: Properties/recovertree.php:29
+msgid "Do you want to recover the tree structure of the propertytype {0}?"
+msgstr "Möchten Sie die Baumstruktur des Eigenschaftstyps {0} wiederherstellen?"
+
+#: Properties/recovertree.php:34
+msgid "Do you want to recover the tree structure of all properties?"
+msgstr "Möchten Sie die Baumstruktur aller Eigenschaften wiederherstellen?"
+
+#: Sections/sec_grid.php:70
+msgid "{0} item(s) could not be positioned on the grid."
+msgstr "{0} Einträge konnten nicht im Raster positioniert werden."
+
+#: Sections/sec_stack.php:43
+msgid "Content"
+msgstr "Inhalt"
+
+#: Sections/sec_stack.php:43
+msgid "Property"
+msgstr "Eigenschaft"
+
+#: Sections/view_footnotes.php:36
+msgid "Footnotes"
+msgstr "Fußnoten"
+
+#: Sections/view_metrics.php:23
+msgid "Annotations"
+msgstr "Annotationen"
+
+#: Sections/view_metrics.php:28
+msgid "Full-text characters"
+msgstr "Volltextzeichen"
+
+#: Sections/view_metrics.php:33
+msgid "Mandatory content"
+msgstr "Pflichtinhalte"
+
+#: Types/add.php:22 Types/edit.php:24 Types/index.php:25 Types/view.php:21
+msgid "Types"
+msgstr "Typen"
+
+#: Types/add.php:30 Types/delete.php:29 Types/edit.php:32 Types/index.php:33
+#: Types/view.php:29
+msgid "Scopes"
+msgstr "Bereiche"
+
+#: Types/delete.php:22
+msgid "Delete type"
+msgstr "Typ löschen"
+
+#: Types/delete.php:38
+msgid "Are you sure you want to delete the type \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie den Typ \"{0}\" löschen wollen?"
+
+#: Types/index.php:51
+msgid "The following {0} types are missing: {1}."
+msgstr "Die folgenden {0} Typen fehlen: {1}."
+
+#: Types/index.php:139
+msgid "New Type"
+msgstr "Neuer Typ"
+
+#: element/import.php:24
+msgid "from"
+msgstr "von"
+
+#: element/import.php:25
+msgid "into"
+msgstr "zu"
+
+#: element/import.php:33 element/transfer.php:91
+msgid "Preview"
+msgstr "Vorschau"
+
+#: element/import.php:39 element/transfer.php:100
+msgid "{0} records"
+msgstr "{0} Datensätze"
+
+#: element/transfer.php:29
+msgid "from "
+msgstr "von "
+
+#: element/transfer.php:30
+msgid "to "
+msgstr "zu "
+
+#: element/transfer.php:41
+msgid "Source database"
+msgstr "Quelldatenbank"
+
+#: element/transfer.php:46
+msgid "Target database"
+msgstr "Zieldatenbank"
+
+#: element/transfer.php:66
+msgid "Options"
+msgstr "Optionen"
+
+#: element/transfer.php:77
+msgid "Parameters"
+msgstr "Parameter"
+
+msgid "The folder does not exist yet. Create the folder before adding files."
+msgstr "Der Ordner existiert noch nicht. Bitte erstellen Sie den Ordner, bevor Sie Dateien hinzufügen."
+
+msgid "{0} of the files and folders listed in the database are missing."
+msgstr "{0} der Dateien und Ordner in dieser Datenbank fehlen."
+
+msgid "The file record has been deleted."
+msgstr "Der Dateidatensatz wurde gelöscht."
+
+msgid "The file record could not be deleted. Please, try again."
+msgstr "Der Dateidatensatz konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+msgid "The folder has been deleted."
+msgstr "Der Ordner wurde gelöscht."
+
+msgid "The folder could not be deleted. Please, try again."
+msgstr "Der Ordner konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+msgid "The folder record has been deleted."
+msgstr "Der Ordnerdatensatz wurde gelöscht."
+
+msgid "The folder record could not be deleted. Please, try again."
+msgstr "Der Ordnerdatensatz konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+msgid "Upload File"
+msgstr "Datei hochladen"
+
+msgid "Add note"
+msgstr "Notiz hinzufügen"
+
+msgid "List Notes"
+msgstr "Notizen auflisten"
+
+msgid "previous"
+msgstr "vorige"
+
+msgid "next"
+msgstr "nächste"
+
+msgid "Edit Note"
+msgstr "Notiz bearbeiten"
+
+msgid "List Projects"
+msgstr "Projekte auflisten"
+
+msgid "Text"
+msgstr "Text"
+
+msgid "Database "
+msgstr "Datenbank "

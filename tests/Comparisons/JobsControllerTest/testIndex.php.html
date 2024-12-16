@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Pipelines    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web","settings":{"columns":{"jobs":[]}},"session":{"ui":[]}});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_jobs             action_index             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><span>Jobs</span></li></ul>                            </nav>
+                                            </div>
+
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+<!-- Breadcrumbs -->
+
+<!-- Content area -->
+<div class="content-main widget-scrollbox">
+    <table class="recordlist widget-table actions-toframe" data-filter-group="jobs" data-snippet="rows" data-model="jobs" data-sortdir="desc" data-sortkey="id"><thead><tr>
+<th scope="col" data-col="id"><button
+            type="button"
+            class="widget-dropdown widget-dropdown-toggle button-settings widget-filter-item widget-filter-item-columns"
+            data-toggle="jobs-settings-fields"
+            data-filter-group="jobs"
+            title="Select columns"
+            aria-label="Select columns">⚙</button><div id="jobs-settings-fields"
+            class="widget-dropdown-pane"
+            data-widget-dropdown-position="right"
+            data-snippet="jobs-settings-fields"><ul class="selector-columns selector-checkboxes"><li class="selector-reset">Reset selection</li><li data-value="id"><div class="input checkbox"><input type="hidden" name="fields[id]" value="0"><label for="fields-id"><input type="checkbox" name="fields[id]" value="1" checked="checked" id="fields-id">ID</label></div></li><li data-value="typ"><div class="input checkbox"><input type="hidden" name="fields[typ]" value="0"><label for="fields-typ"><input type="checkbox" name="fields[typ]" value="1" checked="checked" id="fields-typ">Type</label></div></li><li data-value="status"><div class="input checkbox"><input type="hidden" name="fields[status]" value="0"><label for="fields-status"><input type="checkbox" name="fields[status]" value="1" checked="checked" id="fields-status">Status</label></div></li><li data-value="progress"><div class="input checkbox"><input type="hidden" name="fields[progress]" value="0"><label for="fields-progress"><input type="checkbox" name="fields[progress]" value="1" checked="checked" id="fields-progress">Progress</label></div></li><li data-value="progressmax"><div class="input checkbox"><input type="hidden" name="fields[progressmax]" value="0"><label for="fields-progressmax"><input type="checkbox" name="fields[progressmax]" value="1" checked="checked" id="fields-progressmax">Max progress</label></div></li><li data-value="pipeline"><div class="input checkbox"><input type="hidden" name="fields[pipeline]" value="0"><label for="fields-pipeline"><input type="checkbox" name="fields[pipeline]" value="1" checked="checked" id="fields-pipeline">Pipeline</label></div></li><li data-value="database"><div class="input checkbox"><input type="hidden" name="fields[database]" value="0"><label for="fields-database"><input type="checkbox" name="fields[database]" value="1" checked="checked" id="fields-database">Database</label></div></li></ul></div><a class="desc" href="/jobs?sort=id&amp;direction=asc">ID</a></th>
+<th scope="col" data-col="typ"><a href="/jobs?sort=typ&amp;direction=asc">Type</a></th>
+<th scope="col" data-col="status"><a href="/jobs?sort=status&amp;direction=asc">Status</a></th>
+<th scope="col" data-col="progress"><a href="/jobs?sort=progress&amp;direction=asc">Progress</a></th>
+<th scope="col" data-col="progressmax"><a href="/jobs?sort=progressmax&amp;direction=asc">Max progress</a></th>
+<th scope="col" data-col="pipeline">Pipeline</th>
+<th scope="col" data-col="database">Database</th>
+<th scope="col" data-col="modified"><a href="/jobs?sort=modified&amp;direction=asc">Last modified</a></th>
+<th scope="col" data-col="created"><a href="/jobs?sort=created&amp;direction=asc">Created on</a></th>
+<th scope="col" class="actions">Actions</th></tr></thead><tbody data-list-name="jobs" data-list-action-next="" data-list-action-get="/jobs/index"><tr class="node item item-level-0 item-nochildren" data-list-itemof="jobs" data-id="2" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">2</div></td><td >export</td><td >work</td><td >1</td><td >4</td><td >Entwicklung4.4</td><td >epi_playground</td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/jobs/view/2" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren" data-list-itemof="jobs" data-id="1" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">1</div></td><td >export</td><td >download</td><td >5</td><td >4</td><td >Entwicklung4.4</td><td >epi_playground</td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/jobs/view/1" data-role="view">View</a></td></tr></tbody></table></div>
+
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default">2 records</span></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><a href="/jobs.csv" target="_blank" rel="nofollow" data-list-select="jobs" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/jobs.xml" target="_blank" rel="nofollow" data-list-select="jobs" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/jobs.json" target="_blank" rel="nofollow" data-list-select="jobs" data-list-param="id" class="">JSON</a></li><li><a href="/help/epiweb-jobs-index" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

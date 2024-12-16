@@ -1,0 +1,14 @@
+table;id;norm_iri;articletype;articlenumber;title;projects_id;name;shortname;sectiontype;parent_id;articles_id;sortno;sectionnumber;sectionname;layout_cols;layout_rows;comment;status;itemtype;sections_id;content;to_id;properties_id;propertytype;lemma
+projects;projects-int20;projectiri;;;;;Future books;lb;;;;;;;;;;;;;;;;;
+articles;articles-int2779;awesomeiri;object;Article #1;Awesome article about data;projects-int20;;;;;;;;;;;;;;;;;;;
+sections;sections-int2779;datasectioniri;;;;;;;text;;articles-int2779;1;1;All about data;0;0;Not finished yet;0;;;;;;;
+sections;sections-int155814;;;;;;;;newsectiontype;sections-int2779;articles-int2779;2;1;Subsetting data;0;0;;0;;;;;;;
+items;items-int326205;;;;;;;;;;articles-int2779;1;;;;;;;text;sections-int2779;This is the first sentence of the book.;;;;
+items;items-int110029;;;;;;;;;;articles-int2779;1;;;;;;;text;sections-int155814;The subchapter starts with this sentence.;;;;
+items;items-int215970;;;;;;;;;;articles-int2779;1;;;;;;;literature;sections-int155814;Better read this one.;;properties-int21989;;
+items;items-int198232;;;;;;;;;;articles-int2779;2;;;;;;;literature;sections-int155814;Headache.;;properties-int21987;;
+sections;sections-int1;;;;;;;;newsectiontype;;articles-int2779;1;1;Brand new section;0;0;;0;;;;;;;
+items;items-int1;;;;;;;;;;articles-int2779;1;;;;;;;fancyitem;sections-int1;What's in an item that is impossible?;;;;
+properties;properties-int21989;gooddoi;;;;;Good book;;;properties-int1;;2;;;;;;;;;;;;literature;Good
+properties;properties-int21987;;;;;;Bad book;;;properties-int1;;1;;;;;;;;;;;;literature;Bad
+properties;properties-int1;;;;;;Book collection;;;;;;;;;;;;;;;;;literature;Books

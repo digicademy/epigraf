@@ -1,0 +1,14 @@
+{
+    "property": {
+        "id": "properties-3",
+        "propertytype": "materials",
+        "level": 0,
+        "lft": 5,
+        "rght": 6,
+        "sortno": 2,
+        "sortkey": "PublicSortKnownMaterial",
+        "lemma": "PublicLemmaKnownMaterial",
+        "name": "PublicNameKnownMaterial",
+        "norm_iri": "knownmaterial"
+    }
+}

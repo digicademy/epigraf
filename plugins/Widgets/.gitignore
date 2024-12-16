@@ -1,0 +1,5 @@
+/composer.lock
+/phpunit.xml
+/vendor
+node_modules
+config/Migrations/schema-dump-default.lock

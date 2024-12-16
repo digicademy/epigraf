@@ -1,0 +1,1 @@
+/*eslint-disable*/module.exports={messages:JSON.parse("{\"Footnote\":\"Fußnote\",\"Reloading document\":\"Dokument wird neu geladen\",\"Open in new tab\":\"In neuem Tab öffnen\",\"Close\":\"Schließen\"}")};

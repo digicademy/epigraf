@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" processIsolation="false" stopOnFailure="false" bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./src</directory>
+      <directory suffix=".php">./plugins/*/src</directory>
+    </include>
+  </coverage>
+  <php>
+    <env name="PHPUNIT" value="true"/>
+    <ini name="memory_limit" value="-1"/>
+    <ini name="apc.enable_cli" value="1"/>
+  </php>
+  <!-- Add any additional test suites you want to run here -->
+  <testsuites>
+    <testsuite name="App Test Suite">
+      <directory>./tests/TestCase</directory>
+    </testsuite>
+    <!-- Add plugin test suites here. -->
+    <testsuite name="Epi Test Suite">
+      <directory>./plugins/Epi/tests/TestCase</directory>
+    </testsuite>
+    <testsuite name="Widgets Test Suite">
+      <directory>./plugins/Widgets/tests/TestCase</directory>
+    </testsuite>
+    <testsuite name="Files Test Suite">
+      <directory>./plugins/Files/tests/TestCase</directory>
+    </testsuite>
+  </testsuites>
+  <!-- Ignore vendor tests in code coverage reports -->
+  <extensions>
+    <extension class="\Cake\TestSuite\Fixture\PHPUnitExtension"/>
+  </extensions>
+</phpunit>

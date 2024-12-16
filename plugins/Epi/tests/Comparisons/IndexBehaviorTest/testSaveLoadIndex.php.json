@@ -1,0 +1,2247 @@
+{
+    "outputoptions": {
+        "propertytype": "outputoptions",
+        "properties": {
+            "6": {
+                "sections": {
+                    "17": {
+                        "id": 17,
+                        "articles_id": 1
+                    }
+                },
+                "id": 6,
+                "propertytype": "outputoptions",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Lemma A",
+                "lemma": "Lemma A",
+                "name": "Lemma A ",
+                "unit": "Lemma-Einheit",
+                "comment": "LemmaABemerkung",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Lemma,Lemmy,Schlaglemma",
+                "norm_data": "Lemma Lemma Lemmy Normdaten"
+            },
+            "5": {
+                "sections": {
+                    "17": {
+                        "id": 17,
+                        "articles_id": 1
+                    }
+                },
+                "id": 5,
+                "propertytype": "outputoptions",
+                "level": 0,
+                "lft": 8,
+                "rght": 13,
+                "sortno": 8,
+                "sortkey": "Lemma B",
+                "lemma": "Lemma B",
+                "name": "Lemma B ",
+                "comment": "Lemma B Bemerkung",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Lemma,Lemmy,Schlaglemma,Lemmo",
+                "norm_data": "Lemma B Norm"
+            }
+        }
+    },
+    "literature": {
+        "propertytype": "literature",
+        "properties": {
+            "12": {
+                "sections": {
+                    "16": {
+                        "id": 16,
+                        "articles_id": 1
+                    }
+                },
+                "id": 12,
+                "propertytype": "literature",
+                "level": 1,
+                "lft": 2,
+                "rght": 7,
+                "sortno": 2,
+                "sortkey": "Autor 1",
+                "lemma": "Autor 1",
+                "name": "Autor 1 ",
+                "unit": "Einheit Autor 1",
+                "comment": "Bemerk Aut 1",
+                "iscategory": 1,
+                "ishidden": 0,
+                "keywords": "Autor,Quelle,Karstadt",
+                "norm_data": "Autor 1 Normdaten"
+            },
+            "7": {
+                "sections": {
+                    "16": {
+                        "id": 16,
+                        "articles_id": 1
+                    },
+                    "14": {
+                        "id": 14,
+                        "articles_id": 1
+                    }
+                },
+                "id": 7,
+                "parent_id": 12,
+                "propertytype": "literature",
+                "level": 2,
+                "lft": 5,
+                "rght": 6,
+                "sortno": 5,
+                "sortkey": "Unterautor 2",
+                "lemma": "Unterautor 2",
+                "name": "Unterautor 2 ",
+                "unit": "Unterautor2 Einheit",
+                "comment": "Unterautor 2 Bemerkung",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Autor,Karstadt,Ursprung",
+                "norm_data": "Unterautor 2 Normdaten"
+            },
+            "10": {
+                "sections": {
+                    "14": {
+                        "id": 14,
+                        "articles_id": 1
+                    }
+                },
+                "id": 10,
+                "propertytype": "literature",
+                "level": 1,
+                "lft": 8,
+                "rght": 13,
+                "sortno": 8,
+                "sortkey": "Quelle 1",
+                "lemma": "Quelle 1",
+                "name": "Quelle 1 ",
+                "unit": "Quelleneinheit 1",
+                "comment": "Quelle bemerkung",
+                "iscategory": 1,
+                "ishidden": 0,
+                "keywords": "Quelle,Karstadt,Ursprung",
+                "norm_data": "Quelle Norm 1"
+            }
+        }
+    },
+    "locations": {
+        "propertytype": "locations",
+        "properties": {
+            "18": {
+                "sections": {
+                    "15": {
+                        "id": 15,
+                        "articles_id": 1
+                    }
+                },
+                "id": 18,
+                "propertytype": "locations",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Standort A",
+                "lemma": "Standort A",
+                "name": "Standort A ",
+                "unit": "EinheitStandordA",
+                "comment": "Standort A bemerkung",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Standort,Herkunft,Provenienz",
+                "norm_data": "Standortnorm A"
+            },
+            "14": {
+                "sections": {
+                    "15": {
+                        "id": 15,
+                        "articles_id": 1
+                    }
+                },
+                "id": 14,
+                "parent_id": 15,
+                "propertytype": "locations",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Standort B1",
+                "lemma": "Standort B1",
+                "name": "Standort B1 ",
+                "unit": "Standort B1 Einheit",
+                "comment": "Standort B1 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Standort,Provenienz,Herkunft",
+                "norm_data": "Standort B1 Norm"
+            },
+            "15": {
+                "id": 15,
+                "propertytype": "locations",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Standort B",
+                "lemma": "Standort B",
+                "name": "Standort B ",
+                "unit": "Standort B Einheit",
+                "comment": "Standort B Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Standort,Provenienz,Herkunft",
+                "norm_data": "Standort B Norm"
+            }
+        }
+    },
+    "conditions": {
+        "propertytype": "conditions",
+        "properties": {
+            "24": {
+                "sections": {
+                    "13": {
+                        "id": 13,
+                        "articles_id": 1
+                    }
+                },
+                "id": 24,
+                "propertytype": "conditions",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Zustand 1",
+                "lemma": "Zustand 1",
+                "name": "Zustand 1 ",
+                "unit": "Zustand 1 einheit",
+                "comment": "Zustand 1 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Zustand,Kondition",
+                "norm_data": "Zustand 1 Norm"
+            }
+        }
+    },
+    "materials": {
+        "propertytype": "materials",
+        "properties": {
+            "30": {
+                "sections": {
+                    "12": {
+                        "id": 12,
+                        "articles_id": 1
+                    }
+                },
+                "id": 30,
+                "propertytype": "materials",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Material 1",
+                "lemma": "Material 1",
+                "name": "Material 1 ",
+                "unit": "Material 1 Einheit",
+                "comment": "Material 1 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Material,Werkstoff",
+                "norm_data": "Material 1 Norm"
+            },
+            "26": {
+                "sections": {
+                    "12": {
+                        "id": 12,
+                        "articles_id": 1
+                    }
+                },
+                "id": 26,
+                "parent_id": 29,
+                "propertytype": "materials",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Material 2a",
+                "lemma": "Material 2a",
+                "name": "Material 2a",
+                "unit": "Material 2a Einheit",
+                "comment": "Material 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Material,Werkstoff",
+                "norm_data": "Material 2a Norm"
+            },
+            "29": {
+                "id": 29,
+                "propertytype": "materials",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Material 2",
+                "lemma": "Material 2",
+                "name": "Material 2 ",
+                "unit": "Material 2 Einheit",
+                "comment": "Material 2 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Material,Werkstoff",
+                "norm_data": "Material 2 Norm"
+            }
+        }
+    },
+    "objecttypes": {
+        "propertytype": "objecttypes",
+        "properties": {
+            "36": {
+                "sections": {
+                    "11": {
+                        "id": 11,
+                        "articles_id": 1
+                    }
+                },
+                "id": 36,
+                "propertytype": "objecttypes",
+                "level": 0,
+                "lft": 1,
+                "rght": 8,
+                "sortno": 1,
+                "sortkey": "Tr\u00e4ger 1",
+                "lemma": "Tr\u00e4ger 1",
+                "name": "Tr\u00e4ger 1 ",
+                "unit": "Tr\u00e4ger 1 Einheit",
+                "comment": "Tr\u00e4ger 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Tr\u00e4ger,Medium",
+                "norm_data": "Tr\u00e4ger 1 Norm"
+            },
+            "32": {
+                "sections": {
+                    "11": {
+                        "id": 11,
+                        "articles_id": 1
+                    }
+                },
+                "id": 32,
+                "parent_id": 35,
+                "propertytype": "objecttypes",
+                "level": 1,
+                "lft": 12,
+                "rght": 13,
+                "sortno": 8,
+                "sortkey": "Tr\u00e4ger 2a",
+                "lemma": "Tr\u00e4ger 2a",
+                "name": "Tr\u00e4ger 2a",
+                "unit": "Tr\u00e4ger 2a Einheit",
+                "comment": "Tr\u00e4ger 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Medium,Tr\u00e4ger",
+                "norm_data": "Tr\u00e4ger 2a Nordm"
+            },
+            "35": {
+                "id": 35,
+                "propertytype": "objecttypes",
+                "level": 0,
+                "lft": 9,
+                "rght": 14,
+                "sortno": 7,
+                "sortkey": "Tr\u00e4ger 2",
+                "lemma": "Tr\u00e4ger 2",
+                "name": "Tr\u00e4ger 2 ",
+                "unit": "Tr\u00e4ger 2 Einheit",
+                "comment": "Tr\u00e4ger 2 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Tr\u00e4ger,Medium",
+                "norm_data": "Tr\u00e4ger 2 Norm"
+            }
+        }
+    },
+    "measures": {
+        "propertytype": "measures",
+        "properties": {
+            "38": {
+                "sections": {
+                    "10": {
+                        "id": 10,
+                        "articles_id": 1
+                    }
+                },
+                "id": 38,
+                "parent_id": 42,
+                "propertytype": "measures",
+                "level": 1,
+                "lft": 2,
+                "rght": 3,
+                "sortno": 2,
+                "sortkey": "Ma\u00df 1a",
+                "lemma": "Ma\u00df 1a",
+                "name": "Ma\u00df 1a ",
+                "unit": "Ma\u00df 1a einheit",
+                "comment": "Ma\u00df 1a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Ma\u00dfangaben,Hektoliter",
+                "norm_data": "Ma\u00df 1a"
+            },
+            "42": {
+                "id": 42,
+                "propertytype": "measures",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Ma\u00df 1",
+                "lemma": "Ma\u00df 1",
+                "name": "Ma\u00df 1 ",
+                "unit": "Ma\u00df 1 Einheit",
+                "comment": "Ma\u00df 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Ma\u00dfangaben,Meter,Kilometer,Hektoliter",
+                "norm_data": "Ma\u00df 1 Norm"
+            },
+            "40": {
+                "sections": {
+                    "10": {
+                        "id": 10,
+                        "articles_id": 1
+                    }
+                },
+                "id": 40,
+                "parent_id": 41,
+                "propertytype": "measures",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Ma\u00df 2a",
+                "lemma": "Ma\u00df 2a",
+                "name": "Ma\u00df 2a ",
+                "unit": "Ma\u00df 2a Einheit",
+                "comment": "Ma\u00df 2a Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Ma\u00dfangaben,Meter",
+                "norm_data": "Ma\u00df 2a Norm"
+            },
+            "41": {
+                "id": 41,
+                "propertytype": "measures",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Ma\u00df 2",
+                "lemma": "Ma\u00df 2",
+                "name": "Ma\u00df 2 ",
+                "unit": "Ma\u00df 2 Einheit",
+                "comment": "Ma\u00df 2 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Ma\u00dfangaben,Meter,Kilometer",
+                "norm_data": "Ma\u00df 2 Norm"
+            }
+        }
+    },
+    "heraldry": {
+        "propertytype": "heraldry",
+        "properties": {
+            "44": {
+                "sections": {
+                    "9": {
+                        "id": 9,
+                        "articles_id": 1
+                    }
+                },
+                "id": 44,
+                "propertytype": "heraldry",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 1,
+                "sortkey": "wappen 001",
+                "name": "Wappen 1",
+                "comment": "Notizen Wappen 1",
+                "content": "Schild 1",
+                "elements": "Oberwappen 1<nl><\/nl>Verweis auf eine Marke: <rec_ma id=\"000004456303270875000000029487\" value=\"hm001.1121\"><\/rec_ma>",
+                "iscategory": 0,
+                "ishidden": 0,
+                "file_name": "1024px-Nautical_star.svg.png",
+                "source_from": "Nachweis Wappen 1"
+            },
+            "43": {
+                "sections": {
+                    "9": {
+                        "id": 9,
+                        "articles_id": 1
+                    }
+                },
+                "id": 43,
+                "propertytype": "heraldry",
+                "level": 0,
+                "lft": 3,
+                "rght": 4,
+                "sortno": 2,
+                "sortkey": "wappen 002",
+                "name": "Wappen 2",
+                "comment": "Notizen Wappen 2",
+                "content": "Schild 2<nl><\/nl>Literaturverweis: <nl><\/nl><rec_lit id=\"000004472261132811342592685794\" value=\"Quelle 1 \"><\/rec_lit>",
+                "elements": "Oberwappen 2",
+                "iscategory": 0,
+                "ishidden": 0,
+                "file_name": "15320_0_589.jpg",
+                "source_from": "Nachweis Wappen 2"
+            }
+        }
+    },
+    "brands": {
+        "propertytype": "brands",
+        "properties": {
+            "186": {
+                "sections": {
+                    "8": {
+                        "id": 8,
+                        "articles_id": 1
+                    }
+                },
+                "properties_id": 184,
+                "id": 186,
+                "propertytype": "brands",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 0,
+                "lemma": "Markeneintrag im Register",
+                "name": "hm001.1121",
+                "iscategory": 0,
+                "ishidden": 0,
+                "signature": "Nummer 1 im Band",
+                "file_name": "tp\/hm001.1121.svg"
+            },
+            "185": {
+                "sections": {
+                    "8": {
+                        "id": 8,
+                        "articles_id": 1
+                    }
+                },
+                "properties_id": 183,
+                "id": 185,
+                "propertytype": "brands",
+                "level": 0,
+                "lft": 0,
+                "rght": 0,
+                "sortno": 0,
+                "name": "hm002.2211",
+                "iscategory": 0,
+                "ishidden": 0,
+                "signature": "Nummer 2 im Band",
+                "file_name": "tp\/hm002.2211.svg"
+            }
+        }
+    },
+    "imagetypes": {
+        "propertytype": "imagetypes",
+        "properties": {
+            "50": {
+                "sections": {
+                    "7": {
+                        "id": 7,
+                        "articles_id": 1
+                    }
+                },
+                "id": 50,
+                "propertytype": "imagetypes",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Kategorie 1",
+                "lemma": "Kategorie 1",
+                "name": "Kategorie 1 ",
+                "unit": "Kategorie 1 Einheit",
+                "comment": "Kategorie 1 Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Kategorie,Category",
+                "norm_data": "Kategorie 1 Norm"
+            }
+        }
+    },
+    "placenames": {
+        "propertytype": "placenames",
+        "properties": {
+            "636": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 636,
+                "propertytype": "placenames",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 1,
+                "sortkey": "Ortsname 1 ",
+                "lemma": "Ortsname 1",
+                "name": "Ortsname 1 ",
+                "iscategory": 0,
+                "ishidden": 0
+            },
+            "642": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 642,
+                "propertytype": "placenames",
+                "level": 0,
+                "lft": 3,
+                "rght": 4,
+                "sortno": 3,
+                "sortkey": "Ortsname 2 ",
+                "lemma": "Ortsname 2",
+                "name": "Ortsname 2 ",
+                "iscategory": 0,
+                "ishidden": 0
+            },
+            "641": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 641,
+                "propertytype": "placenames",
+                "level": 0,
+                "lft": 5,
+                "rght": 6,
+                "sortno": 5,
+                "sortkey": "Ortsname 3 ",
+                "lemma": "Ortsname 3",
+                "name": "Ortsname 3 ",
+                "iscategory": 0,
+                "ishidden": 0
+            }
+        }
+    },
+    "personnames": {
+        "propertytype": "personnames",
+        "properties": {
+            "637": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 637,
+                "propertytype": "personnames",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 1,
+                "sortkey": "Personenname 1 ",
+                "lemma": "Personenname 1",
+                "name": "Personenname 1 ",
+                "iscategory": 0,
+                "ishidden": 0
+            }
+        }
+    },
+    "subjects": {
+        "propertytype": "subjects",
+        "properties": {
+            "638": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 638,
+                "propertytype": "subjects",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 1,
+                "sortkey": "Sacheintrag 1 ",
+                "lemma": "Sacheintrag 1",
+                "name": "Sacheintrag 1 ",
+                "iscategory": 0,
+                "ishidden": 0
+            }
+        }
+    },
+    "manufacturers": {
+        "propertytype": "manufacturers",
+        "properties": {
+            "639": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 639,
+                "propertytype": "manufacturers",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 1,
+                "sortkey": "Hersteller 1 ",
+                "lemma": "Hersteller 1",
+                "name": "Hersteller 1 ",
+                "iscategory": 0,
+                "ishidden": 0
+            }
+        }
+    },
+    "icons": {
+        "propertytype": "icons",
+        "properties": {
+            "640": {
+                "sections": {
+                    "6": {
+                        "id": 6,
+                        "articles_id": 1
+                    }
+                },
+                "id": 640,
+                "propertytype": "icons",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 1,
+                "sortkey": "Ikonografie 1 ",
+                "lemma": "Ikonografie 1",
+                "name": "Ikonografie 1 ",
+                "iscategory": 0,
+                "ishidden": 0
+            }
+        }
+    },
+    "captions": {
+        "propertytype": "captions",
+        "properties": {
+            "197": {
+                "sections": {
+                    "5": {
+                        "id": 5,
+                        "articles_id": 1
+                    }
+                },
+                "id": 197,
+                "propertytype": "captions",
+                "level": 0,
+                "lft": 25,
+                "rght": 26,
+                "sortkey": "Beschreibung",
+                "lemma": "Beschreibung",
+                "name": "Beschreibung",
+                "norm_iri": "di_description"
+            },
+            "201": {
+                "sections": {
+                    "4": {
+                        "id": 4,
+                        "articles_id": 1
+                    }
+                },
+                "id": 201,
+                "propertytype": "captions",
+                "level": 0,
+                "lft": 29,
+                "rght": 30,
+                "sortkey": "Gliederung: Ebene 1",
+                "lemma": "Gliederung: Ebene 1",
+                "name": "Gliederung: Ebene 1",
+                "norm_iri": "di_header1"
+            }
+        }
+    },
+    "texttypes": {
+        "propertytype": "texttypes",
+        "properties": {
+            "116": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 116,
+                "propertytype": "texttypes",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Textsorte 1",
+                "lemma": "Textsorte 1",
+                "name": "Textsorte 1 ",
+                "unit": "Textsorte 1 Einheit",
+                "comment": "Textsorte 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Textsorte,Text type",
+                "norm_data": "Textsorte 1 NOrm"
+            },
+            "112": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 112,
+                "parent_id": 113,
+                "propertytype": "texttypes",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Textsorte 2a",
+                "lemma": "Textsorte 2a",
+                "name": "Textsorte 2a",
+                "unit": "Textsorte 2a Einheit ",
+                "comment": "Textsorte 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Text type",
+                "norm_data": "Textsorte 2a Norm"
+            },
+            "113": {
+                "id": 113,
+                "propertytype": "texttypes",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Textsorte 2",
+                "lemma": "Textsorte 2",
+                "name": "Textsorte 2 ",
+                "unit": "Textsorte 2 Einheit",
+                "comment": "Textsorte 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Textsorte,Text type",
+                "norm_data": "Textsorte 2 Norm"
+            }
+        }
+    },
+    "fonttypes": {
+        "propertytype": "fonttypes",
+        "properties": {
+            "122": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 122,
+                "propertytype": "fonttypes",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Schriftart 1",
+                "lemma": "Schriftart 1",
+                "name": "Schriftart 1 ",
+                "unit": "Schriftart 1 Einheit",
+                "comment": "Schriftart 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Schriftart,Font",
+                "norm_data": "Schriftart 1 Norm"
+            },
+            "121": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 121,
+                "parent_id": 122,
+                "propertytype": "fonttypes",
+                "level": 1,
+                "lft": 2,
+                "rght": 3,
+                "sortno": 2,
+                "sortkey": "Schriftart 1a",
+                "lemma": "Schriftart 1a",
+                "name": "Schriftart 1a",
+                "unit": "Schriftart 1a Einheit",
+                "comment": "Schriftart 1a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Schriftart",
+                "norm_data": "Schriftart 1a Norm"
+            },
+            "119": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 119,
+                "propertytype": "fonttypes",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Schriftart 2",
+                "lemma": "Schriftart 2",
+                "name": "Schriftart 2 ",
+                "unit": "Schriftart 2 Einheit",
+                "comment": "Schriftart 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Schriftart,Font",
+                "norm_data": "Schriftart 2 Norm"
+            },
+            "118": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 118,
+                "parent_id": 119,
+                "propertytype": "fonttypes",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Schriftart 2a",
+                "lemma": "Schriftart 2a",
+                "name": "Schriftart 2a",
+                "unit": "Schriftart 2a Einheit",
+                "comment": "Schriftart 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Font",
+                "norm_data": "Schriftart 2a Norm"
+            }
+        }
+    },
+    "languages": {
+        "propertytype": "languages",
+        "properties": {
+            "128": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 128,
+                "propertytype": "languages",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Sprache 1",
+                "lemma": "Sprache 1",
+                "name": "Sprache 1 ",
+                "unit": "Sprache 1 einheit",
+                "comment": "Sprache 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Sprache,Language",
+                "norm_data": "Sprache 1 Norm"
+            },
+            "124": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 124,
+                "parent_id": 125,
+                "propertytype": "languages",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Sprache 2a",
+                "lemma": "Sprache 2a",
+                "name": "Sprache 2a",
+                "unit": "Sprache 2a Einheit",
+                "comment": "Sprache 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Language",
+                "norm_data": "Sprache 2a Norm"
+            },
+            "125": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 125,
+                "propertytype": "languages",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Sprache 2",
+                "lemma": "Sprache 2",
+                "name": "Sprache 2 ",
+                "unit": "Sprache 2 Einheit",
+                "comment": "Sprache 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Sprache,Language",
+                "norm_data": "Sprache 2 Norm"
+            }
+        }
+    },
+    "techniques": {
+        "propertytype": "techniques",
+        "properties": {
+            "134": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 134,
+                "propertytype": "techniques",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Ausf\u00fchrungstechnik 1",
+                "lemma": "Ausf\u00fchrungstechnik 1",
+                "name": "Ausf\u00fchrungstechnik 1 ",
+                "unit": "Ausf\u00fchrungstechnik 1 Einheit",
+                "comment": "Ausf\u00fchrungstechnik 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Ausf\u00fchrungstechnik,Technique",
+                "norm_data": "Ausf\u00fchrungstechnik 1 Norm"
+            },
+            "130": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 130,
+                "parent_id": 131,
+                "propertytype": "techniques",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 8,
+                "sortkey": "Ausf\u00fchrungstechnik 2a",
+                "lemma": "Ausf\u00fchrungstechnik 2a",
+                "name": "Ausf\u00fchrungstechnik 2a",
+                "unit": "Ausf\u00fchrungstechnik 2a Einheit",
+                "comment": "Ausf\u00fchrungstechnik 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Technique",
+                "norm_data": "Ausf\u00fchrungstechnik 2a Norm"
+            },
+            "131": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 131,
+                "propertytype": "techniques",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 7,
+                "sortkey": "Ausf\u00fchrungstechnik 2",
+                "lemma": "Ausf\u00fchrungstechnik 2",
+                "name": "Ausf\u00fchrungstechnik 2 ",
+                "unit": "Ausf\u00fchrungstechnik 2 Einheit",
+                "comment": "Ausf\u00fchrungstechnik 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Ausf\u00fchrungstechnik,Technique",
+                "norm_data": "Ausf\u00fchrungstechnik 2 Norm"
+            }
+        }
+    },
+    "epithets": {
+        "propertytype": "epithets",
+        "properties": {
+            "140": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 140,
+                "propertytype": "epithets",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Epithet 1",
+                "lemma": "Epithet 1",
+                "name": "Epithet 1 ",
+                "unit": "Epithet 1 Einheit",
+                "comment": "Epithet 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Epithet,Spitzname",
+                "norm_data": "Epithet 1 "
+            },
+            "136": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 136,
+                "parent_id": 137,
+                "propertytype": "epithets",
+                "level": 1,
+                "lft": 9,
+                "rght": 11,
+                "sortno": 9,
+                "sortkey": "Epithet 2a",
+                "lemma": "Epithet 2a",
+                "name": "Epithet 2a",
+                "unit": "Epithet 2a Einheit",
+                "comment": "Epithet 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Spitzname",
+                "norm_data": "Epithet 2a Norm"
+            },
+            "137": {
+                "id": 137,
+                "propertytype": "epithets",
+                "level": 0,
+                "lft": 8,
+                "rght": 14,
+                "sortno": 8,
+                "sortkey": "Epithet 2",
+                "lemma": "Epithet 2",
+                "name": "Epithet 2 ",
+                "unit": "Epithet 2 einheit",
+                "comment": "Epithet 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Epithet,Spitzname",
+                "norm_data": "Epithet 2 Norm"
+            },
+            "139": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 139,
+                "parent_id": 140,
+                "propertytype": "epithets",
+                "level": 1,
+                "lft": 2,
+                "rght": 4,
+                "sortno": 2,
+                "sortkey": "Epithet 1a",
+                "lemma": "Epithet 1a",
+                "name": "Epithet 1a",
+                "unit": "Epithet 1a Einheit",
+                "comment": "Epithet 1a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Epithet",
+                "norm_data": "Epithet 1a Norm"
+            }
+        }
+    },
+    "incipits": {
+        "propertytype": "incipits",
+        "properties": {
+            "146": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 146,
+                "propertytype": "incipits",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Initien 1",
+                "lemma": "Initien 1",
+                "name": "Initien 1 ",
+                "unit": "Initien 1 Einheit",
+                "comment": "Initien 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Initien,Anfang",
+                "norm_data": "Initien 1 Norm"
+            },
+            "142": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 142,
+                "parent_id": 143,
+                "propertytype": "incipits",
+                "level": 1,
+                "lft": 9,
+                "rght": 11,
+                "sortno": 9,
+                "sortkey": "Initien 2a",
+                "lemma": "Initien 2a",
+                "name": "Initien 2a",
+                "unit": "Initien 2a Einheit",
+                "comment": "Initien 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Anfang",
+                "norm_data": "Initien 2a  Norm"
+            },
+            "143": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 143,
+                "propertytype": "incipits",
+                "level": 0,
+                "lft": 8,
+                "rght": 14,
+                "sortno": 8,
+                "sortkey": "Initien 2",
+                "lemma": "Initien 2",
+                "name": "Initien 2 ",
+                "unit": "Initien 2 Einheit",
+                "comment": "Initien 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Initien,Anfang",
+                "norm_data": "Initien 2 Norm"
+            }
+        }
+    },
+    "formulas": {
+        "propertytype": "formulas",
+        "properties": {
+            "152": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 152,
+                "propertytype": "formulas",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Formel 1",
+                "lemma": "Formel 1",
+                "name": "Formel 1 ",
+                "unit": "Formel 1 Einheit",
+                "comment": "Formel 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Formel,Formula",
+                "norm_data": "Formel 1 Norm"
+            },
+            "148": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 148,
+                "parent_id": 149,
+                "propertytype": "formulas",
+                "level": 1,
+                "lft": 9,
+                "rght": 11,
+                "sortno": 9,
+                "sortkey": "Formel 2a",
+                "lemma": "Formel 2a",
+                "name": "Formel 2a",
+                "unit": "Formel 2a Einheit",
+                "comment": "Formel 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Formula",
+                "norm_data": "Formel 2a Norm"
+            },
+            "149": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 149,
+                "propertytype": "formulas",
+                "level": 0,
+                "lft": 8,
+                "rght": 14,
+                "sortno": 8,
+                "sortkey": "Formel 2",
+                "lemma": "Formel 2",
+                "name": "Formel 2 ",
+                "unit": "Formel 2 Einheit",
+                "comment": "Formel 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Formel,Formular",
+                "norm_data": "Formel 2 Norm"
+            }
+        }
+    },
+    "sources": {
+        "propertytype": "sources",
+        "properties": {
+            "158": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 158,
+                "propertytype": "sources",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Zitat 1",
+                "lemma": "Zitat 1",
+                "name": "Zitat 1 ",
+                "unit": "Zitat 1 Einheit",
+                "comment": "Zitat 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Zitat,Quote",
+                "norm_data": "Zitat 1 Norm"
+            },
+            "154": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 154,
+                "parent_id": 155,
+                "propertytype": "sources",
+                "level": 1,
+                "lft": 9,
+                "rght": 11,
+                "sortno": 9,
+                "sortkey": "Zitat 2a",
+                "lemma": "Zitat 2a",
+                "name": "Zitat 2a",
+                "unit": "Zitat 2a einheit",
+                "comment": "Zitat 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Quote",
+                "norm_data": "Zitat 2a Norm"
+            },
+            "155": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 155,
+                "propertytype": "sources",
+                "level": 0,
+                "lft": 8,
+                "rght": 14,
+                "sortno": 8,
+                "sortkey": "Zitat 2",
+                "lemma": "Zitat 2",
+                "name": "Zitat 2 ",
+                "unit": "Zitat 2 einheit",
+                "comment": "Zitat 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Zitat,Quote",
+                "norm_data": "Zitat 2 Norm"
+            },
+            "157": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 157,
+                "parent_id": 158,
+                "propertytype": "sources",
+                "level": 1,
+                "lft": 2,
+                "rght": 4,
+                "sortno": 2,
+                "sortkey": "Zitat 1a",
+                "lemma": "Zitat 1a",
+                "name": "Zitat 1a",
+                "unit": "Zitat 1a Einheit",
+                "comment": "Zitat 1a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Zitat",
+                "norm_data": "Zitat 1a Norm"
+            }
+        }
+    },
+    "initials": {
+        "propertytype": "initials",
+        "properties": {
+            "164": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 164,
+                "propertytype": "initials",
+                "level": 0,
+                "lft": 1,
+                "rght": 6,
+                "sortno": 1,
+                "sortkey": "Initiale 1",
+                "lemma": "Initiale 1",
+                "name": "Initiale 1 ",
+                "unit": "Initiale 1 Einheit",
+                "comment": "Initiale 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Initiale,Initial",
+                "norm_data": "Initiale 1 Norm"
+            },
+            "160": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 160,
+                "parent_id": 161,
+                "propertytype": "initials",
+                "level": 1,
+                "lft": 8,
+                "rght": 9,
+                "sortno": 9,
+                "sortkey": "Initiale 2a",
+                "lemma": "Initiale 2a",
+                "name": "Initiale 2a",
+                "unit": "Initiale 2a Einheit",
+                "comment": "Initiale 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Initial",
+                "norm_data": "Initiale 2a Norm"
+            },
+            "161": {
+                "id": 161,
+                "propertytype": "initials",
+                "level": 0,
+                "lft": 7,
+                "rght": 12,
+                "sortno": 8,
+                "sortkey": "Initiale 2",
+                "lemma": "Initiale 2",
+                "name": "Initiale 2 ",
+                "unit": "Initiale 2 Einheit",
+                "comment": "Initiale 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Initiale,Initial",
+                "norm_data": "Initiale 2 Norm"
+            },
+            "163": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 163,
+                "parent_id": 164,
+                "propertytype": "initials",
+                "level": 1,
+                "lft": 2,
+                "rght": 3,
+                "sortno": 2,
+                "sortkey": "Initiale 1a",
+                "lemma": "Initiale 1a",
+                "name": "Initiale 1a",
+                "unit": "Initiale 1a Einheit",
+                "comment": "Initiale 1a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Initiale",
+                "norm_data": "Initiale 1a Norm"
+            }
+        }
+    },
+    "metres": {
+        "propertytype": "metres",
+        "properties": {
+            "170": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    },
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 170,
+                "propertytype": "metres",
+                "level": 0,
+                "lft": 1,
+                "rght": 7,
+                "sortno": 1,
+                "sortkey": "Versma\u00df 1",
+                "lemma": "Versma\u00df 1",
+                "name": "Versma\u00df 1 ",
+                "unit": "Versma\u00df 1 Einheit",
+                "comment": "Versma\u00df 1 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Versma\u00df,Meter",
+                "norm_data": "Versma\u00df 1 Norm"
+            },
+            "166": {
+                "sections": {
+                    "3": {
+                        "id": 3,
+                        "articles_id": 1
+                    }
+                },
+                "id": 166,
+                "parent_id": 167,
+                "propertytype": "metres",
+                "level": 1,
+                "lft": 9,
+                "rght": 11,
+                "sortno": 9,
+                "sortkey": "Versma\u00df 2a",
+                "lemma": "Versma\u00df 2a",
+                "name": "Versma\u00df 2a",
+                "unit": "Versma\u00df 2a Einheit",
+                "comment": "Versma\u00df 2a Bemerk",
+                "iscategory": 1,
+                "ishidden": 1,
+                "keywords": "Meter",
+                "norm_data": "Versma\u00df 2a Norm"
+            },
+            "167": {
+                "sections": {
+                    "22": {
+                        "id": 22,
+                        "articles_id": 1
+                    }
+                },
+                "id": 167,
+                "propertytype": "metres",
+                "level": 0,
+                "lft": 8,
+                "rght": 14,
+                "sortno": 8,
+                "sortkey": "Versma\u00df 2",
+                "lemma": "Versma\u00df 2",
+                "name": "Versma\u00df 2 ",
+                "unit": "Versma\u00df 2 Einheit",
+                "comment": "Versma\u00df 2 Bemerk",
+                "iscategory": 0,
+                "ishidden": 0,
+                "keywords": "Versma\u00df,Meter",
+                "norm_data": "Versma\u00df 2 Norm"
+            }
+        }
+    },
+    "datakeys": {
+        "propertytype": "datakeys",
+        "properties": {
+            "514": {
+                "sections": {
+                    "162": {
+                        "id": 162,
+                        "articles_id": 2
+                    }
+                },
+                "id": 514,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 1,
+                "rght": 2,
+                "sortno": 17,
+                "sortkey": "di_number",
+                "lemma": "di_number",
+                "name": "di_number",
+                "norm_iri": "di_di_number"
+            },
+            "546": {
+                "sections": {
+                    "164": {
+                        "id": 164,
+                        "articles_id": 2
+                    }
+                },
+                "id": 546,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 33,
+                "rght": 34,
+                "sortno": 49,
+                "sortkey": "preliminaries",
+                "lemma": "preliminaries",
+                "name": "preliminaries",
+                "norm_iri": "di_preliminaries"
+            },
+            "518": {
+                "sections": {
+                    "166": {
+                        "id": 166,
+                        "articles_id": 2
+                    }
+                },
+                "id": 518,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 5,
+                "rght": 6,
+                "sortno": 63,
+                "sortkey": "prelim_series",
+                "lemma": "prelim_series",
+                "name": "prelim_series",
+                "norm_iri": "di_prelim_series"
+            },
+            "520": {
+                "sections": {
+                    "168": {
+                        "id": 168,
+                        "articles_id": 2
+                    }
+                },
+                "id": 520,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 7,
+                "rght": 8,
+                "sortno": 69,
+                "sortkey": "prelim_series_title",
+                "lemma": "prelim_series_title",
+                "name": "prelim_series_title",
+                "norm_iri": "di_prelim_series_title"
+            },
+            "522": {
+                "sections": {
+                    "170": {
+                        "id": 170,
+                        "articles_id": 2
+                    }
+                },
+                "id": 522,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 9,
+                "rght": 10,
+                "sortno": 67,
+                "sortkey": "prelim_series_number",
+                "lemma": "prelim_series_number",
+                "name": "prelim_series_number",
+                "norm_iri": "di_prelim_series_number"
+            },
+            "524": {
+                "sections": {
+                    "172": {
+                        "id": 172,
+                        "articles_id": 2
+                    }
+                },
+                "id": 524,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 11,
+                "rght": 12,
+                "sortno": 65,
+                "sortkey": "prelim_series_editor",
+                "lemma": "prelim_series_editor",
+                "name": "prelim_series_editor",
+                "norm_iri": "di_prelim_series_editor"
+            },
+            "526": {
+                "sections": {
+                    "174": {
+                        "id": 174,
+                        "articles_id": 2
+                    }
+                },
+                "id": 526,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 13,
+                "rght": 14,
+                "sortno": 75,
+                "sortkey": "prelim_sub_series",
+                "lemma": "prelim_sub_series",
+                "name": "prelim_sub_series",
+                "norm_iri": "di_prelim_sub_series"
+            },
+            "528": {
+                "sections": {
+                    "176": {
+                        "id": 176,
+                        "articles_id": 2
+                    }
+                },
+                "id": 528,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 15,
+                "rght": 16,
+                "sortno": 77,
+                "sortkey": "prelim_volume",
+                "lemma": "prelim_volume",
+                "name": "prelim_volume",
+                "norm_iri": "di_prelim_volume"
+            },
+            "530": {
+                "sections": {
+                    "178": {
+                        "id": 178,
+                        "articles_id": 2
+                    }
+                },
+                "id": 530,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 17,
+                "rght": 18,
+                "sortno": 81,
+                "sortkey": "prelim_volume_title",
+                "lemma": "prelim_volume_title",
+                "name": "prelim_volume_title",
+                "norm_iri": "di_prelim_volume_title"
+            },
+            "532": {
+                "sections": {
+                    "180": {
+                        "id": 180,
+                        "articles_id": 2
+                    }
+                },
+                "id": 532,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 19,
+                "rght": 20,
+                "sortno": 79,
+                "sortkey": "prelim_volume_subtitle",
+                "lemma": "prelim_volume_subtitle",
+                "name": "prelim_volume_subtitle",
+                "norm_iri": "di_prelim_volume_subtitle"
+            },
+            "534": {
+                "sections": {
+                    "182": {
+                        "id": 182,
+                        "articles_id": 2
+                    }
+                },
+                "id": 534,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 21,
+                "rght": 22,
+                "sortno": 83,
+                "sortkey": "prelim_year",
+                "lemma": "prelim_year",
+                "name": "prelim_year",
+                "norm_iri": "di_prelim_year"
+            },
+            "536": {
+                "sections": {
+                    "184": {
+                        "id": 184,
+                        "articles_id": 2
+                    }
+                },
+                "id": 536,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 23,
+                "rght": 24,
+                "sortno": 59,
+                "sortkey": "prelim_publisher",
+                "lemma": "prelim_publisher",
+                "name": "prelim_publisher",
+                "norm_iri": "di_prelim_publisher"
+            },
+            "538": {
+                "sections": {
+                    "186": {
+                        "id": 186,
+                        "articles_id": 2
+                    }
+                },
+                "id": 538,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 25,
+                "rght": 26,
+                "sortno": 57,
+                "sortkey": "prelim_print_note",
+                "lemma": "prelim_print_note",
+                "name": "prelim_print_note",
+                "norm_iri": "di_prelim_print_note"
+            },
+            "540": {
+                "sections": {
+                    "188": {
+                        "id": 188,
+                        "articles_id": 2
+                    }
+                },
+                "id": 540,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 27,
+                "rght": 28,
+                "sortno": 53,
+                "sortkey": "prelim_isbn",
+                "lemma": "prelim_isbn",
+                "name": "prelim_isbn",
+                "norm_iri": "di_prelim_isbn"
+            },
+            "542": {
+                "sections": {
+                    "190": {
+                        "id": 190,
+                        "articles_id": 2
+                    }
+                },
+                "id": 542,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 29,
+                "rght": 30,
+                "sortno": 61,
+                "sortkey": "prelim_rights",
+                "lemma": "prelim_rights",
+                "name": "prelim_rights",
+                "norm_iri": "di_prelim_rights"
+            },
+            "544": {
+                "sections": {
+                    "192": {
+                        "id": 192,
+                        "articles_id": 2
+                    }
+                },
+                "id": 544,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 31,
+                "rght": 32,
+                "sortno": 73,
+                "sortkey": "prelim_sponsors",
+                "lemma": "prelim_sponsors",
+                "name": "prelim_sponsors",
+                "norm_iri": "di_prelim_sponsors"
+            },
+            "548": {
+                "sections": {
+                    "196": {
+                        "id": 196,
+                        "articles_id": 2
+                    }
+                },
+                "id": 548,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 35,
+                "rght": 36,
+                "sortno": 51,
+                "sortkey": "prelim_biblio_note",
+                "lemma": "prelim_biblio_note",
+                "name": "prelim_biblio_note",
+                "norm_iri": "di_prelim_biblio_note"
+            },
+            "550": {
+                "sections": {
+                    "198": {
+                        "id": 198,
+                        "articles_id": 2
+                    }
+                },
+                "id": 550,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 37,
+                "rght": 38,
+                "sortno": 129,
+                "sortkey": "table_of_content",
+                "lemma": "table_of_content",
+                "name": "table_of_content",
+                "norm_iri": "di_table_of_content"
+            },
+            "552": {
+                "sections": {
+                    "200": {
+                        "id": 200,
+                        "articles_id": 2
+                    }
+                },
+                "id": 552,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 39,
+                "rght": 40,
+                "sortno": 47,
+                "sortkey": "prefaces",
+                "lemma": "prefaces",
+                "name": "prefaces",
+                "norm_iri": "di_prefaces"
+            },
+            "554": {
+                "sections": {
+                    "202": {
+                        "id": 202,
+                        "articles_id": 2
+                    }
+                },
+                "id": 554,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 41,
+                "rght": 42,
+                "sortno": 29,
+                "sortkey": "introduction",
+                "lemma": "introduction",
+                "name": "introduction",
+                "norm_iri": "di_introduction"
+            },
+            "568": {
+                "sections": {
+                    "208": {
+                        "id": 208,
+                        "articles_id": 2
+                    },
+                    "212": {
+                        "id": 212,
+                        "articles_id": 2
+                    }
+                },
+                "id": 568,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 55,
+                "rght": 56,
+                "sortno": 13,
+                "sortkey": "csv_table",
+                "lemma": "csv_table",
+                "name": "csv_table",
+                "norm_iri": "di_csv_table"
+            },
+            "562": {
+                "sections": {
+                    "210": {
+                        "id": 210,
+                        "articles_id": 2
+                    },
+                    "214": {
+                        "id": 214,
+                        "articles_id": 2
+                    }
+                },
+                "id": 562,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 49,
+                "rght": 50,
+                "sortno": 11,
+                "sortkey": "continuation",
+                "lemma": "continuation",
+                "name": "continuation",
+                "norm_iri": "di_continuation"
+            },
+            "564": {
+                "sections": {
+                    "234": {
+                        "id": 234,
+                        "articles_id": 2
+                    }
+                },
+                "id": 564,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 51,
+                "rght": 52,
+                "sortno": 133,
+                "lemma": "empty",
+                "norm_iri": "di_empty"
+            },
+            "566": {
+                "sections": {
+                    "238": {
+                        "id": 238,
+                        "articles_id": 2
+                    }
+                },
+                "id": 566,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 53,
+                "rght": 54,
+                "sortno": 7,
+                "sortkey": "articles",
+                "lemma": "articles",
+                "name": "articles",
+                "norm_iri": "di_articles"
+            },
+            "556": {
+                "sections": {
+                    "242": {
+                        "id": 242,
+                        "articles_id": 2
+                    }
+                },
+                "id": 556,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 43,
+                "rght": 44,
+                "sortno": 13,
+                "sortkey": "csv_table",
+                "lemma": "csv_table",
+                "name": "csv_table",
+                "norm_iri": "di_csv_table"
+            },
+            "570": {
+                "sections": {
+                    "244": {
+                        "id": 244,
+                        "articles_id": 2
+                    }
+                },
+                "id": 570,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 57,
+                "rght": 58,
+                "sortno": 27,
+                "sortkey": "indices",
+                "lemma": "indices",
+                "name": "indices",
+                "norm_iri": "di_indices"
+            },
+            "610": {
+                "sections": {
+                    "248": {
+                        "id": 248,
+                        "articles_id": 2
+                    },
+                    "276": {
+                        "id": 276,
+                        "articles_id": 2
+                    }
+                },
+                "id": 610,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 97,
+                "rght": 98,
+                "sortno": 3,
+                "lemma": "indexgroup",
+                "name": "indexgruppe",
+                "norm_iri": "di_indexgroup"
+            },
+            "576": {
+                "sections": {
+                    "250": {
+                        "id": 250,
+                        "articles_id": 2
+                    }
+                },
+                "id": 576,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 63,
+                "rght": 64,
+                "sortno": 109,
+                "sortkey": "properties_personennamen",
+                "lemma": "personnames",
+                "name": "index_personennamen",
+                "norm_iri": "di_personnames"
+            },
+            "578": {
+                "sections": {
+                    "252": {
+                        "id": 252,
+                        "articles_id": 2
+                    }
+                },
+                "id": 578,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 65,
+                "rght": 66,
+                "sortno": 93,
+                "sortkey": "properties_hersteller",
+                "lemma": "manufacturers",
+                "name": "index_hersteller",
+                "norm_iri": "di_manufacturers"
+            },
+            "580": {
+                "sections": {
+                    "254": {
+                        "id": 254,
+                        "articles_id": 2
+                    }
+                },
+                "id": 580,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 67,
+                "rght": 68,
+                "sortno": 107,
+                "sortkey": "properties_ortsnamen",
+                "lemma": "placenames",
+                "name": "index_ortsnamen",
+                "norm_iri": "di_placenames"
+            },
+            "606": {
+                "sections": {
+                    "282": {
+                        "id": 282,
+                        "articles_id": 2
+                    }
+                },
+                "id": 606,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 93,
+                "rght": 94,
+                "sortno": 119,
+                "sortkey": "properties_technik",
+                "lemma": "techniques",
+                "name": "index_technik",
+                "norm_iri": "di_techniques"
+            },
+            "630": {
+                "sections": {
+                    "306": {
+                        "id": 306,
+                        "articles_id": 2
+                    }
+                },
+                "id": 630,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 117,
+                "rght": 118,
+                "sortno": 41,
+                "sortkey": "marks",
+                "lemma": "marks",
+                "name": "marks",
+                "norm_iri": "di_marks"
+            },
+            "632": {
+                "sections": {
+                    "308": {
+                        "id": 308,
+                        "articles_id": 2
+                    }
+                },
+                "id": 632,
+                "propertytype": "datakeys",
+                "level": 0,
+                "lft": 119,
+                "rght": 120,
+                "sortno": 43,
+                "sortkey": "plates",
+                "lemma": "plates",
+                "name": "plates",
+                "norm_iri": "di_plates"
+            }
+        }
+    }
+}

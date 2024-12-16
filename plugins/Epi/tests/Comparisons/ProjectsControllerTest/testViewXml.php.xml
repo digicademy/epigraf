@@ -1,0 +1,6 @@
+<response>
+  <project id="projects-1" projecttype="epi" database="projects" norm_iri="bookiri">
+    <name>Testprojekt 1</name>
+    <signature>TP1</signature>
+  </project>
+</response>

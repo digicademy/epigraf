@@ -1,0 +1,29 @@
+[
+    {
+        "id": 14,
+        "deleted": 0,
+        "version_id": null,
+        "created": "2022-02-02T10:10:10+01:00",
+        "modified": "2022-02-02T12:12:12+01:00",
+        "type": "record",
+        "content": "errare humanum est ..."
+    },
+    {
+        "id": 24,
+        "deleted": 0,
+        "version_id": null,
+        "created": "2022-02-02T10:10:10+01:00",
+        "modified": "2022-02-02T12:12:12+01:00",
+        "type": "record",
+        "content": "mens sana in corpore sano ..."
+    },
+    {
+        "id": 25,
+        "deleted": 2,
+        "version_id": 24,
+        "created": "2022-02-02T10:10:10+01:00",
+        "modified": "2022-02-02T12:12:12+01:00",
+        "type": "record",
+        "content": "mens sana in corpore sano ..."
+    }
+]

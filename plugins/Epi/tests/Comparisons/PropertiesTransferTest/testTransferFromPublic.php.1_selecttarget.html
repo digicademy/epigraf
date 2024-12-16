@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Categories [public]    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/public/";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_properties             action_transfer             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >public &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks?database=public"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li><li class="" ><a href="/epi/public/articles">public</a></li></ul></div></li><li class="menu_database" ><a href="/epi/public/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/public/articles?load=1">Articles</a></li><li class="menu_database active" ><a href="/epi/public/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/public/files?load=1">Files</a></li><li class="menu_database" ><a href="/epi/public/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/public/types?load=1">Types</a></li><li class="menu_database" ><a href="/epi/public/users?load=1">Users</a></li><li class="menu_database" ><a href="/epi/public/analytics?load=1">Analytics</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=public">Pipelines</a></li><li class="menu_global" ><a href="/users?database=public">Users</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=public">Repository</a></li><li class="menu_global" ><a href="/help?database=public">Help</a></li><li class="menu_global" ><a href="/wiki?database=public">Wiki</a></li><li class="menu_global" ><a href="/?database=public">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2?database=public" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars?database=public" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><span>Transfer</span></li></ul></nav>                    </div>
+
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+<!-- Breadcrumbs -->
+
+<!-- Content area -->
+
+    <form method="get" accept-charset="utf-8" id="form-transfer" action="/epi/public/properties/transfer/materials">
+    <div class="transfer-databases content-tight">
+
+        <table class="vertical-table">
+            <tr>
+                <th scope="row">Source database</th>
+                <td>public</td>
+            </tr>
+
+            <tr>
+                <th scope="row">Target database</th>
+                <td>
+                                        <select name="target"><option value="">Select database</option><option value="projects">projects</option><option value="public">public</option></select>                </td>
+            </tr>
+
+            <tr>
+                <th scope="row">Table</th>
+                <td>properties</td>
+            </tr>
+                            <tr>
+                    <th scope="row">Scope</th>
+                    <td>materials</td>
+                </tr>
+
+
+            <tr><th scope="row">Options</th><td><div class="input checkbox"><input type="hidden" name="versions" value="0"><label for="versions"><input type="checkbox" name="versions" value="1" id="versions">Init versioning</label></div><div class="input checkbox"><input type="hidden" name="tree" value="0"><label for="tree"><input type="checkbox" name="tree" value="1" id="tree">Recover trees</label></div><div class="input checkbox"><input type="hidden" name="files" value="0"><label for="files"><input type="checkbox" name="files" value="1" id="files">Copy files</label></div></td></tr><tr><th scope="row">Snippets</th><td><div class="input checkbox"><input type="hidden" name="snippets[iris]" value="0"><label for="snippets-iris"><input type="checkbox" name="snippets[iris]" value="1" checked="checked" id="snippets-iris">iris</label></div><div class="input checkbox"><input type="hidden" name="snippets[published]" value="0"><label for="snippets-published"><input type="checkbox" name="snippets[published]" value="1" checked="checked" id="snippets-published">published</label></div><div class="input checkbox"><input type="hidden" name="snippets[search]" value="0"><label for="snippets-search"><input type="checkbox" name="snippets[search]" value="1" id="snippets-search">search</label></div><div class="input checkbox"><input type="hidden" name="snippets[editors]" value="0"><label for="snippets-editors"><input type="checkbox" name="snippets[editors]" value="1" id="snippets-editors">editors</label></div><div class="input checkbox"><input type="hidden" name="snippets[comments]" value="0"><label for="snippets-comments"><input type="checkbox" name="snippets[comments]" value="1" id="snippets-comments">comments</label></div></td></tr><tr><th scope="row">Publication states</th><td><div class="input checkbox"><input type="hidden" name="published[val_0]" value="0"><label for="published-val-0"><input type="checkbox" name="published[val_0]" value="1" id="published-val-0">Drafted</label></div><div class="input checkbox"><input type="hidden" name="published[val_1]" value="0"><label for="published-val-1"><input type="checkbox" name="published[val_1]" value="1" id="published-val-1">In progress</label></div><div class="input checkbox"><input type="hidden" name="published[val_2]" value="0"><label for="published-val-2"><input type="checkbox" name="published[val_2]" value="1" id="published-val-2">Complete</label></div><div class="input checkbox"><input type="hidden" name="published[val_3]" value="0"><label for="published-val-3"><input type="checkbox" name="published[val_3]" value="1" id="published-val-3">Published</label></div><div class="input checkbox"><input type="hidden" name="published[val_4]" value="0"><label for="published-val-4"><input type="checkbox" name="published[val_4]" value="1" id="published-val-4">Searchable</label></div></td></tr>
+            <tr>
+                <th scope="row">Parameters</th>
+                <td>
+                    <table class="nested-table"><tbody></tbody></table>                </td>
+            </tr>
+
+        </table>
+
+
+    </div>
+    </form>
+
+
+                                            <nav class="actions-content" data-snippet="actions-content">
+                            <ul class="action-menu"><li><a href="/epi/public/properties/index/materials" data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="button button_cancel widget-shortcut" data-role="cancel">Cancel</a></li><li><button data-shortcuts="Ctrl+S F10" title="Preview (Ctrl+S F10)" aria-label="Preview" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" autofocus="autofocus" form="form-transfer" data-role="submit" type="submit">Preview</button></li></ul>                        </nav>
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-epi-properties-transfer?database=public" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

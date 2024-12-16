@@ -1,0 +1,21 @@
+{
+    "notes": [
+        {
+            "id": 1,
+            "deleted": 0,
+            "version_id": null,
+            "job_id": null,
+            "published": 0,
+            "menu": 1,
+            "created_by": null,
+            "modified_by": 121,
+            "notetype": null,
+            "name": "Testnotiz",
+            "category": "Testkategorie",
+            "sortkey": "testnotiz",
+            "content": "<p>Inhalt der Testnotiz has been extended<\/p>",
+            "format": "html",
+            "norm_iri": "testnotiz"
+        }
+    ]
+}

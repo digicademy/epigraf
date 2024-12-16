@@ -1,0 +1,6 @@
+.git
+.gitlab
+.idea
+tmp
+vendor
+tests/Codeception/_output

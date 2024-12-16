@@ -1,0 +1,50 @@
+<?php
+
+return [
+  'Properties' => [
+    (int) 0 => [
+      'propertytype' => 'personnames',
+      'id' => '11078',
+      'import_db' => 'personen.mdb',
+      'import_id' => '385',
+      'name' => 'Völschow, Martin († 1590)',
+      'lemma' => 'Martin († 1590)',
+      'comment' => 'geboren:gestorben: 1590Vater: Völschow, Martin I (+1546)Mutter: Hundesteden, Gertrud (+)Gatten: 1.Beckmann, Elisabeth 2.Engelbrecht, ReginaVita: Ratsherr in Greifswald 1561-1590, Mitstifter der Marienkanzel {2}Seine Witwe Regina Engelbrecht kaufte am 2. April 1590 die Grabplattte mit der Nr. 7  in der Nikolaikirche, unter der Martin und später sie selbst bestattet wurden.',
+      'norm_data' => 'doida:13',
+      'norm_type' => 'doida',
+    ],
+    (int) 1 => [
+      'propertytype' => 'personnames',
+      'id' => '',
+      'import_db' => '',
+      'import_id' => '',
+      'name' => 'Völschow, Daniel',
+      'lemma' => 'Daniel',
+      'comment' => 'geboren:gestorben:Vater: Völschow, Martin II (+1590)Mutter: Engelbrecht, Regina (+)Gatten: 1.Bünsow, MargaretheVita: 1601 Greifswalder Bürger {3}',
+      'norm_data' => 'doida:14',
+      'norm_type' => 'doida',
+    ],
+    (int) 2 => [
+      'propertytype' => 'personnames',
+      'id' => '',
+      'import_db' => 'fiktiv.mdb',
+      'import_id' => '1',
+      'name' => 'Völschow, Evalina',
+      'lemma' => 'Evalina',
+      'comment' => 'nie gestorben',
+      'norm_data' => '',
+      'norm_type' => 'doida',
+    ],
+    (int) 3 => [
+      'propertytype' => 'personnames',
+      'id' => '',
+      'import_db' => '',
+      'import_id' => '',
+      'name' => 'Völschow, Adamoaro',
+      'lemma' => 'Adamaro',
+      'comment' => 'nie geboren',
+      'norm_data' => '',
+      'norm_type' => 'doida',
+    ],
+  ],
+];

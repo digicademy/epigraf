@@ -1,0 +1,113 @@
+{
+    "name": "epigraf/app",
+    "description": "Epigraf",
+    "version": "0.0.0.9000",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "cakephp/cakephp": "4.5.x",
+        "cakephp/migrations": "^3.0",
+        "cakephp/plugin-installer": "^1.3",
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "michelf/php-markdown": "1.9.1",
+        "components/jquery": "3.*",
+        "components/jqueryui": "1.*",
+        "enyo/dropzone": "5.x",
+        "friendsofcake/cakephp-csvview": "~4.0",
+        "masterexploder/phpthumb": "^2.1",
+        "bcrowe/cakephp-api-pagination": "^2.1",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-dom": "*",
+        "ext-xsl": "*",
+        "ext-zlib": "*",
+        "ext-zip": "*",
+        "ext-xmlreader": "*",
+        "ext-pdo": "*",
+        "ext-curl": "*",
+        "ext-posix": "*",
+        "lampager/lampager-cakephp": "^2.0",
+        "masterminds/html5": "^2.7",
+        "ivopetkov/html5-dom-document-php": "2.*",
+        "cakephp/bake": "^2.5"
+    },
+    "require-dev": {
+        "cakephp/cakephp-codesniffer": "~4.3.0",
+        "cakephp/debug_kit": "~4.11",
+        "josegonzalez/dotenv": "^3.2",
+        "phpunit/phpunit": "~9.5",
+        "psy/psysh": "@stable",
+        "codeception/codeception": "^5.2",
+        "codeception/module-phpbrowser": "^2.0",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-webdriver": "^3.0",
+        "codeception/visualception": "5.*",
+        "codeception/module-db": "~3.1",
+        "codeception/c3": "2.*"
+    },
+    "suggest": {
+        "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",
+        "phpunit/phpunit": "Allows automated tests to be run without system-wide install.",
+        "cakephp/cakephp-codesniffer": "Allows to check the code against the coding standards used in CakePHP."
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "./src/",
+            "Epi\\": "./plugins/Epi/src/",
+            "Widgets\\": "./plugins/Widgets/src/",
+            "Files\\": "./plugins/Files/src/",
+            "Rest\\": "./plugins/Rest/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Test\\": "./tests/",
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests/",
+            "Epi\\Test\\": "./plugins/Epi/tests/",
+            "Widgets\\Test\\": "./plugins/Widgets/tests/",
+            "Files\\Test\\": "./plugins/Files/tests/",
+            "Rest\\Test\\": "./plugins/Rest/tests/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": "App\\Console\\Installer::postInstall",
+        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
+        "post-update-cmd": "App\\Console\\Installer::postUpdate"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "olifolkerd/tabulator",
+                "version": "4.9.3",
+                "source": {
+                    "url": "https://github.com/olifolkerd/tabulator.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "jquery/jquery-mousewheel",
+                "version": "3.1.13",
+                "source": {
+                    "url": "https://github.com/jquery/jquery-mousewheel.git",
+                    "type": "git",
+                    "reference": "3.1.x"
+                }
+            }
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "cakephp/plugin-installer": true,
+            "codeception/c3": true
+        }
+    }
+}

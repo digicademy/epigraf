@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--
+  - Epigraf 5.0
+  -
+  - @author     Epigraf Team
+  - @contact    jakob.juenger@adwmainz.de
+  - @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+  -
+  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 200 200"
+   version="1.1"
+   id="svg8"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="close.svg">
+  <defs
+     id="defs2">
+    <clipPath
+       id="clip0">
+      <rect
+         x="698"
+         y="332"
+         width="334"
+         height="334"
+         id="rect833" />
+    </clipPath>
+    <clipPath
+       id="clip0-2">
+      <rect
+         x="695"
+         y="329"
+         width="340"
+         height="340"
+         id="rect852" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.67054455"
+     inkscape:cx="369.92755"
+     inkscape:cy="369.71965"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="974"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       clip-path="url(#clip0-2)"
+       transform="matrix(0.52941184,0,0,0.52941169,-357.94124,-164.17643)"
+       id="g859"
+       style="stroke:none;stroke-opacity:1">
+      <path
+         d="M 695.451,380.663 746.663,329.451 865,447.788 983.337,329.451 1034.55,380.663 916.212,499 1034.55,617.337 983.337,668.549 865,550.212 746.663,668.549 695.451,617.337 813.788,499 Z"
+         fill="#ffffff"
+         fill-rule="evenodd"
+         id="path857"
+         style="stroke:none;stroke-opacity:1" />
+    </g>
+  </g>
+</svg>

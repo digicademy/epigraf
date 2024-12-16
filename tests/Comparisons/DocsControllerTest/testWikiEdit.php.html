@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Hilfsmittel    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_wiki             action_edit             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global active" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+                <div class="frame-title">
+                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
+                </div>
+
+                <div class="frame-content">
+                    <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/wiki">List all</a></div><div class="tree-meta"></div></li><li class="category-meta node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/wiki?category=">Without category</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=A.+Inschriften+Online">A. Inschriften Online</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-nochildren" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=B.+Hilfsmittel">B. Hilfsmittel</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="4" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=C.+Repositorium">C. Repositorium</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="5" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=D.+Recherche">D. Recherche</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="6" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=E.+Organisation">E. Organisation</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-id="7" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=F.+Entwicklung">F. Entwicklung</a></div><div class="tree-meta"></div></li></ul></div>                </div>
+                <div class="frame-footer">
+                                            <form method="get" accept-charset="utf-8" id="search" action="/docs/index/wiki"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
+                </div></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/docs/index/wiki">Wiki</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Hilfsmittel</span></li></ul>                            </nav>
+                                            </div>
+
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+
+<!-- Content area -->
+<div class="widget-entity"><form method="post" accept-charset="utf-8" id="form-edit-docs-96" autocomplete="off" data-cancel-url="/docs/view/wiki/96" data-delete-url="/docs/delete/wiki/96" action="/docs/edit/wiki/96"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="lock" data-lock-url="/docs/lock/wiki/96.json" data-unlock-url="/docs/unlock/wiki/96.json" value="7"><table class="vertical-table" data-row-table="docs" data-row-id="96" data-row-type="wiki" data-row-model="docs" data-root-table="docs" data-root-id="96" data-file-basepath="wiki" data-file-defaultpath="b.hilfsmittel"><tr class="table-input-text" data-row-field="name"><th scope="row">Name</th><td><div class="input text"><input type="text" name="name" id="name" value="Hilfsmittel" maxlength="200"></div></td></tr><tr class="table-input-hidden" data-row-field="format"><th scope="row">format</th><td><input type="hidden" name="format" id="format" value="html"></td></tr><tr class="table-input-htmleditor" data-row-field="content"><td colspan="2"><h2>Content</h2><div class="input htmleditor"><textarea name="content" class="widget-htmleditor"><h5>Übersicht</h5>
+
+<p>A. Themenfelder:</p>
+
+<ul>
+<li><a href="#wb">Wörterbücher</a></li>
+<li><a href="#heraldik">Heraldik</a></li>
+<li><a href="#chrono">Chronologie und Chronographie</a></li>
+<li><a href="#theologie">Theologie und Kirche</a></li>
+<li><a href="#uni">Universität</a></li>
+<li><a href="#histo">Geschichtsquellen</a></li>
+<li><a href="#prosopo">Prosopographie</a></li>
+<li><a href="#geo">Historische Geographie</a></li>
+<li><a href="#kuge">Kunstgeschichte und Denkmalpflege</a></li>
+<li><a href="#glocken">Glockenkunde</a></li>
+<li><a href="#musik">Musik und Liturgie</a></li>
+<li><a href="#sigla">Abbreviaturen und Siglen</a></li>
+<li><a href="#attribute">Berufe, Titel, Stände, Verwandtschaften, Attribute</a></li>
+</ul>
+
+<p>B. Techniken:</p>
+
+<ul>
+<li><a href="#tastatur">Tastaturbelegung für Altgriechisch und Hebräisch</a></li>
+<li><a href="https://www.google.com/url?sa=t&amp;amp;rct=j&amp;amp;q=&amp;amp;esrc=s&amp;amp;source=web&amp;amp;cd=2&amp;amp;cad=rja&amp;amp;uact=8&amp;amp;ved=2ahUKEwjP9d-JlIfkAhUiIMUKHV8mALEQFjABegQIAhAC&amp;amp;url=http%3A%2F%2Fwww.provincia.bz.it%2Flandmaus%2Fde%2Flandmaus-online%2Ftipps-tricks.asp%3F%26somepubl_action%3D300%26somepubl_image_id%3D177668&amp;amp;usg=AOvVaw0baD5FjdxtI5Oubq8vsEiR">Verwendung "Regulärer Ausdrücke": Suchen und Ersetzen mit Mustervergleich/Platzhalter in Word</a></li>
+<li><a href="https://epigraf.inschriften.net/files/download?root=shared&amp;amp;path=wiki%2FHilfsmittel&amp;amp;filename=Krummrey-Panciera_CIL_VI_8_1_1.pdf">Explicatio notarum quae diacriticae dicuntur - Leidener Klammersystem mit den Erweiterungen von Krummrey und Panciera (CIL VII.8.1)</a></li>
+</ul>
+
+<hr />
+
+<p><a name="wb"></a></p>
+
+<h4>Wörterbücher</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="https://www.dwds.de/">DWDS – Digitales Wörterbuch der deutschen Sprache</a></li>
+<li><a href="http://www.woerterbuchnetz.de/cgi-bin/WBNetz/setupStartSeite.tcl">Wörterbuch-Netz - Historische und regionalsprachliche Wörterbücher des Deutschen</a></li>
+<li><a href="http://www.plattdeutsch-niederdeutsch.net/bibliographie/woerterbuecher.htm">Wörterbücher des Niederdeutschen</a></li>
+<li><a href="http://www.mhdwb-online.de/">Mittelhochdeutsches Wörterbuch (MWB Online)</a></li>
+<li><a href="https://de.wikisource.org/wiki/Mittelniederdeutsches_W%C3%B6rterbuch_(Schiller-L%C3%BCbben)">Schiller/Lübben, Mittelniederdeutsches Wörterbuch</a></li>
+<li><a href="https://fwb-online.de/">Frühneuhochdeutsches Wörterbuch (FWB online)</a></li>
+</ul>
+
+<hr />
+
+<ul>
+<li><a href="http://ducange.enc.sorbonne.fr/">Du Cange et al., Glossarium mediæ et infimæ latinitatis</a></li>
+<li><a href="http://linguax.com/lexica/forc.php">Forcellini (Totius Latinitatis Lexicon Aegidii Forcellini)</a></li>
+<li><a href="http://ciham-digital.huma-num.fr/enigma/">Enigma: Entziffern schwieriger lateinischer Lesarten in mittelalterlichen Handschriften</a></li>
+<li><a href="https://www.navigium.de/latein-woerterbuch.php?form">Navigium - Latein-Wörterbuch</a></li>
+<li><a href="https://www2.uni-mannheim.de/mateo/camenahtdocs/eureca.html">CAMENA EVRECA: Lateinwörterbücher aus der Frühen Neuzeit</a></li>
+</ul>
+
+<hr />
+
+<p><a name="heraldik"></a></p>
+
+<h4>Heraldik</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li>Nachschlag- und Sammelwerke adeliger Wappen <a href="http://wiki-de.genealogy.net/Nachschlag-_und_Sammelwerke_adeliger_Wappen">GenWiki  &amp;#8663;</a></li>
+</ul>
+
+<hr />
+
+<ul>
+<li>Siebmachers Wappenbücher <a href="http://data.cerl.org/siebmacher/_search">CerlOrg  &amp;#8663;</a></li>
+<li>Bagmihl, Pommersches Wappenbuch <a href="https://de.wikipedia.org/wiki/Pommersches_Wappenbuch">Wikipedia &amp;#8663;</a> <a href="http://wiki-de.genealogy.net/Pommersches_Wappenbuch_(Bagmihl)">GenWiki &amp;#8663;</a></li>
+<li>Spießen, Wappenbuch des Westfälischen Adels <a href="http://wiki-de.genealogy.net/Wappenbuch_des_westf%C3%A4lischen_Adels">GenWiki  &amp;#8663;</a></li>
+</ul>
+
+<hr />
+
+<p><a name="chrono"></a></p>
+
+<h4>Chronologie und Chronographie</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li>Grotefend, Zeitrechnung des deutschen Mittelalters und der Neuzeit, von Horst Ruth <a href="http://www.manuscripta-mediaevalia.de/gaeste/grotefend/grotefend.htm"> <em>manuscripta-mediaevalia</em> &amp;#8663;</a></li>
+<li><a href="http://people.albion.edu/imacinnes/calendar/Ecclesiastical_dates_files/widget1_markup.html">Ecclesiastical Date Calculator</a></li>
+</ul>
+
+<hr />
+
+<p><a name="theologie"></a></p>
+
+<h4>Theologie und Kirche</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<p>Bibelrecherche</p>
+
+<ul>
+<li><a href="https://www.bibleserver.com/">BibelServer</a></li>
+<li><a href="http://www.bibel-online.net/">BibelOnline</a></li>
+<li><a href="https://www.biblegateway.com/passage/?language=Latin">Biblegateway</a></li>
+<li><a href="http://markgoodacre.org/multibib/">All-in-One Biblical Resources Search</a></li>
+</ul>
+
+<hr />
+
+<p>Lexika</p>
+
+<ul>
+<li><a href="http://www.bbkl.de/">Biographisch-bibliographisches Kirchenlexikon (BBKL)</a></li>
+<li><a href="https://www.heiligenlexikon.de/">Ökumenisches Heiligenlexikon</a></li>
+<li><a href="https://www.bibelwissenschaft.de/wibilex/">WiBiLex - Das wissenschaftliche Bibellexikon im Internet (im Aufbau)</a></li>
+</ul>
+
+<hr />
+
+<p>Siglen</p>
+
+<ul>
+<li><a href="https://epigraf.inschriften.net/files/download?root=root&amp;amp;path=shared%2Fwiki%2FHilfsmittel&amp;amp;filename=Bibelnachweise.pdf">Siglen für Bibelnachweise (pdf)</a></li>
+</ul>
+
+<hr />
+
+<p>Bibel-Online-Ausgaben</p>
+
+<ol>
+<li>Moderne deutschsprachige Bibelausgaben:</li>
+</ol>
+
+<ul>
+<li><a href="https://www.bibleserver.com/">Luther-Bibel (2017) </a></li>
+<li><a href="https://www.bibleserver.com">Einheitsübersetzung (2016)</a></li>
+<li><a href="https://www.bibleserver.com">Zürcher Bibel</a></li>
+</ul>
+
+<ol start="2">
+<li>Lateinische Bibelausgaben:</li>
+</ol>
+
+<ul>
+<li><a href="http://vulsearch.sourceforge.net/html/">Vulgata Clementina</a></li>
+<li><a href="https://www.bibelwissenschaft.de/online-bibeln/biblia-sacra-vulgata/lesen-im-bibeltext/">Vulgata (Weber/Gryson)</a> Die Online-Ausgabe enthält im Unterschied zur gedruckten im Psalter nur das Psalterium iuxta Hebraeos, nicht aber das Gallicanum.</li>
+</ul>
+
+<ol start="3">
+<li>Evangelische deutschsprachige Bibelübersetzungen des 16. Jahrhunderts:</li>
+</ol>
+
+<ul>
+<li><a href="http://www.zeno.org/Literatur/M/Luther,+Martin/Luther-Bibel+1545">Luther-Bibel (1545), Edition</a></li>
+<li><a href="http://daten.digitale-sammlungen.de/~db/0005/bsb00051900/images/">Niederdeutsche Bibelübersetzung (Bugenhagen-Bibel, 1533), Vollfaksimile</a></li>
+<li><a href="http://www.digitale-bibliothek-mv.de/viewer/resolver?urn=urn%253Anbn%253Ade%253Agbv%253A9-g-1904456">Niederdeutsche Bibelübersetzung (Barther Bibel, 1588)</a></li>
+<li><a href="https://www.e-rara.ch/zuz/doi/10.3931/e-rara-17064">Zürcher Bibel (1531), Vollfaksimile</a></li>
+</ul>
+
+<ol start="4">
+<li>Katholische deutschsprachige Bibelübersetzungen des 16. Jahrhunderts (Katholische Korrekturbibeln):</li>
+</ol>
+
+<ul>
+<li><a href="http://digital.onb.ac.at/OnbViewer/viewer.faces?doc=ABO_%2BZ137159405">Hieronymus Emser, Neues Testament (1527), Vollfaksimile</a></li>
+<li><a href="http://daten.digitale-sammlungen.de/~db/0008/bsb00085341/images/">Johannes Dietenberger, Biblia Altes und Neues Testament (1534) Vollfaksimile</a></li>
+<li><a href="http://digital.onb.ac.at/OnbViewer/viewer.faces?doc=ABO_%2BZ137117101">Johannes Eck, Bibel Altes und Neues Testament (1537), Vollfaksimile</a></li>
+</ul>
+
+<ol start="5">
+<li><p><a href="https://www.bibelwissenschaft.de/online-bibeln/ueber-die-online-bibeln/">Deutsche Bibelgesellschaft: Online-Bibeln</a>
+Das Portal bietet Online-Ausgaben der hebräischen, griechischen, lateinischen und einzelner moderner deutschsprachiger Ausgaben. Unter dem Stichwort „Bibelkunde“ erklären sehr instruktive Artikel Aufbau, Inhalt und Texttradition einzelner Bibelbücher (<a href="https://www.bibelwissenschaft.de/wibilex/">WiBiLex</a>). Eine Zeitschrift „Die Bibel in der Kunst“ ist im Aufbau.</p></li>
+<li><p><a href="https://opacplus.bib-bvb.de/TouchPoint_touchpoint/start.do?SearchProfile=Altbestand&amp;amp;SearchType=2">VD 16</a>
+Vollfaksimiles historischer Bibelausgaben erreichbar über das Verzeichnis der Drucke des 16. Jahrhunderts.</p></li>
+</ol>
+
+<hr />
+
+<p><a name="uni"></a></p>
+
+<h4>Universität</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="http://rag-online.org/">RAG - Repertorium Academicum Germanicum - Die graduierten Gelehrten des Alten Reiches zwischen 1250 und 1550</a></li>
+<li><a href="http://genwiki.genealogy.net/Universit%C3%A4tsmatrikel">Universitätsmatrikel - GenWiki</a></li>
+</ul>
+
+<hr />
+
+<p><a name="histo"></a></p>
+
+<h4>Geschichtsquellen</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="http://www.mgh.de/">Monumenta Germaniae Historica (MGH)</a></li>
+<li><a href="http://www.regesta-imperii.de/startseite.html">Regesta Imperii</a></li>
+</ul>
+
+<hr />
+
+<p><a name="prosopo"></a></p>
+
+<h4>Prosopographie</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="http://www.biographie-portal.eu/">Biographie-Portal  - ADB, NDB u. a.</a></li>
+<li><a href="http://www.personalschriften.de/">Personalschriften</a></li>
+<li><a href="http://personendatenbank.germania-sacra.de/">Germania Sacra: Personendatenbank</a></li>
+<li><a href="http://194.242.233.132/denqRG/index.htm">Repertorium Germanicum (RG)</a></li>
+</ul>
+
+<hr />
+
+<p><a name="geo"></a></p>
+
+<h4>Historische Geographie</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="http://www.columbia.edu/acis/ets/Graesse/contents.html">Orbis Latinus online</a></li>
+<li><a href="http://www.personalschriften.de/datenbanken/thelo.html">Datenbank frühneuzeitlicher Ortsnamen: Thesaurus Locorum (THELO)</a></li>
+<li><a href="http://194.242.233.132/denqRG/index.htm">Repertorium Germanicum (RG)</a></li>
+<li><a href="https://www.geonames.org/">Geonames</a> Website zur Ermittlung geographischer Normdaten</li>
+</ul>
+
+<hr />
+
+<p><a name="kuge"></a></p>
+
+<h4>Kunstgeschichte und Denkmalpflege</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="https://de.wikisource.org/wiki/Kunstdenkm%C3%A4ler">Bau- und Kunstdenkmäler in Deutschland und Europa - Inventarbände</a></li>
+</ul>
+
+<hr />
+
+<p><a name="glocken"></a></p>
+
+<h4>Glockenkunde / Campanologie</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="https://glockenmuseum.de">Deutsches Glockenmuseum</a></li>
+<li><a href="http://www.grabinski-online.de">Grabinski Online</a></li>
+<li>Bibliographien
+
+<ul>
+<li><a href="https://glockenmuseum.de/bibliothek/katalog/">Bibliothekskatalog des Deutschen Glockenmuseums</a></li>
+<li><a href="http://www.grabinski-online.de/glocken/biblio.html">Bibliographie zur Glockenkunde von Joachim Grabinski</a></li>
+<li><a href="http://pionlib.de/bells">Bibliographie zur Glockenkunde = OPAC des Deutschen Glockenmuseums, von Andreas Philipp</a></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<p><a name="musik"></a></p>
+
+<h4>Musik und Liturgie</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li>Datenbanken zur Kirchenmusik des Mittelalters
+
+<ul>
+<li><a href="https://gregorien.info/">Gregorianisches Repertoire</a></li>
+<li><a href="http://cantus.uwaterloo.ca/">Cantus: A Database for Latin Ecclesiastical Chant - Inventories of Chant Sources</a></li>
+<li><a href="http://gregorianik.uni-regensburg.de/info">Antiphonale Synopticum</a></li>
+</ul></li>
+<li>Nachschlagewerke
+
+<ul>
+<li><a href="https://archive.org/details/repertoriumhymno01chev">Ulysse Chevalier, Repertorium Hymnologicum, Bd. 1: A-K</a></li>
+<li><a href="https://archive.org/details/repertoriumhymn02chev">Ulysse Chevalier, Repertorium Hymnologicum, Bd. 2: L-Z</a></li>
+<li><a href="https://archive.org/details/repertoriumhymn03chev">Ulysse Chevalier, Repertorium Hymnologicum, Bd. 3: Nachträge A-Z</a></li>
+<li><a href="https://archive.org/details/repertoriumhymno04chev_0">Ulysse Chevalier, Repertorium Hymnologicum, Bd. 4: Nachträge A-Z</a></li>
+<li><a href="https://archive.org/details/repertoriumhymn05chev">Ulysse Chevalier, Repertorium Hymnologicum, Bd. 5: Addenda et corrigenda</a></li>
+<li><a href="https://archive.org/details/repertoriumhymno06chev">Ulysse Chevalier, Repertorium Hymnologicum, Bd. 6: Préface - Tables</a></li>
+</ul></li>
+<li>Thematische Internetseiten
+
+<ul>
+<li><a href="https://www.uni-muenster.de/Kultbild/missa/">Missa Medievalis</a>: Internetseite der Universität Münster, SFB 496, Forschungsgruppe KultBild, die einen Überblick über Text- und Bildquellen sowie Realien zur mittelalterlichen Messe bietet.</li>
+</ul></li>
+</ul>
+
+<hr />
+
+<p><a name="sigla"></a></p>
+
+<h4>Abbreviaturen und Siglen</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="https://epigraf.inschriften.net/epi4/inschriften_mv/files/download?path=hilfsmittel%2FDI-Allgemein%2FHilfsmittel&amp;amp;filename=Abkuerzungen_per_singulas_litteras.xlsx">Abkürzungen <em>per singulas litteras</em> in den DI-Bänden (Jens Pickenhan)</a></li>
+<li><a href="https://epigraf.inschriften.net/files/download?root=shared&amp;amp;path=wiki%2FHilfsmittel&amp;amp;filename=Abkuerzungen.xlsx">Abkürzungen in den DI-Bänden allgemein (fürs Epgraphik-Lehrbuch zusammengestellt von Katharina Kagerer)</a></li>
+<li><a href="https://www2.uni-mannheim.de/mateo/camenaref/siglalatina.html">Sigla Latina in Libris Impressis Occurrentia, von Marek Winiarczyk, Universität Mannheim</a></li>
+</ul>
+
+<hr />
+
+<p><a name="attribute"></a></p>
+
+<h4>Berufe, Titel, Stände, Verwandtschaften, Attribute</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li><a href="https://epigraf.inschriften.net/epi4/inschriften_mv/files/download?path=hilfsmittel%2FDI-Allgemein%2FDI-Richtlinien&amp;amp;filename=Epitheta-Titel.pdf">Grundsätzliche Überlegungen zur Übersetzung von Titeln, Standes-, Rang- und Amtsbezeichnungen sowie von Epitheta und Prädikaten, von Rüdiger Fuchs</a></li>
+<li><a href="https://script.byu.edu/SiteAssets/German_Occupations.pdf">Berufsbezeichnungen</a> <a href="https://script.byu.edu/Pages/German/de/common.aspx">(BYU's Script Tutorial)</a></li>
+<li><a href="http://www.personalschriften.de/datenbanken/thepro.html">Datenbank frühneuzeitlicher Berufsbezeichnungen: Thesaurus Professionum (THEPRO)</a></li>
+<li><a href="https://epigraf.inschriften.net/files/download?root=shared&amp;amp;path=wiki%2FHilfsmittel&amp;amp;filename=Titel_--mter_Auszug-aus-DI-2--12--36--48--50--54.pdf">Übersetzungen lateinischer Titel, Standes-, Rang- und Amtsbezeichnungen (Harald Drös)</a></li>
+</ul>
+
+<hr />
+
+<p><a name="tastatur"></a></p>
+
+<h4>Tastaturbelegung für Altgriechisch und Hebräisch</h4>
+
+<p><a href="https://epigraf.inschriften.net/wiki/view/96"><em>zurück</em></a></p>
+
+<ul>
+<li>Altgriechisch
+
+<ul>
+<li><a href="https://www.kaththeol.uni-muenchen.de/studium/wissenschaftliches-arbeiten/materialien_seite/griechisch.pdf">Tastatur auf Altgriechisch umstellen</a></li>
+<li><a href="https://de.wikipedia.org/wiki/Polytonische_Orthographie">Polytonische Orthographie</a></li>
+<li><a href="https://biblegreek.jimdo.com/tastaturbelegung.php">Griechisch Schreiben mit Open Office</a></li>
+</ul></li>
+<li>Hebräisch
+
+<ul>
+<li><a href="https://www.kaththeol.uni-muenchen.de/studium/wissenschaftliches-arbeiten/materialien_seite/tastatur-hebraeisch.pdf">Tastatur auf Hebräisch umstellen</a></li>
+</ul></li>
+</ul>
+
+<hr />
+
+<p></br></br></br></br></br></p>
+</textarea></div></td></tr><tr class="table-input-text" data-row-field="category"><th scope="row">Category</th><td><div class="input text"><input type="text" name="category" id="category" value="B. Hilfsmittel" maxlength="300"></div></td></tr><tr class="table-input-checkbox" data-row-field="menu"><th scope="row">Add to menu</th><td><div class="input checkbox"><input type="hidden" name="menu" value="0"><input type="checkbox" name="menu" value="1" id="menu" checked="checked"></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">Pretty URL (iri)</th><td><div class="input text"><input type="text" name="norm_iri" id="norm-iri" value="" maxlength="50"></div></td></tr><tr class="table-input-text" data-row-field="sortkey"><th scope="row">Sort key</th><td><div class="input text"><input type="text" name="sortkey" id="sortkey" maxlength="50"></div></td></tr><tr class="table-input-checkbox" data-row-field="published"><th scope="row">Published</th><td><div class="input checkbox"><input type="hidden" name="published" value="0"><input type="checkbox" name="published" value="1" id="published"></div></td></tr></table></form></div>
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><button data-shortcuts="Ctrl+S F10" title="Save (Ctrl+S F10)" aria-label="Save" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" form="form-edit-docs-96" data-role="save" data-target="docs-96" type="submit">Save</button></li><li><button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-edit-docs-96" data-role="cancel" data-target="docs-96">Cancel</button></li><li><button type="button" form="form-edit-docs-96" data-role="delete" data-target="docs-96" class="">Delete</button></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-wiki-edit" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Schriftart 2 [projects]    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/projects/";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+    <style data-snippet="article-css">.xml_tag_rec_lit { color:#0066ff }
+.xml_tag_rec_ma { color:#0066ff }
+.xml_tag_rec_extern { color:#0066ff }
+.xml_tag_rec_intern { color:#0066ff }
+.xml_tag_loc_ten { color: #6abc6a }
+.xml_tag_reg { color: #6abc6a }
+.xml_tag_anchor { color:#0066ff }
+.xml_tag_bl > .xml_bracket_open, .xml_tag_bl > .xml_bracket_close { color:#FFFFFF; background-color:#c1c1c1; font-size:0.7em;display:inline-block;width:100%;} .xml_tag_bl > .xml_bracket_open {margin-bottom:1em;} .xml_tag_bl > .xml_bracket_close {margin-top:1em;}
+.xml_tag_z { color:#ffffff;background-color:#c1c1c1; padding: 0 0.2em; }
+.xml_tag_vz { color:#ffffff; background-color:#c1c1c1; padding: 0 0.2em;}
+.xml_tag_wtr { color: #6abc6a; font-weight: bold }
+.xml_tag_spatium_v { color:#0066ff; font-size: 0.8em }
+.xml_tag_del { color:#0066ff }
+.xml_tag_cpl > .xml_bracket_open, .xml_tag_cpl > .xml_bracket_close { color:#0066ff }
+.xml_tag_oms > .xml_bracket_open, .xml_tag_oms > .xml_bracket_close { color:#0066ff }
+.xml_tag_add > .xml_bracket_open, .xml_tag_add > .xml_bracket_close { color:#0066ff }
+.xml_tag_abr > .xml_bracket_open, .xml_tag_abr > .xml_bracket_close { color:#0066ff }
+.xml_tag_vsl { color: #66bb66; font-size: 1.5em }
+.xml_tag_ini { color: #8f503d; font-size: 1.5em }
+.xml_tag_chr { color: #0066ff; font-size: 1.3em }
+.xml_tag_kap { color: #1ccaaa; font-size: 1em; font-variant: small-caps }
+.xml_tag_all > .xml_bracket_open, .xml_tag_all > .xml_bracket_close { color:#0066ff }
+.xml_tag_sup { color:#e87a59; vertical-align: super; font-size: 0.75em }
+.xml_tag_insec { text-decoration: underline; text-decoration-color: #33cc33; text-decoration-style: dotted }
+.xml_tag_quot { font-style: italic }
+.xml_tag_folge > .xml_bracket_open, .xml_tag_folge > .xml_bracket_close { color:#c00000ff; font-weight: bold }
+.xml_tag_p .xml_bracket_open, .xml_tag_p .xml_bracket_close { color: #8627ab; background-color:#e2de90 }
+.xml_tag_h .xml_bracket_open, .xml_tag_h .xml_bracket_close { color: #8627ab; background-color:#e2de90 }
+.xml_tag_b { font-weight: bold }
+.xml_tag_i { font-style: italic }
+.xml_tag_u { text-decoration: underline }
+.xml_tag_g { color: #adadad; font-family: "Courier New", serif; font-weight: bold; }
+.xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }
+.xml_tag_a { color:#0066ff }
+.xml_tag_wunsch .xml_bracket_open, .xml_tag_wunsch .xml_bracket_close { color:#1464AA; background-color:#e2de90 }
+.xml_tag_app1 { color:#0066ff;position: relative;bottom: 0.5em;font-size: 0.8em; }
+.xml_tag_app2 { color:#0066ff;position: relative;bottom: 0.5em;font-size: 0.8em; }</style>
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_properties             action_edit             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks?database=projects"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_database" ><a href="/epi/projects/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/projects/articles?load=1">Articles</a></li><li class="menu_database active" ><a href="/epi/projects/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/projects/files?load=1">Files</a></li><li class="menu_database" ><a href="/epi/projects/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/projects/types?load=1">Types</a></li><li class="menu_database" ><a href="/epi/projects/users?load=1">Users</a></li><li class="menu_database" ><a href="/epi/projects/analytics?load=1">Analytics</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=projects">Pipelines</a></li><li class="menu_global" ><a href="/users?database=projects">Users</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=projects">Repository</a></li><li class="menu_global" ><a href="/help?database=projects">Help</a></li><li class="menu_global" ><a href="/wiki?database=projects">Wiki</a></li><li class="menu_global" ><a href="/?database=projects">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2?database=projects" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars?database=projects" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/epi/projects/properties">Categories</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Schriftarten</span></li></ul>                            </nav>
+                                            </div>
+
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+<!-- Breadcrumbs -->
+
+
+<!-- Content area -->
+
+<div class="content-large">
+    <div class="widget-entity widget-document widget-document-edit" data-edit-mode="1" data-row-table="properties" data-row-id="119" data-row-type="fonttypes" data-row-model="epi_properties" data-root-table="properties" data-root-id="119" data-file-basepath="properties/fonttypes" data-file-defaultpath="" data-database="projects"><div class="doc-section"><div class="doc-section-content"><div class="doc-section-items"><form method="post" accept-charset="utf-8" id="form-edit-properties-119" autocomplete="off" data-cancel-url="/epi/projects/properties/view/119" data-delete-url="/epi/projects/properties/delete/119" action="/epi/projects/properties/edit/119"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="lock" data-lock-url="/epi/projects/properties/lock/119.json" data-unlock-url="/epi/projects/properties/unlock/119.json" value="7"><table class="vertical-table"><tr class="table-input-reference" data-row-field="parent_id"><th scope="row">Obereintrag</th><td><div class="input reference"><div class="widget-dropdown-selector" data-url="http://localhost/epi/projects/properties/index/fonttypes?template=choose&amp;references=0" data-url-param="find"><input type="text" name="parent_id-text" value="" title="" autocomplete="off" class="input-reference-text"  data-label="selected"><input type="hidden" name="parent_id" class="input-reference-value"><div data-list-value="id" class="widget-dropdown-pane widget-scrollbox"><ul class="widget-tree" data-snippet="rows"></ul></div></div></div></td></tr><tr class="table-input-text" data-row-field="lemma"><th scope="row">Lemma</th><td><div class="input text"><input type="text" name="lemma" id="lemma" value="Schriftart 2" maxlength="1500"></div></td></tr><tr class="table-input-text" data-row-field="name"><th scope="row">Langform</th><td><div class="input text"><input type="text" name="name" id="name" value="Schriftart 2 " maxlength="1500"></div></td></tr><tr class="table-input-reference" data-row-field="related_id"><th scope="row">Siehe</th><td><div class="input reference"><div class="widget-dropdown-selector" data-url="http://localhost/epi/projects/properties/index/fonttypes?template=choose&amp;show=content&amp;references=0&amp;empty=1" data-url-param="find"><input type="text" name="related_id-text" value="" title="" autocomplete="off" class="input-reference-text"  data-label="selected"><input type="hidden" name="related_id" class="input-reference-value"><div data-list-value="id" class="widget-dropdown-pane widget-scrollbox"><ul class="widget-tree" data-snippet="rows"></ul></div></div></div></td></tr><tr class="table-input-text" data-row-field="sortkey"><th scope="row">Sortierschlüssel</th><td><div class="input text"><input type="text" name="sortkey" id="sortkey" value="Schriftart 2" maxlength="1500"></div></td></tr><tr class="table-input-textarea" data-row-field="comment"><th scope="row">Bemerkung</th><td><div class="input textarea"><textarea name="comment" id="comment" rows="5" maxlength="100000">Schriftart 2 Bemerk</textarea></div></td></tr><tr class="table-input-text" data-row-field="keywords"><th scope="row">Schlüsselwörter</th><td><div class="input text"><input type="text" name="keywords" id="keywords" value="Schriftart,Font" maxlength="1500"></div></td></tr><tr class="table-input-textarea" data-row-field="norm_data"><th scope="row">Normdaten</th><td><div class="input textarea"><textarea name="norm_data" id="norm-data" rows="5" maxlength="1500">Schriftart 2 Norm</textarea></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">IRI-Fragment</th><td><div class="input text"><input type="text" name="norm_iri" data-autofill="1" id="norm-iri" maxlength="500"></div></td></tr></table></form></div><div class="doc-section-links doc-section-links-empty doc-section-links-hidden"><button type="button" class="widget-switch widget-switch-icon button-links-toggle tiny" title="Toggle annotations" area-label="Toggle annotations" data-switch-element=".doc-section-links" data-switch-closest="1" data-switch-reverse="1" data-switch-class="doc-section-links-hidden">Toggle</button></div></div></div><div class="templates"><script type="text/template" class="template template-annotation-links"><div class="doc-section-link" data-row-table="{scope}" data-row-id="{id}" data-row-type="{type}" title="{toValue}" data-from-id="{fromId}" data-from-tab="{fromTab}" data-from-field="{fromField}" data-from-tagid="{fromTagid}" data-from-tagname="{fromTagname}" data-to-id="{toId}" data-to-tab="{toTab}"><span class="doc-section-link-text">{toValue}</span><input type="hidden" name="links[{idx}][id]" data-row-field="id" form="form-edit-properties-119" value="{id}"> <input type="hidden" name="links[{idx}][deleted]" data-row-field="deleted" form="form-edit-properties-119" value="{deleted}"> <input type="hidden" name="links[{idx}][root_id]" data-row-field="root_id" form="form-edit-properties-119" value="119"> <input type="hidden" name="links[{idx}][root_tab]" data-row-field="root_tab" form="form-edit-properties-119" value="properties"> <input type="hidden" name="links[{idx}][from_id]" data-row-field="from_id" form="form-edit-properties-119" value="{fromId}"> <input type="hidden" name="links[{idx}][from_tab]" data-row-field="from_tab" form="form-edit-properties-119" value="{fromTab}"> <input type="hidden" name="links[{idx}][from_field]" data-row-field="from_field" form="form-edit-properties-119" value="{fromField}"> <input type="hidden" name="links[{idx}][from_tagid]" data-row-field="from_tagid" form="form-edit-properties-119" value="{fromTagid}"> <input type="hidden" name="links[{idx}][from_tagname]" data-row-field="from_tagname" form="form-edit-properties-119" value="{fromTagname}"> <input type="hidden" name="links[{idx}][to_id]" data-row-field="to_id" form="form-edit-properties-119" value="{toId}"> <input type="hidden" name="links[{idx}][to_tab]" data-row-field="to_tab" form="form-edit-properties-119" value="{toTab}"></div></script><script type="text/template" class="template template-annotation-footnotes"><div class="doc-section-link" data-row-table="{scope}" data-row-id="{id}" data-row-type="{type}" title="{name}" data-from-id="{fromId}" data-from-tab="{fromTab}" data-from-field="{fromField}" data-from-tagid="{fromTagid}" data-from-tagname="{fromTagname}"><span class="doc-section-link-text">{name}</span></div></script></div></div></div>
+
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><button data-shortcuts="Ctrl+S F10" title="Save (Ctrl+S F10)" aria-label="Save" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" form="form-edit-properties-119" data-role="save" data-target="properties-119" type="submit">Save</button></li><li><button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-edit-properties-119" data-role="cancel" data-target="properties-119">Cancel</button></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-epi-properties-edit?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<response>
+  <properties>
+    <property>
+      <lemma>Material 1</lemma>
+      <articles_count>1</articles_count>
+    </property>
+    <property>
+      <lemma>siehe</lemma>
+    </property>
+    <property>
+      <lemma>Material 1a</lemma>
+      <articles_count>0</articles_count>
+    </property>
+    <property>
+      <lemma>siehe</lemma>
+    </property>
+    <property>
+      <lemma>Material 2</lemma>
+      <articles_count>0</articles_count>
+    </property>
+    <property>
+      <lemma>siehe</lemma>
+    </property>
+    <property>
+      <lemma>Material 2a</lemma>
+      <articles_count>1</articles_count>
+    </property>
+    <property>
+      <lemma>siehe</lemma>
+    </property>
+  </properties>
+  <pagination>
+    <count>4</count>
+    <page>1</page>
+    <page_prev>0</page_prev>
+    <page_next>0</page_next>
+    <perpage>100</perpage>
+  </pagination>
+</response>

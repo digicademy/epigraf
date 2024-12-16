@@ -1,0 +1,1366 @@
+<response>
+  <index propertytype="outputoptions">
+    <properties>
+      <property id="properties-6" sortno="1" sortkey="Lemma A" propertytype="outputoptions" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+        <lemma>Lemma A</lemma>
+        <name>Lemma A </name>
+        <unit>Lemma-Einheit</unit>
+        <comment>LemmaABemerkung</comment>
+        <keywords>Lemma,Lemmy,Schlaglemma</keywords>
+        <norm_data>Lemma Lemma Lemmy Normdaten</norm_data>
+        <sections>
+          <section id="sections-17" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-4" parent_id="properties-6" sortno="2" sortkey="Untereintrag A" propertytype="outputoptions" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+        <lemma>Untereintrag A</lemma>
+        <name>Untereintrag A </name>
+        <unit>Untereintrag A</unit>
+        <comment>Bemerkung zu Untereintrag A</comment>
+        <keywords>Lemma,Lemmy,Schlaglemma,Untereintrag</keywords>
+        <norm_data>Untereintrag Normdaten</norm_data>
+      </property>
+      <property id="properties-3" parent_id="properties-6" sortno="5" related_id="properties-4" propertytype="outputoptions" level="1" lft="5" rght="6" iscategory="1" ishidden="1">
+        <lemma>siehe</lemma>
+        <unit>Untereintrag A II Einheit</unit>
+        <comment>Bemerkung Untereintrag A II </comment>
+        <keywords>Lemmy,Lemma,Schlaglemma,Untereintrag</keywords>
+        <norm_data>Nomunter A II</norm_data>
+      </property>
+      <property id="properties-5" sortno="8" sortkey="Lemma B" propertytype="outputoptions" level="0" lft="8" rght="13" iscategory="0" ishidden="0">
+        <lemma>Lemma B</lemma>
+        <name>Lemma B </name>
+        <comment>Lemma B Bemerkung</comment>
+        <keywords>Lemma,Lemmy,Schlaglemma,Lemmo</keywords>
+        <norm_data>Lemma B Norm</norm_data>
+        <sections>
+          <section id="sections-17" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="literature">
+    <properties>
+      <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="1" lft="2" rght="7" iscategory="1" ishidden="0">
+        <lemma>Autor 1</lemma>
+        <name>Autor 1 </name>
+        <unit>Einheit Autor 1</unit>
+        <comment>Bemerk Aut 1</comment>
+        <keywords>Autor,Quelle,Karstadt</keywords>
+        <norm_data>Autor 1 Normdaten</norm_data>
+        <sections>
+          <section id="sections-16" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="2" lft="5" rght="6" iscategory="1" ishidden="1">
+        <lemma>Unterautor 2</lemma>
+        <name>Unterautor 2 </name>
+        <unit>Unterautor2 Einheit</unit>
+        <comment>Unterautor 2 Bemerkung</comment>
+        <keywords>Autor,Karstadt,Ursprung</keywords>
+        <norm_data>Unterautor 2 Normdaten</norm_data>
+        <sections>
+          <section id="sections-16" articles_id="articles-1" />
+          <section id="sections-14" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
+        <lemma>Quelle 1</lemma>
+        <name>Quelle 1 </name>
+        <unit>Quelleneinheit 1</unit>
+        <comment>Quelle bemerkung</comment>
+        <keywords>Quelle,Karstadt,Ursprung</keywords>
+        <norm_data>Quelle Norm 1</norm_data>
+        <sections>
+          <section id="sections-14" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-9" parent_id="properties-10" sortno="9" sortkey="Quelle 1a" propertytype="literature" level="2" lft="9" rght="10" iscategory="0" ishidden="0">
+        <lemma>Quelle 1a</lemma>
+        <name>Quelle 1a </name>
+        <unit>Quelle 1a Einheit</unit>
+        <comment>Bemerk Q1A</comment>
+        <keywords>Quelle,Karstadt,Ursprung</keywords>
+        <norm_data>Norm Quelle 1a</norm_data>
+      </property>
+      <property id="properties-8" parent_id="properties-10" sortno="11" related_id="properties-9" propertytype="literature" level="2" lft="11" rght="12" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Einheit quelle 1b</unit>
+        <comment>bemerkung quelle 1b</comment>
+        <keywords>Karstadt,Quelle,Ursprung</keywords>
+        <norm_data>Normquelle 1b</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="locations">
+    <properties>
+      <property id="properties-18" sortno="1" sortkey="Standort A" propertytype="locations" level="0" lft="1" rght="6" iscategory="1" ishidden="1">
+        <lemma>Standort A</lemma>
+        <name>Standort A </name>
+        <unit>EinheitStandordA</unit>
+        <comment>Standort A bemerkung</comment>
+        <keywords>Standort,Herkunft,Provenienz</keywords>
+        <norm_data>Standortnorm A</norm_data>
+        <sections>
+          <section id="sections-15" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-17" parent_id="properties-18" sortno="2" sortkey="Standort A1" propertytype="locations" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+        <lemma>Standort A1</lemma>
+        <name>Standort A1 </name>
+        <unit>Standeinheit A1</unit>
+        <comment>Bemerkung Stand A1</comment>
+        <keywords>Herkunft,Provenienz,Standort</keywords>
+        <norm_data>Stand Norm A1</norm_data>
+      </property>
+      <property id="properties-16" parent_id="properties-18" sortno="4" related_id="properties-17" propertytype="locations" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+        <lemma>siehe</lemma>
+        <unit>Standort A2 Einheit</unit>
+        <comment>Standort A2 Bemerkung</comment>
+        <keywords>Standort,Provenienz,Herkunft</keywords>
+        <norm_data>Standort A2 Normdaten</norm_data>
+      </property>
+      <property id="properties-15" sortno="7" sortkey="Standort B" propertytype="locations" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Standort B</lemma>
+        <name>Standort B </name>
+        <unit>Standort B Einheit</unit>
+        <comment>Standort B Bemerk</comment>
+        <keywords>Standort,Provenienz,Herkunft</keywords>
+        <norm_data>Standort B Norm</norm_data>
+      </property>
+      <property id="properties-14" parent_id="properties-15" sortno="8" sortkey="Standort B1" propertytype="locations" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Standort B1</lemma>
+        <name>Standort B1 </name>
+        <unit>Standort B1 Einheit</unit>
+        <comment>Standort B1 Bemerk</comment>
+        <keywords>Standort,Provenienz,Herkunft</keywords>
+        <norm_data>Standort B1 Norm</norm_data>
+        <sections>
+          <section id="sections-15" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="conditions">
+    <properties>
+      <property id="properties-24" sortno="1" sortkey="Zustand 1" propertytype="conditions" level="0" lft="1" rght="7" iscategory="1" ishidden="1">
+        <lemma>Zustand 1</lemma>
+        <name>Zustand 1 </name>
+        <unit>Zustand 1 einheit</unit>
+        <comment>Zustand 1 Bemerk</comment>
+        <keywords>Zustand,Kondition</keywords>
+        <norm_data>Zustand 1 Norm</norm_data>
+        <sections>
+          <section id="sections-13" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-23" parent_id="properties-24" sortno="2" sortkey="Zustand 1a" propertytype="conditions" level="1" lft="2" rght="4" iscategory="0" ishidden="0">
+        <lemma>Zustand 1a</lemma>
+        <name>Zustand 1a </name>
+        <unit>Zustand 1a Einheit</unit>
+        <comment>Zustand 1a Bemerk</comment>
+        <keywords>Zustand,Kondition</keywords>
+        <norm_data>Zustand 1a Norm</norm_data>
+      </property>
+      <property id="properties-22" parent_id="properties-24" sortno="5" related_id="properties-23" propertytype="conditions" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Zustand 1b Einheit</unit>
+        <comment>Zustand 1b Bemerk</comment>
+        <keywords>Zustand,Kondition</keywords>
+        <norm_data>Zustand 1b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="materials">
+    <properties>
+      <property id="properties-30" sortno="1" sortkey="Material 1" propertytype="materials" level="0" lft="1" rght="6" iscategory="1" ishidden="1">
+        <lemma>Material 1</lemma>
+        <name>Material 1 </name>
+        <unit>Material 1 Einheit</unit>
+        <comment>Material 1 Bemerk</comment>
+        <keywords>Material,Werkstoff</keywords>
+        <norm_data>Material 1 Norm</norm_data>
+        <sections>
+          <section id="sections-12" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-28" parent_id="properties-30" sortno="2" sortkey="Material 1a" propertytype="materials" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+        <lemma>Material 1a</lemma>
+        <name>Material 1a </name>
+        <unit>Material 1a Einheit</unit>
+        <comment>Material 1a Bemerk</comment>
+        <keywords>Material,Werkstoff</keywords>
+        <norm_data>Material 1a Norm</norm_data>
+      </property>
+      <property id="properties-27" parent_id="properties-30" sortno="4" related_id="properties-28" propertytype="materials" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+        <lemma>siehe</lemma>
+        <unit>Material 1b Einheit</unit>
+        <comment>Material 1b Bemerk</comment>
+        <keywords>Material,Werkstoff</keywords>
+        <norm_data>Material 1b</norm_data>
+      </property>
+      <property id="properties-29" sortno="7" sortkey="Material 2" propertytype="materials" level="0" lft="7" rght="12" iscategory="1" ishidden="1">
+        <lemma>Material 2</lemma>
+        <name>Material 2 </name>
+        <unit>Material 2 Einheit</unit>
+        <comment>Material 2 Bemerk</comment>
+        <keywords>Material,Werkstoff</keywords>
+        <norm_data>Material 2 Norm</norm_data>
+      </property>
+      <property id="properties-26" parent_id="properties-29" sortno="8" sortkey="Material 2a" propertytype="materials" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Material 2a</lemma>
+        <name>Material 2a</name>
+        <unit>Material 2a Einheit</unit>
+        <comment>Material 2a Bemerk</comment>
+        <keywords>Material,Werkstoff</keywords>
+        <norm_data>Material 2a Norm</norm_data>
+        <sections>
+          <section id="sections-12" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-25" parent_id="properties-29" sortno="10" related_id="properties-26" propertytype="materials" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Material 2b Einheit</unit>
+        <comment>Material 2b Bemerk</comment>
+        <keywords>Material,Werkstoff</keywords>
+        <norm_data>Material 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="objecttypes">
+    <properties>
+      <property id="properties-36" sortno="1" sortkey="Träger 1" propertytype="objecttypes" level="0" lft="1" rght="8" iscategory="0" ishidden="0">
+        <lemma>Träger 1</lemma>
+        <name>Träger 1 </name>
+        <unit>Träger 1 Einheit</unit>
+        <comment>Träger 1 Bemerk</comment>
+        <keywords>Träger,Medium</keywords>
+        <norm_data>Träger 1 Norm</norm_data>
+        <sections>
+          <section id="sections-11" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-33" parent_id="properties-36" sortno="4" related_id="properties-34" propertytype="objecttypes" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Träger 1b Einheit</unit>
+        <comment>Träger 1b Bemerk</comment>
+        <keywords>Medium,Träger</keywords>
+        <norm_data>Träger 1b</norm_data>
+      </property>
+      <property id="properties-34" parent_id="properties-36" sortno="2" sortkey="Träger 1a" propertytype="objecttypes" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+        <lemma>Träger 1a</lemma>
+        <name>Träger 1a </name>
+        <unit>Träger 1a Einheit</unit>
+        <comment>Träger 1a Bemerk</comment>
+        <keywords>Träger,Medium</keywords>
+        <norm_data>Träger 1a</norm_data>
+        <norm_iri>traeger1a</norm_iri>
+      </property>
+      <property id="properties-35" sortno="7" sortkey="Träger 2" propertytype="objecttypes" level="0" lft="9" rght="14" iscategory="1" ishidden="1">
+        <lemma>Träger 2</lemma>
+        <name>Träger 2 </name>
+        <unit>Träger 2 Einheit</unit>
+        <comment>Träger 2 Bemerk</comment>
+        <keywords>Träger,Medium</keywords>
+        <norm_data>Träger 2 Norm</norm_data>
+      </property>
+      <property id="properties-31" parent_id="properties-35" sortno="10" related_id="properties-32" propertytype="objecttypes" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Träger 2b Einheit</unit>
+        <comment>Träger 2b Bemerk</comment>
+        <keywords>Träger,Medium</keywords>
+        <norm_data>Träger 2b Norm</norm_data>
+      </property>
+      <property id="properties-32" parent_id="properties-35" sortno="8" sortkey="Träger 2a" propertytype="objecttypes" level="1" lft="12" rght="13" iscategory="1" ishidden="1">
+        <lemma>Träger 2a</lemma>
+        <name>Träger 2a</name>
+        <unit>Träger 2a Einheit</unit>
+        <comment>Träger 2a Bemerk</comment>
+        <keywords>Medium,Träger</keywords>
+        <norm_data>Träger 2a Nordm</norm_data>
+        <sections>
+          <section id="sections-11" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="measures">
+    <properties>
+      <property id="properties-42" sortno="1" sortkey="Maß 1" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Maß 1</lemma>
+        <name>Maß 1 </name>
+        <unit>Maß 1 Einheit</unit>
+        <comment>Maß 1 Bemerk</comment>
+        <keywords>Maßangaben,Meter,Kilometer,Hektoliter</keywords>
+        <norm_data>Maß 1 Norm</norm_data>
+      </property>
+      <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="Maß 1a" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Maß 1a</lemma>
+        <name>Maß 1a </name>
+        <unit>Maß 1a einheit</unit>
+        <comment>Maß 1a Bemerk</comment>
+        <keywords>Maßangaben,Hektoliter</keywords>
+        <norm_data>Maß 1a</norm_data>
+        <sections>
+          <section id="sections-10" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-37" parent_id="properties-42" sortno="4" related_id="properties-38" propertytype="measures" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Maß 1b Einheit</unit>
+        <comment>Maß 1b Bemerk</comment>
+        <keywords>Maßangaben,Kilometer,Hektoliter</keywords>
+        <norm_data>Maß 1b Norm</norm_data>
+      </property>
+      <property id="properties-41" sortno="7" sortkey="Maß 2" propertytype="measures" level="0" lft="7" rght="12" iscategory="1" ishidden="1">
+        <lemma>Maß 2</lemma>
+        <name>Maß 2 </name>
+        <unit>Maß 2 Einheit</unit>
+        <comment>Maß 2 Bemerk</comment>
+        <keywords>Maßangaben,Meter,Kilometer</keywords>
+        <norm_data>Maß 2 Norm</norm_data>
+      </property>
+      <property id="properties-40" parent_id="properties-41" sortno="8" sortkey="Maß 2a" propertytype="measures" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>Maß 2a</lemma>
+        <name>Maß 2a </name>
+        <unit>Maß 2a Einheit</unit>
+        <comment>Maß 2a Bemerk</comment>
+        <keywords>Maßangaben,Meter</keywords>
+        <norm_data>Maß 2a Norm</norm_data>
+        <sections>
+          <section id="sections-10" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-39" parent_id="properties-41" sortno="10" related_id="properties-40" propertytype="measures" level="1" lft="10" rght="11" iscategory="1" ishidden="1">
+        <lemma>siehe</lemma>
+        <unit>Maß 2b Einheit</unit>
+        <comment>Maß 2b Bemerk</comment>
+        <keywords>Maßangaben,Kilometer,Hektoliter</keywords>
+        <norm_data>Maß 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="heraldry">
+    <properties>
+      <property id="properties-44" sortno="1" sortkey="wappen 001" propertytype="heraldry" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <name>Wappen 1</name>
+        <comment>Notizen Wappen 1</comment>
+        <content>Schild 1</content>
+        <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" value="hm001.1121"></rec_ma></elements>
+        <file_name>1024px-Nautical_star.svg.png</file_name>
+        <source_from>Nachweis Wappen 1</source_from>
+        <sections>
+          <section id="sections-9" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-43" sortno="2" sortkey="wappen 002" propertytype="heraldry" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+        <name>Wappen 2</name>
+        <comment>Notizen Wappen 2</comment>
+        <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" value="Quelle 1 "></rec_lit></content>
+        <elements>Oberwappen 2</elements>
+        <file_name>15320_0_589.jpg</file_name>
+        <source_from>Nachweis Wappen 2</source_from>
+        <sections>
+          <section id="sections-9" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="brands">
+    <properties>
+      <property id="properties-185" sortno="0" propertytype="brands" level="0" lft="0" rght="0" iscategory="0" ishidden="0">
+        <name>hm002.2211</name>
+        <signature>Nummer 2 im Band</signature>
+        <file_name>tp/hm002.2211.svg</file_name>
+        <sections>
+          <section id="sections-8" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-186" sortno="0" propertytype="brands" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Markeneintrag im Register</lemma>
+        <name>hm001.1121</name>
+        <signature>Nummer 1 im Band</signature>
+        <file_name>tp/hm001.1121.svg</file_name>
+        <sections>
+          <section id="sections-8" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="imagetypes">
+    <properties>
+      <property id="properties-50" sortno="1" sortkey="Kategorie 1" propertytype="imagetypes" level="0" lft="1" rght="6" iscategory="1" ishidden="1">
+        <lemma>Kategorie 1</lemma>
+        <name>Kategorie 1 </name>
+        <unit>Kategorie 1 Einheit</unit>
+        <comment>Kategorie 1 Bemerk</comment>
+        <keywords>Kategorie,Category</keywords>
+        <norm_data>Kategorie 1 Norm</norm_data>
+        <sections>
+          <section id="sections-7" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-45" parent_id="properties-50" sortno="4" related_id="properties-49" propertytype="imagetypes" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+        <lemma>siehe</lemma>
+        <unit>Kategorie 1b Einheit</unit>
+        <comment>Kategorie 1b Bemerk</comment>
+        <keywords>Category</keywords>
+        <norm_data>Kategorie 1b Norm</norm_data>
+      </property>
+      <property id="properties-49" sortno="7" sortkey="Kategorie 2" propertytype="imagetypes" level="0" lft="7" rght="13" iscategory="0" ishidden="0">
+        <lemma>Kategorie 2</lemma>
+        <name>Kategorie 2 </name>
+        <unit>Kategorie 2 Einheit</unit>
+        <comment>Kategorie 2 Bemerk</comment>
+        <keywords>Kategorie,Category</keywords>
+        <norm_data>Kategorie 2 Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="placenames">
+    <properties>
+      <property id="properties-636" sortno="1" sortkey="Ortsname 1 " propertytype="placenames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Ortsname 1</lemma>
+        <name>Ortsname 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-642" sortno="3" sortkey="Ortsname 2 " propertytype="placenames" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+        <lemma>Ortsname 2</lemma>
+        <name>Ortsname 2 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-641" sortno="5" sortkey="Ortsname 3 " propertytype="placenames" level="0" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>Ortsname 3</lemma>
+        <name>Ortsname 3 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="personnames">
+    <properties>
+      <property id="properties-637" sortno="1" sortkey="Personenname 1 " propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Personenname 1</lemma>
+        <name>Personenname 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="subjects">
+    <properties>
+      <property id="properties-638" sortno="1" sortkey="Sacheintrag 1 " propertytype="subjects" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Sacheintrag 1</lemma>
+        <name>Sacheintrag 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="manufacturers">
+    <properties>
+      <property id="properties-639" sortno="1" sortkey="Hersteller 1 " propertytype="manufacturers" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Hersteller 1</lemma>
+        <name>Hersteller 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="icons">
+    <properties>
+      <property id="properties-640" sortno="1" sortkey="Ikonografie 1 " propertytype="icons" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Ikonografie 1</lemma>
+        <name>Ikonografie 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="captions">
+    <properties>
+      <property id="properties-197" sortkey="Beschreibung" propertytype="captions" level="0" lft="25" rght="26">
+        <lemma>Beschreibung</lemma>
+        <name>Beschreibung</name>
+        <norm_iri>di_description</norm_iri>
+        <sections>
+          <section id="sections-5" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" level="0" lft="29" rght="30">
+        <lemma>Gliederung: Ebene 1</lemma>
+        <name>Gliederung: Ebene 1</name>
+        <norm_iri>di_header1</norm_iri>
+        <sections>
+          <section id="sections-4" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="texttypes">
+    <properties>
+      <property id="properties-116" sortno="1" sortkey="Textsorte 1" propertytype="texttypes" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Textsorte 1</lemma>
+        <name>Textsorte 1 </name>
+        <unit>Textsorte 1 Einheit</unit>
+        <comment>Textsorte 1 Bemerk</comment>
+        <keywords>Textsorte,Text type</keywords>
+        <norm_data>Textsorte 1 NOrm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-115" parent_id="properties-116" sortno="2" sortkey="Textsorte 1a" propertytype="texttypes" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Textsorte 1a</lemma>
+        <name>Textsorte 1a</name>
+        <unit>Textsorte 1a Einheit</unit>
+        <comment>Textsorte 1a Bemerk</comment>
+        <keywords>Textsorte</keywords>
+        <norm_data>Textsorte 1a Norm</norm_data>
+      </property>
+      <property id="properties-114" parent_id="properties-116" sortno="4" related_id="properties-115" propertytype="texttypes" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Textsorte 1b Einheit</unit>
+        <comment>Textsorte 1b Bemerk</comment>
+        <keywords>Textsorte</keywords>
+        <norm_data>Textsorte 1b Norm</norm_data>
+      </property>
+      <property id="properties-113" sortno="7" sortkey="Textsorte 2" propertytype="texttypes" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Textsorte 2</lemma>
+        <name>Textsorte 2 </name>
+        <unit>Textsorte 2 Einheit</unit>
+        <comment>Textsorte 2 Bemerk</comment>
+        <keywords>Textsorte,Text type</keywords>
+        <norm_data>Textsorte 2 Norm</norm_data>
+      </property>
+      <property id="properties-112" parent_id="properties-113" sortno="8" sortkey="Textsorte 2a" propertytype="texttypes" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Textsorte 2a</lemma>
+        <name>Textsorte 2a</name>
+        <unit>Textsorte 2a Einheit </unit>
+        <comment>Textsorte 2a Bemerk</comment>
+        <keywords>Text type</keywords>
+        <norm_data>Textsorte 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-111" parent_id="properties-113" sortno="10" related_id="properties-112" propertytype="texttypes" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Textsorte 2b Einheit</unit>
+        <comment>Textsorte 2b Bemerk</comment>
+        <keywords>Text type</keywords>
+        <norm_data>Textsorte 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="fonttypes">
+    <properties>
+      <property id="properties-122" sortno="1" sortkey="Schriftart 1" propertytype="fonttypes" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Schriftart 1</lemma>
+        <name>Schriftart 1 </name>
+        <unit>Schriftart 1 Einheit</unit>
+        <comment>Schriftart 1 Bemerk</comment>
+        <keywords>Schriftart,Font</keywords>
+        <norm_data>Schriftart 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Schriftart 1a" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Schriftart 1a</lemma>
+        <name>Schriftart 1a</name>
+        <unit>Schriftart 1a Einheit</unit>
+        <comment>Schriftart 1a Bemerk</comment>
+        <keywords>Schriftart</keywords>
+        <norm_data>Schriftart 1a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-120" parent_id="properties-122" sortno="4" related_id="properties-121" propertytype="fonttypes" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Schriftart 1b Einheit</unit>
+        <comment>Schriftart 1b Bemerk</comment>
+        <keywords>Schriftart</keywords>
+        <norm_data>Schriftart 1b Norm</norm_data>
+      </property>
+      <property id="properties-119" sortno="7" sortkey="Schriftart 2" propertytype="fonttypes" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Schriftart 2</lemma>
+        <name>Schriftart 2 </name>
+        <unit>Schriftart 2 Einheit</unit>
+        <comment>Schriftart 2 Bemerk</comment>
+        <keywords>Schriftart,Font</keywords>
+        <norm_data>Schriftart 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-118" parent_id="properties-119" sortno="8" sortkey="Schriftart 2a" propertytype="fonttypes" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Schriftart 2a</lemma>
+        <name>Schriftart 2a</name>
+        <unit>Schriftart 2a Einheit</unit>
+        <comment>Schriftart 2a Bemerk</comment>
+        <keywords>Font</keywords>
+        <norm_data>Schriftart 2a Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-117" parent_id="properties-119" sortno="10" related_id="properties-118" propertytype="fonttypes" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Schriftart 2b Einheit</unit>
+        <comment>Schriftart 2b Bemerk</comment>
+        <keywords>Font</keywords>
+        <norm_data>Schriftart 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="languages">
+    <properties>
+      <property id="properties-128" sortno="1" sortkey="Sprache 1" propertytype="languages" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Sprache 1</lemma>
+        <name>Sprache 1 </name>
+        <unit>Sprache 1 einheit</unit>
+        <comment>Sprache 1 Bemerk</comment>
+        <keywords>Sprache,Language</keywords>
+        <norm_data>Sprache 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-127" parent_id="properties-128" sortno="2" sortkey="Sprache 1a" propertytype="languages" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Sprache 1a</lemma>
+        <name>Sprache 1a</name>
+        <unit>Sprache 1a Einheit</unit>
+        <comment>Sprache 1a Bemerk</comment>
+        <keywords>Sprache</keywords>
+        <norm_data>Sprache 1a Norm</norm_data>
+      </property>
+      <property id="properties-126" parent_id="properties-128" sortno="4" related_id="properties-127" propertytype="languages" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Sprache 1b Einheti</unit>
+        <comment>Sprache 1b Bemerk</comment>
+        <keywords>Sprache</keywords>
+        <norm_data>Sprache 1b Norm</norm_data>
+      </property>
+      <property id="properties-125" sortno="7" sortkey="Sprache 2" propertytype="languages" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Sprache 2</lemma>
+        <name>Sprache 2 </name>
+        <unit>Sprache 2 Einheit</unit>
+        <comment>Sprache 2 Bemerk</comment>
+        <keywords>Sprache,Language</keywords>
+        <norm_data>Sprache 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-124" parent_id="properties-125" sortno="8" sortkey="Sprache 2a" propertytype="languages" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Sprache 2a</lemma>
+        <name>Sprache 2a</name>
+        <unit>Sprache 2a Einheit</unit>
+        <comment>Sprache 2a Bemerk</comment>
+        <keywords>Language</keywords>
+        <norm_data>Sprache 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-123" parent_id="properties-125" sortno="10" related_id="properties-124" propertytype="languages" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Sprache 2b Einheit</unit>
+        <comment>Sprache 2b Bemerk</comment>
+        <keywords>Language</keywords>
+        <norm_data>Sprache 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="techniques">
+    <properties>
+      <property id="properties-134" sortno="1" sortkey="Ausführungstechnik 1" propertytype="techniques" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Ausführungstechnik 1</lemma>
+        <name>Ausführungstechnik 1 </name>
+        <unit>Ausführungstechnik 1 Einheit</unit>
+        <comment>Ausführungstechnik 1 Bemerk</comment>
+        <keywords>Ausführungstechnik,Technique</keywords>
+        <norm_data>Ausführungstechnik 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-133" parent_id="properties-134" sortno="2" sortkey="Ausführungstechnik 1a" propertytype="techniques" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Ausführungstechnik 1a</lemma>
+        <name>Ausführungstechnik 1a</name>
+        <unit>Ausführungstechnik 1a Einheit</unit>
+        <comment>Ausführungstechnik 1a Bemerk</comment>
+        <keywords>Ausführungstechnik</keywords>
+        <norm_data>Ausführungstechnik 1a Norm</norm_data>
+      </property>
+      <property id="properties-132" parent_id="properties-134" sortno="4" related_id="properties-133" propertytype="techniques" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Ausführungstechnik 1b Einheit</unit>
+        <comment>Ausführungstechnik 1b Bemerk</comment>
+        <keywords>Ausführungstechnik</keywords>
+        <norm_data>Ausführungstechnik 1b Norm</norm_data>
+      </property>
+      <property id="properties-131" sortno="7" sortkey="Ausführungstechnik 2" propertytype="techniques" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Ausführungstechnik 2</lemma>
+        <name>Ausführungstechnik 2 </name>
+        <unit>Ausführungstechnik 2 Einheit</unit>
+        <comment>Ausführungstechnik 2 Bemerk</comment>
+        <keywords>Ausführungstechnik,Technique</keywords>
+        <norm_data>Ausführungstechnik 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-130" parent_id="properties-131" sortno="8" sortkey="Ausführungstechnik 2a" propertytype="techniques" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Ausführungstechnik 2a</lemma>
+        <name>Ausführungstechnik 2a</name>
+        <unit>Ausführungstechnik 2a Einheit</unit>
+        <comment>Ausführungstechnik 2a Bemerk</comment>
+        <keywords>Technique</keywords>
+        <norm_data>Ausführungstechnik 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-129" parent_id="properties-131" sortno="10" related_id="properties-130" propertytype="techniques" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Ausführungstechnik 2b Einheit</unit>
+        <comment>Ausführungstechnik 2b Bemerk</comment>
+        <keywords>Ausführungstechnik,Technique</keywords>
+        <norm_data>Ausführungstechnik 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="epithets">
+    <properties>
+      <property id="properties-140" sortno="1" sortkey="Epithet 1" propertytype="epithets" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+        <lemma>Epithet 1</lemma>
+        <name>Epithet 1 </name>
+        <unit>Epithet 1 Einheit</unit>
+        <comment>Epithet 1 Bemerk</comment>
+        <keywords>Epithet,Spitzname</keywords>
+        <norm_data>Epithet 1 </norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-139" parent_id="properties-140" sortno="2" sortkey="Epithet 1a" propertytype="epithets" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+        <lemma>Epithet 1a</lemma>
+        <name>Epithet 1a</name>
+        <unit>Epithet 1a Einheit</unit>
+        <comment>Epithet 1a Bemerk</comment>
+        <keywords>Epithet</keywords>
+        <norm_data>Epithet 1a Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-138" parent_id="properties-140" sortno="5" related_id="properties-139" propertytype="epithets" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Epithet 1b Einheit</unit>
+        <comment>Epithet 1b Bemerk</comment>
+        <keywords>Epithet</keywords>
+        <norm_data>Epithet 1b Norm</norm_data>
+      </property>
+      <property id="properties-137" sortno="8" sortkey="Epithet 2" propertytype="epithets" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
+        <lemma>Epithet 2</lemma>
+        <name>Epithet 2 </name>
+        <unit>Epithet 2 einheit</unit>
+        <comment>Epithet 2 Bemerk</comment>
+        <keywords>Epithet,Spitzname</keywords>
+        <norm_data>Epithet 2 Norm</norm_data>
+      </property>
+      <property id="properties-136" parent_id="properties-137" sortno="9" sortkey="Epithet 2a" propertytype="epithets" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
+        <lemma>Epithet 2a</lemma>
+        <name>Epithet 2a</name>
+        <unit>Epithet 2a Einheit</unit>
+        <comment>Epithet 2a Bemerk</comment>
+        <keywords>Spitzname</keywords>
+        <norm_data>Epithet 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-135" parent_id="properties-137" sortno="12" related_id="properties-136" propertytype="epithets" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Epithet 2b Einheit</unit>
+        <comment>Epithet 2b Bemer</comment>
+        <keywords>Spitzname</keywords>
+        <norm_data>Epithet 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="incipits">
+    <properties>
+      <property id="properties-146" sortno="1" sortkey="Initien 1" propertytype="incipits" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+        <lemma>Initien 1</lemma>
+        <name>Initien 1 </name>
+        <unit>Initien 1 Einheit</unit>
+        <comment>Initien 1 Bemerk</comment>
+        <keywords>Initien,Anfang</keywords>
+        <norm_data>Initien 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-145" parent_id="properties-146" sortno="2" sortkey="Initien 1a" propertytype="incipits" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+        <lemma>Initien 1a</lemma>
+        <name>Initien 1a</name>
+        <unit>Initien 1a Einheit</unit>
+        <comment>Initien 1a BEmerk</comment>
+        <keywords>Initien</keywords>
+        <norm_data>Initien 1a Norm</norm_data>
+      </property>
+      <property id="properties-144" parent_id="properties-146" sortno="5" related_id="properties-145" propertytype="incipits" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Initien 1b Einheit</unit>
+        <comment>Initien 1b Bemerk</comment>
+        <keywords>Initien</keywords>
+        <norm_data>Initien 1b Norm</norm_data>
+      </property>
+      <property id="properties-143" sortno="8" sortkey="Initien 2" propertytype="incipits" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
+        <lemma>Initien 2</lemma>
+        <name>Initien 2 </name>
+        <unit>Initien 2 Einheit</unit>
+        <comment>Initien 2 Bemerk</comment>
+        <keywords>Initien,Anfang</keywords>
+        <norm_data>Initien 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-142" parent_id="properties-143" sortno="9" sortkey="Initien 2a" propertytype="incipits" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
+        <lemma>Initien 2a</lemma>
+        <name>Initien 2a</name>
+        <unit>Initien 2a Einheit</unit>
+        <comment>Initien 2a Bemerk</comment>
+        <keywords>Anfang</keywords>
+        <norm_data>Initien 2a  Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-141" parent_id="properties-143" sortno="12" related_id="properties-142" propertytype="incipits" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Initien 2b Einheit </unit>
+        <comment>Initien 2b Bemerk</comment>
+        <keywords>Anfang</keywords>
+        <norm_data>Initien 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="formulas">
+    <properties>
+      <property id="properties-152" sortno="1" sortkey="Formel 1" propertytype="formulas" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+        <lemma>Formel 1</lemma>
+        <name>Formel 1 </name>
+        <unit>Formel 1 Einheit</unit>
+        <comment>Formel 1 Bemerk</comment>
+        <keywords>Formel,Formula</keywords>
+        <norm_data>Formel 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-151" parent_id="properties-152" sortno="2" sortkey="Formel 1a" propertytype="formulas" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+        <lemma>Formel 1a</lemma>
+        <name>Formel 1a</name>
+        <unit>Formel 1a Einheit</unit>
+        <comment>Formel 1a Bemerk</comment>
+        <keywords>Formel</keywords>
+        <norm_data>Formel 1a Norm</norm_data>
+      </property>
+      <property id="properties-150" parent_id="properties-152" sortno="5" related_id="properties-151" propertytype="formulas" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Formel 1b Einheit</unit>
+        <comment>Formel 1b Bemerk</comment>
+        <keywords>Formel</keywords>
+        <norm_data>Formel 1b Norm</norm_data>
+      </property>
+      <property id="properties-149" sortno="8" sortkey="Formel 2" propertytype="formulas" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
+        <lemma>Formel 2</lemma>
+        <name>Formel 2 </name>
+        <unit>Formel 2 Einheit</unit>
+        <comment>Formel 2 Bemerk</comment>
+        <keywords>Formel,Formular</keywords>
+        <norm_data>Formel 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-148" parent_id="properties-149" sortno="9" sortkey="Formel 2a" propertytype="formulas" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
+        <lemma>Formel 2a</lemma>
+        <name>Formel 2a</name>
+        <unit>Formel 2a Einheit</unit>
+        <comment>Formel 2a Bemerk</comment>
+        <keywords>Formula</keywords>
+        <norm_data>Formel 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-147" parent_id="properties-149" sortno="12" related_id="properties-148" propertytype="formulas" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Formel 2b Einheti</unit>
+        <comment>Formel 2b Bemerk</comment>
+        <keywords>Formula</keywords>
+        <norm_data>Formel 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="sources">
+    <properties>
+      <property id="properties-158" sortno="1" sortkey="Zitat 1" propertytype="sources" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+        <lemma>Zitat 1</lemma>
+        <name>Zitat 1 </name>
+        <unit>Zitat 1 Einheit</unit>
+        <comment>Zitat 1 Bemerk</comment>
+        <keywords>Zitat,Quote</keywords>
+        <norm_data>Zitat 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-157" parent_id="properties-158" sortno="2" sortkey="Zitat 1a" propertytype="sources" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+        <lemma>Zitat 1a</lemma>
+        <name>Zitat 1a</name>
+        <unit>Zitat 1a Einheit</unit>
+        <comment>Zitat 1a Bemerk</comment>
+        <keywords>Zitat</keywords>
+        <norm_data>Zitat 1a Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-156" parent_id="properties-158" sortno="5" related_id="properties-157" propertytype="sources" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Zitat 1b Einheit</unit>
+        <comment>Zitat 1b Bemerk</comment>
+        <keywords>Zitat</keywords>
+        <norm_data>Zitat 1b Norm</norm_data>
+      </property>
+      <property id="properties-155" sortno="8" sortkey="Zitat 2" propertytype="sources" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
+        <lemma>Zitat 2</lemma>
+        <name>Zitat 2 </name>
+        <unit>Zitat 2 einheit</unit>
+        <comment>Zitat 2 Bemerk</comment>
+        <keywords>Zitat,Quote</keywords>
+        <norm_data>Zitat 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-154" parent_id="properties-155" sortno="9" sortkey="Zitat 2a" propertytype="sources" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
+        <lemma>Zitat 2a</lemma>
+        <name>Zitat 2a</name>
+        <unit>Zitat 2a einheit</unit>
+        <comment>Zitat 2a Bemerk</comment>
+        <keywords>Quote</keywords>
+        <norm_data>Zitat 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-153" parent_id="properties-155" sortno="12" related_id="properties-154" propertytype="sources" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Zitat 2b Einheit</unit>
+        <comment>Zitat 2b Bemerk</comment>
+        <keywords>Quote</keywords>
+        <norm_data>Zitat 2b norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="initials">
+    <properties>
+      <property id="properties-164" sortno="1" sortkey="Initiale 1" propertytype="initials" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Initiale 1</lemma>
+        <name>Initiale 1 </name>
+        <unit>Initiale 1 Einheit</unit>
+        <comment>Initiale 1 Bemerk</comment>
+        <keywords>Initiale,Initial</keywords>
+        <norm_data>Initiale 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-163" parent_id="properties-164" sortno="2" sortkey="Initiale 1a" propertytype="initials" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Initiale 1a</lemma>
+        <name>Initiale 1a</name>
+        <unit>Initiale 1a Einheit</unit>
+        <comment>Initiale 1a Bemerk</comment>
+        <keywords>Initiale</keywords>
+        <norm_data>Initiale 1a Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-161" sortno="8" sortkey="Initiale 2" propertytype="initials" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Initiale 2</lemma>
+        <name>Initiale 2 </name>
+        <unit>Initiale 2 Einheit</unit>
+        <comment>Initiale 2 Bemerk</comment>
+        <keywords>Initiale,Initial</keywords>
+        <norm_data>Initiale 2 Norm</norm_data>
+      </property>
+      <property id="properties-160" parent_id="properties-161" sortno="9" sortkey="Initiale 2a" propertytype="initials" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+        <lemma>Initiale 2a</lemma>
+        <name>Initiale 2a</name>
+        <unit>Initiale 2a Einheit</unit>
+        <comment>Initiale 2a Bemerk</comment>
+        <keywords>Initial</keywords>
+        <norm_data>Initiale 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="metres">
+    <properties>
+      <property id="properties-170" sortno="1" sortkey="Versmaß 1" propertytype="metres" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+        <lemma>Versmaß 1</lemma>
+        <name>Versmaß 1 </name>
+        <unit>Versmaß 1 Einheit</unit>
+        <comment>Versmaß 1 Bemerk</comment>
+        <keywords>Versmaß,Meter</keywords>
+        <norm_data>Versmaß 1 Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-169" parent_id="properties-170" sortno="2" sortkey="Versmaß 1a" propertytype="metres" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+        <lemma>Versmaß 1a</lemma>
+        <name>Versmaß 1a</name>
+        <unit>Versmaß 1a EInheit</unit>
+        <comment>Versmaß 1a Bemerk</comment>
+        <keywords>Versmaß</keywords>
+        <norm_data>Versmaß 1a Norm</norm_data>
+      </property>
+      <property id="properties-168" parent_id="properties-170" sortno="5" related_id="properties-169" propertytype="metres" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Versmaß 1b Einheit</unit>
+        <comment>Versmaß 1b Bemerk</comment>
+        <keywords>Versmaß</keywords>
+        <norm_data>Versmaß 1b Norm</norm_data>
+      </property>
+      <property id="properties-167" sortno="8" sortkey="Versmaß 2" propertytype="metres" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
+        <lemma>Versmaß 2</lemma>
+        <name>Versmaß 2 </name>
+        <unit>Versmaß 2 Einheit</unit>
+        <comment>Versmaß 2 Bemerk</comment>
+        <keywords>Versmaß,Meter</keywords>
+        <norm_data>Versmaß 2 Norm</norm_data>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-166" parent_id="properties-167" sortno="9" sortkey="Versmaß 2a" propertytype="metres" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
+        <lemma>Versmaß 2a</lemma>
+        <name>Versmaß 2a</name>
+        <unit>Versmaß 2a Einheit</unit>
+        <comment>Versmaß 2a Bemerk</comment>
+        <keywords>Meter</keywords>
+        <norm_data>Versmaß 2a Norm</norm_data>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-165" parent_id="properties-167" sortno="12" related_id="properties-166" propertytype="metres" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <unit>Versmaß 2b Einheit</unit>
+        <comment>Versmaß 2b Bemerk</comment>
+        <keywords>Meter</keywords>
+        <norm_data>Versmaß 2b Norm</norm_data>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="datakeys">
+    <properties>
+      <property id="properties-514" sortno="17" sortkey="di_number" propertytype="datakeys" level="0" lft="1" rght="2">
+        <lemma>di_number</lemma>
+        <name>di_number</name>
+        <norm_iri>di_di_number</norm_iri>
+        <sections>
+          <section id="sections-162" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-518" sortno="63" sortkey="prelim_series" propertytype="datakeys" level="0" lft="5" rght="6">
+        <lemma>prelim_series</lemma>
+        <name>prelim_series</name>
+        <norm_iri>di_prelim_series</norm_iri>
+        <sections>
+          <section id="sections-166" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-520" sortno="69" sortkey="prelim_series_title" propertytype="datakeys" level="0" lft="7" rght="8">
+        <lemma>prelim_series_title</lemma>
+        <name>prelim_series_title</name>
+        <norm_iri>di_prelim_series_title</norm_iri>
+        <sections>
+          <section id="sections-168" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-522" sortno="67" sortkey="prelim_series_number" propertytype="datakeys" level="0" lft="9" rght="10">
+        <lemma>prelim_series_number</lemma>
+        <name>prelim_series_number</name>
+        <norm_iri>di_prelim_series_number</norm_iri>
+        <sections>
+          <section id="sections-170" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-524" sortno="65" sortkey="prelim_series_editor" propertytype="datakeys" level="0" lft="11" rght="12">
+        <lemma>prelim_series_editor</lemma>
+        <name>prelim_series_editor</name>
+        <norm_iri>di_prelim_series_editor</norm_iri>
+        <sections>
+          <section id="sections-172" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-526" sortno="75" sortkey="prelim_sub_series" propertytype="datakeys" level="0" lft="13" rght="14">
+        <lemma>prelim_sub_series</lemma>
+        <name>prelim_sub_series</name>
+        <norm_iri>di_prelim_sub_series</norm_iri>
+        <sections>
+          <section id="sections-174" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-528" sortno="77" sortkey="prelim_volume" propertytype="datakeys" level="0" lft="15" rght="16">
+        <lemma>prelim_volume</lemma>
+        <name>prelim_volume</name>
+        <norm_iri>di_prelim_volume</norm_iri>
+        <sections>
+          <section id="sections-176" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-530" sortno="81" sortkey="prelim_volume_title" propertytype="datakeys" level="0" lft="17" rght="18">
+        <lemma>prelim_volume_title</lemma>
+        <name>prelim_volume_title</name>
+        <norm_iri>di_prelim_volume_title</norm_iri>
+        <sections>
+          <section id="sections-178" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-532" sortno="79" sortkey="prelim_volume_subtitle" propertytype="datakeys" level="0" lft="19" rght="20">
+        <lemma>prelim_volume_subtitle</lemma>
+        <name>prelim_volume_subtitle</name>
+        <norm_iri>di_prelim_volume_subtitle</norm_iri>
+        <sections>
+          <section id="sections-180" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-534" sortno="83" sortkey="prelim_year" propertytype="datakeys" level="0" lft="21" rght="22">
+        <lemma>prelim_year</lemma>
+        <name>prelim_year</name>
+        <norm_iri>di_prelim_year</norm_iri>
+        <sections>
+          <section id="sections-182" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-536" sortno="59" sortkey="prelim_publisher" propertytype="datakeys" level="0" lft="23" rght="24">
+        <lemma>prelim_publisher</lemma>
+        <name>prelim_publisher</name>
+        <norm_iri>di_prelim_publisher</norm_iri>
+        <sections>
+          <section id="sections-184" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-538" sortno="57" sortkey="prelim_print_note" propertytype="datakeys" level="0" lft="25" rght="26">
+        <lemma>prelim_print_note</lemma>
+        <name>prelim_print_note</name>
+        <norm_iri>di_prelim_print_note</norm_iri>
+        <sections>
+          <section id="sections-186" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-540" sortno="53" sortkey="prelim_isbn" propertytype="datakeys" level="0" lft="27" rght="28">
+        <lemma>prelim_isbn</lemma>
+        <name>prelim_isbn</name>
+        <norm_iri>di_prelim_isbn</norm_iri>
+        <sections>
+          <section id="sections-188" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-542" sortno="61" sortkey="prelim_rights" propertytype="datakeys" level="0" lft="29" rght="30">
+        <lemma>prelim_rights</lemma>
+        <name>prelim_rights</name>
+        <norm_iri>di_prelim_rights</norm_iri>
+        <sections>
+          <section id="sections-190" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" level="0" lft="31" rght="32">
+        <lemma>prelim_sponsors</lemma>
+        <name>prelim_sponsors</name>
+        <norm_iri>di_prelim_sponsors</norm_iri>
+        <sections>
+          <section id="sections-192" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-546" sortno="49" sortkey="preliminaries" propertytype="datakeys" level="0" lft="33" rght="34">
+        <lemma>preliminaries</lemma>
+        <name>preliminaries</name>
+        <norm_iri>di_preliminaries</norm_iri>
+        <sections>
+          <section id="sections-164" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-548" sortno="51" sortkey="prelim_biblio_note" propertytype="datakeys" level="0" lft="35" rght="36">
+        <lemma>prelim_biblio_note</lemma>
+        <name>prelim_biblio_note</name>
+        <norm_iri>di_prelim_biblio_note</norm_iri>
+        <sections>
+          <section id="sections-196" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-550" sortno="129" sortkey="table_of_content" propertytype="datakeys" level="0" lft="37" rght="38">
+        <lemma>table_of_content</lemma>
+        <name>table_of_content</name>
+        <norm_iri>di_table_of_content</norm_iri>
+        <sections>
+          <section id="sections-198" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-552" sortno="47" sortkey="prefaces" propertytype="datakeys" level="0" lft="39" rght="40">
+        <lemma>prefaces</lemma>
+        <name>prefaces</name>
+        <norm_iri>di_prefaces</norm_iri>
+        <sections>
+          <section id="sections-200" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-554" sortno="29" sortkey="introduction" propertytype="datakeys" level="0" lft="41" rght="42">
+        <lemma>introduction</lemma>
+        <name>introduction</name>
+        <norm_iri>di_introduction</norm_iri>
+        <sections>
+          <section id="sections-202" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-556" sortno="13" sortkey="csv_table" propertytype="datakeys" level="0" lft="43" rght="44">
+        <lemma>csv_table</lemma>
+        <name>csv_table</name>
+        <norm_iri>di_csv_table</norm_iri>
+        <sections>
+          <section id="sections-242" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-562" sortno="11" sortkey="continuation" propertytype="datakeys" level="0" lft="49" rght="50">
+        <lemma>continuation</lemma>
+        <name>continuation</name>
+        <norm_iri>di_continuation</norm_iri>
+        <sections>
+          <section id="sections-210" articles_id="articles-2" />
+          <section id="sections-214" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-564" sortno="133" propertytype="datakeys" level="0" lft="51" rght="52">
+        <lemma>empty</lemma>
+        <norm_iri>di_empty</norm_iri>
+        <sections>
+          <section id="sections-234" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-566" sortno="7" sortkey="articles" propertytype="datakeys" level="0" lft="53" rght="54">
+        <lemma>articles</lemma>
+        <name>articles</name>
+        <norm_iri>di_articles</norm_iri>
+        <sections>
+          <section id="sections-238" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-568" sortno="13" sortkey="csv_table" propertytype="datakeys" level="0" lft="55" rght="56">
+        <lemma>csv_table</lemma>
+        <name>csv_table</name>
+        <norm_iri>di_csv_table</norm_iri>
+        <sections>
+          <section id="sections-208" articles_id="articles-2" />
+          <section id="sections-212" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-570" sortno="27" sortkey="indices" propertytype="datakeys" level="0" lft="57" rght="58">
+        <lemma>indices</lemma>
+        <name>indices</name>
+        <norm_iri>di_indices</norm_iri>
+        <sections>
+          <section id="sections-244" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-576" sortno="109" sortkey="properties_personennamen" propertytype="datakeys" level="0" lft="63" rght="64">
+        <lemma>personnames</lemma>
+        <name>index_personennamen</name>
+        <norm_iri>di_personnames</norm_iri>
+        <sections>
+          <section id="sections-250" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-578" sortno="93" sortkey="properties_hersteller" propertytype="datakeys" level="0" lft="65" rght="66">
+        <lemma>manufacturers</lemma>
+        <name>index_hersteller</name>
+        <norm_iri>di_manufacturers</norm_iri>
+        <sections>
+          <section id="sections-252" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-580" sortno="107" sortkey="properties_ortsnamen" propertytype="datakeys" level="0" lft="67" rght="68">
+        <lemma>placenames</lemma>
+        <name>index_ortsnamen</name>
+        <norm_iri>di_placenames</norm_iri>
+        <sections>
+          <section id="sections-254" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-606" sortno="119" sortkey="properties_technik" propertytype="datakeys" level="0" lft="93" rght="94">
+        <lemma>techniques</lemma>
+        <name>index_technik</name>
+        <norm_iri>di_techniques</norm_iri>
+        <sections>
+          <section id="sections-282" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-610" sortno="3" propertytype="datakeys" level="0" lft="97" rght="98">
+        <lemma>indexgroup</lemma>
+        <name>indexgruppe</name>
+        <norm_iri>di_indexgroup</norm_iri>
+        <sections>
+          <section id="sections-248" articles_id="articles-2" />
+          <section id="sections-276" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-630" sortno="41" sortkey="marks" propertytype="datakeys" level="0" lft="117" rght="118">
+        <lemma>marks</lemma>
+        <name>marks</name>
+        <norm_iri>di_marks</norm_iri>
+        <sections>
+          <section id="sections-306" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" level="0" lft="119" rght="120">
+        <lemma>plates</lemma>
+        <name>plates</name>
+        <norm_iri>di_plates</norm_iri>
+        <sections>
+          <section id="sections-308" articles_id="articles-2" />
+        </sections>
+      </property>
+    </properties>
+  </index></response>

@@ -1,0 +1,16 @@
+{
+    "id": 2,
+    "deleted": 0,
+    "published": 0,
+    "created": "2020-11-11T14:17:34+01:00",
+    "modified": "2020-10-29T13:00:58+01:00",
+    "created_by": null,
+    "modified_by": 2,
+    "name": "test_private_renamed.doc",
+    "description": "New world.",
+    "type": "doc",
+    "size": 33381,
+    "root": "shared",
+    "path": "downloads",
+    "isfolder": 0
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Help    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"author","scope":"web","settings":{"columns":{"docs":[]}},"session":{"ui":[]}});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_help             action_index             template_default             theme_default             userrole_author">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global active" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/1" class="btn-profile" title="author"></a>                                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+                <div class="frame-title">
+                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
+                </div>
+
+                <div class="frame-content">
+                    <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first active node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/help">List all</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Administration">Administration</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Handbuch">Handbuch</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Kontext-Hilfe">Kontext-Hilfe</a></div><div class="tree-meta"></div></li></ul></div>                </div>
+                <div class="frame-footer">
+                                            <form method="get" accept-charset="utf-8" id="search" action="/docs/index/help"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search" value="epigraf"></div></form>                                    </div>
+                </div></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/docs/index/help">Help</a></li></ul></nav>                    </div>
+
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+<!-- Breadcrumbs -->
+
+<!-- Sidebars -->
+
+<!-- Content -->
+
+<div class="content-main widget-scrollbox">
+    <table class="recordlist widget-table actions-toframe widget-tree" data-filter-group="help" data-snippet="rows" data-model="help" data-sortdir="asc"><thead><tr>
+<th scope="col" data-col="name"><a href="/docs/index/help?term=epigraf&amp;sort=name&amp;direction=asc">Name</a></th>
+<th scope="col" data-col="category"><a href="/docs/index/help?term=epigraf">Category</a></th>
+<th scope="col" data-col="norm_iri" data-width="150" style="position: relative; width: 150px; max-width: 150px;"><a href="/docs/index/help?term=epigraf&amp;sort=norm_iri&amp;direction=asc">IRI-Fragment</a></th>
+<th scope="col" data-col="sortkey" data-width="50" style="position: relative; width: 50px; max-width: 50px;"><a href="/docs/index/help?term=epigraf&amp;sort=sortkey&amp;direction=asc">Order</a></th>
+<th scope="col" data-col="modified"><a href="/docs/index/help?term=epigraf&amp;sort=modified&amp;direction=asc">Last modified</a></th>
+<th scope="col" data-col="created"><a href="/docs/index/help?term=epigraf&amp;sort=created&amp;direction=asc">Created on</a></th>
+<th scope="col" class="actions">Actions</th></tr></thead><tbody data-list-name="help" data-list-action-next="" data-list-action-get="/docs/index/help?term=epigraf"><tr class="node item item-level-0 item-nochildren row-main" data-list-itemof="help" data-id="73" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Epigraf-Handbuch</div></td><td >Handbuch</td><td >start</td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/help/73" data-role="view">View</a></td></tr><tr class="node item item-level-1 item-nochildren row-supplement" data-list-itemof="help" data-id="hit-73" data-parent="73" data-tree-parent="73" data-level="1"><td class="tree-cell"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content">Content</div></td><td colspan="5"><p>## Übersicht
+* [<mark>Epigraf</mark>Desktop](#<mark>epigraf</mark>_desktop)
+* [<mark>Epigraf</mark>Web](#<mark>epigraf</mark>_web)
+* [Häufig gestellte Fragen (FAQs)](/docs/view/110)
+----
+* [<mark>Epigraf</mark> User Support via Mattermost](https://mattermost.gitlab.rlp.net/di/channels/<mark>epigraf</mark>-user-support)
+* [<mark>Epigraf</mark>-Server: Verantwortliche und Hotline](/docs/view/141)
+----
+# <mark>Epigraf</mark>Desktop {#<mark>epigraf</mark>_desktop}
+[Installation](/docs/view/1)
+[Konfiguration](/docs/view/70)
+[Dokumentation](/docs/view/131<span class="shorten">...</span><span class="shorten">...</span>#einschraenken)
+* [Bugreports - Fehlermeldungen per Email senden](/docs/view/130)
+* [Dateinamen für <mark>Epigraf</mark>Web](/docs/view/123)
+* [Datierung](/docs/view/95)
+* [Doubletten in Registern zusammenführen](/docs/view/85#doubletten)
+* [Drucksatz erstellen aus <mark>Epigraf</mark> in Word](/files/download?root=shared&amp;path=wiki%2FHilfsmittel&amp;filename=Leitfaden-Satzherstellung-aus-<mark>Epigraf</mark>-in-Word.docx)
+* [Importfunktion](/docs/view/127)
+* [Ligaturen optional durch Unterstreichung oder U<span class="shorten">...</span><span class="shorten">...</span>ltextsuche](/docs/view/132)
+* [Weblinks](/docs/view/128#weblinks)
+* [Word-Export](/docs/view/138)
+# <mark>Epigraf</mark>Web {#<mark>epigraf</mark>_web}
+<mark>Epigraf</mark>Web bildet den Online-Bereich von <mark>Epigraf</mark> 4 mit Elementen einer virtuellen Forschungsumgebung, die auch genutzt werden können, wenn <mark>Epigraf</mark>Desktop nicht als Redaktionssystem verwendet wird.
+Allgemein und forschungsstellenübergreifend bietet <mark>Epigraf</mark>Web Zugriff auf das <mark>Epigraf</mark>-Handbuch und das [<mark>Epigraf</mark>-Wiki](/wiki/view/117).
+Daneben wird jeder Forschungsstelle ein eigener Bereich für die Projektorgan<span class="shorten">...</span></p></td><td class="actions"><a href="/docs/view/help/73?highlight=epigraf" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren row-main" data-list-itemof="help" data-id="47" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Startfenster</div></td><td >Handbuch</td><td >window-uebersicht</td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/help/47" data-role="view">View</a></td></tr><tr class="node item item-level-1 item-nochildren row-supplement" data-list-itemof="help" data-id="hit-47" data-parent="47" data-tree-parent="47" data-level="1"><td class="tree-cell"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content">Content</div></td><td colspan="5"><p><span class="shorten">...</span>h=help%2Fscreenshots&amp;filename=startseite.png)
+Beim Programmstart erscheint das Startfenster von <mark>Epigraf</mark>.
+Die Hauptfläche nimmt eine Tabelle ein, die – entsprechend der Auswahl im [Dropdown-Feld &quot;Ebe<span class="shorten">...</span><span class="shorten">...</span>eren Bereich werden (ensprechend den in der Konfiguration vorgenommen Einträgen) die auf dem PC mit <mark>Epigraf</mark>Desktop verknüpften Datenbanken angezeigt. Die Anzeige bietet die Möglichkeit, durch Anklicken eine <span class="shorten">...</span><span class="shorten">...</span>den:
+* __Artikel exportieren__ (F6): Export einzelner oder mehrerer Artikel als Text-Dokument über [<mark>Epigraf</mark>Web](/docs/view/87), optionsweise auch mit Ausgabe der Register.
+* __Band exportieren__ (F7): Export ganzer Inschriftenbände als Text-Dokument über [<mark>Epigraf</mark>Web](/docs/view/87), optionsweise beschränkbar auf einzelne Bandabschnitte.
+##__Menü &quot;Ansicht&q<span class="shorten">...</span><span class="shorten">...</span>in- oder auszublenden.
+##__Menü &quot;Dateiablage&quot;__  {#menue_dateiablag}
+       Zeigt die auf <mark>Epigraf</mark>Web vorhandenen Verzeichnisse zur Ablage von Dateien (Hilfsmittel) an und leitet dorthin weiter.
+
+##__Menü &quot;Notizen&quot;__  {#menue_notizen}
+       Zeigt die auf <mark>Epigraf</mark>Web abgelegten Notizen an und leitet dorthin weiter.
+
+#Statusanzeige {#statusDb}
+zurück ...
+Hier<span class="shorten">...</span><span class="shorten">...</span>e in den [Registern](/docs/view/80)
+7. `Notizen`: leitet weiter zu den [Notizen](/docs/view/77) auf <mark>Epigraf</mark>Web
+8. `Hilfsmittel`: leitet weiter zu den [Hilfsmitteln](/docs/view/78) auf <mark>Epigraf</mark>Web
+#Statuszeile {#statusZ}
+[zurück ...](/docs/view/47)
+In der Statuszeile unterhalb der Tabelle ers<span class="shorten">...</span></p></td><td class="actions"><a href="/docs/view/help/47?highlight=epigraf" data-role="view">View</a></td></tr>
+<tr class="node item item-level-0 item-nochildren row-main" data-list-itemof="help" data-id="50" data-parent="" data-tree-parent="" data-level="0"><td ><div class="tree-content">Artikel » Abschnitt Datensatz</div></td><td >Kontext-Hilfe</td><td >section-datensatz</td><td ></td><td >#TIME#</td><td >#TIME#</td><td class="actions"><a href="/docs/view/help/50" data-role="view">View</a></td></tr><tr class="node item item-level-1 item-nochildren row-supplement" data-list-itemof="help" data-id="hit-50" data-parent="50" data-tree-parent="50" data-level="1"><td class="tree-cell"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content">Content</div></td><td colspan="5"><p>[zur Übersicht ...](https://<mark>epigraf</mark>.inschriften.net/docs/view/73)
+![Datensatz](https://<mark>epigraf</mark>.inschriften.net/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=DatensatzFenste<span class="shorten">...</span></p></td><td class="actions"><a href="/docs/view/help/50?highlight=epigraf" data-role="view">View</a></td></tr></tbody></table></div>
+
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default">3 records</span></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><a href="/docs/index/help.csv?term=epigraf" target="_blank" rel="nofollow" data-list-select="help" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/docs/index/help.xml?term=epigraf" target="_blank" rel="nofollow" data-list-select="help" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/docs/index/help.json?term=epigraf" target="_blank" rel="nofollow" data-list-select="help" data-list-param="id" class="">JSON</a></li><li><a href="/help/epiweb-help-index" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

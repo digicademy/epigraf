@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Epigraf 4 - Files    </title>
+
+    <link href="/favicon.png" type="image/x-icon" rel="icon"/><link href="/favicon.png" type="image/x-icon" rel="shortcut icon"/>
+        <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/css/app.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.css"/>    <link rel="stylesheet" href="/widgets/css/filter.css"/>	<link rel="stylesheet" href="/widgets/css/layout.css"/>	<link rel="stylesheet" href="/widgets/css/popup.css"/>	<link rel="stylesheet" href="/widgets/css/tablewidget.css"/>
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jquery/jquery.mousewheel.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script src="/js/app.min.js"></script>    <script>App.baseUrl = "http://localhost/";</script>    <script>App.data = [];</script>	<script>App.user = [];</script>
+    <script src="/widgets/js/paginator.js"></script>    <script src="/widgets/js/filter.js"></script>	<script src="/widgets/js/layout.js"></script>	<script src="/widgets/js/tablewidget.js"></script>	<script src="/widgets/js/pipeline.js"></script>	<script src="/widgets/js/popups.js"></script>    <script src="/widgets/js/ckeditor/epieditor.js"></script>	    <script src="/widgets/js/dropdowns.js"></script>    <script src="/widgets/js/widgets.js"></script>
+    </head>
+
+<body class="controller_files action_delete userrole_author">
+
+    <div id="page-wrapper">
+
+        <nav class="actions-main topmenu">
+
+            <div class="topmenu-left">
+                    <div class="topmenu-left-items">
+                      <ul class=" horizontal">
+
+
+                    <li class="menu_database first active dropdown">
+
+	                    <button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo; </button>
+    	                <div class="widget-dropdown-pane dropdown-menu" id="databasemenu-dropdown">
+        	                <ul class=" vertical">
+
+
+                    <li class="first">
+                            <a href="/epi/projects/articles">projects</a>
+
+        </li>
+
+</ul>
+
+
+            	        </div>
+
+
+
+
+        </li>
+                <li class="menu_database">
+                            <a href="/epi/projects/projects">Projekte</a>
+
+        </li>
+                <li class="menu_database">
+                            <a href="/epi/projects/articles">Artikel</a>
+
+        </li>
+                <li class="menu_database">
+                            <a href="/epi/projects/notes">Notizen</a>
+
+        </li>
+                <li class="menu_database active">
+                            <a href="/epi/projects/files">Dateien</a>
+
+        </li>
+                <li class="menu_database spacer">
+                            <span>&nbsp;|&nbsp;</span>
+
+
+
+        </li>
+                <li class="menu_global">
+                            <a href="/files?root=shared&amp;database=projects">Repositorium</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/help?database=projects">Hilfe</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/wiki?database=projects">Wiki</a>
+
+        </li>
+                <li class="menu_global">
+                            <a href="/users/logout">Logout</a>
+
+        </li>
+
+</ul>
+
+
+                    </div>
+
+                    <div class="topmenu-left-dots">
+						<button class="widget-dropdown widget-dropdown-toggle" data-toggle="dotmenu-dropdown">☰</button>
+						<div class="widget-dropdown-pane dropdown-menu widget-dropdown-pos-bottomright" id="dotmenu-dropdown">
+							<ul class="vertical"></ul>
+						</div>
+                    </div>
+            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+                                    <span class="menu-home">
+                        <a href="/">Epigraf</a>
+                    </span>
+                            </div>
+
+        </nav>
+
+
+        <div id="content-wrapper" class="accordion">
+
+                <!-- Fill sidebars -->
+
+
+                <!-- Right sidebar -->
+
+                <!-- Toggles -->
+
+
+                <!-- Left sidebar -->
+
+                <!-- Content -->
+                <div id="content" class="accordion-item accordion-main">
+
+                    <div class="content-header">
+                        <div class="content-header-title">
+                                                                                    <nav class="breadcrumbs">
+								<ul class="breadcrumbs-trail"><li><a href="/epi/projects/files">Dateien</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>root</span></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>downloads</span></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>test.doc</span></li></ul>							</nav>
+                                                    </div>
+
+
+                    </div>
+
+                    <div class="content-flash"></div>
+
+                    <div class="content-content widget-scrollsync-content">
+
+<!-- Breadcrumbs -->
+
+
+<!-- Content area -->
+<div class="content-extratight">
+
+	<div class="message danger">
+		Gefahrenbereich! Operationen auf dieser Seite können Inhalt empfindlich beschädigen. Daten können für immer verloren gehen!	</div>
+
+	<p>
+		This will delete the file or folder "downloads/test.doc" on the server. All data will be deleted forever. Are you sure? Are you really sure?	</p>
+
+	<form method="post" accept-charset="utf-8" id="form-edit" action="/epi/projects/files/delete?root=root&amp;path=downloads&amp;filename=test.doc">	<fieldset>
+		<input type="hidden" name="File[id]" id="file-id" value="2"/>	</fieldset>
+	<div style="display:none;"></div></form></div>
+
+<!-- Actions -->
+                                                    <nav class="actions-content">
+                                <ul class="action-menu">
+<li><a href="/epi/projects/files?root=root&amp;path=downloads" class="button button_cancel">Abbrechen</a></li>
+<li><button form="form-edit" data-role="submit" type="submit">Löschen</button></li>
+</ul>                            </nav>
+                                            </div>
+
+					<div class="content-footer">
+					    					</div>
+				</div>
+
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+    "name": "epigraf/Widgets",
+    "description": "Widgets plugin for Epigraf",
+    "type": "cakephp-plugin",
+    "license": "MIT",
+    "require": {
+        "cakephp/cakephp": "~4.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Widgets\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Widgets\\Test\\": "tests/",
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests/"
+        }
+    }
+}

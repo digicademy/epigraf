@@ -1,0 +1,39 @@
+{
+    "properties": [
+        {
+            "lemma": "Schriftart 1",
+            "articles_count": 1
+        },
+        {
+            "lemma": "siehe"
+        },
+        {
+            "lemma": "Schriftart 1a",
+            "articles_count": 1
+        },
+        {
+            "lemma": "siehe"
+        },
+        {
+            "lemma": "Schriftart 2",
+            "articles_count": 1
+        },
+        {
+            "lemma": "siehe"
+        },
+        {
+            "lemma": "Schriftart 2a",
+            "articles_count": 1
+        },
+        {
+            "lemma": "siehe"
+        }
+    ],
+    "pagination": {
+        "count": 4,
+        "page": 1,
+        "page_prev": false,
+        "page_next": false,
+        "perpage": 100
+    }
+}

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-application progid="Word.Document"?>
+<w:wordDocument xmlns:aml="http://schemas.microsoft.com/aml/2001/core" xmlns:dt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:exsl="http://exslt.org/common" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:msxsl="urn:schemas-microsoft-com:xslt" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:php="http://php.net/xsl" xmlns:sl="http://schemas.microsoft.com/schemaLibrary/2003/core" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="http://schemas.microsoft.com/office/word/2003/wordml" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:wsp="http://schemas.microsoft.com/office/word/2003/wordml/sp2" xmlns:wx="http://schemas.microsoft.com/office/word/2003/auxHint" w:macrosPresent="no" w:embeddedObjPresent="no" w:ocxPresent="no" xml:space="preserve">
+<w:fonts><w:defaultFonts w:ascii="Times New Roman" w:fareast="Times New Roman" w:h-ansi="Times New Roman" w:cs="Times New Roman"/><w:font w:name="Times New Roman"><w:panose-1 w:val="02020404030301010803"/><w:charset w:val="00"/><w:family w:val="Roman"/><w:pitch w:val="variable"/><w:sig w:usb-0="00000287" w:usb-1="00000000" w:usb-2="00000000" w:usb-3="00000000" w:csb-0="0000009F" w:csb-1="00000000"/></w:font><w:font w:name="Courier New"><w:panose-1 w:val="02070409020205020404"/><w:charset w:val="00"/><w:family w:val="Modern"/><w:notTrueType/><w:pitch w:val="fixed"/><w:sig w:usb-0="00000003" w:usb-1="00000000" w:usb-2="00000000" w:usb-3="00000000" w:csb-0="00000001" w:csb-1="00000000"/></w:font><w:font w:name="Araldo"><w:panose-1 w:val="02020404030301010803"/><w:charset w:val="00"/><w:family w:val="Roman"/><w:pitch w:val="variable"/><w:sig w:usb-0="00000003" w:usb-1="00000000" w:usb-2="00000000" w:usb-3="00000000" w:csb-0="00000001" w:csb-1="00000000"/></w:font><w:font w:name="Cambria"><w:panose-1 w:val="02040503050406030204"/><w:charset w:val="00"/><w:family w:val="Roman"/><w:pitch w:val="variable"/><w:sig w:usb-0="E00002FF" w:usb-1="400004FF" w:usb-2="00000000" w:usb-3="00000000" w:csb-0="0000019F" w:csb-1="00000000"/></w:font></w:fonts>
+<w:styles><w:versionOfBuiltInStylenames w:val="4"/><w:latentStyles w:defLockedState="off" w:latentStyleCount="156"/><w:style w:type="paragraph" w:default="on" w:styleId="epi-standard"><w:name w:val="Normal"/><w:aliases w:val="A1"/><wx:uiName wx:val="epi-standard"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:h-ansi="Times New Roman"/><wx:font wx:val="Times New Roman"/><w:sz w:val="20"/><w:lang w:val="DE" w:fareast="DE" w:bidi="AR-SA"/><w:kern w:val="20"/></w:rPr><w:pPr><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="both"/></w:pPr></w:style><w:style w:type="paragraph" w:default="on" w:styleId="epi-normal-1"><w:name w:val="epi-normal-1"/><wx:uiName wx:val="epi-normal-1"/><w:rPr><w:rFonts w:ascii="Times New Roman" w:h-ansi="Times New Roman"/><wx:font wx:val="Times New Roman"/><w:sz w:val="20"/><w:lang w:val="DE" w:fareast="DE" w:bidi="AR-SA"/><w:kern w:val="20"/></w:rPr><w:pPr><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="both"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-notiz"><w:name w:val="epi-notiz"/><w:basedOn w:val="epi-standard"/><wx:uiName wx:val="epi-notiz"/><w:pPr><w:pStyle w:val="epi-notiz"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="left"/></w:pPr><w:rPr><w:rFonts w:ascii="Courier New" w:h-ansi="Courier New"/><wx:font wx:val="Courier New"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-kopfzeile"><w:name w:val="epi-kopfzeile"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-kopfzeile"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="left"/><w:outlineLvl w:val="1"/><w:keepNext w:val="on"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-kopfzeile-balken-oben"><w:name w:val="epi-kopfzeile-balken-oben"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-kopfzeile-balken-oben"/><w:widowControl w:val="on"/><w:pBdr><w:top w:val="single" w:sz="6" wx:bdrwidth="14" w:space="1" w:color="auto"/></w:pBdr><w:spacing w:line="100" w:line-rule="exact"/><w:keepNext w:val="on"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-kopfzeile-balken-unten"><w:name w:val="epi-kopfzeile-balken-unten"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-kopfzeile-balken-unten"/><w:widowControl w:val="on"/><w:pBdr><w:bottom w:val="single" w:sz="6" wx:bdrwidth="15" w:space="1" w:color="auto"/></w:pBdr><w:spacing w:line="100" w:line-rule="exact"/><w:keepNext w:val="on"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-seitenkopf"><w:name w:val="epi-seitenkopf"/><wx:uiName wx:val="epi-seitenkopf"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:tabs><w:tab w:val="center" w:pos="4536"/><w:tab w:val="right" w:pos="9072"/></w:tabs></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-seitenfuss"><w:name w:val="epi-seitenfuss"/><wx:uiName wx:val="epi-seitenfuß"/><w:basedOn w:val="epi-normal-1"/><w:link w:val="seitenzahl"/><w:pPr><w:tabs><w:tab w:val="center" w:pos="4536"/><w:tab w:val="right" w:pos="9072"/></w:tabs></w:pPr></w:style><w:style w:type="character" w:styleId="epi-seitenzahl"><w:name w:val="epi-seitenzahl"/><w:link w:val="seitenfuss"/></w:style><w:style w:type="paragraph" w:styleId="epi-marginalie"><w:name w:val="epi-marginalie"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-marginalie"/><w:pPr><w:pStyle w:val="epi-marginalie"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="left"/><w:framePr w:w="1190" w:hspace="200" w:vspace="850" w:wrap="not-beside" w:vanchor="text" w:hanchor="page" w:x-align="outside" w:y="1"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-beschreibung"><w:name w:val="epi-beschreibung"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-beschreibung"/><w:pPr><w:pStyle w:val="epi-beschreibung"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="both"/></w:pPr><w:rPr><wx:font wx:val="Times New Roman"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-wappen"><w:name w:val="epi-wappen"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-wappen"/><w:pPr><w:pStyle w:val="epi-wappen"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="left"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-verse"><w:name w:val="epi-verse"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-verse"/><w:pPr><w:pStyle w:val="epi-verse"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="left"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-gliederung-1"><w:name w:val="epi-gliederung-1"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-gliederung-1"/><w:pPr><w:pStyle w:val="epi-gliederung-1"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="60"/><w:jc w:val="left"/><w:ind w:left="709" w:hanging="709"/><w:i/></w:pPr><w:rPr><w:i/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-gliederung-2"><w:name w:val="epi-gliederung-2"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-gliederung-2"/><w:pPr><w:pStyle w:val="epi-gliederung-2"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="60"/><w:jc w:val="left"/><w:ind w:left="709"/></w:pPr><w:rPr><w:i/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-gliederung-3"><w:name w:val="epi-gliederung-3"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-gliederung-3"/><w:pPr><w:pStyle w:val="epi-gliederung-3"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="60"/><w:jc w:val="left"/><w:ind w:left="709"/></w:pPr><w:rPr><w:i/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-transkription"><w:name w:val="epi-transkription"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-transkription"/><w:pPr><w:pStyle w:val="epi-transkription"/><w:suppressAutoHyphens/><w:widowControl/><w:spacing w:line="260" w:line-rule="exact"/><w:jc w:val="left"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-pentameter"><w:name w:val="epi-pentameter"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-pentameter"/><w:pPr><w:pStyle w:val="epi-pentameter"/><w:suppressAutoHyphens/><w:widowControl/><w:spacing w:line="260" w:line-rule="exact"/><w:ind w:left="284"/><w:jc w:val="left"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-normal-2"><w:name w:val="epi-normal-2"/><wx:uiName wx:val="epi-normal-2"/><w:pPr><w:pStyle w:val="epi-normal-2"/><w:spacing w:line="240" w:line-rule="auto"/></w:pPr><w:rPr><w:sz w:val="18"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-uebersetzung1"><w:name w:val="epi-uebersetzung1"/><wx:uiName wx:val="epi-übersetzung1"/><w:basedOn w:val="epi-normal-2"/><w:pPr><w:pStyle w:val="epi-uebersetzung"/><w:jc w:val="both"/></w:pPr><w:rPr><w:sz w:val="18"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-uebersetzung2"><w:name w:val="epi-uebersetzung2"/><wx:uiName wx:val="epi-übersetzung2"/><w:basedOn w:val="epi-normal-2"/><w:pPr><w:pStyle w:val="epi-uebersetzung2"/><w:spacing w:before="120" w:after="240"/><w:ind w:left="323"/></w:pPr><w:rPr><w:sz w:val="18"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-apparat"><w:name w:val="epi-apparat"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-apparat"/><w:pPr><w:pStyle w:val="epi-apparat"/><w:widowControl w:val="off"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="both"/><w:ind w:left="284" w:hanging="284"/><w:tabs><w:tab w:val="left" w:pos="284"/></w:tabs></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-nachweis"><w:name w:val="epi-nachweis"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-nachweis"/><w:pPr><w:pStyle w:val="epi-nachweis"/><w:spacing w:line="200" w:line-rule="exact"/><w:jc w:val="both"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-1pt"><w:name w:val="epi-leerzeile-1pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-1pt"/><w:pPr><w:spacing w:line="20" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-2pt"><w:name w:val="epi-leerzeile-2pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-2pt"/><w:pPr><w:spacing w:line="40" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-3pt"><w:name w:val="epi-leerzeile-3pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-3pt"/><w:pPr><w:spacing w:line="60" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-4pt"><w:name w:val="epi-leerzeile-4pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-4pt"/><w:pPr><w:spacing w:line="80" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-5pt"><w:name w:val="epi-leerzeile-5pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-5pt"/><w:pPr><w:spacing w:line="100" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-6pt"><w:name w:val="epi-leerzeile-6pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-6pt"/><w:pPr><w:spacing w:line="120" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-7pt"><w:name w:val="epi-leerzeile-7pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-7pt"/><w:pPr><w:spacing w:line="140" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-8pt"><w:name w:val="epi-leerzeile-8pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-8pt"/><w:pPr><w:spacing w:line="160" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-9pt"><w:name w:val="epi-leerzeile-9pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-9pt"/><w:pPr><w:spacing w:line="180" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-10pt"><w:name w:val="epi-leerzeile-10pt"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-leerzeile-10pt"/><w:pPr><w:spacing w:line="200" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-10.5pt"><w:name w:val="epi-leerzeile-10.5pt"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-leerzeile-10.5pt"/><w:pPr><w:spacing w:line="210" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-11pt"><w:name w:val="epi-leerzeile-11pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-11pt"/><w:pPr><w:spacing w:line="220" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-12pt"><w:name w:val="epi-leerzeile-12pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-12pt"/><w:pPr><w:spacing w:line="240" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-13pt"><w:name w:val="epi-leerzeile-13pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-13pt"/><w:pPr><w:spacing w:line="260" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-14pt"><w:name w:val="epi-leerzeile-14pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-14pt"/><w:pPr><w:spacing w:line="280" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-15pt"><w:name w:val="epi-leerzeile-15pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-15pt"/><w:pPr><w:spacing w:line="300" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-16pt"><w:name w:val="epi-leerzeile-16pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-16pt"/><w:pPr><w:spacing w:line="320" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-17pt"><w:name w:val="epi-leerzeile-17pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-17pt"/><w:pPr><w:spacing w:line="340" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-18pt"><w:name w:val="epi-leerzeile-18pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-18pt"/><w:pPr><w:spacing w:line="360" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-19pt"><w:name w:val="epi-leerzeile-19pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-19pt"/><w:pPr><w:spacing w:line="380" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-20pt"><w:name w:val="epi-leerzeile-20pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-20pt"/><w:pPr><w:spacing w:line="400" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-21pt"><w:name w:val="epi-leerzeile-21pt"/><w:basedOn w:val="epi-normal-2"/><wx:uiName wx:val="epi-leerzeile-21pt"/><w:pPr><w:spacing w:line="420" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-leerzeile-22pt"><w:name w:val="epi-leerzeile-22pt"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-leerzeile-22pt"/><w:pPr><w:spacing w:line="440" w:line-rule="exact"/></w:pPr></w:style><w:style w:type="paragraph" w:styleId="epi-titelei-1"><w:name w:val="epi-titelei-1"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-titelei-1"/><w:pPr><w:pStyle w:val="epi-titelei-1"/><w:widowControl w:val="on"/><w:spacing w:line="480" w:line-rule="exact" w:after="960"/><w:jc w:val="center"/><w:keepNext w:val="on"/><w:pageBreakBefore/></w:pPr><w:rPr><w:smallCaps/><w:sz w:val="48"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-titelei-2"><w:name w:val="epi-titelei-2"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-titelei-2"/><w:pPr><w:pStyle w:val="epi-titelei-2"/><w:widowControl w:val="on"/><w:spacing w:line="480" w:line-rule="exact"/><w:spacing w:val="40"/><w:jc w:val="center"/><w:keepNext w:val="on"/></w:pPr><w:rPr><w:caps/><w:sz w:val="24"/><w:spacing w:val="10"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-titelei-3"><w:name w:val="epi-titelei-3"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-titelei-3"/><w:pPr><w:pStyle w:val="epi-titelei-3"/><w:widowControl w:val="on"/><w:spacing w:line="200" w:line-rule="exact" w:after="200"/><w:jc w:val="center"/><w:keepNext w:val="on"/></w:pPr><w:rPr><w:caps/><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-titelei-4"><w:name w:val="epi-titelei-4"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-titelei-4"/><w:pPr><w:pStyle w:val="epi-titelei-4"/><w:widowControl w:val="on"/><w:spacing w:line="240" w:line-rule="exact" w:after="220"/><w:jc w:val="center"/><w:keepNext w:val="on"/></w:pPr><w:rPr><w:sz w:val="24"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-impressum-1"><w:name w:val="epi-impressum-1"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-impressum-1"/><w:pPr><w:pStyle w:val="epi-impressum-1"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="220"/><w:jc w:val="center"/><w:keepNext w:val="on"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-impressum-2"><w:name w:val="epi-impressum-2"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-impressum-2"/><w:pPr><w:pStyle w:val="epi-impressum-2"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact"/><w:jc w:val="center"/><w:keepNext w:val="on"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-1"><w:name w:val="epi-ueberschrift-1"/><wx:uiName wx:val="epi-überschrift-1"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-1"/><w:widowControl w:val="on"/><w:spacing w:line="240" w:line-rule="exact" w:after="220" w:before="480"/><w:jc w:val="center"/><w:keepNext w:val="on"/><w:outlineLvl w:val="0"/></w:pPr><w:rPr><w:caps/><w:sz w:val="24"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-2"><w:name w:val="epi-ueberschrift-2"/><wx:uiName wx:val="epi-überschrift-2"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-2"/><w:widowControl w:val="on"/><w:spacing w:line="240" w:line-rule="exact" w:after="220" w:before="220"/><w:jc w:val="center"/><w:keepNext w:val="on"/><w:outlineLvl w:val="1"/></w:pPr><w:rPr><w:smallCaps/><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-3"><w:name w:val="epi-ueberschrift-3"/><wx:uiName wx:val="epi-überschrift-3"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-3"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="200" w:before="200"/><w:jc w:val="left"/><w:keepNext w:val="on"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-3z"><w:name w:val="epi-ueberschrift-3z"/><wx:uiName wx:val="epi-überschrift-3z"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="200" w:before="200"/><w:jc w:val="center"/><w:keepNext w:val="on"/><w:outlineLvl w:val="2"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-4"><w:name w:val="epi-ueberschrift-4"/><wx:uiName wx:val="epi-überschrift-4"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-4"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="200" w:before="200"/><w:jc w:val="left"/><w:keepNext w:val="on"/><w:outlineLvl w:val="3"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-5"><w:name w:val="epi-ueberschrift-5"/><wx:uiName wx:val="epi-überschrift-5"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-5"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="160" w:before="200"/><w:jc w:val="left"/><w:keepNext w:val="on"/><w:outlineLvl w:val="4"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-6"><w:name w:val="epi-ueberschrift-6"/><wx:uiName wx:val="epi-überschrift-6"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-6"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="160" w:before="160"/><w:jc w:val="left"/><w:keepNext w:val="on"/><w:outlineLvl w:val="5"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-7"><w:name w:val="epi-ueberschrift-7"/><wx:uiName wx:val="epi-überschrift-7"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-7"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="120" w:before="160"/><w:jc w:val="left"/><w:keepNext w:val="on"/><w:outlineLvl w:val="6"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-ueberschrift-8"><w:name w:val="epi-ueberschrift-8"/><wx:uiName wx:val="epi-überschrift-8"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:pStyle w:val="epi-ueberschrift-8"/><w:widowControl w:val="on"/><w:spacing w:line="220" w:line-rule="exact" w:after="120" w:before="120"/><w:jc w:val="left"/><w:keepNext w:val="on"/><w:outlineLvl w:val="7"/><w:ind w:first-line="240"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-register-eintrag"><w:name w:val="epi-register-eintrag"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-register-eintrag"/><w:pPr><w:pStyle w:val="epi-register-eintrag"/><w:widowControl w:val="on"/><w:jc w:val="left"/></w:pPr><w:rPr><w:sz w:val="20"/><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-marken"><w:name w:val="epi-marken"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-marken"/><w:pPr><w:jc w:val="left"/><w:spacing w:before="50"/><w:ind w:left="469" w:right="764" w:hanging="469"/></w:pPr><w:rPr><w:sz w:val="18"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-zeilennummer"><w:name w:val="epi-zeilennummer"/><wx:uiName wx:val="epi-zeilennummer"/><w:basedOn w:val="epi-normal-2"/><w:pPr><w:jc w:val="right"/><w:spacing w:line="260" w:line-rule="exact"/></w:pPr><w:rPr><w:i/><w:sz w:val="16"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-tabellenzeile"><w:name w:val="epi-tabellenzeile"/><wx:uiName wx:val="epi-tabellenzeile"/><w:basedOn w:val="epi-normal-1"/><w:pPr><w:jc w:val="left"/><w:spacing w:line="200" w:line-rule="exact" w:after="80"/><w:keepLines w:val="on"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-inhalt-1"><w:name w:val="epi-inhalt-1"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-inhalt-1"/><w:pPr><w:tabs><w:tab w:val="left" w:leader="dot" w:pos="7750"/><w:tab w:val="right" w:pos="8110"/></w:tabs></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="paragraph" w:styleId="epi-inhalt-2"><w:name w:val="epi-inhalt-2"/><w:basedOn w:val="epi-normal-1"/><wx:uiName wx:val="epi-inhalt-2"/><w:pPr><w:tabs><w:tab w:val="left" w:pos="850"/><w:tab w:val="left" w:leader="dot" w:pos="7750"/><w:tab w:val="right" w:pos="8110"/></w:tabs><w:ind w:left="850" w:hanging="570" w:right="570"/></w:pPr><w:rPr><w:kern w:val="20"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-fussnotenzeichen"><w:name w:val="epi-fussnotenzeichen"/><wx:uiName wx:val="epi-fußnotenzeichen"/><w:basedOn w:val="epi-normal-1"/><w:semiHidden/><w:rPr><w:vertAlign w:val="superscript"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-folium"><w:name w:val="epi-folium"/><wx:uiName wx:val="epi-folium"/><w:basedOn w:val="epi-normal-1"/><w:semiHidden/><w:rPr><w:vertAlign w:val="superscript"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-version"><w:name w:val="epi-version"/><wx:uiName wx:val="epi-version"/><w:rPr><w:vertAlign w:val="superscript"/><w:u w:val="single" w:color="black"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-zitat"><w:name w:val="epi-zitat"/><wx:uiName wx:val="epi-zitat"/><w:rPr><w:i/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-chronogramm"><w:name w:val="epi-chronogramm"/><wx:uiName wx:val="epi-chronogramm"/><w:rPr><w:b/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-initialen"><w:name w:val="epi-initialen"/><wx:uiName wx:val="epi-initialen"/><w:rPr><w:sz w:val="28"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-versalien"><w:name w:val="epi-versalien"/><wx:uiName wx:val="epi-versalien"/><w:rPr><w:sz w:val="28"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-hochgestellt"><w:name w:val="epi-hochgestellt"/><wx:uiName wx:val="epi-hochgestellt"/><w:rPr><w:position w:val="10"/><w:sz w:val="16"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-kapitaelchen"><w:name w:val="epi-kapitaelchen"/><wx:uiName wx:val="epi-kapitaelchen"/><w:rPr><w:smallCaps/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-ligatur"><w:name w:val="epi-ligatur"/><wx:uiName wx:val="epi-ligatur"/><w:rPr><w:u w:val="single" w:color="black"/></w:rPr></w:style><w:style w:type="character" w:styleId="epi-gesperrt"><w:name w:val="epi-gesperrt"/><wx:uiName wx:val="epi-gesperrt"/><w:rPr><w:spacing w:val="40"/></w:rPr></w:style><w:style w:type="character" w:styleId="Hyperlink"><w:name w:val="Hyperlink"/><w:rsid w:val="001158DE"/><w:rPr><w:color w:val="000099"/></w:rPr></w:style></w:styles>
+
+<w:docPr>
+  <w:view w:val="print"/>
+  <w:zoom w:percent="150"/>
+  <w:attachedTemplate w:val=""/>
+  <w:defaultTabStop w:val="708"/>
+  
+  
+    <w:autoHyphenation/>
+    
+    <w:consecutiveHyphenLimit w:val="2"/>
+    
+    <w:hyphenationZone w:val="284"/>
+    
+    <w:doNotHyphenateCaps/>
+  <w:characterSpacingControl w:val="DontCompress"/>
+  
+  <w:mirrorMargins/>
+  <w:validateAgainstSchema/>
+  <w:saveInvalidXML w:val="off"/>
+  <w:ignoreMixedContent w:val="off"/>
+  <w:alwaysShowPlaceholderText w:val="off"/>
+  <w:compat/>
+
+  <w:footnotePr>
+    <w:footnote w:type="separator">
+      <w:p>
+        <w:pPr>
+          <w:spacing w:line="240" w:line-rule="auto"/>
+        </w:pPr>
+        <w:r>
+          <w:separator/>
+        </w:r>
+      </w:p>
+    </w:footnote>
+    <w:footnote w:type="continuation-separator">
+      <w:p>
+        <w:pPr>
+          <w:spacing w:line="240" w:line-rule="auto"/>
+        </w:pPr>
+        <w:r>
+          <w:continuationSeparator/>
+        </w:r>
+      </w:p>
+    </w:footnote>
+  </w:footnotePr>
+</w:docPr>
+<w:body>
+    
+
+
+
+
+
+<!--katalog anfang-->
+<wx:sect>
+<w:p><w:pPr><w:pageBreakBefore/></w:pPr></w:p><w:p><w:pPr><w:sectPr><w:type w:val="odd-page"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1701" w:right="1985" w:bottom="2580" w:left="1814" w:header="709" w:footer="1800" w:gutter="0"/><w:cols w:space="708"/><w:docGrid w:line-pitch="360"/><w:hdr w:type="even"><w:p><w:pPr><w:pStyle w:val="epi.seitenkopf"/></w:pPr></w:p></w:hdr><w:hdr w:type="odd"><w:p><w:pPr><w:pStyle w:val="epi.normal-1"/></w:pPr></w:p></w:hdr><w:ftr w:type="even"><w:p><w:pPr><w:pStyle w:val="epi.seitenfuss"/></w:pPr><w:fldSimple w:instr=" PAGE \* MERGEFORMAT "><w:r wsp:rsidR="000C002F"><w:rPr><w:noProof/></w:rPr><w:t>2</w:t></w:r></w:fldSimple></w:p><w:p><w:pPr><w:pStyle w:val="epi.seitenfuss"/></w:pPr></w:p></w:ftr><w:ftr w:type="odd"><w:p><w:pPr><w:pStyle w:val="epi.seitenfuss"/><w:jc w:val="right"/></w:pPr><w:fldSimple w:instr=" PAGE \* MERGEFORMAT "><w:r wsp:rsidR="00544CA7"><w:rPr><w:noProof/></w:rPr><w:t>22</w:t></w:r></w:fldSimple></w:p><w:p><w:pPr><w:pStyle w:val="epi.seitenfuss"/></w:pPr></w:p></w:ftr></w:sectPr></w:pPr></w:p><!--artikelanfang-->
+<wx:sub-section>
+
+
+
+
+
+<!--kopfzeile anfang-->
+<wx:pBdrGroup><wx:borders><wx:top wx:val="solid" wx:bdrwidth="14" wx:space="1" wx:color="auto"/></wx:borders><w:p><w:pPr><w:pStyle w:val="epi-kopfzeile-balken-oben"/></w:pPr></w:p></wx:pBdrGroup>
+<w:p><w:pPr><w:pStyle w:val="epi-kopfzeile"/><w:tabs><w:tab w:val="center" w:pos="3087.5"/><w:tab w:val="right" w:pos="8110"/></w:tabs></w:pPr><aml:annotation w:type="Word.Bookmark.Start" aml:id="articles-1" w:name="articles-1"/><w:r><w:t>1 </w:t></w:r><aml:annotation w:type="Word.Bookmark.End" aml:id="articles-1"/><w:r><w:tab/><w:t>Standort A</w:t></w:r><w:r><w:tab/><w:t>794, 1066, 1234, 1337</w:t></w:r></w:p><wx:pBdrGroup><wx:borders><wx:bottom wx:val="solid" wx:bdrwidth="15" wx:space="1" wx:color="auto"/></wx:borders><w:p><w:pPr><w:pStyle w:val="epi-kopfzeile-balken-unten"/></w:pPr></w:p></wx:pBdrGroup>
+<!--kopfzeile ende-->
+<!--signatur anfang-->
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/><w:keepNext w:val="on"/></w:pPr><w:r><w:rPr><w:vertAlign w:val="superscript"/></w:rPr><w:t>Signatur 1</w:t></w:r></w:p>
+<!--signatur ende-->
+<!--beschreibung anfang-->
+<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>1)</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text </w:t></w:r><w:r><w:t>Text Text</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Text Text Text</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Text </w:t></w:r><w:r><w:rPr><w:b/></w:rPr><w:t>Text </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-zitat"/></w:rPr><w:t>Text</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Text </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-gesperrt"/></w:rPr><w:t>Text </w:t></w:r><w:r><w:t>Text</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> HYPERLINK "https://www.snerpa.is/net/isl/laxdal.htm" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:rStyle w:val="Hyperlink"/></w:rPr><w:t>LINK</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:r><w:t> </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text Text Text</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text Text Text</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Literaturverweis im Text: </w:t></w:r><w:r><w:t>Unterautor </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Externe Verweise</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf einen Artikel: Kat.-Nr. </w:t></w:r><w:r><w:rPr/><w:t>Signatur 2</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf eine Inschrift: Kat.-Nr. </w:t></w:r><w:r><w:t>Signatur 2[A]</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf einen Inschriftenteil: Kat.-Nr. </w:t></w:r><w:r><w:t>Signatur 2[A.1]</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf eine Fußnote: Kat.-Nr. </w:t></w:r><w:r><w:t>Signatur 2[1]</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Interne Verweise</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf Inschrift B: </w:t></w:r><w:r><w:t>II</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf Inschriftenteil B2: </w:t></w:r><w:r><w:t>II.II</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf Fußnote a: </w:t></w:r><w:r><w:t>a</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf Fußnote 2: </w:t></w:r><w:r><w:t>2</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>- auf Marke: </w:t></w:r><w:r><w:t>N1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--beschreibung ende-->
+<!--angaben anfang--><wx:pBdrGroup><wx:apo><wx:width wx:val="849"/><wx:jc wx:val="right"/><wx:vertFromText wx:val="850"/><wx:horizFromText wx:val="200"/></wx:apo><w:p><w:pPr><w:pStyle w:val="epi-marginalie"/></w:pPr><w:r><w:rPr><w:vanish/></w:rPr><w:t>Abb. </w:t></w:r></w:p></wx:pBdrGroup><w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Maß 1a 1 m Maß 1a einheit (Ergänzungen Maßgaben), Maß 2a 2 m Maß 2a Einheit (Ergänzungen Maßgaben 2).</w:t></w:r><w:r><w:t> – </w:t></w:r><w:r><w:t>Bu. 12 cm (</w:t></w:r><w:r><w:t>I</w:t></w:r><w:r><w:t>), Mittel cm (</w:t></w:r><w:r><w:t>I</w:t></w:r><w:r><w:t>), hoch cm (</w:t></w:r><w:r><w:t>II</w:t></w:r><w:r><w:t>), niedrig cm (</w:t></w:r><w:r><w:t>II</w:t></w:r><w:r><w:t>).</w:t></w:r><w:r><w:t> – </w:t></w:r><w:r><w:t>Schriftart 1 (</w:t></w:r><w:r><w:t>I</w:t></w:r><w:r><w:t>), (</w:t></w:r><w:r><w:t>I</w:t></w:r><w:r><w:t>); Schriftart 2 (</w:t></w:r><w:r><w:t>II</w:t></w:r><w:r><w:t>), (</w:t></w:r><w:r><w:t>II</w:t></w:r><w:r><w:t>).</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:t>Inschrift </w:t></w:r><w:r><w:t>I2</w:t></w:r><w:r><w:t> nach Quelle Inschriften Teil 2A, Inschrift </w:t></w:r><w:r><w:t>II2a</w:t></w:r><w:r><w:t> nach Quelle Inschrift B Teil 2.</w:t></w:r><w:r><w:t> – </w:t></w:r><w:r><w:t>Inschrift </w:t></w:r><w:r><w:t>I1</w:t></w:r><w:r><w:t> ergänzt nach 1235, Inschrift </w:t></w:r><w:r><w:t>I2</w:t></w:r><w:r><w:t> ergänzt nach 1400, Inschrift </w:t></w:r><w:r><w:t>II1a</w:t></w:r><w:r><w:t> ergänzt nach 1069, Inschrift </w:t></w:r><w:r><w:t>II2a</w:t></w:r><w:r><w:t> ergänzt nach 800.</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--angaben ende-->
+<!--gliederung-1 anfang-->
+<w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT </w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr><w:b/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-zitat"/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:rPr/><w:t>TEXT </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-gesperrt"/></w:rPr><w:t>TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT </w:t></w:r><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> HYPERLINK "https://www.snerpa.is/net/isl/laxdal.htm" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:rStyle w:val="Hyperlink"/></w:rPr><w:t>LINK </w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:r><w:rPr/><w:t> </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr></w:p>
+<!--gliederung-1 ende-->
+<!--transkription anfang--><w:tbl><w:tblPr><w:tblW w:w="7920" w:type="dxa"/><w:tblCellMar><w:left w:w="10" w:type="dxa"/><w:right w:w="10" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="370"/><w:gridCol w:w="7358"/></w:tblGrid>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="370" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr>
+<w:r><w:t>I1.</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="7200" w:type="dxa"/></w:tcPr>
+<w:tbl><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr/><w:t>Zwischenraum von 1: </w:t></w:r><w:r><w:t> </w:t></w:r><w:r><w:rPr/><w:t>Unbestimmter Verlust: </w:t></w:r><w:r><w:rPr/><w:t>[‒ ‒ ‒]</w:t></w:r><w:r><w:rPr/><w:t>Erg[änzéng] Ausla [ssðung] Verzeilenumbruh </w:t></w:r></w:p></w:tc>
+</w:tr><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr/><w:t> </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〈</w:t></w:r><w:r><w:rPr/><w:t>Nachtrag</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〉</w:t></w:r><w:r><w:rPr/><w:t>Abk(ürzung)</w:t></w:r><w:r><w:rPr/><w:t>Ve</w:t></w:r><w:r><w:rPr/><w:t>rsalie Zeilenumbruch </w:t></w:r><w:r><w:rPr/><w:t>‎//</w:t></w:r></w:p></w:tc>
+</w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Hann bjó í Raums </w:t></w:r><w:r><w:t>Worttrenner 1 Einheit</w:t></w:r><w:r><w:rPr/><w:t> dal í Raumsd</w:t></w:r>æ<w:r><w:rPr/><w:t>lafylk</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Alphabetische Fußnote: </w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/></w:rPr><w:t>a)</w:t></w:r><w:r><w:rPr/><w:t>Numerische Fußnote: </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>2)</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="370" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr>
+<w:r><w:t>I2†.</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="7200" w:type="dxa"/></w:tcPr>
+<w:tbl><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr><w:rStyle w:val="epi-initialen"/></w:rPr><w:t>í</w:t></w:r><w:r><w:rPr/><w:t>nitialeCh</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-chronogramm"/></w:rPr><w:t>r</w:t></w:r><w:r><w:rPr/><w:t>onogrammbuchstabeV</w:t></w:r><w:r><w:rPr/><w:t>h</w:t></w:r><w:r><w:rPr/><w:t>érsalieAb(m</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-kapitaelchen"/></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr/><w:t>ðr ) </w:t></w:r><w:r><w:rPr/><w:t>‎//</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〈</w:t></w:r><w:r><w:rPr/><w:t>Nachtrag</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〉</w:t></w:r><w:r><w:rPr/><w:t>[Auslassung]</w:t></w:r>Bu<w:r><w:rPr/><w:t>chstabenverbindungUns</w:t></w:r><w:r><w:t>ð</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:rPr/><w:t>cherer TextZwischenraum von drei </w:t></w:r><w:r><w:t>   </w:t></w:r><w:r><w:rPr/><w:t> ZeichenUnbestimmte Anzahl </w:t></w:r><w:r><w:rPr/><w:t>[‒ ‒ ‒]</w:t></w:r><w:r><w:rPr/><w:t> verlorener Zeichen[Erg]ðnzungWort</w:t></w:r><w:r><w:t>Worttrenner 2a Einheit</w:t></w:r><w:r><w:rPr/><w:t>trennerHochge</w:t></w:r><w:r><w:rPr><w:position w:val="8"/><w:sz w:val="16"/></w:rPr><w:t>stellt</w:t></w:r><w:r><w:rPr/><w:t> </w:t></w:r></w:p></w:tc>
+</w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--transkription ende-->
+<!--transkription anfang--><w:tbl><w:tblPr><w:tblW w:w="7920" w:type="dxa"/><w:tblCellMar><w:left w:w="10" w:type="dxa"/><w:right w:w="10" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="370"/><w:gridCol w:w="7358"/></w:tblGrid>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="370" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr>
+<w:r><w:t>II1.</w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/><w:u w:val="single" w:color="black"/></w:rPr><w:t>a</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="7200" w:type="dxa"/></w:tcPr>
+<w:tbl><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr><w:rStyle w:val="epi-initialen"/></w:rPr><w:t>Þ</w:t></w:r><w:r><w:rPr/><w:t>at </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-chronogramm"/></w:rPr><w:t>v</w:t></w:r><w:r><w:rPr/><w:t>ar eitt </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-kapitaelchen"/></w:rPr><w:t>s</w:t></w:r><w:r><w:rPr/><w:t>umar, </w:t></w:r><w:r><w:rPr/><w:t>‎//</w:t></w:r><w:r><w:rPr/><w:t>at </w:t></w:r><w:r><w:rPr/><w:t>G</w:t></w:r><w:r><w:rPr/><w:t>rímr bjó för sína í V</w:t></w:r>í<w:r><w:rPr/><w:t>k austr </w:t></w:r></w:p></w:tc>
+</w:tr><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr/><w:t>eptir </w:t></w:r><w:r><w:rPr><w:position w:val="8"/><w:sz w:val="16"/></w:rPr><w:t>Harald</w:t></w:r><w:r><w:rPr/><w:t> dau</w:t></w:r><w:r><w:t>Worttrenner 1b Einheit</w:t></w:r><w:r><w:rPr/><w:t>ðan, </w:t></w:r><w:r><w:t>m</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>á</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>g</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t> </w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:rPr/><w:t>sinn, </w:t></w:r><w:r><w:t> </w:t></w:r><w:r><w:rPr/><w:t>fyrir því </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〈</w:t></w:r><w:r><w:rPr/><w:t>at</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〉</w:t></w:r><w:r><w:rPr/><w:t>[hann] [átti ] [þar] m</w:t></w:r><w:r><w:rPr/><w:t>[‒ ‒ ‒]</w:t></w:r><w:r><w:rPr/><w:t>iklar eignir.</w:t></w:r></w:p></w:tc>
+</w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+</w:tc>
+</w:tr>
+<w:tr><w:tc><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+</w:tc></w:tr><w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="370" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr>
+<w:r><w:t>II1.</w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/><w:u w:val="single" w:color="black"/></w:rPr><w:t>b</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="7200" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr></w:p>
+</w:tc>
+</w:tr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="370" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr>
+<w:r><w:t>II2†.</w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/><w:u w:val="single" w:color="black"/></w:rPr><w:t>a</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="7200" w:type="dxa"/></w:tcPr>
+<w:tbl><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr><w:rStyle w:val="epi-initialen"/></w:rPr><w:t>G</w:t></w:r><w:r><w:rPr/><w:t>rímr </w:t></w:r><w:r><w:rPr/><w:t>u</w:t></w:r><w:r><w:rPr/><w:t>nni </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-chronogramm"/></w:rPr><w:t>h</w:t></w:r><w:r><w:rPr/><w:t>enni </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-kapitaelchen"/></w:rPr><w:t>m</w:t></w:r><w:r><w:rPr/><w:t>ikit, ok l</w:t></w:r>æ<w:r><w:rPr/><w:t>tr [hann] þat </w:t></w:r><w:r><w:rPr><w:position w:val="8"/><w:sz w:val="16"/></w:rPr><w:t>eptir</w:t></w:r><w:r><w:rPr/><w:t> henni. </w:t></w:r><w:r><w:rPr/><w:t>‎//</w:t></w:r><w:r><w:rPr/><w:t>Hún </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〈</w:t></w:r><w:r><w:rPr/><w:t>var hverri </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〉</w:t></w:r><w:r><w:rPr/><w:t>konu vænni</w:t></w:r><w:r><w:t> </w:t></w:r><w:r><w:rPr/><w:t> ok betr</w:t></w:r><w:r><w:rPr/><w:t>[‒ ‒ ‒]</w:t></w:r><w:r><w:rPr/><w:t> at sér [um] alla hluti,</w:t></w:r></w:p></w:tc>
+</w:tr><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
+<w:r><w:rPr/><w:t> þeira( er) í Nor</w:t></w:r><w:r><w:t>Worttrenner 2a Einheit</w:t></w:r><w:r><w:rPr/><w:t>egi váru. Þeira för var búin </w:t></w:r><w:r><w:t>v</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>i</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>r</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>ð</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>u</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>l</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>i</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>g</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:t>a</w:t></w:r><w:r><w:t>̣</w:t></w:r><w:r><w:rPr/><w:t>.</w:t></w:r></w:p></w:tc>
+</w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+</w:tc>
+</w:tr>
+<w:tr><w:tc><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+</w:tc></w:tr><w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="370" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr>
+<w:r><w:t>II2†.</w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/><w:u w:val="single" w:color="black"/></w:rPr><w:t>b</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="7200" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Transkription in B.2.2</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--transkription ende-->
+<!--fußnoten anfang-->
+<!--buchstabenapparat anfang-->
+<w:tbl><w:tblPr><w:tblStyle w:val="Tabellengitternetz"/><w:tblW w:w="0" w:type="auto"/><w:tblInd w:w="0" w:type="dxa"/><w:tblBorders><w:top w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:left w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:bottom w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:right w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:insideH w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:insideV w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/></w:tblBorders><w:tblLook w:val="01E0"/></w:tblPr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="360" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr><w:r><w:t>a) </w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="7740" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr><w:r><w:rPr/><w:t>Alphabetische Fußnote in A.1.1</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<!--buchstabenapparat ende-->
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--fußnoten ende-->
+<!--übersetzungen anfang-->
+<w:p><w:pPr><w:pStyle w:val="epi-uebersetzung1"/></w:pPr><w:r><w:t>(</w:t></w:r><w:r><w:t>I1</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-version"/></w:rPr><w:t/></w:r><w:r><w:t>) </w:t></w:r><w:r><w:rPr/><w:t>Übersetzung Inschrift A - Teil 1 - Bearbeitung 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-uebersetzung1"/></w:pPr><w:r><w:t>(</w:t></w:r><w:r><w:t>I2</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-version"/></w:rPr><w:t/></w:r><w:r><w:t>) </w:t></w:r><w:r><w:rPr/><w:t>Übersetzung Örvar-Odds saga</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-uebersetzung1"/></w:pPr><w:r><w:t>(</w:t></w:r><w:r><w:t>II1</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-version"/></w:rPr><w:t>a</w:t></w:r><w:r><w:t>) </w:t></w:r><w:r><w:rPr/><w:t>Übersetzung Inschrift B Teil 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-uebersetzung1"/></w:pPr><w:r><w:t>(</w:t></w:r><w:r><w:t>II2</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-version"/></w:rPr><w:t>a</w:t></w:r><w:r><w:t>) </w:t></w:r><w:r><w:rPr/><w:t>Übersetzung Inschrift B Teil 2</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-uebersetzung1"/></w:pPr><w:r><w:t>(</w:t></w:r><w:r><w:t>II2</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-version"/></w:rPr><w:t>b</w:t></w:r><w:r><w:t>) </w:t></w:r><w:r><w:rPr/><w:t>Übersetzung in B.2.2</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--übersetzungen ende-->
+<!--versmaße anfang-->
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/></w:pPr><w:r><w:t>Versmaßanzeige in Artikel 1 (I).</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/></w:pPr><w:r><w:t>Versmaßanzeige im Artikel 2a (I).</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/></w:pPr><w:r><w:t>Versmaßanzeige im Artiekl 1 (II).</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/></w:pPr><w:r><w:t>Versmaßanzeige im Artiekl 2 (II).</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+
+<!--versmaße ende-->
+<!--wappen anfang-->
+<w:tbl>
+<w:tblPr><w:tblStyle w:val="Tabellengitternetz"/><w:tblW w:w="0" w:type="auto"/><w:tblBorders><w:top w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:left w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:bottom w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:right w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:insideH w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:insideV w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/></w:tblBorders><w:tblLook w:val="01E0"/></w:tblPr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar><w:tcW w:w="980" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:r><w:t>Wappen:</w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tbl>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar></w:tcPr>
+<w:p>
+<w:pPr><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:ind w:right="100"/></w:pPr>
+<w:r><w:t>Wappen 1</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>3)</w:t></w:r>
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar></w:tcPr>
+<w:p>
+<w:pPr><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:ind w:left="100"/><w:ind w:right="100"/></w:pPr>
+<w:r><w:t>Wappen 1</w:t></w:r>
+</w:p>
+</w:tc>
+</w:tr><w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar></w:tcPr>
+<w:p>
+<w:pPr><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:ind w:right="100"/></w:pPr>
+
+</w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar></w:tcPr>
+<w:p>
+<w:pPr><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:ind w:left="100"/><w:ind w:right="100"/></w:pPr>
+<w:r><w:t>Wappen 2</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>4)</w:t></w:r>
+</w:p>
+</w:tc>
+</w:tr></w:tbl>
+<w:p><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr></w:p>/&gt; 
+</w:tc>
+</w:tr>
+</w:tbl>
+
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--wappen ende-->
+<!--fußnoten anfang-->
+<!--ziffernapparat anfang-->
+<w:tbl>
+<w:tblPr><w:tblStyle w:val="Tabellengitternetz"/><w:tblW w:w="0" w:type="auto"/><w:tblInd w:w="0" w:type="dxa"/><w:tblBorders><w:top w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:left w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:bottom w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:right w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:insideH w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/><w:insideV w:val="none" w:sz="0" wx:bdrwidth="0" w:space="0" w:color="auto"/></w:tblBorders><w:tblLook w:val="01E0"/></w:tblPr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="360" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr><w:r><w:t>1) </w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="7740" w:type="dxa"/></w:tcPr>
+<w:p>
+<w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr>
+<w:r><w:rPr/><w:t>Fußnotentext mit &amp;-Zeichen. Und mit spitzer &lt; Klammer.</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="360" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr><w:r><w:t>2) </w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="7740" w:type="dxa"/></w:tcPr>
+<w:p>
+<w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr>
+<w:r><w:rPr/><w:t>Numerische Fußnote in A.1.1</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="360" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr><w:r><w:t>3) </w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="7740" w:type="dxa"/></w:tcPr>
+<w:p>
+<w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr>
+<w:r><w:rPr/><w:t>Anmerkungen Wappen 1</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+<w:tr>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="360" w:type="dxa"/></w:tcPr>
+<w:p><w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr><w:r><w:t>4) </w:t></w:r></w:p>
+</w:tc>
+<w:tc>
+<w:tcPr><w:tcMar><w:bottom w:w="30" w:type="dxa"/></w:tcMar><w:tcW w:w="7740" w:type="dxa"/></w:tcPr>
+<w:p>
+<w:pPr><w:pStyle w:val="epi-apparat"/><w:ind w:left="0" w:first-line="0"/></w:pPr>
+<w:r><w:rPr/><w:t>Anmerkungen Wappen 2</w:t></w:r></w:p>
+</w:tc>
+</w:tr>
+</w:tbl>
+<!--ziffernapparat ende-->
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--fußnoten ende-->
+<!--nachweise anfang-->
+<w:p>
+<w:pPr><w:pStyle w:val="epi-nachweis"/></w:pPr>
+<w:r><w:t>Quelle 1 </w:t></w:r><w:r><w:rPr/><w:t> Ergänzung 3, Verweis auf </w:t></w:r><w:r><w:t>I</w:t></w:r><w:r><w:t>; </w:t></w:r><w:r><w:t>Unterautor 2 </w:t></w:r><w:r><w:rPr/><w:t> ERgänzung 4</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<!--nachweise ende-->
+<!--notizen anfang-->
+<w:p>
+<w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<wx:pBdrGroup><wx:borders><wx:bottom wx:val="solid" wx:bdrwidth="15" wx:space="1" wx:color="auto"/></wx:borders><w:p><w:pPr><w:pBdr><w:bottom w:val="dotted" w:sz="6" wx:bdrwidth="15" w:space="1" w:color="auto"/></w:pBdr><w:spacing w:line="100" w:line-rule="exact"/></w:pPr></w:p></wx:pBdrGroup>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>Notizen:</w:t></w:r>&gt;</w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Artikel</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Datensatz</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Signaturen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Signaturen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Standorte</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Standorte</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Nachweise</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Nachweise</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Beschaffenheit</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Beschaffenheit</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Material</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Material</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Inschriftenträger</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschriftenträger</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Maßangaben</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Maßangaben</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Wappen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Wappen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Marken</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Marken</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Abbildungen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Abbildungen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Register</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Register</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Beschreibung</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Abschnitt 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Gliederung: Ebene 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Abschnitt 2a</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Inschrift A</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschrift A</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Teil A</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notzien Inschriftenteil 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Bearbeitung A</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschrift A - Inschriftenteil 1 - Bearbeitung 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Teil A</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschr A Teil 2</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Bearbeitung A</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Inschrift A Teil 2 Bearbeitungsnotizen</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t>Inschrift B</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschrift B</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Teil B</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschrift B Teil 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Bearbeitung B</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschrift B Teil 1 Bearbeitung 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Teil B</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschr B Teil 2</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr><w:i/></w:rPr><w:t> Bearbeitung B</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-notiz"/></w:pPr>
+<w:r><w:rPr/><w:t>Notizen Inschrift B Teil 2 Bearbeitung 1</w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
+
+<!--notizen ende-->
+<!--artikelende-->
+</wx:sub-section>
+
+<w:p wsp:rsidR="00533250" wsp:rsidRDefault="00533250"><w:pPr><w:sectPr wsp:rsidR="00533250" wsp:rsidSect="00533250"><w:type w:val="continuous"/><w:pgSz w:w="11906" w:h="16838"/><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1701" w:right="1985" w:bottom="2580" w:left="1814" w:header="709" w:footer="1800" w:gutter="0"/><w:cols w:num="1" w:space="708"/><w:docGrid w:line-pitch="360"/></w:sectPr></w:pPr></w:p></wx:sect>
+<!--katalog ende-->
+
+
+
+<!--indices anfang--><!--indices ende-->
+
+
+
+
+
+
+ <w:sectPr>
+  <w:hdr w:type="even">
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="epi-seitenkopf"/>
+      </w:pPr>
+    </w:p>
+  </w:hdr>
+  <w:hdr w:type="odd">
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="epi-normal-1"/>
+      </w:pPr>
+    </w:p>
+  </w:hdr>
+  <w:ftr w:type="even">
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="epi-seitenfuss"/>
+      </w:pPr>
+      <w:fldSimple w:instr=" PAGE \* MERGEFORMAT ">
+        <w:r wsp:rsidR="000C002F">
+          <w:rPr>
+            <w:noProof/>
+          </w:rPr>
+          <w:t>2</w:t>
+        </w:r>
+      </w:fldSimple>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="epi-seitenfuss"/>
+      </w:pPr>
+    </w:p>
+  </w:ftr>
+  <w:ftr w:type="odd">
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="epi-seitenfuss"/>
+        <w:jc w:val="right"/>
+      </w:pPr>
+      <w:fldSimple w:instr=" PAGE \* MERGEFORMAT ">
+        <w:r wsp:rsidR="00544CA7">
+          <w:rPr>
+            <w:noProof/>
+          </w:rPr>
+          <w:t>22</w:t>
+        </w:r>
+      </w:fldSimple>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="epi-seitenfuss"/>
+      </w:pPr>
+    </w:p>
+  </w:ftr>
+  <w:type w:val="continuous"/>
+   <w:pgSz w:w="11906" w:h="16838"/>
+      
+  <w:pgMar w:top="1701" w:right="1985" w:bottom="2580" w:left="1814" w:header="709" w:footer="1800" w:gutter="0"/>
+      
+      <w:cols w:space="708"/>
+  <w:docGrid w:line-pitch="360"/>
+</w:sectPr>
+
+
+</w:body>
+</w:wordDocument>

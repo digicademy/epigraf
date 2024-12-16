@@ -1,0 +1,23 @@
+{
+    "name": "epigraf/Files",
+    "description": "Files plugin for CakePHP",
+    "type": "cakephp-plugin",
+    "license": "MIT",
+    "require": {
+        "cakephp/cakephp": "~4.1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Files\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Files\\Test\\": "tests/",
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests/"
+        }
+    }
+}

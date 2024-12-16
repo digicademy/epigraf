@@ -1,0 +1,21 @@
+{
+    "id": 3058,
+    "deleted": 0,
+    "version_id": null,
+    "job_id": null,
+    "published": null,
+    "created": "2020-10-29T13:00:58+01:00",
+    "modified": "2020-10-29T13:00:58+01:00",
+    "created_by": null,
+    "modified_by": null,
+    "scope": "articles",
+    "mode": "default",
+    "preset": "default",
+    "name": "library",
+    "sortno": 0,
+    "category": null,
+    "caption": "Bibliothek",
+    "description": null,
+    "config": null,
+    "norm_iri": "library"
+}

@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg54"
+   sodipodi:docname="tree.svg"
+   width="60"
+   height="60"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)">
+  <metadata
+     id="metadata60">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs58" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1680"
+     inkscape:window-height="987"
+     id="namedview56"
+     showgrid="true"
+     inkscape:zoom="11.313708"
+     inkscape:cx="10.01088"
+     inkscape:cy="31.86987"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1-54">
+    <inkscape:grid
+       type="xygrid"
+       id="grid991"
+       snapvisiblegridlinesonly="false"
+       spacingx="10"
+       spacingy="10" />
+  </sodipodi:namedview>
+  <symbol
+     id="empty"
+     width="110"
+     height="100"
+     transform="translate(0,-40)" />
+  <symbol
+     id="line"
+     width="110"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="svg_1"
+       x="50"
+       y="0"
+       width="6"
+       height="100"
+       style="fill:#666666;stroke:#666666" />
+  </symbol>
+  <symbol
+     id="child"
+     width="220"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="rect5"
+       x="50"
+       y="0"
+       width="6"
+       height="100"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="svg_2"
+       x="57"
+       y="47"
+       width="145"
+       height="6"
+       style="fill:#666666;stroke:#666666" />
+  </symbol>
+  <symbol
+     id="childlast"
+     width="220"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="rect9"
+       x="50"
+       y="0"
+       width="6"
+       height="53"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect11"
+       x="50"
+       y="47"
+       width="153"
+       height="6"
+       style="fill:#666666;stroke:#666666" />
+  </symbol>
+  <symbol
+     id="plus"
+     width="220"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="rect14"
+       x="50"
+       y="0"
+       width="6"
+       height="100"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect16"
+       x="82"
+       y="48"
+       width="137"
+       height="6"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="svg_4"
+       x="27"
+       y="24"
+       width="52"
+       height="52"
+       style="fill:#ffffff;stroke:#666666;stroke-width:6" />
+    <rect
+       id="svg_6"
+       x="38"
+       y="49"
+       width="29"
+       height="2"
+       style="fill:#ffffff;stroke:#007f7f;stroke-width:5" />
+    <rect
+       id="svg_5"
+       x="38"
+       y="49"
+       width="30"
+       height="2"
+       transform="rotate(90,53,50)"
+       style="fill:#ffffff;stroke:#007f7f;stroke-width:4" />
+  </symbol>
+  <symbol
+     id="pluslast"
+     width="220"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="rect22"
+       x="50"
+       y="0"
+       width="6"
+       height="22"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect24"
+       x="82"
+       y="48"
+       width="120"
+       height="6"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect26"
+       x="27"
+       y="24"
+       width="52"
+       height="52"
+       style="fill:#ffffff;stroke:#666666;stroke-width:6" />
+    <rect
+       id="rect28"
+       x="38"
+       y="49"
+       width="29"
+       height="2"
+       style="fill:#ffffff;stroke:#007f7f;stroke-width:5" />
+    <rect
+       id="rect30"
+       x="38"
+       y="49"
+       width="30"
+       height="2"
+       transform="rotate(90,53,50)"
+       style="fill:#ffffff;stroke:#007f7f;stroke-width:4" />
+  </symbol>
+  <symbol
+     id="minus"
+     width="220"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="rect33"
+       x="50"
+       y="0"
+       width="6"
+       height="100"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect35"
+       x="82"
+       y="47"
+       width="120"
+       height="6"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect37"
+       x="27"
+       y="24"
+       width="52"
+       height="52"
+       style="fill:#ffffff;stroke:#666666;stroke-width:6" />
+    <rect
+       id="rect39"
+       x="38"
+       y="49"
+       width="30"
+       height="2"
+       style="fill:#ffffff;stroke:#007f7f;stroke-width:5" />
+    <rect
+       id="svg_3"
+       x="125"
+       y="53"
+       width="6"
+       height="47"
+       style="fill:#666666;stroke:#666666" />
+  </symbol>
+  <symbol
+     id="minuslast"
+     width="220"
+     height="100"
+     transform="translate(0,-40)">
+    <rect
+       id="rect43"
+       x="50"
+       y="0"
+       width="6"
+       height="22"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect45"
+       x="82"
+       y="47"
+       width="120"
+       height="6"
+       style="fill:#666666;stroke:#666666" />
+    <rect
+       id="rect47"
+       x="27"
+       y="24"
+       width="52"
+       height="52"
+       style="fill:#ffffff;stroke:#666666;stroke-width:6" />
+    <rect
+       id="rect49"
+       x="38"
+       y="49"
+       width="30"
+       height="2"
+       style="fill:#ffffff;stroke:#007f7f;stroke-width:5" />
+    <rect
+       id="rect51"
+       x="125"
+       y="53"
+       width="6"
+       height="47"
+       style="fill:#666666;stroke:#666666" />
+  </symbol>
+  <g
+     id="g942"
+     transform="matrix(0.2,0,0,0.2,38,-19.6)">
+    <g
+       style="fill:#8d8d90;fill-opacity:1"
+       transform="translate(-190,297.49999)"
+       id="Layer_1">
+      <title
+         id="title2">Layer 1</title>
+      <rect
+         id="svg_1-6"
+         x="47.5"
+         y="1.110223e-016"
+         width="5"
+         height="52.5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.66143787" />
+      <rect
+         id="svg_2-8"
+         x="52.5"
+         y="47.5"
+         width="47.5"
+         height="5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.54350531" />
+    </g>
+    <g
+       style="fill:#8d8d90;fill-opacity:1"
+       transform="translate(-190,197.50003)"
+       id="Layer_1-7">
+      <title
+         id="title2-3">Layer 1</title>
+      <rect
+         id="svg_1-1"
+         x="47.5"
+         y="0"
+         width="5"
+         height="100"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.91287094" />
+      <rect
+         id="svg_2-3"
+         x="52.5"
+         y="47.5"
+         width="47.5"
+         height="5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.54350531" />
+    </g>
+    <g
+       transform="translate(-90.00001,197.50003)"
+       id="Layer_1-5">
+      <title
+         id="title2-2">Layer 1</title>
+      <rect
+         id="svg_1-2"
+         x="47.5"
+         y="0"
+         width="5"
+         height="100"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.91287094" />
+      <rect
+         id="svg_2-6"
+         x="52.5"
+         y="47.5"
+         width="47.5"
+         height="5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.54350531" />
+      <rect
+         style="opacity:1;fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:3.35980082;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65"
+         id="rect828"
+         width="51"
+         height="51"
+         x="24.5"
+         y="24.5" />
+      <rect
+         y="28.5"
+         x="28.5"
+         height="43"
+         width="43"
+         id="rect830"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.83277345;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65" />
+      <rect
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
+         id="svg_6-9"
+         x="40.694565"
+         y="49.379639"
+         width="18.610872"
+         height="1.2407248" />
+    </g>
+    <g
+       transform="translate(100,200)"
+       id="Layer_1-54">
+      <title
+         id="title2-5">Layer 1</title>
+      <rect
+         id="svg_1-5"
+         x="-142.50002"
+         y="97.499992"
+         width="5"
+         height="52.5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.66143787" />
+      <rect
+         id="svg_2-1"
+         x="-137.50002"
+         y="144.99998"
+         width="47.5"
+         height="5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.54350531" />
+      <rect
+         style="opacity:1;fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:3.35980082;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65"
+         id="rect828-4"
+         width="51"
+         height="51"
+         x="-165.50002"
+         y="122" />
+      <rect
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
+         id="svg_6-1"
+         x="-149.30545"
+         y="146.87962"
+         width="18.610872"
+         height="1.2407248" />
+      <rect
+         y="126"
+         x="-161.50002"
+         height="43"
+         width="43"
+         id="rect830-7"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.83277345;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65" />
+      <rect
+         height="1.2407248"
+         width="18.610872"
+         y="146.87962"
+         x="-149.30545"
+         id="rect838"
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none" />
+    </g>
+    <g
+       transform="translate(9.99999,197.50003)"
+       id="Layer_1-8">
+      <title
+         id="title2-0">Layer 1</title>
+      <rect
+         id="svg_1-5-1"
+         x="47.5"
+         y="1.7985613e-014"
+         width="5"
+         height="100"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.912871" />
+      <rect
+         style="opacity:1;fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:3.35980082;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65"
+         id="rect828-1"
+         width="51"
+         height="51"
+         x="24.5"
+         y="24.5" />
+      <rect
+         id="svg_2-0"
+         x="52.5"
+         y="47.5"
+         width="47.5"
+         height="5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.54350531" />
+      <rect
+         y="28.5"
+         x="28.5"
+         height="43"
+         width="43"
+         id="rect830-98"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.83277345;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65" />
+      <rect
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
+         id="svg_6-0"
+         x="40.694565"
+         y="49.379639"
+         width="18.610872"
+         height="1.2407248" />
+      <rect
+         height="1.2407248"
+         width="18.610872"
+         y="-50.620365"
+         x="40.694565"
+         id="rect838-2"
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
+         transform="rotate(90)" />
+    </g>
+    <g
+       transform="translate(9.99999,297.49999)"
+       id="Layer_1-9">
+      <title
+         id="title2-9">Layer 1</title>
+      <rect
+         id="svg_1-5-16"
+         x="47.5"
+         y="0"
+         width="5"
+         height="52.5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.66143787" />
+      <rect
+         style="opacity:1;fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:3.35980082;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65"
+         id="rect828-18"
+         width="51"
+         height="51"
+         x="24.5"
+         y="24.5" />
+      <rect
+         id="svg_2-4"
+         x="52.5"
+         y="47.5"
+         width="47.5"
+         height="5"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.54350531" />
+      <rect
+         y="28.5"
+         x="28.5"
+         height="43"
+         width="43"
+         id="rect830-8"
+         style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.83277345;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.65" />
+      <rect
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
+         id="svg_6-4"
+         x="40.694565"
+         y="49.379639"
+         width="18.610872"
+         height="1.2407248" />
+      <rect
+         height="1.2407248"
+         width="18.610872"
+         y="-50.620365"
+         x="40.694565"
+         id="rect838-9"
+         style="fill:#ffffff;stroke:#007f7f;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none"
+         transform="rotate(90)" />
+    </g>
+    <g
+       style="fill:#8d8d90;fill-opacity:1"
+       id="Layer_1-3"
+       transform="translate(-190,97.500031)">
+      <title
+         id="title2-24">Layer 1</title>
+      <rect
+         id="svg_1-4"
+         x="47.5"
+         y="0"
+         width="5"
+         height="100"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.912871" />
+    </g>
+    <g
+       transform="translate(-208.78858,97.500031)"
+       id="g931">
+      <rect
+         id="rect903"
+         x="166.28857"
+         y="80"
+         width="5"
+         height="10"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.28867516" />
+      <rect
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.28867516"
+         height="10"
+         width="5"
+         y="10.00001"
+         x="166.28857"
+         id="rect909" />
+      <rect
+         id="rect913"
+         x="166.28857"
+         y="33.33334"
+         width="5"
+         height="10"
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.28867516" />
+      <rect
+         style="fill:#8d8d90;fill-opacity:1;stroke:none;stroke-width:0.28867516"
+         height="10"
+         width="5"
+         y="56.666668"
+         x="166.28857"
+         id="rect915" />
+    </g>
+  </g>
+</svg>

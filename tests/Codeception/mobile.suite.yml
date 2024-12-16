@@ -1,0 +1,26 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: http://localhost/
+            browser: firefox
+            window_size: 360x800
+        - VisualCeption:
+            maximumDeviation: 1               # deviation in percent
+            saveCurrentImageIfFailure: true   # if true, VisualCeption saves the current
+            fullScreenShot: false              # fullpage screenshot
+            referenceImageDir: references/mobile/
+            currentImageDir: current/
+        - \Helper\Acceptance
+step_decorators: ~
+extensions:
+  enabled:
+    - Codeception\Extension\RunProcess:
+        0: xvfb-run -a java -jar -Dwebdriver.chrome.driver="/usr/bin/chromedriver" /opt/selenium/selenium-server-standalone.jar > /dev/null 2>&1 &
+        sleep: 2

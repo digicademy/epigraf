@@ -1,0 +1,6 @@
+id;norm_iri;name;shortname;table;lemma;propertytype;parent_id;title;projects_id;sectionname;sortno;sectiontype;articles_id;content;value;sections_id;itemtype;properties_id
+projects-like;projects-like;LIKE;LIKE;projects;;;;;;;;;;;;;;
+articles-ig_bild_p_B6r9vARCLSb;articles-ig_bild_p_B6r9vARCLSb;;;articles;;;;bild.de ig ig_bild_p_B6r9vARCLSb NA;projects-like;;;;;;;;;
+sections-ig_bild_p_B6r9vARCLSb;;;;sections;;;;;;#1 post from bild;1;post;articles-ig_bild_p_B6r9vARCLSb;;;;;
+sections-ig_bild_c_18087340660087812;;;;sections;;;sections-ig_bild_p_B6r9vARCLSb;;;#2 comment from andreas.nauheimer;2;comment;articles-ig_bild_p_B6r9vARCLSb;;;;;
+sections-ig_bild_c_17927184910353022;;;;sections;;;sections-ig_bild_p_B6r9vARCLSb;;;#3 comment from crownontyrone;3;comment;articles-ig_bild_p_B6r9vARCLSb;;;;;

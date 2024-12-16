@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Träger 1 / Träger 2a [projects]    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/projects/";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+    <style data-snippet="article-css">.xml_tag_rec_lit { color:#0066ff }
+.xml_tag_rec_ma { color:#0066ff }
+.xml_tag_rec_extern { color:#0066ff }
+.xml_tag_rec_intern { color:#0066ff }
+.xml_tag_loc_ten { color: #6abc6a }
+.xml_tag_reg { color: #6abc6a }
+.xml_tag_anchor { color:#0066ff }
+.xml_tag_bl > .xml_bracket_open, .xml_tag_bl > .xml_bracket_close { color:#FFFFFF; background-color:#c1c1c1; font-size:0.7em;display:inline-block;width:100%;} .xml_tag_bl > .xml_bracket_open {margin-bottom:1em;} .xml_tag_bl > .xml_bracket_close {margin-top:1em;}
+.xml_tag_z { color:#ffffff;background-color:#c1c1c1; padding: 0 0.2em; }
+.xml_tag_vz { color:#ffffff; background-color:#c1c1c1; padding: 0 0.2em;}
+.xml_tag_wtr { color: #6abc6a; font-weight: bold }
+.xml_tag_spatium_v { color:#0066ff; font-size: 0.8em }
+.xml_tag_del { color:#0066ff }
+.xml_tag_cpl > .xml_bracket_open, .xml_tag_cpl > .xml_bracket_close { color:#0066ff }
+.xml_tag_oms > .xml_bracket_open, .xml_tag_oms > .xml_bracket_close { color:#0066ff }
+.xml_tag_add > .xml_bracket_open, .xml_tag_add > .xml_bracket_close { color:#0066ff }
+.xml_tag_abr > .xml_bracket_open, .xml_tag_abr > .xml_bracket_close { color:#0066ff }
+.xml_tag_vsl { color: #66bb66; font-size: 1.5em }
+.xml_tag_ini { color: #8f503d; font-size: 1.5em }
+.xml_tag_chr { color: #0066ff; font-size: 1.3em }
+.xml_tag_kap { color: #1ccaaa; font-size: 1em; font-variant: small-caps }
+.xml_tag_all > .xml_bracket_open, .xml_tag_all > .xml_bracket_close { color:#0066ff }
+.xml_tag_sup { color:#e87a59; vertical-align: super; font-size: 0.75em }
+.xml_tag_insec { text-decoration: underline; text-decoration-color: #33cc33; text-decoration-style: dotted }
+.xml_tag_quot { font-style: italic }
+.xml_tag_folge > .xml_bracket_open, .xml_tag_folge > .xml_bracket_close { color:#c00000ff; font-weight: bold }
+.xml_tag_p .xml_bracket_open, .xml_tag_p .xml_bracket_close { color: #8627ab; background-color:#e2de90 }
+.xml_tag_h .xml_bracket_open, .xml_tag_h .xml_bracket_close { color: #8627ab; background-color:#e2de90 }
+.xml_tag_b { font-weight: bold }
+.xml_tag_i { font-style: italic }
+.xml_tag_u { text-decoration: underline }
+.xml_tag_g { color: #adadad; font-family: "Courier New", serif; font-weight: bold; }
+.xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }
+.xml_tag_a { color:#0066ff }
+.xml_tag_wunsch .xml_bracket_open, .xml_tag_wunsch .xml_bracket_close { color:#1464AA; background-color:#e2de90 }
+.xml_tag_app1 { color:#0066ff;position: relative;bottom: 0.5em;font-size: 0.8em; }
+.xml_tag_app2 { color:#0066ff;position: relative;bottom: 0.5em;font-size: 0.8em; }</style>
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_properties             action_merge             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks?database=projects"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_database" ><a href="/epi/projects/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/projects/articles?load=1">Articles</a></li><li class="menu_database active" ><a href="/epi/projects/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/projects/files?load=1">Files</a></li><li class="menu_database" ><a href="/epi/projects/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/projects/types?load=1">Types</a></li><li class="menu_database" ><a href="/epi/projects/users?load=1">Users</a></li><li class="menu_database" ><a href="/epi/projects/analytics?load=1">Analytics</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=projects">Pipelines</a></li><li class="menu_global" ><a href="/users?database=projects">Users</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=projects">Repository</a></li><li class="menu_global" ><a href="/help?database=projects">Help</a></li><li class="menu_global" ><a href="/wiki?database=projects">Wiki</a></li><li class="menu_global" ><a href="/?database=projects">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2?database=projects" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars?database=projects" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/epi/projects/properties">Categories</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Merge</span></li></ul>                            </nav>
+                                            </div>
+
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"><div class="message success" onclick="this.classList.add('hidden')" data-snippet="message">The properties have been merged.</div>
+</div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+<!-- Breadcrumbs -->
+
+
+<!-- Content area -->
+<div class="widget-entity">
+
+</div>
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-epi-properties-merge?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

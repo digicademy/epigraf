@@ -1,0 +1,1599 @@
+{
+    "locations_count": {
+        "selected": true,
+        "aggregate": "count",
+        "name": "locations_count",
+        "caption": "locations_count",
+        "key": "items.{*}[itemtype=locations]",
+        "width": null
+    },
+    "signature": {
+        "caption": "Signatur",
+        "default": true,
+        "name": "signature",
+        "key": "signature",
+        "sort": "signature",
+        "types": {
+            "epi-book": {
+                "caption": "Signatur",
+                "default": true,
+                "name": "signature",
+                "key": "signature",
+                "sort": "signature"
+            },
+            "epi-article": {
+                "caption": "Signatur",
+                "default": true,
+                "name": "signature",
+                "key": "signature",
+                "sort": "signature"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "name": {
+        "caption": "Titel",
+        "default": true,
+        "name": "name",
+        "key": "name",
+        "sort": "name",
+        "types": {
+            "epi-book": {
+                "caption": "Titel",
+                "default": true,
+                "name": "name",
+                "key": "name",
+                "sort": "name"
+            },
+            "epi-article": {
+                "caption": "Titel",
+                "default": true,
+                "name": "name",
+                "key": "name",
+                "sort": "name"
+            }
+        },
+        "public": true,
+        "selected": false,
+        "width": null
+    },
+    "items_locations": {
+        "key": "items.{*}[itemtype=locations].property.name",
+        "caption": "Standorte",
+        "aggregate": "collapse",
+        "default": true,
+        "name": "items_locations",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "locations",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=locations].property.name",
+                "caption": "Standorte",
+                "aggregate": "collapse",
+                "default": true,
+                "name": "items_locations",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "locations",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "items_date": {
+        "key": "items.{*}[itemtype=conditions].date_value",
+        "caption": "Objektdatierung",
+        "default": true,
+        "aggregate": "collapse",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "date_sort",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "conditions",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "min",
+            "type": "conditions,dio-conditions-raw"
+        },
+        "name": "items_date",
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=conditions].date_value",
+                "caption": "Objektdatierung",
+                "default": true,
+                "aggregate": "collapse",
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "date_sort",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "conditions",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "min",
+                    "type": "conditions,dio-conditions-raw"
+                },
+                "name": "items_date"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "items_conditions": {
+        "key": "items.{*}[itemtype=conditions].property.name",
+        "caption": "Zustand",
+        "aggregate": "collapse",
+        "name": "items_conditions",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "conditions",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=conditions].property.name",
+                "caption": "Zustand",
+                "aggregate": "collapse",
+                "name": "items_conditions",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "conditions",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "items_objecttypes": {
+        "key": "items.{*}[itemtype=objecttypes].property.name",
+        "caption": "Inschriftentr\u00e4ger",
+        "aggregate": "collapse",
+        "default": true,
+        "name": "items_objecttypes",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "objecttypes",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=objecttypes].property.name",
+                "caption": "Inschriftentr\u00e4ger",
+                "aggregate": "collapse",
+                "default": true,
+                "name": "items_objecttypes",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "objecttypes",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "items_materials": {
+        "key": "items.{*}[itemtype=materials].property.name",
+        "caption": "Materialien",
+        "aggregate": "collapse",
+        "name": "items_materials",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "materials",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=materials].property.name",
+                "caption": "Materialien",
+                "aggregate": "collapse",
+                "name": "items_materials",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "materials",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "status": {
+        "caption": "Status",
+        "name": "status",
+        "key": "status",
+        "sort": "status",
+        "types": {
+            "epi-article": {
+                "caption": "Status",
+                "name": "status",
+                "key": "status",
+                "sort": "status"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "published": {
+        "name": "published",
+        "caption": "Ver\u00f6ffentlicht",
+        "key": "published",
+        "sort": "published",
+        "types": {
+            "epi-book": {
+                "name": "published",
+                "caption": "Ver\u00f6ffentlicht",
+                "key": "published",
+                "sort": "published"
+            },
+            "epi-article": {
+                "name": "published",
+                "caption": "Ver\u00f6ffentlicht",
+                "key": "published",
+                "sort": "published"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "modified": {
+        "default": false,
+        "caption": "Ver\u00e4ndert",
+        "name": "modified",
+        "key": "modified",
+        "sort": "modified",
+        "types": {
+            "epi-book": {
+                "default": false,
+                "caption": "Ver\u00e4ndert",
+                "name": "modified",
+                "key": "modified",
+                "sort": "modified"
+            },
+            "epi-article": {
+                "default": false,
+                "caption": "Ver\u00e4ndert",
+                "name": "modified",
+                "key": "modified",
+                "sort": "modified"
+            }
+        },
+        "public": false,
+        "selected": false,
+        "width": null
+    },
+    "created": {
+        "default": false,
+        "caption": "Angelegt",
+        "name": "created",
+        "key": "created",
+        "sort": "created",
+        "types": {
+            "epi-book": {
+                "default": false,
+                "caption": "Angelegt",
+                "name": "created",
+                "key": "created",
+                "sort": "created"
+            },
+            "epi-article": {
+                "default": false,
+                "caption": "Angelegt",
+                "name": "created",
+                "key": "created",
+                "sort": "created"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "modifier_name": {
+        "default": false,
+        "key": "modifier.name",
+        "caption": "Ver\u00e4ndert von",
+        "name": "modifier_name",
+        "sort": {
+            "table": "users",
+            "foreign": "modified_by",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "types": {
+            "epi-book": {
+                "default": false,
+                "key": "modifier.name",
+                "caption": "Ver\u00e4ndert von",
+                "name": "modifier_name",
+                "sort": {
+                    "table": "users",
+                    "foreign": "modified_by",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            },
+            "epi-article": {
+                "default": false,
+                "key": "modifier.name",
+                "caption": "Ver\u00e4ndert von",
+                "name": "modifier_name",
+                "sort": {
+                    "table": "users",
+                    "foreign": "modified_by",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "creator_name": {
+        "default": false,
+        "key": "creator.name",
+        "caption": "Angelegt von",
+        "name": "creator_name",
+        "sort": {
+            "table": "users",
+            "foreign": "created_by",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "types": {
+            "epi-book": {
+                "default": false,
+                "key": "creator.name",
+                "caption": "Angelegt von",
+                "name": "creator_name",
+                "sort": {
+                    "table": "users",
+                    "foreign": "created_by",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            },
+            "epi-article": {
+                "default": false,
+                "key": "creator.name",
+                "caption": "Angelegt von",
+                "name": "creator_name",
+                "sort": {
+                    "table": "users",
+                    "foreign": "created_by",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "id": {
+        "name": "id",
+        "caption": "ID",
+        "key": "id",
+        "sort": "id",
+        "types": {
+            "epi-book": {
+                "name": "id",
+                "caption": "ID",
+                "key": "id",
+                "sort": "id"
+            },
+            "epi-article": {
+                "name": "id",
+                "caption": "ID",
+                "key": "id",
+                "sort": "id"
+            }
+        },
+        "width": 100,
+        "default": false,
+        "selected": false
+    },
+    "sortno": {
+        "name": "sortno",
+        "caption": "Artikelsortierung",
+        "key": "sortno",
+        "sort": "sortno",
+        "types": {
+            "epi-book": {
+                "name": "sortno",
+                "caption": "Artikelsortierung",
+                "key": "sortno",
+                "sort": "sortno"
+            },
+            "epi-article": {
+                "name": "sortno",
+                "caption": "Artikelsortierung",
+                "key": "sortno",
+                "sort": "sortno"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "articletype": {
+        "name": "articletype",
+        "caption": "Artikeltyp",
+        "key": "articletype",
+        "sort": "articletype",
+        "types": {
+            "epi-book": {
+                "name": "articletype",
+                "caption": "Artikeltyp",
+                "key": "articletype",
+                "sort": "articletype"
+            },
+            "epi-article": {
+                "name": "articletype",
+                "caption": "Artikeltyp",
+                "key": "articletype",
+                "sort": "articletype"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "iri": {
+        "caption": "IRI-Pfad",
+        "key": "iri_path",
+        "default": false,
+        "name": "iri",
+        "types": {
+            "epi-book": {
+                "caption": "IRI-Pfad",
+                "key": "iri_path",
+                "default": false,
+                "name": "iri"
+            },
+            "epi-article": {
+                "caption": "IRI-Pfad",
+                "key": "iri_path",
+                "default": false,
+                "name": "iri"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "url": {
+        "caption": "URL",
+        "selectable": false,
+        "name": "url",
+        "key": "url",
+        "types": {
+            "epi-book": {
+                "caption": "URL",
+                "selectable": false,
+                "name": "url",
+                "key": "url"
+            },
+            "epi-article": {
+                "caption": "URL",
+                "selectable": false,
+                "name": "url",
+                "key": "url"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "project_id": {
+        "key": "project.id",
+        "caption": "Projekt-ID",
+        "name": "project_id",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "id",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "types": {
+            "epi-book": {
+                "key": "project.id",
+                "caption": "Projekt-ID",
+                "name": "project_id",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "id",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            },
+            "epi-article": {
+                "key": "project.id",
+                "caption": "Projekt-ID",
+                "name": "project_id",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "id",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "project_signature": {
+        "key": "project.signature",
+        "caption": "Projekt",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "signature",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "name": "project_signature",
+        "types": {
+            "epi-book": {
+                "key": "project.signature",
+                "caption": "Projekt",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "signature",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                },
+                "name": "project_signature"
+            },
+            "epi-article": {
+                "key": "project.signature",
+                "caption": "Projekt",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "signature",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                },
+                "name": "project_signature"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "project_name": {
+        "key": "project.name",
+        "caption": "Projektname",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "name": "project_name",
+        "types": {
+            "epi-book": {
+                "key": "project.name",
+                "caption": "Projektname",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                },
+                "name": "project_name"
+            },
+            "epi-article": {
+                "key": "project.name",
+                "caption": "Projektname",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                },
+                "name": "project_name"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "project_sortno": {
+        "key": "project.sortno",
+        "caption": "Projektsortierung",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "sortno",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "cast": "INTEGER"
+        },
+        "name": "project_sortno",
+        "types": {
+            "epi-book": {
+                "key": "project.sortno",
+                "caption": "Projektsortierung",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "sortno",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "cast": "INTEGER"
+                },
+                "name": "project_sortno"
+            },
+            "epi-article": {
+                "key": "project.sortno",
+                "caption": "Projektsortierung",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "sortno",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "cast": "INTEGER"
+                },
+                "name": "project_sortno"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "project_type": {
+        "key": "project.type.caption",
+        "caption": "Projekttyp",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "projecttype",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "type",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    }
+                }
+            ]
+        },
+        "name": "project_type",
+        "types": {
+            "epi-book": {
+                "key": "project.type.caption",
+                "caption": "Projekttyp",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "projecttype",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                },
+                "name": "project_type"
+            },
+            "epi-article": {
+                "key": "project.type.caption",
+                "caption": "Projekttyp",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "projecttype",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                },
+                "name": "project_type"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "project_url": {
+        "key": "project.url",
+        "caption": "Projekt-URL",
+        "selectable": false,
+        "name": "project_url",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "url",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "types": {
+            "epi-book": {
+                "key": "project.url",
+                "caption": "Projekt-URL",
+                "selectable": false,
+                "name": "project_url",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "url",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            },
+            "epi-article": {
+                "key": "project.url",
+                "caption": "Projekt-URL",
+                "selectable": false,
+                "name": "project_url",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "url",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "inscriptions_date": {
+        "key": "items.{*}[itemtype=transcriptions].date_value",
+        "caption": "Inschriftendatierungen",
+        "aggregate": "collapse",
+        "selectable": false,
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "date_sort",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "transcriptions",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "min",
+            "type": "transcriptions"
+        },
+        "name": "inscriptions_date",
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=transcriptions].date_value",
+                "caption": "Inschriftendatierungen",
+                "aggregate": "collapse",
+                "selectable": false,
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "date_sort",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "transcriptions",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "min",
+                    "type": "transcriptions"
+                },
+                "name": "inscriptions_date"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "images_count": {
+        "key": "items.{*}[itemtype=images]",
+        "caption": "Abbildungen",
+        "aggregate": "count",
+        "selectable": false,
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "id",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "images",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "count",
+            "type": "images"
+        },
+        "name": "images_count",
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=images]",
+                "caption": "Abbildungen",
+                "aggregate": "count",
+                "selectable": false,
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "id",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "images",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "count",
+                    "type": "images"
+                },
+                "name": "images_count"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "inscriptions_count": {
+        "key": "sections.{*}[sectiontype=inscription]",
+        "caption": "Inschriften",
+        "aggregate": "count",
+        "selectable": false,
+        "name": "inscriptions_count",
+        "sort": {
+            "table": "sections",
+            "foreign": "articles_id",
+            "field": "id",
+            "relation": "hasmany",
+            "conditions": {
+                "sectiontype": "inscription",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "lft"
+            ],
+            "aggregate": "count"
+        },
+        "types": {
+            "epi-article": {
+                "key": "sections.{*}[sectiontype=inscription]",
+                "caption": "Inschriften",
+                "aggregate": "count",
+                "selectable": false,
+                "name": "inscriptions_count",
+                "sort": {
+                    "table": "sections",
+                    "foreign": "articles_id",
+                    "field": "id",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "sectiontype": "inscription",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "lft"
+                    ],
+                    "aggregate": "count"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "inscriptionparts_count": {
+        "key": "sections.{*}[sectiontype=inscriptionpart]",
+        "caption": "Inschriftenteile",
+        "aggregate": "count",
+        "selectable": false,
+        "name": "inscriptionparts_count",
+        "sort": {
+            "table": "sections",
+            "foreign": "articles_id",
+            "field": "id",
+            "relation": "hasmany",
+            "conditions": {
+                "sectiontype": "inscriptionpart",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "lft"
+            ],
+            "aggregate": "count"
+        },
+        "types": {
+            "epi-article": {
+                "key": "sections.{*}[sectiontype=inscriptionpart]",
+                "caption": "Inschriftenteile",
+                "aggregate": "count",
+                "selectable": false,
+                "name": "inscriptionparts_count",
+                "sort": {
+                    "table": "sections",
+                    "foreign": "articles_id",
+                    "field": "id",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "sectiontype": "inscriptionpart",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "lft"
+                    ],
+                    "aggregate": "count"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "inscriptiontexts_count": {
+        "key": "sections.{*}[sectiontype=inscriptiontext]",
+        "caption": "Bearbeitungen",
+        "aggregate": "count",
+        "selectable": false,
+        "name": "inscriptiontexts_count",
+        "sort": {
+            "table": "sections",
+            "foreign": "articles_id",
+            "field": "id",
+            "relation": "hasmany",
+            "conditions": {
+                "sectiontype": "inscriptiontext",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "lft"
+            ],
+            "aggregate": "count"
+        },
+        "types": {
+            "epi-article": {
+                "key": "sections.{*}[sectiontype=inscriptiontext]",
+                "caption": "Bearbeitungen",
+                "aggregate": "count",
+                "selectable": false,
+                "name": "inscriptiontexts_count",
+                "sort": {
+                    "table": "sections",
+                    "foreign": "articles_id",
+                    "field": "id",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "sectiontype": "inscriptiontext",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "lft"
+                    ],
+                    "aggregate": "count"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "topics": {
+        "key": "items.{*}[itemtype=topics].property.lemma",
+        "caption": "Themen",
+        "aggregate": "collapse",
+        "selectable": false,
+        "name": "topics",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "lemma",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "topics",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "epi-book": {
+                "key": "items.{*}[itemtype=topics].property.lemma",
+                "caption": "Themen",
+                "aggregate": "collapse",
+                "selectable": false,
+                "name": "topics",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "lemma",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "topics",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "epi-article": {
+                "key": "items.{*}[itemtype=topics].property.lemma",
+                "caption": "Themen",
+                "aggregate": "collapse",
+                "selectable": false,
+                "name": "topics",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "lemma",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "topics",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "topics_priority": {
+        "key": "items.{*}[itemtype=topics].value",
+        "caption": "Priorit\u00e4t",
+        "aggregate": "collapse",
+        "selectable": false,
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "value",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "topics",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "min",
+            "type": "topics",
+            "cast": "INTEGER"
+        },
+        "name": "topics_priority",
+        "types": {
+            "epi-book": {
+                "key": "items.{*}[itemtype=topics].value",
+                "caption": "Priorit\u00e4t",
+                "aggregate": "collapse",
+                "selectable": false,
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "value",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "topics",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "min",
+                    "type": "topics",
+                    "cast": "INTEGER"
+                },
+                "name": "topics_priority"
+            },
+            "epi-article": {
+                "key": "items.{*}[itemtype=topics].value",
+                "caption": "Priorit\u00e4t",
+                "aggregate": "collapse",
+                "selectable": false,
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "value",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "topics",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "min",
+                    "type": "topics",
+                    "cast": "INTEGER"
+                },
+                "name": "topics_priority"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "summary": {
+        "caption": "summary",
+        "selectable": false,
+        "aggregate": false,
+        "name": "summary",
+        "key": "summary",
+        "types": {
+            "epi-article": {
+                "caption": "summary",
+                "selectable": false,
+                "aggregate": false,
+                "name": "summary",
+                "key": "summary"
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "source": {
+        "key": "project.name",
+        "icon": "\ud83d\udd6e",
+        "selectable": false,
+        "name": "source",
+        "caption": "source",
+        "sort": {
+            "table": "projects",
+            "foreign": "projects_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse"
+        },
+        "types": {
+            "epi-article": {
+                "key": "project.name",
+                "icon": "\ud83d\udd6e",
+                "selectable": false,
+                "name": "source",
+                "caption": "source",
+                "sort": {
+                    "table": "projects",
+                    "foreign": "projects_id",
+                    "field": "name",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "location": {
+        "key": "items.{*}[itemtype=locations].property.lemma",
+        "icon": "\ud83d\udccd",
+        "selectable": false,
+        "name": "location",
+        "caption": "location",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "lemma",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "locations",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=locations].property.lemma",
+                "icon": "\ud83d\udccd",
+                "selectable": false,
+                "name": "location",
+                "caption": "location",
+                "sort": {
+                    "table": "properties",
+                    "foreign": "properties_id",
+                    "field": "lemma",
+                    "relation": "belongsto",
+                    "conditions": {
+                        "deleted": 0
+                    },
+                    "aggregate": "collapse",
+                    "through": [
+                        {
+                            "table": "items",
+                            "foreign": "articles_id",
+                            "field": "property",
+                            "relation": "hasmany",
+                            "conditions": {
+                                "itemtype": "locations",
+                                "deleted": 0
+                            },
+                            "order": [
+                                "articles_id",
+                                "sortno"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "date": {
+        "key": "items.{*}[itemtype=conditions].date_value",
+        "icon": "\u231b",
+        "selectable": false,
+        "name": "date",
+        "caption": "date",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "date_value",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "conditions",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "collapse"
+        },
+        "types": {
+            "epi-article": {
+                "key": "items.{*}[itemtype=conditions].date_value",
+                "icon": "\u231b",
+                "selectable": false,
+                "name": "date",
+                "caption": "date",
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "date_value",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "conditions",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "collapse"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    }
+}

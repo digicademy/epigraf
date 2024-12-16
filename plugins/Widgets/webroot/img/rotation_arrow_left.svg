@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="200"
+   height="200"
+   overflow="hidden"
+   version="1.1"
+   id="svg11"
+   sodipodi:docname="rotation_arrow_left_2.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <metadata
+     id="metadata15">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     id="namedview13"
+     showgrid="false"
+     inkscape:zoom="0.58626091"
+     inkscape:cx="-7.6842239"
+     inkscape:cy="225.2944"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg11" />
+  <defs
+     id="defs5">
+    <clipPath
+       id="clip0">
+      <rect
+         x="831"
+         y="310"
+         width="1306"
+         height="1308"
+         id="rect2" />
+    </clipPath>
+  </defs>
+  <g
+     clip-path="url(#clip0)"
+     transform="matrix(0.13788164,0,0,0.13772097,-104.62435,-32.803836)"
+     id="g9">
+    <path
+       d="M 0,1299 V 1185.24 C 0,647.177 436.186,210.99 974.249,210.99 h 1.001 V 0 L 1300,338.494 975.25,676.987 v -210.99 h -1.001 c -397.226,0 -719.242,322.016 -719.242,719.243 V 1299 Z"
+       stroke="#008cba"
+       stroke-width="4.58333"
+       stroke-miterlimit="8"
+       fill="#ffffff"
+       fill-rule="evenodd"
+       transform="matrix(-1,0,0,1,2134.5,316.5)"
+       id="path7" />
+  </g>
+</svg>

@@ -1,0 +1,109 @@
+{
+    "dates": {
+        "selected": true,
+        "aggregate": "collapse",
+        "caption": "Objektdatierung",
+        "key": "items.*[itemtype=conditions,dio-conditions-raw].date_value",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "date_sort",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "conditions,dio-conditions-raw",
+                "deleted": 0
+            },
+            "order": [
+                "sortno"
+            ],
+            "aggregate": "min"
+        },
+        "default": true,
+        "public": true,
+        "name": "dates",
+        "width": null
+    },
+    "locations": {
+        "selected": true,
+        "aggregate": "collapse",
+        "caption": "Standorte",
+        "key": "items.*[itemtype=locations].property.name",
+        "default": true,
+        "public": true,
+        "name": "locations",
+        "sort": {
+            "table": "properties",
+            "foreign": "properties_id",
+            "field": "name",
+            "relation": "belongsto",
+            "conditions": {
+                "deleted": 0
+            },
+            "aggregate": "collapse",
+            "through": [
+                {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "property",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "locations",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "sortno"
+                    ]
+                }
+            ]
+        },
+        "width": null
+    },
+    "sortnos": {
+        "selected": true,
+        "aggregate": "max",
+        "caption": "Sortiernummern",
+        "key": "items.*[itemtype=locations,topics,conditions].sortno",
+        "default": true,
+        "public": true,
+        "name": "sortnos",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "sortno",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "locations,topics,conditions",
+                "deleted": 0
+            },
+            "order": [
+                "sortno"
+            ],
+            "aggregate": "max"
+        },
+        "width": null
+    },
+    "topics_priority": {
+        "selected": true,
+        "aggregate": "collapse",
+        "caption": "Themenpriorit\u00e4t",
+        "key": "items.*[itemtype=topics].value",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "value",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "topics"
+            },
+            "order": [
+                "sortno"
+            ],
+            "aggregate": "min",
+            "cast": "INTEGER"
+        },
+        "selectable": false,
+        "public": true,
+        "name": "topics_priority",
+        "width": null
+    }
+}

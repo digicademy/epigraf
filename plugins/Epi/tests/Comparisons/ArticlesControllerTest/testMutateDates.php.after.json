@@ -1,0 +1,112 @@
+[
+    {
+        "id": 8,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "1234",
+        "date_start": 1234,
+        "date_end": 1234,
+        "date_sort": "01234AAA00000000A4",
+        "sections_id": 13,
+        "articles_id": 1
+    },
+    {
+        "id": 777,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "",
+        "date_start": null,
+        "date_end": null,
+        "date_sort": null,
+        "sections_id": 383,
+        "articles_id": 4
+    },
+    {
+        "id": 1,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "1234",
+        "date_start": 1234,
+        "date_end": 1234,
+        "date_sort": "01234AAA00000000A4",
+        "sections_id": 1,
+        "articles_id": 1
+    },
+    {
+        "id": 37,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "794",
+        "date_start": 794,
+        "date_end": 794,
+        "date_sort": "00794AAA00000000A4",
+        "sections_id": 18,
+        "articles_id": 1
+    },
+    {
+        "id": 41,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "1066",
+        "date_start": 1066,
+        "date_end": 1066,
+        "date_sort": "01066AAA00000000A4",
+        "sections_id": 20,
+        "articles_id": 1
+    },
+    {
+        "id": 46,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "1337",
+        "date_start": 1337,
+        "date_end": 1337,
+        "date_sort": "01337AAA00000000A4",
+        "sections_id": 23,
+        "articles_id": 1
+    },
+    {
+        "id": 363,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "",
+        "date_start": null,
+        "date_end": null,
+        "date_sort": null,
+        "sections_id": 143,
+        "articles_id": 3
+    },
+    {
+        "id": 766,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "",
+        "date_start": null,
+        "date_end": null,
+        "date_sort": null,
+        "sections_id": 377,
+        "articles_id": 1
+    },
+    {
+        "id": 767,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "",
+        "date_start": null,
+        "date_end": null,
+        "date_sort": null,
+        "sections_id": 378,
+        "articles_id": 1
+    },
+    {
+        "id": 781,
+        "deleted": 0,
+        "job_id": null,
+        "date_value": "",
+        "date_start": null,
+        "date_end": null,
+        "date_sort": null,
+        "sections_id": 395,
+        "articles_id": 4
+    }
+]

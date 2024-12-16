@@ -1,0 +1,4455 @@
+{
+    "types": [
+        {
+            "id": "types-895",
+            "scope": "projects",
+            "name": "epi",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 1,
+            "category": "EPI",
+            "caption": "EPI",
+            "description": "Mit Epigraf erstellte Projekte.",
+            "config": {
+                "fields": {
+                    "name": "Name",
+                    "signature": "Kurztitel",
+                    "description": "Beschreibung",
+                    "norm_data": "Normdaten",
+                    "sortno": "Sortierung",
+                    "published": "Ver\u00f6ffentlicht",
+                    "norm_iri": {
+                        "caption": "IRI-Fragment",
+                        "autofill": {
+                            "source": "signature",
+                            "process": [
+                                "irifragment"
+                            ]
+                        }
+                    },
+                    "iri_path": "IRI-Pfad"
+                },
+                "columns": {
+                    "sortno": "Sortierung",
+                    "signature": "Kurztitel",
+                    "name": "Name",
+                    "articles": "Artikel",
+                    "published_label": "Ver\u00f6ffentlicht",
+                    "iri_path": "IRI"
+                }
+            },
+            "norm_iri": "epi",
+            "created": "2022-12-03T11:01:24+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-161",
+            "scope": "articles",
+            "name": "epi-article",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 5,
+            "category": "EPI",
+            "caption": "EPI-Artikel",
+            "description": "In Epigraf editierte Artikel",
+            "config": {
+                "preview": {
+                    "images": [
+                        "images"
+                    ],
+                    "text": [
+                        "transcriptions"
+                    ],
+                    "summary": [
+                        "source",
+                        "location",
+                        "date"
+                    ]
+                },
+                "fields": {
+                    "created": "Erstellt",
+                    "modified": "Ge\u00e4ndert",
+                    "created_by": "Erstellt von",
+                    "modified_by": "Bearbeitet von",
+                    "norm_data": "Normdaten",
+                    "iri_path": "IRI-Pfad",
+                    "published": "Ver\u00f6ffentlicht",
+                    "status": "Status",
+                    "sortno": "Sortierung",
+                    "signature": {
+                        "caption": "Signatur",
+                        "help": "Wird automatisch aus der ersten Signatur \u00fcbernommen",
+                        "autofill": {
+                            "source": "items[signatures].value",
+                            "force": true
+                        }
+                    },
+                    "name": "Titel",
+                    "projects_id": "Projekt"
+                },
+                "header": [
+                    {
+                        "key": "{signature}"
+                    },
+                    {
+                        "key": "{name}",
+                        "grow": true
+                    },
+                    {
+                        "key": "{sections.*.items.*[itemtype=locations].property.path|first}"
+                    },
+                    {
+                        "key": "{sections.*.items.*[itemtype=conditions].date_value|first}"
+                    }
+                ],
+                "columns": {
+                    "signature": {
+                        "caption": "Signatur",
+                        "default": true
+                    },
+                    "name": {
+                        "caption": "Titel",
+                        "default": true
+                    },
+                    "items_locations": {
+                        "key": "items.{*}[itemtype=locations].property.name",
+                        "caption": "Standorte",
+                        "aggregate": "collapse",
+                        "default": true
+                    },
+                    "items_date": {
+                        "key": "items.{*}[itemtype=conditions].date_value",
+                        "caption": "Objektdatierung",
+                        "default": true,
+                        "aggregate": "collapse",
+                        "sort": {
+                            "table": "items",
+                            "type": "conditions,dio-conditions-raw",
+                            "field": "date_sort",
+                            "aggregate": "min"
+                        }
+                    },
+                    "items_conditions": {
+                        "key": "items.{*}[itemtype=conditions].property.name",
+                        "caption": "Zustand",
+                        "aggregate": "collapse"
+                    },
+                    "items_objecttypes": {
+                        "key": "items.{*}[itemtype=objecttypes].property.name",
+                        "caption": "Inschriftentr\u00e4ger",
+                        "aggregate": "collapse",
+                        "default": true
+                    },
+                    "items_materials": {
+                        "key": "items.{*}[itemtype=materials].property.name",
+                        "caption": "Materialien",
+                        "aggregate": "collapse"
+                    },
+                    "status": {
+                        "caption": "Status"
+                    },
+                    "published": "Ver\u00f6ffentlicht",
+                    "modified": {
+                        "default": false,
+                        "caption": "Ver\u00e4ndert"
+                    },
+                    "created": {
+                        "default": false,
+                        "caption": "Angelegt"
+                    },
+                    "modifier_name": {
+                        "default": false,
+                        "key": "modifier.name",
+                        "caption": "Ver\u00e4ndert von"
+                    },
+                    "creator_name": {
+                        "default": false,
+                        "key": "creator.name",
+                        "caption": "Angelegt von"
+                    },
+                    "id": "ID",
+                    "sortno": "Artikelsortierung",
+                    "articletype": "Artikeltyp",
+                    "iri": {
+                        "caption": "IRI-Pfad",
+                        "key": "iri_path",
+                        "default": false
+                    },
+                    "url": {
+                        "caption": "URL",
+                        "selectable": false
+                    },
+                    "project_id": {
+                        "key": "project.id",
+                        "caption": "Projekt-ID"
+                    },
+                    "project_signature": {
+                        "key": "project.signature",
+                        "caption": "Projekt",
+                        "sort": "Projects.signature"
+                    },
+                    "project_name": {
+                        "key": "project.name",
+                        "caption": "Projektname",
+                        "sort": "Projects.name"
+                    },
+                    "project_sortno": {
+                        "key": "project.sortno",
+                        "caption": "Projektsortierung",
+                        "sort": {
+                            "table": "projects",
+                            "field": "sortno",
+                            "cast": "INTEGER"
+                        }
+                    },
+                    "project_type": {
+                        "key": "project.type.caption",
+                        "caption": "Projekttyp",
+                        "sort": "Projects.projecttype"
+                    },
+                    "project_url": {
+                        "key": "project.url",
+                        "caption": "Projekt-URL",
+                        "selectable": false
+                    },
+                    "inscriptions_date": {
+                        "key": "items.{*}[itemtype=transcriptions].date_value",
+                        "caption": "Inschriftendatierungen",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "transcriptions",
+                            "field": "date_sort",
+                            "aggregate": "min"
+                        }
+                    },
+                    "images_count": {
+                        "key": "items.{*}[itemtype=images]",
+                        "caption": "Abbildungen",
+                        "aggregate": "count",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "images",
+                            "field": "id",
+                            "aggregate": "count"
+                        }
+                    },
+                    "inscriptions_count": {
+                        "key": "sections.{*}[sectiontype=inscription]",
+                        "caption": "Inschriften",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "inscriptionparts_count": {
+                        "key": "sections.{*}[sectiontype=inscriptionpart]",
+                        "caption": "Inschriftenteile",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "inscriptiontexts_count": {
+                        "key": "sections.{*}[sectiontype=inscriptiontext]",
+                        "caption": "Bearbeitungen",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "topics": {
+                        "key": "items.{*}[itemtype=topics].property.lemma",
+                        "caption": "Themen",
+                        "aggregate": "collapse",
+                        "selectable": false
+                    },
+                    "topics_priority": {
+                        "key": "items.{*}[itemtype=topics].value",
+                        "caption": "Priorit\u00e4t",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "topics",
+                            "field": "value",
+                            "cast": "INTEGER",
+                            "aggregate": "min"
+                        }
+                    },
+                    "summary": {
+                        "caption": "summary",
+                        "selectable": false,
+                        "aggregate": false
+                    },
+                    "source": {
+                        "key": "project.name",
+                        "icon": "\ud83d\udd6e",
+                        "selectable": false
+                    },
+                    "location": {
+                        "key": "items.{*}[itemtype=locations].property.lemma",
+                        "icon": "\ud83d\udccd",
+                        "selectable": false
+                    },
+                    "date": {
+                        "key": "items.{*}[itemtype=conditions].date_value",
+                        "icon": "\u231b",
+                        "selectable": false
+                    }
+                },
+                "sections": {
+                    "text[Beschreibung]": {
+                        "type": "text",
+                        "caption": "Beschreibung"
+                    },
+                    "locations": {
+                        "type": "locations"
+                    },
+                    "conditions": {
+                        "type": "conditions"
+                    },
+                    "measures": {
+                        "type": "measures"
+                    },
+                    "materials": {
+                        "type": "materials"
+                    },
+                    "objecttypes": {
+                        "type": "objecttypes"
+                    },
+                    "inscription": {
+                        "type": "inscription",
+                        "collapsed": true,
+                        "caption": "A",
+                        "count": "*"
+                    },
+                    "inscriptionpart": {
+                        "type": "inscriptionpart",
+                        "caption": "1",
+                        "parent": "inscription",
+                        "count": "*",
+                        "collapsed": true
+                    },
+                    "inscriptiontext": {
+                        "type": "inscriptiontext",
+                        "caption": "1",
+                        "parent": "inscriptionpart",
+                        "count": "*"
+                    },
+                    "text[Kommentar]": {
+                        "type": "text",
+                        "caption": "Kommentar"
+                    },
+                    "heraldry": {
+                        "type": "heraldry"
+                    },
+                    "brands": {
+                        "type": "brands"
+                    },
+                    "images": {
+                        "type": "images"
+                    },
+                    "index": {
+                        "type": "index"
+                    },
+                    "references": {
+                        "type": "references"
+                    },
+                    "signatures": {
+                        "type": "signatures"
+                    },
+                    "cluster": {
+                        "type": "cluster",
+                        "default": false
+                    },
+                    "geolocation": {
+                        "type": "geolocation",
+                        "default": false
+                    },
+                    "outputoptions": {
+                        "type": "outputoptions"
+                    },
+                    "text": {
+                        "type": "text",
+                        "caption": "Textabschnitt",
+                        "default": false,
+                        "count": "*"
+                    },
+                    "collections": {
+                        "type": "collections",
+                        "caption": "Kollektionen",
+                        "count": "*"
+                    }
+                },
+                "namespaces": {
+                    "urn": {
+                        "button": "DIO",
+                        "baseurl": "https:\/\/nbn-resolving.de\/urn:"
+                    }
+                },
+                "pipelines": {
+                    "di-articles-doc": {
+                        "caption": "Word",
+                        "scope": "article"
+                    },
+                    "di-articles-doc-munich": {
+                        "caption": "M\u00fcnchen",
+                        "button": false
+                    },
+                    "di-epidoc": {
+                        "caption": "EpiDoc"
+                    },
+                    "di-book-doc": {
+                        "caption": "Band",
+                        "scope": "book",
+                        "button": false
+                    },
+                    "di-images": {
+                        "button": false
+                    },
+                    "di-articles-xlsx": {
+                        "button": false
+                    },
+                    "dio-export-book": {
+                        "button": false
+                    },
+                    "dio-export-img-wismar": {
+                        "button": false
+                    },
+                    "dio-export-img-magdeburg": {
+                        "button": false
+                    }
+                },
+                "footnotes": [
+                    "app1",
+                    "app2"
+                ],
+                "triples": {
+                    "base": "http:\/\/epigraf.inschriften.net\/iri\/",
+                    "namespaces": {
+                        "epi": "http:\/\/epigraf.inschriften.net\/iri\/",
+                        "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                        "schema": "http:\/\/schema.org\/",
+                        "crm": "http:\/\/www.cidoc-crm.org\/cidoc-crm\/"
+                    },
+                    "templates": [
+                        {
+                            "comment": "The article is an academic article.",
+                            "subject": "epi:{iri}",
+                            "predicate": "rdf:type",
+                            "object": "schema:ScholarlyArticle"
+                        },
+                        {
+                            "comment": "The article has a title.",
+                            "subject": "epi:{iri}",
+                            "predicate": "schema:title",
+                            "object": "{name}"
+                        },
+                        {
+                            "comment": "The article is about inscriptions.",
+                            "subject": "epi:{iri}",
+                            "predicate": "schema:about",
+                            "object": "epi:{iri}#inscriptions"
+                        },
+                        {
+                            "comment": "The inscriptions are a collection.",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "rdf:type",
+                            "object": "schema:Collection"
+                        },
+                        {
+                            "comment": "When was the inscription collection created?",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "schema:dateCreated",
+                            "object": "{sections.*[sectiontype=conditions].items.*[itemtype=conditions].date_value}"
+                        },
+                        {
+                            "comment": "The inscription collection exists of inscriptions.",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "schema:hasPart",
+                            "object": "epi:{sections.*[sectiontype=inscription].iri}#"
+                        },
+                        {
+                            "comment": "The inscription collection is described by comments.",
+                            "subject": "epi:{iri}#inscriptions",
+                            "predicate": "schema:description",
+                            "object": "{sections.*[name=Kommentar].items.*[itemtype=text].content}"
+                        },
+                        {
+                            "comment": "The article is about an object.",
+                            "subject": "epi:{iri}",
+                            "predicate": "schema:about",
+                            "object": "epi:{iri}#object"
+                        },
+                        {
+                            "comment": "The object is a physical object.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "rdf:type",
+                            "object": "crm:E19_Physical_Object"
+                        },
+                        {
+                            "comment": "The object has object types",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "schema:additionalType",
+                            "object": "{sections.*[sectiontype=objecttypes].items.*[itemtype=objecttypes].property.path}"
+                        },
+                        {
+                            "comment": "The object has locations.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "schema:location",
+                            "object": "{sections.*[sectiontype=locations].items.*[itemtype=locations].property.path}"
+                        },
+                        {
+                            "comment": "The object is described by descriptions.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "schema:description",
+                            "object": "{sections.*[name=Beschreibung].items.*[itemtype=text].content}"
+                        },
+                        {
+                            "comment": "The object carries the inscriptions.",
+                            "subject": "epi:{iri}#object",
+                            "predicate": "crm:P128_carries",
+                            "object": "epi:{sections.*[sectiontype=inscription].iri}#"
+                        }
+                    ]
+                },
+                "epidesktop": true
+            },
+            "norm_iri": "epi-article",
+            "modified": "2024-11-09T17:14:05+01:00"
+        },
+        {
+            "id": "types-2613",
+            "scope": "articles",
+            "name": "epi-article",
+            "mode": "preview",
+            "preset": "default",
+            "sortno": 6,
+            "category": "EPI",
+            "caption": "EPI-Artikel",
+            "description": "In Epigraf editierte Artikel (Konfiguration f\u00fcr die \u00f6ffentliche Ansicht)",
+            "config": {
+                "preview": {
+                    "images": [
+                        "images"
+                    ],
+                    "text": [
+                        "transcriptions"
+                    ],
+                    "summary": [
+                        "source",
+                        "location",
+                        "date"
+                    ]
+                },
+                "fields": {
+                    "created": "Erstellt",
+                    "modified": "Ge\u00e4ndert",
+                    "created_by": "Erstellt von",
+                    "modified_by": "Bearbeitet von",
+                    "norm_data": "Normdaten",
+                    "iri_path": "IRI-Pfad",
+                    "published": {
+                        "caption": "Ver\u00f6ffentlicht",
+                        "public": false
+                    },
+                    "status": {
+                        "caption": "Status",
+                        "public": false
+                    },
+                    "sortno": {
+                        "caption": "Sortierung",
+                        "public": false
+                    },
+                    "signature": "Signatur",
+                    "name": "Titel",
+                    "projects_id": "Projekt"
+                },
+                "columns": {
+                    "signature": {
+                        "caption": "Signatur",
+                        "default": true,
+                        "public": true
+                    },
+                    "name": {
+                        "caption": "Titel",
+                        "default": true,
+                        "public": true
+                    },
+                    "items_locations": {
+                        "key": "items.{*}[itemtype=locations].property.name",
+                        "caption": "Standorte",
+                        "aggregate": "collapse",
+                        "public": true,
+                        "default": true
+                    },
+                    "items_date": {
+                        "key": "items.{*}[itemtype=conditions].date_value",
+                        "caption": "Objektdatierung",
+                        "default": true,
+                        "aggregate": "collapse",
+                        "sort": {
+                            "table": "items",
+                            "type": "conditions,dio-conditions-raw",
+                            "field": "date_sort",
+                            "aggregate": "min"
+                        }
+                    },
+                    "items_conditions": {
+                        "key": "items.{*}[itemtype=conditions].property.name",
+                        "caption": "Zustand",
+                        "aggregate": "collapse"
+                    },
+                    "items_objecttypes": {
+                        "key": "items.{*}[itemtype=objecttypes].property.name",
+                        "caption": "Inschriftentr\u00e4ger",
+                        "aggregate": "collapse",
+                        "default": true,
+                        "public": true
+                    },
+                    "items_materials": {
+                        "key": "items.{*}[itemtype=materials].property.name",
+                        "caption": "Materialien",
+                        "aggregate": "collapse"
+                    },
+                    "status": {
+                        "caption": "Status"
+                    },
+                    "published": {
+                        "caption": "Ver\u00f6ffentlicht"
+                    },
+                    "modified": {
+                        "default": false,
+                        "caption": "Ver\u00e4ndert"
+                    },
+                    "created": {
+                        "default": false,
+                        "caption": "Angelegt"
+                    },
+                    "modifier_name": {
+                        "default": false,
+                        "key": "modifier.name",
+                        "caption": "Ver\u00e4ndert von"
+                    },
+                    "creator_name": {
+                        "default": false,
+                        "key": "creator.name",
+                        "caption": "Angelegt von"
+                    },
+                    "id": {
+                        "caption": "ID",
+                        "public": true
+                    },
+                    "sortno": {
+                        "caption": "Artikelsortierung",
+                        "public": true
+                    },
+                    "articletype": {
+                        "caption": "Artikeltyp",
+                        "public": true
+                    },
+                    "iri": {
+                        "caption": "IRI-Pfad",
+                        "key": "iri_path",
+                        "default": false,
+                        "public": true
+                    },
+                    "url": {
+                        "caption": "URL",
+                        "public": true,
+                        "selectable": false
+                    },
+                    "project_id": {
+                        "key": "project.id",
+                        "caption": "Projekt-ID",
+                        "public": true
+                    },
+                    "project_signature": {
+                        "key": "project.signature",
+                        "caption": "Projekt",
+                        "public": true,
+                        "sort": "Projects.signature"
+                    },
+                    "project_name": {
+                        "key": "project.name",
+                        "caption": "Projektname",
+                        "public": true,
+                        "sort": "Projects.name"
+                    },
+                    "project_sortno": {
+                        "key": "project.sortno",
+                        "caption": "Projektsortierung",
+                        "public": true,
+                        "sort": {
+                            "table": "projects",
+                            "field": "sortno",
+                            "cast": "INTEGER"
+                        }
+                    },
+                    "project_type": {
+                        "key": "project.type.caption",
+                        "caption": "Projekttyp",
+                        "public": true,
+                        "sort": "Projects.projecttype"
+                    },
+                    "project_url": {
+                        "key": "project.url",
+                        "caption": "Projekt-URL",
+                        "public": true,
+                        "selectable": false
+                    },
+                    "inscriptions_date": {
+                        "key": "items.{*}[itemtype=transcriptions].date_value",
+                        "caption": "Inschriftendatierungen",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "transcriptions",
+                            "field": "date_sort",
+                            "aggregate": "min"
+                        }
+                    },
+                    "images_count": {
+                        "key": "items.{*}[itemtype=images]",
+                        "caption": "Abbildungen",
+                        "aggregate": "count",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "images",
+                            "field": "id",
+                            "aggregate": "count"
+                        }
+                    },
+                    "inscriptions_count": {
+                        "key": "sections.{*}[sectiontype=inscription]",
+                        "caption": "Inschriften",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "inscriptionparts_count": {
+                        "key": "sections.{*}[sectiontype=inscriptionpart]",
+                        "caption": "Inschriftenteile",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "inscriptiontexts_count": {
+                        "key": "sections.{*}[sectiontype=inscriptiontext]",
+                        "caption": "Bearbeitungen",
+                        "aggregate": "count",
+                        "selectable": false
+                    },
+                    "topics": {
+                        "key": "items.{*}[itemtype=topics].property.lemma",
+                        "caption": "Themen",
+                        "public": true,
+                        "aggregate": "collapse",
+                        "selectable": false
+                    },
+                    "topics_priority": {
+                        "key": "items.{*}[itemtype=topics].value",
+                        "caption": "Priorit\u00e4t",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "topics",
+                            "field": "value",
+                            "cast": "INTEGER",
+                            "aggregate": "min"
+                        }
+                    },
+                    "summary": {
+                        "caption": "summary",
+                        "selectable": false,
+                        "aggregate": false,
+                        "public": true
+                    },
+                    "source": {
+                        "key": "project.name",
+                        "icon": "\ud83d\udd6e",
+                        "public": true,
+                        "selectable": false
+                    },
+                    "location": {
+                        "key": "items.{*}[itemtype=locations].property.lemma",
+                        "icon": "\ud83d\udccd",
+                        "public": true,
+                        "selectable": false
+                    },
+                    "date": {
+                        "key": "items.{*}[itemtype=conditions].date_value",
+                        "icon": "\u231b",
+                        "public": true,
+                        "selectable": false
+                    }
+                },
+                "sections": {
+                    "text[Beschreibung]": {
+                        "type": "text",
+                        "caption": "Beschreibung",
+                        "weight": -6
+                    },
+                    "locations": {
+                        "type": "locations",
+                        "weight": -5
+                    },
+                    "conditions": {
+                        "type": "conditions",
+                        "weight": -4
+                    },
+                    "measures": {
+                        "type": "measures",
+                        "weight": -3
+                    },
+                    "materials": {
+                        "type": "materials",
+                        "weight": -2
+                    },
+                    "objecttypes": {
+                        "type": "objecttypes",
+                        "weight": -1
+                    },
+                    "inscription": {
+                        "type": "inscription",
+                        "caption": "A",
+                        "count": "*"
+                    },
+                    "inscriptionpart": {
+                        "type": "inscriptionpart",
+                        "caption": "1",
+                        "parent": "inscription",
+                        "count": "*"
+                    },
+                    "inscriptiontext": {
+                        "type": "inscriptiontext",
+                        "caption": "1",
+                        "parent": "inscriptionpart",
+                        "count": "*"
+                    },
+                    "text[Kommentar]": {
+                        "type": "text",
+                        "caption": "Kommentar"
+                    },
+                    "heraldry": {
+                        "type": "heraldry",
+                        "weight": 1
+                    },
+                    "brands": {
+                        "type": "brands",
+                        "weight": 2
+                    },
+                    "images": {
+                        "type": "images",
+                        "weight": 3
+                    },
+                    "index": {
+                        "type": "index",
+                        "weight": 4
+                    },
+                    "references": {
+                        "type": "references",
+                        "weight": 5
+                    },
+                    "signatures": {
+                        "type": "signatures",
+                        "weight": 6
+                    },
+                    "cluster": {
+                        "type": "cluster",
+                        "weight": 7,
+                        "default": false
+                    },
+                    "geolocation": {
+                        "type": "geolocation",
+                        "weight": 8,
+                        "default": false
+                    },
+                    "outputoptions": {
+                        "type": "outputoptions",
+                        "weight": 9
+                    },
+                    "text": {
+                        "type": "text",
+                        "caption": "Textabschnitt",
+                        "default": false,
+                        "count": "*"
+                    },
+                    "topics": {
+                        "type": "collections",
+                        "caption": "Kollektionen"
+                    }
+                },
+                "namespaces": {
+                    "urn": {
+                        "button": "DIO",
+                        "baseurl": "https:\/\/nbn-resolving.de\/urn:"
+                    }
+                },
+                "footnotes": [
+                    "app1",
+                    "app2"
+                ]
+            },
+            "norm_iri": "epi-article-preview",
+            "created": "2023-08-28T02:20:38+02:00",
+            "modified": "2024-11-09T14:06:36+01:00"
+        },
+        {
+            "id": "types-162",
+            "scope": "articles",
+            "name": "epi-book",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 7,
+            "category": "EPI",
+            "caption": "EPI-Bandartikel",
+            "description": "Bandartikel, zum Erstellen des Bandes inklusive Einleitung und Anh\u00e4ngen",
+            "config": {
+                "fields": {
+                    "created": "Erstellt",
+                    "modified": "Ge\u00e4ndert",
+                    "created_by": "Erstellt von",
+                    "modified_by": "Bearbeitet von",
+                    "norm_data": "Normdaten",
+                    "iri_path": "IRI-Pfad",
+                    "published": "Ver\u00f6ffentlicht",
+                    "status": "Status",
+                    "sortno": "Sortierung",
+                    "signature": "Artikelnummer",
+                    "name": "Titel",
+                    "projects_id": "Projekt"
+                },
+                "sections": {
+                    "outputoptions": "Ausgabeoptionen",
+                    "chapter": {
+                        "type": "chapter",
+                        "caption": "Kapitel",
+                        "count": "*"
+                    },
+                    "table": "Tabelle"
+                },
+                "columns": {
+                    "signature": {
+                        "caption": "Signatur",
+                        "default": true
+                    },
+                    "name": {
+                        "caption": "Titel",
+                        "default": true
+                    },
+                    "published": "Ver\u00f6ffentlicht",
+                    "modified": {
+                        "default": false,
+                        "caption": "Ver\u00e4ndert"
+                    },
+                    "created": {
+                        "default": false,
+                        "caption": "Angelegt"
+                    },
+                    "modifier_name": {
+                        "default": false,
+                        "key": "modifier.name",
+                        "caption": "Ver\u00e4ndert von"
+                    },
+                    "creator_name": {
+                        "default": false,
+                        "key": "creator.name",
+                        "caption": "Angelegt von"
+                    },
+                    "id": "ID",
+                    "sortno": "Artikelsortierung",
+                    "articletype": "Artikeltyp",
+                    "iri": {
+                        "caption": "IRI-Pfad",
+                        "key": "iri_path",
+                        "default": false
+                    },
+                    "url": {
+                        "caption": "URL",
+                        "selectable": false
+                    },
+                    "project_id": {
+                        "key": "project.id",
+                        "caption": "Projekt-ID"
+                    },
+                    "project_signature": {
+                        "key": "project.signature",
+                        "caption": "Projekt",
+                        "sort": "Projects.signature"
+                    },
+                    "project_name": {
+                        "key": "project.name",
+                        "caption": "Projektname",
+                        "sort": "Projects.name"
+                    },
+                    "project_sortno": {
+                        "key": "project.sortno",
+                        "caption": "Projektsortierung",
+                        "sort": {
+                            "table": "projects",
+                            "field": "sortno",
+                            "cast": "INTEGER"
+                        }
+                    },
+                    "project_type": {
+                        "key": "project.type.caption",
+                        "caption": "Projekttyp",
+                        "sort": "Projects.projecttype"
+                    },
+                    "project_url": {
+                        "key": "project.url",
+                        "caption": "Projekt-URL",
+                        "selectable": false
+                    },
+                    "topics": {
+                        "key": "items.{*}[itemtype=topics].property.lemma",
+                        "caption": "Themen",
+                        "aggregate": "collapse",
+                        "selectable": false
+                    },
+                    "topics_priority": {
+                        "key": "items.{*}[itemtype=topics].value",
+                        "caption": "Priorit\u00e4t",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "topics",
+                            "field": "value",
+                            "cast": "INTEGER",
+                            "aggregate": "min"
+                        }
+                    }
+                },
+                "footnotes": [
+                    "app1",
+                    "app2"
+                ]
+            },
+            "norm_iri": "epi-book",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2616",
+            "scope": "articles",
+            "name": "epi-book",
+            "mode": "preview",
+            "preset": "default",
+            "sortno": 8,
+            "category": "EPI",
+            "caption": "EPI-Bandartikel",
+            "description": "Bandartikel, zum Erstellen des Bandes inklusive Einleitung und Anh\u00e4ngen",
+            "config": {
+                "columns": {
+                    "signature": {
+                        "caption": "Signatur",
+                        "default": true,
+                        "public": true
+                    },
+                    "name": {
+                        "caption": "Titel",
+                        "default": true,
+                        "public": true
+                    },
+                    "published": "Ver\u00f6ffentlicht",
+                    "modified": {
+                        "default": false,
+                        "caption": "Ver\u00e4ndert"
+                    },
+                    "created": {
+                        "default": false,
+                        "caption": "Angelegt"
+                    },
+                    "modifier_name": {
+                        "default": false,
+                        "key": "modifier.name",
+                        "caption": "Ver\u00e4ndert von"
+                    },
+                    "creator_name": {
+                        "default": false,
+                        "key": "creator.name",
+                        "caption": "Angelegt von"
+                    },
+                    "id": {
+                        "caption": "ID",
+                        "public": true
+                    },
+                    "sortno": {
+                        "caption": "Artikelsortierung",
+                        "public": true
+                    },
+                    "articletype": {
+                        "caption": "Artikeltyp",
+                        "public": true
+                    },
+                    "iri": {
+                        "caption": "IRI-Pfad",
+                        "key": "iri_path",
+                        "default": false,
+                        "public": true
+                    },
+                    "url": {
+                        "caption": "URL",
+                        "public": true,
+                        "selectable": false
+                    },
+                    "project_id": {
+                        "key": "project.id",
+                        "caption": "Projekt-ID",
+                        "public": true
+                    },
+                    "project_signature": {
+                        "key": "project.signature",
+                        "caption": "Projekt",
+                        "public": true,
+                        "sort": "Projects.signature"
+                    },
+                    "project_name": {
+                        "key": "project.name",
+                        "caption": "Projektname",
+                        "public": true,
+                        "sort": "Projects.name"
+                    },
+                    "project_sortno": {
+                        "key": "project.sortno",
+                        "caption": "Projektsortierung",
+                        "public": true,
+                        "sort": {
+                            "table": "projects",
+                            "field": "sortno",
+                            "cast": "INTEGER"
+                        }
+                    },
+                    "project_type": {
+                        "key": "project.type.caption",
+                        "caption": "Projekttyp",
+                        "public": true,
+                        "sort": "Projects.projecttype"
+                    },
+                    "project_url": {
+                        "key": "project.url",
+                        "caption": "Projekt-URL",
+                        "public": true,
+                        "selectable": false
+                    },
+                    "topics": {
+                        "key": "items.{*}[itemtype=topics].property.lemma",
+                        "caption": "Themen",
+                        "public": true,
+                        "aggregate": "collapse",
+                        "selectable": false
+                    },
+                    "topics_priority": {
+                        "key": "items.{*}[itemtype=topics].value",
+                        "caption": "Priorit\u00e4t",
+                        "aggregate": "collapse",
+                        "selectable": false,
+                        "sort": {
+                            "table": "items",
+                            "type": "topics",
+                            "field": "value",
+                            "cast": "INTEGER",
+                            "aggregate": "min"
+                        }
+                    }
+                }
+            },
+            "norm_iri": "epi-book-preview",
+            "created": "2023-08-28T02:20:38+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-1438",
+            "scope": "sections",
+            "name": "chapter",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 0,
+            "category": "EPI",
+            "caption": "Kapitel",
+            "description": "Kapitel in Bandartikeln",
+            "config": {
+                "fields": {
+                    "name": {
+                        "caption": "Bezeichnung",
+                        "edit": true
+                    },
+                    "alias": {
+                        "caption": "Alias",
+                        "edit": true
+                    },
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    "chapter",
+                    {
+                        "type": "search",
+                        "display": false,
+                        "default": false
+                    }
+                ],
+                "sections": [
+                    "chapter"
+                ],
+                "view": "stack"
+            },
+            "norm_iri": "chapter",
+            "created": "2023-04-25T12:12:25+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-146",
+            "scope": "sections",
+            "name": "text",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 1,
+            "category": "EPI",
+            "caption": "Textabschnitt",
+            "description": "Textabschnitt in Inschriftenartikeln, insbesondere Beschreibung und Kommentar.",
+            "config": {
+                "fields": {
+                    "name": {
+                        "caption": "Bezeichnung",
+                        "edit": true,
+                        "options": "captions"
+                    },
+                    "alias": {
+                        "caption": "Alias",
+                        "edit": true
+                    },
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    "text",
+                    {
+                        "type": "search",
+                        "display": false,
+                        "default": false
+                    }
+                ],
+                "sections": [
+                    "text"
+                ],
+                "view": "stack"
+            },
+            "norm_iri": "text",
+            "modified": "2024-01-27T19:09:38+01:00"
+        },
+        {
+            "id": "types-138",
+            "scope": "sections",
+            "name": "locations",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 2,
+            "category": "EPI",
+            "caption": "Standorte",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "geolocations",
+                        "count": "*",
+                        "display": true
+                    },
+                    {
+                        "type": "locations",
+                        "count": "*"
+                    }
+                ],
+                "view": {
+                    "name": "table",
+                    "grouped": false,
+                    "widgets": {
+                        "map": true
+                    }
+                }
+            },
+            "norm_iri": "locations",
+            "modified": "2024-01-27T19:09:36+01:00"
+        },
+        {
+            "id": "types-131",
+            "scope": "sections",
+            "name": "conditions",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 3,
+            "category": "EPI",
+            "caption": "Beschaffenheit",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    "conditions"
+                ],
+                "view": "table"
+            },
+            "norm_iri": "conditions",
+            "modified": "2024-01-27T19:09:34+01:00"
+        },
+        {
+            "id": "types-140",
+            "scope": "sections",
+            "name": "measures",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 4,
+            "category": "EPI",
+            "caption": "Abmessungen",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "measures",
+                        "count": "*"
+                    }
+                ],
+                "view": "table"
+            },
+            "norm_iri": "measures",
+            "modified": "2024-01-27T19:09:36+01:00"
+        },
+        {
+            "id": "types-139",
+            "scope": "sections",
+            "name": "materials",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 5,
+            "category": "EPI",
+            "caption": "Materialien",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "materials",
+                        "count": "*"
+                    }
+                ],
+                "view": "table"
+            },
+            "norm_iri": "materials",
+            "modified": "2024-01-27T19:09:36+01:00"
+        },
+        {
+            "id": "types-141",
+            "scope": "sections",
+            "name": "objecttypes",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 6,
+            "category": "EPI",
+            "caption": "Inschriftentr\u00e4ger",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "objecttypes",
+                        "count": "*"
+                    }
+                ],
+                "view": "table"
+            },
+            "norm_iri": "objecttypes",
+            "modified": "2024-01-27T19:09:37+01:00"
+        },
+        {
+            "id": "types-135",
+            "scope": "sections",
+            "name": "inscription",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 7,
+            "category": "EPI",
+            "caption": "Inschrift",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "epithets",
+                        "count": "*"
+                    },
+                    {
+                        "type": "fontheights",
+                        "count": "*"
+                    },
+                    {
+                        "type": "fonttypes",
+                        "count": "*"
+                    },
+                    {
+                        "type": "formulas",
+                        "count": "*"
+                    },
+                    {
+                        "type": "incipits",
+                        "count": "*"
+                    },
+                    {
+                        "type": "initials",
+                        "count": "*"
+                    },
+                    {
+                        "type": "languages",
+                        "count": "*"
+                    },
+                    {
+                        "type": "metres",
+                        "count": "*"
+                    },
+                    {
+                        "type": "sources",
+                        "count": "*"
+                    },
+                    {
+                        "type": "techniques",
+                        "count": "*"
+                    },
+                    {
+                        "type": "texttypes",
+                        "count": "*"
+                    },
+                    {
+                        "type": "search",
+                        "count": "*",
+                        "default": false,
+                        "display": false
+                    }
+                ],
+                "sections": [
+                    "inscriptionpart"
+                ],
+                "name": {
+                    "prefix": "Inschrift ",
+                    "number": "alphabetic",
+                    "scoped": true
+                },
+                "view": {
+                    "name": "table",
+                    "grouped": true,
+                    "collapsed": true
+                },
+                "triples": {
+                    "namespaces": {
+                        "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                        "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                        "schema": "https:\/\/schema.org\/"
+                    },
+                    "templates": [
+                        {
+                            "comment": "The inscription is an inscription.",
+                            "subject": "epi:{iri}#",
+                            "predicate": "rdf:type",
+                            "object": "crm:E34_Inscription"
+                        },
+                        {
+                            "comment": "An inscription uses one or several languages.",
+                            "subject": "epi:{iri}#",
+                            "predicate": "schema:inLanguages",
+                            "object": "{items.*[itemtype=languages].property.path}"
+                        },
+                        {
+                            "comment": "An inscription uses a font.",
+                            "subject": "epi:{iri}#",
+                            "predicate": "schema:pattern",
+                            "object": "{items.*[itemtype=fonttypes].property.path}"
+                        }
+                    ]
+                }
+            },
+            "norm_iri": "inscription",
+            "modified": "2024-10-31T01:59:38+01:00"
+        },
+        {
+            "id": "types-136",
+            "scope": "sections",
+            "name": "inscriptionpart",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 8,
+            "category": "EPI",
+            "caption": "Inschriftenteil",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    "lost"
+                ],
+                "sections": [
+                    "inscriptiontext"
+                ],
+                "name": {
+                    "prefix": "Teil ",
+                    "number": "numeric",
+                    "path": true,
+                    "scoped": true
+                },
+                "showpath": true,
+                "view": "stack"
+            },
+            "norm_iri": "inscriptionpart",
+            "modified": "2024-01-27T19:09:35+01:00"
+        },
+        {
+            "id": "types-137",
+            "scope": "sections",
+            "name": "inscriptiontext",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 9,
+            "category": "EPI",
+            "caption": "Inschriftenbearbeitung",
+            "config": {
+                "help": "usecases-di-toolbar",
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    "transcriptions"
+                ],
+                "name": {
+                    "prefix": "Bearbeitung ",
+                    "number": "numeric",
+                    "path": true,
+                    "scoped": true
+                },
+                "showpath": true,
+                "view": "stack",
+                "display": "highlight",
+                "triples": {
+                    "namespaces": {
+                        "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                        "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                        "schema": "https:\/\/schema.org\/"
+                    },
+                    "templates": [
+                        {
+                            "comment": "An inscription has text",
+                            "subject": "epi:{parent.parent.iri}#",
+                            "predicate": "schema:text",
+                            "object": "{items.*[itemtype=transcriptions].content}"
+                        }
+                    ]
+                }
+            },
+            "norm_iri": "inscriptiontext",
+            "modified": "2024-10-31T01:59:49+01:00"
+        },
+        {
+            "id": "types-132",
+            "scope": "sections",
+            "name": "heraldry",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 10,
+            "category": "EPI",
+            "caption": "Wappen",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "heraldry",
+                        "count": "*",
+                        "default": false
+                    }
+                ],
+                "view": {
+                    "name": "table",
+                    "widgets": {
+                        "grid": {
+                            "itemtype": "heraldry",
+                            "fields": [
+                                "sortno",
+                                "property"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "heraldry",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-130",
+            "scope": "sections",
+            "name": "brands",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 11,
+            "category": "EPI",
+            "caption": "Marken",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "brands",
+                        "count": "*"
+                    }
+                ],
+                "view": {
+                    "name": "table",
+                    "widgets": {
+                        "thumbs": {
+                            "itemtype": "brands",
+                            "property": true,
+                            "link": false,
+                            "size": "small",
+                            "fields": [
+                                "sortno",
+                                "property"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "brands",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-133",
+            "scope": "sections",
+            "name": "images",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 12,
+            "category": "EPI",
+            "caption": "Abbildungen",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "images",
+                        "count": "*"
+                    }
+                ],
+                "view": {
+                    "name": "table",
+                    "widgets": {
+                        "thumbs": {
+                            "itemtype": "images",
+                            "link": true,
+                            "fields": [
+                                "sortno",
+                                "file"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "images",
+            "modified": "2024-01-27T19:09:34+01:00"
+        },
+        {
+            "id": "types-134",
+            "scope": "sections",
+            "name": "index",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 13,
+            "category": "EPI",
+            "caption": "Register",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "icons",
+                        "count": "*"
+                    },
+                    {
+                        "type": "manufacturers",
+                        "count": "*"
+                    },
+                    {
+                        "type": "personnames",
+                        "count": "*"
+                    },
+                    {
+                        "type": "placenames",
+                        "count": "*"
+                    },
+                    {
+                        "type": "subjects",
+                        "count": "*"
+                    }
+                ],
+                "view": {
+                    "name": "table",
+                    "grouped": true
+                }
+            },
+            "norm_iri": "index",
+            "modified": "2024-01-27T19:09:35+01:00"
+        },
+        {
+            "id": "types-143",
+            "scope": "sections",
+            "name": "references",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 14,
+            "category": "EPI",
+            "caption": "Nachweise",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "literature",
+                        "count": "*"
+                    }
+                ],
+                "view": "table"
+            },
+            "norm_iri": "references",
+            "modified": "2024-01-27T19:09:37+01:00"
+        },
+        {
+            "id": "types-144",
+            "scope": "sections",
+            "name": "signatures",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 15,
+            "category": "EPI",
+            "caption": "Signaturen",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "signatures",
+                        "count": "*"
+                    }
+                ],
+                "view": "table",
+                "links": {
+                    "comment": [
+                        "text",
+                        "transcription",
+                        "references",
+                        "links"
+                    ]
+                }
+            },
+            "norm_iri": "signatures",
+            "modified": "2024-01-27T19:09:37+01:00"
+        },
+        {
+            "id": "types-142",
+            "scope": "sections",
+            "name": "outputoptions",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 16,
+            "category": "EPI",
+            "caption": "Darstellung",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "outputoptions",
+                        "count": "*"
+                    }
+                ],
+                "view": "table"
+            },
+            "norm_iri": "outputoptions",
+            "modified": "2024-10-24T02:18:12+02:00"
+        },
+        {
+            "id": "types-1322",
+            "scope": "sections",
+            "name": "table",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 17,
+            "category": "EPI",
+            "caption": "Tabelle",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht",
+                    "name": {
+                        "caption": "Bezeichnung",
+                        "edit": true
+                    },
+                    "alias": {
+                        "caption": "Alias",
+                        "edit": true
+                    },
+                    "comment": {
+                        "types": [
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "character"
+                        ]
+                    }
+                },
+                "items": [
+                    {
+                        "type": "text",
+                        "count": 1
+                    },
+                    {
+                        "type": "search",
+                        "count": 1,
+                        "default": false,
+                        "display": false
+                    }
+                ],
+                "sections": [
+                    "text",
+                    "table"
+                ],
+                "view": "table"
+            },
+            "norm_iri": "table",
+            "created": "2023-02-17T18:55:57+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-1567",
+            "scope": "sections",
+            "name": "collections",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 0,
+            "category": "Kollektionen",
+            "caption": "Kollektionen",
+            "description": "Abschnitt f\u00fcr nutzerdefinierte Kollektionen",
+            "config": {
+                "fields": {
+                    "published": "Ver\u00f6ffentlicht"
+                },
+                "display": "addendum",
+                "items": [
+                    {
+                        "type": "collections",
+                        "count": "*"
+                    },
+                    {
+                        "type": "topics",
+                        "count": "*"
+                    }
+                ],
+                "view": {
+                    "name": "table",
+                    "grouped": true
+                }
+            },
+            "norm_iri": "collections",
+            "created": "2023-02-17T18:55:52+01:00",
+            "modified": "2024-03-17T21:05:05+01:00"
+        },
+        {
+            "id": "types-204",
+            "scope": "items",
+            "name": "text",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 1,
+            "category": "EPI",
+            "caption": "Text",
+            "config": {
+                "fulltext": true,
+                "fields": {
+                    "property": {
+                        "caption": "\u00dcberschrift",
+                        "showcaption": false,
+                        "format": "sectionname",
+                        "types": "captions"
+                    },
+                    "content": {
+                        "caption": "Inhalt",
+                        "showcaption": false,
+                        "fulltext": "Text",
+                        "format": "xml",
+                        "height": 10,
+                        "types": [
+                            "app1",
+                            "app2",
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "text",
+            "created": "2022-01-16T00:40:26+01:00",
+            "modified": "2024-07-09T13:30:29+02:00"
+        },
+        {
+            "id": "types-196",
+            "scope": "items",
+            "name": "chapter",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 2,
+            "category": "EPI",
+            "caption": "Kapitel",
+            "config": {
+                "fulltext": true,
+                "fields": {
+                    "content": {
+                        "caption": "Inhalt",
+                        "showcaption": false,
+                        "fulltext": "Text",
+                        "format": "xml",
+                        "types": [
+                            "app1",
+                            "app2",
+                            "links",
+                            "transcription",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "property": {
+                        "caption": "Datenschl\u00fcssel",
+                        "showcaption": true,
+                        "format": "property",
+                        "types": "datakeys"
+                    }
+                }
+            },
+            "norm_iri": "chapter",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-205",
+            "scope": "items",
+            "name": "search",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 3,
+            "category": "EPI",
+            "caption": "Suchtext",
+            "description": "Wird f\u00fcr die Volltextsuche verwendet und enth\u00e4lt den durchsuchbaren Text eines Abschnitts.",
+            "config": {
+                "display": false,
+                "fields": {
+                    "value": {
+                        "caption": "Bereich"
+                    },
+                    "content": {
+                        "caption": "Inhalt"
+                    },
+                    "flagged": {
+                        "caption": "Cleaned"
+                    }
+                }
+            },
+            "norm_iri": "search",
+            "created": "2022-01-16T00:42:00+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-1080",
+            "scope": "items",
+            "name": "geolocations",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 4,
+            "category": "EPI",
+            "caption": "Geokoordinaten",
+            "config": {
+                "display": false,
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "value": {
+                        "caption": "Geokoordinaten",
+                        "showcaption": false,
+                        "format": "geodata",
+                        "keys": {
+                            "lat": "Latitude",
+                            "lng": "Longitude",
+                            "radius": "Radius"
+                        },
+                        "template": "list"
+                    },
+                    "content": "Anmerkung",
+                    "published": {
+                        "caption": "Status",
+                        "format": "published",
+                        "options": [
+                            "ungepr\u00fcft",
+                            "vermutet",
+                            "gepr\u00fcft",
+                            "ver\u00f6ffentlicht",
+                            "durchsuchbar"
+                        ]
+                    }
+                },
+                "templates": {
+                    "coding": {
+                        "fields": {
+                            "value": {
+                                "keys": {
+                                    "lat": {
+                                        "caption": "Latitude",
+                                        "edit": true
+                                    },
+                                    "lng": {
+                                        "caption": "Longitude",
+                                        "edit": true
+                                    },
+                                    "radius": {
+                                        "caption": "Radius",
+                                        "edit": true
+                                    }
+                                }
+                            },
+                            "published": {
+                                "edit": true
+                            },
+                            "content": {
+                                "edit": true
+                            }
+                        }
+                    }
+                }
+            },
+            "norm_iri": "geolocations",
+            "created": "2022-12-03T11:01:25+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-187",
+            "scope": "items",
+            "name": "locations",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 4,
+            "category": "EPI",
+            "caption": "Standorte",
+            "config": {
+                "fields": {
+                    "sortno": "Nr",
+                    "property": {
+                        "caption": "Standort",
+                        "format": "property",
+                        "types": "locations",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "locations",
+            "modified": "2024-01-27T19:09:43+01:00"
+        },
+        {
+            "id": "types-169",
+            "scope": "items",
+            "name": "conditions",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 5,
+            "category": "EPI",
+            "caption": "Zust\u00e4nde",
+            "config": {
+                "fields": {
+                    "date": {
+                        "caption": "Datierung",
+                        "format": "date"
+                    },
+                    "property": {
+                        "caption": "Zustand",
+                        "format": "property",
+                        "types": "conditions",
+                        "manage": true
+                    },
+                    "value": {
+                        "caption": "Fragment",
+                        "format": "check"
+                    }
+                }
+            },
+            "norm_iri": "conditions",
+            "modified": "2024-01-27T19:09:39+01:00"
+        },
+        {
+            "id": "types-164",
+            "scope": "items",
+            "name": "measures",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 6,
+            "category": "EPI",
+            "caption": "Abmessungen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Ma\u00dfangabe",
+                        "format": "property",
+                        "types": "measures",
+                        "manage": true
+                    },
+                    "value": {
+                        "caption": "Wert",
+                        "format": "xml"
+                    },
+                    "unit": {
+                        "caption": "Einheit",
+                        "format": "unit"
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "measures",
+            "modified": "2024-01-27T19:09:39+01:00"
+        },
+        {
+            "id": "types-188",
+            "scope": "items",
+            "name": "materials",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 7,
+            "category": "EPI",
+            "caption": "Materialien",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Material",
+                        "format": "property",
+                        "types": "materials",
+                        "manage": true
+                    }
+                }
+            },
+            "norm_iri": "materials",
+            "modified": "2024-01-27T19:09:43+01:00"
+        },
+        {
+            "id": "types-186",
+            "scope": "items",
+            "name": "objecttypes",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 8,
+            "category": "EPI",
+            "caption": "Objekttypen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Objekttyp",
+                        "format": "property",
+                        "types": "objecttypes",
+                        "manage": true
+                    }
+                }
+            },
+            "norm_iri": "objecttypes",
+            "modified": "2024-01-27T19:09:43+01:00"
+        },
+        {
+            "id": "types-178",
+            "scope": "items",
+            "name": "epithets",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 9,
+            "category": "EPI",
+            "caption": "Epitheta",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "epithets",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "epithets",
+            "modified": "2024-01-27T19:09:40+01:00"
+        },
+        {
+            "id": "types-200",
+            "scope": "items",
+            "name": "fontheights",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 10,
+            "category": "EPI",
+            "caption": "Schrifth\u00f6hen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "value": {
+                        "caption": "Wert",
+                        "format": "text"
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "fontheights",
+            "created": "2022-01-16T00:15:53+01:00",
+            "modified": "2024-01-27T19:09:46+01:00"
+        },
+        {
+            "id": "types-177",
+            "scope": "items",
+            "name": "fonttypes",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 11,
+            "category": "EPI",
+            "caption": "Schriftarten",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "fonttypes",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "fonttypes",
+            "modified": "2024-01-27T19:09:40+01:00"
+        },
+        {
+            "id": "types-180",
+            "scope": "items",
+            "name": "formulas",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 12,
+            "category": "EPI",
+            "caption": "Formeln",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "formulas",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "formulas",
+            "modified": "2024-01-27T19:09:41+01:00"
+        },
+        {
+            "id": "types-191",
+            "scope": "items",
+            "name": "incipits",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 13,
+            "category": "EPI",
+            "caption": "Initien",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "incipits",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "incipits",
+            "modified": "2024-01-27T19:09:44+01:00"
+        },
+        {
+            "id": "types-179",
+            "scope": "items",
+            "name": "initials",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 14,
+            "category": "EPI",
+            "caption": "Initialen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "initials",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "initials",
+            "modified": "2024-01-27T19:09:41+01:00"
+        },
+        {
+            "id": "types-189",
+            "scope": "items",
+            "name": "languages",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 15,
+            "category": "EPI",
+            "caption": "Sprachen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "languages",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "languages",
+            "modified": "2024-01-27T19:09:44+01:00"
+        },
+        {
+            "id": "types-175",
+            "scope": "items",
+            "name": "metres",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 16,
+            "category": "EPI",
+            "caption": "Versma\u00dfe",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "metres",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Anzeige im Artikel",
+                        "format": "xml",
+                        "types": [
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "metres",
+            "modified": "2024-01-27T19:09:40+01:00"
+        },
+        {
+            "id": "types-181",
+            "scope": "items",
+            "name": "sources",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 17,
+            "category": "EPI",
+            "caption": "Quellen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "sources",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "sources",
+            "modified": "2024-01-27T19:09:41+01:00"
+        },
+        {
+            "id": "types-190",
+            "scope": "items",
+            "name": "techniques",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 18,
+            "category": "EPI",
+            "caption": "Ausf\u00fchrung",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "techniques",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "techniques",
+            "modified": "2024-01-27T19:09:44+01:00"
+        },
+        {
+            "id": "types-176",
+            "scope": "items",
+            "name": "texttypes",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 19,
+            "category": "EPI",
+            "caption": "Textsorten",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "texttypes",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "texttypes",
+            "modified": "2024-01-27T19:09:40+01:00"
+        },
+        {
+            "id": "types-202",
+            "scope": "items",
+            "name": "lost",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 20,
+            "category": "EPI",
+            "caption": "Original verloren",
+            "config": {
+                "fields": {
+                    "value": {
+                        "caption": "Original verloren",
+                        "format": "check"
+                    }
+                }
+            },
+            "norm_iri": "lost",
+            "created": "2022-01-16T00:36:06+01:00",
+            "modified": "2024-01-27T19:09:46+01:00"
+        },
+        {
+            "id": "types-201",
+            "scope": "items",
+            "name": "transcriptions",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 21,
+            "category": "EPI",
+            "caption": "Transkription",
+            "config": {
+                "fulltext": true,
+                "fields": {
+                    "content": {
+                        "caption": "Transkription",
+                        "fulltext": "Transkription",
+                        "format": "xml",
+                        "height": 10,
+                        "types": [
+                            "app1",
+                            "app2",
+                            "links",
+                            "transcription",
+                            "references",
+                            "nl",
+                            "character"
+                        ]
+                    },
+                    "translation": {
+                        "caption": "\u00dcbersetzung",
+                        "fulltext": "\u00dcbersetzung",
+                        "format": "xml",
+                        "height": 10,
+                        "types": [
+                            "app1",
+                            "app2",
+                            "links",
+                            "transcription",
+                            "references",
+                            "character"
+                        ]
+                    },
+                    "date": {
+                        "caption": "Datierung",
+                        "group": "date",
+                        "format": "date"
+                    },
+                    "date_add": {
+                        "caption": "Erg\u00e4nzung zur Datierung",
+                        "group": "date",
+                        "format": "text"
+                    },
+                    "source_from": {
+                        "caption": "Quelle",
+                        "group": "source",
+                        "format": "xml",
+                        "types": [
+                            "references",
+                            "links",
+                            "text",
+                            "app2",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "source_addition": {
+                        "caption": "Erg\u00e4nzungen nach",
+                        "group": "source",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "text",
+                            "h",
+                            "references",
+                            "character"
+                        ]
+                    },
+                    "source_autopsy": {
+                        "caption": "Autopsie",
+                        "group": "source",
+                        "format": "check"
+                    }
+                }
+            },
+            "norm_iri": "transcriptions",
+            "created": "2022-01-16T00:34:54+01:00",
+            "modified": "2024-07-09T13:30:18+02:00"
+        },
+        {
+            "id": "types-198",
+            "scope": "items",
+            "name": "heraldry",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 22,
+            "category": "EPI",
+            "caption": "Wappen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "pos": {
+                        "display": false,
+                        "caption": "Position (x\/y\/z)",
+                        "format": "position"
+                    },
+                    "property": {
+                        "caption": "Wappen",
+                        "showcaption": false,
+                        "format": "property",
+                        "types": "heraldry",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Anmerkungen",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "heraldry",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-197",
+            "scope": "items",
+            "name": "brands",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 23,
+            "category": "EPI",
+            "caption": "Marken",
+            "config": {
+                "fields": {
+                    "property": {
+                        "caption": "Marke",
+                        "format": "property",
+                        "types": "brands",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Beschreibung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "brands",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-163",
+            "scope": "items",
+            "name": "images",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 24,
+            "category": "EPI",
+            "caption": "Abbildungen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "file": {
+                        "caption": "Datei",
+                        "format": "file"
+                    },
+                    "content": {
+                        "caption": "Beschreibung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "published": {
+                        "caption": "Ver\u00f6ffentlicht",
+                        "format": "published"
+                    },
+                    "property": {
+                        "caption": "Abbildungstyp",
+                        "display": "more",
+                        "format": "property",
+                        "types": "imagetypes",
+                        "manage": true,
+                        "required": false
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "display": "more",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    },
+                    "file_meta": {
+                        "caption": "Metadaten",
+                        "display": "more",
+                        "template": "list",
+                        "format": "json",
+                        "keys": {
+                            "title": {
+                                "caption": "Titel",
+                                "display": "more"
+                            },
+                            "headline": {
+                                "caption": "\u00dcberschrift",
+                                "display": "more"
+                            },
+                            "creator": {
+                                "caption": "Ersteller",
+                                "display": "more"
+                            },
+                            "source": {
+                                "caption": "Quelle",
+                                "display": "more"
+                            },
+                            "licence": {
+                                "caption": "Lizenz",
+                                "display": "more",
+                                "format": "select",
+                                "options": {
+                                    "": "Unklar",
+                                    "ccby40": "CC BY 4.0",
+                                    "other": "Andere"
+                                }
+                            },
+                            "rights": {
+                                "caption": "Copyright",
+                                "display": "more"
+                            },
+                            "usageterms": {
+                                "caption": "Nutzungsbedingungen",
+                                "display": "more"
+                            },
+                            "credit": {
+                                "caption": "Credit",
+                                "display": "more"
+                            },
+                            "marked": {
+                                "caption": "Gesch\u00fctzt",
+                                "display": "more",
+                                "format": "select",
+                                "options": {
+                                    "true": "Urheberrechtlich gesch\u00fctzt",
+                                    "false": "Public Domain"
+                                }
+                            }
+                        }
+                    },
+                    "file_copyright": {
+                        "caption": "Copyright (EpiDesktop)",
+                        "display": "more",
+                        "format": "xml"
+                    },
+                    "flagged": {
+                        "caption": "Abbildungsteil",
+                        "display": "more",
+                        "format": "check"
+                    }
+                }
+            },
+            "norm_iri": "images",
+            "modified": "2024-09-22T21:45:16+02:00"
+        },
+        {
+            "id": "types-182",
+            "scope": "items",
+            "name": "icons",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 25,
+            "category": "EPI",
+            "caption": "Ikonografie",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "icons",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "icons",
+            "modified": "2024-09-23T11:58:05+02:00"
+        },
+        {
+            "id": "types-185",
+            "scope": "items",
+            "name": "manufacturers",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 26,
+            "category": "EPI",
+            "caption": "Hersteller",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "manufacturers",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "manufacturers",
+            "modified": "2024-09-23T11:58:11+02:00"
+        },
+        {
+            "id": "types-192",
+            "scope": "items",
+            "name": "personnames",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 27,
+            "category": "EPI",
+            "caption": "Personennamen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "personnames",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "personnames",
+            "modified": "2024-09-23T11:58:19+02:00"
+        },
+        {
+            "id": "types-183",
+            "scope": "items",
+            "name": "placenames",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 28,
+            "category": "EPI",
+            "caption": "Ortsnamen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "placenames",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "placenames",
+            "modified": "2024-09-23T11:58:25+02:00"
+        },
+        {
+            "id": "types-184",
+            "scope": "items",
+            "name": "subjects",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 29,
+            "category": "EPI",
+            "caption": "Sachregister",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Wert",
+                        "format": "property",
+                        "types": "subjects",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "h",
+                            "character"
+                        ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "subjects",
+            "modified": "2024-09-23T11:58:42+02:00"
+        },
+        {
+            "id": "types-194",
+            "scope": "items",
+            "name": "literature",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 30,
+            "category": "EPI",
+            "caption": "Literaturtitel",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Literaturtitel",
+                        "format": "property",
+                        "types": "literature",
+                        "manage": true
+                    },
+                    "content": {
+                        "caption": "Erg\u00e4nzung",
+                        "format": "xml",
+                        "types": [
+                            "app2",
+                            "links",
+                            "references",
+                            "text",
+                            "sup",
+                            "h",
+                            "character"
+                        ]
+                    }
+                }
+            },
+            "norm_iri": "literature",
+            "modified": "2024-11-07T22:21:39+01:00"
+        },
+        {
+            "id": "types-203",
+            "scope": "items",
+            "name": "signatures",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 31,
+            "category": "EPI",
+            "caption": "Signaturen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "value": {
+                        "caption": "Signatur",
+                        "format": "text"
+                    },
+                    "property": {
+                        "caption": "Literatur",
+                        "format": "property",
+                        "types": "literature",
+                        "manage": true,
+                        "required": false
+                    }
+                }
+            },
+            "norm_iri": "signatures",
+            "created": "2022-01-16T00:38:18+01:00",
+            "modified": "2024-01-27T19:09:47+01:00"
+        },
+        {
+            "id": "types-168",
+            "scope": "items",
+            "name": "outputoptions",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 32,
+            "category": "EPI",
+            "caption": "Darstellungen",
+            "config": {
+                "fields": {
+                    "sortno": {
+                        "caption": "Nr"
+                    },
+                    "property": {
+                        "caption": "Darstellung",
+                        "format": "property",
+                        "types": "outputoptions",
+                        "manage": true
+                    }
+                }
+            },
+            "norm_iri": "outputoptions",
+            "modified": "2024-01-27T19:09:39+01:00"
+        },
+        {
+            "id": "types-1565",
+            "scope": "items",
+            "name": "topics",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 0,
+            "category": "Kollektionen",
+            "caption": "Themenbr\u00fccken",
+            "config": {
+                "fields": {
+                    "property": {
+                        "caption": "Kategorie",
+                        "format": "property",
+                        "types": "topics"
+                    },
+                    "value": {
+                        "caption": "Priorit\u00e4t"
+                    },
+                    "content": {
+                        "caption": "Anmerkung"
+                    }
+                }
+            },
+            "norm_iri": "topics",
+            "created": "2023-02-17T18:55:52+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-3001",
+            "scope": "items",
+            "name": "collections",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 1,
+            "category": "Kollektionen",
+            "caption": "Kollektionen",
+            "config": {
+                "fields": {
+                    "property": {
+                        "caption": "Kategorie",
+                        "format": "property",
+                        "types": "collections",
+                        "manage": true
+                    },
+                    "value": {
+                        "caption": "Priorit\u00e4t"
+                    },
+                    "content": {
+                        "caption": "Anmerkung"
+                    }
+                }
+            },
+            "norm_iri": "collections",
+            "created": "2024-03-17T21:06:28+01:00",
+            "modified": "2024-03-19T01:51:06+01:00"
+        },
+        {
+            "id": "types-1292",
+            "scope": "items",
+            "name": "related",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 2,
+            "category": "Kollektionen",
+            "caption": "\u00c4hnliche Artikel",
+            "description": "Ergebnis der Clusteranalyse",
+            "norm_iri": "related",
+            "created": "2023-02-17T18:55:56+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2632",
+            "scope": "links",
+            "name": "horizontal-ellipsis",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 100,
+            "category": "character",
+            "caption": "Waagrechtes Auslassungszeichen",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u2026",
+                "shortcut": "Alt+.",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-horizontal-ellipsis",
+            "created": "2023-06-16T09:43:47+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2633",
+            "scope": "links",
+            "name": "narrow-no-break-space",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 101,
+            "category": "character",
+            "caption": "Gesch\u00fctztes Leerzeichen",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u202f",
+                "tag_type": "character",
+                "shortcut": "Shift+space"
+            },
+            "norm_iri": "char-narrow-no-break-space",
+            "created": "2023-07-31T13:24:03+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2627",
+            "scope": "links",
+            "name": "black-square",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 102,
+            "category": "character",
+            "caption": "Schwarzes Quadrat",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u25a0",
+                "shortcut": "Alt+Shift+B",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-black-square",
+            "created": "2023-06-16T09:43:47+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2628",
+            "scope": "links",
+            "name": "cross",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 103,
+            "category": "character",
+            "caption": "Kreuz",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u2020",
+                "shortcut": "Alt++",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-cross",
+            "created": "2023-06-16T09:43:47+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2631",
+            "scope": "links",
+            "name": "figure-dash",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 104,
+            "category": "character",
+            "caption": "Gedankenstrich",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u2012",
+                "shortcut": "Alt+-",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-figure-dash",
+            "created": "2023-06-16T13:46:22+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2635",
+            "scope": "links",
+            "name": "single-low-quotation-mark",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 105,
+            "category": "character",
+            "caption": "Einfaches Anf\u00fchrungszeichen unten",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u201a",
+                "shortcut": "Alt+#",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-single-low-quotation-mark",
+            "created": "2023-06-16T14:00:02+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2634",
+            "scope": "links",
+            "name": "single-high-quotation-mark",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 106,
+            "category": "character",
+            "caption": "Einfaches Anf\u00fchrungszeichen oben",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u2018",
+                "shortcut": "Alt+Shift+\u0027",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-single-high-quotation-mark",
+            "created": "2023-06-16T14:03:41+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2630",
+            "scope": "links",
+            "name": "double-low-quotation-mark",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 107,
+            "category": "character",
+            "caption": "Doppeltes Anf\u00fchrungszeichen unten",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u201e",
+                "shortcut": "Alt+2",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-double-low-quotation-mark",
+            "created": "2023-06-17T12:52:33+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2629",
+            "scope": "links",
+            "name": "double-high-quotation-mark",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 108,
+            "category": "character",
+            "caption": "Doppeltes Anf\u00fchrungszeichen oben",
+            "config": {
+                "group": "character",
+                "toolbutton": false,
+                "html_content": "\u201c",
+                "shortcut": "Alt+Shift+\u0022",
+                "tag_type": "character"
+            },
+            "norm_iri": "char-double-high-quotation-mark",
+            "created": "2023-06-17T12:54:17+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-2644",
+            "scope": "links",
+            "name": "rec",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 10,
+            "category": "links",
+            "caption": "Verweise",
+            "description": "Dropdown-Button f\u00fcr Verweise auf Literatur, Hausmarken, Artikel und Standorte.",
+            "config": {
+                "group": "links",
+                "toolbutton": {
+                    "group": "references",
+                    "icon": "reference",
+                    "dropdown": true
+                }
+            },
+            "norm_iri": "rec",
+            "created": "2023-11-17T10:22:15+01:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-70",
+            "scope": "links",
+            "name": "rec_lit",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 11,
+            "category": "links",
+            "caption": "Verweis auf Literatur",
+            "config": {
+                "group": "links",
+                "toolbutton": {
+                    "group": "references"
+                },
+                "shortcut": "Alt+Shift+L",
+                "tag_type": "text",
+                "css_style": ".xml_tag_rec_lit { color:#0066ff }",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "render": "text",
+                        "targets": {
+                            "properties": [
+                                "literature"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "literature",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-71",
+            "scope": "links",
+            "name": "rec_ma",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 12,
+            "category": "links",
+            "caption": "Verweis auf Hausmarke",
+            "config": {
+                "group": "links",
+                "shortcut": "Alt+Shift+M",
+                "toolbutton": {
+                    "group": "references"
+                },
+                "tag_type": "text",
+                "css_style": ".xml_tag_rec_ma { color:#0066ff }",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "render": "text",
+                        "targets": {
+                            "properties": [
+                                "brands"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "brand",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-72",
+            "scope": "links",
+            "name": "rec_extern",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 13,
+            "category": "links",
+            "caption": "Externer Verweis",
+            "description": "Verweis auf einen anderen Artikel bzw. einen Abschnitt oder eine Fu\u00dfnote in einem anderen Artikel.",
+            "config": {
+                "group": "links",
+                "shortcut": "Alt+Shift+O",
+                "toolbutton": {
+                    "group": "references"
+                },
+                "tag_type": "text",
+                "css_style": ".xml_tag_rec_extern { color:#0066ff }",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "render": "text",
+                        "targets": {
+                            "articles": [
+                                "epi-article"
+                            ],
+                            "footnotes": [
+                                "app1",
+                                "app2"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "external",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-73",
+            "scope": "links",
+            "name": "rec_intern",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 14,
+            "category": "links",
+            "caption": "Interner Verweis",
+            "description": "Verweis auf einen Abschnitt oder eine Fu\u00dfnote innerhalb des Artikels.",
+            "config": {
+                "group": "links",
+                "shortcut": "Alt+Shift+I",
+                "toolbutton": {
+                    "group": "references"
+                },
+                "tag_type": "text",
+                "css_style": ".xml_tag_rec_intern { color:#0066ff }",
+                "fields": {
+                    "to": {
+                        "format": "relation",
+                        "render": "text",
+                        "targets": {
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ],
+                            "footnotes": [
+                                "app1",
+                                "app2"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "internal",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-93",
+            "scope": "links",
+            "name": "loc_ten",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 15,
+            "category": "links",
+            "caption": "Standort",
+            "description": "Platzhalter f\u00fcr einen Textbaustein, der beim Export zusammengesetzt und eingef\u00fcgt wird; an der Stelle wird eine Fu\u00dfnote erzeugt des Inhalts \u0026amp;quot;Siehe Grundriss St. Nikolai Nr. xxx\u0026amp;quot;; xxx steht f\u00fcr die entsprechende Nummer, die im Abschnitt \u0026amp;quot;Signaturen\u0026amp;quot; des Artikels anzugeben ist und von dort ausgelesen wird.",
+            "config": {
+                "group": "links",
+                "toolbutton": {
+                    "group": "references"
+                },
+                "tag_type": "empty",
+                "html": {
+                    "tag_type": "text"
+                },
+                "css_style": ".xml_tag_loc_ten { color: #6abc6a }",
+                "content": "[Pos]"
+            },
+            "norm_iri": "location",
+            "modified": "2024-11-07T22:29:03+01:00"
+        },
+        {
+            "id": "types-94",
+            "scope": "links",
+            "name": "reg",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 16,
+            "category": "links",
+            "caption": "Register",
+            "description": "nicht mehr verwendet",
+            "config": {
+                "group": "links",
+                "toolbutton": false,
+                "tag_name": "reg",
+                "tag_type": "text",
+                "css_style": ".xml_tag_reg { color: #6abc6a }",
+                "content": "[r]"
+            },
+            "norm_iri": "index",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-3053",
+            "scope": "links",
+            "name": "anchor",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 17,
+            "category": "links",
+            "caption": "Seitenzahlenanker",
+            "description": "Ziel f\u00fcr Links auf Druckseiten",
+            "config": {
+                "group": "links",
+                "tag_type": "text",
+                "prefix": "[Druckseite ",
+                "postfix": "]",
+                "toolbutton": {
+                    "group": "references"
+                },
+                "attributes": {
+                    "value": {
+                        "caption": "Druckseite",
+                        "render": "text"
+                    }
+                },
+                "css_style": ".xml_tag_anchor { color:#0066ff }"
+            },
+            "norm_iri": "anchor",
+            "created": "2024-07-26T17:28:54+02:00",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-92",
+            "scope": "links",
+            "name": "quot",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 80,
+            "category": "references",
+            "caption": "Zitat",
+            "config": {
+                "group": "references",
+                "shortcut": "alt+Q",
+                "tag_type": "format",
+                "css_style": ".xml_tag_quot { font-style: italic }"
+            },
+            "norm_iri": "quote",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-78",
+            "scope": "links",
+            "name": "folge",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 81,
+            "category": "references",
+            "caption": "Verweisfolge",
+            "config": {
+                "group": "references",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_folge \u003E .xml_bracket_open, .xml_tag_folge \u003E .xml_bracket_close { color:#c00000ff; font-weight: bold }",
+                "prefix": "{",
+                "postfix": "}"
+            },
+            "norm_iri": "sequence",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-95",
+            "scope": "links",
+            "name": "p",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 90,
+            "category": "text",
+            "caption": "Absatz",
+            "config": {
+                "group": "text",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_p .xml_bracket_open, .xml_tag_p .xml_bracket_close { color: #8627ab; background-color:#e2de90 }",
+                "html": {
+                    "prefix": "\u003Cp|",
+                    "postfix": "|p\u003E"
+                },
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "render": "text",
+                        "targets": {
+                            "properties": [
+                                "paragraphs"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "paragraph",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-96",
+            "scope": "links",
+            "name": "h",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 91,
+            "category": "text",
+            "caption": "\u00dcberschrift",
+            "config": {
+                "group": "text",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_h .xml_bracket_open, .xml_tag_h .xml_bracket_close { color: #8627ab; background-color:#e2de90 }",
+                "html": {
+                    "prefix": "\u003CH|",
+                    "postfix": "|H\u003E"
+                },
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "render": "text",
+                        "targets": {
+                            "properties": [
+                                "paragraphs"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "heading",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-97",
+            "scope": "links",
+            "name": "b",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 92,
+            "category": "text",
+            "caption": "Fett",
+            "config": {
+                "group": "text",
+                "tag_type": "format",
+                "css_style": ".xml_tag_b { font-weight: bold }"
+            },
+            "norm_iri": "bold",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-98",
+            "scope": "links",
+            "name": "i",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 93,
+            "category": "text",
+            "caption": "Kursiv",
+            "config": {
+                "group": "text",
+                "tag_type": "format",
+                "css_style": ".xml_tag_i { font-style: italic }"
+            },
+            "norm_iri": "italic",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-99",
+            "scope": "links",
+            "name": "u",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 94,
+            "category": "text",
+            "caption": "Unterstrichen",
+            "config": {
+                "group": "text",
+                "tag_type": "format",
+                "css_style": ".xml_tag_u { text-decoration: underline }"
+            },
+            "norm_iri": "underlined",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-100",
+            "scope": "links",
+            "name": "g",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 95,
+            "category": "text",
+            "caption": "Gesperrt",
+            "config": {
+                "group": "text",
+                "tag_type": "format",
+                "css_style": ".xml_tag_g { color: #adadad; font-family: \u0022Courier New\u0022, serif; font-weight: bold; }"
+            },
+            "norm_iri": "letterspaced",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-101",
+            "scope": "links",
+            "name": "k",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 96,
+            "category": "text",
+            "caption": "Kapit\u00e4lchen",
+            "config": {
+                "group": "text",
+                "tag_type": "format",
+                "css_style": ".xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }"
+            },
+            "norm_iri": "caps",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-103",
+            "scope": "links",
+            "name": "a",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 97,
+            "category": "text",
+            "caption": "Link",
+            "config": {
+                "group": "text",
+                "tag_type": "text",
+                "attributes": {
+                    "value": {
+                        "caption": "Linktext",
+                        "render": "text"
+                    },
+                    "href": {
+                        "caption": "URL",
+                        "render": "attribute"
+                    }
+                },
+                "css_style": ".xml_tag_a { color:#0066ff }",
+                "html": {
+                    "tag": "a"
+                }
+            },
+            "norm_iri": "link",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-102",
+            "scope": "links",
+            "name": "wunsch",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 999,
+            "category": "text",
+            "caption": "Wunschtag",
+            "config": {
+                "group": "text",
+                "toolbutton": false,
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_wunsch .xml_bracket_open, .xml_tag_wunsch .xml_bracket_close { color:#1464AA; background-color:#e2de90 }",
+                "html": {
+                    "prefix": "\u003Cw|",
+                    "postfix": "|w\u003E"
+                }
+            },
+            "norm_iri": "wish",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-67",
+            "scope": "links",
+            "name": "nl",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 1000,
+            "category": "text",
+            "caption": "Umbruch",
+            "config": {
+                "group": "text",
+                "tag_type": "break",
+                "toolbutton": false
+            },
+            "norm_iri": "newline",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-86",
+            "scope": "links",
+            "name": "bl",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 50,
+            "category": "transcription",
+            "caption": "Bereich",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+B",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_bl \u003E .xml_bracket_open, .xml_tag_bl \u003E .xml_bracket_close { color:#FFFFFF; background-color:#c1c1c1; font-size:0.7em;display:inline-block;width:100%;} .xml_tag_bl \u003E .xml_bracket_open {margin-bottom:1em;} .xml_tag_bl \u003E .xml_bracket_close {margin-top:1em;}",
+                "html": {
+                    "prefix": "\u255f\u2500",
+                    "postfix": " \u2500\u2562"
+                },
+                "prefix": "",
+                "postfix": "",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "required": false,
+                        "targets": {
+                            "properties": [
+                                "alignments"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "block",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-84",
+            "scope": "links",
+            "name": "z",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 51,
+            "category": "transcription",
+            "caption": "Zeile",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+Z",
+                "tag_type": "text",
+                "css_style": ".xml_tag_z { color:#ffffff;background-color:#c1c1c1; padding: 0 0.2em; }",
+                "content": "\/",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "targets": {
+                            "properties": [
+                                "linebindings"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "line",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-85",
+            "scope": "links",
+            "name": "vz",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 52,
+            "category": "transcription",
+            "caption": "Verszeile",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+F",
+                "tag_type": "text",
+                "css_style": ".xml_tag_vz { color:#ffffff; background-color:#c1c1c1; padding: 0 0.2em;}",
+                "content": "|",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "targets": {
+                            "properties": [
+                                "indentations"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "verseline",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-87",
+            "scope": "links",
+            "name": "wtr",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 53,
+            "category": "transcription",
+            "caption": "Worttrenner",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+W",
+                "tag_type": "text",
+                "css_style": ".xml_tag_wtr { color: #6abc6a; font-weight: bold }",
+                "content": "\u2022",
+                "fields": {
+                    "to": {
+                        "format": "record",
+                        "targets": {
+                            "properties": [
+                                "wordseparators"
+                            ]
+                        }
+                    }
+                }
+            },
+            "norm_iri": "wordseparator",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-74",
+            "scope": "links",
+            "name": "spatium_v",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 54,
+            "category": "transcription",
+            "caption": "Spatium",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+S",
+                "tag_type": "text",
+                "attributes": {
+                    "width": {
+                        "caption": "Breite",
+                        "default": "1",
+                        "render": "text"
+                    }
+                },
+                "css_style": ".xml_tag_spatium_v { color:#0066ff; font-size: 0.8em }",
+                "prefix": "\u251c",
+                "postfix": "\u2524"
+            },
+            "norm_iri": "spatium",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-80",
+            "scope": "links",
+            "name": "del",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 55,
+            "category": "transcription",
+            "caption": "Verlust",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+D",
+                "tag_type": "text",
+                "attributes": {
+                    "num_sign": {
+                        "caption": "Zeichenzahl",
+                        "render": "text",
+                        "repeat": ".",
+                        "default": "---"
+                    }
+                },
+                "css_style": ".xml_tag_del { color:#0066ff }",
+                "prefix": "[",
+                "postfix": "]"
+            },
+            "norm_iri": "loss",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-79",
+            "scope": "links",
+            "name": "cpl",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 56,
+            "category": "transcription",
+            "caption": "Erg\u00e4nzung",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+E",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_cpl \u003E .xml_bracket_open, .xml_tag_cpl \u003E .xml_bracket_close { color:#0066ff }",
+                "prefix": "[",
+                "postfix": "]"
+            },
+            "norm_iri": "addition",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-83",
+            "scope": "links",
+            "name": "oms",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 57,
+            "category": "transcription",
+            "caption": "Auslassung",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+O",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_oms \u003E .xml_bracket_open, .xml_tag_oms \u003E .xml_bracket_close { color:#0066ff }",
+                "prefix": "[(",
+                "postfix": ")]"
+            },
+            "norm_iri": "ellipsis",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-81",
+            "scope": "links",
+            "name": "add",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 58,
+            "category": "transcription",
+            "caption": "Nachtrag",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+N",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_add \u003E .xml_bracket_open, .xml_tag_add \u003E .xml_bracket_close { color:#0066ff }",
+                "prefix": "\u003C",
+                "postfix": "\u003E"
+            },
+            "norm_iri": "addendum",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-77",
+            "scope": "links",
+            "name": "abr",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 59,
+            "category": "transcription",
+            "caption": "Abk\u00fcrzung",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+A",
+                "tag_type": "bracket",
+                "css_style": ".xml_tag_abr \u003E .xml_bracket_open, .xml_tag_abr \u003E .xml_bracket_close { color:#0066ff }",
+                "prefix": "(",
+                "postfix": ")"
+            },
+            "norm_iri": "abbreviation",
+            "modified": "2024-10-30T23:47:45+01:00"
+        },
+        {
+            "id": "types-90",
+            "scope": "links",
+            "name": "vsl",
+            "mode": "default",
+            "preset": "default",
+            "sortno": 60,
+            "category": "transcription",
+            "caption": "Versalie",
+            "config": {
+                "group": "transcription",
+                "shortcut": "alt+G",
+                "tag_type": "format",
+                "css_style": ".xml_tag_vsl { color: #66bb66; font-size: 1.5em }"
+            },
+            "norm_iri": "versal",
+            "modified": "2024-10-30T23:47:45+01:00"
+        }
+    ],
+    "pagination": {
+        "count": 150,
+        "page": 1,
+        "page_prev": false,
+        "page_next": true,
+        "perpage": 100
+    }
+}

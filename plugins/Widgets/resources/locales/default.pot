@@ -1,0 +1,283 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2024-09-17 16:59+0200\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:530
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:632
+#: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:448
+#: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:533
+msgid "Section"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1608
+msgid "{0} {1}"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1624
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1626
+msgid "Add item"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1642
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1644
+msgid "Remove item"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1736
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2132
+msgid "Tag number is missing."
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1788
+msgid "Tag is missing."
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2049
+#: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:1179
+msgid "Footnotes"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2208
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2209
+msgid "Remove footnote"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2327
+msgid "Caption"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2328
+msgid "IRI fragment"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2329
+msgid "Modified"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2533
+msgid "Are you sure to delete the entity?"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2811
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:513
+msgid "No"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2811
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:467
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:507
+msgid "Yes"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2935
+msgid "Task caption"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2948
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2968
+msgid "Task can be skipped by user"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2957
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2971
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2973
+msgid "Input file"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2962
+msgid "Leave empty to use default"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3059
+msgid "Outputfile"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3067
+msgid "Leave empty to use the default file name"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3096
+msgid "Search"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:378
+msgid "Content"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:382
+msgid "Category"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:113
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:350
+msgid "Actions"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:205
+msgid "Submit"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:230
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:371
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:422
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:488
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:544
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1433
+msgid "Cancel"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:265
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:301
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1598
+msgid "Edit"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:276
+msgid "Unlock"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:339
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:360
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:407
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:579
+msgid "Save"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:422
+msgid "Close"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:439
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:595
+msgid "Delete"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:535
+msgid "Preview"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:626
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:627
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:628
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:905
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:906
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:907
+msgid "Help"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:671
+msgid "Table"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:673
+msgid "Map"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:677
+msgid "Tiles"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:679
+msgid "Lanes"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:719
+msgid "Read"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:720
+msgid "Revise"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:794
+msgid "CSV"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:798
+msgid "XML"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:802
+msgid "JSON"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:834
+msgid "Export"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:958
+msgid " records"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1176
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1177
+msgid "More functions"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1602
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:576
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:673
+msgid "View"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:134
+msgid "Key"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:135
+msgid "Value"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:369
+msgid "More..."
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:480
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:200
+msgid "See {0}"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:484
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:203
+msgid "Reference from {0}"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:989
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:990
+msgid "Select columns"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1120
+msgid "Reset filter and columns."
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1331
+#: ./plugins/Widgets/src/View/Widget/ReferenceWidget.php:85
+msgid "selected"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1481
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1550
+msgid "Reset selection"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:115
+msgid "Manage"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:131
+msgid "None"
+msgstr ""
+

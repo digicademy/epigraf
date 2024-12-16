@@ -1,0 +1,1 @@
+(self.webpackChunkEpigraf_Widgets=self.webpackChunkEpigraf_Widgets||[]).push([[190],{455:(e,n,s)=>{s.d(n,{messages:()=>a});const a=JSON.parse('{"Footnote":"Fußnote","Reloading document":"Dokument wird neu geladen","Open in new tab":"In neuem Tab öffnen","Close":"Schließen"}')}}]);

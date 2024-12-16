@@ -1,0 +1,10 @@
+{
+    "project": {
+        "id": "projects-1",
+        "name": "Testprojekt 1",
+        "signature": "TP1",
+        "norm_iri": "bookiri",
+        "projecttype": "epi",
+        "database": "projects"
+    }
+}

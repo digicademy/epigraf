@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Wismar [projects]    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/projects/";window.App.debug = false;window.App.user.load({"role":"author","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_notes             action_edit             template_default             theme_default             userrole_author">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_database" ><a href="/epi/projects/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/projects/articles?load=1">Articles</a></li><li class="menu_database" ><a href="/epi/projects/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/projects/files?load=1">Files</a></li><li class="menu_database active" ><a href="/epi/projects/notes?load=1">Notes</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/files?root=shared&amp;database=projects">Repository</a></li><li class="menu_global" ><a href="/help?database=projects">Help</a></li><li class="menu_global" ><a href="/wiki?database=projects">Wiki</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/1?database=projects" class="btn-profile" title="author"></a>                                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+                <div class="frame-title">
+                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
+                </div>
+
+                <div class="frame-content">
+                    <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes">List all</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Entwicklung">Entwicklung</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Hilfsmittel">Hilfsmittel</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Mecklenburg">Mecklenburg</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="4" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Organisation">Organisation</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="5" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Pommern">Pommern</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="6" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Richtlinien">Richtlinien</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="7" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Rostock">Rostock</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-nochildren item-last" data-id="8" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Wismar">Wismar</a></div><div class="tree-meta"></div></li></ul></div>                </div>
+                <div class="frame-footer">
+                                            <form method="get" accept-charset="utf-8" id="search" action="/epi/projects/notes"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
+                </div></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/epi/projects/notes">Notes</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Wismar</span></li></ul>                            </nav>
+                                            </div>
+
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+
+<!-- Content area -->
+<div class="widget-entity"><form method="post" accept-charset="utf-8" id="form-edit-notes-2" autocomplete="off" data-cancel-url="/epi/projects/notes/view/2" data-delete-url="/epi/projects/notes/delete/2" action="/epi/projects/notes/edit/2"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="lock" data-lock-url="/epi/projects/notes/lock/2.json" data-unlock-url="/epi/projects/notes/unlock/2.json" value="7"><table class="vertical-table" data-row-table="notes" data-row-id="2" data-row-type="notes" data-row-model="epi_notes" data-root-table="notes" data-root-id="2" data-file-basepath="notes" data-file-defaultpath="wismar" data-database="projects"><tr class="table-input-text" data-row-field="name"><th scope="row">Name</th><td><div class="input text"><input type="text" name="name" id="name" value="Wismar" maxlength="200"></div></td></tr><tr class="table-input-hidden" data-row-field="format"><th scope="row">format</th><td><input type="hidden" name="format" id="format" value="html"></td></tr><tr class="table-input-htmleditor" data-row-field="content"><td colspan="2"><h2>Content</h2><div class="input htmleditor"><textarea name="content" class="widget-htmleditor"><h4>Chat</h4>
+
+<ol>
+<li>hwi.marien.ct249
+
+<ul>
+<li>Literaturangabe in Anm. 3 präzisieren (in AUB vorhanden)</li>
+</ul></li>
+<li>marien.ct+65
+
+<ul>
+<li>MD: Maße sind jetzt in Notizfeld</li>
+<li>wann und wo wurden die Fragemente eingelagert ?</li>
+<li>zugewiesen an: JH</li>
+</ul></li>
+<li>heilgeist.steintafel
+
+<ul>
+<li>MD, CM: Ausgabefehler, derselbe Fehler auch in hwi.marien.ct303, hwi.marien.glocke03, hwi.georgen.glocke1 (MD)</li>
+<li>zugewiesen an: JH</li>
+</ul></li>
+<li>dominikaner.tafel
+
+<ul>
+<li>CM: Schriftart einfach eine frühe(!) Got. Min. mit wenigen Brechungen, die Crull nicht kannte und die er deswegen als "Cursive" bezeichnet hat?</li>
+<li>zugewiesen an: JH</li>
+</ul></li>
+<li>georgen.ct289
+
+<ul>
+<li>CM: A (1461) und B (1464) von demselben Steinmetz,  gleichzeitig entstanden --> beide von 1464</li>
+<li>zugewiesen an: JH (zu A1 und A2 ändern)</li>
+</ul></li>
+<li>Nachgetragene Sterbedaten sollen in der Kopfzeile mit einer eigenen JZ berücksichtigt werden. Vgl. m.ct158, n.ct021, n.ctSK16... --> prüft/vereinheitlicht Jürgen</li>
+<li>Bei Nachweisen von Crull/Techen Seitenzahlen mit Nr. (in Klammern) angeben. --> Prüfen und vereinheitlichen.
+
+<ul>
+<li>zugewiesen an Philipp</li>
+</ul></li>
+<li>Bei Nachweisen von Crull/Techen Seitenzahlen mit Nr. (in Klammern) angeben, ggf. ergänzen (s.o.); dazu: Der Klammergebrauch gilt auch für alle andere Lit. mit Seiten- UND Nr.-angaben --> vereinheitlichen, Zweifelsfälle notieren (Name, Titel, Datensatz)
+
+<ul>
+<li>zugewiesen an Philipp</li>
+</ul></li>
+</ol>
+
+<h3>Besprochen und entschieden:</h3>
+
+<p><strong>Editionsteil</strong>
+1. Zusammenschreibung nach modernem Gebrauch, wenn aber dann Großbuchstaben mitten im Wort stehen würden, wird Worttrennung wie in der Überlieferung gelassen; Bsp.: marien.tafel-sperling: Tausent Sechs Hundert Siebenzehn
+2. y mit Trema aus kopialer Überlieferung wird ohne Trema wiedergegeben, bei Überlieferung im Original wird das Trema beibehalten
+3. (Namens-)Ergänzungen von CT werden in der Edition wiedergegeben, wenn die Ergänzung nachvollziehbar ist. Wenn die Ergänzung nicht nachvollziehbar ist, wird sie in Anmerkungen wiedergegeben. Wenn die komplette Inschrift nach CT, weil nicht mehr vorhanden, im Editionsteil; es gibt einen Unterschied zwischen Ergänzung nach(!) Crull und Techen und Ergänzung von(!) Crull und Techen (d.h. schon bei C/T in eckigen Klammern).
+4. Interpunktion von Crull/Techen bei neuzeitlichen Inschriften wird nicht übernommen, bei mittelalterlichen schon (sofern überhaupt vorhanden); das gilt für Grabplatten, für Epitaphien evtl. abweichendes Verfahren
+5. V. S. E. soll immer in der Edition aufgelöst werden, nicht in einer Bu.-anmerkung: V(ND) S(EINEN) E(RBEN). --> Wenn aus der I. niederdt. Sprache ersichtlich, dann auch Auflösung in niederdt. Formen; sonst neuhochdt.-modern - z.B. (H(ERRN)) - auflösen. --> erl.
+6. Jahreszahlen: nur nach m für tausend und nach den Jahrhunderten eine Leerstelle setzen.
+7. In der Edition von sehr schlecht erhaltenen Inschriften werden entweder a) Unterpunkte gesetzt oder b) Wortlaut nach C/T in [...] wiedergegeben. Das bleibt so, wie es ist!
+1. Worttrenner werden generell(!) als hochgestellte Punkte wiedergegeben; z.B. g.ct157, ct118. Anders: Punkte auf Grundlinie, die Funktion eines Satzzeichens haben.
+9. Archivalien, nach denen Inschriften wiedergegeben/ergänzt wurden (vgl. m.ct269, Begräbnisbuch St. Marien; n.ct174, Begräbnisbuch ...), sind keine Inschriftenüberlieferung und werden daher NICHT in die Nachweisezeile aufgenommen (Jürgen).
+1. Namensinitialen, deren Bedeutung/Auflösung sich erschließen lässt (aus anderen I. oder aus Grabbüchern), einheitlich in der Edition auflösen (nicht in Anm.); vgl. m.ct158, m.ct199 A, g.ct263 B, g.ct067 C, m.ct247 B u. C, m.ct+39 B, g.ct174 ... Es ist ok, wenn die Nachweise dann in Form von Grabbuch-Zitaten im Komm. stehen.
+1. Lat. Eigentumsvermerke als Namen im Genitiv werden übersetzt als "Des N. N. und ...". - Pronomen "seinen" bei folgendem "heredum" wird mit übersetzt, auch wenn es im lat. Text nicht dasteht. --> Erledigt CM 26.1.2021: m.ct263, g.ct031, m.ct062, m.ct+57, g.ct007, m.ct145 ... [NB: Dt. Eigentumsvermerke, wenn ausgeschrieben, haben "und seinen Erben", also Dativ; so auch in Editionen vereinheitlicht.]
+10. Zur Info: Crull/Techen geben Inschriften in got. Min. in Frakturtype wieder, Inschriften in Kapitalis in Antiqua (aber Kleinbuchstaben)
+8. Jürgen: Prüfen, ob in allen Inschriftenbeschreibungen die Worttrenner besprochen werden und ggf., ob sie mit den Tags im Editionsteil übereinstimmen. Das scheint je nach Standort unterschiedlich gehandhabt worden zu sein.</p>
+
+<p><strong>Namenskonventionen für historische Personen</strong>
+1. Bei Personennamen wird zunächst die Namensform verwendet, die in der Inschrift vorkommt. Kommen zu derselben Personen mehrere Namensformen vor, muss man sich für eine entscheiden und darf in allen Artikeln nur diese eine verwenden. Bei Familiennamen können mehrere Formen bzw. Varianten im selben Registereintrag verzeichnet werden. Im selben Artikel sollte aber nur eine einzige Form verwendet werden, gegebenfalls kann man eine Variante in Klammern dazu geben. Vor- und Nachnamen, die auf <em>-man</em> enden, werden zu <em>-mann</em> normalisiert.
+2. Namen zu Anfang der Beschreibung, "Grabplatte für ..." - Namen stimmen nicht immer denen im Editionsteil übereinstimmen (n.ct173). Anderer Fall: Nachname in Klammern, weil er nicht in der Inschrift steht (m.ct219). --> In der Inschrift abgekürzte und für die Ed. aufgelöste Namen werden in der Beschreibung vollständig genannt.
+3. Erschlossene Nachnamen, die nicht in der Inschrift stehen, können in der Beschreibung in Klammern gesetzt werden.
+4. Referenznamen (Hauptform, vgl. Register): Wenn der Name in den Inschriften von der Form des Referenznamens abweicht, wird in der Beschreibung / bei der ersten Nennung im Artikel die Referenzform UND die Variante in Klammern angegeben; sonst nur der Referenzname; Beispiel "Ahasver (Asschweries) Meincke".
+5. Namen von noch existierenden Adelsfamilien werden nach heutigem Gebrauch angesetzt; vgl. Winterfeldt (nicht -feld), Königsmarck (nicht -mark), vgl. m.ct095 ... [evtl. nochmal prüfen]
+1. Unsichere Namen: nach unsicheren Namensformen steht erst ein Spatium, dann "(?)" --> erl. CM 11.02.21</p>
+
+<p><strong>Terminologie</strong>
+1. hl. Johannes: Als Namensformen gelten Johannes Bapt. und Johannes Ev.
+2. Terminologie Genien (eigentl. antike Schutzgötter) vs. Putten (Barock: nackte kleine Engel oder Engelsköpfe): "Genien" nur verwenden, wenn es einen größeren antiken (stilistischen, mytholog.) Kontext gibt.
+7. Grabbuch vs. Begräbnisbuch: es heißt Grabbuch (nicht Begräbnisbuch) --> vereinheitlichen (erl. CM)
+1. "Wangenstein" oder "Beischlagwange"? --> Beischlagwange (erl. CM)
+1. Quadrangel: Nominativ Sgl.: das Quadrangel, Nominativ Pl. die Quadrangel, ABER Dativ Pl. Quadrangeln (vgl. Deklination v. Engel) --> vereinheitlichen (erl. CM 8.2.21)</p>
+
+<p><strong>Übersetzungen</strong>
+1. Übersetzung von "beatus" bei Tagesangaben in "heilig" - statt selig - ändern.
+2. Übersetzungen von Quellenzitaten werden zwischen einfache Anführungsstriche '...' gesetzt.
+3. Bei Datierung nach Heiligentagen darf statt z. B. "am Tag des heiligen Martin" auch "am Martinstag" übersetzt sein, beide Übersetzungsmöglichkeiten sind ok
+4. Gemäß Mail Frau Schröder (17.9.2020) Übersetzungen der ndt. Fürbittformel ändern: "Dass Gott ihm gnädig sei." --> "Gott sei ihm gnädig." --> Erledigt CM für alle Stellen, die durch automatische Suche zu finden waren.</p>
+
+<p><strong>Zitate</strong>
+1. Betr. Zitate aus älterer Literatur: Vor Erscheinungsjahr 1800 wie Quellenzitate behandeln, also kursiv setzen; nach 1800 wie Zitate aus der modernen Forschungsliteratur in  "..." setzen. --> Bsp. marien.gewölbe-1607, franziskaner.gp-beatrix, marien.ct243
+2. Werktitel kursiv, ebenso Zitate aus Primärtexten (Quellen) --> m.glocke09
+3. Zitate a.d. Lutherbibel "diplomatisch" wiedergeben, d.h. wie in der TB-Ausgabe nach dem Druck 1545 (dtv-Ausgabe), d.h. mit Virgeln, Versalien, v für u usw.
+<strong>Parameterzeile</strong>
+1. Maßangaben sollen in der Form "11 cm" (nicht "11,0 cm") ausgegeben werden</p>
+
+<p><strong>Abkürzungen</strong>
+1. Jahrhundert wird im Fließtext eher ausgeschrieben, in Stichpunktartigem eher abgekürzt, muss aber nicht ganz konsequent sein
+2. zwischen Abkürzungen aus zwei Wörtern steht ein Leerzeichen: z. B., u. a.</p>
+
+<p><strong>Standorte</strong>
+1. Betr. Standorte OFM-Kloster und OP-Kloster: Aus beiden Orten stammen Inschriften, die nach der Klosterzeit angefertigt wurden, dennoch soll als Standort "Dominikanerkloster" bzw. "-kirche" und "Franziskanerkloster" bzw. "-kirche" angegeben werden, weil das auch in späterer Zeit die ortsübliche Bezeichnung ist. Das Patrozinium soll nur in der Einleitung angeführt werden.</p>
+
+<p><strong>anderes</strong>
+1. "s." und "s. a." für "siehe" und "siehe auch" soll ausgeschrieben werden. --> erl. Philipp 28.01.21
+2. Bei Nachweisen von Crull/Techen Seitenzahlen mit Nr. (in Klammern) angeben, der Klammergebrauch gilt auch für alle andere Lit. mit Seiten- UND Nr.-angaben --> für C/T erledigt CM - prüfen für andere Titel
+3. "AHW, Zeugenbuch 2 (1430–1490), p. 60" - das "p." soll NICHT durch "S." ersetzt werden.
+4. Interpunktion in Fällen wie "Nach Schlie, Geschichts-Denkmäler 2, S. 98 wurde 1462 ..." --> kein Komma nach der S.-zahl.
+5. Tagesdaten zu Quellennachweisen in Anm. werden nach dem Schema "13. Juli 1615" (nicht: "1615 Juli 13") wiedergegeben.
+6. Anführen von einzelnen Inschriften v. a. im Komm.: Wenn der Buchstabe der Inschrift syntaktisch nicht notwendig ist, steht der Buchstabe in Klammern, wenn er aber notwendig ist, ohne Klammern im fortlaufenden Satz.
+8. Quellenzeile:  wird chronologisch sortiert --> prüfen, Philipp (ab 28.1.2021)
+10. Bei Verweisen auf Lexikonartikel wird der Kurztitel des Lexikonartikels in die Literaturliste aufgenommen (nicht der Lexikontitel), beim Nachweis des Artikels  steht nicht "Art.", sondern Autorname und Titel des Artikels. In einer Fußnote NICHT auf Online-Ausgabe verweisen, z. B. bei ADB, NDB  -- Beispiele (20.1.2021, müssen noch korrigiert werden, dafür Literaturliste mit ausgeben): 1. franziskaner.gp-beatrix, dort "Wolfgang Huschner, Heinrich II. (der Löwe), in: Pettke (Hg.), Biographisches Lexikon 6, S. 156–162, hier S. 156" -  "Art. Latomus, Bernhard (Karl Ernst Hermann Krause), in: ADB 19 (1884), S. 753, auch https://de.wikisource.org/wiki/ADB:Latomus,_Bernhard (31.7.2018)" - 2. m.ct154, dort "Art. Gronovius, Johann Friedrich in: ADB und NDB, online http://www.deutsche-biographie.de/sfz23943.html" - 3. wandmal.tidekap1, dort "Liselotte Stauch, Walther Föhl, Art. Baum in: Reallexikon zur Deutschen Kunstgeschichte (RDK) 2, Sp. 63–90, hier Sp. 67" - 4. g.altar-thomas, dort "Ulrike Mörschel, Art. A[lbert] v[on] Brescia, in: Lexikon des Mittelalters 1, Sp. 288" - 5. m.epitaph-schwartzkopff, dort "Joachim Kramer, Art. Phönix, in: LCI 3, Sp. 430–432"</p>
+
+<h3>Offene Fragen u. Korrekturen</h3>
+
+<ol>
+<li>Welche Recherchen müssen unbedingt noch in HWI erfolgen? Lässt sich das durch eine Fahrt abarbeiten??? - Einzelne Angaben (Maße, Ausführungsdetails) könnten im Vorwort des DI-Bandes durch einen Satz zu pandemiebedingten Einschränkungen ab März 2020 erklärt werden.</li>
+<li>Städt. Beschauzeichen ergänzen (Mona): kirchner1634, schenkkanne-1637</li>
+<li>Schreibung von Zahlen (Geldbeträge usw.): jetzt noch uneinheitlich, mal als Wort, mal als Zahl. Üblich wäre: bis 12 ausschreiben, danach nur runde Zahlen (zehn, zwanzig etc.).</li>
+<li>Bef.-Nr.: Sollen Bef.-Nr. einheitlich mit vierstelligen JZ wiedergegeben werden? jetzt mal in der Form 7/07 (m.ct229, m.ct324), mal 9/2007 (m.ct232, m.ct227), mal nur Nummer (Bef.-Nr. 77, so m.ct+71, g.ct040 ...).</li>
+<li>Ist es korrekt, dass Inv.-Nr. des Stadtgeschichtlichen Museums mal nach dem Muster "Inv.-Nr. 5316 KE", mal in der Form "Inv.-Nr. EB 57/01" wiedergegeben werden?</li>
+<li>Wiedergabe von Kürzungspunkten aus der kopialen Überlieferung, z. B. für Bibelstellen: Punkte beibehalten oder tilgen? vgl. marien.taufe (A), altarleuchter -1630-2 (S oder S.?)</li>
+<li>Ausgabe "Reimverse, dt." oder "Deutsche Reimverse"?</li>
+<li>Formatierung von Kirchenliedern und Archivalientiteln - kursiv, in einem oder zwei Anführungsstrichen? noch uneinheitlich, siehe epitaph-1615, Anm. 2, 3 u. 4; m.ct249 (...); s. dazu auch oben, Zitate: Werktitel sollen kursiv sein ...</li>
+<li>Artikel Jürgen: zu Kapellen evtl. Hinweise auf Grundrisse bei Grewolls, Kapellen nachtragen</li>
+<li>Glocken: für die Bearbeitung auch Eichler, Handbuch der Stück- und Glockengießer (Zi. 2.12) benutzen, Titel kommt bislang nicht vor.</li>
+<li>Textkrit. Anmerkungen: Wie wird "Zu ergänzen ist ..." benutzt? Aktuell: auch - natürlich nicht nur - für verkürzte Formeln, die aber nie in ganzer Länge  ausgeführt waren, wo also gar kein Schriftverlust vorliegt; siehe z. B. dominikanerglocke1 (Anm. b), n.ct130, dominikaner.chorinschrift (Anm. w: "Zu ergänzen ist dem Sinn nach ..."; g.ct001+, hwi.fürstenhof (C). Vorschlag: statt "zu ergänzen ist ..." ggf. "Für ..." verwenden?</li>
+<li>Sonderfall dazu: orate [pro eo]: Es gibt viele Fälle, in denen als kürzestmögliche Form "orate" für ausreichend gehalten wurde, "pro eo" war offenbar entbehrlich. Trotzdem Anm. in der Form "Zu ergänzen ist pro eo." machen???</li>
+<li>Schriftbezeichnungen "Gotische Minuskel mit Versalien - Gotische Minuskel mit Versalien in Versalschrift - Gotische Minuskel mit Fraktur-Versalien - Gotische Minuskel mit frakturartigem Versal" ...: Mir scheint, dass das nicht sauber getrennt ist, weil es sich nicht trennen lässt. Dasselbe wird nicht immer mit demselben Begriff bezeichnet; außerdem sind Versalien ja relativ frei gestaltbar. Es sei denn, es handelt sich eindeutig um Kapitalis-Versalien, aber auch hier gibt es Übergänge zur Frühhum. Kap. Vgl. n.ct243 (B), museum.gp-kladow (B), heilgeist.ct001 (B), g.ct203 (C), n.ct014+, n.ct016+, n.ct194 (A) ... Vgl. zum Thema Kohn, in: Epigraphik 2000, S. 65ff.</li>
+<li>Worttrenner, Gestaltung der: Stichproben(!) haben Diskrepanzen zwischen Beschreibung und Tags im Editionsteil ergeben. Vgl. g.ctSK07: Worttrenner als "unbestimmt" getagged, in der Beschr nicht erwähnt - ich sehe viele Doppelpunkte; m.ct064, A: "Rauten" laut Beschreibung, Tags "Quadrangel"; m.ct+03: ein Quadrat und eine Raute in der Beschr., tags: Quadrat, Quadrangel, Raute; n.ct257 (C) Quadrangel vs. Hochpunkt ...</li>
+<li>Namensregister, Überprüfung: Formen der Familiennamen prüfen. Welche Formen stehen in den Inschriften, was in den einzelnen Artikeln (bei häufigen Namen), was im Register als Haupt- bzw. Nebenform? Auch Wappenreg. berücksichtigen!</li>
+<li>Jürgen: In prosopograf. Teilen der Gp.-kommentare fehlende Verweise auf einzelne Inschriften ergänzen bzw. überprüfen und ggf. korrigieren? Jonas hat sich das erste Viertel des Kat. angeschaut und Korrekturbedarf festgestellt (Jan. 2021).</li>
+<li>Jürgen: Unterpunktete Worttrenner werden nicht ausgegeben; s. museum.gp-tancke. --> Jürgen</li>
+<li>Jürgen: betr. Datierungen. Es gibt "vor 1462" neben "1462 oder früher" bzw. "nach 1477" neben "1477 oder später" --> noch nicht entschieden, dafür Fälle zusammen ansehen u. vereinheitlichen.</li>
+</ol>
+
+<h5>Chat erledigt</h5>
+
+<ol>
+<li>drei Zierschnallen
+
+<ul>
+<li>Standort LAKD, nicht Fundort</li>
+<li>zugewiesen an: MD - erledigt</li>
+</ul></li>
+<li>pilgerzeichen
+
+<ul>
+<li>CM, MD: raus aus Katalog, weil seriell gegossen</li>
+<li>zugewiesen an: CM - erledigt</li>
+</ul></li>
+<li>museum.sühnestein-steenvord
+
+<ul>
+<li>MD: raus, Standort ist in NWM; ist auch in NWM schon angelegt: nwm.saunsdorf.gedenkstein; Fotos in den Artikel bei NWM</li>
+<li>zugewiesen an: MD - erledigt</li>
+</ul></li>
+<li>marien.ct219 u. a.
+
+<ul>
+<li>CM: bei Oeynhausen nur Inschrift A ==> Nachweise zu Oeynhausen auf die Inschrift(en) hin konkretisieren</li>
+<li>zugewiesen an: Jonas u. CM - erledigt</li>
+</ul></li>
+<li>im AHW existiert ein Foto zum Leuchter hwi.marien.kronleuchter <a href="https://ariadne-portal.uni-greifswald.de/?arc=15&amp;amp;type=mps&amp;amp;id=101489">... link</a>
+
+<ul>
+<li>zugewiesen an: MD - auf dem Foto die Plättchen mit den Inschriften nicht vorhanden - erledigt</li>
+</ul></li>
+<li>CM: Kurztitel Mecklenburgisches Urkundenbuch/MUB vereinheitlichen zu MUB - erledigt Jonas/CM</li>
+<li>CM: hwi.heilgeist.bildfenster: Sind hier irgendwelche Maße ermittelbar? - nein MD</li>
+<li>CM: Verwendung von "Reimverse" und "Reimverse deutsch" vereinheitlichen; in den Ed. oft auch noch nicht mit entsprechenden Zeilenumbrüchen formatiert - am besten zu finden über ein Gesamt-Dokument - Literaturwiss. handelt es sich um Verse unterschiedl. Silbenzahl mit Paarreimen (Wagenknecht, Deutsche Metrik: "Knittelvers") - erledigt MD</li>
+<li>MUB-Nachweise umstellen von S.-zahlen auf Nr.
+
+<ul>
+<li>zugewiesen an: Jonas u. CM - erledigt Jonas</li>
+</ul></li>
+<li>CM (15.9.): Verständnis des "Chorumgangs": Es gibt nur EINEN Ch., daher Bezeichnungen wie "Übergang vom südlichen zum südöstlichen Chorumgang" ergänzen durch Ausdrücke wie "Teil" oder "Bereich". Vgl. m.ct254 ... - erledigt CM</li>
+<li>Zitierweise von Blattangaben in handschriftl. Quellen: f. -> fol., Blatt/Bl. -> fol. Die Ausnahme: Scheffers, Bl. xx - das bleibt so! - erledigt PB, CM</li>
+<li>(1.10.) Für C/T-Nachweise werden keine Buchstaben für die einzelnen Inschriften in der Nachweiszeile ergänzt. --> In einzelnen Artikeln, wo sie noch stehen, rausnehmen! --> Erledigt CM.</li>
+<li>Nachweisen von Crull/Techen in Form von Seitenzahlen mit Nr. (in Klammern), also "S. 12 (Nr. 13)" --> für C/T erledigt CM - noch nicht für andere Werke, aus denen Angaben mit Nr. angeführt werden</li>
+<li>Betr. Standorte OFM-Kloster und OP-Kloster
+
+<ul>
+<li>Manchmal Standort Kirche, manchmal Kloster allgemein -> prüfen/vereinheitlichen</li>
+<li>zugewiesen an: MD - erledigt</li>
+</ul></li>
+<li>Vornamen ohne Nachnamen, Nachnamen ohne Vornamen: Vorne in Beschreibungen zurückhaltend "N. N." ergänzen, wenn sonst keine Angaben zum Namen vorliegen; vgl. n.ct196 und öfter. Bei späteren Namensnennungen im Artikel darf(!) N. N. auch fehlen. --> erledigt CM 13.11.2020</li>
+<li>Maßangaben sollen in der Form "11 cm" (nicht "11,0 cm") ausgegeben werden --> vereinheitlichen, d.h. wo im PDF vorhanden aus den Maßangaben tilgen
+
+<ul>
+<li>erledigt Jonas</li>
+</ul></li>
+<li>Tagesdaten zu Quellennachweisen in Anm. werden nach dem Schema "13. Juli 1615" (nicht: "1615 Juli 13") wiedergegeben --> vereinheitlichen
+
+<ul>
+<li>erledigt Jonas</li>
+</ul></li>
+<li>Ausgabe Maßezeile: Wenn in einer Inschrift sowohl Zi. als auch Bu. vorhanden sind, muss die Schriftform an erster Stelle stehen, damit "Bu." ausgegeben wird
+
+<ul>
+<li>erledigt Jonas</li>
+</ul></li>
+</ol>
+
+<h4>Aufgabenbereich für Mona:</h4>
+
+<ul>
+<li>Altarretabel</li>
+<li>Wand- und Deckenmalerei</li>
+<li>Leuchter - fertig</li>
+<li>Vasa sacra - fertig</li>
+<li>Epitaphien</li>
+<li>evtl. Wasserkunst</li>
+<li>Glasgemälde und -fenster - fertig</li>
+<li>Kanzeln</li>
+<li>Gemälde - fertig</li>
+<li>Ofensockel - fertig</li>
+<li>Uhr und Zifferblatt - fertig</li>
+<li>Papagoyenektte - ausgesondert</li>
+<li>Großschmiedestraße 18 - fertig</li>
+<li>Tafelbilder - fertig</li>
+<li>Triumphkreuze - fertig</li>
+</ul>
+
+<h4>Aufgabenbereich für Christine:</h4>
+
+<ul>
+<li>Zunft u.ä. - fertig</li>
+</ul>
+
+<h4>Aufgabenbereich für Jürgen:</h4>
+
+<ul>
+<li>Kanzeln</li>
+<li>Glocken</li>
+<li>evtl. Wasserkunst</li>
+</ul>
+
+<h4>Aufgaben für Jonas</h4>
+
+<p>Noch nicht gezeichnete Marken sind:
+1. mkg-hamburg.stop-1911.278 (Abb. Kunzel, Zinngießerhandwerk, S. 422, Nr. 44-78) <strong>verschlagen</strong></p>
+
+<ol start="2">
+<li><p>sm-schwerin.stop-KH370 (Abb. Kunzel, Zinngießerhandwerk, S. 422, Nr. 44-79) <strong>verschlagen</strong></p></li>
+<li><p>museum.stop-2950 (Abb. Kunzel, Zinngießerhandwerk, S. 422, Nr. 44-76) <strong>verschlagen</strong></p></li>
+<li><p>museum.stop-12869 (Abb. Kunzel, Zinngießerhandwerk, S. 422, Nr. 44-80) <strong>gezeichnet; liegt im Ordner von Jonas S</strong> - in Artikel eingefügt MD</p></li>
+<li><p>museum.willkomm-kirchner1634 (Abb. Kunzel, Zinngießerhandwerk, S. 402, Nr. 44-32) <strong>gezeichnet; liegt im Ordner von Jonas S</strong>  - in Artikel eingefügt MD</p></li>
+<li><p>georgen.kelch6 (Fotos: hwi.georgen.kelch6.DIHGW_3860 und hwi.georgen.kelch6.DIHGW_3863) <strong>gezeichnet; liegt im Ordner von Jonas S</strong> - in Artikel eingefügt MD</p></li>
+</ol>
+
+<p>außerdem:</p>
+
+<ol start="7">
+<li><p>nikolai.kelch4 (nur eine Zeichnung bei Schlie 2, S. 153, bei der ich mir nicht sicher bin, ob sie zum Zeichnen reicht) <strong>nicht vollständig abgebildet, daher keine Zeichnung mgl.</strong></p></li>
+<li><p>marien.kelch5 (keine Abb,: Crull und Schlie sagen, das Meisterzeichen sei ein H; reicht eher nicht zum Zeichnen, oder?) <strong>reicht nicht zum Zeichnen</strong></p></li>
+<li><p>marien.kanzel (oberes Foto in der pdf-Datei "Kanzel Wismar..." im Ordner Mona->Wismar, auf S. 7) <strong>gezeichnet; liegt im Ordner von Jonas S</strong>  - in Artikel eingefügt MD</p></li>
+</ol>
+
+<hr />
+
+<p><a href="https://epigraf.inschriften.net/epi4/inschriften_mv/notes/view/16">To-do-Liste</a></p>
+
+<p><a href="https://epigraf.inschriften.net/epi4/inschriften_mv/notes/view/14">Adressen</a></p>
+
+<h4>Hilfsmittel (Linkliste)</h4>
+
+<ul>
+<li><a href="http://www.torrido.de/index.htm">Techen, Friedrich, Geschichte der Seestadt Wismar</a></li>
+<li><a href="&amp;#92;141.53.14.11\inschriftenmv">HWI-Personennachweise</a></li>
+<li><a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00000845">von Gamm, Ausgestorbene Geschlechter Mecklenburgs</a></li>
+<li><a href="http://daten.digitale-sammlungen.de/~db/bsb00006577/images/index.html?id=00006577&amp;amp;fip=141.53.196.42&amp;amp;no=12&amp;amp;seite=1">Crull, Ratslinie</a></li>
+<li><a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00002957">Crull, Wappen der Mannschaft</a></li>
+<li><a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00003164">Crull, Wappen Wismarscher Geschlechter</a></li>
+<li><a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00003382">Grotefend, Mecklenburger in Danzig</a></li>
+<li><a href="http://mvdok.lbmv.de/sammlung/mjb">Mecklenburgische Jahrbücher</a></li>
+<li><a href="http://www.archive.org/search.php?query=mecklenburgisches%20Urkundenbuch">Mecklenburgisches Urkundenbuch</a></li>
+<li><a href="http://www.archive.org/details/diekunstundgesch02schl">Schlie, Bau- und Kunstdenkmäler, Bd. 2</a></li>
+<li><a href="https://opus4.kobv.de/opus4-bamberg/frontdoor/index/index/docId/26016">Fries, St. Georgen (Diss.)</a></li>
+<li>Schröder, Kurze Beschreibung der Stadt und Herrschaft Wismar <a href="http://www.lexikus.de/bibliothek/Kurze-Beschreibung-der-Stadt-und-Herrschaft-Wismar">Lexikus</a> u. <a href="http://mdz-nbn-resolving.de/urn:nbn:de:bvb:12-bsb10003310-5">BSB</a>
+
+<ul>
+<li>Stadtsekretäre: S. 51</li>
+<li>Syndici S. 32</li>
+</ul></li>
+</ul>
+
+<p>Archiv der Hansestadt Wismar - Stadtbücher <a href="https://www.stadtbuecher.de/de/archive/stadtarchiv-wismar/pdf">1: pdf</a>
+<a href="https://www.stadtbuecher.de/de/archive/stadtarchiv-wismar/">2: stadtbuecher.de</a></p>
+
+<p><a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00003730">Joachim Brügmann, Das Zunftwesen der Seestadt Wismar bis zum Beginn des 17. Jahrhunderts</a></p>
+
+<p>Friedrich Crull, Friedrich Techen: Die Grabsteine der Wismarer Kirchen<br/>
+<a href="http://mvdok.lbmv.de/resolve/id/mvdok_document_00002988/fulltext#page119">Teil 1: Einleitung, St. Marien</a><br/>
+<a href="http://mvdok.lbmv.de/resolve/id/mvdok_document_00003004/fulltext#page241">Teil 2: St. Nikolai</a><br/>
+<a href="http://mvdok.lbmv.de/resolve/id/mvdok_document_00003019/fulltext#page103">Teil 3: St. Georgen, Schwarzes Kloster, In der Stadt verstreute Steine; Epitaphien; Register</a><br/></p>
+
+<p>Wismars Straßennamen<br/>
+<a href="https://epigraf.inschriften.net/epi4/inschriften_mv/files?path=hilfsmittel%2FProjekte-in-MV%2FWismar">Kindler, Straßennamen Wismars</a><br/>
+<a href="https://epigraf.inschriften.net/epi4/inschriften_mv/files?path=hilfsmittel%2FProjekte-in-MV%2FWismar">Schmidt, Straßennamen Wismars</a><br/>
+<a href="http://www.wismar.de/media/custom/125_659_1.PDF">Straßennamen Lexikon</a><br/>
+<a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00003299">Techen, Straßennamen Wismars</a><br/></p>
+
+<p>Gustav Willgeroth, Die Mecklenburgisch-Schwerinschen Pfarren seit dem dreißigjährigen Kriege. Mit Anmerkungen über die früheren Pastoren seit der Reformation, 4 Bde., Wismar 1924–1937</p>
+
+<ul>
+<li>Präpositur Wismar <a href="http://purl.uni-rostock.de/rosdok/ppn717436977">Bd. 3</a>, S. 1337ff.
+
+<ul>
+<li>Wismar St. Marien: 1347 [222]</li>
+<li>Wismar St. Georgen: 1366</li>
+<li>Wismar St. Nikolai: 1377</li>
+</ul></li>
+</ul>
+
+<p><a href="http://mvdok.lbmv.de/mjbrenderer?id=mvdok_document_00003723">Gustav Willgeroth, Die Lehrer der Großen Stadtschule zu Wismar</a></p>
+
+<p><a href="http://rosdok.uni-rostock.de/mcrviewer/recordIdentifier/rosdok_ppn859930912/iview2/phys_0007.iview2?logicalDiv=log_0002">Gustav Willgeroth, Beiträge zur Wismarschen Familienkunde, Wismar 1932</a></p>
+</textarea></div></td></tr><tr class="table-input-text" data-row-field="category"><th scope="row">Category</th><td><div class="input text"><input type="text" name="category" id="category" value="Wismar" maxlength="300"></div></td></tr><tr class="table-input-checkbox" data-row-field="menu"><th scope="row">Add to menu</th><td><div class="input checkbox"><input type="hidden" name="menu" value="0"><input type="checkbox" name="menu" value="1" id="menu" checked="checked"></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">Pretty URL (iri)</th><td><div class="input text"><input type="text" name="norm_iri" id="norm-iri" maxlength="50"></div></td></tr><tr class="table-input-text" data-row-field="sortkey"><th scope="row">Sort key</th><td><div class="input text"><input type="text" name="sortkey" id="sortkey" maxlength="50"></div></td></tr><tr class="table-input-checkbox" data-row-field="published"><th scope="row">Published</th><td><div class="input checkbox"><input type="hidden" name="published" value="0"><input type="checkbox" name="published" value="1" id="published"></div></td></tr></table></form></div>
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><button data-shortcuts="Ctrl+S F10" title="Save (Ctrl+S F10)" aria-label="Save" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" form="form-edit-notes-2" data-role="save" data-target="notes-2" type="submit">Save</button></li><li><button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-edit-notes-2" data-role="cancel" data-target="notes-2">Cancel</button></li><li><button type="button" form="form-edit-notes-2" data-role="delete" data-target="notes-2" class="">Delete</button></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-epi-notes-edit?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

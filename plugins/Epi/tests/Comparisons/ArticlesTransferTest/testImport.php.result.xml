@@ -1,0 +1,116 @@
+<response>
+  <article id="articles-1" database="import" norm_iri="awesomeiri" articletype="object">
+    <created>2020-10-29T13:00:58+01:00</created>
+    <modified>2020-10-29T13:00:58+01:00</modified>
+    <project id="projects-1" database="import" norm_iri="projectiri">
+      <name>Future books</name>
+    </project>
+    <sections>
+      <section id="sections-1" articles_id="articles-1" sortno="1" level="1" children="1" siblings="2" layout_cols="0" layout_rows="0" sectiontype="text">
+        <comment>Not finished yet</comment>
+        <path>
+          <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
+        </path>
+        <status>0</status>
+        <items>
+          <item id="items-1" itemtype="text" sortno="1" sections_id="sections-1" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
+            </sectionpath>
+            <content>This is the first sentence of the book.</content>
+          </item>
+        </items>
+      </section>
+      <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sortno="2" level="2" children="0" siblings="1" layout_cols="0" layout_rows="0" sectiontype="newsectiontype">
+        <path>
+          <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
+          <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
+        </path>
+        <status>0</status>
+        <items>
+          <item id="items-2" itemtype="text" sortno="1" sections_id="sections-2" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
+              <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
+            </sectionpath>
+            <content>The subchapter starts with this sentence.</content>
+          </item>
+          <item id="items-3" itemtype="literature" sortno="1" sections_id="sections-2" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
+              <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
+            </sectionpath>
+            <content>Better read this one.</content>
+            <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="4" rght="5">
+              <lemma>Good</lemma>
+              <name>Good book</name>
+              <norm_iri>gooddoi</norm_iri>
+              <ancestors>
+                <property id="properties-3" propertytype="literature" level="0" lft="1" rght="6">
+                  <lemma>Books</lemma>
+                  <name>Book collection</name>
+                </property>
+              </ancestors>
+            </property>
+          </item>
+          <item id="items-4" itemtype="literature" sortno="2" sections_id="sections-2" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
+              <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
+            </sectionpath>
+            <content>Headache.</content>
+            <property id="properties-2" parent_id="properties-3" sortno="1" propertytype="literature" level="1" lft="2" rght="3">
+              <lemma>Bad</lemma>
+              <name>Bad book</name>
+              <ancestors>
+                <property id="properties-3" propertytype="literature" level="0" lft="1" rght="6">
+                  <lemma>Books</lemma>
+                  <name>Book collection</name>
+                </property>
+              </ancestors>
+            </property>
+          </item>
+        </items>
+      </section>
+      <section id="sections-3" articles_id="articles-1" sortno="1" level="1" children="0" siblings="2" layout_cols="0" layout_rows="0" sectiontype="newsectiontype">
+        <path>
+          <section id="sections-3" articles_id="articles-1" sectiontype="newsectiontype" sortno="1" level="1" children="0" siblings="2" />
+        </path>
+        <status>0</status>
+        <items>
+          <item id="items-5" itemtype="fancyitem" sortno="1" sections_id="sections-3" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-3" articles_id="articles-1" sectiontype="newsectiontype" sortno="1" level="1" children="0" siblings="2" />
+            </sectionpath>
+            <content>What&#039;s in an item that is impossible?</content>
+          </item>
+        </items>
+      </section>
+    </sections>
+  </article>
+  <indexes>
+    <index propertytype="literature">
+      <properties>
+        <property id="properties-3" propertytype="literature" level="0" lft="1" rght="6">
+          <lemma>Books</lemma>
+          <name>Book collection</name>
+        </property>
+        <property id="properties-2" parent_id="properties-3" sortno="1" propertytype="literature" level="1" lft="2" rght="3">
+          <lemma>Bad</lemma>
+          <name>Bad book</name>
+          <sections>
+            <section id="sections-2" articles_id="articles-1" />
+          </sections>
+        </property>
+        <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="4" rght="5">
+          <lemma>Good</lemma>
+          <name>Good book</name>
+          <norm_iri>gooddoi</norm_iri>
+          <sections>
+            <section id="sections-2" articles_id="articles-1" />
+          </sections>
+        </property>
+      </properties>
+    </index>
+  </indexes>
+</response>

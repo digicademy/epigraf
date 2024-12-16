@@ -1,0 +1,28 @@
+[
+    {
+        "exists": false,
+        "preview": 0,
+        "path": "items\/signatur-1",
+        "name": "Vercelli IV 2",
+        "extension": "PNG",
+        "filepath": "items\/signatur-1\/Vercelli IV 2.PNG",
+        "group": "Vercelli IV 2.PNG\/Vercelli IV 2",
+        "metadata": [],
+        "url_view": "\/epi\/projects\/files\/view?path=items%2Fsignatur-1&filename=Vercelli+IV+2.PNG",
+        "url_thumb": "\/epi\/projects\/files\/download?path=items%2Fsignatur-1&filename=Vercelli+IV+2.PNG&format=thumb&size=400",
+        "url_display": "\/epi\/projects\/files\/display?path=items%2Fsignatur-1&filename=Vercelli+IV+2.PNG"
+    },
+    {
+        "exists": false,
+        "preview": 0,
+        "path": "items\/signatur-1",
+        "name": "Vercelli SB I",
+        "extension": "PNG",
+        "filepath": "items\/signatur-1\/Vercelli SB I.PNG",
+        "group": "Vercelli SB I.PNG\/Vercelli SB I",
+        "metadata": [],
+        "url_view": "\/epi\/projects\/files\/view?path=items%2Fsignatur-1&filename=Vercelli+SB+I.PNG",
+        "url_thumb": "\/epi\/projects\/files\/download?path=items%2Fsignatur-1&filename=Vercelli+SB+I.PNG&format=thumb&size=400",
+        "url_display": "\/epi\/projects\/files\/display?path=items%2Fsignatur-1&filename=Vercelli+SB+I.PNG"
+    }
+]

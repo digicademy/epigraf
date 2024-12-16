@@ -1,0 +1,906 @@
+{
+    "64108ccb72c08606f1577d855a6c5812": {
+        "sql": "FROM articles WHERE projects_id IS NULL  AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"articles\", id, \"articles\", articles.id",
+        "type": "Articles with null Project",
+        "target": 0,
+        "no": 1,
+        "number": 0,
+        "status": "ok"
+    },
+    "3e60b31a54327febdeb1f16ed73c5586": {
+        "sql": "FROM articles WHERE deleted = 0 AND projects_id NOT IN (SELECT id FROM projects WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"articles\", id, \"articles\", articles.id",
+        "type": "Articles with invalid Project",
+        "target": 0,
+        "no": 2,
+        "number": 0,
+        "status": "ok"
+    },
+    "29014d644e0ad6d511eef0b029f309a1": {
+        "sql": "FROM sections WHERE articles_id IS NULL  AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"sections\", id, \"articles\", NULL",
+        "clean": "UPDATE sections SET deleted = 3 WHERE articles_id IS NULL  AND deleted = 0",
+        "type": "Sections with null Article",
+        "target": 0,
+        "no": 3,
+        "number": 0,
+        "status": "ok"
+    },
+    "f848b76d8ad8f10c1e5b9eca4904d7ad": {
+        "sql": "FROM sections WHERE deleted = 0 AND articles_id NOT IN (SELECT id FROM articles WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"sections\", id, \"articles\", articles_id",
+        "type": "Sections with invalid Articles",
+        "target": 0,
+        "no": 4,
+        "number": 0,
+        "status": "ok"
+    },
+    "281dbcd9efcdc35704107a3aa4bb7ad0": {
+        "sql": "FROM items WHERE sections_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "clear": "UPDATE items SET deleted = 3 WHERE sections_id IS NULL AND deleted = 0",
+        "type": "Items with null Section",
+        "target": 0,
+        "no": 5,
+        "number": 0,
+        "status": "ok"
+    },
+    "0d564b31ae5b8e54c22f630fec08227c": {
+        "sql": "FROM items WHERE deleted = 0 AND sections_id NOT IN (SELECT id FROM sections WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "clear": "UPDATE items SET deleted = 3 WHERE deleted = 0 AND sections_id NOT IN (SELECT id FROM sections WHERE deleted = 0)",
+        "type": "Items with invalid Section",
+        "target": 0,
+        "no": 6,
+        "number": 0,
+        "status": "ok"
+    },
+    "f3fe839fc7aa0d38ee31a8d678f7e6cb": {
+        "sql": "FROM items WHERE articles_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "type": "Items with null Article",
+        "target": 0,
+        "no": 7,
+        "number": 0,
+        "status": "ok"
+    },
+    "334b7f2d58937a8865432c079f315eed": {
+        "sql": "FROM items WHERE deleted = 0 AND articles_id NOT IN (SELECT id FROM articles WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "type": "Items with invalid Article",
+        "target": 0,
+        "no": 8,
+        "number": 0,
+        "status": "ok"
+    },
+    "8ee10c797c3ebd38e0bc384edce0604f": {
+        "sql": "FROM articles WHERE (articletype IS NULL OR articletype = \"\") AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"articles\", id, NULL, NULL",
+        "type": "Articles: empty articletype",
+        "target": 0,
+        "no": 9,
+        "number": 0,
+        "status": "ok"
+    },
+    "64f3f8b2f8b633f671b21a3502027c62": {
+        "sql": "FROM sections WHERE (sectiontype IS NULL OR sectiontype = \"\") AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"sections\", id, NULL, NULL",
+        "type": "Sections: empty sectiontype",
+        "target": 0,
+        "no": 10,
+        "number": 0,
+        "status": "ok"
+    },
+    "bde504c7a4dd82dee84b193a7016ecbb": {
+        "sql": "FROM properties WHERE (propertytype IS NULL OR propertytype = \"\") AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"properties\", id, NULL, NULL",
+        "type": "Properties: empty propertytype",
+        "target": 0,
+        "no": 11,
+        "number": 0,
+        "status": "ok"
+    },
+    "4b86067d77f4c6c949522d7a7b0857a9": {
+        "sql": "FROM items WHERE (itemtype IS NULL OR itemtype = \"\") AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Items: empty itemtype",
+        "target": 0,
+        "no": 12,
+        "number": 0,
+        "status": "ok"
+    },
+    "35047e6e1e548d3d41af0fb51db786e8": {
+        "sql": "FROM items WHERE itemtype=\"transcriptions\" AND properties_id IS NOT NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Nonnull items to properties by properties id (itemtype=transcriptions)",
+        "target": 0,
+        "no": 13,
+        "number": 0,
+        "status": "ok"
+    },
+    "97b9a3a7959a867364e603747f4dd623": {
+        "sql": "FROM items WHERE itemtype=\"lost\" AND properties_id IS NOT NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Nonnull items to properties by properties id (itemtype=lost)",
+        "target": 0,
+        "no": 14,
+        "number": 0,
+        "status": "ok"
+    },
+    "4a9ebe5a1669395beff2244c9b8d5445": {
+        "sql": "FROM items WHERE itemtype=\"search\" AND properties_id IS NOT NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Nonnull items to properties by properties id (itemtype=search)",
+        "target": 0,
+        "no": 15,
+        "number": 0,
+        "status": "ok"
+    },
+    "c6858b1ca1f4ebf4dd72da6238affed2": {
+        "sql": "FROM items WHERE itemtype=\"fontheights\" AND properties_id IS NOT NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Nonnull items to properties by properties id (itemtype=fontheights)",
+        "target": 0,
+        "no": 16,
+        "number": 0,
+        "status": "ok"
+    },
+    "aa5ac10d1b3c9ae191b208a46551c9d9": {
+        "sql": "FROM items WHERE itemtype=\"text\" AND properties_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Null items to properties by properties id (itemtype=text)",
+        "target": 0,
+        "no": 17,
+        "number": 4,
+        "status": "notok"
+    },
+    "68e1bdc5db5142b3664c31a14043e4fc": {
+        "sql": "FROM items WHERE itemtype=\"chapter\" AND properties_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Null items to properties by properties id (itemtype=chapter)",
+        "target": 0,
+        "no": 18,
+        "number": 40,
+        "status": "notok"
+    },
+    "9599290124fad470ad0494eca9ace315": {
+        "sql": "FROM items WHERE itemtype=\"conditions\" AND properties_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Null items to properties by properties id (itemtype=conditions)",
+        "target": 0,
+        "no": 19,
+        "number": 1,
+        "status": "notok"
+    },
+    "9d51806890aacfc8f2f1dd600aa54d49": {
+        "sql": "FROM items WHERE itemtype=\"geolocations\" AND properties_id IS NOT NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", items.id, \"articles\", articles_id",
+        "type": "Nonnull items to properties by properties id (itemtype=geolocations)",
+        "target": 0,
+        "no": 20,
+        "number": 0,
+        "status": "ok"
+    },
+    "5e4d245e33cf4918d1ba8ec769a6e952": {
+        "sql": "FROM items WHERE properties_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "type": "Null items to properties by properties_id",
+        "target": 0,
+        "no": 21,
+        "number": 113,
+        "status": "warn"
+    },
+    "65e8eb6945ea8004b62b7c6fe028492a": {
+        "sql": "FROM items WHERE deleted = 0 AND properties_id NOT IN (SELECT id FROM properties WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", id, \"articles\", articles_id",
+        "type": "Invalid items to properties by properties_id",
+        "target": 0,
+        "no": 22,
+        "number": 0,
+        "status": "ok"
+    },
+    "23f1f89cd00e87ad22b99aa3e9a3edbe": {
+        "sql": "FROM footnotes WHERE root_tab IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "clear": "UPDATE footnotes SET deleted = 3 WHERE root_tab IS NULL and root_id IS NULL and from_tab IS NULL and from_id IS NULL AND deleted = 0",
+        "type": "Footnotes with null root_tab",
+        "target": 0,
+        "no": 23,
+        "number": 0,
+        "status": "ok"
+    },
+    "c753af3b135422e189c159a8f0c3561e": {
+        "sql": "FROM footnotes WHERE root_id IS NULL AND root_tab = \"articles\" AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "type": "Footnotes with null root_id (root_tab = articles)",
+        "target": 0,
+        "no": 24,
+        "number": 0,
+        "status": "ok"
+    },
+    "f08e6ddf7c27f0841aa833f1e5614699": {
+        "sql": "FROM footnotes WHERE deleted = 0 AND root_tab = \"articles\" AND root_id NOT IN (SELECT id FROM articles WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "type": "Footnotes with invalid root_id (root_tab = articles)",
+        "target": 0,
+        "no": 25,
+        "number": 0,
+        "status": "ok"
+    },
+    "62297fbca79ec5d052780126dddf6231": {
+        "sql": "FROM footnotes WHERE from_tab IS NULL AND  deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "type": "Footnotes with null from_tab",
+        "target": 0,
+        "no": 26,
+        "number": 0,
+        "status": "ok"
+    },
+    "615c9b0a730e7c5b06b300cb1fd48801": {
+        "sql": "FROM footnotes WHERE from_id IS NULL AND from_tab = \"items\" AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "type": "Footnotes with null from_id (from_tab = items)",
+        "target": 0,
+        "no": 27,
+        "number": 0,
+        "status": "ok"
+    },
+    "8fbd5a69e58e77ca582492a5f15433f6": {
+        "sql": "FROM footnotes WHERE deleted = 0 AND from_tab = \"items\" AND from_id NOT IN (SELECT id FROM items WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", id, root_tab, root_id",
+        "type": "Footnotes with invalid from_id (from_tab = items)",
+        "target": 0,
+        "no": 28,
+        "number": 0,
+        "status": "ok"
+    },
+    "198b844516bbe5e49ae4f42e056ebdcc": {
+        "sql": "FROM footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
+        "clear": "UPDATE footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") SET footnotes.deleted = 3 WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"footnotes\", footnotes.id, root_tab, root_id",
+        "type": "Footnotes with invalid from_tagid (from_tab = items, from_field = content)",
+        "target": 0,
+        "no": 29,
+        "number": 0,
+        "status": "ok"
+    },
+    "0353d6b8ac374f0fc5790beeeda32eea": {
+        "sql": "FROM links WHERE root_tab IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "clear": "UPDATE links SET deleted = 3 WHERE root_tab IS NULL and root_id IS NULL and from_tab IS NULL and from_id IS NULL AND deleted = 0",
+        "type": "Links with null root_tab",
+        "target": 0,
+        "no": 30,
+        "number": 0,
+        "status": "ok"
+    },
+    "991a85e31590c062a5417da83db8bd7f": {
+        "sql": "FROM links WHERE root_tab = \"articles\" AND root_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with null root_id (root_tab = articles)",
+        "target": 0,
+        "no": 31,
+        "number": 0,
+        "status": "ok"
+    },
+    "f0c376f74131c2e954b825e68ba0b359": {
+        "sql": "FROM links WHERE deleted = 0 AND root_tab = \"articles\" AND root_id NOT IN (SELECT id FROM articles WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with invalid root_id (root_tab = articles)",
+        "target": 0,
+        "no": 32,
+        "number": 0,
+        "status": "ok"
+    },
+    "237bd390e499005e614a55e417b84ba1": {
+        "sql": "FROM links WHERE root_tab = \"properties\" AND root_id IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with null root_id (root_tab = properties)",
+        "target": 0,
+        "no": 33,
+        "number": 0,
+        "status": "ok"
+    },
+    "132743888c01a05d2704f9fa2084f022": {
+        "sql": "FROM links WHERE deleted = 0 AND root_tab = \"properties\" AND root_id NOT IN (SELECT id FROM properties WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with invalid root_id (root_tab = properties)",
+        "target": 0,
+        "no": 34,
+        "number": 0,
+        "status": "ok"
+    },
+    "2ce188b140d216e72c050ee8808680fc": {
+        "sql": "FROM links WHERE from_tab IS NULL AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with null from_tab",
+        "target": 0,
+        "no": 35,
+        "number": 0,
+        "status": "ok"
+    },
+    "e40e7f8d51f84c2d050dfe52e694d8a4": {
+        "sql": "FROM links WHERE from_id IS NULL AND from_tab = \"items\" AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with null from_id (from_tab = items)",
+        "target": 0,
+        "no": 36,
+        "number": 0,
+        "status": "ok"
+    },
+    "9287017ca0d78f2e70ec508de03acb1a": {
+        "sql": "FROM links WHERE deleted = 0 AND from_tab = \"items\" AND from_id NOT IN (SELECT id FROM items WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with invalid from_id (from_tab = items)",
+        "target": 0,
+        "no": 37,
+        "number": 0,
+        "status": "ok"
+    },
+    "c55758bf76683584b115919fd374782f": {
+        "sql": "FROM links WHERE from_id IS NULL AND from_tab = \"properties\" AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with null from_id (from_tab = properties)",
+        "target": 0,
+        "no": 38,
+        "number": 0,
+        "status": "ok"
+    },
+    "466db6b4f66a884dd7a1e50cfb3dcde9": {
+        "sql": "FROM links WHERE deleted = 0 AND from_tab = \"properties\" AND from_id NOT IN (SELECT id FROM properties WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with invalid from_id (from_tab = properties)",
+        "target": 0,
+        "no": 39,
+        "number": 0,
+        "status": "ok"
+    },
+    "ce3d9c0c591774a5949303d022c96d42": {
+        "sql": "FROM links WHERE from_id IS NULL AND from_tab = \"footnotes\" AND deleted = 0",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with null from_id (from_tab = footnotes)",
+        "target": 0,
+        "no": 40,
+        "number": 0,
+        "status": "ok"
+    },
+    "021d5d28214222f83b284cc82b5b32b4": {
+        "sql": "FROM links WHERE deleted = 0 AND from_tab = \"footnotes\" AND from_id NOT IN (SELECT id FROM footnotes WHERE deleted = 0)",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", id, root_tab, root_id",
+        "type": "Links with invalid from_id (from_tab = footnotes)",
+        "target": 0,
+        "no": 41,
+        "number": 0,
+        "status": "ok"
+    },
+    "11e18b22c218cca0a0d1d02663effcd1": {
+        "sql": "FROM links LEFT JOIN items ON items.deleted = 0 AND links.from_id = items.id AND items.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND items.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN items ON items.deleted = 0 AND links.from_id = items.id AND items.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND items.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = items, from_field = content)",
+        "target": 0,
+        "no": 42,
+        "number": 5,
+        "status": "notok"
+    },
+    "c4ecc3dac87b6ff72c2db067f533d3a7": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN items ON items.deleted = 0 AND links.from_id = items.id WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN items ON items.deleted = 0 AND links.from_id = items.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"items\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = items, from_field = content)",
+        "target": 0,
+        "no": 43,
+        "number": 0,
+        "status": "ok"
+    },
+    "f51c2ad2b0f6f9ec7a8ab30fcde927a6": {
+        "sql": "FROM links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.elements LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.elements LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND properties.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = properties, from_field = elements)",
+        "target": 0,
+        "no": 44,
+        "number": 0,
+        "status": "ok"
+    },
+    "917a5788e4e757bb252dd6ffe603d835": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"elements\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = properties, from_field = elements)",
+        "target": 0,
+        "no": 45,
+        "number": 0,
+        "status": "ok"
+    },
+    "cef10e0b947086e201124882c2558d32": {
+        "sql": "FROM links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id AND properties.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND properties.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = properties, from_field = content)",
+        "target": 0,
+        "no": 46,
+        "number": 0,
+        "status": "ok"
+    },
+    "e298ba8ace3ba6c42de8fd74a7db35f2": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN properties ON properties.deleted = 0 AND links.from_id = properties.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"properties\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = properties, from_field = content)",
+        "target": 0,
+        "no": 47,
+        "number": 0,
+        "status": "ok"
+    },
+    "3c56a3c0ed5e692a86a50d7cd7048813": {
+        "sql": "FROM links LEFT JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id AND footnotes.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND footnotes.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "clear": "UPDATE links LEFT JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id AND footnotes.content LIKE CONCAT(\"%\",links.from_tagid,\"%\") SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND footnotes.id IS NULL",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "type": "Links with invalid from_tagid (from_tab = footnotes, from_field = content)",
+        "target": 0,
+        "no": 48,
+        "number": 0,
+        "status": "ok"
+    },
+    "4e253fae5a1c12a6039159b73ea6d8a2": {
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", links.id, links.root_tab, links.root_id",
+        "sql": "FROM links INNER JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "clear": "UPDATE links INNER JOIN footnotes ON footnotes.deleted = 0 AND links.from_id = footnotes.id SET links.deleted = 3 WHERE links.deleted = 0 AND links.from_tab = \"footnotes\" AND links.from_field = \"content\" AND links.id IN  (SELECT MAX(id) FROM links WHERE deleted=0 GROUP BY from_tagid having COUNT(*) > 1)",
+        "type": "Links with duplicate from_tagid (from_tab = footnotes, from_field = content)",
+        "target": 0,
+        "no": 49,
+        "number": 0,
+        "status": "ok"
+    },
+    "9442ec0e8432a84ced52bf18955e0680": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"p\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type p) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 50,
+        "number": 0,
+        "status": "ok"
+    },
+    "61d732bbce37291e6cc54db786f43a6c": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"p\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type p) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 51,
+        "number": 0,
+        "status": "ok"
+    },
+    "7a70e349ff3b775bfad7cbe786d638d8": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"h\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type h) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 52,
+        "number": 0,
+        "status": "ok"
+    },
+    "6718403ec0c3647c8e286e8d4abbbc70": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"h\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type h) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 53,
+        "number": 0,
+        "status": "ok"
+    },
+    "f138b79a14cffd1652693abc05e096ff": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"abr\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type abr) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 54,
+        "number": 0,
+        "status": "ok"
+    },
+    "7d4b966abf9ba891c7b22f2c1d3ddc2f": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"abr\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type abr) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 55,
+        "number": 0,
+        "status": "ok"
+    },
+    "29a7a2fda366f9cc41ba865508fc213e": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"all\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type all) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 56,
+        "number": 0,
+        "status": "ok"
+    },
+    "33c39dd29cb9943b16d1b7303dc762d7": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"all\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type all) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 57,
+        "number": 0,
+        "status": "ok"
+    },
+    "5892a479687a6489cd0110a8cb5f0e6d": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"wtr\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type wtr) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 58,
+        "number": 0,
+        "status": "ok"
+    },
+    "e8c10a1218fc9c51be95e8faeb5879ee": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"wtr\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type wtr) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 59,
+        "number": 0,
+        "status": "ok"
+    },
+    "96f992b2cc4433451841096a32388754": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"vz\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type vz) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 60,
+        "number": 0,
+        "status": "ok"
+    },
+    "870fcfb5bde2c4ced4ad11a9cd507bee": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"vz\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type vz) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 61,
+        "number": 0,
+        "status": "ok"
+    },
+    "7a0e1fb9995eaa40d7286d84ca7cc410": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"z\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type z) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 62,
+        "number": 0,
+        "status": "ok"
+    },
+    "e03f333fad8d7eb29fed0ed6d69f0944": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"z\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type z) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 63,
+        "number": 0,
+        "status": "ok"
+    },
+    "2f6991ff0490a10d248110fe30aac9a3": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"bl\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type bl) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 64,
+        "number": 0,
+        "status": "ok"
+    },
+    "a310d0549b52b09c69c94ee64c57c68d": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"bl\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type bl) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 65,
+        "number": 0,
+        "status": "ok"
+    },
+    "432690f734dc98bdffa3dbbd8d00d0b7": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"sup\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type sup) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 66,
+        "number": 0,
+        "status": "ok"
+    },
+    "c1b5a385881d854da406762682771056": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"sup\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type sup) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 67,
+        "number": 0,
+        "status": "ok"
+    },
+    "0d7647e881bbdf18b6fd10d92dc7242a": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_lit\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_lit) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 68,
+        "number": 0,
+        "status": "ok"
+    },
+    "ba796f62afa32ad712eed3fed36ff3df": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_lit\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_lit) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 69,
+        "number": 0,
+        "status": "ok"
+    },
+    "98aa94dd803a844a3478bf2e1cd256ea": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"articles\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_extern\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_extern) with empty to_id (to_tab = articles)",
+        "target": 0,
+        "no": 70,
+        "number": 0,
+        "status": "ok"
+    },
+    "642d985938448eb7eade64b114dc32b9": {
+        "sql": "FROM links AS fromtab LEFT JOIN articles ON articles.deleted = 0 AND fromtab.to_id = articles.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"articles\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_extern\" AND articles.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_extern) with invalid to_id (to_tab = articles)",
+        "target": 0,
+        "no": 71,
+        "number": 0,
+        "status": "ok"
+    },
+    "8d9aeaab1c530cec43da88d509474de9": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"sections\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_intern\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_intern) with empty to_id (to_tab = sections)",
+        "target": 0,
+        "no": 72,
+        "number": 0,
+        "status": "ok"
+    },
+    "4e95471c95cf425d393c7551cb8b98d7": {
+        "sql": "FROM links AS fromtab LEFT JOIN sections ON sections.deleted = 0 AND fromtab.to_id = sections.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"sections\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_intern\" AND sections.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_intern) with invalid to_id (to_tab = sections)",
+        "target": 0,
+        "no": 73,
+        "number": 0,
+        "status": "ok"
+    },
+    "93087626f8bac846762b2baf001f5408": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_ma\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_ma) with empty to_id (to_tab = properties)",
+        "target": 0,
+        "no": 74,
+        "number": 0,
+        "status": "ok"
+    },
+    "b62626292e97e2a45d001dc88f10c54f": {
+        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_ma\" AND properties.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_ma) with invalid to_id (to_tab = properties)",
+        "target": 0,
+        "no": 75,
+        "number": 0,
+        "status": "ok"
+    },
+    "1b17a87f6276fdf014a10ebd2676104a": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"sections\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_extern\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_extern) with empty to_id (to_tab = sections)",
+        "target": 0,
+        "no": 76,
+        "number": 0,
+        "status": "ok"
+    },
+    "97591b6152718a2d5ca3046ca4f6ddda": {
+        "sql": "FROM links AS fromtab LEFT JOIN sections ON sections.deleted = 0 AND fromtab.to_id = sections.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"sections\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_extern\" AND sections.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_extern) with invalid to_id (to_tab = sections)",
+        "target": 0,
+        "no": 77,
+        "number": 0,
+        "status": "ok"
+    },
+    "90f4e3b041259a622c61f402e00835cb": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"footnotes\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_extern\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_extern) with empty to_id (to_tab = footnotes)",
+        "target": 0,
+        "no": 78,
+        "number": 0,
+        "status": "ok"
+    },
+    "9116540f67b6253b3ff3dd24a11e1cf3": {
+        "sql": "FROM links AS fromtab LEFT JOIN footnotes ON footnotes.deleted = 0 AND fromtab.to_id = footnotes.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"footnotes\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_extern\" AND footnotes.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_extern) with invalid to_id (to_tab = footnotes)",
+        "target": 0,
+        "no": 79,
+        "number": 0,
+        "status": "ok"
+    },
+    "3aafb631bff1ca4038160a2e97d26dfe": {
+        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"footnotes\" AND fromtab.to_id IS NULL AND from_tagname = \"rec_intern\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
+        "type": "Links (links of type rec_intern) with empty to_id (to_tab = footnotes)",
+        "target": 0,
+        "no": 80,
+        "number": 0,
+        "status": "ok"
+    },
+    "b4884bd4e03a9c97f1ebb91988981369": {
+        "sql": "FROM links AS fromtab LEFT JOIN footnotes ON footnotes.deleted = 0 AND fromtab.to_id = footnotes.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"footnotes\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"rec_intern\" AND footnotes.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
+        "type": "Links (links of type rec_intern) with invalid to_id (to_tab = footnotes)",
+        "target": 0,
+        "no": 81,
+        "number": 0,
+        "status": "ok"
+    },
+    "c9e983d593c479c6fe7f2f324f7c6c4f": {
+        "sql": "FROM items AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"sections\" AND fromtab.links_id IS NULL AND itemtype = \"heraldry\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
+        "type": "Links (items of type heraldry) with empty links_id (links_tab = sections)",
+        "target": 0,
+        "no": 82,
+        "number": 0,
+        "status": "ok"
+    },
+    "5af20c9bd3c5a0f9c2c07e17f8919fc9": {
+        "sql": "FROM items AS fromtab LEFT JOIN sections ON sections.deleted = 0 AND fromtab.links_id = sections.id WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"sections\" AND fromtab.links_id IS NOT NULL AND fromtab.itemtype = \"heraldry\" AND sections.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
+        "type": "Links (items of type heraldry) with invalid links_id (links_tab = sections)",
+        "target": 0,
+        "no": 83,
+        "number": 0,
+        "status": "ok"
+    },
+    "794b3eb97b92c2935a2699e1d7a750ed": {
+        "sql": "FROM items AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"items\" AND fromtab.links_id IS NULL AND itemtype = \"images\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
+        "type": "Links (items of type images) with empty links_id (links_tab = items)",
+        "target": 0,
+        "no": 84,
+        "number": 0,
+        "status": "ok"
+    },
+    "ddaa4aecfa540976e88d0b51b511e583": {
+        "sql": "FROM items AS fromtab LEFT JOIN items ON items.deleted = 0 AND fromtab.links_id = items.id WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"items\" AND fromtab.links_id IS NOT NULL AND fromtab.itemtype = \"images\" AND items.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
+        "type": "Links (items of type images) with invalid links_id (links_tab = items)",
+        "target": 0,
+        "no": 85,
+        "number": 0,
+        "status": "ok"
+    },
+    "3a1312fd85b2d29721818503085e3c3f": {
+        "sql": "FROM items AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"sections\" AND fromtab.links_id IS NULL AND itemtype = \"images\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
+        "type": "Links (items of type images) with empty links_id (links_tab = sections)",
+        "target": 0,
+        "no": 86,
+        "number": 0,
+        "status": "ok"
+    },
+    "02c9a318c9b2a3559c6d557baa6ea3c8": {
+        "sql": "FROM items AS fromtab LEFT JOIN sections ON sections.deleted = 0 AND fromtab.links_id = sections.id WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"sections\" AND fromtab.links_id IS NOT NULL AND fromtab.itemtype = \"images\" AND sections.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
+        "type": "Links (items of type images) with invalid links_id (links_tab = sections)",
+        "target": 0,
+        "no": 87,
+        "number": 0,
+        "status": "ok"
+    },
+    "699d4c541291e0e9c569ce7453e604bc": {
+        "sql": "FROM items AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"sections\" AND fromtab.links_id IS NULL AND itemtype = \"brands\" ",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
+        "type": "Links (items of type brands) with empty links_id (links_tab = sections)",
+        "target": 0,
+        "no": 88,
+        "number": 0,
+        "status": "ok"
+    },
+    "ac49fc014d78f4009fea12a33459331a": {
+        "sql": "FROM items AS fromtab LEFT JOIN sections ON sections.deleted = 0 AND fromtab.links_id = sections.id WHERE fromtab.deleted = 0 AND  fromtab.links_tab = \"sections\" AND fromtab.links_id IS NOT NULL AND fromtab.itemtype = \"brands\" AND sections.id IS NULL",
+        "sql_count": "SELECT COUNT(*)",
+        "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
+        "type": "Links (items of type brands) with invalid links_id (links_tab = sections)",
+        "target": 0,
+        "no": 89,
+        "number": 0,
+        "status": "ok"
+    }
+}

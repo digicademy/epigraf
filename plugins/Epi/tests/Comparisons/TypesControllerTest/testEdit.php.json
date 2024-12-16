@@ -1,0 +1,92 @@
+{
+    "id": 2,
+    "deleted": 0,
+    "version_id": null,
+    "job_id": 61013,
+    "published": null,
+    "created": null,
+    "modified": "2020-10-29T13:00:58+01:00",
+    "created_by": null,
+    "modified_by": 6,
+    "scope": "properties",
+    "mode": "default",
+    "preset": "default",
+    "name": "anothermeasure",
+    "sortno": 2,
+    "category": "Vokabulare",
+    "caption": "Vermessung",
+    "description": "",
+    "config": {
+        "type": "flat",
+        "displayfield": "name",
+        "fields": {
+            "name": "Bezeichnung",
+            "lemma": "Schl\u00fcssel",
+            "sortkey": {
+                "caption": "Sortierschl\u00fcssel",
+                "autofill": {
+                    "source": "name",
+                    "process": [
+                        "sortkey"
+                    ]
+                }
+            },
+            "unit": "Zeichen",
+            "comment": "Bemerkung",
+            "keywords": "Schl\u00fcsselw\u00f6rter",
+            "norm_data": "Normdaten",
+            "norm_iri": {
+                "caption": "IRI-Fragment",
+                "autofill": {
+                    "source": "name",
+                    "process": [
+                        "irifragment"
+                    ]
+                }
+            },
+            "created": "Erstellt",
+            "modified": "Ge\u00e4ndert",
+            "created_by": "Erstellt von",
+            "modified_by": "Bearbeitet von",
+            "id": "ID"
+        },
+        "columns": {
+            "lemma": "Abk\u00fcrzung",
+            "name": {
+                "caption": "Bezeichnung",
+                "default": true
+            },
+            "unit": {
+                "caption": "Einheit",
+                "default": true
+            },
+            "norm_data": "Normdaten",
+            "comment": "Bemerkung",
+            "norm_iri": {
+                "caption": "IRI-Fragment",
+                "default": true
+            },
+            "articles_count": "Artikel",
+            "modified": {
+                "default": false,
+                "caption": "Ver\u00e4ndert"
+            },
+            "created": {
+                "default": false,
+                "caption": "Angelegt"
+            },
+            "modifier_name": {
+                "default": false,
+                "key": "modifier.name",
+                "caption": "Ver\u00e4ndert von"
+            },
+            "creator_name": {
+                "default": false,
+                "key": "creator.name",
+                "caption": "Angelegt von"
+            },
+            "id": "ID"
+        }
+    },
+    "norm_iri": "measures"
+}

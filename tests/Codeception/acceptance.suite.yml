@@ -1,0 +1,66 @@
+# Codeception Test Suite Configuration
+#
+# Suite for acceptance tests.
+# Perform tests in browser using the WebDriver or PhpBrowser.
+# If you need both WebDriver and PHPBrowser tests - create a separate suite.
+
+actor: AcceptanceTester
+#coverage:
+#  remote: true
+modules:
+    enabled:
+        - WebDriver:
+            url: http://localhost
+            browser: firefox
+            window_size: 1280x800
+        - VisualCeption:
+            maximumDeviation: 0.1             # deviation in percent (mean squared error over all channels, keep it low)
+            saveCurrentImageIfFailure: true   # if true, VisualCeption saves the current
+            fullScreenShot: false             # fullpage screenshot
+            referenceImageDir: references/
+            currentImageDir: current/
+        - Db:
+            dsn: 'mysql:host=test_sql'
+            user: 'root'
+            password: 'root'
+            databases:
+              test_epigraf:
+                dsn: 'mysql:host=test_sql'
+                user: 'root'
+                password: 'root'
+                dbname: 'test_epigraf'
+                dump: 'tests/Testdata/Databases/test_epigraf.sql'
+                populate: true # run populator before all tests
+                cleanup: true # run populator before each test
+                initial_queries:
+                  - 'CREATE DATABASE IF NOT EXISTS test_epigraf CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+                  - 'USE test_epigraf;'
+                  - 'SET NAMES utf8;'
+                populator: 'mysql -u $user -p$password -h $host $dbname < $dump'
+              test_projects:
+                dsn: 'mysql:host=test_sql'
+                user: 'root'
+                password: 'root'
+                dbname: 'test_projects'
+                dump: 'tests/Testdata/Databases/test_projects.sql'
+                populate: true # run populator before all tests
+                cleanup: true # run populator before each test
+                initial_queries:
+                  - 'CREATE DATABASE IF NOT EXISTS test_projects CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+                  - 'USE test_projects;'
+                  - 'SET NAMES utf8 COLLATE utf8_unicode_ci;'
+                populator: 'mysql -u $user -p$password -h $host --default-character-set=utf8 $dbname < $dump'
+        - \Helper\Acceptance
+        - \Codeception\Module\Asserts
+step_decorators: ~
+extensions:
+  enabled:
+    - Codeception\Extension\RunProcess:
+        0: mkdir /tmp/sessions
+        1: chown -R www-data /tmp/sessions
+        2: bin/cake setup tmp
+        3: bin/cake cache clear_all
+        4: chown -R www-data /tmp/cache
+        5: xvfb-run -a java -jar -Dwebdriver.chrome.driver="/usr/bin/chromedriver" /opt/selenium/selenium-server-standalone.jar > /dev/null 2>&1 &
+        sleep: 2
+

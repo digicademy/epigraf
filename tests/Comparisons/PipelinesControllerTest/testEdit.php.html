@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        DI: Band    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_pipelines             action_edit             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Tasks</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+                <div class="frame-title">
+                    <div class="frame-title-caption">Tasks</div>
+                    <div class="frame-title-manage"><button class="btn-edit-sidebar widget-switch" data-switch-element=".sidebar-left ul.widget-tree" data-switch-class="widget-tree-edit" data-role="move">Move</button><button class="btn-edit-sidebar doc-section-remove" data-list-for="menu-left" data-role="delete" title="Remove selected section" aria-label="Remove selected section">-</button><button class="btn-edit-sidebar doc-section-add widget-dropdown-selector" data-list-for="menu-left" data-role="add" data-url="/pipelines/add_task/21" title="Add section" ariaLabel="Add section">+</button><button class="btn-close" title="Close" aria-label="Close"></button></div>
+                </div>
+
+                <div class="frame-content">
+                    <div class="widget-scrollbox"><ul class="side-nav widget-scrollsync menu-sections widget-tree widget-tree-fixed widget-dragitems" data-list-name="menu-left" data-list-add="/pipelines/add_task/21"><li class="first node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-1" data-id="1"><div class="tree-content"><a href="#sections-1">1 Options</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-2" data-id="2"><div class="tree-content"><a href="#sections-2">2 Project data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-3" data-id="3"><div class="tree-content"><a href="#sections-3">3 Article data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-4" data-id="4"><div class="tree-content"><a href="#sections-4">4 Article data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-5" data-id="5"><div class="tree-content"><a href="#sections-5">5 Index data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-6" data-id="6"><div class="tree-content"><a href="#sections-6">6 Bundle files</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-7" data-id="7"><div class="tree-content"><a href="#sections-7">7 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-8" data-id="8"><div class="tree-content"><a href="#sections-8">8 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-9" data-id="9"><div class="tree-content"><a href="#sections-9">9 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-10" data-id="10"><div class="tree-content"><a href="#sections-10">10 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-11" data-id="11"><div class="tree-content"><a href="#sections-11">11 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-12" data-id="12"><div class="tree-content"><a href="#sections-12">12 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-13" data-id="13"><div class="tree-content"><a href="#sections-13">13 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-14" data-id="14"><div class="tree-content"><a href="#sections-14">14 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-15" data-id="15"><div class="tree-content"><a href="#sections-15">15 Save to file</a></div><div class="tree-meta"></div></li><script type="text/template" class="template"><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-{id}" data-id="{id}"><div class="tree-content"><a href="#sections-{id}">{sectionname}</a></div><div class="tree-meta"></div></li></script></ul></div>                </div>
+                <div class="frame-footer">
+                                    </div>
+                </div></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/pipelines">Pipelines</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>DI: Band</span></li></ul>                            </nav>
+                                            </div>
+
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Tasks</button>
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+<!-- Breadcrumbs -->
+
+<!-- Content area -->
+
+<div class="doc-article widget-document widget-document-edit"
+     data-row-table="pipelines" data-row-id="21"
+     data-root-table="pipelines" data-root-id="21"
+     data-edit-mode="1">
+
+        <form method="post" accept-charset="utf-8" id="form-edit-pipelines-21" data-cancel-url="/pipelines/view/21" data-delete-url="/pipelines/delete/21" action="/pipelines/edit/21"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div>        <div class="doc-content">
+            <table class="vertical-table" data-row-table="pipelines" data-row-id="21" data-row-type="" data-row-model="pipelines" data-root-table="pipelines" data-root-id="21" data-file-basepath="pipelines" data-file-defaultpath=""><tr class="table-input-text" data-row-field="name"><th scope="row">Name</th><td><div class="input text"><input type="text" name="name" id="name" value="DI: Band" maxlength="200"></div></td></tr><tr class="table-input-text" data-row-field="description"><td colspan="2"><h2>Description</h2><div class="input textarea"><textarea name="description" id="description" rows="5">Ausgabe eines Inschriftenbandes in Word</textarea></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">IRI-Fragment</th><td><div class="input text"><input type="text" name="norm_iri" id="norm-iri" value="di-book-doc" maxlength="255"></div></td></tr></table>        </div>
+
+                                <div id="sections-1" class="doc-section widget-scrollsync-section" data-row-id="1" data-row-type="options" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Options&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="1"><input type="hidden" name="Tasks[1][number]" data-row-field="sortno" value="1"><input type="hidden" name="Tasks[1][type]" value="options"><span data-value="name">1 Options</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td colspan="2">
+
+        <table class="options_list">
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Label</th>
+                <th>Key</th>
+                <th>Value</th>
+                <th>Type</th>
+                <th>Select</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][1][number]" class="options_number" data-row-field="sortno" value="1">
+                    <div class="input text"><input type="text" name="Tasks[1][options][1][category]" id="tasks-1-options-1-category" value="Allgemeines"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][1][label]" id="tasks-1-options-1-label" value="Signatur"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][1][key]" id="tasks-1-options-1-key" value="signature"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][1][value]" id="tasks-1-options-1-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][1][type]" id="tasks-1-options-1-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][1][output]" value="0"><input type="checkbox" name="Tasks[1][options][1][output]" value="1" checked="checked" id="tasks-1-options-1-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][2][number]" class="options_number" data-row-field="sortno" value="2">
+                    <div class="input text"><input type="text" name="Tasks[1][options][2][category]" id="tasks-1-options-2-category" value="Allgemeines"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][2][label]" id="tasks-1-options-2-label" value="Notizen"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][2][key]" id="tasks-1-options-2-key" value="notes"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][2][value]" id="tasks-1-options-2-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][2][type]" id="tasks-1-options-2-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][2][output]" value="0"><input type="checkbox" name="Tasks[1][options][2][output]" value="1" id="tasks-1-options-2-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][3][number]" class="options_number" data-row-field="sortno" value="3">
+                    <div class="input text"><input type="text" name="Tasks[1][options][3][category]" id="tasks-1-options-3-category" value="Allgemeines"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][3][label]" id="tasks-1-options-3-label" value="Letzte Änderung"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][3][key]" id="tasks-1-options-3-key" value="modified"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][3][value]" id="tasks-1-options-3-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][3][type]" id="tasks-1-options-3-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][3][output]" value="0"><input type="checkbox" name="Tasks[1][options][3][output]" value="1" id="tasks-1-options-3-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][4][number]" class="options_number" data-row-field="sortno" value="4">
+                    <div class="input text"><input type="text" name="Tasks[1][options][4][category]" id="tasks-1-options-4-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][4][label]" id="tasks-1-options-4-label" value="Titelei"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][4][key]" id="tasks-1-options-4-key" value="preliminaries"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][4][value]" id="tasks-1-options-4-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][4][type]" id="tasks-1-options-4-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][4][output]" value="0"><input type="checkbox" name="Tasks[1][options][4][output]" value="1" id="tasks-1-options-4-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][5][number]" class="options_number" data-row-field="sortno" value="5">
+                    <div class="input text"><input type="text" name="Tasks[1][options][5][category]" id="tasks-1-options-5-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][5][label]" id="tasks-1-options-5-label" value="Inhaltsverzeichnis"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][5][key]" id="tasks-1-options-5-key" value="table_of_content"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][5][value]" id="tasks-1-options-5-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][5][type]" id="tasks-1-options-5-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][5][output]" value="0"><input type="checkbox" name="Tasks[1][options][5][output]" value="1" id="tasks-1-options-5-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][6][number]" class="options_number" data-row-field="sortno" value="6">
+                    <div class="input text"><input type="text" name="Tasks[1][options][6][category]" id="tasks-1-options-6-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][6][label]" id="tasks-1-options-6-label" value="Vorwort"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][6][key]" id="tasks-1-options-6-key" value="prefaces"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][6][value]" id="tasks-1-options-6-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][6][type]" id="tasks-1-options-6-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][6][output]" value="0"><input type="checkbox" name="Tasks[1][options][6][output]" value="1" id="tasks-1-options-6-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][7][number]" class="options_number" data-row-field="sortno" value="7">
+                    <div class="input text"><input type="text" name="Tasks[1][options][7][category]" id="tasks-1-options-7-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][7][label]" id="tasks-1-options-7-label" value="Einleitung"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][7][key]" id="tasks-1-options-7-key" value="introduction"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][7][value]" id="tasks-1-options-7-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][7][type]" id="tasks-1-options-7-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][7][output]" value="0"><input type="checkbox" name="Tasks[1][options][7][output]" value="1" id="tasks-1-options-7-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][8][number]" class="options_number" data-row-field="sortno" value="8">
+                    <div class="input text"><input type="text" name="Tasks[1][options][8][category]" id="tasks-1-options-8-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][8][label]" id="tasks-1-options-8-label" value="Katalog der Inschriften"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][8][key]" id="tasks-1-options-8-key" value="articles"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][8][value]" id="tasks-1-options-8-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][8][type]" id="tasks-1-options-8-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][8][output]" value="0"><input type="checkbox" name="Tasks[1][options][8][output]" value="1" checked="checked" id="tasks-1-options-8-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][9][number]" class="options_number" data-row-field="sortno" value="9">
+                    <div class="input text"><input type="text" name="Tasks[1][options][9][category]" id="tasks-1-options-9-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][9][label]" id="tasks-1-options-9-label" value="Chronologische Liste der Inschriften"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][9][key]" id="tasks-1-options-9-key" value="table_of_inscriptions"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][9][value]" id="tasks-1-options-9-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][9][type]" id="tasks-1-options-9-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][9][output]" value="0"><input type="checkbox" name="Tasks[1][options][9][output]" value="1" id="tasks-1-options-9-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][10][number]" class="options_number" data-row-field="sortno" value="10">
+                    <div class="input text"><input type="text" name="Tasks[1][options][10][category]" id="tasks-1-options-10-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][10][label]" id="tasks-1-options-10-label" value="Register"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][10][key]" id="tasks-1-options-10-key" value="indices"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][10][value]" id="tasks-1-options-10-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][10][type]" id="tasks-1-options-10-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][10][output]" value="0"><input type="checkbox" name="Tasks[1][options][10][output]" value="1" id="tasks-1-options-10-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][11][number]" class="options_number" data-row-field="sortno" value="11">
+                    <div class="input text"><input type="text" name="Tasks[1][options][11][category]" id="tasks-1-options-11-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][11][label]" id="tasks-1-options-11-label" value="Abkürzungen"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][11][key]" id="tasks-1-options-11-key" value="abbreviations"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][11][value]" id="tasks-1-options-11-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][11][type]" id="tasks-1-options-11-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][11][output]" value="0"><input type="checkbox" name="Tasks[1][options][11][output]" value="1" id="tasks-1-options-11-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][12][number]" class="options_number" data-row-field="sortno" value="12">
+                    <div class="input text"><input type="text" name="Tasks[1][options][12][category]" id="tasks-1-options-12-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][12][label]" id="tasks-1-options-12-label" value="Quellen und Literatur"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][12][key]" id="tasks-1-options-12-key" value="biblio"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][12][value]" id="tasks-1-options-12-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][12][type]" id="tasks-1-options-12-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][12][output]" value="0"><input type="checkbox" name="Tasks[1][options][12][output]" value="1" id="tasks-1-options-12-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][13][number]" class="options_number" data-row-field="sortno" value="13">
+                    <div class="input text"><input type="text" name="Tasks[1][options][13][category]" id="tasks-1-options-13-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][13][label]" id="tasks-1-options-13-label" value="Liste der bisher erschienenen DI-Bände"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][13][key]" id="tasks-1-options-13-key" value="di-volumes"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][13][value]" id="tasks-1-options-13-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][13][type]" id="tasks-1-options-13-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][13][output]" value="0"><input type="checkbox" name="Tasks[1][options][13][output]" value="1" id="tasks-1-options-13-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][14][number]" class="options_number" data-row-field="sortno" value="14">
+                    <div class="input text"><input type="text" name="Tasks[1][options][14][category]" id="tasks-1-options-14-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][14][label]" id="tasks-1-options-14-label" value="Zeichnungen"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][14][key]" id="tasks-1-options-14-key" value="drawings"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][14][value]" id="tasks-1-options-14-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][14][type]" id="tasks-1-options-14-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][14][output]" value="0"><input type="checkbox" name="Tasks[1][options][14][output]" value="1" id="tasks-1-options-14-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][15][number]" class="options_number" data-row-field="sortno" value="15">
+                    <div class="input text"><input type="text" name="Tasks[1][options][15][category]" id="tasks-1-options-15-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][15][label]" id="tasks-1-options-15-label" value="Marken"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][15][key]" id="tasks-1-options-15-key" value="marks"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][15][value]" id="tasks-1-options-15-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][15][type]" id="tasks-1-options-15-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][15][output]" value="0"><input type="checkbox" name="Tasks[1][options][15][output]" value="1" id="tasks-1-options-15-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][16][number]" class="options_number" data-row-field="sortno" value="16">
+                    <div class="input text"><input type="text" name="Tasks[1][options][16][category]" id="tasks-1-options-16-category" value="Band"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][16][label]" id="tasks-1-options-16-label" value="Bildtafeln"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][16][key]" id="tasks-1-options-16-key" value="plates"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][16][value]" id="tasks-1-options-16-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][16][type]" id="tasks-1-options-16-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][16][output]" value="0"><input type="checkbox" name="Tasks[1][options][16][output]" value="1" id="tasks-1-options-16-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][17][number]" class="options_number" data-row-field="sortno" value="17">
+                    <div class="input text"><input type="text" name="Tasks[1][options][17][category]" id="tasks-1-options-17-category" value="Standorte-Register"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][17][label]" id="tasks-1-options-17-label" value="Basis-Standort anzeigen"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][17][key]" id="tasks-1-options-17-key" value="base_location"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][17][value]" id="tasks-1-options-17-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][17][type]" id="tasks-1-options-17-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][17][output]" value="0"><input type="checkbox" name="Tasks[1][options][17][output]" value="1" id="tasks-1-options-17-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][18][number]" class="options_number" data-row-field="sortno" value="18">
+                    <div class="input text"><input type="text" name="Tasks[1][options][18][category]" id="tasks-1-options-18-category" value="Fußnoten"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][18][label]" id="tasks-1-options-18-label" value="Nummern rechtsbündig"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][18][key]" id="tasks-1-options-18-key" value="footnotes"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][18][value]" id="tasks-1-options-18-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][18][type]" id="tasks-1-options-18-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][18][output]" value="0"><input type="checkbox" name="Tasks[1][options][18][output]" value="1" id="tasks-1-options-18-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][19][number]" class="options_number" data-row-field="sortno" value="19">
+                    <div class="input text"><input type="text" name="Tasks[1][options][19][category]" id="tasks-1-options-19-category" value="Ligaturen"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][19][label]" id="tasks-1-options-19-label" value="unterstreichen"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][19][key]" id="tasks-1-options-19-key" value="ligature_arcs"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][19][value]" id="tasks-1-options-19-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][19][type]" id="tasks-1-options-19-type"><option value="check">Check</option><option value="radio" selected="selected">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][19][output]" value="0"><input type="checkbox" name="Tasks[1][options][19][output]" value="1" checked="checked" id="tasks-1-options-19-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][20][number]" class="options_number" data-row-field="sortno" value="20">
+                    <div class="input text"><input type="text" name="Tasks[1][options][20][category]" id="tasks-1-options-20-category" value="Ligaturen"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][20][label]" id="tasks-1-options-20-label" value="Ligaturbögen"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][20][key]" id="tasks-1-options-20-key" value="ligature_arcs"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][20][value]" id="tasks-1-options-20-value" value="1"></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][20][type]" id="tasks-1-options-20-type"><option value="check">Check</option><option value="radio" selected="selected">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][20][output]" value="0"><input type="checkbox" name="Tasks[1][options][20][output]" value="1" id="tasks-1-options-20-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][21][number]" class="options_number" data-row-field="sortno" value="21">
+                    <div class="input text"><input type="text" name="Tasks[1][options][21][category]" id="tasks-1-options-21-category" value="Marken"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][21][label]" id="tasks-1-options-21-label" value="zu einer Kategorie zusammenfassen "></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][21][key]" id="tasks-1-options-21-key" value="marks_together "></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][21][value]" id="tasks-1-options-21-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][21][type]" id="tasks-1-options-21-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][21][output]" value="0"><input type="checkbox" name="Tasks[1][options][21][output]" value="1" id="tasks-1-options-21-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][22][number]" class="options_number" data-row-field="sortno" value="22">
+                    <div class="input text"><input type="text" name="Tasks[1][options][22][category]" id="tasks-1-options-22-category" value="Sonstiges"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][22][label]" id="tasks-1-options-22-label" value="Sortierung nach Signatur"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][22][key]" id="tasks-1-options-22-key" value="sort_signatures"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][22][value]" id="tasks-1-options-22-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][22][type]" id="tasks-1-options-22-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][22][output]" value="0"><input type="checkbox" name="Tasks[1][options][22][output]" value="1" id="tasks-1-options-22-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][23][number]" class="options_number" data-row-field="sortno" value="23">
+                    <div class="input text"><input type="text" name="Tasks[1][options][23][category]" id="tasks-1-options-23-category" value="Quellen und Literatur"></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][23][label]" id="tasks-1-options-23-label" value="DI-Bände ausblenden"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][23][key]" id="tasks-1-options-23-key" value="di_volumes_hide"></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][23][value]" id="tasks-1-options-23-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][23][type]" id="tasks-1-options-23-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][23][output]" value="0"><input type="checkbox" name="Tasks[1][options][23][output]" value="1" id="tasks-1-options-23-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+
+
+                                    <tr class="doc-section-item">
+                        <td class="first"></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <button class="doc-item-add tiny"
+                                    title="Add item"
+                                    aria-label="Add item">+</button></td>
+                            <script type="text/template" class="template template-doc-section-item">
+
+<tr class="doc-section-item" data-row-type="option">
+    <td class="first">
+
+        <input type="hidden" name="Tasks[1][options][{id}][number]" class="options_number" data-row-field="sortno" value="{id}">
+                    <div class="input text"><input type="text" name="Tasks[1][options][{id}][category]" id="tasks-1-options-id-category" value=""></div>            </td>
+
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][{id}][label]" id="tasks-1-options-id-label" value=""></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][{id}][key]" id="tasks-1-options-id-key" value=""></div>            </td>
+    <td>
+                    <div class="input text"><input type="text" name="Tasks[1][options][{id}][value]" id="tasks-1-options-id-value" value=""></div>            </td>
+    <td>
+        <div class="input select"><select name="Tasks[1][options][{id}][type]" id="tasks-1-options-id-type"><option value="check">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
+    <td>
+        <div class="input checkbox"><input type="hidden" name="Tasks[1][options][{id}][output]" value="0"><input type="checkbox" name="Tasks[1][options][{id}][output]" value="1" id="tasks-1-options-id-output"></div>    </td>
+            <td>
+            <button class="doc-item-remove tiny"
+                    title="Remove item"
+                    type="button"
+                    aria-label="Remove item">-</button>
+        </td>
+
+</tr>
+
+                            </script>
+                    </tr>
+                            </tbody>
+        </table>
+    </td> </tr>
+<tr><td>Outputfile</td><td><input type="text" name="Tasks[1][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-2" class="doc-section widget-scrollsync-section" data-row-id="2" data-row-type="data_projects" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Project data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="2"><input type="hidden" name="Tasks[2][number]" data-row-field="sortno" value="2"><input type="hidden" name="Tasks[2][type]" value="data_projects"><span data-value="name">2 Project data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[2][caption]" value="Project data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[2][canskip]" value="0"><label for="tasks-2-canskip"><input type="checkbox" name="Tasks[2][canskip]" value="1" id="tasks-2-canskip">Task can be skipped by user</label></div></td></tr><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[2][iris]" value="0"><label for="tasks-2-iris"><input type="checkbox" name="Tasks[2][iris]" value="1" id="tasks-2-iris">Output IRIs instead of IDs</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[2][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-3" class="doc-section widget-scrollsync-section" data-row-id="3" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="3"><input type="hidden" name="Tasks[3][number]" data-row-field="sortno" value="3"><input type="hidden" name="Tasks[3][type]" value="data_articles"><span data-value="name">3 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[3][caption]" value="Article data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[3][canskip]" value="0"><label for="tasks-3-canskip"><input type="checkbox" name="Tasks[3][canskip]" value="1" id="tasks-3-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Article types</td><td><div class="input text"><input type="text" name="Tasks[3][articletypes]" placeholder="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" id="tasks-3-articletypes" aria-label="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" value="epi-book"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][matchprojects]" value="0"><label for="tasks-3-matchprojects"><input type="checkbox" name="Tasks[3][matchprojects]" value="1" checked="checked" id="tasks-3-matchprojects">All articles in selected projects</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][copyimages]" value="0"><label for="tasks-3-copyimages"><input type="checkbox" name="Tasks[3][copyimages]" value="1" help="Add metadata to the image files and copy them to the target folder" id="tasks-3-copyimages">Copy images </label></div></td><tr><td>Image item types</td><td><div class="input text"><input type="text" name="Tasks[3][imagetypes]" placeholder="A comma separated list of item types, e.g. &quot;images&quot;" id="tasks-3-imagetypes" aria-label="A comma separated list of item types, e.g. &quot;images&quot;" value=""></div></td><tr><td>Image metadata configuration</td><td><div class="input textarea"><textarea name="Tasks[3][metadata]" placeholder="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" id="tasks-3-metadata" aria-label="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" rows="5"></textarea></div></td><tr><td>Image folder in the current job folder</td><td><div class="input text"><input type="text" name="Tasks[3][imagefolder]" placeholder="For example, &quot;images&quot;" id="tasks-3-imagefolder" aria-label="For example, &quot;images&quot;" value=""></div></td><tr><td>Output format</td><td><div class="input select"><select name="Tasks[3][format]" id="tasks-3-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option></select></div></td><tr><td>Data snippets</td><td><div class="input text"><input type="text" name="Tasks[3][snippets]" placeholder="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" id="tasks-3-snippets" aria-label="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" value=""></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][iris]" value="0"><label for="tasks-3-iris"><input type="checkbox" name="Tasks[3][iris]" value="1" id="tasks-3-iris">Output IRIs instead of IDs</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][wrap]" value="0"><label for="tasks-3-wrap"><input type="checkbox" name="Tasks[3][wrap]" value="1" help="Add prolog and epilog to the output, e.g. the XML declaration and XML root tags." id="tasks-3-wrap">Wrap content (add prolog and epilog)</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[3][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-4" class="doc-section widget-scrollsync-section" data-row-id="4" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="4"><input type="hidden" name="Tasks[4][number]" data-row-field="sortno" value="4"><input type="hidden" name="Tasks[4][type]" value="data_articles"><span data-value="name">4 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[4][caption]" value="Article data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[4][canskip]" value="0"><label for="tasks-4-canskip"><input type="checkbox" name="Tasks[4][canskip]" value="1" id="tasks-4-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Article types</td><td><div class="input text"><input type="text" name="Tasks[4][articletypes]" placeholder="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" id="tasks-4-articletypes" aria-label="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" value="epi-article"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][matchprojects]" value="0"><label for="tasks-4-matchprojects"><input type="checkbox" name="Tasks[4][matchprojects]" value="1" id="tasks-4-matchprojects">All articles in selected projects</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][copyimages]" value="0"><label for="tasks-4-copyimages"><input type="checkbox" name="Tasks[4][copyimages]" value="1" help="Add metadata to the image files and copy them to the target folder" id="tasks-4-copyimages">Copy images </label></div></td><tr><td>Image item types</td><td><div class="input text"><input type="text" name="Tasks[4][imagetypes]" placeholder="A comma separated list of item types, e.g. &quot;images&quot;" id="tasks-4-imagetypes" aria-label="A comma separated list of item types, e.g. &quot;images&quot;" value=""></div></td><tr><td>Image metadata configuration</td><td><div class="input textarea"><textarea name="Tasks[4][metadata]" placeholder="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" id="tasks-4-metadata" aria-label="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" rows="5"></textarea></div></td><tr><td>Image folder in the current job folder</td><td><div class="input text"><input type="text" name="Tasks[4][imagefolder]" placeholder="For example, &quot;images&quot;" id="tasks-4-imagefolder" aria-label="For example, &quot;images&quot;" value=""></div></td><tr><td>Output format</td><td><div class="input select"><select name="Tasks[4][format]" id="tasks-4-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option></select></div></td><tr><td>Data snippets</td><td><div class="input text"><input type="text" name="Tasks[4][snippets]" placeholder="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" id="tasks-4-snippets" aria-label="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" value=""></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][iris]" value="0"><label for="tasks-4-iris"><input type="checkbox" name="Tasks[4][iris]" value="1" id="tasks-4-iris">Output IRIs instead of IDs</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][wrap]" value="0"><label for="tasks-4-wrap"><input type="checkbox" name="Tasks[4][wrap]" value="1" help="Add prolog and epilog to the output, e.g. the XML declaration and XML root tags." id="tasks-4-wrap">Wrap content (add prolog and epilog)</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[4][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-5" class="doc-section widget-scrollsync-section" data-row-id="5" data-row-type="data_index" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Index data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="5"><input type="hidden" name="Tasks[5][number]" data-row-field="sortno" value="5"><input type="hidden" name="Tasks[5][type]" value="data_index"><span data-value="name">5 Index data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[5][caption]" value="Index data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[5][canskip]" value="0"><label for="tasks-5-canskip"><input type="checkbox" name="Tasks[5][canskip]" value="1" id="tasks-5-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[5][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-6" class="doc-section widget-scrollsync-section" data-row-id="6" data-row-type="bundle" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Bundle files&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="6"><input type="hidden" name="Tasks[6][number]" data-row-field="sortno" value="6"><input type="hidden" name="Tasks[6][type]" value="bundle"><span data-value="name">6 Bundle files</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[6][caption]" value="Bundle files"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[6][canskip]" value="0"><label for="tasks-6-canskip"><input type="checkbox" name="Tasks[6][canskip]" value="1" id="tasks-6-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Source folder, relative to the job folder</td><td><div class="input text"><input type="text" name="Tasks[6][source]" placeholder="Leave empty to concatenate all default files produced by the current job." id="tasks-6-source" aria-label="Leave empty to concatenate all default files produced by the current job." value=""></div></td><tr><td>Prefix</td><td><div class="input textarea"><textarea name="Tasks[6][prefix]" placeholder="The start of the output file." id="tasks-6-prefix" aria-label="The start of the output file." rows="5">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;book&gt;</textarea></div></td><tr><td>Postfix</td><td><div class="input textarea"><textarea name="Tasks[6][postfix]" placeholder="The end of the output file." id="tasks-6-postfix" aria-label="The end of the output file." rows="5">
+&lt;/book&gt;</textarea></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[6][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-7" class="doc-section widget-scrollsync-section" data-row-id="7" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="7"><input type="hidden" name="Tasks[7][number]" data-row-field="sortno" value="7"><input type="hidden" name="Tasks[7][type]" value="transformxsl"><span data-value="name">7 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[7][caption]" value="Transform with XSL"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[7][canskip]" value="0"><label for="tasks-7-canskip"><input type="checkbox" name="Tasks[7][canskip]" value="1" id="tasks-7-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[7][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>XSL-T template</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[7][xslfile]" id="tasks-7-xslfile" value="pipelines/templates/epi-trans0.xsl" data-path="" data-itemtype="file"><button id="tasks-7-xslfile_button" type="button" class="" data-input="tasks-7-xslfile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td><tr><td>Parser</td><td><div class="radio-group"><input type="hidden" name="Tasks[7][processor]" id="tasks-7-processor" value=""><label for="tasks-7-processor-saxon"><input type="radio" name="Tasks[7][processor]" value="saxon" id="tasks-7-processor-saxon" checked="checked">Saxon</label><label for="tasks-7-processor-php"><input type="radio" name="Tasks[7][processor]" value="php" id="tasks-7-processor-php">PHP default</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[7][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-8" class="doc-section widget-scrollsync-section" data-row-id="8" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="8"><input type="hidden" name="Tasks[8][number]" data-row-field="sortno" value="8"><input type="hidden" name="Tasks[8][type]" value="transformxsl"><span data-value="name">8 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[8][caption]" value="Transform with XSL"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[8][canskip]" value="0"><label for="tasks-8-canskip"><input type="checkbox" name="Tasks[8][canskip]" value="1" id="tasks-8-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[8][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>XSL-T template</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[8][xslfile]" id="tasks-8-xslfile" value="pipelines/templates/epi-trans1.xsl" data-path="" data-itemtype="file"><button id="tasks-8-xslfile_button" type="button" class="" data-input="tasks-8-xslfile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td><tr><td>Parser</td><td><div class="radio-group"><input type="hidden" name="Tasks[8][processor]" id="tasks-8-processor" value=""><label for="tasks-8-processor-saxon"><input type="radio" name="Tasks[8][processor]" value="saxon" id="tasks-8-processor-saxon" checked="checked">Saxon</label><label for="tasks-8-processor-php"><input type="radio" name="Tasks[8][processor]" value="php" id="tasks-8-processor-php">PHP default</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[8][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-9" class="doc-section widget-scrollsync-section" data-row-id="9" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="9"><input type="hidden" name="Tasks[9][number]" data-row-field="sortno" value="9"><input type="hidden" name="Tasks[9][type]" value="transformxsl"><span data-value="name">9 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[9][caption]" value="Transform with XSL"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[9][canskip]" value="0"><label for="tasks-9-canskip"><input type="checkbox" name="Tasks[9][canskip]" value="1" id="tasks-9-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[9][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>XSL-T template</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[9][xslfile]" id="tasks-9-xslfile" value="pipelines/templates/epi-trans2.xsl" data-path="" data-itemtype="file"><button id="tasks-9-xslfile_button" type="button" class="" data-input="tasks-9-xslfile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td><tr><td>Parser</td><td><div class="radio-group"><input type="hidden" name="Tasks[9][processor]" id="tasks-9-processor" value=""><label for="tasks-9-processor-saxon"><input type="radio" name="Tasks[9][processor]" value="saxon" id="tasks-9-processor-saxon" checked="checked">Saxon</label><label for="tasks-9-processor-php"><input type="radio" name="Tasks[9][processor]" value="php" id="tasks-9-processor-php">PHP default</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[9][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-10" class="doc-section widget-scrollsync-section" data-row-id="10" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="10"><input type="hidden" name="Tasks[10][number]" data-row-field="sortno" value="10"><input type="hidden" name="Tasks[10][type]" value="replace"><span data-value="name">10 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[10][caption]" value="Search and replace"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[10][canskip]" value="0"><label for="tasks-10-canskip"><input type="checkbox" name="Tasks[10][canskip]" value="1" id="tasks-10-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[10][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>Replacement file</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[10][replacefile]" id="tasks-10-replacefile" value="pipelines/templates/epi-replace-whitespace.txt" data-path="" data-itemtype="file"><button id="tasks-10-replacefile_button" type="button" class="" data-input="tasks-10-replacefile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[10][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-11" class="doc-section widget-scrollsync-section" data-row-id="11" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="11"><input type="hidden" name="Tasks[11][number]" data-row-field="sortno" value="11"><input type="hidden" name="Tasks[11][type]" value="transformxsl"><span data-value="name">11 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[11][caption]" value="Transform with XSL"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[11][canskip]" value="0"><label for="tasks-11-canskip"><input type="checkbox" name="Tasks[11][canskip]" value="1" id="tasks-11-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[11][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>XSL-T template</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[11][xslfile]" id="tasks-11-xslfile" value="pipelines/templates/epi-trans-word1.xsl" data-path="" data-itemtype="file"><button id="tasks-11-xslfile_button" type="button" class="" data-input="tasks-11-xslfile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td><tr><td>Parser</td><td><div class="radio-group"><input type="hidden" name="Tasks[11][processor]" id="tasks-11-processor" value=""><label for="tasks-11-processor-saxon"><input type="radio" name="Tasks[11][processor]" value="saxon" id="tasks-11-processor-saxon" checked="checked">Saxon</label><label for="tasks-11-processor-php"><input type="radio" name="Tasks[11][processor]" value="php" id="tasks-11-processor-php">PHP default</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[11][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-12" class="doc-section widget-scrollsync-section" data-row-id="12" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="12"><input type="hidden" name="Tasks[12][number]" data-row-field="sortno" value="12"><input type="hidden" name="Tasks[12][type]" value="replace"><span data-value="name">12 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[12][caption]" value="Search and replace"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[12][canskip]" value="0"><label for="tasks-12-canskip"><input type="checkbox" name="Tasks[12][canskip]" value="1" id="tasks-12-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[12][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>Replacement file</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[12][replacefile]" id="tasks-12-replacefile" value="pipelines/templates/epi-silbentrennung.txt" data-path="" data-itemtype="file"><button id="tasks-12-replacefile_button" type="button" class="" data-input="tasks-12-replacefile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[12][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-13" class="doc-section widget-scrollsync-section" data-row-id="13" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="13"><input type="hidden" name="Tasks[13][number]" data-row-field="sortno" value="13"><input type="hidden" name="Tasks[13][type]" value="transformxsl"><span data-value="name">13 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[13][caption]" value="Transform with XSL"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[13][canskip]" value="0"><label for="tasks-13-canskip"><input type="checkbox" name="Tasks[13][canskip]" value="1" id="tasks-13-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[13][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>XSL-T template</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[13][xslfile]" id="tasks-13-xslfile" value="pipelines/templates/epi-trans-word2.xsl" data-path="" data-itemtype="file"><button id="tasks-13-xslfile_button" type="button" class="" data-input="tasks-13-xslfile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td><tr><td>Parser</td><td><div class="radio-group"><input type="hidden" name="Tasks[13][processor]" id="tasks-13-processor" value=""><label for="tasks-13-processor-saxon"><input type="radio" name="Tasks[13][processor]" value="saxon" id="tasks-13-processor-saxon">Saxon</label><label for="tasks-13-processor-php"><input type="radio" name="Tasks[13][processor]" value="php" id="tasks-13-processor-php" checked="checked">PHP default</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[13][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-14" class="doc-section widget-scrollsync-section" data-row-id="14" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="14"><input type="hidden" name="Tasks[14][number]" data-row-field="sortno" value="14"><input type="hidden" name="Tasks[14][type]" value="replace"><span data-value="name">14 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[14][caption]" value="Search and replace"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[14][canskip]" value="0"><label for="tasks-14-canskip"><input type="checkbox" name="Tasks[14][canskip]" value="1" id="tasks-14-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[14][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>Replacement file</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[14][replacefile]" id="tasks-14-replacefile" value="pipelines/templates/epi-contract-numbers.txt" data-path="" data-itemtype="file"><button id="tasks-14-replacefile_button" type="button" class="" data-input="tasks-14-replacefile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[14][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-15" class="doc-section widget-scrollsync-section" data-row-id="15" data-row-type="save" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Save to file&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="15"><input type="hidden" name="Tasks[15][number]" data-row-field="sortno" value="15"><input type="hidden" name="Tasks[15][type]" value="save"><span data-value="name">15 Save to file</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Input file</td><td><input type="text" name="Tasks[15][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>File extension</td><td><div class="input text"><input type="text" name="Tasks[15][extension]" id="tasks-15-extension" value="doc"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[15][download]" value="0"><label for="tasks-15-download"><input type="checkbox" name="Tasks[15][download]" value="1" checked="checked" id="tasks-15-download">Force download</label></div></td></tr>
+</tbody></table></div></div>
+
+    </form></div>
+<!-- Actions -->
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><button data-shortcuts="Ctrl+S F10" title="Save (Ctrl+S F10)" aria-label="Save" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" form="form-edit-pipelines-21" data-role="save" data-target="pipelines-21" type="submit">Save</button></li><li><button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-edit-pipelines-21" data-role="cancel" data-target="pipelines-21">Cancel</button></li><li><button type="button" form="form-edit-pipelines-21" data-role="delete" data-target="pipelines-21" class="">Delete</button></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-pipelines-edit" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+<head>
+    <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        Databases    </title>
+
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for textual and multimodal data">    <meta name="author" content="Epigraf Team">
+    <!-- CSS frameworks -->
+    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <!-- CSS app -->
+    <link rel="stylesheet" href="/css/app.css">
+    <!-- CSS widgets and plugins -->
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+    <!-- Theme -->
+            <link rel="stylesheet" href="/css/theme_default.css">
+    <!-- JS -->
+
+    <!-- JS frameworks -->
+    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <!-- JS app -->
+            <script src="/js/app.min.js" type="module"></script>
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+    <!-- JS widgets -->
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+
+    <!-- Additional CSS -->
+
+    <!-- Additional JS -->
+        </head>
+
+<body class="controller_jobs             action_view             template_default             theme_default             userrole_admin">
+
+<div class="page-wrapper accordion">
+
+            <nav class="actions-main">
+
+            <div class="topmenu-left">
+                <div class="widget-sandwich-source widget-sandwich-items-topmenu"
+                     data-sandwich-source="topmenu-left">
+                    <ul class="horizontal" ><li class="menu_database first active dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+
+            <div class="topmenu-right">
+                <div id="loader" style="display:none;"></div>
+
+
+                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
+
+        </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Left sidebar -->
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        <!-- Content -->
+                    <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
+
+                <div class="content-header">
+                    <div class="content-header-title">
+                                                                            <nav class="breadcrumbs">
+                                <ul class="breadcrumbs-trail"><li><a href="/jobs/index">Jobs</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>1</span></li></ul>                            </nav>
+                                            </div>
+
+
+                                    </div>
+
+                <div class="content-toolbar empty"></div>
+
+                <div class="content-flash"></div>
+
+                <div class="content-content widget-scrollsync-content">
+
+
+<!-- Breadcrumbs -->
+
+<!-- Content area -->
+<table class="vertical-table">
+    <tr>
+        <th scope="row">Typ</th>
+        <td>export</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Status</th>
+        <td>download</td>
+    </tr>
+    <tr>
+        <th scope="row">Progress</th>
+        <td>5/4</td>
+    </tr>
+    <tr>
+        <th scope="row">Created</th>
+        <td>#TIME#</td>
+    </tr>
+    <tr>
+        <th scope="row">Modified</th>
+        <td>#TIME#</td>
+    </tr>
+
+</table>
+
+    <h2>Tasks</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Done</th>
+                <th>Number</th>
+                <th>Type</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+
+
+            <tr>
+                <td>
+                                        <span class="badge success">✓</span>
+                                    </td>
+
+                <td>1</td>
+                <td>export</td>
+                <td>
+                    offset: 30; start: 1                </td>
+
+            </tr>
+
+
+            <tr>
+                <td>
+                                        <span class="badge success">✓</span>
+                                    </td>
+
+                <td>2</td>
+                <td>transformxsl</td>
+                <td>
+                    xslfile: templates4_4/epi44-trans0.xsl                </td>
+
+            </tr>
+
+
+            <tr>
+                <td>
+                                        <span class="badge success">✓</span>
+                                    </td>
+
+                <td>3</td>
+                <td>transformxsl</td>
+                <td>
+                    xslfile: templates4_4/epi44-trans1.xsl                </td>
+
+            </tr>
+
+
+            <tr>
+                <td>
+                                        <span class="badge success">✓</span>
+                                    </td>
+
+                <td>4</td>
+                <td>transformxsl</td>
+                <td>
+                    xslfile: templates4_4/epi44-trans2.xsl                </td>
+
+            </tr>
+
+
+            <tr>
+                <td>
+                                        <span class="badge success">✓</span>
+                                    </td>
+
+                <td>5</td>
+                <td>save</td>
+                <td>
+                    extension: xml                </td>
+
+            </tr>
+
+            </table>
+
+    <h2>Config</h2>
+
+        <table class="nested-table"><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody><tr><th scope="row">database</th><td>epi_playground</td></tr><tr><th scope="row">project_id</th><td>20</td></tr><tr><th scope="row">pipeline_id</th><td>18</td></tr><tr><th scope="row">articles_ids</th><td>7953</td></tr><tr><th scope="row">tasks</th><td> <i>[2]</i></td></tr><tr><th scope="row">	data</th><td> <i>[3]</i></td></tr><tr><th scope="row">		objects</th><td>false</td></tr><tr><th scope="row">		index</th><td>0</td></tr><tr><th scope="row">		text</th><td>0</td></tr><tr><th scope="row">	options</th><td> <i>[38]</i></td></tr><tr><th scope="row">		0</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>1</td></tr><tr><th scope="row">			output</th><td>1</td></tr><tr><th scope="row">			category</th><td>Allgemeines</td></tr><tr><th scope="row">			label</th><td>Signatur anzeigen</td></tr><tr><th scope="row">			key</th><td>signature</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		1</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>2</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Allgemeines</td></tr><tr><th scope="row">			label</th><td>Notizen</td></tr><tr><th scope="row">			key</th><td>notes</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		2</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>3</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Allgemeines</td></tr><tr><th scope="row">			label</th><td>Letzte Änderung</td></tr><tr><th scope="row">			key</th><td>modified</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		3</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>4</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Titelei</td></tr><tr><th scope="row">			key</th><td>preliminaries</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		4</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>5</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Vorwort</td></tr><tr><th scope="row">			key</th><td>prefaces</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		5</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>6</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Einleitung</td></tr><tr><th scope="row">			key</th><td>introduction</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		6</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>7</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Chronologische Liste der Inschriften</td></tr><tr><th scope="row">			key</th><td>table_of_inscriptions</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		7</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>8</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Register</td></tr><tr><th scope="row">			key</th><td>indices</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		8</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>9</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Abkürzungen</td></tr><tr><th scope="row">			key</th><td>abbreviations</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		9</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>10</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Quellen und Literatur</td></tr><tr><th scope="row">			key</th><td>biblio</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		10</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>11</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Liste der bisher erschienenen DI-Bände</td></tr><tr><th scope="row">			key</th><td>di-volumes</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		11</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>12</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Zeichnungen</td></tr><tr><th scope="row">			key</th><td>drawings</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		12</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>13</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Grundrisse</td></tr><tr><th scope="row">			key</th><td>maps</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		13</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>14</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Bildtafeln</td></tr><tr><th scope="row">			key</th><td>plates</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		14</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>15</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Inhaltsverzeichnis</td></tr><tr><th scope="row">			key</th><td>table_of_content</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		15</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>16</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Katalogtitel</td></tr><tr><th scope="row">			key</th><td>catalog_title</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		16</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>17</td></tr><tr><th scope="row">			output</th><td>1</td></tr><tr><th scope="row">			category</th><td>Band</td></tr><tr><th scope="row">			label</th><td>Katalog der Inschriften</td></tr><tr><th scope="row">			key</th><td>articles</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		17</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>18</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Marken</td></tr><tr><th scope="row">			label</th><td>Marken ausgeben</td></tr><tr><th scope="row">			key</th><td>marks</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		18</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>19</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Marken</td></tr><tr><th scope="row">			label</th><td>zu einer Kategorie zusammenfassen</td></tr><tr><th scope="row">			key</th><td>marks_together</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		19</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>20</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Sonstiges</td></tr><tr><th scope="row">			label</th><td>Verweise auf Abbildungen in den Artikeln</td></tr><tr><th scope="row">			key</th><td>image_references</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		20</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>21</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Sonstiges</td></tr><tr><th scope="row">			label</th><td>bei Fußnoten Nummern rechtsbündig</td></tr><tr><th scope="row">			key</th><td>footnotes</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		21</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>22</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Sonstiges</td></tr><tr><th scope="row">			label</th><td>Versalien</td></tr><tr><th scope="row">			key</th><td>caps</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		22</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>23</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Sonstiges</td></tr><tr><th scope="row">			label</th><td>Sortierung nach Signatur</td></tr><tr><th scope="row">			key</th><td>sort_signatures</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		23</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>24</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Register</td></tr><tr><th scope="row">			label</th><td>separates Versregister</td></tr><tr><th scope="row">			key</th><td>index_verses</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		24</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>25</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Register</td></tr><tr><th scope="row">			label</th><td>separates Register der Meister und Werkstätten</td></tr><tr><th scope="row">			key</th><td>index_producers</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		25</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>26</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Register</td></tr><tr><th scope="row">			label</th><td>nicht identifizierte Wappen mit Beschreibung ausgeben</td></tr><tr><th scope="row">			key</th><td>reg_unident_descript</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		26</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>27</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Standorte-Register</td></tr><tr><th scope="row">			label</th><td>Basis-Standort anzeigen</td></tr><tr><th scope="row">			key</th><td>base_location</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		27</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>28</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Artikel</td></tr><tr><th scope="row">			key</th><td>links_articles</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		28</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>29</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Marken</td></tr><tr><th scope="row">			key</th><td>links_marks</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		29</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>30</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Grafikobjekte</td></tr><tr><th scope="row">			key</th><td>links_maps</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		30</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>31</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Inschriften</td></tr><tr><th scope="row">			key</th><td>links_inscriptions</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		31</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>32</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Fußnoten</td></tr><tr><th scope="row">			key</th><td>links_footnotes</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		32</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>33</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Literatur</td></tr><tr><th scope="row">			key</th><td>links_lit</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		33</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>34</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Links erzeugen auf</td></tr><tr><th scope="row">			label</th><td>Wappen</td></tr><tr><th scope="row">			key</th><td>links_coa</td></tr><tr><th scope="row">			radio</th><td>0</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		34</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>35</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Ausgabemodus</td></tr><tr><th scope="row">			label</th><td>Münchner Reihe</td></tr><tr><th scope="row">			key</th><td>modus</td></tr><tr><th scope="row">			radio</th><td>1</td></tr><tr><th scope="row">			value</th><td>projects_bay</td></tr><tr><th scope="row">		35</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>36</td></tr><tr><th scope="row">			output</th><td>1</td></tr><tr><th scope="row">			category</th><td>Ausgabemodus</td></tr><tr><th scope="row">			label</th><td>die anderen Reihen</td></tr><tr><th scope="row">			key</th><td>modus</td></tr><tr><th scope="row">			radio</th><td>1</td></tr><tr><th scope="row">			value</th><td>projects_all</td></tr><tr><th scope="row">		36</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>37</td></tr><tr><th scope="row">			output</th><td>1</td></tr><tr><th scope="row">			category</th><td>Ligaturen</td></tr><tr><th scope="row">			label</th><td>unterstreichen</td></tr><tr><th scope="row">			key</th><td>ligature_arcs</td></tr><tr><th scope="row">			radio</th><td>1</td></tr><tr><th scope="row">			value</th><td></td></tr><tr><th scope="row">		37</th><td> <i>[7]</i></td></tr><tr><th scope="row">			number</th><td>38</td></tr><tr><th scope="row">			output</th><td>0</td></tr><tr><th scope="row">			category</th><td>Ligaturen</td></tr><tr><th scope="row">			label</th><td>Ligaturbögen</td></tr><tr><th scope="row">			key</th><td>ligature_arcs</td></tr><tr><th scope="row">			radio</th><td>1</td></tr><tr><th scope="row">			value</th><td>1</td></tr><tr><th scope="row">pipeline_name</th><td>Entwicklung4.4</td></tr><tr><th scope="row">project_name</th><td>Wismar</td></tr><tr><th scope="row">filename</th><td>project_20-job_27552.xml</td></tr><tr><th scope="row">filepath</th><td>epi_playground/jobs/project_20-job_27552.xml</td></tr></tbody></table>
+
+                                    </div>
+
+                <div class="content-footer"></div>
+
+            </div>
+
+        <!-- Right sidebar -->
+
+            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+
+            </div>
+
+            <footer><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-jobs-view" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+</div>
+</body>
+</html>

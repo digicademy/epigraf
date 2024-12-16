@@ -1,0 +1,19 @@
+{
+    "id": 2,
+    "deleted": 0,
+    "version_id": 0,
+    "job_id": null,
+    "published": null,
+    "menu": 1,
+    "created": "2017-10-30T11:34:43+01:00",
+    "modified": "2020-10-29T13:00:58+01:00",
+    "created_by": null,
+    "modified_by": 1,
+    "notetype": null,
+    "name": "Wismar",
+    "category": "Tests",
+    "sortkey": null,
+    "content": "This is now testing playground",
+    "format": "html",
+    "norm_iri": null
+}

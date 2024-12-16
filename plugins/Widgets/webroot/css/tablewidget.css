@@ -1,0 +1,109 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+.is-resizing * {
+	cursor: col-resize !important;
+}
+
+.resize-bar {
+	top: 10%;
+	right: 0;
+	width: 5px;
+	height: 75%;
+	position: absolute;
+	cursor: col-resize;
+}
+
+
+.widget-table thead:hover .resize-bar {
+	border-right:3px solid var(--columns-resizer-color);
+}
+
+.widget-table th:not(.cols-toggle) {
+	min-width: 3rem;
+}
+
+table.recordlist.widget-table td,
+table.recordlist.widget-table th {
+    box-sizing: border-box;
+	max-width: inherit;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.widget-table .row-selected {
+    background-color: var(--table-bg-color-selected-unfocused);
+    color: var(--table-font-color-selected-unfocused);
+}
+
+.widget-table.widget-focused .row-selected {
+    background-color: var(--table-bg-color-selected);
+    color: var(--table-font-color-selected);
+}
+
+.widget-table.widget-focused .row-selected a {
+    color: var(--table-font-color-selected);
+}
+
+.widget-table .row-selected:hover {
+    background-color: var(--table-bg-color-selected-unfocused-hover);
+}
+
+.widget-table.widget-focused  .row-selected:hover {
+    background-color: var(--table-bg-color-selected-hover);
+}
+
+.widget-table .row-stale,
+.widget-table .row-stale a {
+    color: var(--table-stale-font-color);
+}
+
+.widget-table-mode-select tr {
+    position: relative;
+}
+
+
+.widget-table-mode-select td.actions > a:first-child {
+    display: inherit;
+}
+
+.unselectable {
+
+}
+
+.table-help {
+
+}
+
+.table-input-hidden {
+	display: none;
+}
+
+
+/** Dragging */
+
+tr.is-dragging,
+tr.is-dragging td,
+tr.is-dragging a {
+    background-color: var(--accent-submit-hover);
+    color: var(--button-font-color);
+    cursor: grabbing;
+}
+
+
+/** Override XML styles **/
+.widget-table td span.xml_tag {
+    color:inherit;
+    display: inline-block;
+    min-width: 1em;
+}
+

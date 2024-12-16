@@ -1,0 +1,98 @@
+{
+    "31": {
+        "related_id": [
+            32,
+            36
+        ]
+    },
+    "32": {
+        "deleted": [
+            0,
+            1
+        ],
+        "mergedto_id": [
+            null,
+            36
+        ]
+    },
+    "647": [
+        null,
+        {
+            "id": 647,
+            "deleted": 2,
+            "version_id": 31,
+            "job_id": null,
+            "published": null,
+            "created_by": 1,
+            "modified_by": 1,
+            "sortno": 10,
+            "sortkey": null,
+            "propertytype": "objecttypes",
+            "signature": null,
+            "file_name": null,
+            "properties_id": null,
+            "lemma": "siehe",
+            "name": null,
+            "unit": "Tr\u00e4ger 2b Einheit",
+            "comment": "Tr\u00e4ger 2b Bemerk",
+            "content": null,
+            "elements": null,
+            "keywords": "Tr\u00e4ger,Medium",
+            "source_from": null,
+            "ishidden": 0,
+            "iscategory": 0,
+            "norm_type": null,
+            "norm_data": "Tr\u00e4ger 2b Norm",
+            "norm_iri": null,
+            "import_db": "Tr\u00e4ger 2b DB",
+            "import_id": "Tr\u00e4ger 2b ID",
+            "related_id": 32,
+            "mergedto_id": null,
+            "splitfrom_id": null,
+            "parent_id": 35,
+            "level": 1,
+            "lft": 10,
+            "rght": 11
+        }
+    ],
+    "648": [
+        null,
+        {
+            "id": 648,
+            "deleted": 2,
+            "version_id": 32,
+            "job_id": null,
+            "published": null,
+            "created_by": 1,
+            "modified_by": 1,
+            "sortno": 8,
+            "sortkey": "Tr\u00e4ger 2a",
+            "propertytype": "objecttypes",
+            "signature": null,
+            "file_name": null,
+            "properties_id": null,
+            "lemma": "Tr\u00e4ger 2a",
+            "name": "Tr\u00e4ger 2a",
+            "unit": "Tr\u00e4ger 2a Einheit",
+            "comment": "Tr\u00e4ger 2a Bemerk",
+            "content": null,
+            "elements": null,
+            "keywords": "Medium,Tr\u00e4ger",
+            "source_from": null,
+            "ishidden": 1,
+            "iscategory": 1,
+            "norm_type": null,
+            "norm_data": "Tr\u00e4ger 2a Nordm",
+            "norm_iri": null,
+            "import_db": "Tr\u00e4ger 2a DB",
+            "import_id": "Tr\u00e4ger 2a ID",
+            "related_id": null,
+            "mergedto_id": null,
+            "splitfrom_id": null,
+            "parent_id": 35,
+            "level": 1,
+            "lft": 12,
+            "rght": 13
+        }
+    ]
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="20"
+   height="20"
+   viewBox="0 0 5.2916665 5.2916668"
+   version="1.1"
+   id="svg1048"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="button_sequence.svg">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     id="namedview1050"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     units="px"
+     inkscape:zoom="24.202694"
+     inkscape:cx="5.3713034"
+     inkscape:cy="6.9826939"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1045" />
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       id="text79101-7"
+       y="3.873862"
+       x="-0.14461249"
+       style="font-size:4.41736984px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:none;stroke-width:0.18405671"
+       xml:space="preserve"><tspan
+         y="3.873862"
+         x="-0.14461249"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Source Sans 3';-inkscape-font-specification:'Source Sans 3, ';fill:#d22027;fill-opacity:1;stroke-width:0.18405671"
+         id="tspan79099-8"
+         sodipodi:role="line">{<tspan
+   id="tspan98978-6"
+   style="font-size:3.09612179px;stroke-width:0.18405671"> </tspan></tspan></text>
+    <text
+       inkscape:transform-center-y="2.7111308"
+       inkscape:transform-center-x="-16.354241"
+       id="text79101-0-9"
+       y="3.8059084"
+       x="1.3276042"
+       style="font-size:3.53842497px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:none;stroke-width:0.18405671"
+       xml:space="preserve"><tspan
+         y="3.8059084"
+         x="1.3276042"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.53842497px;font-family:'Source Sans 3';-inkscape-font-specification:'Source Sans 3, ';fill:#d22027;fill-opacity:1;stroke-width:0.18405671"
+         id="tspan79099-6-5"
+         sodipodi:role="line">...</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:4.41736984px;line-height:1.25;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:none;stroke-width:0.18405671"
+       x="4.1079268"
+       y="3.8738608"
+       id="text831"><tspan
+         sodipodi:role="line"
+         id="tspan829"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Source Sans 3';-inkscape-font-specification:'Source Sans 3, ';fill:#d22027;fill-opacity:1;stroke-width:0.18405671"
+         x="4.1079268"
+         y="3.8738608">}</tspan></text>
+  </g>
+</svg>

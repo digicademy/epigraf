@@ -1,0 +1,19 @@
+{
+    "id": 23,
+    "deleted": 0,
+    "version_id": null,
+    "job_id": null,
+    "published": null,
+    "menu": 1,
+    "created": "2020-10-29T13:00:58+01:00",
+    "modified": "2020-10-29T13:00:58+01:00",
+    "created_by": 1,
+    "modified_by": 1,
+    "notetype": null,
+    "name": "Mainz",
+    "category": "Tests",
+    "sortkey": null,
+    "content": "testcontent",
+    "format": "html",
+    "norm_iri": null
+}

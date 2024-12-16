@@ -1,0 +1,4 @@
+table;id;norm_iri;articletype;articlenumber;title;projects_id;name;shortname;sectiontype;parent_id;articles_id;sortno;sectionnumber;sectionname;layout_cols;layout_rows;comment;status;itemtype;sections_id;content;to_id;properties_id;propertytype;lemma;action
+articles;articles-int2779;awesomeiri;object;Article #1;This new title should be ignored;projects-int20;;;;;;;;;;;;;;;;;;;;skip;
+sections;sections-int2779;datasectioniri;;;;;;;text;;articles-int2779;1;1;All about data;0;0;Not finished yet;0;;;;;;;;clear;
+items;items-int326205;;;;;;;;;;articles-int2779;1;;;;;;;text;sections-int2779;This is an updated sentence.;;;;;

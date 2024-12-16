@@ -1,0 +1,26 @@
+[
+    {
+        "dates": 0,
+        "locations": "Standort A , Standort A , Standort A , Standort B1 , Standort B1 , Standort B1 ",
+        "sortnos": 2,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": null,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": null,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": null,
+        "topics_priority": null
+    }
+]

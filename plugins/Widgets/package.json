@@ -1,0 +1,19 @@
+{
+  "name": "Epigraf Widgets",
+  "version": "1.0.0",
+  "description": "Widgets for Epigraf",
+
+  "scripts": {
+    "build": "webpack --mode production",
+    "devel": "webpack --mode development",
+
+    "watch": "webpack --mode development --watch"
+  },
+  "devDependencies": {
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "keywords": [],
+  "author": "Epigraf Team",
+  "license": "MIT"
+}

@@ -1,0 +1,162 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+
+.image-container {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+.metadata-container {
+    background-color: var(--content-bg-color);
+}
+
+.image-viewport {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.image-container img {
+    cursor: move;
+    max-width: none;
+    height: 100%;
+}
+
+/* Buttons */
+.ui-dialog .ui-dialog-buttonset {
+    width: 100%;
+}
+
+.ui-button.button-right {
+  float: right;
+}
+
+button.button-svg,
+footer .action-menu button.button-svg,
+.ui-dialog .ui-dialog-buttonpane button.button-svg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+    padding: 1em 1em 1em 1em;
+}
+
+button.button-rotate-left,
+.ui-dialog .ui-dialog-buttonpane button.button-rotate-left {
+    background-image: url('../img/rotation_arrow_left.svg');
+}
+
+button.button-rotate-right,
+.ui-dialog .ui-dialog-buttonpane button.button-rotate-right {
+    background-image: url('../img/rotation_arrow_right.svg');
+}
+
+button.button-zoom-in,
+.ui-dialog .ui-dialog-buttonpane button.button-zoom-in {
+    background-image: url('../img/plus.svg');
+}
+
+button.button-zoom-out,
+.ui-dialog .ui-dialog-buttonpane button.button-zoom-out {
+    background-image: url('../img/minus.svg');
+}
+
+button.button-size-fit,
+.ui-dialog .ui-dialog-buttonpane button.button-size-fit {
+    background-image: url('../img/fullsize.svg');
+}
+
+button.button-previous,
+.ui-dialog .ui-dialog-buttonpane button.button-previous {
+    background-image: url('../img/previous_image.svg');
+}
+
+button.button-next,
+.ui-dialog .ui-dialog-buttonpane button.button-next {
+    background-image: url('../img/next_image.svg');
+}
+
+.ui-dialog .popup-image.ui-dialog-content {
+    display: flex;
+    padding: 0;
+}
+
+.metadata-container {
+    flex: 0 0 40%;
+    position: relative;
+    background-color: var(--pane-bg-color);
+}
+
+.metadata-container table tbody {
+    background-color: var(--pane-bg-color);
+}
+
+.metadata-toggle {
+    background-color: var(--button-bg-color);
+    background-image: url('../img/dropdown_down.svg');
+    transform: rotate(90deg);
+    background-size: cover;
+    width: 1.5em;
+    height: 1.5em;
+    border: none;
+    cursor: pointer;
+}
+
+.metadata-toggle.imploded {
+    background-image: url('../img/dropdown_up.svg');
+}
+
+.metadata-toggle.active, .metadata-toggle:hover {
+    background-color: var(--button-bg-color-hover);
+    transition: background-color 300ms ease-out 0s;
+}
+
+.metadata-content {
+    margin: 1em;
+    width: 100%;
+}
+
+/* Full screen viewer */
+
+.content-content .image-viewer-frame {
+    flex:1;
+}
+
+.content-content .metadata-container {
+    flex: 0 0 20%;
+}
+
+.content-content .image-container {
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar .doc-image.selected {
+  background-color: var(--nav-bg-color-active);
+    color:white;
+}
+
+.sidebar .doc-image.selected a {
+    color:var(--button-font-color);
+}
+
+.sidebar .doc-image-content {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+/** Animation **/
+img.animate-zoom {
+    transition: left 150ms ease-in-out, top 150ms ease-in-out, height 150ms ease-in-out;
+}
