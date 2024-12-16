@@ -1,4 +1,5 @@
 <img align="right" width="48" height="48" src="/docs/assets/img/epigraf-icon.png" alt="Epigraf logo">
+
 # Epigraf
 
 Epigraf is a research platform for collecting, annotating, linking and publishing textual and multimodal data.
