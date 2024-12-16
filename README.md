@@ -1,6 +1,6 @@
 <img align="right" width="100" height="100" src="/docs/assets/img/epigraf-icon.png" alt="Epigraf logo">
 
-# Epigraf: A research platform for collecting, annotating, linking and publishing textual and multimodal data.
+# Epigraf: A research platform for collecting, annotating, linking and publishing multimodal text data data.
 
 *This is the first open source release, still experimental.*
 
@@ -55,5 +55,5 @@ and the research group
 **Citation**
 Jünger, J., Hertkorn, G., Gärtner, C.,
 Herold, J., Knispel, J., Kopp, M.,Kotthoff, H., Lentge, F., Michel, M., Syring, W-D. (2024).
-Epigraf: a research platform for collecting, annotating, linking and publishing textual and multimodal data.
+Epigraf: a research platform for collecting, annotating, linking and publishing multimodal text data data.
 Version 5.0. https://github.com/digicademy/epigraf

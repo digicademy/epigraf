@@ -35,7 +35,7 @@ use Cake\Core\Configure;
     </title>
 
     <?= $this->Html->meta('icon',Configure::read('App.icon', 'img/favicon_petrol.png')) ?>
-    <?= $this->Html->meta('description',__('A research platform for textual and multimodal data')); ?>
+    <?= $this->Html->meta('description',__('A research platform for multimodal text data data')); ?>
     <?= $this->Html->meta('author','Epigraf Team'); ?>
     <?= $this->fetch('meta') ?>
 
