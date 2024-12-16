@@ -1,10 +1,8 @@
-<img align="right" width="100" height="100" src="/docs/assets/img/epigraf-icon.png" alt="Epigraf logo">
+<img align="right" width="48" height="48" src="/docs/assets/img/epigraf-icon.png" alt="Epigraf logo">
+# Epigraf
 
-# Epigraf: A research platform for collecting, annotating, linking and publishing multimodal text data data.
-
-*This is the first open source release, still experimental.*
-
-The Epigraf data model supports research databases ranging from epistolary editions to social media corpora.
+Epigraf is a research platform for collecting, annotating, linking and publishing textual and multimodal data.
+The data model supports research databases ranging from epistolary editions to social media corpora.
 Epigraf is currently used primarily for editing epigraphic data - inscriptions in connection with the objects to which they are attached.
 It includes a publication system for various document formats such as Word or TEI, structured JSON, XML and CSV data, and triples in TTL, JSON-LD and RDF/XML.
 
