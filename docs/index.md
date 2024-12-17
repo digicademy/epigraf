@@ -10,7 +10,6 @@
 permalink: /
 ---
 
-# Introduction
 
 Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data.
 
@@ -30,7 +29,7 @@ Look out for the flowers that are in bloom and help nurture the garden.
 
 ![Epigraf use cases](assets/img/epigraf-use-cases.png)
 
-# Getting Started
+## Getting Started
 
 Epigraf is a classical web application.
 The [server infrastructure](/docs/servers) to run Epigraf consists of an Apache web server,
@@ -69,7 +68,7 @@ You can use the prepared docker compose setup to run the application:
 
 What's next? Get familiar with the [Epigraf configuration](https://epigraf.inschriften.net/help) to adapt it to your use case.
 
-# Architecture
+## Architecture
 
 The [frontend](/docs/frontend) is rendered in the browser using HTML, CSS, and JavaScript. Frontend logic is based on the EpiWidJs framework.
 The [backend](/docs/backend) is implemented using the CakePHP framework and contains the application logic.
@@ -79,7 +78,7 @@ Frontend and database content is cached using Redis. If no Redis server is avail
 
 ![Epigraf architecture](../assets/img/epigraf-architecture.png){:width="90%"}
 
-# Directory structure
+## Directory structure
 
 The source code folder contains the standard directories of a CakePHP
 application.

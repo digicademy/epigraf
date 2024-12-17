@@ -3,6 +3,8 @@ title: Themes
 permalink: '/frontend/themes/'
 ---
 
+## Color schemes
+
 The visual appearance of the frontend is defined using themes. The primary color palette, accent colors, neutral colors, and functional colors
 as well as the font face are defined in the file `src/htdocs/app.css`. Those variables are used in the CSS files of the frontend to style the HTML elements.
 Theme files in the `src/htdocs` folder overwrite the default values.
@@ -52,7 +54,7 @@ Themes can be switched by the `theme` query parameter or in the user settings. A
 Additional styles are provided by the Widget plugin in the `plugins/Widget/webroot/css/widget.css` file.
 Each widget may contribute a css file in `plugins/Widget/webroot/css` which is imported into the `widget.css` file.
 
-# Toolbar
+## Toolbar icons
 The XML editor toolbar buttons make use of icons as SVG files.
 The icons are dynamically imported to Epigraf from the file `htdocs/img/icons.min.js`.
 This file is created with webpack from the `resource/icons` folder.

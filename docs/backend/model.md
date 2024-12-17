@@ -21,9 +21,9 @@ The model always combines a table class and an entity class:
 In summary, query results retrieved by table classes are a collection of entities.
 Fields are available in entity properties.
 
-# Table and Entity Classes
+## Table and Entity Classes
 
-## Application Level Models
+### Application Level Models
 Application level data is managed by models in the `src/Model` folder.
 All Tables are derived from `src/Model/Table/BaseTable.php` and all Entities from `src/Model/Entity/BaseEntity.php`.
 
@@ -57,7 +57,7 @@ to understand the full picture:
    The type entity is loaded along with the entities from the database and is available in the entity's `type` property.
    On the application level, the `type` property accesses an instance of the DefaultType entity class .
 
-## Project Level Models
+### Project Level Models
 Project databases are managed by models in the `plugins/Epi/src/Model` folder.
 
 Tables classes are usually derived from `plugins/Epi/src/Model/Table/BaseTable.php`
@@ -88,7 +88,7 @@ Some special cases have to be considered:
    Single entities are loaded into the default CakePHP Entity class.
 
 
-## Common Behaviours
+### Common Behaviours
 
 The table and entity classes share functionality by inheritance as described above.
 Other mechanisms for shared functionality include:
@@ -103,7 +103,7 @@ Other mechanisms for shared functionality include:
 
 TODO: Explain pagination and the TotalPaginator class.
 
-### Behaviors
+#### Behaviors
 - **ImportBehavior**: Import csv or xml files and transfer data between databases.
   Records are mapped using identifiers, allowing patch operations in addition to adding and deleting data.
   Links between the records are resolved.
@@ -119,12 +119,12 @@ TODO: Explain pagination and the TotalPaginator class.
 - **XmlStylesBehavior**: Parse XML fields and render them to different output formats
   such as XML, HTML, Markdown or plain text, based on the types configuration.
 
-### Interfaces
+#### Interfaces
 - **ExportEntityInterface, ExportTableInterface**: Functions for data export.
 - **MutateEntityInterface, MutateTableInterface**: Functions for batch operations.
 - **ScopedTableInterface**: Scope function, which allow a database table to be used for different entities.
 
-# Types Configuration
+## Types Configuration
 
 The Epigraf user interface is highly configurable to support domains such as letter editions or social media corpora.
 The configuration defines which fields from a database record are used with which labels in the specific domain.
@@ -132,7 +132,7 @@ The configuration is stored in the types table. Each typed entity has access to 
 
 TODO: Add example. Add better explanation.
 
-# Retrieving Field Values
+## Retrieving Field Values
 
 Once you have retrieved entities from the database,
 you can use extraction keys to access the data.
@@ -145,7 +145,7 @@ Placeholder strings are handled by `BaseEntity::getValuePlaceholder()`,
 which calls `BaseEntity::getValueNested()` to extract target fields,
 which in turn calls `BaseEntity::getValueFormatted()` to format the field value.
 
-## Placeholder Strings
+### Placeholder Strings
 
 Placeholder strings are the most versatile extraction method as they combine literal
 strings and placholders. They are used for triple generation.
@@ -163,7 +163,7 @@ optionally followed by processing steps, each seperated by a pipe.
 See `BaseEntity::getValuePlaceholder()` and `Objects::processValues()` for more information.
 
 
-## Extraction Paths
+### Extraction Paths
 
 Extraction paths consist of dot separated path elements.
 For example, if you want to extract the lemmata of all properties used in article items
@@ -183,7 +183,7 @@ The last path element is the target field, handled by `BaseEntity::getValueForma
 
 See `BaseEntity::getValueNested()` for more information.
 
-## Rendered Field Values
+### Rendered Field Values
 
 Once a target field has been extracted, the value can be formatted according to the
 field configuration and the output format.
