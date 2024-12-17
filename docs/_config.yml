@@ -31,7 +31,8 @@ github_username:  strohne
 # theme: just-the-docs
 remote_theme: just-the-docs/just-the-docs
 
-# plugins:
+plugins:
+  - jekyll-remote-theme
 #  - jekyll-feed
 
 defaults:
