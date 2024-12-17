@@ -22,8 +22,8 @@ title: Epigraf developer documentation
 email: jakob.juenger@uni-muenster.de
 description: >- # this means to ignore newlines until "baseurl:"
   Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data.
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/epigraf" # the subpath of your site, e.g. /blog
+url: "https://digicademy.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  strohne
 
 # Build settings
