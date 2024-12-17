@@ -1,10 +1,8 @@
 ---
 title: Model
-parent: Backend
-nav_order: 30
+permalink: '/backend/model/'
 ---
 
-# {{ page.title }}
 
 The purpose of the model layer is to retrieve, modify, and store data in the database.
 Epigraf uses the CakePHP ORM to map database records to entities.

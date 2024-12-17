@@ -1,10 +1,7 @@
 ---
 title: Backups
-parent: Database
-nav_order: 20
+permalink: '/database/backups/'
 ---
-
-# {{ page.title }}
 
 ## Versioning and Deletion
 

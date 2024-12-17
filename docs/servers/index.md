@@ -1,9 +1,7 @@
 ---
 title: Servers
-nav_order: 10
+permalink: '/servers/'
 ---
-
-# {{ page.title }}
 
 ## Installation
 Epigraf needs a web server, a relational database management system and a cache server.

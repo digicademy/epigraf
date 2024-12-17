@@ -1,11 +1,7 @@
 ---
 title: Templates
-layout: default
-parent: Frontend
-nav_order: 10
+permalink: '/frontend/templates/'
 ---
-# {{ page.title }}
-
 
 ## Page Layout
 
@@ -122,4 +118,4 @@ The application object implements methods...
 
 The `App` object is expanded by functions in widgets.js
 that attach JavaScript classes to HTML elements.
-See the [widget documentation](/docs/frontend/widgets).
+See the [widget documentation](/frontend/widgets).

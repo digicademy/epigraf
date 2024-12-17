@@ -1,10 +1,7 @@
 ---
 title: Credits
-layout: default
-nav_order: 200
+permalink: '/credits/'
 ---
-
-# {{ page.title }}
 
 Epigraf is developed by the
 [Digital Academy of Sciences and Literature | Mainz](https://www.adwmainz.de/digitalitaet/digitale-akademie.html)

@@ -1,17 +1,14 @@
 ---
 title: Controller
-parent: Backend
-nav_order: 10
+permalink: '/backend/controller/'
 ---
-
-# {{ page.title }}
 
 Epigraf maps URLs to action methods in controller classes.
 These methods perform three primary functions:
 
 1. Parameter parsing: Extract and validate URL parameters that control the data retrieval and view rendering.
-2. Data Handling: Retrieve and store data using the [model](/docs/backend/model) based on URL parameters and posted payloads.
-3. View Rendering: Pass data to [views](/docs/backend/view) for the browser (HTML) or API responses (e.g. JSON).
+2. Data Handling: Retrieve and store data using the [model](/backend/model) based on URL parameters and posted payloads.
+3. View Rendering: Pass data to [views](/backend/view) for the browser (HTML) or API responses (e.g. JSON).
 
 ## URL Mapping and Routing
 

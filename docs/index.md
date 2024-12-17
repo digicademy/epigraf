@@ -7,7 +7,6 @@
 #
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
-layout: home
 permalink: /
 ---
 
@@ -19,7 +18,8 @@ The data model supports research databases ranging from epistolary editions to s
 Epigraf is currently used primarily for editing epigraphic data - inscriptions in connection with the objects to which they are attached.
 It includes a publication system for various document formats such as Word or TEI, structured JSON, XML and CSV data, and triples in TTL, JSON-LD and RDF/XML.
 
-![Epigraf use cases](assets/img/epigraf-use-cases.png)
+*Note about the documentation:* You are currently reading the [developer documentation](https://digicademy.github.io/epigraf/).
+For information about how to use Epigraf, see the [user documentation](https://epigraf.inschriften.net/help).
 
 *Note about the development status:* Epigraf has a history.
 You will find archeological layers and legacy code from former development epochs
@@ -28,7 +28,7 @@ Some of them are well preserved, others are deteriorating.
 In any case, they provide fertile soil for future development.
 Look out for the flowers that are in bloom and help nurture the garden.
 
-![Edit with Epigraf](assets/img/edit-with-epigraf_playground~394.png)
+![Epigraf use cases](assets/img/epigraf-use-cases.png)
 
 # Getting Started
 
@@ -66,6 +66,8 @@ You can use the prepared docker compose setup to run the application:
 
 5. Login to Epigraf at [http://localhost](http://localhost)
    with the username `admin` and the password `admin`.
+
+What's next? Get familiar with the [Epigraf configuration](https://epigraf.inschriften.net/help) to adapt it to your use case.
 
 # Architecture
 

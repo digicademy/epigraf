@@ -1,10 +1,7 @@
 ---
 title: Data Model
-parent: Database
-nav_order: 10
+permalink: '/database/datamodel/'
 ---
-
-# {{ page.title }}
 
 ## Application Database
 
@@ -13,11 +10,11 @@ The tables include:
 
 - *databanks*: The configured project databases.
 - *users*: User data, including contact information and settings
-- *permissions*: User permissions, see [Authentication and authorization](../backend/controller.html#authentication-and-authorization).
+- *permissions*: User permissions, see [Authentication and authorization](/backend/controller/#authentication-and-authorization).
 - *files*: Metadata for files managed by Epigraf.
 - *docs*: Wiki, help and public pages.
 - *pipelines*: Export pipeline configurations.
-- *jobs*: Each [batch operation](/docs/database/batch) generates a job.
+- *jobs*: Each [batch operation](/database/batch-operations) generates a job.
 
 ## Project Databases
 

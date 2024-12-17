@@ -1,10 +1,7 @@
 ---
 title: View
-parent: Backend
-nav_order: 30
+permalink: '/backend/view/'
 ---
-
-# {{ page.title }}
 
 Depending on the rendering format, as determined by the URL extension or the request Accept header,
 different view classes are used.

@@ -1,10 +1,7 @@
 ---
 title: Batch Operations
-parent: Database
-nav_order: 30
+permalink: '/database/batch-operations/'
 ---
-
-# {{ page.title }}
 
 ## The Export Pipeline System
 

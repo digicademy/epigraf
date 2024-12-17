@@ -1,10 +1,7 @@
 ---
 title: Themes
-layout: default
-parent: Frontend
-nav_order: 30
+permalink: '/frontend/themes/'
 ---
-# {{ page.title }}
 
 The visual appearance of the frontend is defined using themes. The primary color palette, accent colors, neutral colors, and functional colors
 as well as the font face are defined in the file `src/htdocs/app.css`. Those variables are used in the CSS files of the frontend to style the HTML elements.

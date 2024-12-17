@@ -1,10 +1,8 @@
 ---
 title: Database
-has_children: true
-nav_order: 40
+permalink: '/database/'
+toc: false
 ---
-
-# {{ page.title }}
 
 Epigraf stores data using a relational database management system (MariaDB) and in the file system.
 There is one application database `epigraf` for user management, pipelines, help pages, and other application-wide content.

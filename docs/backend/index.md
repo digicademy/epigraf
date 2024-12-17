@@ -1,10 +1,7 @@
 ---
-title: Backend
-has_children: true
-nav_order: 20
+title: Backend and Framework
+permalink: '/backend/'
 ---
-
-# {{ page.title }}
 
 Epigraf is a PHP application that uses the CakePHP framework and adheres to the MVC paradigm.
 

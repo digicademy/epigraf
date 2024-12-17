@@ -1,19 +1,26 @@
-<img align="right" width="48" height="48" src="/docs/assets/img/epigraf-icon.png" alt="Epigraf logo">
+<img align="right" width="48" height="48" src="assets/img/epigraf-icon.png" alt="Epigraf logo">
 
 # Epigraf
 
-Epigraf is a research platform for collecting, annotating, linking and publishing textual and multimodal data.
+Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data.
 The data model supports research databases ranging from epistolary editions to social media corpora.
 Epigraf is currently used primarily for editing epigraphic data - inscriptions in connection with the objects to which they are attached.
 It includes a publication system for various document formats such as Word or TEI, structured JSON, XML and CSV data, and triples in TTL, JSON-LD and RDF/XML.
 
-You want to try it out? Contact us for a test account on one of our machines.
 See the [user documentation](https://epigraf.inschriften.net/help)
 and the [developer documentation](https://digicademy.github.io/epigraf/) for further information.
 
-![Epigraf use cases](/docs/assets/img/epigraf-use-cases.png)
+Want to try it out? Contact us for a test account on one of our machines.
 
-![Edit with Epigraf](/docs/assets/img/edit-with-epigraf_playground~394.png)
+*Note about the development status:* Epigraf has a history.
+You will find archeological layers and legacy code from former development epochs
+when visiting the code base and documentation.
+Some of them are well preserved, others are deteriorating.
+In any case, they provide fertile soil for future development.
+Look out for the flowers that are in bloom and help nurture the garden.
+
+![Epigraf use cases](assets/img/epigraf-use-cases.png)
+
 
 ## How to run Epigraf
 
@@ -42,8 +49,10 @@ and the [developer documentation](https://digicademy.github.io/epigraf/) for fur
 
 5. Login to Epigraf at http://localhost with username and password `admin`.
 
+What's next? Get familiar with the [Epigraf configuration](https://epigraf.inschriften.net/help) to adapt it to your use case.
 
-See the [docker](docker) folder for more options.
+Have a look at the [docker](docker) folder for more options for running Epigraf.
+See the [developer documentation](https://digicademy.github.io/epigraf/) for background information.
 
 ## Authors and Citation
 Epigraf is developed by the
@@ -52,6 +61,7 @@ and the research group
 [Digital Media & Computational Methods at the University of Münster](https://www.uni-muenster.de/Kowi/institut/arbeitsbereiche/digital-media-computational-methods.shtml), Germany.
 
 **Citation**
+
 Jünger, J., Hertkorn, G., Gärtner, C.,
 Herold, J., Knispel, J., Kopp, M.,Kotthoff, H., Lentge, F., Michel, M., Syring, W-D. (2024).
 Epigraf: a research platform for collecting, annotating, linking and publishing multimodal text data.

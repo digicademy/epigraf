@@ -1,0 +1,47 @@
+main:
+  - title: "Introduction"
+    url: /
+  - title: "GitHub"
+    url: https://github.com/digicademy/epigraf
+  - title: "Credits"
+    url: /credits/
+
+docs:
+  - title: "Servers"
+    url: /servers/
+  - title: "Backend"
+    url: /backend/
+    children:
+      - title: "Controller"
+        url: /backend/controller/
+      - title: "Model"
+        url: /backend/model/
+      - title: "View"
+        url: /backend/view/
+  - title: "Frontend"
+    url: /frontend/
+    children:
+      - title: "Templates"
+        url: /frontend/templates/
+      - title: "Widgets"
+        url: /frontend/widgets/
+      - title: "Themes"
+        url: /frontend/themes/
+      - title: "Translation"
+        url: /frontend/translation/
+  - title: "Database"
+    url: /database/
+    children:
+      - title: "Datamodel"
+        url: /database/datamodel/
+      - title: "Backups"
+        url: /database/backups/
+      - title: "Batch Operations"
+        url: /database/batch-operations/
+  - title: "Tests"
+    url: /tests/
+    children:
+      - title: "Backend Tests"
+        url: /tests/backend/
+      - title: "Acceptance Tests"
+        url: /tests/acceptance/
