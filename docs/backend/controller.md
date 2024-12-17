@@ -170,7 +170,7 @@ User settings in Epigraf are either stored in the user record or in the session.
 All controllers extend the `AppController` class (`src/Controller/AppController.php`)
 which is derived from the base `Controller` class provided by the CakePHP framework.
 
-![Application controller class hierarchy](/assets/img/classes-controller-app.png){:width="55%"}
+![Application controller class hierarchy](../assets/img/classes-controller-app.png){:width="55%"}
 
 On the application level, controllers serve the following purposes:
 
@@ -189,7 +189,7 @@ The Epi plugin implements an own `Epi\AppController` class (`plugins/Epi/Control
 derived from the global AppController, adding functionality for project database handling.
 All project database controllers within the Epi plugin extend this class.
 
-![Epi plugin controller class hierarchy](/assets/img/classes-controller-epi.png){:width="60%"}
+![Epi plugin controller class hierarchy](../assets/img/classes-controller-epi.png){:width="60%"}
 
 They Epi plugin controllers serve the following purposes:
 

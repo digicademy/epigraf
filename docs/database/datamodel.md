@@ -44,7 +44,7 @@ The project databases include the following tables:
 
 See the user help for further information about the available fields in each table.
 
-![Graphic illustration of the data model](..//assets/img/epigraf-data-model.png)
+![Graphic illustration of the data model](../assets/img/epigraf-data-model.png)
 
 ## Domain Model Configuration
 

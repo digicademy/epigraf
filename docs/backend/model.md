@@ -30,7 +30,7 @@ All Tables are derived from `src/Model/Table/BaseTable.php` and all Entities fro
 Common methods in the table classes are `findHasParams()` and `findContainFields()`
 which are used by the controllers to filter and retrieve data from the database based on query parameters.
 
-![Model class hierarchy (App)](/assets/img/classes-model-app.png){:width="60%"}
+![Model class hierarchy (App)](../assets/img/classes-model-app.png){:width="60%"}
 
 There are some pecularities in the models. You may need to read the section about project database models
 to understand the full picture:
@@ -64,7 +64,7 @@ Tables classes are usually derived from `plugins/Epi/src/Model/Table/BaseTable.p
 and entity classes from `plugins/Epi/src/Model/Entity/BaseEntity.php`.
 Both project database level base classes extend the corresponding application's base classes.
 
-![Model class hierarchy (Epi)](/assets/img/classes-model-epi.png){:width="80%"}
+![Model class hierarchy (Epi)](../assets/img/classes-model-epi.png){:width="80%"}
 
 Some special cases have to be considered:
 

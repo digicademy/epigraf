@@ -13,7 +13,7 @@ different view classes are used.
                The ApiView based classes are also used in the export pipelines
                to generate TEI-documents and other structured data formats.
 
-![View class hierarchy](/assets/img/classes-views.png){: width="55%"}
+![View class hierarchy](../assets/img/classes-views.png){: width="55%"}
 
 
 ## Rendering HTML for the Browser
