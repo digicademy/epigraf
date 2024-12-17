@@ -28,7 +28,7 @@ Some of them are well preserved, others are deteriorating.
 In any case, they provide fertile soil for future development.
 Look out for the flowers that are in bloom and help nurture the garden.
 
-![Epigraf use cases](../assets/img/epigraf-use-cases.png)
+![Epigraf use cases](assets/img/epigraf-use-cases.png)
 
 # Getting Started
 
