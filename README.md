@@ -9,7 +9,7 @@ It includes a publication system for various document formats such as Word or TE
 
 You want to try it out? Contact us for a test account on one of our machines.
 See the [user documentation](https://epigraf.inschriften.net/help)
-and the [developer documentation](/docs/index.md) for further information.
+and the [developer documentation](https://digicademy.github.io/epigraf/) for further information.
 
 ![Epigraf use cases](/docs/assets/img/epigraf-use-cases.png)
 
