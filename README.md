@@ -54,5 +54,5 @@ and the research group
 **Citation**
 Jünger, J., Hertkorn, G., Gärtner, C.,
 Herold, J., Knispel, J., Kopp, M.,Kotthoff, H., Lentge, F., Michel, M., Syring, W-D. (2024).
-Epigraf: a research platform for collecting, annotating, linking and publishing multimodal text data data.
+Epigraf: a research platform for collecting, annotating, linking and publishing multimodal text data.
 Version 5.0. https://github.com/digicademy/epigraf

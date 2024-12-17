@@ -13,7 +13,7 @@ permalink: /
 
 # Introduction
 
-Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data data.
+Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data.
 
 The data model supports research databases ranging from epistolary editions to social media corpora.
 Epigraf is currently used primarily for editing epigraphic data - inscriptions in connection with the objects to which they are attached.
