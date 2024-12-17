@@ -7,9 +7,9 @@
 #
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
+title: Introduction
 permalink: /
 ---
-
 
 Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data.
 
@@ -20,7 +20,7 @@ It includes a publication system for various document formats such as Word or TE
 *Note about the documentation:* You are currently reading the [developer documentation](https://digicademy.github.io/epigraf/).
 For information about how to use Epigraf, see the [user documentation](https://epigraf.inschriften.net/help).
 
-*Note about the development status:* Epigraf has a history.
+Epigraf has a history.
 You will find archeological layers and legacy code from former development epochs
 when visiting the code base and documentation.
 Some of them are well preserved, others are deteriorating.
