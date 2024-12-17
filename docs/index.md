@@ -19,7 +19,7 @@ The data model supports research databases ranging from epistolary editions to s
 Epigraf is currently used primarily for editing epigraphic data - inscriptions in connection with the objects to which they are attached.
 It includes a publication system for various document formats such as Word or TEI, structured JSON, XML and CSV data, and triples in TTL, JSON-LD and RDF/XML.
 
-![Epigraf use cases](/docs/assets/img/epigraf-use-cases.png)
+![Epigraf use cases](assets/img/epigraf-use-cases.png)
 
 *Note about the development status:* Epigraf has a history.
 You will find archeological layers and legacy code from former development epochs
@@ -28,7 +28,7 @@ Some of them are well preserved, others are deteriorating.
 In any case, they provide fertile soil for future development.
 Look out for the flowers that are in bloom and help nurture the garden.
 
-![Edit with Epigraf](/docs/assets/img/edit-with-epigraf_playground~394.png)
+![Edit with Epigraf](assets/img/edit-with-epigraf_playground~394.png)
 
 # Getting Started
 
@@ -75,7 +75,7 @@ MariaDB and the file system is used to store [data](/docs/database). There is on
 user accounts and application-wide data. For the research data, multiple project databases are created.
 Frontend and database content is cached using Redis. If no Redis server is available, the cache is stored in the file system.
 
-![Epigraf architecture](/docs/assets/img/epigraf-architecture.png){:width="90%"}
+![Epigraf architecture](assets/img/epigraf-architecture.png){:width="90%"}
 
 # Directory structure
 
