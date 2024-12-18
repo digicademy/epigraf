@@ -1,12 +1,21 @@
 ---
+# Only the main Sass file needs front matter (the dashes are enough)
+search: false
 ---
 
-@import "{{ site.theme }}";
+@charset "utf-8";
+
+$h-size-1: 1.6em;
+$h-size-2: 1.25em;
+$h-size-3: 1.25em;
+$h-size-4: 1.25em;
+$h-size-5: 1.25em;
+$h-size-6: 1.25em;
+
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
 
 body {
     font-size: 0.75em;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-size: 1.25em;
 }

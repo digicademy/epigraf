@@ -785,6 +785,10 @@ export class ScrollPaginator extends BaseWidget {
             return;
         }
 
+        if (!event.detail.data || !event.detail.data.row) {
+            return;
+        }
+
         const rowValue = event.detail.data.row.split('-');
         const rowTab = rowValue[0] || '';
         const rowId = rowValue.slice(1).join('-');

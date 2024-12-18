@@ -44,7 +44,7 @@ class Installer
         static::createWritableDirectories($rootDir, $io);
         static::buildWebPack($rootDir, $io);
 
-        static::copyJsFiles($rootDir, $io);
+        //static::copyJsFiles($rootDir, $io);
         static::createSymlinks($rootDir, $io);
 
         // ask if the permissions should be changed
@@ -96,11 +96,13 @@ class Installer
         static::buildWebPack($rootDir, $io);
         static::createSymlinks($rootDir, $io);
 
-        static::copyJsFiles($rootDir, $io);
+        //static::copyJsFiles($rootDir, $io);
     }
 
     /**
      * Copy Javascript files
+     *
+     * @deprecated Place files in the folder and commit them.
      *
      * @param $rootDir
      * @param $io
@@ -112,9 +114,9 @@ class Installer
         $files = [
             $rootDir . '/vendor/components/jquery/jquery.min.js' => $rootDir . '/htdocs/js/jquery/jquery.min.js',
             $rootDir . '/vendor/enyo/dropzone/dist/dropzone.js' => $rootDir . '/plugins/Widgets/webroot/js/dropzone/dropzone.js',
-            $rootDir . '/vendor/enyo/dropzone/dist/dropzone.css' => $rootDir . '/plugins/Widgets/webroot/css/dropzone/dropzone.css'
-//            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf' => $rootDir . '/htdocs/webfonts/fa-solid-900.ttf',
-//            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2' => $rootDir . '/htdocs/webfonts/fa-solid-900.woff2'
+            $rootDir . '/vendor/enyo/dropzone/dist/dropzone.css' => $rootDir . '/plugins/Widgets/webroot/css/dropzone/dropzone.css',
+            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf' => $rootDir . '/htdocs/webfonts/fa-solid-900.ttf',
+            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2' => $rootDir . '/htdocs/webfonts/fa-solid-900.woff2'
         ];
 
         foreach ($files as $from => $to) {

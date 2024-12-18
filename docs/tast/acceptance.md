@@ -1,6 +1,7 @@
 ---
 title: Acceptance Tests
 permalink: '/tests/acceptance/'
+toc: false
 ---
 
 Acceptance testing is primarily used to prevent unintended changes to the frontend.

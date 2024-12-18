@@ -25,33 +25,34 @@ collegues from Die Deutschen Inschriften and the Mainz Academy.
 Thanks to all of you who contribute to the Epigraf ecosystem.
 
 ## Third-party Components
-Epigraf is developed using third-party software under open source licences.
+Epigraf is developed using third-party software under open source licenses.
 
 - [Ace editor](https://ace.c9.io/), BSD License
-- [CakePHP](https://cakephp.org/), MIT Licence
+- [CakePHP](https://cakephp.org/), MIT License
 - [CKEditor](https://ckeditor.com/), GNU General Public License 2 or later
 - [Codeception](https://codeception.com/), MIT License
 - [dropzone.js](https://www.dropzone.dev/), MIT License
 - [ExifTool](https://exiftool.org/), GNU General Public License 1 or later
 - [Font Awesome](https://fontawesome.com/), SIL OFL 1.1 License
-- [Jeykyll](https://jekyllrb.com/), MIT Licence
-- [jQuery](https://jquery.com/), MIT Licence
-- [jQueryUI](https://jqueryui.com/), MIT Licence
-- [jsDoc](https://jsdoc.app/), Apache Licence, Version 2.0
+- [Jeykyll](https://jekyllrb.com/), MIT License
+- [jQuery](https://jquery.com/), MIT License
+- [jQueryUI](https://jqueryui.com/), MIT License
+- [jsDoc](https://jsdoc.app/), Apache License, Version 2.0
 - [Leaflet](https://leafletjs.com/), BSD 2-Clause "Simplified" License
-- [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster), MIT Licence
-- [Leaflet Easy Button](https://github.com/CliffCloud/Leaflet.EasyButton), MIT Licence
-- [Leaflet Gesture Handling](https://github.com/elmarquis/Leaflet.GestureHandling), MIT Licence
-- [Leaflet Path Drag](https://github.com/w8r/Leaflet.Path.Drag), MIT Licence
+- [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster), MIT License
+- [Leaflet Easy Button](https://github.com/CliffCloud/Leaflet.EasyButton), MIT License
+- [Leaflet Gesture Handling](https://github.com/elmarquis/Leaflet.GestureHandling), MIT License
+- [Leaflet Path Drag](https://github.com/w8r/Leaflet.Path.Drag), MIT License
 - [Lingui](https://lingui.dev/), MIT License
 - [mark.js](https://markjs.io/), MIT License
+- [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/), MIT License
 - [npm](https://npmjs.com/), Artistic License 2.0,
-- [phpDocumentor](https://phpdoc.org/), MIT Licence
+- [phpDocumentor](https://phpdoc.org/), MIT License
 - [PHPUnit](https://phpunit.de/index.html), BSD 3-Clause License
-- [Plotly.js](https://github.com/plotly/plotly.js/), MIT Licence
-- [Poedit](https://poedit.net/), MIT Licence
+- [Plotly.js](https://github.com/plotly/plotly.js/), MIT License
+- [Poedit](https://poedit.net/), MIT License
 - [Saxon parser](https://www.saxonica.com/), Mozilla Public License version 2.0
 - [Source Sans 3](https://github.com/adobe-fonts/source-sans/),  SIL OFL 1.1 License
-- [Webpack](https://webpack.js.org/), MIT Licence
+- [Webpack](https://webpack.js.org/), MIT License
 
 A big "Thank you!" to all those projects!

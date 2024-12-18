@@ -1,6 +1,7 @@
 ---
 title: Tests
 permalink: '/tests/'
+toc: false
 ---
 
 Throughout the development process, Epigraf code is tested in two ways:

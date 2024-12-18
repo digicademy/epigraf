@@ -212,7 +212,7 @@ export class EpiMap extends BaseWidget {
         this.geoLocButton.button.classList.remove('btn-geolocation-active');
         this.geoLocButton.button.classList.add('btn-geolocation-inactive');
 
-        new ResizeObserver(() => this.map.invalidateSize()).observe(this.mapElement);
+        this.listenResize(this.mapElement, () => this.map.invalidateSize());
     }
 
     /**

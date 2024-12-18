@@ -1007,7 +1007,14 @@ class Article extends RootEntity
      */
     public function numberSections()
     {
+        $numbers = [];
+
         foreach ($this->sections as $key => $section) {
+            $numbers[$section->parent_id ?? ''] = $numbers[$section->parent_id ?? ''] ?? [];
+            $currentNumber = ($numbers[$section->parent_id ?? ''][$section->sectiontype ?? ''] ?? 0) + 1;
+            $numbers[$section->parent_id ?? ''][$section->sectiontype ?? ''] = $currentNumber;
+            $section->number = $currentNumber;
+
             $section->sortno = $key + 1;
         }
     }

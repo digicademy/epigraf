@@ -214,6 +214,7 @@ class PropertiesCest
         $I->scrollto($contentSelector);
         $I->focus($contentSelector);
         $I->click($contentSelector);
+        $I->wait(1);
         $I->pressKey($contentSelector, 'Mein Schild');
         $I->wait(1);
 
@@ -222,6 +223,7 @@ class PropertiesCest
         $I->scrollto($contentSelector);
         $I->focus($contentSelector);
         $I->click($contentSelector);
+        $I->wait(1);
         $I->pressKey(
             $contentSelector,
             'Some',
@@ -236,6 +238,7 @@ class PropertiesCest
             WebDriverKeys::ENTER,
             'out of view.'
         );
+        $I->wait(1);
 
         // Save new property
         $I->click("Save", '.ui-dialog-buttonset');

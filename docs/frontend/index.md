@@ -1,6 +1,7 @@
 ---
 title: Frontend
 permalink: '/frontend/'
+toc: false
 ---
 
 The frontend of Epigraf consists of HTML pages rendered by the CakePHP template system and styled with CSS.
@@ -12,4 +13,4 @@ For interactive trees, tables and other widgets, Epigraf implements an own EpiWi
 Bundling JavaScript files, CSS files, language resources and images is done using Webpack.
 All bundles can be generated at once by calling `npm run build`.
 
-![Edit with Epigraf](../assets/img/epigraf-editor.png)
+![Epigraf Editor](../assets/img/epigraf-editor.png)

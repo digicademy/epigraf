@@ -230,40 +230,49 @@ export class TableWidget extends BaseWidget {
      *  Expand last column
      */
     expandLastColumn() {
-        const containerWidth = this.widgetElement.parentElement.clientWidth;
-        const containerDiff = containerWidth - this.widgetElement.offsetWidth;
-
-        const oldTableWidth = this.widgetElement.offsetWidth;
-        const lastCol = this.getLastVisibleColumn();
-
-        if (!lastCol) {
-            return false;
+        if (this.isExpanding) {
+            return;
         }
+        this.isExpanding = true;
 
-        const oldColWidth = lastCol.clientWidth;
-        const colDiff = lastCol.dataset.targetWidth - oldColWidth;
+        try {
+            const containerWidth = this.widgetElement.parentElement.clientWidth;
+            const containerDiff = containerWidth - this.widgetElement.offsetWidth;
 
-        if (lastCol.dataset.targetWidth === undefined) {
-            lastCol.dataset.targetWidth = oldColWidth;
-        }
+            const oldTableWidth = this.widgetElement.offsetWidth;
+            const lastCol = this.getLastVisibleColumn();
 
-        let newWidth = oldColWidth;
+            if (!lastCol) {
+                return false;
+            }
 
-        // Shrink
-        if ((containerDiff < 0) && (colDiff < 0)) {
-            newWidth = oldColWidth + Math.max(colDiff, containerDiff);
-        }
-        // Grow
-        else if (containerDiff > 0) {
-            newWidth = oldColWidth + containerDiff;
-        }
+            const oldColWidth = lastCol.clientWidth;
+            const colDiff = lastCol.dataset.targetWidth - oldColWidth;
 
-        if (newWidth !== oldColWidth) {
-            lastCol.style.maxWidth = newWidth + 'px';
-            lastCol.style.width = newWidth + 'px';
+            if (lastCol.dataset.targetWidth === undefined) {
+                lastCol.dataset.targetWidth = oldColWidth;
+            }
 
-            const newTableWidth = oldTableWidth + (newWidth - oldColWidth);
-            this.widgetElement.style.width = newTableWidth + 'px';
+            let newWidth = oldColWidth;
+
+            // Shrink
+            if ((containerDiff < 0) && (colDiff < 0)) {
+                newWidth = oldColWidth + Math.max(colDiff, containerDiff);
+            }
+            // Grow
+            else if (containerDiff > 0) {
+                newWidth = oldColWidth + containerDiff;
+            }
+
+            if (newWidth !== oldColWidth) {
+                lastCol.style.maxWidth = newWidth + 'px';
+                lastCol.style.width = newWidth + 'px';
+
+                const newTableWidth = oldTableWidth + (newWidth - oldColWidth);
+                this.widgetElement.style.width = newTableWidth + 'px';
+            }
+        } finally {
+            this.isExpanding = false;
         }
     }
 

@@ -642,22 +642,27 @@ class ArticlesCest
         $contentSelector = '.doc-section-item[data-row-id="4"] .doc-fieldname-content .widget-xmleditor';
         $I->focusXmlInput($contentSelector);
 
+        $I->wait(0.5);
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
             WebDriverKeys::DELETE,
             'Fancynewtext'
         );
+        $I->wait(0.5);
 
         // Edit the title
         $contentSelector = '.doc-content input[name="name"]';
         $I->click($contentSelector);
+
+        $I->wait(0.5);
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
             WebDriverKeys::DELETE,
             'Fancynewtitle'
         );
+        $I->wait(0.5);
 
         // Save and compare output
         $I->click('Save', 'nav.actions-bottom');

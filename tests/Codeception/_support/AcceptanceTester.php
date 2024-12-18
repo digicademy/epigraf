@@ -169,20 +169,11 @@ class AcceptanceTester extends \Codeception\Actor
         $this->click($selector);
 
         $this->waitForElementVisible('.content-toolbar.active');
+        $this->wait(0.25);
 
         if ($cursor) {
             $this->pressCtrlHome();
             $this->wait(0.5);
-//            $this->executeJs('
-//                let element = document.querySelector("' . addslashes($selector) . '");
-//                let range = document.createRange();
-//                let sel = window.getSelection();
-//                range.setStart(element, 0);
-//                range.collapse(true);
-//                sel.removeAllRanges();
-//                sel.addRange(range);
-//                element.focus();
-//            ');
         }
     }
 
