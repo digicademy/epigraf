@@ -49,7 +49,6 @@ Look out for the flowers that are in bloom and help nurture the garden.
 5. Login to Epigraf at http://localhost with username and password `admin`.
 
 What's next? Get familiar with the [Epigraf configuration](https://epigraf.inschriften.net/help) to adapt it to your use case.
-
 Have a look at the [docker](docker) folder for more options for running Epigraf.
 See the [developer documentation](https://digicademy.github.io/epigraf/) for background information.
 
