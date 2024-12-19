@@ -13,7 +13,7 @@ different view classes are used.
                The ApiView based classes are also used in the export pipelines
                to generate TEI-documents and other structured data formats.
 
-![View class hierarchy](../assets/img/classes-views.png){: width="55%"}
+![View class hierarchy](../assets/img/classes-view.png)
 
 
 ## Rendering HTML for the Browser
@@ -47,10 +47,6 @@ Utilities for rendering HTML elements:
 - MenuHelper
 - FilesHelper
 - TypesHelper
-
-TODO: Briefly explain the purpose of each helper. No need to duplicate documentation from the helper classes.
-
-
 
 ## Rendering API Data
 

@@ -74,7 +74,7 @@ MariaDB and the file system is used to store [data](/docs/database). There is on
 user accounts and application-wide data. For the research data, multiple project databases are created.
 Frontend and database content is cached using Redis. If no Redis server is available, the cache is stored in the file system.
 
-![Epigraf architecture](assets/img/epigraf-architecture.png){:width="90%"}
+![Epigraf architecture](assets/img/epigraf-architecture.png)
 
 ## Directory structure
 

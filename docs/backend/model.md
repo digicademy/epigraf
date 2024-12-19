@@ -30,7 +30,7 @@ All Tables are derived from `src/Model/Table/BaseTable.php` and all Entities fro
 Common methods in the table classes are `findHasParams()` and `findContainFields()`
 which are used by the controllers to filter and retrieve data from the database based on query parameters.
 
-![Model class hierarchy (App)](../assets/img/classes-model-app.png){:width="60%"}
+![Model class hierarchy (App)](../assets/img/classes-model-app.png)
 
 There are some pecularities in the models. You may need to read the section about project database models
 to understand the full picture:
@@ -64,7 +64,7 @@ Tables classes are usually derived from `plugins/Epi/src/Model/Table/BaseTable.p
 and entity classes from `plugins/Epi/src/Model/Entity/BaseEntity.php`.
 Both project database level base classes extend the corresponding application's base classes.
 
-![Model class hierarchy (Epi)](../assets/img/classes-model-epi.png){:width="80%"}
+![Model class hierarchy (Epi)](../assets/img/classes-model-epi.png)
 
 Some special cases have to be considered:
 
@@ -101,8 +101,6 @@ Other mechanisms for shared functionality include:
   For example, the ExportTableInterface defines the functions getExportCount() and getExportData()
   that are called from the Job classes on different models.
 
-TODO: Explain pagination and the TotalPaginator class.
-
 #### Behaviors
 - **ImportBehavior**: Import csv or xml files and transfer data between databases.
   Records are mapped using identifiers, allowing patch operations in addition to adding and deleting data.
@@ -124,13 +122,13 @@ TODO: Explain pagination and the TotalPaginator class.
 - **MutateEntityInterface, MutateTableInterface**: Functions for batch operations.
 - **ScopedTableInterface**: Scope function, which allow a database table to be used for different entities.
 
-## Types Configuration
+## Domain Model Configuration
 
 The Epigraf user interface is highly configurable to support domains such as letter editions or social media corpora.
 The configuration defines which fields from a database record are used with which labels in the specific domain.
 The configuration is stored in the types table. Each typed entity has access to its type record by the type property.
 
-TODO: Add example. Add better explanation.
+See the user documentation for information about how to configure the domain model.
 
 ## Retrieving Field Values
 
