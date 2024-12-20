@@ -6,11 +6,6 @@
 /data/*
 /private/*
 
-/htdocs/js/jquery/*
-!/htdocs/js/jquery/jquery.ajaxqueue.js
-/plugins/Widgets/webroot/js/dropzone/*
-/plugins/Widgets/webroot/css/dropzone/*
-
 node_modules
 
 /phpdoc/*
