@@ -218,7 +218,7 @@ Both are descendants of the `BaseForm` class supporting features for saving data
 ![Inheritance hierarchy](../assets/img/classes-widget-basedocumentmodel.png)
 
 The `EntityWidget` is used for simple entities, usually displayed in a vertical table.
-It inherits all methods and properties from the base from widget
+It inherits all methods and properties from `BaseForm`
 and does not provide any additional functionality.
 
 The `DocumentWidget` is used for more complex data,

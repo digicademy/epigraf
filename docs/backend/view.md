@@ -31,22 +31,25 @@ Templates for the project databases are located in the `plugins/Epi/templates` d
 Shared rendering logic is encapsulated in helper classes, which are located in the `src/View/Helper` directory
 on the application level and in the plugin folders.
 
-Supports rendering of entity collections in tables:
-- TableHelper
-- TreeHelper
+Support for rendering of entity collections in tables:
+- **TableHelper**: Generates tables for entities, entity collections and arrays.
+- **TreeHelper**: Generates tree markup, e.g. for categories. The helper supports trees for selecting entities.
+  Can be used in combination with the table helper to add tree markup to tables.
 
-Supports rendering of entities and their fields:
-- BaseEntityHelper
-- EntityHtmlHelper
-- EntityInputHelper
-- EntityMarkdownHelper
+Support for rendering of entities and their fields:
+- **BaseEntityHelper**: The class is central to rendering entities.
+  Its function `entityForm()` is called to view entities and to create input forms.
+  Its function `sectionList()` is called for generating documents such as articles.
+- **EntityHtmlHelper**: Derives from BaseEntityHelper helper for markup specific to non-editing HTML output for entities.
+- **EntityInputHelper**: Derives from BaseEntityHelper helper for form input generation when editing entities.
+- **EntityMarkdownHelper**: Derives from BaseEntityHelper helper and overrides functions for Markdown rendering.
 
 Utilities for rendering HTML elements:
-- ElementHelper
-- LinkHelper
-- MenuHelper
-- FilesHelper
-- TypesHelper
+- **ElementHelper**: Provides basic functions for creating HTML tags.
+- **LinkHelper**: Generates links and buttons.
+- **MenuHelper**: Generates different kinds of menus with the function `renderMenu()`.
+- **FilesHelper**: Supports uploading files, displaying previews and thumbnails.
+- **TypesHelper**: Provides access to the types configuration.
 
 ## Rendering API Data
 
