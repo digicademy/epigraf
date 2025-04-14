@@ -8,33 +8,32 @@
     <title>
         DI: Band    </title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
     <!-- CSS frameworks -->
-    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">
+            <link rel="stylesheet" href="/css/theme_default.css">    
     <!-- JS -->
 
     <!-- JS frameworks -->
-    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>
-    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
+            <script src="/js/app.min.js" type="module"></script>    
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web","session":{"ui":[]}});}</script>
     <!-- JS widgets -->
-        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
 
     <!-- Additional CSS -->
-
+    
     <!-- Additional JS -->
         </head>
 
-<body class="controller_pipelines             action_edit             template_default             theme_default             userrole_admin">
-
+<body class="plugin_ controller_pipelines action_edit template_default theme_default userrole_admin">
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -42,23 +41,23 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
 
                 <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-
+                
                     <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
 
         </nav>
-
+    
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-
-
+        
+                                                        
             <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Tasks</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
                     <div class="frame-title-caption">Tasks</div>
@@ -69,18 +68,17 @@
                     <div class="widget-scrollbox"><ul class="side-nav widget-scrollsync menu-sections widget-tree widget-tree-fixed widget-dragitems" data-list-name="menu-left" data-list-add="/pipelines/add_task/21"><li class="first node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-1" data-id="1"><div class="tree-content"><a href="#sections-1">1 Options</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-2" data-id="2"><div class="tree-content"><a href="#sections-2">2 Project data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-3" data-id="3"><div class="tree-content"><a href="#sections-3">3 Article data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-4" data-id="4"><div class="tree-content"><a href="#sections-4">4 Article data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-5" data-id="5"><div class="tree-content"><a href="#sections-5">5 Index data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-6" data-id="6"><div class="tree-content"><a href="#sections-6">6 Bundle files</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-7" data-id="7"><div class="tree-content"><a href="#sections-7">7 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-8" data-id="8"><div class="tree-content"><a href="#sections-8">8 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-9" data-id="9"><div class="tree-content"><a href="#sections-9">9 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-10" data-id="10"><div class="tree-content"><a href="#sections-10">10 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-11" data-id="11"><div class="tree-content"><a href="#sections-11">11 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-12" data-id="12"><div class="tree-content"><a href="#sections-12">12 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-13" data-id="13"><div class="tree-content"><a href="#sections-13">13 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-14" data-id="14"><div class="tree-content"><a href="#sections-14">14 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-15" data-id="15"><div class="tree-content"><a href="#sections-15">15 Save to file</a></div><div class="tree-meta"></div></li><script type="text/template" class="template"><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-{id}" data-id="{id}"><div class="tree-content"><a href="#sections-{id}">{sectionname}</a></div><div class="tree-meta"></div></li></script></ul></div>                </div>
                 <div class="frame-footer">
                                     </div>
-                </div></div></div></div></div>
+                </div></div></div></div></div>        
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
                 <div class="content-header">
                     <div class="content-header-title">
-                                                                            <nav class="breadcrumbs">
-                                <ul class="breadcrumbs-trail"><li><a href="/pipelines">Pipelines</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>DI: Band</span></li></ul>                            </nav>
-                                            </div>
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/pipelines">Pipelines</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>DI: Band</span></li></ul></nav>                    </div>
 
                                             <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Tasks</button>
-
+                    
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -88,7 +86,7 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-
+                    
 <!-- Breadcrumbs -->
 
 <!-- Content area -->
@@ -99,10 +97,10 @@
      data-edit-mode="1">
 
         <form method="post" accept-charset="utf-8" id="form-edit-pipelines-21" data-cancel-url="/pipelines/view/21" data-delete-url="/pipelines/delete/21" action="/pipelines/edit/21"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div>        <div class="doc-content">
-            <table class="vertical-table" data-row-table="pipelines" data-row-id="21" data-row-type="" data-row-model="pipelines" data-root-table="pipelines" data-root-id="21" data-file-basepath="pipelines" data-file-defaultpath=""><tr class="table-input-text" data-row-field="name"><th scope="row">Name</th><td><div class="input text"><input type="text" name="name" id="name" value="DI: Band" maxlength="200"></div></td></tr><tr class="table-input-text" data-row-field="description"><td colspan="2"><h2>Description</h2><div class="input textarea"><textarea name="description" id="description" rows="5">Ausgabe eines Inschriftenbandes in Word</textarea></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">IRI-Fragment</th><td><div class="input text"><input type="text" name="norm_iri" id="norm-iri" value="di-book-doc" maxlength="255"></div></td></tr></table>        </div>
+            <table class="vertical-table" data-row-table="pipelines" data-row-id="21" data-row-type="" data-row-model="pipelines" data-root-table="pipelines" data-root-id="21" data-file-basepath="pipelines" data-file-defaultpath=""><tr class="table-input-text" data-row-field="name"><th scope="row">Name</th><td><div class="input text"><input type="text" name="name" id="name" value="DI: Band" maxlength="200"></div></td></tr><tr class="table-input-select" data-row-field="type"><th scope="row">Type</th><td><div class="input select"><select name="type" id="type"><option value="export">Export</option><option value="import">Import</option></select></div></td></tr><tr class="table-input-text" data-row-field="description"><td colspan="2"><h2>Description</h2><div class="input textarea"><textarea name="description" id="description" rows="5">Ausgabe eines Inschriftenbandes in Word</textarea></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">IRI-Fragment</th><td><div class="input text"><input type="text" name="norm_iri" id="norm-iri" value="di-book-doc" maxlength="255"></div></td></tr></table>        </div>
 
                                 <div id="sections-1" class="doc-section widget-scrollsync-section" data-row-id="1" data-row-type="options" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Options&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="1"><input type="hidden" name="Tasks[1][number]" data-row-field="sortno" value="1"><input type="hidden" name="Tasks[1][type]" value="options"><span data-value="name">1 Options</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td colspan="2">
-
+    
         <table class="options_list">
             <thead>
             <tr>
@@ -116,7 +114,7 @@
             </tr>
             </thead>
             <tbody>
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -139,10 +137,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -165,10 +163,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -191,10 +189,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -217,10 +215,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -243,10 +241,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -269,10 +267,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -295,10 +293,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -321,10 +319,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -347,10 +345,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -373,10 +371,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -399,10 +397,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -425,10 +423,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -451,10 +449,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -477,10 +475,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -503,10 +501,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -529,10 +527,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -555,10 +553,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -581,10 +579,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -607,10 +605,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -633,10 +631,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -659,10 +657,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -685,10 +683,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -711,10 +709,10 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
-
+                
 
                                     <tr class="doc-section-item">
                         <td class="first"></td>
@@ -728,7 +726,7 @@
                                     title="Add item"
                                     aria-label="Add item">+</button></td>
                             <script type="text/template" class="template template-doc-section-item">
-
+                                                                
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -751,7 +749,7 @@
                     type="button"
                     aria-label="Remove item">-</button>
         </td>
-
+    
 </tr>
 
                             </script>
@@ -761,9 +759,9 @@
     </td> </tr>
 <tr><td>Outputfile</td><td><input type="text" name="Tasks[1][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
                                 <div id="sections-2" class="doc-section widget-scrollsync-section" data-row-id="2" data-row-type="data_projects" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Project data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="2"><input type="hidden" name="Tasks[2][number]" data-row-field="sortno" value="2"><input type="hidden" name="Tasks[2][type]" value="data_projects"><span data-value="name">2 Project data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[2][caption]" value="Project data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[2][canskip]" value="0"><label for="tasks-2-canskip"><input type="checkbox" name="Tasks[2][canskip]" value="1" id="tasks-2-canskip">Task can be skipped by user</label></div></td></tr><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[2][iris]" value="0"><label for="tasks-2-iris"><input type="checkbox" name="Tasks[2][iris]" value="1" id="tasks-2-iris">Output IRIs instead of IDs</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[2][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
-                                <div id="sections-3" class="doc-section widget-scrollsync-section" data-row-id="3" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="3"><input type="hidden" name="Tasks[3][number]" data-row-field="sortno" value="3"><input type="hidden" name="Tasks[3][type]" value="data_articles"><span data-value="name">3 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[3][caption]" value="Article data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[3][canskip]" value="0"><label for="tasks-3-canskip"><input type="checkbox" name="Tasks[3][canskip]" value="1" id="tasks-3-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Article types</td><td><div class="input text"><input type="text" name="Tasks[3][articletypes]" placeholder="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" id="tasks-3-articletypes" aria-label="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" value="epi-book"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][matchprojects]" value="0"><label for="tasks-3-matchprojects"><input type="checkbox" name="Tasks[3][matchprojects]" value="1" checked="checked" id="tasks-3-matchprojects">All articles in selected projects</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][copyimages]" value="0"><label for="tasks-3-copyimages"><input type="checkbox" name="Tasks[3][copyimages]" value="1" help="Add metadata to the image files and copy them to the target folder" id="tasks-3-copyimages">Copy images </label></div></td><tr><td>Image item types</td><td><div class="input text"><input type="text" name="Tasks[3][imagetypes]" placeholder="A comma separated list of item types, e.g. &quot;images&quot;" id="tasks-3-imagetypes" aria-label="A comma separated list of item types, e.g. &quot;images&quot;" value=""></div></td><tr><td>Image metadata configuration</td><td><div class="input textarea"><textarea name="Tasks[3][metadata]" placeholder="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" id="tasks-3-metadata" aria-label="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" rows="5"></textarea></div></td><tr><td>Image folder in the current job folder</td><td><div class="input text"><input type="text" name="Tasks[3][imagefolder]" placeholder="For example, &quot;images&quot;" id="tasks-3-imagefolder" aria-label="For example, &quot;images&quot;" value=""></div></td><tr><td>Output format</td><td><div class="input select"><select name="Tasks[3][format]" id="tasks-3-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option></select></div></td><tr><td>Data snippets</td><td><div class="input text"><input type="text" name="Tasks[3][snippets]" placeholder="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" id="tasks-3-snippets" aria-label="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" value=""></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][iris]" value="0"><label for="tasks-3-iris"><input type="checkbox" name="Tasks[3][iris]" value="1" id="tasks-3-iris">Output IRIs instead of IDs</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][wrap]" value="0"><label for="tasks-3-wrap"><input type="checkbox" name="Tasks[3][wrap]" value="1" help="Add prolog and epilog to the output, e.g. the XML declaration and XML root tags." id="tasks-3-wrap">Wrap content (add prolog and epilog)</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[3][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
-                                <div id="sections-4" class="doc-section widget-scrollsync-section" data-row-id="4" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="4"><input type="hidden" name="Tasks[4][number]" data-row-field="sortno" value="4"><input type="hidden" name="Tasks[4][type]" value="data_articles"><span data-value="name">4 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[4][caption]" value="Article data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[4][canskip]" value="0"><label for="tasks-4-canskip"><input type="checkbox" name="Tasks[4][canskip]" value="1" id="tasks-4-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Article types</td><td><div class="input text"><input type="text" name="Tasks[4][articletypes]" placeholder="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" id="tasks-4-articletypes" aria-label="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" value="epi-article"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][matchprojects]" value="0"><label for="tasks-4-matchprojects"><input type="checkbox" name="Tasks[4][matchprojects]" value="1" id="tasks-4-matchprojects">All articles in selected projects</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][copyimages]" value="0"><label for="tasks-4-copyimages"><input type="checkbox" name="Tasks[4][copyimages]" value="1" help="Add metadata to the image files and copy them to the target folder" id="tasks-4-copyimages">Copy images </label></div></td><tr><td>Image item types</td><td><div class="input text"><input type="text" name="Tasks[4][imagetypes]" placeholder="A comma separated list of item types, e.g. &quot;images&quot;" id="tasks-4-imagetypes" aria-label="A comma separated list of item types, e.g. &quot;images&quot;" value=""></div></td><tr><td>Image metadata configuration</td><td><div class="input textarea"><textarea name="Tasks[4][metadata]" placeholder="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" id="tasks-4-metadata" aria-label="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is an extraction key for a image item. Example: {&quot;licence&quot;:&quot;file_meta.licence&quot;,&quot;copyright&quot;:&quot;file_copyright&quot;}" rows="5"></textarea></div></td><tr><td>Image folder in the current job folder</td><td><div class="input text"><input type="text" name="Tasks[4][imagefolder]" placeholder="For example, &quot;images&quot;" id="tasks-4-imagefolder" aria-label="For example, &quot;images&quot;" value=""></div></td><tr><td>Output format</td><td><div class="input select"><select name="Tasks[4][format]" id="tasks-4-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option></select></div></td><tr><td>Data snippets</td><td><div class="input text"><input type="text" name="Tasks[4][snippets]" placeholder="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" id="tasks-4-snippets" aria-label="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" value=""></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][iris]" value="0"><label for="tasks-4-iris"><input type="checkbox" name="Tasks[4][iris]" value="1" id="tasks-4-iris">Output IRIs instead of IDs</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][wrap]" value="0"><label for="tasks-4-wrap"><input type="checkbox" name="Tasks[4][wrap]" value="1" help="Add prolog and epilog to the output, e.g. the XML declaration and XML root tags." id="tasks-4-wrap">Wrap content (add prolog and epilog)</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[4][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
-                                <div id="sections-5" class="doc-section widget-scrollsync-section" data-row-id="5" data-row-type="data_index" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Index data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="5"><input type="hidden" name="Tasks[5][number]" data-row-field="sortno" value="5"><input type="hidden" name="Tasks[5][type]" value="data_index"><span data-value="name">5 Index data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[5][caption]" value="Index data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[5][canskip]" value="0"><label for="tasks-5-canskip"><input type="checkbox" name="Tasks[5][canskip]" value="1" id="tasks-5-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[5][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-3" class="doc-section widget-scrollsync-section" data-row-id="3" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="3"><input type="hidden" name="Tasks[3][number]" data-row-field="sortno" value="3"><input type="hidden" name="Tasks[3][type]" value="data_articles"><span data-value="name">3 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[3][caption]" value="Article data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[3][canskip]" value="0"><label for="tasks-3-canskip"><input type="checkbox" name="Tasks[3][canskip]" value="1" id="tasks-3-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Article types</td><td><div class="input text"><input type="text" name="Tasks[3][articletypes]" placeholder="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" id="tasks-3-articletypes" aria-label="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" value="epi-book"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][matchprojects]" value="0"><label for="tasks-3-matchprojects"><input type="checkbox" name="Tasks[3][matchprojects]" value="1" checked="checked" id="tasks-3-matchprojects">All articles in selected projects</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][copyimages]" value="0"><label for="tasks-3-copyimages"><input type="checkbox" name="Tasks[3][copyimages]" value="1" help="Add metadata to the image files and copy them to the target folder" id="tasks-3-copyimages">Copy images </label></div></td><tr><td>Image item types</td><td><div class="input text"><input type="text" name="Tasks[3][imagetypes]" placeholder="A comma separated list of item types, e.g. &quot;images&quot;" id="tasks-3-imagetypes" aria-label="A comma separated list of item types, e.g. &quot;images&quot;" value=""></div></td><tr><td>Image metadata configuration</td><td><div class="input textarea"><textarea name="Tasks[3][metadata]" placeholder="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is a placeholder extraction key from the perspective of an image item. The configuration will be merged with the types configuration for the image item. Example: {&quot;licence&quot;:&quot;{file_meta.licence}&quot;,&quot;{copyright&quot;:&quot;file_copyright}&quot;}" id="tasks-3-metadata" aria-label="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is a placeholder extraction key from the perspective of an image item. The configuration will be merged with the types configuration for the image item. Example: {&quot;licence&quot;:&quot;{file_meta.licence}&quot;,&quot;{copyright&quot;:&quot;file_copyright}&quot;}" rows="5"></textarea></div></td><tr><td>Image folder in the current job folder</td><td><div class="input text"><input type="text" name="Tasks[3][imagefolder]" placeholder="For example, &quot;images&quot;" id="tasks-3-imagefolder" aria-label="For example, &quot;images&quot;" value=""></div></td><tr><td>Output format</td><td><div class="input select"><select name="Tasks[3][format]" id="tasks-3-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option><option value="geojson">GeoJSON</option></select></div></td><tr><td>Data snippets</td><td><div class="input text"><input type="text" name="Tasks[3][snippets]" placeholder="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" id="tasks-3-snippets" aria-label="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" value=""></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][iris]" value="0"><label for="tasks-3-iris"><input type="checkbox" name="Tasks[3][iris]" value="1" id="tasks-3-iris">Output IRIs instead of IDs</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[3][wrap]" value="0"><label for="tasks-3-wrap"><input type="checkbox" name="Tasks[3][wrap]" value="1" help="Add prolog and epilog to the output, e.g. the XML declaration and XML root tags." id="tasks-3-wrap">Wrap content (add prolog and epilog)</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[3][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-4" class="doc-section widget-scrollsync-section" data-row-id="4" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="4"><input type="hidden" name="Tasks[4][number]" data-row-field="sortno" value="4"><input type="hidden" name="Tasks[4][type]" value="data_articles"><span data-value="name">4 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[4][caption]" value="Article data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[4][canskip]" value="0"><label for="tasks-4-canskip"><input type="checkbox" name="Tasks[4][canskip]" value="1" id="tasks-4-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Article types</td><td><div class="input text"><input type="text" name="Tasks[4][articletypes]" placeholder="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" id="tasks-4-articletypes" aria-label="A comma separated list of article types, e.g. &quot;object&quot; or &quot;text&quot;" value="epi-article"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][matchprojects]" value="0"><label for="tasks-4-matchprojects"><input type="checkbox" name="Tasks[4][matchprojects]" value="1" id="tasks-4-matchprojects">All articles in selected projects</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][copyimages]" value="0"><label for="tasks-4-copyimages"><input type="checkbox" name="Tasks[4][copyimages]" value="1" help="Add metadata to the image files and copy them to the target folder" id="tasks-4-copyimages">Copy images </label></div></td><tr><td>Image item types</td><td><div class="input text"><input type="text" name="Tasks[4][imagetypes]" placeholder="A comma separated list of item types, e.g. &quot;images&quot;" id="tasks-4-imagetypes" aria-label="A comma separated list of item types, e.g. &quot;images&quot;" value=""></div></td><tr><td>Image metadata configuration</td><td><div class="input textarea"><textarea name="Tasks[4][metadata]" placeholder="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is a placeholder extraction key from the perspective of an image item. The configuration will be merged with the types configuration for the image item. Example: {&quot;licence&quot;:&quot;{file_meta.licence}&quot;,&quot;{copyright&quot;:&quot;file_copyright}&quot;}" id="tasks-4-metadata" aria-label="Add the JSON configuration for metadata extraction. Each key is a metadata field in the file, each value is a placeholder extraction key from the perspective of an image item. The configuration will be merged with the types configuration for the image item. Example: {&quot;licence&quot;:&quot;{file_meta.licence}&quot;,&quot;{copyright&quot;:&quot;file_copyright}&quot;}" rows="5"></textarea></div></td><tr><td>Image folder in the current job folder</td><td><div class="input text"><input type="text" name="Tasks[4][imagefolder]" placeholder="For example, &quot;images&quot;" id="tasks-4-imagefolder" aria-label="For example, &quot;images&quot;" value=""></div></td><tr><td>Output format</td><td><div class="input select"><select name="Tasks[4][format]" id="tasks-4-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option><option value="geojson">GeoJSON</option></select></div></td><tr><td>Data snippets</td><td><div class="input text"><input type="text" name="Tasks[4][snippets]" placeholder="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" id="tasks-4-snippets" aria-label="A comma separated list of snippets to retrieve, e.g. &quot;published,comments&quot;" value=""></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][iris]" value="0"><label for="tasks-4-iris"><input type="checkbox" name="Tasks[4][iris]" value="1" id="tasks-4-iris">Output IRIs instead of IDs</label></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[4][wrap]" value="0"><label for="tasks-4-wrap"><input type="checkbox" name="Tasks[4][wrap]" value="1" help="Add prolog and epilog to the output, e.g. the XML declaration and XML root tags." id="tasks-4-wrap">Wrap content (add prolog and epilog)</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[4][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
+                                <div id="sections-5" class="doc-section widget-scrollsync-section" data-row-id="5" data-row-type="data_index" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Index data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="5"><input type="hidden" name="Tasks[5][number]" data-row-field="sortno" value="5"><input type="hidden" name="Tasks[5][type]" value="data_index"><span data-value="name">5 Index data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[5][caption]" value="Index data"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[5][canskip]" value="0"><label for="tasks-5-canskip"><input type="checkbox" name="Tasks[5][canskip]" value="1" id="tasks-5-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Output format</td><td><div class="input select"><select name="Tasks[5][format]" id="tasks-5-format"><option value="xml" selected="selected">XML</option><option value="json">JSON</option><option value="csv">CSV</option><option value="md">Markdown</option><option value="ttl">Turtle</option><option value="rdf">RDF/XML</option><option value="jsonld">JsonLd</option><option value="geojson">GeoJSON</option></select></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[5][iris]" value="0"><label for="tasks-5-iris"><input type="checkbox" name="Tasks[5][iris]" value="1" id="tasks-5-iris">Output IRIs instead of IDs</label></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[5][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
                                 <div id="sections-6" class="doc-section widget-scrollsync-section" data-row-id="6" data-row-type="bundle" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Bundle files&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="6"><input type="hidden" name="Tasks[6][number]" data-row-field="sortno" value="6"><input type="hidden" name="Tasks[6][type]" value="bundle"><span data-value="name">6 Bundle files</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[6][caption]" value="Bundle files"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[6][canskip]" value="0"><label for="tasks-6-canskip"><input type="checkbox" name="Tasks[6][canskip]" value="1" id="tasks-6-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Source folder, relative to the job folder</td><td><div class="input text"><input type="text" name="Tasks[6][source]" placeholder="Leave empty to concatenate all default files produced by the current job." id="tasks-6-source" aria-label="Leave empty to concatenate all default files produced by the current job." value=""></div></td><tr><td>Prefix</td><td><div class="input textarea"><textarea name="Tasks[6][prefix]" placeholder="The start of the output file." id="tasks-6-prefix" aria-label="The start of the output file." rows="5">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
 &lt;book&gt;</textarea></div></td><tr><td>Postfix</td><td><div class="input textarea"><textarea name="Tasks[6][postfix]" placeholder="The end of the output file." id="tasks-6-postfix" aria-label="The end of the output file." rows="5">
 &lt;/book&gt;</textarea></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[6][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
@@ -777,7 +775,7 @@
                                 <div id="sections-14" class="doc-section widget-scrollsync-section" data-row-id="14" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="14"><input type="hidden" name="Tasks[14][number]" data-row-field="sortno" value="14"><input type="hidden" name="Tasks[14][type]" value="replace"><span data-value="name">14 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Task caption</td><td><input type="text" name="Tasks[14][caption]" value="Search and replace"></td></tr><tr><td></td><td><div class="input checkbox"><input type="hidden" name="Tasks[14][canskip]" value="0"><label for="tasks-14-canskip"><input type="checkbox" name="Tasks[14][canskip]" value="1" id="tasks-14-canskip">Task can be skipped by user</label></div></td></tr><tr><td>Input file</td><td><input type="text" name="Tasks[14][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>Replacement file</td><td><div class="input choose"><div class="widget-choose"><input type="text" name="Tasks[14][replacefile]" id="tasks-14-replacefile" value="pipelines/templates/epi-contract-numbers.txt" data-path="" data-itemtype="file"><button id="tasks-14-replacefile_button" type="button" class="" data-input="tasks-14-replacefile" data-itemtype="file" data-url="/files/select?root=shared&amp;path=pipelines%2Ftemplates">...</button></div></div></td></tr><tr><td>Outputfile</td><td><input type="text" name="Tasks[14][outputfile]" placeholder="Leave empty to use the default file name" value=""></td></tr></tbody></table></div></div>
                                 <div id="sections-15" class="doc-section widget-scrollsync-section" data-row-id="15" data-row-type="save" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Save to file&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="15"><input type="hidden" name="Tasks[15][number]" data-row-field="sortno" value="15"><input type="hidden" name="Tasks[15][type]" value="save"><span data-value="name">15 Save to file</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Input file</td><td><input type="text" name="Tasks[15][inputfile]" placeholder="Leave empty to use default" value=""></td></tr><tr><td>File extension</td><td><div class="input text"><input type="text" name="Tasks[15][extension]" id="tasks-15-extension" value="doc"></div></td><tr><td colspan="2"><div class="input checkbox"><input type="hidden" name="Tasks[15][download]" value="0"><label for="tasks-15-download"><input type="checkbox" name="Tasks[15][download]" value="1" checked="checked" id="tasks-15-download">Force download</label></div></td></tr>
 </tbody></table></div></div>
-
+        
     </form></div>
 <!-- Actions -->
 
@@ -786,14 +784,10 @@
                 <div class="content-footer"></div>
 
             </div>
-
+        
         <!-- Right sidebar -->
+                    <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
-
-            </div>
-
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><button data-shortcuts="Ctrl+S F10" title="Save (Ctrl+S F10)" aria-label="Save" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" form="form-edit-pipelines-21" data-role="save" data-target="pipelines-21" type="submit">Save</button></li><li><button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-edit-pipelines-21" data-role="cancel" data-target="pipelines-21">Cancel</button></li><li><button type="button" form="form-edit-pipelines-21" data-role="delete" data-target="pipelines-21" class="">Delete</button></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-pipelines-edit" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><button data-shortcuts="Ctrl+S F10" title="Save (Ctrl+S F10)" aria-label="Save" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" form="form-edit-pipelines-21" data-role="save" data-target="pipelines-21" type="submit">Save</button></li><li><button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-edit-pipelines-21" data-role="cancel" data-target="pipelines-21">Cancel</button></li><li><button type="button" form="form-edit-pipelines-21" data-role="delete" data-target="pipelines-21" class="">Delete</button></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-pipelines-edit" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
 </div>
-</body>
-</html>
+</body></html>

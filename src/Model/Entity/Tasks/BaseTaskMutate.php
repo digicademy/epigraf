@@ -10,6 +10,7 @@
 
 namespace App\Model\Entity\Tasks;
 
+use App\Model\Entity\BaseEntity;
 use App\Model\Entity\BaseTask;
 use App\Model\Interfaces\MutateTableInterface;
 use Cake\Http\Exception\InternalErrorException;
@@ -59,6 +60,10 @@ class BaseTaskMutate extends BaseTask
             'sortby' => $this->job->config['params']['sortby'] ?? null
         ];
 
+        if (!empty($this->config['cursor'])) {
+            $params['cursor'] = $this->config['cursor'] ?? null;
+        }
+
         return $params;
     }
 
@@ -101,8 +106,17 @@ class BaseTaskMutate extends BaseTask
                 $offset,
                 $limit
             );
+
+            foreach ($entities as $entity) {
+                if ($entity instanceof BaseEntity) {
+                    $errors = $entity->getErrors();
+                    $errors = $errors['mutate'] ?? [];
+                    $errors = array_map(fn($error) => ['message' => $error], $errors);
+                    $this->job->addTaskErrors($errors);
+                }
+            }
         } catch (Exception $e) {
-            $msg = __('Error mutating entitites: {error}.', $taskParams);
+            $msg = __('Error mutating entitites: {error}.', ['error' => $e->getMessage()]);
             $this->job->addTaskError($msg, $taskParams, $e);
             return true;
         }

@@ -54,6 +54,7 @@
 
     <?= $this->Form->end() ?>
 </div>
+
 <!-- Actions -->
 <?php
     $this->setShowBlock(['footer']);

@@ -10,6 +10,7 @@
 <?php
 use App\Model\Entity\Databank;
 use App\View\AppView;
+use App\Utilities\Converters\Attributes;
 ?>
 
 <?php
@@ -24,7 +25,7 @@ use App\View\AppView;
 <?php
     $options = ['edit' => $edit, 'mode' => $mode, 'template_article' => $templateArticle];
     $params = $this->getConfig('options')['params']; // Attributes::paramsToQueryString($this->getConfig('options')['params']);
-    $docContentToTop = (!empty($options['edit']) && ($options['mode'] !== 'code'));
+    $docContentToTop = Attributes::isOption('position', 'top', $templateArticle, $edit);
     $this->append('css', $this->Types->getTagStyles());
     $entityHelper = $edit ? $this->EntityInput : $this->EntityHtml;
 ?>
@@ -164,8 +165,10 @@ use App\View\AppView;
 </div>
 
 <!-- Right sidebar -->
-<?php $this->sidebarInit(['left' => 'expanded', 'right' => 'expanded']); ?>
-<?php $this->sidebarSize(['left' => 2, 'right' => 3]); ?>
+<?php $this->setSidebarConfig([
+    'left' => ['init' => 'expanded', 'size' => 2],
+    'right' => ['init' => 'expanded', 'size' => 3]
+]); ?>
 
 <?php
     $this->setShowBlock(['footer']);
@@ -177,11 +180,11 @@ use App\View\AppView;
     <?php
 
         // TODO: generate link in App.openDetails()
-        if ($this->request->is('ajax') && !in_array($mode, ['code'])) {
+        if ($this->request->is('ajax') && !in_array($mode, [MODE_REVISE])) {
             $action = $this->Link->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
             $url = ['action' => $action, $entity->id];
             if (!empty($params['published'])) {
-                $url['?'] = ['mode' => 'stage'];
+                $url['?'] = ['mode' => MODE_STAGE];
             }
             $this->Link->addAction(
                 __('Open article'),

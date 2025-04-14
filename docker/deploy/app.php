@@ -8,6 +8,7 @@ use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
 $redisServer = env('REDIS_HOST', false);
+
 if (!empty($redisServer)) {
     $cacheConfig = [
         'default' => [
@@ -57,6 +58,13 @@ if (!empty($redisServer)) {
             'server' => $redisServer,
             'prefix' => 'epi_results_',
             'duration' => '+1 day'
+        ],
+
+        'services' => [
+            'className' => RedisEngine::class,
+            'server' => 'redis',
+            'prefix' => 'epi_services_',
+            'duration' => '+1 year'
         ]
     ];
 } else {
@@ -115,6 +123,12 @@ if (!empty($redisServer)) {
                 'path' => CACHE . 'results' . DS,
                 'prefix' => 'epi_results_',
                 'duration' => '+1 day'
+        ],
+        'services' => [
+            'className' => 'File',
+            'path' => CACHE . 'services' . DS,
+            'prefix' => 'epi_services_',
+            'duration' => '+1 year'
         ]
     ];
 }
@@ -176,6 +190,7 @@ return [
     'Pages' => [
         'contexthelp' => 'I. Kontexthilfe'
     ],
+
 
     /**
      * Configure basic information about the application.
@@ -250,6 +265,21 @@ return [
     ],
 
     /**
+     * Background job configuration:
+     * - Set the connection to the Redis server
+     * - Set delay to `true`
+     * - Start a worker with `bin/cake jobs process`
+     */
+    'Jobs' => [
+        'delay' => env('JOBS_DELAY', false),
+        'scheme' => 'tcp',
+        'host'   =>  env('JOBS_REDIS_HOST', 'localhost'),
+        'port'   => 6379,
+        'queue_name' => 'jobs_queue',
+        'status_name' => 'jobs_status'
+    ],
+
+    /**
      * Configure the cache adapters.
      */
     'Cache' => $cacheConfig,
@@ -288,6 +318,7 @@ return [
         'skipLog' => [],
         'log' => true,
         'trace' => true,
+        'logger' => \App\Error\ErrorLogger::class
     ],
 
     /**
@@ -342,6 +373,16 @@ return [
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
+    ],
+
+    /**
+     * Configure external API services
+     */
+    'Services' => [
+        'llm' => [
+            'base_url' => env('DATABOARD_URL', 'https://databoard.uni-muenster.de/'),
+            'access_token' => env('DATABOARD_ACCESSTOKEN', null)
+        ]
     ],
 
     /**

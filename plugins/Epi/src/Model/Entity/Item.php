@@ -18,6 +18,7 @@ use App\Utilities\Converters\HistoricDates;
  *
  * # Database fields (without inherited fields)
  * @property string $itemtype
+ * @property string $itemgroup
  * @property int $sortno
  * @property int $properties_id
  * @property string $value
@@ -91,6 +92,7 @@ class Item extends BaseEntity
         'published' => true,
         'deleted' => true,
         'itemtype' => true,
+        'itemgroup' => true,
         'norm_iri' => true,
         'sortno' => true,
         'properties_id' => true,
@@ -134,6 +136,7 @@ class Item extends BaseEntity
         'id',
         'to_id',
         'itemtype',
+        'itemgroup',
         'norm_iri',
         'sortno',
         'sections_id',
@@ -148,6 +151,7 @@ class Item extends BaseEntity
         'file_path',
         'file_source',
         'file_copyright',
+        'file_meta',
         'file_online',
         'date_sort',
         'date_value',
@@ -172,6 +176,7 @@ class Item extends BaseEntity
         'id',
         'to_id',
         'itemtype',
+        'itemgroup',
         'published',
         'sortno',
         'sections_id',
@@ -204,6 +209,7 @@ class Item extends BaseEntity
         'modified',
         'published',
         'type' => 'itemtype', //TODO: rename in database
+        'group' => 'itemgroup',
         'iri' => 'norm_iri',
         'sortno',
         'value',
@@ -219,6 +225,7 @@ class Item extends BaseEntity
         'file_source',
         'file_copyright',
         'file_online',
+        'file_meta',
         'date_sort',
         'date' => 'date_value',
         'date_add',
@@ -245,7 +252,7 @@ class Item extends BaseEntity
         'pos_x' => 'position',
         'pos_y' => 'position',
         'published' => 'published',
-//        'property' => 'property',
+        'property' => 'property',
         'sortno' => 'number'
     ];
 
@@ -272,12 +279,37 @@ class Item extends BaseEntity
     {
         $type = new DefaultType([
             'scope' => 'items',
-            'mode' => 'default',
+            'mode' => MODE_DEFAULT,
             'name' => 'default',
             'norm_iri' => 'default',
             'config' => []
         ]);
         return $type;
+    }
+
+    /**
+     * Get the ID as ID, prefixed ID or IRI pathc
+     *
+     * @param array $fieldName The field name as an array of one or two components
+     * @param array $options
+     * @return string|integer|null
+     */
+    public function getIdFormatted($fieldName, $options)
+    {
+        $prefix = $options['prefixIds'] ?? false;
+        $iri = $options['iriIds'] ?? false;
+        if (($prefix === false) && ($iri === true)) {
+            if ($fieldName[0] === 'id') {
+                return $this->iriPath;
+            }
+            elseif (($fieldName[0] === 'sections_id') && !empty($this->container)) {
+                return $this->container->iriPath;
+            }
+            elseif (($fieldName[0] === 'articles_id') && !empty($this->root)) {
+                return $this->root->iriPath;
+            }
+        }
+        return parent::getIdFormatted($fieldName, $options);
     }
 
     /**
@@ -377,6 +409,10 @@ class Item extends BaseEntity
      */
     public function getTree($targets = [])
     {
+        if (isset($this->_lookup['tree'])) {
+            return $this->_lookup['tree'];
+        }
+
         $nodes = [];
 
         if (!$this->getEntityIsVisible()) {
@@ -386,7 +422,10 @@ class Item extends BaseEntity
         // Item footnotes
         if (empty($targets) || isset($targets['footnotes'])) {
             foreach ($this->footnotes as $child) {
-                if (!empty($targets['footnotes']) && !in_array($child->from_tagname, $targets['footnotes'])) {
+                if (
+                    !empty($targets['footnotes']) &&
+                    (is_array($targets['footnotes']) && !in_array($child->from_tagname, $targets['footnotes']))
+                ) {
                     continue;
                 }
 
@@ -405,7 +444,10 @@ class Item extends BaseEntity
         // Item annotations
         if (empty($targets) || isset($targets['annotations'])) {
             foreach ($this->annotations as $child) {
-                if (!empty($targets['annotations']) && !in_array($child->from_tagname, $targets['annotations'])) {
+                if (
+                    !empty($targets['annotations']) &&
+                    (is_array($targets['annotations']) && !in_array($child->from_tagname, $targets['annotations']))
+                ) {
                     continue;
                 }
 
@@ -454,7 +496,9 @@ class Item extends BaseEntity
             );
         }
 
+        $this->_lookup['tree'] = $nodes;
         return $nodes;
+        //return collection($nodes)->groupBy('id')->toArray();
     }
 
     /**

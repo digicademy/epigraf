@@ -792,8 +792,8 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                                 'id' => $entity->id,
                                 'field' => $fieldName[0],
                                 'tagid' => $tagid,
-                                'tagname' => $content ? $tag['name'] : $tag,
-                                'content' => $content ? $tag['content'] : null
+                                'tagname' => ($content && is_array($tag)) ? $tag['name'] : $tag,
+                                'content' => ($content && is_array($tag)) ? $tag['content'] : null
                             ];
 
                             $tag = new Tag($tag,
@@ -844,6 +844,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                     $link = $links[$element['attributes']['id']][0];
 
                     $element['attributes']['data-link-target'] = $link->getValueFormatted('to_id', $options);
+                    $element['attributes']['data-link-iri'] = $link->getValueFormatted('to_iri_path', $options);
                     $element['attributes']['data-link-value'] = $link->getValueFormatted('to_caption', $options);
 
                     if (!isset($link->type->config['attributes']['value'])) {
@@ -920,9 +921,9 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
 
         $default = $this->_fields_formats[$fieldName[0]] ?? 'raw';
-        if ($default !== 'raw') {
-            return $default;
-        }
+//        if ($default !== 'raw') {
+//            return $default;
+//        }
 
         $type = $this->type ?? [];
         if (empty($type)) {
@@ -1219,6 +1220,19 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
+     * Get the URL of the epigraf article
+     *
+     * @return string
+     */
+    protected function _getInternalUrl()
+    {
+        return '/epi/'
+            . Databank::removePrefix($this->databaseName)
+            . '/' . $this->tableName . '/view/'
+            . $this->id;
+    }
+
+    /**
      * Get XML tag
      *
      * @return mixed
@@ -1460,13 +1474,15 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      *   'xmpRights:UsageTerms' => 'CC BY-NC 4.0'
      * ]
      *
-     * Adding exif data works for: png and jpeg files
+     * Adding exif data works for: jpg and jpeg files
      *
      * @param string $targetFolder The target folder, absolute path on the server
      * @param array $metadataConfig If a metadata configuration is provided, metadata is written to the files.
-     *                              Each key is a metadata field in the file,
-     *                              each value is an extraction key from the perspective of an image item.
-     *                              Example: ["xmpRights:UsageTerms" => "file_licence","dc:rights" => "file_copyright"]
+     *                              Each key is a metadata field in the file, each value is a placeholder extraction key.
+     *                              Instead of a single placeholder, an array of placeholders can be provided.
+     *                              In this case, the first value not evaluating to null or an empty string is used.
+     *                              The placeholder extraction key is resolved from the perspective of an image item.
+     *                              Example: ["xmpRights:UsageTerms" => "{file_licence}","dc:rights" => "{file_copyright}"]
      * @return boolean
      */
     public function copyImage($targetFolder, $metadataConfig)
@@ -1483,10 +1499,27 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         if ($result && in_array($this->file_properties['extension'], ['jpg', 'jpeg'])) {
             $metadataConfig = array_merge($this->file_properties['metadata'] ?? [], $metadataConfig);
             $metadata = [];
-            foreach ($metadataConfig as $field => $value) {
-                $metadata[$field] = $this->getValueNested($value, ['format' => 'txt', 'aggregate' => 'collapse']);
+            foreach ($metadataConfig as $field => $placeholderArray) {
+                $placeholderArray = !is_array($placeholderArray) ? [$placeholderArray] : $placeholderArray;
+                $value = null;
+                foreach ($placeholderArray as $placeholderString) {
+                    $value = $this->getValuePlaceholder($placeholderString, ['format' => false]);
+                    $value = is_array($value) ? array_map(fn($x) => strval($x), $value) : $value;
+                    $value = is_array($value) ? implode(', ', $value) : $value;
+                    if (!is_null($value) && ($value !== '')) {
+                        break;
+                    }
+                }
+                $metadata[$field] = $value;
             }
+            $metadata = array_filter($metadata);
+            $newFilename = $metadata['filename'] ?? $filename;
+            unset($metadata['filename']);
+
             $result = Files::updateXmp(Files::joinPath([$targetFolder, $filename]), $metadata, true);
+            if ($result && ($newFilename !== $filename)) {
+                $result = Files::renameFile($targetFolder, $filename, $newFilename);
+            }
         }
 
         return $result;
@@ -1522,6 +1555,20 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     protected function _getPublicIri()
     {
         return str_contains($this->norm_iri ?: ':', ':') ? $this->id : $this->norm_iri;
+    }
+
+    /**
+     * Get the relative IRI
+     *
+     * @return null|string
+     */
+    protected function _getIriUrl()
+    {
+        $iriPath = $this->iriPath;
+        if (!empty($iriPath)) {
+            return  '/epi/' . $this->database . '/iri/' . $iriPath;
+        }
+        return null;
     }
 
     /**
@@ -1742,6 +1789,65 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
+     * Generate geo data based on the types config.
+     *
+     * Add the geodata key to the types configuration and
+     * set its value to the field that contains the geodata.
+     *
+     * Example:
+     *
+     * "geodata": "value"
+     *
+     * TODO: Do we need the distinction between getDateGeoData() and getExportGeoData(),
+     *       analog to the triples generator?
+     *
+     * @param array $options In the options, provide a format key (html, ttl...)
+     * @return array
+     */
+    public function getExportGeoData($options = []): array
+    {
+
+        if ($options['setRoot'] ?? false) {
+            $this->prepareRoot();
+        }
+
+        if (!$this->getEntityIsVisible($options)) {
+            return [];
+        }
+
+        $geodata = [];
+        $format = $options['format'] ?? 'geojson';
+        $geoDataField = $this->type->merged['geodata'] ?? [];
+
+        if (!empty($geoDataField) && is_string($geoDataField)) {
+
+            $extraData = [
+                'id' => $this->id,
+                'segment' => $this->type->name ?? ''
+            ];
+
+            if (!empty($options['properties'])) {
+                $root = empty($this->container) ?  $this->root : ($this->container->root ?? $this->container);
+                $extraData['properties'] = $root->getMatchedProperties($options['properties']);
+            }
+
+            $geoValue = $this->getValueNested($geoDataField, ['format' => $format, 'geodata' => $extraData]);
+            if (!empty($geoValue)) {
+                $geodata[] = $geoValue;
+            }
+        }
+
+        // Add geo data from children
+        if (!empty($this->_children)) {
+            foreach (($this[$this->_children] ?? []) as $child) {
+                $geodata = array_merge($geodata, $child->getExportGeoData($options));
+            }
+        }
+
+        return $geodata;
+    }
+
+    /**
      * Get selected fields
      *
      * The export fields can be determined in three ways
@@ -1865,6 +1971,16 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         if (($options['clearIri'] ?? false) && ((!$this instanceof RootEntity))) {
             unset($fields['norm_iri']);
             $fields = array_filter($fields, fn($v) => $v !== 'norm_iri');
+        }
+
+        // Rename types fields
+        if (($options['types'] ?? '') === 'merge' ) {
+            $typeField = $this->_fields_import['type'] ?? '';
+            $fieldIdx = array_search($typeField, $fields);
+            if (!empty($typeField) && $fieldIdx !== false) {
+                $fields[$fieldIdx] = is_array($fields[$fieldIdx]) ? $fields[$fieldIdx] : ['key' => $typeField];
+                $fields[$fieldIdx]['name'] = 'type';
+            }
         }
 
         // Rename, remove and parse fields
@@ -2032,6 +2148,35 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
+     * Return geo data from the entities with export ready data
+     *
+     * @param array $options passed to getExportValues
+     * @return array
+     */
+    public function getDataGeo($options)
+    {
+        if (!$this->getEntityIsVisible($options)) {
+            return [];
+        }
+
+        $geodata = $this->getExportGeoData($options);
+        return compact('geodata');
+    }
+
+    /**
+     * Get all property IDs referenced in the article
+     *
+     * @return \Generator Property IDs
+     */
+    public function getDataProperties() {
+        // Yield nothing, overwrite in child classes
+        if (false) {
+            yield;
+        }
+    }
+
+
+    /**
      * Return a flat array of all nested entities with export ready data
      *
      * Nested Entities (not nested arrays) can be converted into wide format,
@@ -2041,8 +2186,8 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * All other nested entities are returned in long format.
      *
      * @param array $options Options passed to getExportValues.
-     * @param boolean|string $keyCol
-     * @param array $keyValues
+     * @param boolean|string $keyCol If set, the path to the current entity is inserted into this field.
+     * @param array $keyValues The path to the current entity.
      * @return array
      */
     public function getDataUnnested($options, $keyCol = false, $keyValues = [])
@@ -2051,8 +2196,15 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $nestedrows = [];
 
         $data = [];
+
+        // Store extraction key
         if (!empty($keyCol)) {
             $data[$keyCol] = implode('.', $keyValues);
+        }
+
+        // Clear first level entities
+        if (empty($keyValues) && !empty($options['clear'])) {
+            $data['_action'] = 'clear';
         }
 
         //$data['table'] = $data['table_name'] ?? '';
@@ -2239,10 +2391,11 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * Fields listed with an alphabetic key in _serialize_fields will be renamed.
      * Xml fields will be parsed.
      *
-     * Supported options:
+     * ### Supported options:
      * - params.snippets
      * - params.shape long|nested
      * - params.idents id|tmp|iri
+     * - params.types merge Whether to generate a single type field for all tables (type instead of articletyle, sectiontype...)
      * - ... //TODO: add all options
      *
      * @param array $options
@@ -2256,7 +2409,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $options['snippets'] = $options['params']['snippets'] ?? [];
         $options['formatFields'] = ($options['format'] ?? '') !== 'raw';
         $options['setRoot'] = true;
-
 
         // Which type of IDs?
         if (($options['params']['idents'] ?? 'id') === 'id') {
@@ -2281,11 +2433,18 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 $options['prepareTree'] = true;
                 $options['format'] = $extension;
             }
+            elseif ($extension === 'geojson') {
+                $options['params']['shape'] = 'geojson';
+                $options['format'] = $extension;
+            }
         }
 
         // Get data
         if ($options['params']['shape'] === 'triples') {
             $data = $this->getDataTriples($options);
+        }
+        elseif ($options['params']['shape'] === 'geojson') {
+            $data = $this->getDataGeo($options);
         }
         else {
             if ($options['params']['shape'] === 'nested') {
@@ -2369,4 +2528,31 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             }
         }
     }
+
+    /**
+     * Get property IDs referenced in the article grouped by property type
+     * that match the filter criteria
+     *
+     * @param array $filter An array of property IDs grouped by the property type
+     * @return array An array of property IDs grouped by the property type
+     */
+    public function getMatchedProperties($filter)
+    {
+        $filteredProperties = [];
+
+        if (!empty($filter)) {
+            foreach ($this->getDataProperties() as $propertyId) {
+                foreach ($filter as $propertyType => $propertyFilter) {
+                    $propertyIds = $propertyFilter['selected'] ?? [];
+                    if (in_array($propertyId, $propertyIds) && !in_array($propertyId,
+                            $filteredProperties[$propertyType] ?? [])) {
+                        $filteredProperties[$propertyType][] = $propertyId;
+                    }
+                }
+            }
+        }
+
+        return $filteredProperties;
+    }
+
 }

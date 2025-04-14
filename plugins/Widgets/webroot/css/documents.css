@@ -222,7 +222,7 @@
     flex-wrap: wrap;
     padding: 0.5em;
     /* font-family: "Caladea", serif; */
-    font-family: var(--content-font-family);
+    font-family: var(--content-font-family), sans-serif;
     /*overflow-x: auto;*/
     /*overflow-y: visible;*/
 }
@@ -253,8 +253,7 @@
 }
 
 .doc-section > .frame-placeholder::before {
-
-    font-family: var(--icon-fontfamily);
+    font-family: var(--icon-fontfamily), fantasy;
     content:"";
 }
 
@@ -326,7 +325,7 @@
 
 .doc-field-addendum .doc-field-content,
 .doc-field-addendum .doc-field-caption {
-    color:#aaa;
+    color:var(--neutral-700);
     font-size: 0.9rem;
 }
 
@@ -355,6 +354,10 @@
 .doc-section-item {
 /*    overflow: hidden;*/
     overflow-wrap: break-word;
+}
+
+.doc-section-stack .doc-section-item + .doc-section-item {
+    margin-top: 1em;
 }
 
 .doc-section-grid-table .doc-section-item.doc-section-item-empty {
@@ -416,7 +419,6 @@ button.button-links-toggle.widget-switch-icon.widget-switch-active:hover {
     margin:0;
     visibility: hidden;
     overflow: hidden;
-    margin:0;
 }
 
 
@@ -588,7 +590,7 @@ button.button-section-content {
     padding:0;
     border:0;
     background-color:transparent;
-    font-family: var(--icon-fontfamily);
+    font-family: var(--icon-fontfamily), fantasy;
     font-size: var(--icon-font-size);
 
 }
@@ -769,7 +771,10 @@ span.xml_tag_nl {
     width:100%;
     min-height:400px;
     position:relative;
+}
 
+.vertical-table .widget-map-container {
+    height: 15em;
 }
 
 .doc-section .widget-map-container-empty {
@@ -1011,8 +1016,14 @@ span.xml_tag_nl {
 
 /* Input size for sortno and pos fields */
 .widget-document-edit .doc-field.doc-fieldname-sortno input,
+.widget-document-edit .doc-field.doc-fieldname-itemgroup input,
 .widget-document-edit .doc-field.doc-fieldname-pos input {
     min-width:3em;
+}
+
+.doc-section-item-highlight .doc-field.doc-fieldname-itemgroup input {
+    background-color: var(--nav-bg-color-hover-light);
+    color: var(--button-font-color);
 }
 
 .widget-document-edit .doc-field.doc-fieldname-pos input {
@@ -1091,15 +1102,19 @@ span.xml_tag_nl {
 .doc-section-view-table .doc-field-image {
     display:none;
 }
+
 .doc-field-content {
-    overflow: hidden;
-    overflow-wrap: anywhere;
-    text-overflow: ellipsis;
-    font-family: var(--content-font-family);
+    font-family: var(--content-font-family), sans-serif;
 }
 
 .doc-fieldname-content {
-    font-family: var(--content-font-family);
+    font-family: var(--content-font-family), sans-serif;
+}
+
+.doc-article:not(.widget-document-edit) .doc-field-content {
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    text-overflow: ellipsis;
 }
 
 .doc-field-error {
@@ -1164,11 +1179,12 @@ table.doc-section-grid-table .doc-section-item-group {
     border: 1px solid var(--preview-bg-color);
     box-shadow: 3px 3px 3px var(--shadow-item);
 
-    width: 7em;
-    min-width: 7em;
+    width: 10em;
+    min-width: 10em;
     height: 5em;
     overflow: hidden;
     text-overflow: ellipsis;
+    display:flex;
 }
 
 .doc-section-grid-table .doc-section-item[draggable="true"] {
@@ -1191,10 +1207,6 @@ table.doc-section-grid-table .doc-section-item-group {
 }
 
 .doc-header + .doc-content {
-
-    margin-top: 3em;
-    border-top: 1px solid black;
-
     margin:0 0 2em 0;
     padding:1em;
     border:0;
@@ -1208,8 +1220,8 @@ table.doc-section-grid-table .doc-section-item-group {
     flex-grow: 1;
     align-content: flex-start;
     box-sizing: border-box;
-    font-family: var(--content-font-family);
-
+    font-family: var(--content-font-family), sans-serif;
+    min-width: 15em;
 }
 
 .doc-attributes .doc-content {

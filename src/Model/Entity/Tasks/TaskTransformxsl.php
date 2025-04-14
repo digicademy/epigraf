@@ -30,8 +30,8 @@ class TaskTransformxsl extends BaseTask
      */
     public function execute()
     {
-        $inputFile = $this->job->getCurrentInputFile();
-        $outputFile = $this->job->getCurrentOutputFile();
+        $inputFile = $this->job->getCurrentInputFilePath();
+        $outputFile = $this->job->getCurrentOutputFilePath();
 
         if (($this->config['processor'] ?? 'php') == 'saxon') {
             return $this->task_xsl_saxon($inputFile, $outputFile);

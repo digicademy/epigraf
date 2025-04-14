@@ -29,8 +29,7 @@
 
 <!-- Sidebars -->
 <?php
-    $this->sidebarInit(['left' => 'expanded','right'=>'collapsed']);
-    $this->sidebarSize(['right'=>5]);
+    $this->setSidebarConfig(['left' => ['init'=>'expanded'],'right'=>['init'=>'collapsed','size'=>5]]);
 ?>
 
 <!-- Content -->

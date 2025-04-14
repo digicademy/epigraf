@@ -487,20 +487,20 @@ class ArticlesCest
         $I->login('devel', 'devel');
         $I->amOnPage('/epi/projects/articles');
         $I->waitForTheAjaxResponse();
-        $I->dontSeeElement('[data-list-itemof="epi_articles"][data-id="8"]');
+        $I->dontSeeElement('[data-list-itemof="epi_articles"][data-id="10"]');
 
         // Add article
         $I->click('Create article');
-        $I->waitForElement('#form-add-articles');
+        $I->waitForElement('.widget-entity form');
 //        $I->seeCurrentUrlMatches('~/epi/projects/articles/add$~');
 
         $I->selectOption('select[name=articletype]', 'epi-article');
 
-        $I->seeInFormFields('#form-add-articles', [
+        $I->seeInFormFields('.widget-entity form', [
             'articletype' => 'EPI-Artikel',
             'projects_id' => 'Testprojekt 1'
         ]);
-        $I->fillField('#form-add-articles#form-add-articles input[name=name]', 'My fancy new article');
+        $I->fillField('.widget-entity form input[name=name]', 'My fancy new article');
 
         // Save
         $I->click('Save', '.ui-dialog-buttonset');
@@ -508,13 +508,13 @@ class ArticlesCest
         // Does the new article show up in the table?
         $I->waitForTheAjaxResponse();
         $I->waitForText('My fancy new article',10,'tbody[data-list-name="epi_articles"]');
-        $I->seeElement('[data-list-itemof="epi_articles"][data-id="8"]');
+        $I->seeElement('[data-list-itemof="epi_articles"][data-id="10"]');
 
         // What about the new tab?
         $I->wait(1);
         $I->switchToNextTab();
         $I->waitForElement('.controller_articles.action_edit');
-        $I->seeCurrentUrlMatches('~/epi/projects/articles/edit/8$~');
+        $I->seeCurrentUrlMatches('~/epi/projects/articles/edit/10$~');
     }
 
     /**
@@ -642,7 +642,7 @@ class ArticlesCest
         $contentSelector = '.doc-section-item[data-row-id="4"] .doc-fieldname-content .widget-xmleditor';
         $I->focusXmlInput($contentSelector);
 
-        $I->wait(0.5);
+        $I->wait(1);
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
@@ -655,7 +655,7 @@ class ArticlesCest
         $contentSelector = '.doc-content input[name="name"]';
         $I->click($contentSelector);
 
-        $I->wait(0.5);
+        $I->wait(1);
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
@@ -1024,6 +1024,58 @@ class ArticlesCest
     }
 
     /**
+     * Scenario: Edit an item, add a tag, save and close
+     *
+     * @group deploy
+     * @param AcceptanceTester $I
+     * @return void
+     */
+    public function restructureBlockWithFootnotes(AcceptanceTester $I)
+    {
+        // Goto the articles list
+        $I->login('devel', 'devel');
+        $I->amOnPage('/epi/projects/articles/edit/1');
+
+        // Select content field of Bearbeitung A.1.1
+        $I->click(".sidebar-left [href='#sections-1']");
+        $contentSelector = '[data-row-table="items"][data-row-id="1"] [data-row-field="content"] .widget-xmleditor';
+        $I->focusXmlInput($contentSelector);
+        $I->click('#doc-section-content-1 .button-links-toggle');
+
+        // Remove blocks
+//        $I->click("span.xml_bracket[data-tagid='000004436164974262731481588902'] .xml_bracket_open");
+//        $I->waitForTheAjaxResponse();
+//        $I->waitForElementVisible('.ui-dialog');
+//        $I->click('button.role-remove', '.ui-dialog');
+//        $I->wait(2);
+
+//        $I->wait(1);
+//        $I->click(".sidebar-left [href='#sections-1']");
+//        $I->wait(1);
+
+        // Scroll to last block
+        $tagSelector = "span.xml_bracket[data-tagid='000004515581058186342592608309'] .xml_bracket_close";
+        $I->scrollIntoView($tagSelector);
+        $tagSelector = ".doc-section-link[data-from-tagid='000004515581058186342592608309']";
+        $I->scrollIntoView($tagSelector);
+        $I->wait(1);
+
+        // Remove last block
+        $I->click("[data-from-tagid='000004515581058186342592608309']");
+        $I->waitForTheAjaxResponse();
+        $I->waitForElementVisible('.ui-dialog');
+        $I->click('button.role-remove', '.ui-dialog');
+        $I->wait(1);
+
+        // Save and compare output
+        $I->click('Save' );
+        $I->waitForText('The article has been saved', 15);
+        $I->waitForTheAjaxResponse();
+
+        $I->dontSeeVisualChanges('body');
+    }
+
+    /**
      * Scenario: Edit an item, remove it and save
      *
      * @group deploy
@@ -1267,7 +1319,7 @@ class ArticlesCest
 
         // Remove footnote
          $I->see('fancynewfootnote');
-        $I->click('.doc-item-remove.tiny', '.doc-footnote[data-row-id="8"]');
+        $I->click('.doc-item-remove.tiny', '.doc-footnote[data-row-id="9"]');
         $I->waitForTheAjaxResponse();
         $I->waitForElementVisible('.ui-dialog');
         $I->click('Confirm');
@@ -1438,7 +1490,7 @@ class ArticlesCest
         $I->login('devel', 'devel');
         $I->amOnPage('/epi/projects/articles/edit/1');
 
-        // Add section
+        // Remove section "Inschrift B"
         $I->waitForElement('.doc-article.widget-document-edit');
 
         $I->click('.sidebar-left .node[data-section-id="sections-3"]');
@@ -1551,7 +1603,7 @@ class ArticlesCest
 
         // Check linebreaks before
         $textbefore = $I->grabTextFrom('.doc-section-item[data-row-id="369"] .doc-fieldname-content .widget-xmleditor');
-        $I->seeNumberOfElements('.doc-section-item[data-row-id="369"] br', 4);
+        $I->seeNumberOfElements('.doc-section-item[data-row-id="369"] br', 6);
 
         // Type into a content field (Beschreibung)
         $I->click('.sidebar-left .node[data-section-id="sections-147"]');
@@ -1566,7 +1618,7 @@ class ArticlesCest
         $I->wait(0.5);
 
         // Check linebreaks after
-        $I->seeNumberOfElements('.doc-section-item[data-row-id="369"] br', 5);
+        $I->seeNumberOfElements('.doc-section-item[data-row-id="369"] br', 7);
         $textafter = $I->grabTextFrom('.doc-section-item[data-row-id="369"] .doc-fieldname-content .widget-xmleditor');
 //        $I->assertNotEquals($textbefore, $textafter);
 

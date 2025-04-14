@@ -4,454 +4,916 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: EpigrafWeb 4.0\n"
-"POT-Creation-Date: 2022-09-27 13:59+0000\n"
-"PO-Revision-Date: 2022-10-16 10:33+0200\n"
+"POT-Creation-Date: 2024-09-17 16:59+0200\n"
+"PO-Revision-Date: 2024-11-15 12:01+0100\n"
 "Last-Translator: Jakob Jünger <jakobjuenger@freenet.de>\n"
 "Language-Team: Deutsch <jakobjuenger@freenet.de>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.5\n"
 
-#: Command/UserCommand.php:101
+#: src/Command/PermissionCommand.php:161
+msgid "The permission {0} has been granted to {1}."
+msgstr "Die Berechtigung {0} wurde {1} erteilt."
+
+#: src/Command/PermissionCommand.php:164
+msgid "The permission {0} could not granted to {1}."
+msgstr "Die Berechtigung {0} konnte {1} nicht erteilt werden."
+
+#: src/Command/PermissionCommand.php:185 src/Command/UserCommand.php:176
 msgid "The user does not exist."
 msgstr "Der Benutzer existiert nicht."
 
-#: Command/UserCommand.php:104
+#: src/Command/PermissionCommand.php:188 src/Command/UserCommand.php:179
 msgid "The user has been removed."
 msgstr "Der Benutzer wurde entfernt."
 
-#: Command/UserCommand.php:106
+#: src/Command/PermissionCommand.php:191 src/Command/UserCommand.php:182
 msgid "The user could not be removed. Please, try again."
-msgstr "Der Benutzer konnte nicht entfernt werden. Bitte versuchen Sie es erneut."
+msgstr ""
+"Der Benutzer konnte nicht entfernt werden. Bitte versuchen Sie es erneut."
 
-#: Controller/AppController.php:293
+#: src/Command/UserCommand.php:152
+msgid "The user {0} has been created."
+msgstr "Der Nutzer {0} wurde erstellt."
+
+#: src/Command/UserCommand.php:155
+msgid ""
+"The user {0} could not be created. Maybe the user is already present in the "
+"database."
+msgstr ""
+"Der Benutzer {0} konnte nicht erstellt werden. Vielleicht existiert der "
+"Benutzer bereits in der Datenbank. "
+
+#: src/Controller/AppController.php:432
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: src/Controller/AppController.php:475
 msgid "Manage databases"
 msgstr "Datenbanken verwalten"
 
-#: Controller/AppController.php:313
+#: src/Controller/AppController.php:496
 msgid "Databases"
 msgstr "Datenbanken"
 
-#: Controller/AppController.php:322
+#: src/Controller/AppController.php:507 src/Model/Table/DatabanksTable.php:260
 msgid "Projects"
 msgstr "Projekte"
 
-#: Controller/AppController.php:323
+#: src/Controller/AppController.php:518 src/Model/Table/DatabanksTable.php:270
 msgid "Articles"
 msgstr "Artikel"
 
-#: Controller/AppController.php:324
-msgid "Properties"
-msgstr "Eigenschaften"
-
-#: Controller/AppController.php:325
-msgid "Files"
-msgstr "Dateien"
-
-#: Controller/AppController.php:326
-msgid "Notes"
-msgstr "Notizen"
-
-#: Controller/AppController.php:327
-msgid "Types"
-msgstr "Typen"
-
-#: Controller/AppController.php:328
-msgid "Analytics"
-msgstr "Analytics"
-
-#: Controller/AppController.php:335
-msgid "Pipelines"
-msgstr "Pipelines"
-
-#: Controller/AppController.php:336
-msgid "Users"
-msgstr "Benutzer"
-
-#: Controller/AppController.php:337
-msgid "Repository"
-msgstr "Repositorium"
-
-#: Controller/AppController.php:340
-msgid "Help"
-msgstr "Hilfe"
-
-#: Controller/AppController.php:341
-msgid "Wiki"
-msgstr "Wiki"
-
-#: Controller/AppController.php:342
-msgid "Pages"
-msgstr "Seiten"
-
-#: Controller/AppController.php:345
-msgid "Logout"
-msgstr "Logout"
-
-#: Controller/AppController.php:770
-msgid "Another user edits the dataset. Please try again later."
-msgstr "Ein anderer Nutzer bearbeitet gerade den Datensatz. Bitte versuchen Sie es später erneut."
-
-#: Controller/DatabanksController.php:50
-msgid "One of the databases is not available. Please check the database name."
-msgstr "Eine der Datenbanken ist nicht verfügbar. Bitte überprüfen Sie den Namen der Datenbank."
-
-#: Controller/DatabanksController.php:52
-msgid "One of the databases does not fulfill the version requirement. Please update the database structure."
-msgstr "Eine der Datenbanken erfüllt die Versionsanforderung nicht. Bitte aktualisieren Sie die Datenbankstruktur."
-
-#: Controller/DatabanksController.php:113
-msgid "The database has been saved."
-msgstr "Die Datenbank wurde gespeichert."
-
-#: Controller/DatabanksController.php:117
-msgid "The database could not be saved. Please, try again."
-msgstr "Die Datenbank konnte nicht gesichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:142
-msgid "The database connection has been saved."
-msgstr "Die Datenbankverbindung wurde gespeichert."
-
-#: Controller/DatabanksController.php:147
-msgid "The database folders have been created."
-msgstr "Die Datenbankenordner wurden erstellt."
-
-#: Controller/DatabanksController.php:149
-msgid "The database folders could not be created. Please, try again."
-msgstr "Die Datenbankordner konnten nicht erstellt werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:155
-msgid "The database has been created."
-msgstr "Die Datenbank wurde erstellt."
-
-#: Controller/DatabanksController.php:157
-msgid "The database could not be created. Please, check your permissions."
-msgstr "Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie die Zugriffsrechte."
-
-#: Controller/DatabanksController.php:164 Controller/DatabanksController.php:258
-msgid "The database has been initialized."
-msgstr "Die Datenbank wurde initialisiert."
-
-#: Controller/DatabanksController.php:166
-msgid "The database could not be initialized. Please, check your permissions."
-msgstr "Die Datenbank konnte nicht initialisiert werden. Bitte überprüfen Sie die Rechte und den Namen der Datenbank."
-
-#: Controller/DatabanksController.php:182
-msgid "The database connection could not be saved. Please, try again."
-msgstr "Die Datenbankverbindung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:206
-msgid "The database has been backed up."
-msgstr "Die Datenbank wurde gesichert."
-
-#: Controller/DatabanksController.php:209
-msgid "The database could not be backed up. Please, try again."
-msgstr "Die Datenbank konnte nicht gesichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:233
-msgid "The file has been imported."
-msgstr "Die Datei wurde importiert."
-
-#: Controller/DatabanksController.php:236
-msgid "The file could not be imported. Please, try again."
-msgstr "Die Datei konnte nicht importiert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:261 Controller/DatabanksController.php:299
-msgid "The database could not be initialized. Please, try again."
-msgstr "Die Datenbank konnte nicht initialisiert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:296
-msgid "The database could not be created. Please, check your permissions and check the database name."
-msgstr "Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie Ihre Rechte und den Namen der Datenbank."
-
-#: Controller/DatabanksController.php:302
-msgid "The database has been created and initialized."
-msgstr "Die Datenbank wurde erstellt und initialisiert."
-
-#: Controller/DatabanksController.php:324
-msgid "The database has been dropped."
-msgstr "Die Datenbank wurde gelöscht."
-
-#: Controller/DatabanksController.php:327
-msgid "The database could not be dropped. Please, try again."
-msgstr "Die Datenbank konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DatabanksController.php:349
-msgid "The database connection has been deleted."
-msgstr "Die Datenbankverbindung wurde gelöscht."
-
-#: Controller/DatabanksController.php:352
-msgid "The database connection could not be deleted. Please, try again."
-msgstr "Die Datenbankverbindung konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DocsController.php:284 Controller/DocsController.php:320
-msgid "The doc has been saved."
-msgstr "Die Seite wurde gespeichert."
-
-#: Controller/DocsController.php:288 Controller/DocsController.php:325
-msgid "The doc could not be saved. Please, try again."
-msgstr "Die Seite konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/DocsController.php:393
-msgid "Another user edits the page. Please try again later."
-msgstr "Ein anderer Nutzer bearbeitet gerade die Seite. Bitte versuchen Sie es später erneut."
-
-#: Controller/DocsController.php:399
-msgid "The page has been deleted."
-msgstr "Die Seite wurde gelöscht."
-
-#: Controller/DocsController.php:402
-msgid "The page could not be deleted. Please, try again."
-msgstr "Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-#: Controller/ExportController.php:154 Controller/ExportController.php:204
-msgid "The job could not be created. Please, try again."
-msgstr "Der Job konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
-
-#: Controller/ExportController.php:242
-msgid "The job could not be saved. Please try again."
-msgstr "Der Job konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/ExportController.php:259
-msgid "The job has been finished."
-msgstr "Der Job wurde beendet."
-
-#: Controller/PipelinesController.php:107 Controller/PipelinesController.php:157
-msgid "The pipeline has been saved."
-msgstr "Die Pipeline wurde gespeichert."
-
-#: Controller/PipelinesController.php:111 Controller/PipelinesController.php:161
-msgid "The pipeline could not be saved. Please, try again."
-msgstr "Die Pipeline konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/PipelinesController.php:188
-msgid "The pipeline has been deleted."
-msgstr "Die Pipeline wurde gelöscht."
-
-#: Controller/PipelinesController.php:191
-msgid "The pipeline could not be deleted. Please, try again."
-msgstr "Die Pipeline konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-#: Controller/UsersController.php:84
-msgid "Invalid username or password, try again"
-msgstr "Ungültiger Benutzername oder ungültiges Passwort, versuchen Sie es erneut"
-
-#: Controller/UsersController.php:294
-msgid "The password has been changed."
-msgstr "Das Passwort wurde geändert."
-
-#: Controller/UsersController.php:297
-msgid "The password could not be changed."
-msgstr "Das Passwort konnte nicht geändert werden."
-
-#: Controller/UsersController.php:326
-msgid "Access has been granted."
-msgstr "Zugriff gewährt."
-
-#: Controller/UsersController.php:328
-msgid "Access could not be granted."
-msgstr "Zugriff konnte nicht gewährt werden."
-
-#: Controller/UsersController.php:337 Controller/UsersController.php:369
-msgid "This operation needs a post request."
-msgstr "Diese Operation benötigt eine Post-Anfrage."
-
-#: Controller/UsersController.php:358 Controller/UsersController.php:363
-msgid "Access has been revoked."
-msgstr "Zugriff wurde widerrufen."
-
-#: Controller/UsersController.php:360 Controller/UsersController.php:365
-msgid "Access could not be revoked."
-msgstr "Zugriff konnte nicht widerrufen werden."
-
-#: Controller/UsersController.php:387 Controller/UsersController.php:420
-msgid "The user has been saved."
-msgstr "Der Benutzer wurde gespeichert."
-
-#: Controller/UsersController.php:391 Controller/UsersController.php:424
-msgid "The user could not be saved. Please, try again."
-msgstr "Der Benutzer konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
-
-#: Controller/UsersController.php:447
-msgid "The user has been deleted."
-msgstr "Der Benutzer wurde gelöscht."
-
-#: Controller/UsersController.php:450
-msgid "The user could not be deleted. Please, try again."
-msgstr "Der Benutzer konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-#: Controller/UsersController.php:468
-msgid "The user settings have been cleared."
-msgstr "Die Nutzereinstellungen wurden gelöscht."
-
-#: Model/Entity/Databank.php:200
-msgid "The database is not available."
-msgstr "Die Datenbank ist nicht verfügbar."
-
-#: Model/Entity/Databank.php:203
-msgid "The database is empty."
-msgstr "Die Datenbank ist leer."
-
-#: Model/Entity/Databank.php:206
-msgid "The version of the database is not supported."
-msgstr "Die Version der Datenbank wird nicht unterstützt."
-
-#: Model/Entity/Databank.php:209
-msgid "The database is ready to use."
-msgstr "Die Datenbank ist einsatzbereit."
-
-#: Model/Entity/Databank.php:593 Model/Entity/Doc.php:125 Model/Entity/Pipeline.php:111
-msgid "Name"
-msgstr "Name"
-
-#: Model/Entity/Databank.php:597
-msgid "Version"
-msgstr "Version"
-
-#: Model/Entity/Databank.php:598
-msgid "IRI Provider"
-msgstr "IRI Provider"
-
-#: Model/Entity/Databank.php:599
-msgid "IRI Prefix"
-msgstr "IRI Prefix"
-
-#: Model/Entity/Databank.php:600
-msgid "Status"
-msgstr "Status"
-
-#: Model/Entity/Databank.php:601
-msgid "Associated Users"
-msgstr "Zugeordnete Benutzer"
-
-#: Model/Entity/Databank.php:602
-msgid "Granted SQL-users"
-msgstr "SQL-Nutzer mit Zugriffsrechten"
-
-#: Model/Entity/Databank.php:603
-msgid "Backup files"
-msgstr "Backup-Dateien"
-
-#: Model/Entity/Doc.php:129
-msgid "Content"
-msgstr "Inhalt"
-
-#: Model/Entity/Doc.php:136
-msgid "Category"
-msgstr "Kategorie"
-
-#: Model/Entity/Doc.php:143
-msgid "Pretty URL (slug)"
-msgstr "Sprechende URL"
-
-#: Model/Entity/Doc.php:147
-msgid "Sort key"
-msgstr "Sortierschlüssel"
-
-#: Model/Entity/Doc.php:151
-msgid "Drafted"
-msgstr "Angelegt"
-
-#: Model/Entity/Doc.php:151
-msgid "In progress"
-msgstr "In Bearbeitung"
-
-
-#: Model/Entity/Doc.php:151
-msgid "Complete"
-msgstr "Fertig"
-
-#: Model/Entity/Doc.php:151
-msgid "Published"
-msgstr "Veröffentlicht"
-
-#: Model/Entity/Doc.php:151
-msgid "Searchable"
-msgstr "Durchsuchbar"
-
-#: Model/Entity/Job.php:467
-msgid "Error executing task of type {type}: {error}"
-msgstr "Fehler beim Ausführen der Aufgabe vom Typ {type}: {error}"
-
-#: Model/Entity/Jobs/JobImport.php:620
-msgid "{0} unsolved references."
-msgstr "{0} unaufgelöste Verweise."
-
-#: Model/Entity/Pipeline.php:112
-msgid "Description"
-msgstr "Beschreibung"
-
-#: Model/Entity/User.php:126
-msgid "Username"
-msgstr "Benutzername"
-
-#: Model/Entity/User.php:127
-msgid "The username should contain the real name of the person. Only alphanumeric characters are allowed. Maximum length is 50 characters."
-msgstr "Der Benutzername sollte den echten Namen der Person enthalten. Erlaubt sind nur alphanumerische Zeichen. Die maximale Länge beträgt 50 Zeichen."
-
-#: Model/Entity/User.php:130
-msgid "Role"
-msgstr "Rolle"
-
-#: Model/Entity/User.php:140
-msgid "Contact"
-msgstr "Kontakt"
-
-#: Model/Entity/User.php:141
-msgid "Please provide some information about how to contact the user, the affiliation or an email address."
-msgstr "Bitte geben Sie einige Informationen darüber an, wie der Benutzer kontaktiert werden kann, die Organisation oder eine E-Mail-Adresse."
-
-#: Model/Entity/User.php:143
-msgid "Password"
-msgstr "Passwort"
-
-#: Model/Entity/User.php:147
-msgid "The access token is used for API access and for access from EpiDesktop. Leave empty to automatically create an access token."
-msgstr ""
-"Das Access-Token wird für den API-Zugriff und für den Zugriff von EpiDesktop verwendet. Lassen Sie dieses Feld leer, um automatisch ein Access-Token "
-"zu erstellen."
-
-#: Model/Entity/User.php:150
-msgid "Default Database"
-msgstr "Voreingestellte Datenbank"
-
-#: Model/Entity/User.php:152
-msgid "Default Article Pipeline"
-msgstr "Voeingestellte Artikel-Pipeline"
-
-#: Model/Entity/User.php:154
-msgid "Default Book Pipeline"
-msgstr "Voreingestellte Buch-Pipeline"
-
-#: Model/Entity/User.php:155
-msgid "Created"
-msgstr "Erzeugt"
-
-#: Model/Entity/User.php:156
-msgid "Modified"
-msgstr "Verändert"
-
-#: Model/Table/DocsTable.php:136
-msgid "Without category"
-msgstr "Ohne Kategorie"
-
-#: Model/Table/DocsTable.php:152
+#: src/Controller/AppController.php:529 src/Model/Table/DatabanksTable.php:278
+#: src/Model/Table/DocsTable.php:224
 msgid "Categories"
 msgstr "Kategorien"
 
-#: Model/Table/DocsTable.php:159
+#: src/Controller/AppController.php:540 src/Model/Table/DatabanksTable.php:286
+msgid "Files"
+msgstr "Dateien"
+
+#: src/Controller/AppController.php:551 src/Model/Table/DatabanksTable.php:294
+msgid "Notes"
+msgstr "Notizen"
+
+#: src/Controller/AppController.php:562 src/Model/Table/DatabanksTable.php:310
+msgid "Types"
+msgstr "Typen"
+
+#: src/Controller/AppController.php:574 src/Controller/AppController.php:608
+#: src/Model/Table/DatabanksTable.php:302
+msgid "Users"
+msgstr "Benutzer"
+
+#: src/Controller/AppController.php:586
+msgid "Analytics"
+msgstr "Analytics"
+
+#: src/Controller/AppController.php:603
+msgid "Pipelines"
+msgstr "Pipelines"
+
+#: src/Controller/AppController.php:613
+msgid "Repository"
+msgstr "Repositorium"
+
+#: src/Controller/AppController.php:620
+msgid "Help"
+msgstr "Hilfe"
+
+#: src/Controller/AppController.php:625
+msgid "Wiki"
+msgstr "Wiki"
+
+#: src/Controller/AppController.php:630
+msgid "Pages"
+msgstr "Seiten"
+
+#: src/Controller/AppController.php:1111
+msgid "You are not allowed to access the selected database."
+msgstr "Sie haben keinen Zugang zur ausgewählten Datenbank."
+
+#: src/Controller/AppController.php:1310
+msgid "The job was created"
+msgstr "Der Job wurde erstellt."
+
+#: src/Controller/AppController.php:1323 src/Controller/JobsController.php:198
+msgid "The job could not be created. Please, try again."
+msgstr "Der Job konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/DatabanksController.php:115
+msgid "The database has been saved."
+msgstr "Die Datenbank wurde gespeichert."
+
+#: src/Controller/DatabanksController.php:120
+msgid "The database could not be saved. Please, try again."
+msgstr ""
+"Die Datenbank konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/DatabanksController.php:142
+msgid "The database connection has been saved."
+msgstr "Die Datenbankverbindung wurde gespeichert."
+
+#: src/Controller/DatabanksController.php:147
+msgid "The database folders have been created."
+msgstr "Die Datenbankenordner wurden erstellt."
+
+#: src/Controller/DatabanksController.php:151
+msgid "The database folders could not be created. Please, try again."
+msgstr ""
+"Die Datenbankordner konnten nicht erstellt werden. Bitte versuchen Sie es "
+"erneut."
+
+#: src/Controller/DatabanksController.php:158
+msgid "The database has been created."
+msgstr "Die Datenbank wurde erstellt."
+
+#: src/Controller/DatabanksController.php:161
+msgid "The database could not be created. Please, check your permissions."
+msgstr ""
+"Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie die "
+"Zugriffsrechte."
+
+#: src/Controller/DatabanksController.php:168
+#: src/Controller/DatabanksController.php:265
+msgid "The database has been initialized."
+msgstr "Die Datenbank wurde initialisiert."
+
+#: src/Controller/DatabanksController.php:171
+msgid "The database could not be initialized. Please, check your permissions."
+msgstr ""
+"Die Datenbank konnte nicht initialisiert werden. Bitte überprüfen Sie die "
+"Rechte und den Namen der Datenbank."
+
+#: src/Controller/DatabanksController.php:188
+msgid "The database connection could not be saved. Please, try again."
+msgstr ""
+"Die Datenbankverbindung konnte nicht gespeichert werden. Bitte versuchen Sie "
+"es erneut."
+
+#: src/Controller/DatabanksController.php:211
+msgid "The database has been backed up."
+msgstr "Die Datenbank wurde gesichert."
+
+#: src/Controller/DatabanksController.php:215
+msgid "The database could not be backed up. Please, try again."
+msgstr ""
+"Die Datenbank konnte nicht gesichert werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/DatabanksController.php:239
+msgid "The file has been imported."
+msgstr "Die Datei wurde importiert."
+
+#: src/Controller/DatabanksController.php:244
+msgid "The file could not be imported. Please, try again."
+msgstr ""
+"Die Datei konnte nicht importiert werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/DatabanksController.php:269
+#: src/Controller/DatabanksController.php:306
+msgid "The database could not be initialized. Please, try again."
+msgstr ""
+"Die Datenbank konnte nicht initialisiert werden. Bitte versuchen Sie es "
+"erneut."
+
+#: src/Controller/DatabanksController.php:302
+msgid ""
+"The database could not be created. Please, check your permissions and check "
+"the database name."
+msgstr ""
+"Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie Ihre Rechte "
+"und den Namen der Datenbank."
+
+#: src/Controller/DatabanksController.php:309
+msgid "The database has been created and initialized."
+msgstr "Die Datenbank wurde erstellt und initialisiert."
+
+#: src/Controller/DatabanksController.php:331
+msgid "The database has been dropped."
+msgstr "Die Datenbank wurde gelöscht."
+
+#: src/Controller/DatabanksController.php:335
+msgid "The database could not be dropped. Please, try again."
+msgstr ""
+"Die Datenbank konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/DatabanksController.php:354
+msgid "The database connection has been deleted."
+msgstr "Die Datenbankverbindung wurde gelöscht."
+
+#: src/Controller/DatabanksController.php:356
+msgid "The database connection could not be deleted. Please, try again."
+msgstr ""
+"Die Datenbankverbindung konnte nicht gelöscht werden. Bitte versuchen Sie es "
+"erneut."
+
+#: src/Controller/JobsController.php:253
+msgid "The export job could not be created. Please, try again."
+msgstr "Der Export-Job konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/JobsController.php:308
+msgid "The job could not be saved. Please try again."
+msgstr ""
+"Der Job konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/JobsController.php:326
+msgid "The job has been finished."
+msgstr "Der Job wurde beendet."
+
+#: src/Controller/PermissionsController.php:60
+#: src/Model/Entity/Databank.php:848
+msgid "Permissions"
+msgstr "Berechtigungen"
+
+#: src/Controller/PipelinesController.php:88
+#: src/Controller/PipelinesController.php:137
+msgid "The pipeline has been saved."
+msgstr "Die Pipeline wurde gespeichert."
+
+#: src/Controller/PipelinesController.php:93
+#: src/Controller/PipelinesController.php:140
+msgid "The pipeline could not be saved. Please, try again."
+msgstr ""
+"Die Pipeline konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/PipelinesController.php:167
+msgid "The pipeline has been deleted."
+msgstr "Die Pipeline wurde gelöscht."
+
+#: src/Controller/PipelinesController.php:169
+msgid "The pipeline could not be deleted. Please, try again."
+msgstr ""
+"Die Pipeline konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/UsersController.php:71
+msgid "Invalid username or password, try again"
+msgstr ""
+"Ungültiger Benutzername oder ungültiges Passwort, versuchen Sie es erneut"
+
+#: src/Controller/UsersController.php:226
+msgid "{0} active user(s)."
+msgstr "{0} aktive Nutzer."
+
+#: src/Controller/UsersController.php:307
+msgid "The password has been changed."
+msgstr "Das Passwort wurde geändert."
+
+#: src/Controller/UsersController.php:311
+msgid "The password could not be changed."
+msgstr "Das Passwort konnte nicht geändert werden."
+
+#: src/Controller/UsersController.php:338
+msgid "Your new access token is {0}"
+msgstr "Ihr neues Zugangstoken ist {0}"
+
+#: src/Controller/UsersController.php:341
+#: src/Controller/UsersController.php:458
+#: src/Controller/UsersController.php:494
+msgid "The user could not be saved. Please, try again."
+msgstr ""
+"Der Benutzer konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/UsersController.php:345
+#: src/Controller/UsersController.php:393
+#: src/Controller/UsersController.php:431
+msgid "This operation needs a post request."
+msgstr "Diese Operation benötigt eine Post-Anfrage."
+
+#: src/Controller/UsersController.php:374
+msgid "No database selected."
+msgstr "Keine Datenbank ausgewählt."
+
+#: src/Controller/UsersController.php:380
+msgid "Access has been granted."
+msgstr "Zugriff gewährt."
+
+#: src/Controller/UsersController.php:383
+msgid "Access could not be granted."
+msgstr "Zugriff konnte nicht gewährt werden."
+
+#: src/Controller/UsersController.php:414
+#: src/Controller/UsersController.php:422
+msgid "Access has been revoked."
+msgstr "Zugriff wurde widerrufen."
+
+#: src/Controller/UsersController.php:417
+#: src/Controller/UsersController.php:425
+msgid "Access could not be revoked."
+msgstr "Zugriff konnte nicht widerrufen werden."
+
+#: src/Controller/UsersController.php:455
+#: src/Controller/UsersController.php:491
+msgid "The user has been saved."
+msgstr "Der Benutzer wurde gespeichert."
+
+#: src/Controller/UsersController.php:515
+msgid "The user has been deleted."
+msgstr "Der Benutzer wurde gelöscht."
+
+#: src/Controller/UsersController.php:518
+msgid "The user could not be deleted. Please, try again."
+msgstr ""
+"Der Benutzer konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: src/Controller/UsersController.php:535
+msgid "The user settings have been cleared."
+msgstr "Die Nutzereinstellungen wurden gelöscht."
+
+#: src/Model/Behavior/VersionBehavior.php:124
+msgid "Versioning failed"
+msgstr "Versionierung fehlgeschlagen"
+
+#: src/Model/Behavior/VersionedTreeBehavior.php:284
+msgid "Could not move record: {0}"
+msgstr "Konnte Datensatz {0} nicht verschieben"
+
+#: src/Model/Entity/BaseEntity.php:521 src/Model/Entity/BaseEntity.php:567
+#: src/Model/Entity/BaseEntity.php:579 src/Model/Entity/BaseEntity.php:709
+msgid "Error parsing JSON: {0}"
+msgstr "Fehler beim Parsen von JSON: {0}"
+
+#: src/Model/Entity/BaseEntity.php:553
+msgid "Error parsing XML: {0}"
+msgstr "Fehler beim Parsen von XML: {0}"
+
+#: src/Model/Entity/BaseEntity.php:612 src/Model/Entity/BaseEntity.php:630
+msgid "Article"
+msgstr "Artikel"
+
+#: src/Model/Entity/BaseEntity.php:676 src/Model/Entity/BaseEntity.php:719
+msgid "Error encoding JSON: {0}"
+msgstr "Fehler beim Kodieren von JSON: {0}"
+
+#: src/Model/Entity/BaseEntity.php:701
+msgid "Error injecting IDs: {0}"
+msgstr "Fehler beim Einfügen der IDs: {0}"
+
+#: src/Model/Entity/BaseEntity.php:808
+msgid "Error parsing original JSON value: {0}"
+msgstr "Fehler beim Parsen des ursprünglichen JSON-Werts: {0}"
+
+#: src/Model/Entity/BaseEntity.php:827
+msgid "Error encoding new JSON value: {0}"
+msgstr "Fehler beim Kodieren des neuen JSON-Werts: {0}"
+
+#: src/Model/Entity/BaseEntity.php:1014
+msgid "Drafted"
+msgstr "Angelegt"
+
+#: src/Model/Entity/BaseEntity.php:1015
+msgid "In progress"
+msgstr "In Bearbeitung"
+
+#: src/Model/Entity/BaseEntity.php:1016
+msgid "Complete"
+msgstr "Fertig"
+
+#: src/Model/Entity/BaseEntity.php:1017 src/Model/Entity/Databank.php:820
+#: src/Model/Entity/Doc.php:220 src/Model/Table/DatabanksTable.php:338
+msgid "Published"
+msgstr "Veröffentlicht"
+
+#: src/Model/Entity/BaseEntity.php:1018
+msgid "Searchable"
+msgstr "Durchsuchbar"
+
+#: src/Model/Entity/BaseEntity.php:1035
+msgid "None"
+msgstr "Keine"
+
+#: src/Model/Entity/Databank.php:257
+msgid "The database is not available."
+msgstr "Die Datenbank ist nicht verfügbar."
+
+#: src/Model/Entity/Databank.php:261
+msgid "The database is empty."
+msgstr "Die Datenbank ist leer."
+
+#: src/Model/Entity/Databank.php:265
+msgid "The version of the database is not supported."
+msgstr "Die Version der Datenbank wird nicht unterstützt."
+
+#: src/Model/Entity/Databank.php:269
+msgid "The database is ready to use."
+msgstr "Die Datenbank ist einsatzbereit."
+
+#: src/Model/Entity/Databank.php:805 src/Model/Entity/Doc.php:177
+#: src/Model/Entity/Pipeline.php:113 src/Model/Entity/Tasks/TaskSort.php:37
+#: src/Model/Entity/User.php:304 src/Model/Table/DatabanksTable.php:250
+#: src/Model/Table/DocsTable.php:276 src/Model/Table/PipelinesTable.php:118
+msgid "Name"
+msgstr "Name"
+
+#: src/Model/Entity/Databank.php:812 src/Model/Entity/Pipeline.php:118
+#: src/Model/Table/DatabanksTable.php:360
+#: src/Model/Table/PipelinesTable.php:125
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/Model/Entity/Databank.php:816 src/Model/Table/DatabanksTable.php:318
+msgid "Version"
+msgstr "Version"
+
+#: src/Model/Entity/Databank.php:827
+msgid "IRI Prefix"
+msgstr "IRI Prefix"
+
+#: src/Model/Entity/Databank.php:831 src/Model/Table/JobsTable.php:144
+msgid "Status"
+msgstr "Status"
+
+#: src/Model/Entity/Databank.php:837
+msgid "Associated Users"
+msgstr "Zugeordnete Benutzer"
+
+#: src/Model/Entity/Databank.php:843
+msgid "Granted SQL-users"
+msgstr "SQL-Nutzer mit Zugriffsrechten"
+
+#: src/Model/Entity/Databank.php:854
+msgid "Backup files"
+msgstr "Backup-Dateien"
+
+#: src/Model/Entity/Doc.php:188 src/Model/Table/DocsTable.php:406
+msgid "Content"
+msgstr "Inhalt"
+
+#: src/Model/Entity/Doc.php:197
+#: src/Model/Entity/Tasks/TaskAssignCollection.php:38
+#: src/Model/Table/DocsTable.php:282
+msgid "Category"
+msgstr "Kategorie"
+
+#: src/Model/Entity/Doc.php:201
+msgid "Add to menu"
+msgstr "Zum Menü hinzufügen"
+
+#: src/Model/Entity/Doc.php:210
+msgid "Pretty URL (iri)"
+msgstr "Sprechende URL (IRI)"
+
+#: src/Model/Entity/Doc.php:215 src/Model/Entity/Tasks/TaskSort.php:35
+msgid "Sort key"
+msgstr "Sortierschlüssel"
+
+#: src/Model/Entity/Job.php:921
+msgid "Error executing task of type {type}: {error}"
+msgstr "Fehler beim Ausführen der Aufgabe vom Typ {type}: {error}"
+
+#: src/Model/Entity/Job.php:1120
+msgid "Selected records ({0})"
+msgstr "Ausgewählte Datensätze ({0})"
+
+#: src/Model/Entity/Job.php:1126
+msgid "All records ({0})"
+msgstr "Alle Datensätze ({0})"
+
+#: src/Model/Entity/Jobs/JobImport.php:139
+msgid "Error loading data from source \"{source}\": {error}."
+msgstr "Fehler beim laden der Daten aus der Quelle \"{source}\": {error}."
+
+#: src/Model/Entity/Jobs/JobImport.php:308
+msgid "Could not copy file {0}."
+msgstr "Konnte die Datei {0} nicht kopieren."
+
+#: src/Model/Entity/Jobs/JobImport.php:324
+msgid "{0} unsolved references."
+msgstr "{0} unaufgelöste Verweise."
+
+#: src/Model/Entity/Jobs/JobTransfer.php:51
+msgid "Recover trees"
+msgstr "Baumstruktur wiederherstellen"
+
+#: src/Model/Entity/Jobs/JobTransfer.php:52
+msgid "Init versioning"
+msgstr "Versionierung initialisieren"
+
+#: src/Model/Entity/Jobs/JobTransfer.php:53
+msgid "Transfer comments"
+msgstr "Notizen übertragen"
+
+#: src/Model/Entity/Jobs/JobTransfer.php:54
+msgid "Copy files"
+msgstr "Dateien kopieren"
+
+#: src/Model/Entity/Permission.php:72 src/Model/Table/PermissionsTable.php:735
+#: src/Model/Table/PermissionsTable.php:745
+#, fuzzy
+#| msgid "Users"
+msgid "User"
+msgstr "Benutzer"
+
+#: src/Model/Entity/Permission.php:80 src/Model/Entity/User.php:299
+#: src/Model/Table/PermissionsTable.php:756 src/Model/Table/UsersTable.php:436
+msgid "Role"
+msgstr "Rolle"
+
+#: src/Model/Entity/Permission.php:89
+msgid "Requested by"
+msgstr "Angefragt von"
+
+#: src/Model/Entity/Permission.php:97 src/Model/Table/PermissionsTable.php:799
+msgid "Permission Type"
+msgstr "Typ der Berechtigung"
+
+#: src/Model/Entity/Permission.php:105 src/Model/Table/PermissionsTable.php:807
+msgid "Endpoint name"
+msgstr "Name des Endpunkts"
+
+#: src/Model/Entity/Permission.php:111 src/Model/Table/PermissionsTable.php:776
+msgid "Entity Type"
+msgstr "Typ der Entität"
+
+#: src/Model/Entity/Permission.php:119
+msgid "Entity Name"
+msgstr "Name der Entität"
+
+#: src/Model/Entity/Permission.php:123 src/Model/Table/PermissionsTable.php:793
+msgid "Entity ID"
+msgstr "ID der Entität"
+
+#: src/Model/Entity/Permission.php:128 src/Model/Table/DocsTable.php:304
+#: src/Model/Table/JobsTable.php:172 src/Model/Table/PermissionsTable.php:826
+#: src/Model/Table/UsersTable.php:526
+msgid "Created on"
+msgstr "Erstellt am"
+
+#: src/Model/Entity/Permission.php:133 src/Model/Table/DocsTable.php:299
+#: src/Model/Table/JobsTable.php:166 src/Model/Table/PermissionsTable.php:820
+#: src/Model/Table/UsersTable.php:520
+msgid "Last modified"
+msgstr "Zuletzt verändert"
+
+#: src/Model/Entity/Permission.php:139 src/Model/Table/PermissionsTable.php:814
+msgid "Expires"
+msgstr "Läuft ab am"
+
+#: src/Model/Entity/Pipeline.php:121 src/Model/Table/DocsTable.php:287
+msgid "IRI-Fragment"
+msgstr "IRI-Fragment"
+
+#: src/Model/Entity/Pipeline.php:144
+msgid "Tasks"
+msgstr "Aufgaben"
+
+#: src/Model/Entity/Tasks/BaseTaskMutate.php:105
+msgid "Error mutating entitites: {error}."
+msgstr "Fehler bei der Stapelverarbeitung:: {error}"
+
+#: src/Model/Entity/Tasks/TaskAssignCollection.php:51
+msgid "Property"
+msgstr "Eigenschaft"
+
+#: src/Model/Entity/Tasks/TaskAssignProject.php:35
+msgid "Project"
+msgstr "Projekt"
+
+#: src/Model/Entity/Tasks/TaskCopyFiles.php:46
+msgid "Empty source path"
+msgstr "Quellpfad fehlt"
+
+#: src/Model/Entity/Tasks/TaskSort.php:36
+msgid "Lemma"
+msgstr "Lemma"
+
+#: src/Model/Entity/Tasks/TaskSort.php:39
+msgid "Sort number"
+msgstr "Sortierschlüssel"
+
+#: src/Model/Entity/Tasks/TaskSort.php:40
+msgid "Tree order"
+msgstr "Reihenfolge in der Baumstruktur"
+
+#: src/Model/Entity/Tasks/TaskSort.php:45
+msgid "Sort field"
+msgstr "Sortierfeld"
+
+#: src/Model/Entity/User.php:250
+msgid "The IRI is missing."
+msgstr "Die IRI fehlt"
+
+#: src/Model/Entity/User.php:254
+msgid "No default database selected"
+msgstr "Keine voreingestellte Datenbank ausgewählt"
+
+#: src/Model/Entity/User.php:263
+msgid "No access to default database. Did you forget to grant access?"
+msgstr "Kein Zugriff auf die voreingestellte Datenbank. Haben Sie die Zuteilung der Berechtigung vergessen?"
+
+#: src/Model/Entity/User.php:294
+msgid "Username"
+msgstr "Benutzername"
+
+#: src/Model/Entity/User.php:295
+msgid ""
+"The username should contain the real name of the person. Only alphanumeric "
+"characters are allowed. Maximum length is 50 characters."
+msgstr ""
+"Der Benutzername sollte den echten Namen der Person enthalten. Erlaubt sind "
+"nur alphanumerische Zeichen. Die maximale Länge beträgt 50 Zeichen."
+
+#: src/Model/Entity/User.php:305
+msgid "First and last name."
+msgstr "Vor- und Nachname"
+
+#: src/Model/Entity/User.php:309
+msgid "Acronym"
+msgstr "Akronym"
+
+#: src/Model/Entity/User.php:310
+msgid "First letters of the name."
+msgstr "Erste Buchstaben des Namens."
+
+#: src/Model/Entity/User.php:314
+msgid "Email address"
+msgstr "E-Mail-Adresse"
+
+#: src/Model/Entity/User.php:315
+msgid "Please provide an email address to contact the user."
+msgstr "Bitte geben Sie eine E-Mail-Adresse für den Kontakt zum Nutzer an."
+
+#: src/Model/Entity/User.php:319 src/Model/Table/UsersTable.php:446
+msgid "Contact"
+msgstr "Kontakt"
+
+#: src/Model/Entity/User.php:320
+msgid ""
+"Please provide additional information about how to contact the user, for "
+"example the affiliation."
+msgstr ""
+"Bitte geben Sie zusätzliche Informationen darüber an, wie der Benutzer "
+"kontaktiert werden kann, zum Beispiel die Organisation."
+
+#: src/Model/Entity/User.php:324
+msgid "Password"
+msgstr "Passwort"
+
+#: src/Model/Entity/User.php:328
+msgid ""
+"Please enter a strong password and remember it well. The password can't be "
+"restored. If you loose it, you have to enter a new password."
+msgstr ""
+"Bitte geben Sie ein sicheres Passwort ein und merken Sie es sich gut. "
+"Das Passwort kann nicht wiederhergestellt werden. "
+ "Wenn Sie es verlieren, müssen Sie ein neues Passwort eingeben."
+
+#: src/Model/Entity/User.php:336
+msgid ""
+"The access token is used for API access and for access from EpiDesktop. "
+"Leave empty to automatically create an access token."
+msgstr ""
+"Das Zugangstoken wird für den API-Zugriff und für den Zugriff von EpiDesktop "
+"verwendet. Lassen Sie dieses Feld leer, um automatisch ein Zugangstoken zu "
+"erstellen."
+
+#: src/Model/Entity/User.php:342
+msgid "Default Database"
+msgstr "Voreingestellte Datenbank"
+
+#: src/Model/Entity/User.php:344
+msgid "Select the database that should open after you login."
+msgstr "Wählen Sie die Datenbank aus, die nach dem Einloggen geöffnet werden soll."
+
+#: src/Model/Entity/User.php:350
+msgid "Default Article Pipeline"
+msgstr "Voreingestellte Artikel-Pipeline"
+
+#: src/Model/Entity/User.php:352
+msgid ""
+"Only Epigraf-Desktop users: Select the pipeline that exports single articles."
+msgstr "Nur Epigraf-Desktop-Nutzer: Wählen Sie die Pipeline, die einzelne Artikel exportiert."
+
+#: src/Model/Entity/User.php:358
+msgid "Default Book Pipeline"
+msgstr "Voreingestellte Buch-Pipeline"
+
+#: src/Model/Entity/User.php:360
+msgid ""
+"Only Epigraf-Desktop users: Select the pipeline that exports a complete book."
+msgstr "Nur Epigraf-Desktop-Nutzer: Wählen Sie die Pipeline, die einen kompletten Band exportiert."
+
+#: src/Model/Entity/User.php:366
+msgid "Language"
+msgstr "Sprache"
+
+#: src/Model/Entity/User.php:368
+msgid "The language in which Epigraf talks to you."
+msgstr "Die Sprache, in der Epigraf mit Ihnen spricht."
+
+#: src/Model/Entity/User.php:372
+msgid "Default"
+msgstr "Voreinstellung"
+
+#: src/Model/Entity/User.php:373
+msgid "Theme"
+msgstr "Theme"
+
+#: src/Model/Entity/User.php:375
+msgid "The user interface appearance."
+msgstr "Das Erscheinungsbild der Benutzeroberfläche."
+
+#: src/Model/Entity/User.php:379 src/Model/Table/PipelinesTable.php:132
+msgid "IRI fragment"
+msgstr "IRI-Fragment"
+
+#: src/Model/Entity/User.php:381
+msgid ""
+" Usually the IRI equals the username. The IRI is used to match users in the "
+"main database to users in the project databases."
+msgstr ""
+"Normalerweise entspricht die IRI dem Benutzernamen. "
+ "Die IRI wird verwendet, um Benutzer in der Hauptdatenbank mit Benutzern in den Projektdatenbanken abzugleichen."
+
+#: src/Model/Entity/User.php:385
+msgid "IRI path"
+msgstr "IRI-Pfad"
+
+#: src/Model/Entity/User.php:391 src/Model/Table/DatabanksTable.php:347
+#: src/Model/Table/PipelinesTable.php:139
+msgid "Created"
+msgstr "Erzeugt"
+
+#: src/Model/Entity/User.php:396 src/Model/Table/DatabanksTable.php:353
+#: src/Model/Table/PipelinesTable.php:146
+msgid "Modified"
+msgstr "Verändert"
+
+#: src/Model/Table/DatabanksTable.php:324
+msgid "Available"
+msgstr "Verfügbar"
+
+#: src/Model/Table/DatabanksTable.php:331
+msgid "Valid"
+msgstr "Gültig"
+
+#: src/Model/Table/DatabanksTable.php:367 src/Model/Table/JobsTable.php:136
+#: src/Model/Table/PipelinesTable.php:111
+msgid "ID"
+msgstr "ID"
+
+#: src/Model/Table/DocsTable.php:208
+msgid "Without category"
+msgstr "Ohne Kategorie"
+
+#: src/Model/Table/DocsTable.php:232
 msgid "List all"
 msgstr "Alle auflisten"
 
-#: Utilities/Files/Files.php:121
+#: src/Model/Table/DocsTable.php:293
+msgid "Order"
+msgstr "Sortieren"
+
+#: src/Model/Table/JobsTable.php:140
+msgid "Type"
+msgstr "Typ"
+
+#: src/Model/Table/JobsTable.php:148
+msgid "Progress"
+msgstr "Fortschritt"
+
+#: src/Model/Table/JobsTable.php:152
+msgid "Max progress"
+msgstr "Maximaler Fortschritt"
+
+#: src/Model/Table/JobsTable.php:156
+msgid "Pipeline"
+msgstr "Pipeline"
+
+#: src/Model/Table/JobsTable.php:161 src/Model/Table/UsersTable.php:460
+msgid "Database"
+msgstr "Datenbank"
+
+#: src/Model/Table/PermissionsTable.php:766
+msgid "Request"
+msgstr "Anfrage"
+
+#: src/Model/Table/PermissionsTable.php:786
+msgid "Entity name"
+msgstr "Name der Entität"
+
+#: src/Model/Table/UsersTable.php:429
+msgid "User name"
+msgstr "Benutzername"
+
+#: src/Model/Table/UsersTable.php:453
+msgid "Email"
+msgstr "E-Mail"
+
+#: src/Model/Table/UsersTable.php:470
+msgid "Article pipeline"
+msgstr "Artikel-Pipeline"
+
+#: src/Model/Table/UsersTable.php:481
+msgid "Book pipeline"
+msgstr "Band-Pipeline"
+
+#: src/Model/Table/UsersTable.php:492
+msgid "Active"
+msgstr "Aktiv"
+
+#: src/Model/Table/UsersTable.php:502
+msgid "Last action"
+msgstr "Letzte Aktion"
+
+#: src/Model/Table/UsersTable.php:508
+msgid "SQL connections"
+msgstr "SQL-Verbindungen"
+
+#: src/Model/Table/UsersTable.php:513
+msgid "IRI"
+msgstr "IRI"
+
+#: src/Utilities/Files/Files.php:148
 msgid "The folder already exists, please choose another name."
 msgstr "Der Ordner existiert bereits, bitte wählen Sie einen anderen Namen."
 
-#: Utilities/Files/Files.php:146
+#: src/Utilities/Files/Files.php:173
 msgid "The file already exists, please choose another filename."
-msgstr "Die Datei existiert bereits, bitte wählen Sie einen anderen Dateinamen."
+msgstr ""
+"Die Datei existiert bereits, bitte wählen Sie einen anderen Dateinamen."
+
+#: src/View/AppView.php:341 src/View/AppView.php:342
+msgid "Remove tabsheet"
+msgstr "Reiter entfernen"
+
+#: src/View/AppView.php:373 src/View/AppView.php:374
+msgid "Add filter"
+msgstr "Filter hinzufügen"
+
+#: src/View/AppView.php:382 src/View/AppView.php:383
+msgid "Close"
+msgstr "Schließen"
+
+#: src/View/AppView.php:390 src/View/AppView.php:391
+msgid "Apply filter"
+msgstr "Filter anwenden"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Another user edits the dataset. Please try again later."
+msgstr ""
+"Ein anderer Nutzer bearbeitet gerade den Datensatz. Bitte versuchen Sie "
+"es später erneut."
+
+msgid ""
+"One of the databases is not available. Please check the database name."
+msgstr ""
+"Eine der Datenbanken ist nicht verfügbar. Bitte überprüfen Sie den Namen "
+"der Datenbank."
+
+msgid ""
+"One of the databases does not fulfill the version requirement. Please "
+"update the database structure."
+msgstr ""
+"Eine der Datenbanken erfüllt die Versionsanforderung nicht. Bitte "
+"aktualisieren Sie die Datenbankstruktur."
+
+msgid "The doc has been saved."
+msgstr "Die Seite wurde gespeichert."
+
+msgid "The doc could not be saved. Please, try again."
+msgstr ""
+"Die Seite konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+msgid "Another user edits the page. Please try again later."
+msgstr ""
+"Ein anderer Nutzer bearbeitet gerade die Seite. Bitte versuchen Sie es "
+"später erneut."
+
+msgid "The page has been deleted."
+msgstr "Die Seite wurde gelöscht."
+
+msgid "The page could not be deleted. Please, try again."
+msgstr ""
+"Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+msgid "IRI Provider"
+msgstr "IRI-Provider"
 
 msgid "Docs"
 msgstr "Seiten"
@@ -466,25 +928,22 @@ msgid "The doc has been deleted."
 msgstr "Die Seite wurde gelöscht."
 
 msgid "The doc could not be deleted. Please, try again."
-msgstr "Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+msgstr ""
+"Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
 
 msgid "The thumb cache has been cleared."
 msgstr "Der Vorschaucache wurde geleert."
 
 msgid "The thumb cache could not be cleared. Please try again."
-msgstr "Der Vorschaucache konnte nicht geleert werden. Bitte versuchen Sie es erneut."
-
-msgid "The user could not be saved. Maybe the user is already present in the database? Please, try again."
-msgstr "Der Benutzer konnte nicht gespeichert werden. Vielleicht existiert der Benutzer bereits in der Datenbank? Bitte versuchen Sie es erneut."
+msgstr ""
+"Der Vorschaucache konnte nicht geleert werden. Bitte versuchen Sie es "
+"erneut."
 
 msgid "Search"
 msgstr "Suche"
 
 msgid "Databank"
 msgstr "Datenbank"
-
-msgid "Project"
-msgstr "Projekt"
 
 msgid "Search term"
 msgstr "Suchausdruck"
@@ -497,9 +956,6 @@ msgstr "vorige"
 
 msgid "next"
 msgstr "nächste"
-
-msgid "Actions"
-msgstr "Aktionen"
 
 msgid "Desktop"
 msgstr "Desktop"
@@ -523,7 +979,9 @@ msgid "Create database"
 msgstr "Datenbank erstellen"
 
 msgid "A project database consists of a data folder and a SQL database."
-msgstr "Eine Projektdatenbank besteht aus einem Datenordner und einer SQL Datenbank."
+msgstr ""
+"Eine Projektdatenbank besteht aus einem Datenordner und einer SQL-"
+"Datenbank."
 
 msgid "If the directory does not exist it will be created."
 msgstr "Falls das Verzeichnis nicht existiert, wird es erstellt."
@@ -531,8 +989,11 @@ msgstr "Falls das Verzeichnis nicht existiert, wird es erstellt."
 msgid "If the SQL database does not exist it will be created."
 msgstr "Falls die SQL Datenbank nicht existiert, wird sie erstellt."
 
-msgid "If the SQL database is empty it will be filled with a blank structure."
-msgstr "Falls die SQL Datenbank leer ist, wird sie mit einer leeren Struktur gefüllt."
+msgid ""
+"If the SQL database is empty it will be filled with a blank structure."
+msgstr ""
+"Falls die SQL Datenbank leer ist, wird sie mit einer leeren Struktur "
+"gefüllt."
 
 msgid "Save"
 msgstr "Speichern"
@@ -544,7 +1005,9 @@ msgid "Cancel"
 msgstr "Abbrechen"
 
 msgid "This will backup the database {0} on the server. Are you sure?"
-msgstr "Dies wird eine Sicherheitskopie der  Datenbank {0} auf dem Server erstellen. Sind Sie sicher?"
+msgstr ""
+"Dies wird eine Sicherheitskopie der  Datenbank {0} auf dem Server "
+"erstellen. Sind Sie sicher?"
 
 msgid "Yes"
 msgstr "Ja"
@@ -553,28 +1016,41 @@ msgid "No"
 msgstr "Nein"
 
 msgid "This will create the database {0} on the server. Are you sure?"
-msgstr "Dies wird die Datenbank {0} auf dem Server erstellen. Sind Sie sicher?"
+msgstr ""
+"Dies wird die Datenbank {0} auf dem Server erstellen. Sind Sie sicher?"
 
-msgid "Danger zone! Operations on this page may severely damage content. Data can get lost forever!"
-msgstr "Gefahrenbereich! Operationen auf dieser Seite können Inhalt empfindlich beschädigen. Daten können für immer verloren gehen!"
+msgid ""
+"Danger zone! Operations on this page may severely damage content. Data "
+"can get lost forever!"
+msgstr ""
+"Gefahrenbereich! Operationen auf dieser Seite können Inhalt empfindlich "
+"beschädigen. Daten können für immer verloren gehen!"
 
-msgid "This will drop the database {0} on the server. All data will be deleted forever. Are you sure? Are you really sure?"
-msgstr "Dies wird die Datenbank {0} vom Server löschen. Alle Daten werden für immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
+msgid ""
+"This will drop the database {0} on the server. All data will be deleted "
+"forever. Are you sure? Are you really sure?"
+msgstr ""
+"Dies wird die Datenbank {0} vom Server löschen. Alle Daten werden für "
+"immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
 
 msgid "Import SQL"
 msgstr "SQL importieren"
 
-msgid "Are you sure about importing this script? This may alter the database."
-msgstr "Sind Sie sicher, dass Sie dieses Script importieren wollen. Dies könnte ihre Datenbank verändern."
+msgid ""
+"Are you sure about importing this script? This may alter the database."
+msgstr ""
+"Sind Sie sicher, dass Sie dieses Script importieren wollen? Dies könnte "
+"ihre Datenbank verändern."
 
 msgid "Manage"
 msgstr "Verwalten"
 
-msgid "Create Database"
-msgstr "Datenbank hinzufügen"
-
-msgid "This will init the database {0} on the server with a blank table structure. Are you sure?"
-msgstr "Dies wird die Datenbank {0} auf dem Server mit einer leeren Tabellenstruktur initialisieren. Sind Sie sicher?"
+msgid ""
+"This will init the database {0} on the server with a blank table "
+"structure. Are you sure?"
+msgstr ""
+"Dies wird die Datenbank {0} auf dem Server mit einer leeren "
+"Tabellenstruktur initialisieren. Sind Sie sicher?"
 
 msgid "Remove Connection"
 msgstr "Verbindung entfernen"
@@ -598,7 +1074,9 @@ msgid "Drop Database"
 msgstr "Datenbank löschen"
 
 msgid "Are you sure you want to drop # {0}? All data will be lost, forever!"
-msgstr "Sind Sie sicher, dass Sie # {0} löschen wollen? Alle Daten werden für immer verloren sein!"
+msgstr ""
+"Sind Sie sicher, dass Sie # {0} löschen wollen? Alle Daten werden für "
+"immer verloren sein!"
 
 msgid "Create doc"
 msgstr "Seite erstellen"
@@ -624,9 +1102,6 @@ msgstr "Seite bearbeiten"
 msgid "Delete Doc"
 msgstr "Seite löschen"
 
-msgid "Pipeline"
-msgstr "Pipeline"
-
 msgid "Data"
 msgstr "Daten"
 
@@ -642,11 +1117,10 @@ msgstr "Text"
 msgid "Elements"
 msgstr "Elemente"
 
-msgid "Database"
-msgstr "Datenbank"
-
 msgid "Specify IDs separated by comma. Leave empty to get all articles."
-msgstr "Geben Sie IDs separiert durch Kommata an. Lassen Sie das Feld leer, um alle Artikel zu erhalten."
+msgstr ""
+"Geben Sie IDs durch Kommata getrennt an. Lassen Sie das Feld leer, um "
+"alle Artikel zu erhalten."
 
 msgid "Start"
 msgstr "Start"
@@ -654,11 +1128,19 @@ msgstr "Start"
 msgid "all"
 msgstr "alle"
 
-msgid "This will delete the file \"{0}\" on the server. All data will be deleted forever. Are you sure? Are you really sure?"
-msgstr "Dies wird die Datei \"{0}\" auf dem Server löschen. Alle Daten werden für immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
+msgid ""
+"This will delete the file \"{0}\" on the server. All data will be deleted "
+"forever. Are you sure? Are you really sure?"
+msgstr ""
+"Dies wird die Datei \"{0}\" auf dem Server löschen. Alle Daten werden für "
+"immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
 
-msgid "This will delete the folder \"{0}\" on the server. All data will be deleted forever. Are you sure? Are you really sure?"
-msgstr "Dies wird den Ordner \"{0}\" auf dem Server löschen. Alle Daten werden für immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
+msgid ""
+"This will delete the folder \"{0}\" on the server. All data will be "
+"deleted forever. Are you sure? Are you really sure?"
+msgstr ""
+"Dies wird den Ordner \"{0}\" auf dem Server löschen. Alle Daten werden "
+"für immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
 
 msgid "File"
 msgstr "Datei"
@@ -711,9 +1193,6 @@ msgstr "Springe zu Ordner"
 msgid "Create new pipeline"
 msgstr "Neue Pipeline erstellen"
 
-msgid "Add option"
-msgstr "Option hinzufügen"
-
 msgid "Add element"
 msgstr "Element hinzufügen"
 
@@ -732,9 +1211,6 @@ msgstr "Wert"
 msgid "Remove option"
 msgstr "Option entfernen"
 
-msgid "Remove element"
-msgstr "Element entfernen"
-
 msgid "New Pipeline"
 msgstr "Neue Pipeline"
 
@@ -752,9 +1228,6 @@ msgstr "Benutzer hinzufügen"
 
 msgid "Grant Access"
 msgstr "Zugriff gewähren"
-
-msgid "Other SQL connections"
-msgstr "Andere SQL-Verbindungen"
 
 msgid "Create User"
 msgstr "Benutzer hinzufügen"
@@ -823,28 +1296,29 @@ msgid "The folder has been deleted."
 msgstr "Der Ordner wurde gelöscht."
 
 msgid "The folder could not be deleted. Please, try again."
-msgstr "Der Ordner konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-msgid "The folder has been created."
-msgstr "Der Ordner wurde erstellt."
+msgstr ""
+"Der Ordner konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
 
 msgid "The folder could not be created. Please, try again."
-msgstr "Der Ordner konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+msgstr ""
+"Der Ordner konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
 
 msgid "The files have been uploaded."
 msgstr "Die Dateien wurden hochgeladen."
 
 msgid "Some files could not be uploaded. Please, try again."
-msgstr "Einige Dateien konnten nicht hochgeladen werden. Bitte versuchen Sie es erneut."
+msgstr ""
+"Einige Dateien konnten nicht hochgeladen werden. Bitte versuchen Sie es "
+"erneut."
 
 msgid "Create database connection"
-msgstr "Datenbankverbindung hinzufügen"
+msgstr "Datenbankverbindung erstellen"
 
 msgid "Database Connections"
 msgstr "Datenbankverbindungen"
 
 msgid "Create Connection"
-msgstr "Verbindung hinzufügen"
+msgstr "Verbindung erstellen"
 
 msgid "Edit Connection"
 msgstr "Verbindung bearbeiten"

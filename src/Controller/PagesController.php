@@ -10,6 +10,7 @@
 
 namespace App\Controller;
 
+use App\Model\Table\PermissionsTable;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\I18n\I18n;
@@ -110,8 +111,9 @@ class PagesController extends AppController
             ]);
 
 
-        if (($this->_getUserRole() !== 'guest') || ($this->segment === 'help')) {
-            $published = $this->_getUserRole() === 'guest';
+        $user = $this->Auth->user();
+        if ((PermissionsTable::getUserRole($user, null,  $this->_getRequestScope()) !== 'guest') || ($this->segment === 'help')) {
+            $published = PermissionsTable::getUserRole($user, null,  $this->_getRequestScope()) === 'guest';
             $this->sidemenu = $this->Docs->getMenu($published);
         }
     }
@@ -226,6 +228,6 @@ class PagesController extends AppController
      */
     public function import($scope = null)
     {
-        $this->Transfer->import('docs', $scope);
+        $this->Transfer->import($scope);
     }
 }

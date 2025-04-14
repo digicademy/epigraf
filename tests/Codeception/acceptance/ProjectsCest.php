@@ -6,8 +6,15 @@
  */
 class ProjectsCest
 {
+    /**
+     * before method
+     *
+     * @param AcceptanceTester $I
+     * @return void
+     */
     public function _before(AcceptanceTester $I)
     {
+        $I->testClassName = get_class($this);
     }
 
     /**

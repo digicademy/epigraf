@@ -25,6 +25,7 @@ use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
+use Epi\Model\Traits\TransferTrait;
 
 /**
  * Types table
@@ -37,6 +38,13 @@ use Cake\Validation\Validator;
  */
 class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableInterface
 {
+    use TransferTrait;
+
+    /**
+     * @var int Default export limit used in TransferTrait
+     */
+    protected $exportLimit = 100;
+
     /**
      * Type field for scoped queries and IRI paths
      *
@@ -243,9 +251,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     }
 
     /**
-     * afterSave callback
-     *
-     * Clear the caches
+     * Clear the caches after saving
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
@@ -459,46 +465,6 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     }
 
     /**
-     * Called from JobExport
-     *
-     * @param $params
-     * @return int Number of rows for calculating the progress bar
-     */
-    public function getExportCount($params): int
-    {
-        $params = $this->parseRequestParameters($params);
-
-        return $this
-            ->find('hasParams', $params)
-            ->count();
-    }
-
-    /**
-     * Get data to be exported
-     *
-     * @implements ExportTableInterface
-     * @param array $params
-     * @param array $paging
-     * @param string $indexkey
-     * @return Type[]
-     */
-    public function getExportData($params, $paging = [], $indexkey = ''): array
-    {
-        $offset = $paging['offset'] ?? 0;
-        $limit = $paging['limit'] ?? 100;
-
-        $params = $this->parseRequestParameters($params);
-        $types = $this
-            ->find('hasParams', $params)
-            ->limit($limit)
-            ->offset($offset)
-            ->toArray();
-        return $types;
-
-    }
-
-
-    /**
      * Get the scope number
      *
      * @param $query
@@ -531,7 +497,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     {
         return $query->find('all')
             ->order(['category' => 'asc', 'name' => 'asc'])
-            ->where(['scope' => 'links', 'deleted' => 0, 'mode' => 'default'], [], true);
+            ->where(['scope' => 'links', 'deleted' => 0, 'mode' => MODE_DEFAULT], [], true);
     }
 
     /**
@@ -545,7 +511,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     {
         return $query->find('all')
             ->order(['category' => 'asc', 'name' => 'asc'])
-            ->where(['scope' => 'footnotes', 'deleted' => 0, 'mode' => 'default'], [], true);
+            ->where(['scope' => 'footnotes', 'deleted' => 0, 'mode' => MODE_DEFAULT], [], true);
     }
 
     /**

@@ -13,22 +13,49 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: plugins/Epi/webroot/js/models.js:1967
-#: plugins/Epi/webroot/js/models.js:1968
+#: plugins/Widgets/webroot/js/documents.js:763
+#: plugins/Widgets/webroot/js/documents.js:861
+msgid "Apply"
+msgstr "Anwenden"
+
+#: plugins/Widgets/webroot/js/jobs.js:409
+msgid "Stop"
+msgstr "Stop"
+
+#: plugins/Widgets/webroot/js/jobs.js:411
+msgid "Please stand by, weaving the words may take a minute."
+msgstr "Bitte warten, das Verweben der Wörte kann eine Minute benötigen."
+
+#: plugins/Widgets/webroot/js/jobs.js:418
+msgid "Invalid service data"
+msgstr "Ungültige Service-Daten"
+
+#: plugins/Widgets/webroot/js/jobs.js:441
+msgid "Invalid service input"
+msgstr "Ungültiger Service-Input"
+
+#: plugins/Widgets/webroot/js/jobs.js:452
+#: plugins/Widgets/webroot/js/jobs.js:472
+msgid "An error occurred"
+msgstr "Es ist eine Fehler aufgetreten"
+
+#: plugins/Epi/webroot/js/models.js:2272
+#: plugins/Epi/webroot/js/models.js:2273
 msgid "Footnote"
 msgstr "Fußnote"
 
-#: plugins/Widgets/webroot/js/layout.js:1717
-#: plugins/Widgets/webroot/js/layout.js:1952
+#: plugins/Widgets/webroot/js/frames.js:849
+#: plugins/Widgets/webroot/js/frames.js:1116
 msgid "Reloading document"
 msgstr "Dokument wird neu geladen"
 
-#: plugins/Widgets/webroot/js/layout.js:1839
-#: plugins/Widgets/webroot/js/layout.js:1840
+#: plugins/Widgets/webroot/js/frames.js:993
+#: plugins/Widgets/webroot/js/frames.js:994
 msgid "Open in new tab"
 msgstr "In neuem Tab öffnen"
 
-#: plugins/Widgets/webroot/js/layout.js:1850
-#: plugins/Widgets/webroot/js/layout.js:1851
+#: plugins/Widgets/webroot/js/documents.js:861
+#: plugins/Widgets/webroot/js/frames.js:1005
+#: plugins/Widgets/webroot/js/frames.js:1006
 msgid "Close"
 msgstr "Schließen"

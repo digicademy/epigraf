@@ -119,6 +119,11 @@ Reference screenshots are located in `_data/references`. If a test
 implements a visual comparison and the reference is not yet there it
 will be created. Thus, to update references, delete them and then run the test.
 
+You can set $shouldOverwriteScreenshots to true in the  AcceptanceTester class
+to overwrite the reference screenshots automatically when the tests run.
+Make sure to set it back to false after updating the references.
+Otherwise, all screenshot based tests will always succeed
+
 ## Test data
 All tests run on the databases in the `test_sql` container.
 Before each test, the test databases are populated with the two dumps located in `tests/Testdata/Databases`.

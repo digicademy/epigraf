@@ -8,8 +8,8 @@
 ?>
 
 <?php
-    $columns = $this->getConfig('options')['columns'] ?? [];
-    $columns_visible = $this->Table->getSelectedColumns($columns);
+//    $columns = $this->getConfig('options')['columns'] ?? [];
+//    $columns_visible = $this->Table->getSelectedColumns($columns);
 
     $params = $this->getConfig('options')['params'] ?? [];
     $selected = $params['selected'] ?? [];
@@ -47,27 +47,7 @@
 <div class="content-main widget-scrollbox" data-snippet="rows">
   <?php
     $params = $this->getConfig('options')['params'] ?? [];
-    $mode = $params['mode'] ?? 'default';
-    $action = $this->Link->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
-
-    if ($mode === 'code') {
-        $viewAction = ['action' => $action, '{id}','?' => ['mode' => 'code']];
-        $openAction =  ['action' => 'view', '{id}'];
-        $tabAction = ['action' => 'view', '{id}'];
-    }
-    else {
-        $published = $params['published'] ?? null;
-        if (!empty($published)) {
-            $viewAction = ['action' => 'view', '{id}','?' => ['published' => implode(',', $published)]];
-            $openAction =  ['action' => $action, '{id}', '?' => ['mode' => 'stage']];
-            $tabAction = ['action' => $action, '{id}', '?' => ['mode' => 'stage']];
-        } else {
-            $viewAction = true;
-            $openAction =  ['action' => $action, '{id}'];
-            $tabAction = ['action' => $action, '{id}'];
-
-        }
-    }
+    $actions = $this->Link->getActions($params['mode'] ?? MODE_DEFAULT, $params);
   ?>
   <?=
     $this->Table->filterTable(
@@ -92,11 +72,7 @@
                 'data-filter-mode' => $this->getConfig('options')['params']['mode'] ?? '',
                 'data-filter-lanes' => $this->getConfig('options')['params']['lanes'] ?? ''
             ],
-            'actions' => [
-                'view' => $viewAction,
-                'open' => $openAction,
-                'tab' => $tabAction
-            ]
+            'actions' => $actions
         ]
     )
   ?>

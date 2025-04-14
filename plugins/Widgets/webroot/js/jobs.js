@@ -12,10 +12,14 @@
 
 import {BaseWidget} from '/js/base.js';
 import Utils from '/js/utils.js';
+import {i18n}  from '/js/lingui.js';
 
 export class JobWidget extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
+
+        this.delay = 0;
+        this.lastRefresh = 0;
 
         this.isPolling = false;
         this.isCancelled = false;
@@ -29,11 +33,12 @@ export class JobWidget extends BaseWidget {
         });
 
         this.messageBar = this.widgetElement.querySelector('.widget-job-message');
-        this.frameWidget = this.getContentPane();
+        this.resultTable = this.widgetElement.querySelector('.widget-job-results');
+        this.frameWidget = this.getFrame();
     }
 
     initWidget() {
-        this.frameWidget = this.getContentPane();
+        this.frameWidget = this.getFrame();
 
         if (this.frameWidget) {
             this.listenEvent(this.frameWidget.buttonPane,'click', (event) => this.onButtonClick(event));
@@ -64,6 +69,15 @@ export class JobWidget extends BaseWidget {
     }
 
     /**
+     * Extract the cancel URL from the widget
+     *
+     * @return {string}
+     */
+    getCancelUrl() {
+        return this.widgetElement.dataset.jobCancelurl;
+    }
+
+    /**
      *  Start polling
      *
      *  @return {boolean} Whether a next action is available (download or polling)
@@ -76,7 +90,6 @@ export class JobWidget extends BaseWidget {
             this.showProceed('Download', target);
             return true;
         }
-
 
         this.url = this.getNextUrl();
         if (!this.url) {
@@ -98,14 +111,14 @@ export class JobWidget extends BaseWidget {
     /**
      * Stop polling
      */
-    stopPolling() {
+    stopPolling(data) {
         this.isPolling = false;
 
         if (this.isCancelled) {
             this.showError('Cancelled');
         } else {
             this.isFinished = true;
-            this.showSuccess('Finished');
+            this.showResult(data);
         }
     }
 
@@ -117,10 +130,7 @@ export class JobWidget extends BaseWidget {
         const role = Utils.getValue(event,'detail.data.role', event.target.dataset.role);
 
         if (this.isPolling && role === 'cancel') {
-            this.isCancelled = true;
-            this.progressBar.querySelector('.ui-progressbar-value').innerHtml = '';
-            $(this.progressBar).progressbar("option", "value", false);
-            $(this.progressBar).progressbar("option", "max", false);
+            this.cancel();
             event.preventDefault();
         }
 
@@ -155,8 +165,9 @@ export class JobWidget extends BaseWidget {
         Utils.hide(this.progressBar);
     }
 
-    showProceed(caption, url) {
-        this.showSuccess('Finished');
+    showProceed(caption, url, data) {
+        this.showResult(data);
+
         this.proceedUrl = url;
         this.frameWidget.showButton('proceed', caption, url);
         if (this.isInFrame()) {
@@ -165,6 +176,26 @@ export class JobWidget extends BaseWidget {
         }
 
         window.location = url;
+    }
+
+    showResult(data) {
+        const msg = data && data.message ? data.message : 'Finished';
+        this.showSuccess(msg);
+
+        const downloads = Utils.getValue(data,'config.downloads');
+        const td = this.resultTable ? this.resultTable.querySelector('td') : undefined;
+
+        if (!downloads || !td) {
+            return;
+        }
+
+        let downloadHtml = '';
+        downloads.forEach(download => {
+            downloadHtml += `<a href="${download.url}" target="_blank">${download.caption}</a><br>`;
+        })
+
+        td.innerHTML = downloadHtml;
+        this.resultTable.classList.remove('empty');
     }
 
     /**
@@ -183,6 +214,18 @@ export class JobWidget extends BaseWidget {
     continuePolling(url, form) {
         const self = this;
         this.isPolling = true;
+
+        // Slow down
+        const currentTime = Date.now();
+        if (this.lastRefresh) {
+            if ((this.lastRefresh + this.delay) > currentTime) {
+                setTimeout(() => {
+                    this.continuePolling(url, form);
+                }, this.delay);
+                return;
+            }
+        }
+        this.lastRefresh = currentTime;
 
         let data = {};
         if (form !== undefined) {
@@ -227,19 +270,25 @@ export class JobWidget extends BaseWidget {
                     self.isFinished = true;
 
                     const target = App.baseUrl + data.redirect;
-                    const caption = (data.status === 'download') ? 'Download' : 'Proceed';
-                    self.showProceed(caption, target);
+                    const caption = (data.download) ? 'Download' : 'Proceed';
+                    self.showProceed(caption, target, data);
                 }
 
                 // Continue
                 else if (data.nexturl && !self.isCancelled) {
+
+                    // For delayed jobs, request status every second
+                    if (data.delay === 1) {
+                        self.delay = 1000;
+                    }
+
                     const target = new URL(data.nexturl, App.baseUrl);
                     self.continuePolling(target);
                 }
 
                 // Stop
                 else {
-                    self.stopPolling();
+                    self.stopPolling(data);
                 }
             },
 
@@ -255,7 +304,24 @@ export class JobWidget extends BaseWidget {
         });
     }
 
+    cancel() {
+        this.isCancelled = true;
+        this.progressBar.querySelector('.ui-progressbar-value').innerHtml = '';
+        $(this.progressBar).progressbar("option", "value", false);
+        $(this.progressBar).progressbar("option", "max", false);
+
+        // Send a delete request to the server
+        const url = this.getCancelUrl();
+        if (url) {
+            return fetch(url, {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
+            });
+        }
+    }
+
 }
+
 
 /**
  * Register widget classes in the app

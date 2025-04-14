@@ -22,30 +22,7 @@ $this->Breadcrumbs->add($job->id);
 ?>
 
 <!-- Content area -->
-<table class="vertical-table">
-    <tr>
-        <th scope="row"><?= __('Typ') ?></th>
-        <td><?= h($job->typ) ?></td>
-    </tr>
-
-    <tr>
-        <th scope="row"><?= __('Status') ?></th>
-        <td><?= h($job->status) ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><?= __('Progress') ?></th>
-        <td><?= h($job->progress) . '/' . h($job->progressmax) ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><?= __('Created') ?></th>
-        <td><?= h($job->created) ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><?= __('Modified') ?></th>
-        <td><?= h($job->modified) ?></td>
-    </tr>
-
-</table>
+<?= $this->EntityHtml->entityForm($job, 'view') ?>
 
 <?php if (!empty($job->config['pipeline_tasks'])): ?>
     <h2><?= __('Tasks') ?></h2>

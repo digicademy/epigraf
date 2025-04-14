@@ -13,7 +13,7 @@ namespace App\Model\Entity\Tasks;
 /**
  * Set the article number
  */
-class TaskAssignNumber extends TaskAssignCollection
+class TaskAssignNumber extends TaskAssignProperty
 {
 
     /**
@@ -28,7 +28,7 @@ class TaskAssignNumber extends TaskAssignCollection
         $fields = [];
 
 //        $database = $this->job->activateDatabank($this->job->config['database']);
-        $propertyType = 'literature'; // TODO: make configurable
+        $propertyType = PROPERTYTYPE_LITERATURE; // TODO: make configurable
 
 
         $fields['config.params.target'] =

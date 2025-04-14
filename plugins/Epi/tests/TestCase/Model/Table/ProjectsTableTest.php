@@ -99,8 +99,7 @@ class ProjectsTableTest extends EpiTestCase
 		$project = $this->Projects
 			->getExportData($options);
 
-		$compare = $this->saveComparisonJson($project);
-		$this->assertJsonStringEqualsComparison($compare);
+		$this->assertJsonStringEqualsComparison($project);
 	}
 
 
@@ -115,8 +114,7 @@ class ProjectsTableTest extends EpiTestCase
 		$project = $this->Projects
 			->getExportData($options);
 
-		$compare = $this->saveComparisonJson($project);
-		$this->assertJsonStringEqualsComparison($compare);
+		$this->assertJsonStringEqualsComparison($project);
 	}
 
     /**
@@ -127,9 +125,7 @@ class ProjectsTableTest extends EpiTestCase
     public function testFindSelect(): void
     {
         $projects = $this->Projects->find('select')->toArray();
-
-        $compare = $this->saveComparisonJson($projects);
-        $this->assertJsonStringEqualsComparison($compare);
+        $this->assertJsonStringEqualsComparison($projects);
     }
 
 
@@ -141,9 +137,25 @@ class ProjectsTableTest extends EpiTestCase
     public function testFindSelectGrouped(): void
     {
         $projects = $this->Projects->find('select',['grouped'=>true])->toArray();
+        $this->assertJsonStringEqualsComparison($projects);
+    }
 
-        $compare = $this->saveComparisonJson($projects);
-        $this->assertJsonStringEqualsComparison($compare);
+    /**
+     * Test that empty projects are listed
+     *
+     * @return void
+     */
+    public function testFindEmptyProjects(): void
+    {
+        $entity = $this->Projects->newEntity(['name' => 'Empty Project']);
+        $this->Projects->save($entity);
+
+        $params = [];
+        $projects = $this->Projects
+            ->find('hasParams', $params)
+            ->find('containFields', $params);
+
+        $this->assertJsonStringEqualsComparison($projects);
     }
 
 }

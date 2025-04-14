@@ -143,39 +143,4 @@ class AppController extends BaseController
 
         return false;
     }
-
-    /**
-     * Get the permission mask for project database specific endpoints
-     *
-     * TODO: implement a PermissionComponent
-     *
-     * The result is used in AppController::hasGrantedPermission() to determine permissions.
-     *
-     * @param array|null $user If null, the current user is used.
-     * @return array
-     */
-    public function getPermissionMask($user = null)
-    {
-        $action = 'epi/' . strtolower($this->request->getParam('controller')) . '/' . strtolower($this->request->getParam('action'));
-//        $database = $this->request->getParam('database') ?? $this->request->getQuery('database') ?? $user['databank']['name'] ?? false;
-
-        $selectedDatabase = $this->request->getParam('database');
-        if (!empty($selectedDatabase)) {
-            $selectedDatabase = Databank::addPrefix($selectedDatabase);
-        }
-
-
-        $permission = [
-            'user_id' => $this->_getUserId($user),
-            'user_role' => $this->_getUserRole($user, $selectedDatabase),
-            'user_request' => $this->_getRequestScope(),
-            'entity_type' => 'databank',
-            'entity_name' => $selectedDatabase,
-            'permission_type' => 'access',
-            'permission_name' => $action
-        ];
-
-        return $permission;
-    }
-
 }

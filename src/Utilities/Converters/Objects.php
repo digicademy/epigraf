@@ -168,7 +168,6 @@ class Objects extends Hash
 
         // TODO: $_key is unnecessary, isn't it?
         $_key = '__set_item__';
-
         $context = [$_key => [$data]];
 
         foreach ($tokens as $token) {
@@ -181,12 +180,13 @@ class Objects extends Hash
                 /*
                  * @author: Jakob Jünger (the if conditions), the asterisk expansion
                  */
-                if ($token === '*') {
+                if (($token === '*') || $token === '') {
                     $token = '{*}';
                 }
 
                 if (($item instanceof BaseEntity) && !$item->getEntityIsVisible($options)) {
                     // Skip unpublished entities
+                    continue;
                 }
 
                 elseif (!str_starts_with($token, '{') && is_object($item)) {
@@ -430,6 +430,7 @@ class Objects extends Hash
      * - 'ltrunc': Remove a prefix from a string.
      *             The prefix is determined by the field value of the root object
      *             as defined in the step options.
+     * - 'json': Extract a json value or a value from a nested array
      *
      * @param mixed $value Input value
      * @param array $steps A list of processing instructions.
@@ -489,9 +490,43 @@ class Objects extends Hash
             elseif ($step === 'strip') {
                 $value = preg_replace('/<[^>]*>/', '', $value);
             }
+
+            elseif ($step === 'padzero') {
+                $value = str_pad($value, intval($options), '0', STR_PAD_LEFT);
+            }
+            elseif ($step === 'json') {
+                $arrayValue = is_array($value) ? $value : json_decode($value, true);
+                $value = Objects::get($arrayValue, $options);
+            }
         }
 
         return $value;
+    }
+
+    /**
+     * Parse a path expression into components
+     *
+     * @param string $pathExpression Path expression (e.g., "root/item[@type='special']").
+     * @param string $separator The path delimiter, e.g. '.' or '/'.
+     * @return array Parsed path components as an array, each item with the keys name, attr and value.
+     */
+    public static function parsePath($pathExpression, $separator = '.') {
+        $segments = Text::tokenize($pathExpression, $separator, '[', ']');
+
+        return array_map(function ($segment) {
+            $tag = $segment;
+            $attr = null;
+            $value = null;
+
+            // Check for attribute conditions (e.g., item[@type='special'])
+            if (strpos($segment, '[') !== false) {
+                $tag = substr($segment, 0, strpos($segment, '['));
+                $condition = substr($segment, strpos($segment, '[') + 1, -1);
+                [$attr, $value] = explode('=', str_replace(["'"], '', $condition));
+            }
+
+            return ['name' => $tag, 'attr' => $attr, 'value' => $value];
+        }, $segments);
     }
 
 }

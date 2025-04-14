@@ -98,6 +98,11 @@ class FileRecord extends BaseEntity
         return $this->fetchTable($this->getSource());
     }
 
+    public function syncDatabase()
+    {
+        $this->table->syncDatabase($this->root, $this->relativeFolder);
+    }
+
     /**
      * Magic property is_file
      *

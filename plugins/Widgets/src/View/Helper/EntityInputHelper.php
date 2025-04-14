@@ -12,11 +12,14 @@ namespace Widgets\View\Helper;
 
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
+use App\Utilities\Files\Files;
 use Cake\ORM\Entity;
 use Cake\Utility\Inflector;
 use Cake\View\Helper\FormHelper;
+use Epi\Model\Entity\Article;
 use Epi\Model\Entity\Footnote;
 use Epi\Model\Entity\Item;
+use Epi\Model\Entity\Section;
 
 /**
  * Entity helper for HTML view generation
@@ -153,6 +156,7 @@ class EntityInputHelper extends BaseEntityHelper
 
         $tables = ($template_section['view']['grouped'] ?? false) ? [$itemTypes] : array_map(fn($x) => [$x], $itemTypes);
         $moreSection = $template_section['view']['more'] ?? false;
+        $fileUpload = $template_section['view']['widgets']['upload'] ?? false;
 
         $out = '';
 
@@ -166,7 +170,9 @@ class EntityInputHelper extends BaseEntityHelper
                 $itemConfig = is_array($itemConfig) ? $itemConfig : ['type' => $itemConfig];
                 $itemType = $itemConfig['type'] ?? 'undefined';
 
-//                $itemCount = $itemConfig['count'] ?? '1';
+                $mergedConfig = $this->Types->getTypes()['items'][$itemType]['merged'] ?? [];
+                $moreItem = $moreItem || (($mergedConfig['display'] ?? true) === 'more');
+
                 $itemsFields = $this->Types->getFields('items', $itemType, ['unnest' => true, 'edit' => true] + $options);
 
                 $i = 0;
@@ -237,55 +243,32 @@ class EntityInputHelper extends BaseEntityHelper
                     $itemClasses[] = $item->hasErrors() ? 'doc-section-item-error' : '';
                     $itemClasses = implode(' ', array_filter($itemClasses));
 
-                    $out .= $this->itemStart($item, ['edit' => true, 'class' => $itemClasses]);
-
-                    // First column contains the item type caption
-                    $out .= $this->Element->outputHtmlElement(
-                        'div',
-                        $this->Types->getCaption('items', $itemType, ucfirst($itemType)),
-                        ['class' => 'doc-field doc-field-itemtype']
+                    $out .= $this->sectionContentTableRow(
+                        $groupHeaders, $itemType,  $item, $section,
+                        ['edit' => true, 'class' => $itemClasses],
+                        [
+                            'mode' => $mode,
+                            'template_item' => $template_item,
+                            'template_section' => $template_section,
+                            'template_article' => $template_article
+                        ],
+                         [
+                             'more' => $moreItem,
+                             'delete' => $itemDelete
+                         ]
                     );
-
-                    foreach ($groupHeaders as $groupHeader) {
-                        $fieldName = $groupHeader['fields'][$itemType]['fieldname'] ?? '';
-                        if (empty($fieldName)) {
-                            $out .= '<div></div>';
-                            continue;
-                        }
-                        $out .= $this->itemField(
-                            $item,
-                            $fieldName,
-                            [
-                                'edit' => true,
-                                'mode' => $mode,
-                                'caption' => false,
-                                'template_item' => $template_item,
-                                'template_section' => $template_section,
-                                'template_article' => $template_article
-                            ]
-                        );
-                    }
-
-                    if ($moreItem) {
-                        $out .= $this->itemMoreButton($section->id, $item->id);
-                    }
-
-                    if ($itemDelete) {
-                        $out .= $this->itemRemoveButton($section->id, $item->id);
-                    }
-
-                    $out .= $this->itemEnd();
                 }
 
                 // Template for new items
-                // TODO: Make dry (see redundant code above)
                 if ($itemAdd || $itemCreate) {
                     $out .= '<div class="doc-section-item ' . (!count($items) ? 'doc-section-item-first' : '') . '">';
                     $out .= '<div class="doc-field doc-field-itemtype">'
                         . $this->Types->getCaption('items', $itemType, ucfirst($itemType))
                         . '</div>';
-                    $out .= $this->itemAddButton($itemCount);
-                    $out .= '<script type="text/template" class="template template-doc-section-item">';
+                    $out .= $this->itemAddButton($itemCount, $itemType);
+                    if ($fileUpload) {
+                        $out .= $this->itemFolderButton($section);
+                    }
 
                     $templateItem = new Item([
                         'itemtype' => $itemType,
@@ -306,36 +289,18 @@ class EntityInputHelper extends BaseEntityHelper
                     $templateItem->container = $section;
                     $templateItem->root = $section->root;
 
-                    $out .= $this->itemStart($templateItem, ['edit' => true]);
-
-                    $out .= $this->Element->outputHtmlElement(
-                        'div',
-                        $this->Types->getCaption('items', $itemType, ucfirst($itemType)),
-                        ['class' => 'doc-field doc-field-itemtype']
+                    $out .= '<script type="text/template" class="template template-doc-section-item">';
+                    $out .= $this->sectionContentTableRow(
+                        $groupHeaders, $itemType,  $templateItem, $section,
+                        ['edit' => true],
+                        [],
+                        [
+                            'more' => $moreItem,
+                            'delete' => $itemDelete
+                        ]
                     );
-
-                    foreach ($groupHeaders as $groupHeader) {
-                        $fieldName = $groupHeader['fields'][$itemType]['fieldname'] ?? '';
-                        $out .= $this->itemField(
-                            $templateItem,
-                            $fieldName,
-                            [
-                                'edit' => true,
-                                'caption' => false,
-                            ]
-                        );
-                    }
-
-                    if ($moreItem) {
-                        $out .= $this->itemMoreButton($section->id, '{id}');
-                    }
-
-                    if ($itemDelete) {
-                        $out .= $this->itemRemoveButton($section->id, '{id}');
-                    }
-
-                    $out .= $this->itemEnd();
                     $out .= '</script>';
+
                     $out .= '</div>';
                 }
             }
@@ -343,12 +308,73 @@ class EntityInputHelper extends BaseEntityHelper
             $out .= '</div>';
         }
 
+        // Annotations
         $items = Arrays::ungroup($groupedItems);
         $out .= $this->annoLists($article, $items, ['edit' => true, 'mode' => $mode]);
 
         return $out;
     }
 
+    /**
+     * Output a row in a section table
+     *
+     * @param array $groupHeaders
+     * @param $itemType
+     * @param $item
+     * @param $section
+     * @param array $itemOptions
+     * @param array $fieldOptions
+     * @param array $buttons
+     * @return string
+     */
+    public function sectionContentTableRow(
+        array $groupHeaders,
+        $itemType,
+        $item,
+        $section,
+        array $itemOptions = [],
+        array $fieldOptions = [],
+        array $buttons = []
+    ): string {
+
+        $out = $this->itemStart($item, $itemOptions);
+
+        // First column contains the item type caption
+        $out .= $this->Element->outputHtmlElement(
+            'div',
+            $this->Types->getCaption('items', $itemType, ucfirst($itemType)),
+            ['class' => 'doc-field doc-field-itemtype']
+        );
+
+        foreach ($groupHeaders as $groupHeader) {
+            $fieldName = $groupHeader['fields'][$itemType]['fieldname'] ?? '';
+            if (empty($fieldName)) {
+                $out .= '<div></div>';
+                continue;
+            }
+            $out .= $this->itemField(
+                $item,
+                $fieldName,
+                [
+                    'edit' => true,
+                    'caption' => false,
+                ] + $fieldOptions
+            );
+        }
+
+
+        if ($buttons['more'] ?? false) {
+            $out .= $this->itemMoreButton($section->id, $item->id, true);
+        }
+
+        if ($buttons['delete'] ?? false) {
+            $out .= $this->itemRemoveButton($section->id, $item->id);
+        }
+
+        $out .= $this->itemEnd();
+
+        return $out;
+    }
 
     /**
      * Output a date field
@@ -490,6 +516,105 @@ class EntityInputHelper extends BaseEntityHelper
     }
 
     /**
+     * Render a button that adds items in tables and grids
+     *
+     * @param integer $itemCount
+     * @param string $itemType
+     * @return string
+     */
+    public function itemAddButton($itemCount = 1, $itemType = '')
+    {
+        $out = $this->Element->openHtmlElement(
+            'div',
+            ['class' => 'doc-field doc-field-add doc-field-add-' . $itemType]
+        );
+
+        $out .= $this->Element->outputHtmlElement(
+            'button',
+            '+',
+            [
+                'class' => 'doc-item-add tiny',
+                'data-items-max' => $itemCount,
+                'title' => __('Add item'),
+                'type' => 'button',
+                'aria-label' => __('Add item')
+            ]
+        );
+
+        $out .= $this->Element->closeHtmlElement('div');
+        return $out;
+    }
+
+    /**
+     * Render a button that opens the folder for file uploads
+     *
+     * @param Section $article
+     * @return string
+     */
+    public function itemFolderButton(Section $section) : string
+    {
+        $article = $section->container;
+        $listName = "files-for-sections-{$section->id}";
+
+        $out = $this->Element->openHtmlElement(
+            'div',
+            [
+                'class' => 'doc-field doc-field-folder',
+                'data-target-list' => $listName
+            ]
+        );
+
+        $manageUrl = $this->Url->build([
+            'controller' => 'Files',
+            'action' => 'index',
+            '?' => [
+                'path' => Files::joinPath([$article->fileBasepath, $article->fileDefaultpath])
+            ]
+        ]);
+
+        $out .= $this->Html->link(
+            __('Folder {0}',$article->fileDefaultpath),
+            [
+                'controller' => 'Files',
+                'action' => 'select',
+                '?' => [
+                    'path' => Files::joinPath([$article->fileBasepath, $article->fileDefaultpath]),
+                    'basepath' => Files::joinPath([$article->fileBasepath, $article->fileDefaultpath]),
+                    'template' => 'upload',
+                    'list' => $listName,
+                ]
+            ],
+            [
+                'class' => 'frame button tiny doc-item-folder',
+                'data-frame-target' => 'folder',
+                'data-frame-caption' => 'Files',
+                'data-frame-external' => $manageUrl,
+            ]
+        );
+
+        $out .= $this->Element->closeHtmlElement('div');
+        return $out;
+    }
+    /**
+     * Render a button that removes items in tables
+     *
+     * @param string $sectionId The section ID
+     * @param string $itemId The item ID or {id} as a placeholder
+     * @return string
+     */
+    public function itemRemoveButton($sectionId, $itemId)
+    {
+        return '<div class="doc-field doc-field-remove">'
+            . $this->Form->hidden('sections[' . $sectionId . '][items][' . $itemId . '][deleted]', ['value' => 0, 'data-row-field' => 'deleted'])
+            . '<button class="doc-item-remove tiny"
+                title="' . __('Remove item') . '"
+                type="button"
+                aria-label="' . __('Remove item') . '">-</button>'
+            . '</div>';
+
+    }
+
+    /**
      * Output a footnote
      *
      * @param false|Footnote $footnote The footnote entity or empty
@@ -525,7 +650,7 @@ class EntityInputHelper extends BaseEntityHelper
             fn($x) => $this->Form->hidden(
                 'footnotes[' . ($data['idx'] ?? '{idx}') . '][' . $x . ']',
                 [
-                    'value' => ($data[$x] ?? ('{' . Inflector::variable($x) . '}')),
+                    'value' => ($data[$x] ?? ('{' . Inflector::variable($x) . '|attr}')),
                     'data-row-field' => $x,
                     'form' => $formId
                 ]
@@ -583,5 +708,7 @@ class EntityInputHelper extends BaseEntityHelper
 
         return $out;
     }
+
+
 
 }

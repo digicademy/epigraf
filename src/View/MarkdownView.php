@@ -82,14 +82,14 @@ class MarkdownView extends ApiView
 
         // Single entities
         if (is_object($data) && ($data instanceof RootEntity)) {
-            $value = $this->EntityMarkdown->render($data);
+            $value = $this->EntityMarkdown->render($data, $options);
         }
 
         // Set of entities
         elseif ($data instanceof ResultSet) {
             foreach ($data as $row) {
                 if ((is_object($row) && ($row instanceof RootEntity))) {
-                    $value .= $this->EntityMarkdown->render($row);
+                    $value .= $this->EntityMarkdown->render($row, $options);
                 }
             }
         }

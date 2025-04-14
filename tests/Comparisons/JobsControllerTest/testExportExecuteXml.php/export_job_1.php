@@ -23,6 +23,7 @@
   array (
     'pipeline_id' => '16',
     'database' => 'projects',
+    'server' => 'http://localhost/',
     'model' => 'articles',
     'table' => 'articles',
     'params' => 
@@ -56,6 +57,7 @@
       array (
       ),
     ),
+    'pipeline_name' => 'Rohdaten',
     'user_role' => 'author',
     'user_id' => 1,
   ),

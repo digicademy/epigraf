@@ -266,6 +266,17 @@ define('PUBLICATION_BINARY_UNPUBLISHED',0);
 define('PUBLICATION_BINARY_PUBLISHED',1);
 
 /**
+ * View modes
+ */
+
+// TODO: replace 'code' by 'revise' in modes
+define('MODE_DEFAULT', 'default');
+define('MODE_PREVIEW', 'preview');
+define('MODE_REVISE', 'code');
+define('MODE_STAGE', 'stage');
+
+
+/**
  * Project user roles
  */
 
@@ -291,6 +302,7 @@ define('ITEMTYPE_SIGNATURES', 'signatures');
 define('SECTIONTYPE_COLLECTION', 'collections');
 define('SECTIONTYPE_SIGNATURES', 'signatures');
 define('SECTIONNAME_SIGNATURES', 'Signaturen');
+define('PROPERTYTYPE_LITERATURE', 'literature');
 
 /**
  * Limits
@@ -309,15 +321,15 @@ define('LOCKMODE_EPIDESKTOP', 1702146);
  * Serialization formats
  */
 
-define('RENDERED_FORMATS', ['html', 'txt', 'md', 'jsonld', 'rdf', 'ttl']);
+define('RENDERED_FORMATS', ['html', 'txt', 'md', 'jsonld', 'rdf', 'ttl','geojson']);
 define('VIEW_FORMATS', ['html', 'md','txt']);
 define('TRIPLE_FORMATS', ['jsonld', 'rdf', 'ttl']);
-define('PLAINTEXT_FORMATS', ['txt', 'md', 'jsonld', 'rdf', 'ttl']);
+define('PLAINTEXT_FORMATS', ['txt', 'md', 'jsonld', 'rdf', 'ttl', 'geojson']);
 
 define('API_FORMATS', ['json', 'xml', 'csv']);
 
-define('API_EXTENSIONS', ['json', 'xml', 'csv', 'jsonld', 'rdf', 'ttl','md']);
-define('API_CONTENTTYPES', ['application/json', 'application/xml', 'text/csv', 'application/ld+json', 'application/rdf+xml', 'text/turtle', 'text/markdown']);
+define('API_EXTENSIONS', ['json', 'xml', 'csv', 'jsonld', 'rdf', 'ttl', 'md', 'geojson']);
+define('API_CONTENTTYPES', ['application/json', 'application/xml', 'text/csv', 'application/ld+json', 'application/rdf+xml', 'text/turtle', 'text/markdown', 'application/geo+json']);
 
 /**
  * Namespaces

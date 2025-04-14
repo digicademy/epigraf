@@ -16,9 +16,7 @@ use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\Routing\Router;
 use Epi\Model\Entity\Article;
-use Epi\Model\Entity\BaseEntity;
 use Epi\Model\Entity\RootEntity;
 use Rest\Entity\LockInterface;
 
@@ -322,7 +320,7 @@ class LinkHelper extends Helper
      * @param integer|null $id The record ID or null for new records
      * @return void
      */
-    public function addSaveButton($mode, $table, $id=null)
+    public function addSaveButton($mode, $table, $id = null)
     {
         $target = isset($id) ? $table . '-' . $id : $table;
         $options =  [
@@ -346,9 +344,8 @@ class LinkHelper extends Helper
      */
     public function addAddCancelButton($entity)
     {
-        // Cancel
-        $target = $entity->tableName;
-        $form = 'form-add-' . $target;
+        // Form ID
+        $form = 'form-add-' . $entity->tableName . '-' . ($entity->id ?? $entity->newId);
 
         // Save
         $options =  [
@@ -717,15 +714,15 @@ class LinkHelper extends Helper
     public function toggleModes($params, $entityId=null, $allowed = [])
     {
         $items = [
-            'default' => ['caption' => __('Read'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]],
-            'code' => ['caption' => __('Revise'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]]
+            MODE_DEFAULT => ['caption' => __('Read'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]],
+            MODE_REVISE => ['caption' => __('Revise'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]]
         ];
         if (!empty($allowed)) {
             $items = array_intersect_key($items,array_flip($allowed));
         }
 
-        $activeMode = $params['mode'] ?? 'default';
-        $lastMode = empty($items) ? 'default' : array_key_last($items);
+        $activeMode = $params['mode'] ?? MODE_DEFAULT;
+        $lastMode = empty($items) ? MODE_DEFAULT : array_key_last($items);
 
         foreach ($items as $name => $options) {
             $active = $name === $activeMode;
@@ -741,7 +738,7 @@ class LinkHelper extends Helper
             $actionOptions['group'] = 'modes';
             $actionOptions['group-last'] = $last;
 
-            if ($params['mode'] === 'default') {
+            if ($params['mode'] === MODE_DEFAULT) {
                 unset($params['mode']);
             }
             $this->addAction($options['caption'], [$entityId, '?' => $params], $actionOptions);
@@ -1531,6 +1528,10 @@ class LinkHelper extends Helper
      * TODO: implement a plugin
      * TODO: check entity_id
      *
+     * ### Options
+     * - roles The roles that are allowed to access the endpoint.
+     *         By default, all roles are allowed.
+     *
      * @param array $url
      * @param array $options
      * @return bool
@@ -1538,36 +1539,47 @@ class LinkHelper extends Helper
     public function hasPermission($url, $options = []) {
         // Check role option
         $role = $this->_View->get('user_dbrole') ?? 'guest';
-
         $allowed = array_merge(($options['roles'] ?? ['*']), ['admin', 'devel']);
-
         if (!(in_array($role, $allowed) | in_array('*', $allowed))) {
             return false;
         }
 
-        // Check hardwired permissions ($authorized property of controllers)
-        if (is_array($url)) {
-            $request = $this->_View->getRequest();
-
-            $endpoint = [
-                'plugin' => strtolower($request->getParam('plugin') ?? ''),
-                'controller' => strtolower($request->getParam('controller') ?? ''),
-                'action' => strtolower($request->getParam('action') ?? '')
-            ];
-
-            $endpoint = array_merge($endpoint, $url);
-
-            $endpoint['plugin'] = is_string($endpoint['plugin']) ? $endpoint['plugin'] : '';
-            $endpoint['scope'] = strtolower($endpoint['plugin']) === 'epi' ? 'epi' : 'app';
-            unset($endpoint['plugin']);
-            unset($endpoint['?']);
-            if (!PermissionsTable::getEndpointHasRole($endpoint, $role, 'web')) {
-                return false;
-            }
+        if (!is_array($url)) {
+            return true;
         }
 
-        return true;
+        // Check hardwired permissions ($authorized property of controllers)
+        $request = $this->_View->getRequest();
+        $endpoint = [
+            'plugin' => strtolower($request->getParam('plugin') ?? ''),
+            'controller' => strtolower($request->getParam('controller') ?? ''),
+            'action' => strtolower($request->getParam('action') ?? '')
+        ];
+        $endpoint = array_merge($endpoint, $url);
 
+        $endpoint['plugin'] = is_string($endpoint['plugin']) ? $endpoint['plugin'] : '';
+        $endpoint['scope'] = strtolower($endpoint['plugin']) === 'epi' ? 'epi' : 'app';
+        unset($endpoint['plugin']);
+        unset($endpoint['?']);
+        if (PermissionsTable::getEndpointHasRole($endpoint, $role, 'web')) {
+            return true;
+        }
+
+        // Check database permissions
+        // 3. Check permission database
+        if ($endpoint['scope'] === 'epi') {
+            $database = $request->getParam('database');
+        } else {
+            $database = null;
+        }
+
+        return PermissionsTable::hasGrantedPermission(
+            $this->_View->get('user', []),
+            $database,
+            $endpoint['controller'],
+            $endpoint['action'],
+            'web'
+        );
     }
 
     /**
@@ -1612,18 +1624,18 @@ class LinkHelper extends Helper
      * Get a URL to view or code the entity
      *
      * @param array $url Provide at least the entity ID
-     * @return string
+     * @return array
      */
     public function openUrl($url)
     {
         $request = $this->getView()->getRequest();
-        $mode = Attributes::cleanOption($request->getQuery('mode'),['preview', 'code', 'default'], '');
+        $mode = Attributes::cleanOption($request->getQuery('mode'),[MODE_DEFAULT, MODE_REVISE, MODE_PREVIEW], '');
 
         if (empty($mode)) {
             $url = array_merge($url, ['action' => 'view']);
         }
-        elseif ($mode === 'code') {
-            $url = array_merge($url, ['action' => 'edit','?' => ['mode' => 'code']]);
+        elseif ($mode === MODE_REVISE) {
+            $url = array_merge($url, ['action' => 'edit','?' => ['mode' => MODE_REVISE]]);
         }
         else {
             $url = array_merge($url, ['action' => 'view', '?' => ['mode' => $mode]]);
@@ -1641,9 +1653,9 @@ class LinkHelper extends Helper
     public function openLink($url)
     {
         $params = $this->_View->getConfig('options')['params'];
-        $mode = $params['mode'] ?? 'default';
+        $mode = $params['mode'] ?? MODE_DEFAULT;
 
-        if ($mode === 'code') {
+        if ($mode === MODE_REVISE) {
             return $this->authLink(__('Edit'), $this->openUrl($url));
         }
         else {
@@ -1731,5 +1743,41 @@ class LinkHelper extends Helper
             $mode = $request->getQuery('mode', 'default');
         }
         return $mode;
+    }
+
+    /**
+     * Get the action arrays for generating links in tables
+     *
+     * @param string $mode The mode will be passed to the URL
+     * @param array $params The published parameter is passed to the URL
+     * @return array
+     */
+    public function getActions($mode = MODE_DEFAULT, $params=[])
+    {
+        $action = $this->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
+        if ($mode === MODE_REVISE) {
+            $viewAction = ['action' => $action, '{id}','?' => ['mode' => MODE_REVISE]];
+            $openAction =  ['action' => 'view', '{id}'];
+            $tabAction = ['action' => 'view', '{id}'];
+        }
+        else {
+            $published = $params['published'] ?? null;
+            if (!empty($published)) {
+                $viewAction = ['action' => 'view', '{id}','?' => ['published' => implode(',', $published)]];
+                $openAction =  ['action' => $action, '{id}', '?' => ['mode' => MODE_STAGE]];
+                $tabAction = ['action' => $action, '{id}', '?' => ['mode' => MODE_STAGE]];
+            } else {
+                $viewAction = true;
+                $openAction =  ['action' => $action, '{id}'];
+                $tabAction = ['action' => $action, '{id}'];
+
+            }
+        }
+
+        return [
+            'view' => $viewAction,
+            'open' => $openAction,
+            'tab' => $tabAction
+        ];
     }
 }

@@ -25,6 +25,19 @@ return [
     ],
 
     /**
+     * No delayed jobs in test system
+     *
+     */
+    'Jobs' => [
+        'delay' => false,
+        'scheme' => 'tcp',
+        'host'   => 'redis',
+        'port'   => 6379,
+        'queue_name' => 'jobs_queue',
+        'status_name' => 'jobs_status'
+    ],
+
+    /**
      * Connection information used by the ORM to connect
      * to your application's datastores.
      * Do not use periods in database name - it may lead to error.

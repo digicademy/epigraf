@@ -78,13 +78,13 @@ class TypesHelper extends Helper
     {
         $default = $options['defaultFields'] ?? [];
         $edit = $options['edit'] ?? false;
-        $mode = $options['mode'] ?? 'view';
+        $mode = $options['mode'] ?? MODE_PREVIEW;
         $unnest = $options['unnest'] ?? false;
 
         $fields = $this->getTypes()[$scope][$type]['merged']['fields'] ?? $default;
         $result = [];
 
-        if (($mode === 'stage') && empty($fields['published'])) {
+        if (($mode === MODE_STAGE) && empty($fields['published'])) {
             $fields['published'] = [
                 'caption' => __('Progress'),
                 'empty' => true,
@@ -98,17 +98,12 @@ class TypesHelper extends Helper
                 continue;
             }
 
-            if (is_string($fieldConfig)) {
-                $result[$fieldName] = ['caption' => $fieldConfig];
-            }
-            elseif (!empty($fieldConfig['keys']) && $unnest) {
+            $fieldConfig = is_string($fieldConfig) ? ['caption' => $fieldConfig] : $fieldConfig;
+
+            if (!empty($fieldConfig['keys']) && $unnest) {
                 foreach ($fieldConfig['keys'] as $keyName => $keyConfig) {
-                    if (is_string($keyConfig)) {
-                        $result[$fieldName . '.' . $keyName] = ['caption' => $keyConfig];
-                    }
-                    else {
-                        $result[$fieldName . '.' . $keyName] = $keyConfig;
-                    }
+                    $keyConfig = is_string($keyConfig) ? ['caption' => $keyConfig] : $keyConfig;
+                    $result[$fieldName . '.' . $keyName] = $keyConfig;
                 }
             }
             else {

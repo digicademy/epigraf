@@ -232,4 +232,16 @@ class Footnote extends BaseEntity
         }
         return $fields;
     }
+
+    public function getEntityIsVisible($options = [])
+    {
+        if (!empty($this->root) && !empty($this->root->_filterAnnos) && method_exists($this->root, 'getTree')) {
+            $tree = $this->root->getTree(['articles'=>true,'sections'=>true,'items'=>true]);
+            if (!isset($tree[$this->from_tab . '-' . $this->from_id])) {
+                return false;
+            }
+        }
+
+        return parent::getEntityIsVisible($options);
+    }
 }

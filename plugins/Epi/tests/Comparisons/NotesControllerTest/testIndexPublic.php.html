@@ -8,33 +8,32 @@
     <title>
         Notes [public]    </title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
     <!-- CSS frameworks -->
-    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">
+            <link rel="stylesheet" href="/css/theme_default.css">    
     <!-- JS -->
 
     <!-- JS frameworks -->
-    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>
+            <script src="/js/app.min.js" type="module"></script>    
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/public/";window.App.debug = false;window.App.user.load({"role":"devel","scope":"web","settings":{"columns":{"epi.notes":[]}},"session":{"ui":[]}});}</script>
     <!-- JS widgets -->
-        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
 
     <!-- Additional CSS -->
-
+    
     <!-- Additional JS -->
         </head>
 
-<body class="controller_notes             action_index             template_default             theme_default             userrole_devel">
-
+<body class="plugin_epi controller_notes action_index template_default theme_default userrole_devel">
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -42,23 +41,23 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >public &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks?database=public"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles">projects</a></li><li class="" ><a href="/epi/public/articles">public</a></li></ul></div></li><li class="menu_database" ><a href="/epi/public/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/public/articles?load=1">Articles</a></li><li class="menu_database" ><a href="/epi/public/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/public/files?load=1">Files</a></li><li class="menu_database active" ><a href="/epi/public/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/public/types?load=1">Types</a></li><li class="menu_database" ><a href="/epi/public/users?load=1">Users</a></li><li class="menu_database" ><a href="/epi/public/analytics?load=1">Analytics</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=public">Pipelines</a></li><li class="menu_global" ><a href="/users?database=public">Users</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=public">Repository</a></li><li class="menu_global" ><a href="/help?database=public">Help</a></li><li class="menu_global" ><a href="/wiki?database=public">Wiki</a></li><li class="menu_global" ><a href="/?database=public">Pages</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >public &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks?database=public"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles?load=1">projects</a></li><li class="" ><a href="/epi/public/articles?load=1">public</a></li></ul></div></li><li class="menu_database" ><a href="/epi/public/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/public/articles?load=1">Articles</a></li><li class="menu_database" ><a href="/epi/public/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/public/files?load=1">Files</a></li><li class="menu_database active" ><a href="/epi/public/notes?load=1">Notes</a></li><li class="menu_database" ><a href="/epi/public/types?load=1">Types</a></li><li class="menu_database" ><a href="/epi/public/users?load=1">Users</a></li><li class="menu_database" ><a href="/epi/public/analytics?load=1">Analytics</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/pipelines?database=public">Pipelines</a></li><li class="menu_global" ><a href="/users?database=public">Users</a></li><li class="menu_global" ><a href="/files?root=shared&amp;database=public">Repository</a></li><li class="menu_global" ><a href="/help?database=public">Help</a></li><li class="menu_global" ><a href="/wiki?database=public">Wiki</a></li><li class="menu_global" ><a href="/?database=public">Pages</a></li></ul>                </div>
 
                 <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-
+                
                     <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/5?database=public" class="btn-profile" title="devel"></a>                                                    <a href="/settings/show/vars?database=public" class="btn-settings" title="System settings"></a>                            </div>
 
         </nav>
-
+    
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-
-
+        
+                                                        
             <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
                     <div class="frame-title-caption">Categories</div>
@@ -69,18 +68,17 @@
                     <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first active node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/public/notes">List all</a></div><div class="tree-meta"></div></li></ul></div>                </div>
                 <div class="frame-footer">
                                             <form method="get" accept-charset="utf-8" id="search" action="/epi/public/notes"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
-                </div></div></div></div></div>
+                </div></div></div></div></div>        
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
                 <div class="content-header">
                     <div class="content-header-title">
-                                                                            <nav class="breadcrumbs">
-                                <ul class="breadcrumbs-trail"><li><a href="/epi/public/notes">Notes</a></li></ul>                            </nav>
-                                            </div>
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/epi/public/notes">Notes</a></li></ul></nav>                    </div>
 
                                             <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
-
+                    
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -88,7 +86,7 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-
+                    
 
 <!-- Breadcrumbs -->
 
@@ -113,14 +111,10 @@
                 <div class="content-footer"></div>
 
             </div>
-
+        
         <!-- Right sidebar -->
+                    <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
-
-            </div>
-
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default">0 records</span></li><li><a href="/epi/public/notes/add" data-shortcuts="Ctrl+M" title="Create page (Ctrl+M)" aria-label="Create page" aria-keyshortcuts="Ctrl+M" class="popup actions-set-default widget-shortcut" data-role="add" popup="1" data-popup-modal="1">Create page</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><a href="/epi/public/notes.csv" target="_blank" rel="nofollow" data-list-select="epi.notes" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/epi/public/notes.xml" target="_blank" rel="nofollow" data-list-select="epi.notes" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/epi/public/notes.json" target="_blank" rel="nofollow" data-list-select="epi.notes" data-list-param="id" class="">JSON</a></li><li><a href="/help/epiweb-epi-notes-index?database=public" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default">0 records</span></li><li><a href="/epi/public/notes/add" data-shortcuts="Ctrl+M" title="Create page (Ctrl+M)" aria-label="Create page" aria-keyshortcuts="Ctrl+M" class="popup actions-set-default widget-shortcut" data-role="add" popup="1" data-popup-modal="1">Create page</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><a href="/epi/public/notes.csv" target="_blank" rel="nofollow" data-list-select="epi.notes" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/epi/public/notes.xml" target="_blank" rel="nofollow" data-list-select="epi.notes" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/epi/public/notes.json" target="_blank" rel="nofollow" data-list-select="epi.notes" data-list-param="id" class="">JSON</a></li><li><a href="/help/epiweb-epi-notes-index?database=public" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
 </div>
-</body>
-</html>
+</body></html>

@@ -141,6 +141,5 @@ class Numbers
         return $lower ? strtolower($str) : $str;
     }
 
-
 }
 

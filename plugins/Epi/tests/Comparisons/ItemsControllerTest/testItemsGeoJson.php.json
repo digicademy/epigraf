@@ -1,0 +1,31 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "data": {
+                "id": 796,
+                "number": 1,
+                "caption": "Signatur 3",
+                "quality": 0,
+                "radius": 10,
+                "url": "\/epi\/projects\/articles\/view\/4",
+                "segment": "geolocations"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    7.62451954667419,
+                    51.96182703399873
+                ]
+            }
+        }
+    ],
+    "pagination": {
+        "count": 1,
+        "page": 1,
+        "page_prev": false,
+        "page_next": false,
+        "perpage": 1000
+    }
+}

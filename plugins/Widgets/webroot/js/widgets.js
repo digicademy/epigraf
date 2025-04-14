@@ -27,12 +27,13 @@ import {ResizableSidebar, Accordion, Tabsheets, ScrollSync, ContentLoader} from 
 import {ConfirmWindow, MessageWindow, PopupWindow, MainFrame, TabFrame} from './frames.js';
 import {HighlightText} from './highlight.js';
 import {JsonEditor} from './editors.js';
-import {EpiMap} from './map.js';
+import {MapWidget} from './map.js';
 import {GridWidget} from './grid.js';
-import {ImageViewer} from './images.js';
+import {ImagesWidget} from './images.js';
 import {UploadWidget} from './uploads.js';
 import {SandwichButton, ChooseButtons, SwitchButtons, ToggleButtons} from './buttons.js';
 import {JobWidget} from './jobs.js';
+import {ServiceButtonWidget, ServiceWidget, ReconcileButtonWidget} from './services.js';
 
 import './dropzone/dropzone.js';
 Dropzone.autoDiscover = false;
@@ -257,11 +258,17 @@ window.App.openPopup = function(data, options) {
         options = data || options || {};
     }
 
+    // Remove old popup
     if (options.name) {
         App.hidePopup(options.name);
     }
 
+    // Create new popup
     const popup = new PopupWindow();
+    if (options.name) {
+        App.addWidget(options.name, popup);
+    }
+
     popup.showData(options);
 
     return popup;

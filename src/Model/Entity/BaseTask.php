@@ -18,6 +18,9 @@ namespace App\Model\Entity;
  * - Create a new template in the folder templates/Tasks that provides the configuration form
  * - If the task will be used within a pipeline, add the task to the pipeline configuration
  *   (Model/Entity/Pipeline.php -> Pipeline->tasksConfig)
+ * - If the task will be used for mutate operations, implement configuration options in the
+ *   task class. Then implement mutateGetTasks() and a respective mutate method in the target table class
+ *   (e.g. in ArticlesTable.php).
  */
 class BaseTask
 {
@@ -74,7 +77,7 @@ class BaseTask
     /**
      * Get paging parameters
      *
-     * @return array An array with the keys offset and limit, and optionally sort
+     * @return array An array with the keys offset and limit, and optionally order
      */
     public function getPagingParams()
     {

@@ -638,3 +638,5 @@ ALTER TABLE `types`
 
 ALTER TABLE `notes` CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(50) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `format`;
 
+ALTER TABLE `items`
+	ADD COLUMN `itemgroup` VARCHAR(100) NULL DEFAULT NULL AFTER `itemtype`;

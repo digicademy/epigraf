@@ -255,7 +255,8 @@ export class SectionsModel extends BaseDocumentModel {
                     treeLevel: parseInt(section.dataset.rowLevel || '0') + 1,
                     labelText: this.getPath(section),
                     labelName: this.getName(section),
-                    labelPath: this.getTitle(section)
+                    labelPath: this.getTitle(section),
+                    searchText: this.getPath(section)
                 });
             }
 
@@ -351,16 +352,29 @@ export class SectionsModel extends BaseDocumentModel {
         // return Utils.getInputValue(section.querySelector('.doc-section-name [data-value="name"]'));
     }
 
-    getPosition(section, scoped = true) {
+    /**
+     * Get the position of a section, optionally within the same parent or section type.
+     *
+     * @param {HTMLElement} section
+     * @param {boolean} usePath
+     * @param {boolean} useScope
+     * @return {number}
+     */
+    getPosition(section, usePath = true, useScope = true) {
         let siblings = [];
-        var prevSibling = section.previousElementSibling;
+        let prevSibling = section.previousElementSibling;
         while (prevSibling) {
-            const inScope = !scoped || (
-                (prevSibling.dataset.rowParentId === section.dataset.rowParentId) &&
-                (prevSibling.dataset.rowType === section.dataset.rowType)
-            );
 
-            if (inScope && prevSibling.classList.contains('doc-section') && !prevSibling.classList.contains('doc-section-removed')) {
+            // Skip deleted sections
+            let matches = prevSibling.classList.contains('doc-section') && !prevSibling.classList.contains('doc-section-removed');
+
+            if (matches && usePath) {
+                matches = prevSibling.dataset.rowParentId === section.dataset.rowParentId;
+            }
+            if (matches && useScope) {
+                matches = prevSibling.dataset.rowType === section.dataset.rowType;
+            }
+            if (matches) {
                 siblings.push(prevSibling);
             }
             prevSibling = prevSibling.previousElementSibling;
@@ -371,21 +385,45 @@ export class SectionsModel extends BaseDocumentModel {
     /**
      * Get the joined names of the section and its ancestors
      *
-     * @param {Element} section
+     * @param {HTMLElement} section
      * @return {string}
      */
     getPath(section) {
         let ancestors = [this.getName(section)];
-        const rowTable = section.dataset.rowTable;
 
-        let prevSibling = section.previousElementSibling;
-        while (prevSibling && (prevSibling.dataset.rowTable === rowTable)) {
-            if (prevSibling.dataset.rowId === section.dataset.rowParentId) {
-                section = prevSibling;
-                ancestors.push(this.getName(prevSibling));
+        try {
+
+            // Only within the same table ('sections')
+            const rowTable = section.dataset.rowTable;
+
+            // Only when using the path is configured in the section type
+            let sectionTypes = {};
+            let sectionConfig = {};
+            let usePath = false;
+            if (rowTable === 'sections') {
+                sectionTypes = Utils.getValue(this.modelParent.models.types._types, rowTable, {});
+                sectionConfig = sectionTypes[section.dataset?.rowType] || this.getConfig(section);
+                usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
             }
-            prevSibling = prevSibling.previousElementSibling;
+
+            let prevSibling = section.previousElementSibling;
+            while (usePath && prevSibling && (prevSibling.dataset.rowTable === rowTable)) {
+                if (prevSibling.dataset.rowId === section.dataset.rowParentId) {
+                    ancestors.push(this.getName(prevSibling));
+
+                    section = prevSibling;
+                    if (rowTable === 'sections') {
+                        sectionConfig = sectionTypes[section.dataset?.rowType] || this.getConfig(section);
+                        usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
+                    }
+                }
+                prevSibling = prevSibling.previousElementSibling;
+            }
+
+        } catch (error) {
+            console.error("Error finding the path: ", error);
         }
+
         return ancestors.reverse().join('.');
     }
 
@@ -393,7 +431,7 @@ export class SectionsModel extends BaseDocumentModel {
      * Get the section config from its json encoded data-row-config attribute
      *
      * @param {HTMLElement} section
-     * @return {{}|any}
+     * @return {Object}
      */
     getConfig(section) {
         try {
@@ -406,15 +444,15 @@ export class SectionsModel extends BaseDocumentModel {
     /**
      * Move sections to match the positions of the menu.
      * Then update data attributes and input values of the sections
-     * (parent_id, preceding_id, sectionnumber, number).
-     * Then update section names;
+     * (parent_id, preceding_id).
+     * Then call updateNames() to update section names, numbers and sort numbers.
      *
      * @param {Event} event An event triggering the update.
      */
     updatePositions(event) {
         const treeWidget = this.widgetTree;
 
-        let sectionNumbers = {};
+        // let sectionNumbers = {};
         let sortNumber = 0;
 
         let currentSection = this.modelParent.widgetElement.querySelector('.doc-section');
@@ -427,7 +465,7 @@ export class SectionsModel extends BaseDocumentModel {
                     currentSection = movedSection;
                 }
 
-                // Update the data fields of the section
+                // Update the tree data fields of the section
                 if (treeWidget) {
 
                     // Parent
@@ -447,24 +485,14 @@ export class SectionsModel extends BaseDocumentModel {
                     );
 
                     // Scoped section number
-                    sectionNumbers[currentSection.dataset.rowParentId] = sectionNumbers[currentSection.dataset.rowParentId] || {};
-                    const currentNumber = (sectionNumbers[currentSection.dataset.rowParentId][currentSection.dataset.rowType] || 0) + 1;
-                    sectionNumbers[currentSection.dataset.rowParentId][currentSection.dataset.rowType] = currentNumber;
+                    // sectionNumbers[currentSection.dataset.rowParentId] = sectionNumbers[currentSection.dataset.rowParentId] || {};
+                    // const currentNumber = (sectionNumbers[currentSection.dataset.rowParentId][currentSection.dataset.rowType] || 0) + 1;
+                    // sectionNumbers[currentSection.dataset.rowParentId][currentSection.dataset.rowType] = currentNumber;
 
-                    Utils.setInputValue(
-                        currentSection.querySelector('[data-row-field="number"]'),
-                        currentNumber
-                    );
-
-                    // Sort number
-                    // For sections this is the running section number
-                    // For pipeline tasks the sortno is mapped to the number field, see EntityHelper taskStart
-                    // TODO: move section inputs into doc-section-head and scope selector
-                    sortNumber += 1;
-                    Utils.setInputValue(
-                        currentSection.querySelector('[data-row-field="sortno"]'),
-                        sortNumber
-                    );
+                    // Utils.setInputValue(
+                    //     currentSection.querySelector('[data-row-field="number"]'),
+                    //     currentNumber
+                    // );
 
                     // Level
                     //TODO: does not work?
@@ -474,6 +502,16 @@ export class SectionsModel extends BaseDocumentModel {
 
                 }
 
+                // Running sort number
+                // (For pipeline tasks the sortno is mapped to the number field, see EntityHelper taskStart)
+                // TODO: move section inputs into doc-section-head and scope selector
+                sortNumber += 1;
+
+                Utils.setInputValue(
+                    currentSection.querySelector('.doc-section-name [data-row-field="sortno"], :scope > [data-row-field="sortno"]'),
+                    sortNumber
+                );
+
                 currentSection = currentSection.nextElementSibling;
             }
         });
@@ -481,12 +519,6 @@ export class SectionsModel extends BaseDocumentModel {
         if (App.scrollsync) {
             App.scrollsync.updateWidget();
         }
-
-        // Before refactored from scrollsync
-        // const activateItem = event ? event.detail.data.row : undefined;
-        // if (activateItem) {
-        //     this.activateLi(activateItem);
-        // }
 
         this.updateNames();
     }
@@ -517,6 +549,7 @@ export class SectionsModel extends BaseDocumentModel {
         if (!section) {
             return;
         }
+
         this.modelParent.models.types.loadTypes('sections').then(
             (sectionTypes) => {
 
@@ -531,15 +564,15 @@ export class SectionsModel extends BaseDocumentModel {
                     menuPublished.classList.add('tree-published-' + publishedValue);
                 }
 
-                // Step 1: Get numeric section number (sectionnumber in the database)
+                // Step 1: Get numeric section number (number field in the database)
                 const sectionConfig = sectionTypes[section.dataset?.rowType] || this.getConfig(section);
                 let useNumber = Utils.getValue(sectionConfig, 'config.name.number');
-                const usePath =
-                    Utils.getValue(sectionConfig, 'config.name.path', false) |
-                    Utils.getValue(sectionConfig, 'config.name.scoped', false);
-                const sectionNumber = this.getPosition(section, usePath);
+                const usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
+                const useScope = Utils.getValue(sectionConfig, 'config.name.scoped', false);
+                const sectionNumber = this.getPosition(section, usePath, useScope);
+                const sortNumber = this.getPosition(section, false, false);
 
-                // Step 2: Get section name (sectionname in the database)
+                // Step 2: Get section name (name field in the database)
                 const customName = Utils.getInputValue(section.querySelector('[data-row-field="name"]'));
 
                 let sectionName;
@@ -564,8 +597,8 @@ export class SectionsModel extends BaseDocumentModel {
                     const menuLabel = prefix + sectionName + postfix;
                     Utils.setElementContent(menuElement.querySelector('.tree-content a'), menuLabel);
 
-                    // Update section title
-                    const sectionTitle = prefix + (usePath ? this.getPath(section) : sectionName) + postfix;
+                    // Update section name
+                    const sectionTitle = prefix + this.getPath(section) + postfix;
                     Utils.setElementContent(
                         section.querySelector('.doc-section-name').querySelector('[data-value="name"]'),
                         sectionTitle
@@ -575,13 +608,14 @@ export class SectionsModel extends BaseDocumentModel {
                     const indent = " ⬥ ".repeat(parseInt(section.dataset.rowLevel));
                     Utils.setElementContent(section.querySelector('.doc-section-indent'), indent);
 
-                    // Update section number
-                    Utils.setInputValue(section.querySelector('.doc-section-name [data-row-field="sortno"]'), sectionNumber);
+                    // Update number
+                    Utils.setInputValue(section.querySelector('.doc-section-name [data-row-field="number"], :scope > [data-row-field="number"]'), sectionNumber);
                 }
 
-            });
+                // Update number
+                Utils.setInputValue(section.querySelector('.doc-section-name [data-row-field="sortno"], :scope > [data-row-field="sortno"]'), sortNumber);
 
-        return;
+            });
     }
 
     view(id) {
@@ -750,7 +784,8 @@ export class SectionsModel extends BaseDocumentModel {
                     App.scrollsync.activateLi(firstNewMenuItem);
                 }
 
-                self.updateNames();
+                // Can this be removed as it is called by updatePositions()?
+                // self.updateNames();
             }
         );
     }
@@ -860,6 +895,9 @@ export class ItemsModel extends BaseDocumentModel {
         this.listenEvent(document, 'changed', event => this.onChanged(event));
         this.listenEvent(document, 'input', event => this.onInput(event));
         this.listenEvent(document, 'keydown', event => this.onKeyDown(event));
+        this.listenEvent(document, 'epi:upload:files', event => this.onUploadFiles(event));
+        this.listenEvent(document, 'epi:update:item', event => this.onUpdateItem(event));
+        this.listenEvent(document, 'epi:import:item', event => this.onImportItem(event));
     }
 
     /**
@@ -1028,6 +1066,102 @@ export class ItemsModel extends BaseDocumentModel {
     }
 
     /**
+     * Handle file import events
+     *
+     * Item import can be triggered by the epi:import:file event.
+     *
+     * @param event
+     */
+    onUploadFiles(event) {
+        const eventData = event.detail.data;
+        if (!eventData || !eventData.listName || !eventData.items) {
+            return;
+        }
+
+        const folderButton = this.doc.findInDocument('[data-target-list="' + eventData.listName + '"]');
+        if (!folderButton) {
+            return;
+        }
+
+        const templateItem = folderButton.closest('.doc-section-item');
+        if (!templateItem) {
+            return;
+        }
+
+        const existingValues = Array.from(
+            templateItem.closest('.doc-section-content').querySelectorAll('.doc-section-item:not([data-deleted]) input[data-itemtype="file"]'),
+         input => (
+             Utils.extractFileName(input.value || '').toLowerCase()
+            )
+        );
+
+        const items = eventData.items;
+        items.forEach(item => {
+            if (!existingValues.includes(item.fileName.toLowerCase())) {
+                this.add(templateItem, item, false);
+            }
+        });
+    }
+
+    /**
+     * Handle item import events
+     *
+     * TODO: merge with onUploadFiles()
+     *
+     * Item import can be triggered by the epi:import:item event.
+     * Used for automated coding by the LLM service.
+     *
+     * @param event
+     */
+    onImportItem(event) {
+
+        const eventData = event.detail.data;
+        if (!eventData || !eventData.sectiontype || !eventData.itemtype || !eventData.items) {
+            return;
+        }
+
+        const sectionElement = this.doc.findInDocument(
+            '[data-row-table="sections"][data-row-type="' + eventData.sectiontype + '"] '
+        );
+        if (!sectionElement) {
+            return;
+        }
+
+        const addButton = sectionElement.querySelector('.doc-section-item .doc-field-add-' + eventData.itemtype);
+        if (!addButton) {
+            return;
+        }
+
+        const templateItem = addButton.closest('.doc-section-item');
+        if (!templateItem) {
+            return;
+        }
+
+        const items = eventData.items;
+        items.forEach(item => {
+            this.add(templateItem, item, false);
+        });
+    }
+
+    onUpdateItem(event) {
+        const eventData = event.detail.data;
+        if (!eventData || !eventData.table || !eventData.id || !eventData.content) {
+            return;
+        }
+
+        const item = document.querySelector('[data-row-table="' + eventData.table + '"][data-row-id="' + eventData.id + '"]');
+        if (this.doc.ownedByDocument(item)) {
+            for (const fieldName in  eventData.content) {
+                const fieldElement = item.querySelector( `[data-row-field="${fieldName}"]`);
+                this.setContent(fieldElement, eventData.content[fieldName]);
+            }
+        }
+
+
+    }
+
+
+    /**
      * Delete an item
      *
      * @param {HTMLElement }item The item element to delete
@@ -1138,6 +1272,22 @@ export class ItemsModel extends BaseDocumentModel {
         itemGroup.classList.toggle('doc-section-groups-empty',items.length === 0);
     }
 
+    setContent(fieldElement, content) {
+        if (!fieldElement) {
+            return;
+        }
+
+        // Update input
+        Utils.setInputValue(fieldElement.querySelector('input'), content);
+
+        // Update XMLEditor
+        const xmlEditorWidget = this.getWidget(fieldElement.querySelector('.doc-field-content'), 'xmleditor');
+        if (xmlEditorWidget) {
+            xmlEditorWidget.setContent(content);
+        }
+
+    }
+
     /**
      * Create a new item based on a template
      *
@@ -1145,8 +1295,10 @@ export class ItemsModel extends BaseDocumentModel {
      *
      * @param {HTMLElement} templateItem An item element with curly bracket placeholders
      *                                   for id, itemsId and sectionsId
+     * @param {Object} itemData The new data, including the fields fileName, property and content
+     * @param {boolean} focusItem If true, the first input of the new item will be focused
      */
-    add(templateItem) {
+    add(templateItem, itemData, focusItem = true) {
 
         const section = templateItem.closest('.doc-section, [data-container-table="sections"]');
         if (!section) {
@@ -1171,6 +1323,47 @@ export class ItemsModel extends BaseDocumentModel {
 
         item.dataset.new = '1';
 
+        // Import content from the ImportFilesWidget and the ServiceButtonWidget
+        // TODO: refactor to a more abstract method, not specific to files and content and properties
+        if (itemData && itemData.fileName) {
+            const fieldName = 'file';
+            const fileInput = item.querySelector(`.doc-fieldname-${fieldName} input[data-itemtype="file"]`);
+            if (fileInput) {
+                // const basePath = Utils.getDataValue(item.closest('[data-file-basepath]'),'fileBasepath');
+                const defaultPath = Utils.getDataValue(templateItem.closest('[data-file-defaultpath]'),'fileDefaultpath')
+                const filePath = defaultPath + '/' + itemData.fileName;
+                Utils.setInputValue(fileInput, filePath);
+                fileInput.dataset.path = defaultPath;
+            }
+        }
+
+        if (itemData && itemData.properties_id) {
+            const fieldName = 'property';
+            Utils.setInputValue(
+                item.querySelector(`.doc-fieldname-${fieldName} input.input-reference-value`),
+                itemData['properties_id']
+            );
+            Utils.setInputValue(
+                item.querySelector(`.doc-fieldname-${fieldName} input.input-reference-text`),
+                itemData['properties_label']
+            );
+        }
+
+        if (itemData && itemData.content) {
+            const fieldName = 'content';
+            const inputElm = item.querySelector(`.doc-fieldname-${fieldName} input`);
+            if (inputElm) {
+                Utils.setInputValue(inputElm, itemData[fieldName]);
+            }
+        }
+
+        if (itemData && itemData.value) {
+            Utils.setInputValue(
+                item.querySelector(`.doc-fieldname-value input`),
+                itemData['value']
+            );
+        }
+
         templateItem.before(item);
         let newItem = templateItem.previousElementSibling;
         const itemGroup = newItem.parentElement;
@@ -1188,17 +1381,18 @@ export class ItemsModel extends BaseDocumentModel {
         App.initWidgets(newItem);
 
         // Focus first input (and open dropdown)
-        const inputSelector = 'div[data-row-field]:not([data-row-field="sortno"]) input:not([type="hidden"]), '
-            + 'div[data-row-field]:not([data-row-field="sortno"]) select';
-        const firstInput = newItem.querySelector(inputSelector);
-        if (firstInput) {
-            firstInput.focus();
-            firstInput.click();
+        if (focusItem) {
+            const inputSelector = 'div[data-row-field]:not([data-row-field="sortno"]) input:not([type="hidden"]), '
+                + 'div[data-row-field]:not([data-row-field="sortno"]) select';
+            const firstInput = newItem.querySelector(inputSelector);
+            if (firstInput) {
+                firstInput.focus();
+                firstInput.click();
+            }
         }
 
         // Fire event (and observe it for example in the map widget)
-        const event = new Event('epi:add:item', {bubbles: true, cancelable: false});
-        newItem.dispatchEvent(event);
+        Utils.emitEvent(newItem, 'epi:add:item',{}, false);
     }
 
     _createId() {
@@ -1628,27 +1822,41 @@ export class AnnotationsModel extends BaseDocumentModel {
     /**
      * Add an annotation next to the content field
      *
-     * @param {Element} widget
-     * @param {string} tagId
-     * @param {string} typeName
-     * @param {string} scope footnotes or links
+     * TODO: Refactor, move method to LinksModel (see FootnotesModel.add() for orientation).
+     *
+     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                               - data-tagid The tag id
+     *                               - data-type The link or footnote type
+     *                               - data-new Whether the element was created by the user using the toolbar
      * @param {Object} tagSet
      * @returns The new annotation element
      */
-    add(widget, tagId, typeName, scope, tagSet) {
+    add(widget, tagAttributes, tagSet) {
+
+        const tagId = tagAttributes['data-tagid'];
+        const typeName = tagAttributes['data-type'];
+        const scope = Utils.getValue(tagSet, typeName + '.scope');
+
         const annoContainer = this._getAnnoContainer(widget);
         if (!annoContainer) {
             console.log('Annotation container not found.');
             return;
         }
-
         annoContainer.classList.remove('doc-section-links-empty');
 
         let fieldData = this.modelParent.getFieldData(widget);
 
         let annoElement = this._getAnnoByTagId(tagId, annoContainer);
         if (!annoElement) {
-            let caption = Utils.getValue(tagSet, typeName + '.caption', 'UNDEFINED');
+            // The caption
+            let toValue = Utils.getValue(
+                tagAttributes, 'data-value',
+                Utils.getValue(tagSet, typeName + '.caption', 'UNDEFINED')
+            );
+
+            let toTab = Utils.getValue(tagAttributes, 'data-target-tab', '');
+            let toId = Utils.getValue(tagAttributes, 'data-target-id', '');
 
             const annoId = this._createRowId();
             const newLink = this.doc.spawnFromTemplate(
@@ -1669,9 +1877,9 @@ export class AnnotationsModel extends BaseDocumentModel {
                     fromTagname: typeName,
 
                     // Only for links, not for footnotes
-                    toId: "",
-                    toTab: "",
-                    toValue: caption,
+                    toId: toId,
+                    toTab: toTab,
+                    toValue: toValue,
 
                     deleted: 0
                 }
@@ -1688,6 +1896,10 @@ export class AnnotationsModel extends BaseDocumentModel {
                 annoElement.dataset.deleted = '0';
                 this.enableInputs(annoElement);
             }
+        }
+
+        if (scope === 'footnotes') {
+            this.modelParent.models.footnotes.add(widget, tagAttributes, tagSet);
         }
 
         return annoElement;
@@ -1974,32 +2186,26 @@ export class AnnotationsModel extends BaseDocumentModel {
     }
 
     /**
-     * Will be called from the editor everytime an element is created.
-     * Makes sure the annotation is created in the link container
-     * and creates the footnote.
+     * Called from the editor everytime an element is created.
+     * Makes sure the annotation is created in the link container.
+     * (the annotation creates the footnote).
      *
      * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
-     * @param {string} tagId ID of the tag
-     * @param {string} typeName The link or footnote type
-     * @param {boolean} isNew Whether the element was created by the user using the toolbar
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                               - data-tagid The tag id
+     *                               - data-type The link or footnote type
+     *                               - data-new Whether the element was created by the user using the toolbar
      * @returns Promise
      */
-    onCreateAnno(widget, tagId, typeName, isNew = false) {
+    onCreateAnno(widget, tagAttributes) {
 
         return this.doc.models.types.getTagSet(widget, false).then(
             (tagSet) => {
-
-                const scope = Utils.getValue(tagSet, typeName + '.scope');
-
-                let anno = this.add(widget, tagId, typeName, scope, tagSet);
-                if (scope === 'footnotes') {
-                    this.modelParent.models.footnotes.add(widget, tagId, typeName, tagSet);
-                }
-
+                let anno = this.add(widget, tagAttributes, tagSet);
+                const isNew = tagAttributes['data-new'];
                 if (isNew && anno) {
                     this.edit(anno, isNew);
                 }
-
                 return anno;
             }
         );
@@ -2010,10 +2216,13 @@ export class AnnotationsModel extends BaseDocumentModel {
      * Will be called from the editor everytime an element is deleted.
      * Hides the link in the link container.
      *
-     * @param widget
-     * @param tagId
+     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                              - data-tagid The tag id
+     *                              - data-type The link or footnote type
      */
-    onRemoveAnno(widget, tagId) {
+    onRemoveAnno(widget, tagAttributes) {
+        const tagId = tagAttributes['data-tagid'];
         this.delete(widget, tagId);
     }
 
@@ -2061,7 +2270,8 @@ export class FootnotesModel extends BaseDocumentModel {
                         treeLevel: 0,
                         labelText: Utils.querySelectorText(item, '.doc-footnote-number'),
                         labelName: i18n.t('Footnote') + ' ' + Utils.querySelectorText(item, '.doc-footnote-number'),
-                        labelPath: i18n.t('Footnote') + ' ' + Utils.querySelectorText(item, '.doc-footnote-number')
+                        labelPath: i18n.t('Footnote') + ' ' + Utils.querySelectorText(item, '.doc-footnote-number'),
+                        searchText: Utils.querySelectorText(item, '.doc-footnote-number')
                     });
                 }
             });
@@ -2225,13 +2435,17 @@ export class FootnotesModel extends BaseDocumentModel {
     /**
      * Add a footnote to the document, including the annotation
      *
-     * @param widget
-     * @param tagId
-     * @param typeName
-     * @param tagSet
+     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                               - data-tagid The tag id
+     *                               - data-type The link or footnote type
+     *                               - data-new Whether the element was created by the user using the toolbar
+     * @param {Object} tagSet
      * @return {HTMLElement}
      */
-    add(widget, tagId, typeName, tagSet) {
+    add(widget, tagAttributes, tagSet) {
+        const tagId = tagAttributes['data-tagid'];
+        const typeName = tagAttributes['data-type'];
 
         const annoContainer = this.doc.models.annotations._getAnnoContainer(widget);
         const annoElement = this.doc.models.annotations._getAnnoByTagId(tagId, annoContainer);
@@ -2253,33 +2467,66 @@ export class FootnotesModel extends BaseDocumentModel {
                 )
             );
 
-            //TODO: make configurable whether the current text is copied to the segment
             // const tagElement = this.doc.models.annotations._getTagByTagId(tagId, widget);
-            //const segment = tagElement ? tagElement.textContent : '';
-            const segment = '';
+            // const segment = tagElement ? tagElement.textContent : '';
 
             const annoId = annoElement.dataset.rowId || this.doc.models.annotations._createRowId();
+            let footnoteContent = {
+                idx: annoId,
+                id: annoId,
+                // id: "",
+                deleted: 0,
+                type: typeName,
+
+                rootId: fieldData.rootId,
+                rootTab: fieldData.rootTab,
+                fromId: fieldData.id,
+                fromTab: fieldData.table,
+                fromField: fieldData.field,
+                fromTagid: tagId,
+                fromTagname: typeName,
+
+                displayname: caption,
+            };
+
+            // Add content
+            for (const fieldName of ['content', 'segment']) {
+
+                footnoteContent[fieldName] = '';
+
+                // Auto fill from selected text
+                let autoFill = Utils.getValue(tagSet, typeName + '.config.fields.' + fieldName+ '.autofill', false);
+                if (autoFill) {
+
+                    if (typeof autoFill !== 'object') {
+                        autoFill = { enabled: autoFill };
+                    }
+                    footnoteContent[fieldName] = tagAttributes['data-selected'] || '';
+
+                    if (autoFill.wrap && (footnoteContent[fieldName] !== '')) {
+                        const wrapType = autoFill.wrap;
+                        const wrapConfig = Utils.getValue(tagSet, wrapType + '.config');
+                        if (wrapConfig && (wrapConfig.tag_type === 'format')) {
+                            const wrapTag = Utils.getValue(wrapConfig, 'html.tag', 'span');
+                            footnoteContent[fieldName] =
+                                '<' + wrapTag + ' class="xml_tag xml_format xml_tag_' + wrapType + '" data-type="' + wrapType+ '">' +
+                                footnoteContent[fieldName] +
+                                '</' + wrapTag + '>';
+                        }
+                    }
+                    if (autoFill.postfix) {
+                        footnoteContent[fieldName] = footnoteContent[fieldName] + autoFill.postfix;
+                    }
+                    if (autoFill.prefix) {
+                        footnoteContent[fieldName] = autoFill.prefix + footnoteContent[fieldName];
+                    }
+                }
+            }
+
+            // Spawn footnote
             const newFootnote = this.doc.satellites.footnotes.spawnFromTemplate(
                 'template-footnote-' + typeName,
-                {
-                    idx: annoId,
-                    id: annoId,
-                    // id: "",
-                    deleted: 0,
-                    type: typeName,
-
-                    rootId: fieldData.rootId,
-                    rootTab: fieldData.rootTab,
-                    fromId: fieldData.id,
-                    fromTab: fieldData.table,
-                    fromField: fieldData.field,
-                    fromTagid: tagId,
-                    fromTagname: typeName,
-
-                    displayname: caption,
-                    content: '',
-                    segment: segment
-                }
+                footnoteContent
             );
 
             if (!newFootnote) {

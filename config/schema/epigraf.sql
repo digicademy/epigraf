@@ -131,3 +131,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `iri` (`norm_iri`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `pipelines`
+	ADD COLUMN `type` VARCHAR(100) NULL DEFAULT NULL AFTER `tasks`;
+
+ALTER TABLE `jobs`
+	ADD COLUMN `delay` TINYINT NOT NULL DEFAULT 0 AFTER `typ`;

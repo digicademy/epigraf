@@ -28,7 +28,7 @@ Finally, the resulting file is stored in the file system or made available for d
 
 ## Batch Manipulation
 
-Epigraf's job system allows multiple records to be imported, transfered, exported or modified in a batch process.
+Epigraf's job system allows multiple records to be imported, transferred, exported or modified in a batch process.
 Import, export and mutate operations are implemented in job classes to be found in the
 `src/Model/Entity/Jobs` directory. Transfer operations are an import into a target database from a source database.
 
@@ -38,6 +38,18 @@ The possible mutate operations, i.e. batch operations for modifying records,
 are listed in the table classes. For example, the fulltext index can be regenerated,
 articles can be moved to another project or be deleted in batches
 (see `ArticlesTable.php`).
+
+## Background Jobs
+
+Background jobs can be used for long-running tasks that should not block the user interface.
+To run jobs as background tasks:
+- In the jobs configuration in `config/app.php`, configure the connection to a Redis server.
+  Redis is used to manage queues and job statuses
+- In the jobs configuration set the `delayed` flag to `true`.
+  With this flag, jobs are not executed immediately but are put into a queue,
+  see JobsController::execute() for details.
+- Run the worker which will process jobs by starting `bin/cake jobs process`.
+  See the `JobsCommand` class in the `src/command` folder for implementation details.
 
 ## API Packages
 

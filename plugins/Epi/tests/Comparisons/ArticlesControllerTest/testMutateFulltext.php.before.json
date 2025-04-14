@@ -3,7 +3,7 @@
         "id": 5,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Material",
         "sections_id": 12,
         "articles_id": 1
@@ -12,7 +12,7 @@
         "id": 7,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Beschaffenheit",
         "sections_id": 13,
         "articles_id": 1
@@ -21,7 +21,7 @@
         "id": 9,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Datensatz",
         "sections_id": 17,
         "articles_id": 1
@@ -30,7 +30,7 @@
         "id": 12,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Nachweise",
         "sections_id": 14,
         "articles_id": 1
@@ -39,7 +39,7 @@
         "id": 15,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Standorte",
         "sections_id": 15,
         "articles_id": 1
@@ -48,7 +48,7 @@
         "id": 18,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Signaturen",
         "sections_id": 16,
         "articles_id": 1
@@ -57,7 +57,7 @@
         "id": 23,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Ma\u00dfangaben",
         "sections_id": 10,
         "articles_id": 1
@@ -66,7 +66,7 @@
         "id": 26,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschriftentr\u00e4ger",
         "sections_id": 11,
         "articles_id": 1
@@ -75,7 +75,7 @@
         "id": 29,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Wappen",
         "sections_id": 9,
         "articles_id": 1
@@ -84,7 +84,7 @@
         "id": 32,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Abbildungen",
         "sections_id": 7,
         "articles_id": 1
@@ -93,43 +93,25 @@
         "id": 34,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Marken",
         "sections_id": 8,
-        "articles_id": 1
-    },
-    {
-        "id": 36,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "\u251cbereich~Gr\u00edmr unni henni mikit, ok l{\u00e6}tr [(hann)] \u00feat eptir henni. \/\rH\u00fan <var hverri >konu v\u00e6nni\u251c1\u2524 ok betr[---] at s\u00e9r [um] alla hluti,|\r \u00feeira( er) \u00ed Nor\u2022egi v\u00e1ru. \r\u00deeira f\u00f6r var b\u00fain vir\u00f0uliga.~bereich\u2524",
-        "sections_id": 18,
         "articles_id": 1
     },
     {
         "id": 38,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschr B Teil 2",
         "sections_id": 19,
-        "articles_id": 1
-    },
-    {
-        "id": 40,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "\u251cbereich~\u00deat var eitt sumar, \/\rat Gr\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V{\u00ed}k austr |\reptir Harald dau\u2022\u00f0an, m\u00e1g sinn, \u251c1\u2524\rfyrir \u00fev\u00ed <at>[(hann)] [(\u00e1tti )] [\u00fear] m[---]iklar eignir.~bereich\u2524\r",
-        "sections_id": 20,
         "articles_id": 1
     },
     {
         "id": 42,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschrift B Teil 1",
         "sections_id": 21,
         "articles_id": 1
@@ -138,43 +120,25 @@
         "id": 44,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschrift B",
         "sections_id": 22,
-        "articles_id": 1
-    },
-    {
-        "id": 45,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "\u251cbereich~\r\u00ednitiale\rChronogrammbuchstabe\rVh\u00e9rsalie\rAb(ma\u00f0r ) \/\r<Nachtrag>\r[(Auslassung)]\r{Bu}chstabenverbindung\rUns\u00f0cherer Text\rZwischenraum von drei \u251c3\u2524 Zeichen\rUnbestimmte Anzahl [---] verlorener Zeichen\r[Erg]\u00f0nzung\rWort\u2022trenner\rHochgestellt |\r~bereich\u2524",
-        "sections_id": 23,
         "articles_id": 1
     },
     {
         "id": 47,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschr A Teil 2",
         "sections_id": 24,
-        "articles_id": 1
-    },
-    {
-        "id": 49,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "\u251cbereich~\rZwischenraum von 1: \u251c1\u2524\rUnbestimmter Verlust: [---]\rErg[\u00e4nz\u00e9ng] \rAusla [(ss\u00f0ung)] \rVerzeilenumbruh | \r<Nachtrag>\rAbk(\u00fcrzung)\rVersalie \rZeilenumbruch \/\r~bereich\u2524\r\u251cbereich~\rHann bj\u00f3 \u00ed Raums \u2022 dal \u00ed Raumsd{\u00e6}lafylk\r~bereich\u2524\r\u251cbereich~Alphabetische Fu\u00dfnote: [a]\rNumerische Fu\u00dfnote: [2]~bereich\u2524",
-        "sections_id": 1,
         "articles_id": 1
     },
     {
         "id": 50,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notzien Inschriftenteil 1",
         "sections_id": 2,
         "articles_id": 1
@@ -183,100 +147,19 @@
         "id": 51,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschrift A",
         "sections_id": 3,
-        "articles_id": 1
-    },
-    {
-        "id": 52,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "Notizen Abschnitt 2a",
-        "sections_id": 4,
-        "articles_id": 1
-    },
-    {
-        "id": 53,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.[1]\r\r<H|Text |H>Text Text\rText Text Text\rText Text Text\rText Text Text\rLINK \r<p|Text Text Text\rText Text Text|p>\rLiteraturverweis im Text: Unterautor \r\rExterne Verweise\r- auf einen Artikel: Signatur 2\r- auf eine Inschrift: Signatur 2[A]\r- auf einen Inschriftenteil: Signatur 2 [A1]\r- auf eine Fu\u00dfnote: Signatur 2 [Fu\u00dfnote 1]\r\rInterne Verweise\r- auf Inschrift B: B\r- auf Inschriftenteil B2: B2\r- auf Fu\u00dfnote a: Fu\u00dfnote a\r- auf Fu\u00dfnote 2: Fu\u00dfnote 2\r- auf Marke: hm001.1121",
-        "sections_id": 5,
         "articles_id": 1
     },
     {
         "id": 54,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Register",
         "sections_id": 6,
         "articles_id": 1
-    },
-    {
-        "id": 362,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": null,
-        "sections_id": 143,
-        "articles_id": 3
-    },
-    {
-        "id": 364,
-        "deleted": 0,
-        "job_id": null,
-        "value": "comment",
-        "content": null,
-        "sections_id": 144,
-        "articles_id": 3
-    },
-    {
-        "id": 366,
-        "deleted": 0,
-        "job_id": null,
-        "value": "comment",
-        "content": null,
-        "sections_id": 145,
-        "articles_id": 3
-    },
-    {
-        "id": 368,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": null,
-        "sections_id": 147,
-        "articles_id": 3
-    },
-    {
-        "id": 370,
-        "deleted": 0,
-        "job_id": null,
-        "value": "comment",
-        "content": null,
-        "sections_id": 159,
-        "articles_id": 3
-    },
-    {
-        "id": 371,
-        "deleted": 0,
-        "job_id": null,
-        "value": "comment",
-        "content": null,
-        "sections_id": 148,
-        "articles_id": 3
-    },
-    {
-        "id": 372,
-        "deleted": 0,
-        "job_id": null,
-        "value": "comment",
-        "content": null,
-        "sections_id": 149,
-        "articles_id": 3
     },
     {
         "id": 754,
@@ -291,7 +174,7 @@
         "id": 755,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschrift A - Inschriftenteil 1 - Bearbeitung 1",
         "sections_id": 1,
         "articles_id": 1
@@ -309,7 +192,7 @@
         "id": 757,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Abschnitt 2a",
         "sections_id": 4,
         "articles_id": 1
@@ -318,7 +201,7 @@
         "id": 758,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Abschnitt 1",
         "sections_id": 5,
         "articles_id": 1
@@ -327,7 +210,7 @@
         "id": 759,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschrift B Teil 2 Bearbeitung 1",
         "sections_id": 18,
         "articles_id": 1
@@ -345,7 +228,7 @@
         "id": 761,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Notizen Inschrift B Teil 1 Bearbeitung 1",
         "sections_id": 20,
         "articles_id": 1
@@ -363,7 +246,7 @@
         "id": 763,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Inschrift A Teil 2 Bearbeitungsnotizen",
         "sections_id": 23,
         "articles_id": 1
@@ -375,24 +258,6 @@
         "value": "translation",
         "content": "\u00dcbersetzung in B.2.2",
         "sections_id": 377,
-        "articles_id": 1
-    },
-    {
-        "id": 765,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "\u251cbereich~\rTranskription in B.2.2\r~bereich\u2524",
-        "sections_id": 377,
-        "articles_id": 1
-    },
-    {
-        "id": 770,
-        "deleted": 0,
-        "job_id": null,
-        "value": "content",
-        "content": "\u251cbereich~\r\r~bereich\u2524",
-        "sections_id": 378,
         "articles_id": 1
     },
     {
@@ -417,7 +282,7 @@
         "id": 824,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "Die Kapitel der Einleitung erhalten keinen Datenschl\u00fcssel (Dropdownfeld neben dem Feld \"Name\").",
         "sections_id": 202,
         "articles_id": 2
@@ -426,7 +291,7 @@
         "id": 833,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "hier nur Ziffern angeben",
         "sections_id": 162,
         "articles_id": 2
@@ -435,9 +300,81 @@
         "id": 834,
         "deleted": 0,
         "job_id": null,
-        "value": "comment",
+        "value": "notes",
         "content": "vor der Online-Publikation erg\u00e4nzen",
         "sections_id": 160,
         "articles_id": 2
+    },
+    {
+        "id": 866,
+        "deleted": 0,
+        "job_id": null,
+        "value": "text",
+        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\n\nText Text Text\nText Text Text\nText Text Text\nText Text Text\nLINK \nText Text Text\nText Text Text\nLiteraturverweis im Text: Unterautor \n\nExterne Verweise\n- auf einen Artikel: Signatur 2\n- auf eine Inschrift: Signatur 2[A]\n- auf einen Inschriftenteil: Signatur 2[A.1]\n- auf eine Fu\u00dfnote: Signatur 2[1]\n\nInterne Verweise\n- auf Inschrift B: B\n- auf Inschriftenteil B2: B.2\n- auf Fu\u00dfnote a: a\n- auf Fu\u00dfnote 2: 2\n- auf Marke: hm001.1121",
+        "sections_id": 5,
+        "articles_id": 1
+    },
+    {
+        "id": 870,
+        "deleted": 0,
+        "job_id": null,
+        "value": "text",
+        "content": "TEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT LINK  \n\nTEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \n\nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT",
+        "sections_id": 4,
+        "articles_id": 1
+    },
+    {
+        "id": 878,
+        "deleted": 0,
+        "job_id": null,
+        "value": "transcription",
+        "content": "Zwischenraum von 1: \nUnbestimmter Verlust: \nErg\u00e4nz\u00e9ng \nAusla ss\u00f0ung \nVerzeilenumbruh  \nNachtrag\nAbk\u00fcrzung\nVersalie \nZeilenumbruch \n \n\nHann bj\u00f3 \u00ed Raums  dal \u00ed Raumsd\u00e6lafylk\n \nAlphabetische Fu\u00dfnote: \nNumerische Fu\u00dfnote:",
+        "sections_id": 1,
+        "articles_id": 1
+    },
+    {
+        "id": 884,
+        "deleted": 0,
+        "job_id": null,
+        "value": "transcription",
+        "content": "\u00ednitiale\nChronogrammbuchstabe\nVh\u00e9rsalie\nAbma\u00f0r  \nNachtrag\nAuslassung\nBuchstabenverbindung\nUns\u00f0cherer Text\nZwischenraum von drei  Zeichen\nUnbestimmte Anzahl  verlorener Zeichen\nErg\u00f0nzung\nWorttrenner\nHochgestellt",
+        "sections_id": 23,
+        "articles_id": 1
+    },
+    {
+        "id": 892,
+        "deleted": 0,
+        "job_id": null,
+        "value": "transcription",
+        "content": "\u00deat var eitt sumar, \nat Gr\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V\u00edk austr \neptir Harald dau\u00f0an, m\u00e1g sinn, \nfyrir \u00fev\u00ed athann \u00e1tti  \u00fear miklar eignir.",
+        "sections_id": 20,
+        "articles_id": 1
+    },
+    {
+        "id": 899,
+        "deleted": 0,
+        "job_id": null,
+        "value": "transcription",
+        "content": "Gr\u00edmr unni henni mikit, ok l\u00e6tr hann \u00feat eptir henni. \nH\u00fan var hverri konu v\u00e6nni ok betr at s\u00e9r um alla hluti,\n \u00feeira er \u00ed Noregi v\u00e1ru. \n\u00deeira f\u00f6r var b\u00fain vir\u00f0uliga.",
+        "sections_id": 18,
+        "articles_id": 1
+    },
+    {
+        "id": 903,
+        "deleted": 0,
+        "job_id": null,
+        "value": "transcription",
+        "content": "Transkription in B.2.2",
+        "sections_id": 377,
+        "articles_id": 1
+    },
+    {
+        "id": 906,
+        "deleted": 0,
+        "job_id": null,
+        "value": "text",
+        "content": "Fu\u00dfnote mit Verweisen: \n\nInterner Verweis auf Inschrift: A\nInterner Verweis auf Fu\u00dfnote: 1\n\nLiteraturverweis: Verweis auf Literatur",
+        "sections_id": 147,
+        "articles_id": 3
     }
 ]

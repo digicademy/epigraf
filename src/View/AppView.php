@@ -199,6 +199,7 @@ class AppView extends View
      */
     public function renderSidebar($side, $options)
     {
+        $options = array_replace_recursive($this->getSidebarConfig($side), $options);
         list($content, $count) = $this->renderTabsheets($side, $options);
 
         // Wrapper attributes
@@ -231,33 +232,75 @@ class AppView extends View
     }
 
     /**
-     * Set the sidebar sizes
+     * Set sidebar configuration
+     *
+     * ## Options:
+     * An array with the keys 'left' and 'right'.
+     * In each array you can set the following keys:
+     * - init to 'expanded' or 'collapsed'
+     * - size to a number
      *
      * @param array $options
      */
-    public function sidebarSize($options)
+    public function setSidebarConfig($options)
     {
-        $default = ['left' => 2, 'right' => 3];
-        $options = array_merge($default, $options);
-
-        // TODO: Set options instead of view vars
-        $this->set('sidebar_size', $options);
+        $defaultOptions = $this->getConfig('sidebar', []);
+        $options = array_replace_recursive($defaultOptions, $options);
+        $this->setConfig('sidebar', $options);
     }
 
     /**
-     * Set whether to init the sidebars expanded or collapsed
+     * Set sidebar configuration depending on the mode
      *
-     * @param array $options
+     * - default: expanded left, collapsed right
+     * - revise: collapsed left, expanded right
+     *
+     * @return void
      */
-    public function sidebarInit($options)
+    public function setSidebarConfigByMode()
     {
-        $options = [
-            'left' => ['init' => $options['left'] ?? 'expanded'],
-            'right' => ['init' => $options['right'] ?? 'expanded']
-        ];
+        $mode = $this->Link->getMode();
+        if ($mode === MODE_REVISE) {
+            $this->setSidebarConfig([
+                'left' => ['init' => 'collapsed', 'size' => 2],
+                'right' => ['init' => 'expanded', 'size' => 6]
+            ]);
+        } else {
+            $this->setSidebarConfig([
+                'left' => ['init' => 'expanded', 'size' => 2],
+                'right' => ['init' => 'collapsed', 'size' => 4]
+            ]);
+        }
+    }
 
-        // TODO: Set options instead of view vars
-        $this->set('sidebar_options', $options);
+    /**
+     * Show the sidebar if not in revise mode
+     *
+     * @return void
+     */
+    public function activateSidebar()
+    {
+        $mode = $this->Link->getMode();
+        if ($mode !== MODE_REVISE) {
+            $this->setSidebarConfig(['left' => ['init' => 'expanded']]);
+        }
+    }
+
+    /**
+     * Get sidebar configuration
+     *
+     * @param string $side The sidebar name (left|right)
+     * @return array
+     */
+    public function getSidebarConfig($side)
+    {
+        $defaultOptions = [
+            'left' => ['init' => 'collapsed', 'size' => 2],
+            'right' => ['init' => 'collapsed', 'size' => 5]
+        ];
+        $options = $this->getConfig('sidebar', []);
+        $options = array_replace_recursive($defaultOptions, $options);
+        return $options[$side] ?? [];
     }
 
     /**

@@ -25,8 +25,13 @@
     margin:1rem 0 0 0;
 }
 
-.widget-filter-facets-descent {
+.widget-filter-facets-options {
+    flex-wrap: wrap;
+}
+
+.widget-filter-facets-options label {
     padding-left: 0.5rem;
+    width: 100%;
 }
 
 .widget-filter-facets-term {
@@ -134,13 +139,17 @@ button.button-settings.active {
 
 .content-searchbar-item {
 	flex:1;
-	min-width: 14rem;
+	min-width: 13rem;
 	padding: 0 0.5rem;
 }
 
 .content-searchbar-item-main {
 	flex:2;
 	min-width: 20em;
+}
+
+.content-searchbar-item[data-flter-param=find] {
+    min-width: 15em;
 }
 
 .content-searchbar-item-sub {

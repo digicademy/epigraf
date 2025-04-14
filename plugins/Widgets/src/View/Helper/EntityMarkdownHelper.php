@@ -13,7 +13,6 @@ namespace Widgets\View\Helper;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
-use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\Routing\Router;
 use Epi\Model\Entity\Footnote;
@@ -28,7 +27,7 @@ use Epi\Model\Entity\Section;
 class EntityMarkdownHelper extends BaseEntityHelper
 {
     const OUTPUT_HEADER_END = "\n\n";
-    const OUTPUT_ITEM_END = "\n\n";
+    const OUTPUT_ITEM_END = "\n";
     const OUTPUT_FIELD_END = "\n";
 
     /**
@@ -59,6 +58,7 @@ class EntityMarkdownHelper extends BaseEntityHelper
 
         $out = "";
         $out .= $this->docHeader($entity, $options);
+        $out .= $this->docContent($entity, $options);
 
         $options['levelOffset'] = 1;
         $out .= $this->sectionList($entity, $options);
@@ -113,17 +113,49 @@ class EntityMarkdownHelper extends BaseEntityHelper
     }
 
     /**
+     *  Output article metadata
+     *
+     * @param Article $entity
+     * @param array $options
+     *
+     * @return string
+     */
+    public function docContent($entity, $options = [])
+    {
+        $out = '';
+
+        $url = $entity->iriUrl;
+        if (!empty($url)) {
+            $out .= "[" . $entity->signature . "](" . $url . ")\n\n";
+        }
+
+        return $out;
+    }
+
+
+    /**
      * Output sections
      *
-     * @param RootEntity $entity An article entity
-     * @param array $options Array with the keys 'article', 'edit', 'mode' and 'template_article'.
+     * ### Options
+     * - article
+     * - edit
+     * - mode
+     * - template_article
+     * - ignore Records to ignore. An array with tables as keys and types as values.
+     *   Example: ['sections'=>['summary']]
      *
+     * @param RootEntity $entity An article entity
+     * @param array $options
      * @return string
      */
     public function sectionList($entity, $options = [])
     {
         $out = '';
+        $ignore = $options['ignore']['sections'] ?? [];
         foreach ($entity->sections ?? [] as $section) {
+            if (in_array($section->sectiontype, $ignore)) {
+                continue;
+            }
             if (!$section->empty) {
                 $out .= $this->sectionContent($section, $options);
             }
@@ -162,26 +194,28 @@ class EntityMarkdownHelper extends BaseEntityHelper
         $sectionConfig['view'] = Arrays::stringToArray($sectionConfig['view'] ?? 'stack', 'name', 'stack');
         $options['template_section'] = $sectionConfig;
 
-        //Section start
-        $out = "";
-        $out .= $this->sectionStart($section, $options);
+        if (($options['template_section']['display'] ?? '') === 'empty') {
+            return "";
+        }
 
 //        TODO: Widgets (map, image)
 //        $widgets = trim($this->sectionWidgets($options));
 //        $options['haswidget'] = !empty($widgets);
 //        $out .= $widgets;
 
-        if (($options['template_section']['display'] ?? '') === 'empty') {
-            return $out;
-        }
-
         // Section content
         if ($sectionConfig['view']['name'] === 'stack') {
-            $out .= $this->sectionContentStacks($section, $options);
+            $out = $this->sectionContentStacks($section, $options);
         }
         else {
-            $out .= $this->sectionContentTables($section, $options);
+            $out = $this->sectionContentTables($section, $options);
         }
+
+        //Section start
+        if ($out !== '') {
+            $out = $this->sectionStart($section, $options) . $out;
+        }
+
 
         return $out;
     }
@@ -246,8 +280,9 @@ class EntityMarkdownHelper extends BaseEntityHelper
             $row = [];
             if (!empty($groupHeaders)) {
                 if ($itemTypeHeaders) {
-                    $row[] = '';
-                    $cols[0] = 0;
+                    $groupHeader = __('Category');
+                    $row[]  = $groupHeader;
+                    $cols[0] = mb_strlen($groupHeader);
                 }
                 foreach ($groupHeaders as $colNo => $groupHeader) {
                     $row[] = $groupHeader;
@@ -311,7 +346,7 @@ class EntityMarkdownHelper extends BaseEntityHelper
         $maxWidth = 30;
         if (!empty($rows)) {
             foreach ($rows as $rowNo => $row) {
-                $overflow = 0;
+//                $overflow = 0;
 
                 if (($rowNo === 0) && !empty($groupHeaders)) {
                     $headerLine = "|";
@@ -407,8 +442,10 @@ class EntityMarkdownHelper extends BaseEntityHelper
 
         $out = "";
         foreach ($items as $item) {
-            $out .= $this->itemContent($item, $itemOptions);
-            $out .= self::OUTPUT_ITEM_END;
+            $content = $this->itemContent($item, $itemOptions);
+            if ($content !== '') {
+                $out .= $content . self::OUTPUT_ITEM_END;
+            }
         }
 
         return $out;
@@ -572,7 +609,7 @@ class EntityMarkdownHelper extends BaseEntityHelper
         $out = "";
         foreach ($itemFields as $fieldName => $fieldConfig) {
             if ((($fieldConfig['force'] ?? false) || !empty($item[$fieldName]))) {
-                $out .= $this->itemField(
+                $content = $this->itemField(
                     $item,
                     $fieldName,
                     array_merge(
@@ -586,7 +623,9 @@ class EntityMarkdownHelper extends BaseEntityHelper
                     )
                 );
 
-                $out .= self::OUTPUT_FIELD_END;
+                if ($content !== '') {
+                    $out .= $content . self::OUTPUT_FIELD_END;
+                }
             }
         }
 
@@ -638,103 +677,105 @@ class EntityMarkdownHelper extends BaseEntityHelper
              'itemFormat', 'empty', 'fieldConfig'
         ));
 
-        $out = "";
+        // JSON
+        if ($itemFormat === 'json') {
+            $content = $this->itemFieldJson($item, $fieldNameParts, $edit, $options);
+        }
+
+        // XML
+        elseif ($itemFormat === 'xml') {
+            $content = $this->itemFieldXml($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Property
+        elseif ($itemFormat === 'property') {
+            $content = $this->itemFieldProperty($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Property: Auto fill from the caption selector
+        elseif ($itemFormat === 'sectionname') {
+            $content = $this->itemFieldSectionname($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Property with unit
+        elseif ($itemFormat === 'unit') {
+            $content = $this->itemFieldUnit($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Linked record
+        elseif ($itemFormat === 'record') {
+            $content = $this->itemFieldRecord($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Linked record
+        elseif ($itemFormat === 'relation') {
+            $content = $this->itemFieldRecord($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Date
+        elseif ($itemFormat === 'date') {
+            $content = $this->itemFieldDate($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Checkbox
+        elseif ($itemFormat === 'check') {
+            $content = $this->itemFieldCheck($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Select
+        elseif ($itemFormat === 'select') {
+            $content = $this->itemFieldSelect($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Published
+        elseif ($itemFormat === 'published') {
+            $content = $this->itemFieldPublished($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Position in grid
+        elseif ($itemFormat === 'position') {
+            $content = $this->itemFieldPosition($item, $fieldNameParts, $edit, $options);
+        }
+
+        // File
+        elseif (($itemFormat === 'file') || ($itemFormat === 'image')) {
+            $content = $this->itemFieldFile($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Image URL
+        elseif ($itemFormat === 'imageurl') {
+            $content = $this->itemFieldImageurl($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Hyperlink
+        elseif ($itemFormat === 'link') {
+            $content = $this->itemFieldLink($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Number
+        elseif ($itemFormat === 'number') {
+            $content = $this->itemFieldNumber($item, $fieldNameParts, $edit, $options);
+        }
+
+        // Raw values
+        else {
+            $content = $this->itemFieldRaw($item, $fieldNameParts, $edit, $options);
+        }
+
+        if ($content === '') {
+            return '';
+        }
+
+
         // Caption
         $caption = $options['caption'] ?? null;
         $showcaption = ($caption !== false) && (($caption !== null) && !$empty) &&
             ($itemFormat !== 'check') && ($itemFormat !== 'position');
 
         if ($showcaption) {
-            $out .= "*" . $caption . "*\n";
-        }
-
-        // JSON
-        if ($itemFormat === 'json') {
-            $out .= $this->itemFieldJson($item, $fieldNameParts, $edit, $options);
-        }
-
-        // XML
-        elseif ($itemFormat === 'xml') {
-            $out .= $this->itemFieldXml($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Property
-        elseif ($itemFormat === 'property') {
-            $out .= $this->itemFieldProperty($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Property: Auto fill from the caption selector
-        elseif ($itemFormat === 'sectionname') {
-            $out .= $this->itemFieldSectionname($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Property with unit
-        elseif ($itemFormat === 'unit') {
-            $out .= $this->itemFieldUnit($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Linked record
-        elseif ($itemFormat === 'record') {
-            $out .= $this->itemFieldRecord($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Linked record
-        elseif ($itemFormat === 'relation') {
-            $out .= $this->itemFieldRecord($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Date
-        elseif ($itemFormat === 'date') {
-            $out .= $this->itemFieldDate($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Checkbox
-        elseif ($itemFormat === 'check') {
-            $out .= $this->itemFieldCheck($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Select
-        elseif ($itemFormat === 'select') {
-            $out .= $this->itemFieldSelect($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Published
-        elseif ($itemFormat === 'published') {
-            $out .= $this->itemFieldPublished($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Position in grid
-        elseif ($itemFormat === 'position') {
-            $out .= $this->itemFieldPosition($item, $fieldNameParts, $edit, $options);
-        }
-
-        // File
-        elseif (($itemFormat === 'file') || ($itemFormat === 'image')) {
-            $out .= $this->itemFieldFile($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Image URL
-        elseif ($itemFormat === 'imageurl') {
-            $out .= $this->itemFieldImageurl($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Hyperlink
-        elseif ($itemFormat === 'link') {
-            $out .= $this->itemFieldLink($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Number
-        elseif ($itemFormat === 'number') {
-            $out .= $this->itemFieldNumber($item, $fieldNameParts, $edit, $options);
-        }
-
-        // Raw values
-        else {
-            $out .= $this->itemFieldRaw($item, $fieldNameParts, $edit, $options);
-        }
-
-        if ($showcaption) {
-            $out .= "\n";
+            $out = "*" . $caption . "*: " . $content;
+        } else {
+            $out = strval($content);
         }
         return $out;
     }
@@ -1145,7 +1186,8 @@ class EntityMarkdownHelper extends BaseEntityHelper
      */
     public function footnoteField($footnote, $fieldname, $options)
     {
-        $out = $this->itemFieldXml($footnote, $fieldname, false, $options);
+        $fieldNameParts = explode('.', $fieldname);
+        $out = $this->itemFieldXml($footnote, $fieldNameParts, false, $options);
         return $out;
     }
 

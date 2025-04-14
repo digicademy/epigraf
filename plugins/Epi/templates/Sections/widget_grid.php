@@ -31,7 +31,6 @@
  */
 
 use App\Utilities\Converters\Arrays;
-use Epi\Model\Entity\Item;
 
 ?>
 
@@ -63,7 +62,7 @@ use Epi\Model\Entity\Item;
 <?php if (!empty($items) || ($edit ?? false)): ?>
     <?= $this->Element->openHtmlElement(
         'div',
-        ['class' => ['widget-grid', $mode === 'edit' ? 'widget-dragdrop' : null], 'data-itemtype'=>$itemtype]
+        ['class' => ['widget-grid', $edit ? 'widget-dragdrop' : null], 'data-itemtype'=>$itemtype]
     ) ?>
         <?php if ($edit && ($template_section['edit'] ?? $template_article['edit'] ?? true)): ?>
             <div class="doc-section-grid-size">

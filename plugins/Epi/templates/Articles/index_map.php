@@ -15,7 +15,12 @@
  * @var \Epi\Model\Entity\Article[] $entities
  */
 
-use Cake\Routing\Router;
+?>
+<?php
+    // The item types are passed to map.js to query the correct items
+    $itemTypes = $this->getConfig('options')['filter']['geodata'] ?? [];
+    $properties = $this->getConfig('options')['params']['properties'] ?? [];
+    $propertyTypes = array_keys($properties);
 
 ?>
 
@@ -25,6 +30,8 @@ use Cake\Routing\Router;
          data-filter-template="map"
          data-filter-mode="<?= $this->getConfig('options')['params']['mode'] ?? '' ?>"
          data-filter-lanes="<?= $this->getConfig('options')['params']['lanes'] ?? '' ?>"
+         data-filter-properties="<?= implode(',', $propertyTypes) ?>"
+         data-row-types = "<?= implode(',', array_keys($itemTypes)) ?>"
          data-mode="search"
     ></div>
 
@@ -37,14 +44,11 @@ use Cake\Routing\Router;
             data-location-lng="<?= $this->getConfig('options')['params']['lng'] ?? '' ?>"
             data-location-zoom="<?= $this->getConfig('options')['params']['zoom'] ?? '' ?>"
     >
-
         <?php
-        $geoJson = [];
-        foreach ($entities as $article) {
-            foreach ($article->getItemsByType(['geolocations']) ?? [] as $item) {
-                $geoJson[] = $item ? $item->getValueFormatted('value') : [];
+            $geoJson = [];
+            foreach ($entities as $article) {
+                $geoJson = array_merge($geoJson, $article->getExportGeoData(['format' => 'html','setRoot' => true, 'properties' => $properties]));
             }
-        }
         ?>
         [<?= implode(',',$geoJson) ?>]
     </script>

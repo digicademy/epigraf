@@ -226,7 +226,7 @@ export class FilterWidget extends BaseWidget {
      * Load results based on article and property search options.
      *
      * @param source The filter that called the method
-     * @param {boolean} clear Wheter all other parameters should be cleared
+     * @param {boolean} clear Whether all other parameters should be cleared
      */
     updateResults(source, clear=false) {
         App.ajaxQueue.stop();
@@ -271,7 +271,7 @@ export class FilterWidget extends BaseWidget {
 
     loadData(url, historyUrl) {
         this.pushHistory = window.history.pushState && historyUrl && !this.isInFrame();
-        const container = this.getContentPane(false);
+        const container = this.getFrame(false);
 
         App.ajaxQueue.add('',
             {
@@ -324,9 +324,10 @@ export class FilterWidget extends BaseWidget {
         url += '?' + jQuery.param(params);
 
         if (!this.isInFrame()) {
+            App.ajaxQueue.stop();
             window.location = url;
         } else {
-            const frameWidget = this.getContentPane();
+            const frameWidget = this.getFrame();
             frameWidget.loadUrl(url, frameWidget.options);
         }
     }
@@ -417,7 +418,6 @@ class FilterFixed extends FilterItemWidget {
      * @returns {{}}
      */
     getPath() {
-        console.log(this.widgetElement);
         if (this.widgetElement && this.widgetElement.dataset) {
             const scope = this.widgetElement.dataset.filterPath;
             return scope;
@@ -775,7 +775,7 @@ class FilterFacetsBase extends FilterItemWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
         this.filterParameter = undefined;
-        this.descentParameter = undefined;
+        this.flagsParameter = undefined;
     }
 
     initWidget() {
@@ -804,11 +804,12 @@ class FilterFacetsBase extends FilterItemWidget {
             (event) => this.onResetClicked(event)
         );
 
-        // Descendant checkbox changed...
+        // Descendants, invert, or all checkbox changed...
         this.listenEvent(
-            this.widgetElement.querySelector('.widget-filter-facets-descent input'),
+            this.widgetElement.querySelector('.widget-filter-facets-options'),
             'input',
-            (event) => this.onOptionsChanged(event)
+            (event) => this.onFlagsChanged(event),
+            'input'
         );
 
         // Node clicked...
@@ -834,11 +835,21 @@ class FilterFacetsBase extends FilterItemWidget {
     }
 
     /**
-     * Fired when the descent checkbox changed
+     * Fired when a checkbox for selection modifications changed
      *
      * @param {Event} event
      */
-    onOptionsChanged(event) {
+    onFlagsChanged(event) {
+        const widgetFilterFacetsOptions = event.target.closest('.widget-filter-facets-options');
+        if (!widgetFilterFacetsOptions) {
+            return;
+        }
+        clearTimeout(this.inputTimeout);
+
+        const flags = [...widgetFilterFacetsOptions.querySelectorAll('input:checked')]
+            .map((node) => node.value);
+
+        this.widgetElement.dataset.filterFlags = flags.join(',');
         this.coordinator.updateResults(this);
     }
 
@@ -868,23 +879,30 @@ class FilterFacetsBase extends FilterItemWidget {
      * @param {Event} event
      */
     onNodeChanged(event) {
-        if (!event.target.closest('.widget-filter-facets-results')) {
+        const widgetFilterFacetResults = event.target.closest('.widget-filter-facets-results')
+        if (!widgetFilterFacetResults) {
             return;
         }
         clearTimeout(this.inputTimeout);
 
-        const selected = [...this.widgetElement.querySelectorAll('input.property:checked')]
+        const selected = [...widgetFilterFacetResults.querySelectorAll('input.property:checked')]
             .map((node) => node.value);
 
         this.widgetElement.dataset.filterSelected = selected.join(',');
         this.updateTabCounter();
+        this.emitEvent('epi:load:facets');
 
         this.inputTimeout = setTimeout( () => this.coordinator.updateResults(this), App.settings.timeout);
     }
 
     clearWidget() {
+        this.emitEvent('epi:close:facets');
         super.clearWidget();
-        if (this.widgetElement.dataset.filterSelected) {
+        const allCheckbox = this.widgetElement.querySelector('.widget-filter-facets-all input');
+        const inverseCheckbox = this.widgetElement.querySelector('.widget-filter-facets-inverse input');
+        if (this.widgetElement.dataset.filterSelected
+            || (allCheckbox && allCheckbox.checked)
+            || (inverseCheckbox && inverseCheckbox.checked)) {
             this.coordinator.updateResults();
         }
     }
@@ -950,6 +968,7 @@ class FilterFacetsBase extends FilterItemWidget {
                 },
                 success: function (data, textStatus, xhr) {
                     App.replaceDataSnippets(data, self.widgetElement);
+                    self.emitEvent('epi:load:facets');
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     // If aborted (see above, https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort)
@@ -964,6 +983,18 @@ class FilterFacetsBase extends FilterItemWidget {
                 }
             }
         );
+    }
+
+    /**
+     * Get the selected facets
+     *
+     * Override in child classes.
+     *
+     * @return {{}} An object with the property type name as key and items as value.
+     *              Each item is an object with the id and label of the property.
+     */
+    getFacets() {
+        return {};
     }
 
     /**
@@ -988,6 +1019,7 @@ class FilterFacetsBase extends FilterItemWidget {
         // TODO: only get params with the article prefix (filter out irrelevant params)
         let articleParams = this.coordinator.getUrlParams(true);
         delete articleParams[this.filterParameter];
+        delete articleParams[this.flagsParameter];
         return articleParams;
     }
 
@@ -999,12 +1031,9 @@ class FilterFacetsBase extends FilterItemWidget {
     getUrlParams() {
         let params = {};
         params[this.filterParameter] = this.widgetElement.dataset.filterSelected;
-
-        const descentCheckbox = this.widgetElement.querySelector('.widget-filter-facets-descent input');
-        if (this.descentParameter && descentCheckbox) {
-            params[this.descentParameter] = descentCheckbox.checked ? 1 : 0;
+        if (this.flagsParameter && this.widgetElement.dataset.filterFlags) {
+            params[this.flagsParameter] = this.widgetElement.dataset.filterFlags;
         }
-
         return params;
     }
 
@@ -1022,6 +1051,14 @@ class FilterFacetsBase extends FilterItemWidget {
 
 class FilterProperties extends FilterFacetsBase {
 
+    colors = [
+        '#E69F00',
+        '#56B4E9',
+        '#009E73',
+        '#bb3fc3',
+        '#0072B2'
+    ];
+
     /**
      * Initialize widget and bind event listeners.
      *
@@ -1031,8 +1068,9 @@ class FilterProperties extends FilterFacetsBase {
      */
     constructor(element, name, parent) {
         super(element, name, parent);
-        this.filterParameter = 'properties.' + this.widgetElement.dataset.filterPropertytype;
-        this.descentParameter = 'descent.' + this.widgetElement.dataset.filterPropertytype;
+        let propertytype = this.widgetElement.dataset.filterPropertytype;
+        this.filterParameter = 'properties.' + propertytype + '.selected';
+        this.flagsParameter = 'properties.' + propertytype + '.flags';
     }
 
     getFacetParams() {
@@ -1042,6 +1080,55 @@ class FilterProperties extends FilterFacetsBase {
             field: 'lemma',
             references: 0
         };
+    }
+
+    /**
+     * Get the selected facets
+     *
+     * Override in child classes.
+     *
+     * @return {{}} An object with the label, color and id indexed by property id.
+     */
+    getFacets() {
+        let data = {};
+
+        // Clear legend color
+        this.widgetElement.querySelectorAll('.node .tree-meta').forEach(
+            (elm) => {
+                elm.style.backgroundColor = '';
+                elm.style.color = '';
+            }
+        );
+
+        let colorIdx = 0;
+        const checked = [...this.widgetElement.querySelectorAll('input.property:checked')];
+        for (let elm of checked) {
+
+            const node = elm.closest('.node');
+            if (node) {
+                const nodeColor = this.colors[colorIdx % this.colors.length];
+
+                // Set data
+                const label = elm.closest('label');
+                if (label) {
+                    data[elm.value] = {
+                        label: label.textContent,
+                        color: nodeColor,
+                        id: elm.value
+                    };
+                }
+
+                // Set legend color
+                const metaElm = node.querySelector('.tree-meta');
+                if (metaElm) {
+                    metaElm.style.backgroundColor = nodeColor;
+                    metaElm.style.color = 'white';
+                }
+
+                colorIdx++;
+            }
+        }
+        return data;
     }
 
 }
@@ -1272,17 +1359,22 @@ class FilterTemplate {
  * Map filter
  * //TODO: derive from FilterItemWidget
  */
-class FilterMap {
+class FilterMap extends FilterItemWidget {
     constructor(coordinator, widgetElement) {
+        super(widgetElement, 'filtermap', coordinator);
+
         // Init vars
         this.coordinator = coordinator;
         this.widgetElement = widgetElement;
         this.inputTimeout = null;
+        this.widgetMap = null;
 
         if (!this.initWidgets()) {
             return false;
         }
         this.coordinator.addFilter(this);
+        this.listenEvent(document,'epi:load:facets', event => this.onLoadFacets(event));
+        this.listenEvent(document,'epi:close:facets', event => this.onCloseFacets(event));
     }
 
     /**
@@ -1295,8 +1387,9 @@ class FilterMap {
             return false;
         }
 
-        if (this.widgetElement.widgetMap !== undefined) {
-            this.widgetElement.widgetMap.updateMarkers();
+        this.widgetMap = this.getWidget(this.widgetElement, 'map');
+        if (this.widgetMap !== undefined) {
+            this.widgetMap.updateMarkers();
         }
 
         if (this.widgetElement.classList.contains('widget-initialized')) {
@@ -1307,7 +1400,28 @@ class FilterMap {
         return true;
     }
 
-    /**
+    onLoadFacets(event) {
+        if (!this.widgetMap || !this.widgetElement || !event.detail.sender) {
+            return;
+        }
+
+        const facetWidget = event.detail.sender;
+
+        if (facetWidget.widgetElement.classList.contains('widget-filter-item-properties')) {
+            const data = facetWidget.getFacets();
+            this.widgetMap.updateColors(data);
+        }
+    }
+
+    onCloseFacets(event) {
+        if (!this.widgetMap || !this.widgetElement || !event.detail.sender) {
+            return;
+        }
+        this.widgetMap.updateColors();
+    }
+
+
+        /**
      * Called by App.filter.updateWidget.
      * After the data was reloaded (by snippet replacement), update the map
      *
@@ -1337,7 +1451,10 @@ class FilterMap {
      * @returns {Object} Object that contains map filter options for URL
      */
     getUrlParams() {
-        const mapCenter = this.widgetElement.widgetMap.getCenter();
+        if (!this.widgetMap) {
+            return {};
+        }
+        const mapCenter = this.widgetMap.getCenter();
         return {'template': 'map', 'lat': mapCenter.lat, 'lng': mapCenter.lng, 'sort': 'distance', 'direction': 'asc'};
     }
 }

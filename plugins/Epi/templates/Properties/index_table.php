@@ -22,7 +22,11 @@
     $scope = $this->getConfig('options')['scope'] ?? '';
     $type = $database->types['properties'][$scope] ?? null;
     $tableModel = 'epi.properties';
- ?>
+
+    $params = $this->getConfig('options')['params'] ?? [];
+    $actions = $this->Link->getActions($params['mode'] ?? MODE_DEFAULT, $params);
+
+?>
 
 <!-- Items -->
 <div class="content-main widget-scrollbox" data-snippet="rows">
@@ -36,13 +40,13 @@
                 'snippet' => false, // Prevents the column selector to vanish
 
                 'tree' => $type['merged']['type'] ?? 'tree',
-                'collapsed' => $this->getConfig('options')['params']['collapsed'] ?? (($type['merged']['type'] ?? 'tree') === 'collapsed'),
+                'collapsed' => $params['collapsed'] ?? (($type['merged']['type'] ?? 'tree') === 'collapsed'),
                 'sort' => false,
                 'fold' => 'foldable',
                 'drag' => true,
                 'paginate' => 'cursor',
                 'scope' => $scope,
-                'actions' => ['view' => true],
+                'actions' => $actions,
                 'class' => 'widget-filter-item widget-filter-item-fixed',
                 'data' => ['data-filter-path' => $scope]
             ]

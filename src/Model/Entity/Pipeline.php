@@ -19,6 +19,7 @@ use Epi\Model\Behavior\PositionBehavior;
  * @property string $name
  * @property string $description
  * @property array $tasks
+ * @property string $type The pipeline type, one of 'import' or 'export'
  *
  */
 class Pipeline extends BaseEntity
@@ -53,17 +54,77 @@ class Pipeline extends BaseEntity
             'canskip' => false,
             'customcaption' => false
         ],
-        'data_job' => ['caption' => 'Job data', 'type' => 'data', 'inputfile' => false],
-        'data_projects' => ['caption' => 'Project data', 'type' => 'data', 'inputfile' => false],
-        'data_articles' => ['caption' => 'Article data', 'type' => 'data', 'inputfile' => false],
-        'data_properties' => ['caption' => 'Property data', 'type' => 'data', 'inputfile' => false],
-        'data_index' => ['caption' => 'Index data', 'type' => 'data', 'inputfile' => false],
-        'data_types' => ['caption' => 'Types data', 'type' => 'data', 'inputfile' => false],
-        'bundle' => ['caption' => 'Bundle files', 'type' => 'data', 'inputfile' => false],
-        'transformxsl' => ['caption' => 'Transform with XSL', 'type' => 'transform'],
-        'copy_files' => ['caption' => 'Copy files', 'type' => 'files', 'outputfile' => false, 'inputfile' => false],
-        'zip' => ['caption' => 'Zip a file or folder', 'type' => 'files', 'outputfile' => true, 'inputfile' => false],
-        'replace' => ['caption' => 'Search and replace', 'type' => 'transform'],
+        'data_job' => [
+            'caption' => 'Job data',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'data_projects' => [
+            'caption' => 'Project data',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'data_articles' => [
+            'caption' => 'Article data',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'data_properties' => [
+            'caption' => 'Property data',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'data_index' => [
+            'caption' => 'Index data',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'data_types' => [
+            'caption' => 'Types data',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'bundle' => [
+            'caption' => 'Bundle files',
+            'type' => 'data',
+            'inputfile' => false
+        ],
+        'transformxsl' => [
+            'caption' => 'Transform with XSL',
+            'type' => 'transform'
+        ],
+        'copy_files' => [
+            'caption' => 'Copy files',
+            'type' => 'files',
+            'outputfile' => false,
+            'inputfile' => false
+        ],
+        'zip' => [
+            'caption' => 'Zip a file or folder',
+            'type' => 'files',
+            'outputfile' => true,
+            'inputfile' => false
+        ],
+        'replace' => [
+            'caption' => 'Search and replace',
+            'type' => 'transform'
+        ],
+        'export_extract' => [
+            'caption' => 'Extract content',
+            'type' => 'export_extract',
+            'inputfile' => true,
+            'outputfile' => true,
+            'canskip' => false,
+            'customcaption' => true
+        ],
+        'export_download' => [
+            'caption' => 'Show downloads',
+            'type' => 'export_download',
+            'inputfile' => false,
+            'outputfile' => false,
+            'canskip' => false,
+            'customcaption' => false
+        ],
         'save' => [
             'caption' => 'Save to file',
             'type' => 'save',
@@ -124,6 +185,12 @@ class Pipeline extends BaseEntity
         $fields = [
             'name' => [
                 'caption' => __('Name'),
+                'action' => ['edit', 'add']
+            ],
+            'type' => [
+                'caption' => __('Type'),
+                'type' => 'select',
+                'options' => ['export' => __('Export'), 'import' => __('Import')],
                 'action' => ['edit', 'add']
             ],
             'description' => [

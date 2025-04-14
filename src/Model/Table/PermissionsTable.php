@@ -10,6 +10,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Databank;
 use App\Model\Entity\Permission;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
@@ -18,6 +19,7 @@ use ArrayObject;
 use App\Cache\Cache;
 use Cake\Event\EventInterface;
 use Cake\ORM\Query;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Cake\I18n\FrozenTime;
@@ -52,7 +54,7 @@ class PermissionsTable extends BaseTable
 
     static $permissionTypes = ['access' => 'Access', 'lock' => 'Lock'];
     static $requestTypes = ['web' => 'Web-Zugriff', 'api' => 'API-Zugriff'];
-    static $requestModes = ['default' => 'Default', 'code' => 'Code', 'preview' => 'View'];
+    static $requestModes = [MODE_DEFAULT => 'Default', MODE_PREVIEW => 'Preview', MODE_REVISE => 'Code', MODE_STAGE => 'Stage'];
     static $entityTypes = ['databank' => 'Databank', 'record' => 'Record'];
 
     static $_endpoints = null;
@@ -213,7 +215,8 @@ class PermissionsTable extends BaseTable
                 'api' => array_fill_keys(PermissionsTable::$userRoles, [])
             ];
 
-        $allowed = $class->getDefaultProperties()['authorized'] ?? [];
+        $defaultProperties = $class->getDefaultProperties();
+        $allowed = $defaultProperties['authorized'] ?? [];
         $allowed = array_merge($defaultRequests, $allowed);
 
         $grouped = [];
@@ -221,12 +224,24 @@ class PermissionsTable extends BaseTable
             $roles = array_merge($defaultRoles[$request], $roles);
 
             foreach ($roles as $role => $actions) {
-                foreach ($actions as $action) {
-                    $grouped[$action][$role][] = $request;
+                foreach ($actions as $actionKey => $actionConfig) {
+                    $action = is_array($actionConfig) ? $actionKey : $actionConfig;
+                    $params = is_array($actionConfig) ? $actionConfig : ['*' => ['*']];
+                    foreach ($params as $param => $values) {
+                        foreach ($values as $value) {
+                            $endpoint = $action;
+                            if ($param !== '*') {
+                                $endpoint .= '?' . $param . '=' . $value;
+                            }
+                            $grouped[$endpoint][$role][] = $request;
+                        }
+                    }
+                    // $grouped[$action][$role][] = $request;
                 }
             }
         }
 
+        // TODO: handle parameter value permissions
         $actions = $class->getMethods(\ReflectionMethod::IS_PUBLIC);
         $actions = array_filter($actions, fn($action) => !in_array($action->name, $ignoreActions));
         $actions = array_filter($actions, fn($action) => !in_array($action->class, $ignoreClasses));
@@ -240,8 +255,9 @@ class PermissionsTable extends BaseTable
             ,
             $actions
         );
-        $actionsPermissions = array_combine($actionsNames, $actionsAuthorized);
 
+        $actionsPermissions = array_combine($actionsNames, $actionsAuthorized);
+        ksort($actionsPermissions);
         return $actionsPermissions;
     }
 
@@ -316,6 +332,83 @@ class PermissionsTable extends BaseTable
         }
 
         return $options;
+    }
+
+    /**
+     * Get user id
+     *
+     * @param $user
+     *
+     * @return integer|null
+     */
+    static public function getUserId($user = null)
+    {
+        return $user['id'] ?? null;
+    }
+
+    /**
+     * Get user role
+     *
+     * // TODO: Implement own component for all user related methods
+     *
+     * @param array $user The user data from the Auth component
+     * @param string $database The currently selected database
+     * @return mixed|string
+     */
+    static public function getUserRole($user = [], $database = null, $requestScope = null)
+    {
+        $userRole = Attributes::cleanOption(
+            $user['role'] ?? 'guest',
+            array_keys(PermissionsTable::$userRoles),
+            'guest'
+        );
+
+        if (!empty($database) && !in_array($userRole, ['admin', 'devel'])) {
+            $database = Databank::addPrefix($database);
+
+            foreach ($user['permissions'] ?? [] as $permission) {
+                if (
+                    (($permission['permission_type'] ?? '') === 'access') &&
+                    (($permission['entity_type'] ?? '') === 'databank') &&
+                    (($permission['entity_name'] ?? '') === $database) &&
+                    (($permission['user_request'] ?? 'web') === $requestScope)
+                ) {
+                    $userRole = $permission['user_role'] ?? $user['role'] ?? '';
+                    break;
+                }
+            }
+        }
+
+        return $userRole;
+    }
+
+    /**
+     * Get the permission mask for a user
+     *
+     * The result is used in AppController::hasGrantedPermission() to determine permissions.
+     *
+     * @param array|null $user If null, the current user is used.
+     * @return array
+     */
+    static public function getPermissionMask($user = null, $database = null, $controller = null, $action = null, $requestScope = null)
+    {
+        $permission = [
+            'user_id' => PermissionsTable::getUserId($user),
+            'user_role' => PermissionsTable::getUserRole($user, null, $requestScope),
+            'user_request' => $requestScope,
+            'permission_type' => 'access'
+        ];
+
+        if (!empty($database)) {
+            $permission['permission_name'] = 'epi/' . strtolower($controller) . '/' . strtolower($action);
+            $permission['entity_type'] = 'databank';
+            $permission['entity_name'] = Databank::addPrefix($database);
+        }
+        else {
+            $permission['permission_name'] = 'app/' . strtolower($controller) . '/' . strtolower($action);
+        }
+
+        return $permission;
     }
 
     /**
@@ -613,6 +706,26 @@ class PermissionsTable extends BaseTable
         $conditions[] = ['OR' => $entity_conditions];
 
         return $this->find('all')->where($conditions)->count();
+    }
+
+    /**
+     * Check whether the user is allowed to access the endpoint
+     * by comparing the request to the permission table.
+     *
+     * @param array $user The user data from the auth component
+     * @return bool
+     */
+    public static function hasGrantedPermission($user = null, $database = null, $controller = null, $action = null, $requestScope = null)
+    {
+        $permissionTable = TableRegistry::getTableLocator()->get('Permissions');
+        $permissionMask = PermissionsTable::getPermissionMask(
+            $user,
+            $database,
+            $controller,
+            $action,
+            $requestScope
+        );
+        return $permissionTable->hasPermission($permissionMask);
     }
 
     /**

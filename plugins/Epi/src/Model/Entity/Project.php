@@ -173,17 +173,6 @@ class Project extends RootEntity
 
     }
 
-
-    /**
-     * Get the URL of the epigraf article
-     *
-     * @return string
-     */
-    protected function _getInternalUrl()
-    {
-        return '/epi/' . Databank::removePrefix($this->databaseName) . '/projects/view/' . $this->id;
-    }
-
     /**
      * Get the URL to an external resource (e.g. on DIO)
      *
@@ -193,7 +182,7 @@ class Project extends RootEntity
      */
     protected function _getExternalUrl()
     {
-        $link = $this->norm_data_parsed[0] ?? [];
+        $link = $this->normDataParsed[0] ?? [];
         return $link['url'] ?? '';
     }
 
@@ -304,7 +293,7 @@ class Project extends RootEntity
     {
         $type = new DefaultType([
             'scope' => 'projects',
-            'mode' => 'default',
+            'mode' => MODE_DEFAULT,
             'name' => 'default',
             'norm_iri' => 'default',
             'config' => []

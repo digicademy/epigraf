@@ -7,7 +7,42 @@
  *
  */
 
-/* Resizable sidebar */
+/* ------------- Resizable sidebar ------------- */
+
+
+.sidebar {
+    flex-basis: 16.66%;
+
+    position: relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    min-width: 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-size-2 {
+    flex-basis: 16.66%;
+}
+
+.sidebar-size-3 {
+    flex-basis: 25%;
+}
+
+.sidebar-size-4 {
+    flex-basis: 33.33%;
+}
+
+.sidebar-size-5 {
+    flex-basis: 41.66%;
+}
+
+.sidebar-size-6 {
+    flex-basis: 50%;
+}
+
 .sidebar-exploder {
     position: absolute;
     top: 50%;
@@ -137,6 +172,8 @@
 .sidebar-collapsed.sidebar-full.sidebar-exploder {
     background-image: url("../img/arrow_left_green.svg");
 }
+
+/* ------------- Accordion ------------- */
 
 .accordion {
     background-color: var(--content-bg-color);

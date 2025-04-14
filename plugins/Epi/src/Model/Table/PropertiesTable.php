@@ -15,6 +15,8 @@ use App\Model\Entity\Jobs\JobMutate;
 use App\Model\Interfaces\ExportTableInterface;
 use App\Model\Interfaces\MutateTableInterface;
 use App\Model\Interfaces\ScopedTableInterface;
+use App\Model\Table\BaseTable as AppBaseTable;
+use App\Model\Table\SaveManyException;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use Cake\Collection\Collection;
@@ -23,15 +25,17 @@ use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\HasMany;
 use Cake\ORM\Association\HasOne;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Utility\Inflector;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 use Epi\Model\Entity\Property;
+use Epi\Model\Traits\TransferTrait;
 use Exception;
 use const SORT_ASC;
 
@@ -47,6 +51,13 @@ use const SORT_ASC;
  */
 class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateTableInterface, ExportTableInterface
 {
+
+    use TransferTrait;
+
+    /**
+     * @var int Default export limit used in TransferTrait
+     */
+    protected $exportLimit = 500;
 
     /**
      * Type field for scoped queries and IRI paths
@@ -68,6 +79,13 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      * @var null
      */
     public $scopeValue = null;
+
+    /**
+     * Whether to check field types after marshalling and merge JSON data
+     *
+     * @var bool
+     */
+    public $mergeJson = true;
 
     /**
      * Store recover operations for the VersionedTreeBehavior
@@ -105,6 +123,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         'columns' => 'list',
         'load' => 'list',
         'save' => 'list',
+        'mode' => 'constant-mode',
 
         'template' => 'raw',
         'articles' => [
@@ -418,9 +437,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     }
 
     /**
-     * afterSave callback
-     *
-     * Clear the caches
+     * Clear the caches after saving
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
@@ -475,6 +492,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 'children' => $params['children'] ?? false,
                 'collapsed' => $params['collapsed'] ?? false,
                 'order' => ['Properties.lft' => $dir],
+                'direction' => $dir,
+                'sort' => 'lft',
                 'sortableFields' => ['lft'],
                 'limit' => 100,
                 'maxLimit' => 100
@@ -495,15 +514,12 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         $params['propertytype'] = empty($requestPath) ? ($requestParameters['propertytype'] ?? $requestParameters['scope'] ?? '') : $requestPath;
 
         // Article parameters: selected properties
-        $other = Attributes::extractPrefixedIntArray($requestParameters, 'properties_');
+        $other = Attributes::extractPrefixedNestedList($requestParameters, 'properties_');
+        // $other usually has no key $params['propertytype'] because it is filtered by JS; clean up?
         $params['selected'] = $other[$params['propertytype']] ?? $params['selected'] ?? []; // To show ticks in checkboxes
         unset($other[$params['propertytype']]);
 
-        // Descent option
-        $decent = Attributes::extractPrefixedBooleans($requestParameters, 'descent_');
-        unset($decent[$params['propertytype']]);
 
-        $params['articles']['descent'] = $decent;
         $params['articles']['properties'] = $other;
         $params['articles'] = Arrays::array_remove_empty($params['articles']);
 
@@ -554,7 +570,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     protected function getCursorId(array $params)
     {
         $treeTerms = $params['find'] ?? '';
-        //$treeTerms = str_replace('%','*', $treeTerms);
         $treeTerms = str_replace('*', '%', $treeTerms);
         $treeTerms = str_replace(['›', '-', '~'], '>', $treeTerms);
         $treeTerms = array_filter(explode('>', $treeTerms));
@@ -586,7 +601,12 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 ->where($cursorConditions);
         }
 
-        $cursor = $cursorQuery !== null ? $cursorQuery->first() : null;
+        if ($cursorQuery === null) {
+            return null;
+        }
+
+        $cursorQuery = $cursorQuery->find('hasArticleOptions', $params);
+        $cursor = $cursorQuery->first();
         return $cursor ? $cursor->id : null;
     }
 
@@ -1355,6 +1375,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         $articlesTable = $this->fetchTable('Epi.Articles');
         $articlesQuery = $articlesTable
             ->find('hasProperties', ['properties' => $reference])
+            ->contain(['Projects'])
             ->limit(10);
         return $articlesQuery;
     }
@@ -1456,7 +1477,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         else {
             $lanes = $options['lanes'] ?? false;
             $propertyType = empty($lanes) ? $this->getDefaultScope() : $lanes;
-            $selectedProperties = $options['properties'][$propertyType] ?? [];
+            $selectedProperties = $options['properties'][$propertyType]['selected'] ?? $options['properties'][$propertyType] ?? [];
 
             $query = $query->where(['Properties.propertytype' => $propertyType]);
 
@@ -1873,6 +1894,23 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     }
 
     /**
+     * Get filter options
+     *
+     * @param array $params
+     * @return array
+     */
+    public function getFilter($params)
+    {
+        $filter = parent::getFilter($params);
+
+        $projectsTable = TableRegistry::getTableLocator()->get('Epi.Projects');
+        $projects = $projectsTable-> find('list')->toArray();
+        $filter['projects'] = $projects;
+
+        return $filter;
+    }
+
+    /**
      * Get all scopes
      *
      * implements ScopedTableInterface
@@ -2034,7 +2072,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             /** @var Property $propertyTarget */
             $propertyTarget = $this->get($propertyTargetId);
             $propertyTarget->merged_ids = $propertySourceIds;
-
         }
         else {
             $propertyTarget = null;
@@ -2058,16 +2095,20 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 'elements',
                 'keywords',
                 'source_from',
-                'norm_data'
+                'norm_data' => "\n"
             ];
 
-            foreach ($concatFields as $fieldName) {
+            foreach ($concatFields as $fieldName => $separator) {
+                if (is_numeric($fieldName)) {
+                    $fieldName = $separator;
+                    $separator = ' / ';
+                }
                 foreach ($propertySources as $propertySource) {
                     $mergedValues = [$propertyTarget[$fieldName]];
                     if (!in_array($propertySource[$fieldName], $mergedValues)) {
                         $mergedValues[] = $propertySource[$fieldName];
                     }
-                    $propertyTarget[$fieldName] = implode(' / ', array_filter($mergedValues));
+                    $propertyTarget[$fieldName] = implode($separator, array_filter($mergedValues));
                 }
             }
 
@@ -2167,51 +2208,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         return parent::getColumns($selected, $default, $type);
     }
 
-
-    /**
-     * Called from JobExport
-     *
-     * @param $params
-     * @return int Number of rows for calculating the progress bar
-     */
-    public function getExportCount($params): int
-    {
-        $query = $this->find('all');
-
-        if (isset($params['scope'])) {
-            $query = $query->where(['propertytype' => $params['scope']]);
-        }
-
-        return $query->count();
-    }
-
-    /**
-     * Get data to be exported
-     *
-     * @implements ExportTableInterface
-     * @param array $params
-     * @param array $paging
-     * @param string $indexkey
-     * @return Property[]
-     */
-    public function getExportData($params, $paging = [], $indexkey = ''): array
-    {
-        $offset = $paging['offset'] ?? 0;
-        $limit = $paging['limit'] ?? 500;
-
-        $query = $this->find('all');
-
-        if (isset($params['scope'])) {
-            $query = $query->where(['propertytype' => $params['scope']]);
-        }
-
-        return $query
-            ->limit($limit)
-            ->offset($offset)
-            ->toArray();
-    }
-
-
     /**
      * Get the list of supported tasks
      *
@@ -2219,12 +2215,23 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      */
     public function mutateGetTasks(): array
     {
-        return [
+        $tasks = [
 //            'delete' => 'Delete properties',
 //            'fix_iris' => 'Clean IRIs',
+            'rebuild_sortkeys' => 'Rebuild sort keys',
             'batch_sort' => 'Sort properties',
-            'batch_merge' => 'Merge properties'
+            'batch_merge' => 'Merge properties',
+            'batch_reconcile' => 'Reconcile norm data'
         ];
+
+        if (in_array(AppBaseTable::$userRole, ['author', 'editor'])) {
+            $tasks = array_intersect_key($tasks, ['batch_sort' => true,'rebuild_sortkeys' => true]);
+        }
+        elseif (!in_array(AppBaseTable::$userRole, ['admin', 'devel'])) {
+            $tasks = [];
+        }
+
+        return $tasks;
     }
 
     /**
@@ -2238,7 +2245,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     public function mutateGetCount($params, $job): int
     {
         if (($job->config['task'] ?? '') === 'batch_sort') {
-            return 1;
+            $params = ['propertytype' => $params['propertytype'] ?? $params['scope'] ?? ''];
+//            return 1;
         }
 
         return parent::mutateGetCount($params, $job);
@@ -2259,6 +2267,11 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
 
         // Sort / recover a single propertytype
         $sortBy = $taskParams['sortby'] ?? 'sortkey';
+
+        if (!in_array(AppBaseTable::$userRole, ['admin', 'devel']) && !in_array($sortBy, ['sortkey', 'lemma'])) {
+            throw new MethodNotAllowedException('You have no permission for using the selected sort field.');
+        }
+
         $this->setSortField($sortBy);
         $this->setScope($propertytype);
         $this->recover();
@@ -2284,9 +2297,21 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         $dataParams = $this->parseRequestParameters($dataParams);
 
         // Use cursor based pagination instead of offset
+        if (($taskParams['cursor'] ?? 0) > 0) {
+            $cursorNode = $this->get($taskParams['cursor']);
+            $cursorConditions = [
+                'OR' => [
+                    ['Properties.level' => $cursorNode->level, 'Properties.id >' => $taskParams['cursor'] ?? 0],
+                    'Properties.level >' => $cursorNode->level
+                ]
+            ];
+        } else {
+            $cursorConditions = ['1=1'];
+        }
+
         $entities = $this
             ->find('hasParams', $dataParams)
-            ->where(['Properties.id >' => $taskParams['cursor'] ?? 0])
+            ->where($cursorConditions)
             ->orderAsc('Properties.level')
             ->orderAsc('Properties.id')
             ->limit($limit)
@@ -2306,6 +2331,79 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 $this->merge($entity->id, $sourceIds, ['concat' => true]);
             }
         }
+
+        return $entities;
+    }
+
+    /**
+     * Reconcile all properties using external services configured in the property type
+     *
+     * @param array $taskParams
+     * @param array $dataParams
+     * @param array $paging Array with the key 'limit'
+     * @return array The mutated entities
+     */
+    public function mutateEntitiesBatchReconcile($taskParams, $dataParams, $paging): array
+    {
+        if (($taskParams['cursor'] ?? 0) < 0) {
+            throw new BadRequestException('Invalid cursor for task');
+        }
+        $limit = $paging['limit'] ?? 1;
+
+        $dataParams = $this->parseRequestParameters($dataParams);
+
+        // Use cursor based pagination instead of offset
+        if (($taskParams['cursor'] ?? 0) > 0) {
+            $cursorConditions = ['Properties.id >' => $taskParams['cursor'] ?? 0];
+        } else {
+            $cursorConditions = ['1=1'];
+        }
+
+        $entities = $this
+            ->find('hasParams', $dataParams)
+            ->contain(['Types'])
+            ->where($cursorConditions)
+            ->orderAsc('Properties.id')
+            ->limit($limit)
+            ->toArray();
+
+        /** @var Property $entity */
+        foreach ($entities as $entity) {
+            $entity->reconcile();
+        }
+
+        if (!$this->saveMany($entities, [])) {
+            throw new SaveManyException('Could save entities.');
+        }
+
+        return $entities;
+    }
+
+    /**
+     * Mutate: Rebuild date fields
+     *
+     * @param array $taskParams
+     * @param array $dataParams
+     * @param array $paging Array with the keys 'offset' and 'limit'
+     * @return array The mutated entities
+     */
+    public function mutateEntitiesRebuildSortkeys($taskParams, $dataParams, $paging): array
+    {
+        $dataParams = $this->parseRequestParameters($dataParams);
+
+        $entities = $this
+            ->find('hasParams', $dataParams)
+            //->find('containAll', $dataParams)
+            ->contain(['Types'])
+            ->limit( $paging['limit'] ?? 100)
+            ->offset($paging['offset'] ?? 0)
+            ->toArray();
+
+        foreach ($entities as $entity) {
+            /** @var Property $entity */
+            $entity->updateSortKey();
+        }
+        $this->saveMany($entities);
 
         return $entities;
     }

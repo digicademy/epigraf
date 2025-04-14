@@ -10,6 +10,7 @@
 import Utils from '/js/utils.js';
 import {UsersModel} from '/js/models.js';
 import {AjaxQueue} from '/js/requests.js';
+import {Tours} from '/js/tours.js';
 
 /**
  * The main application class
@@ -40,7 +41,21 @@ class EpiApp {
         // XHR for Ajax calls
         this.xhr = null;
 
+        // Tours
+        this.tours = new Tours();
+
         this.initEvents();
+    }
+
+    getEndpoint() {
+        const plugin = Utils.getClassValue(document.body, 'plugin_');
+        const controller = Utils.getClassValue(document.body, 'controller_');
+        const action = Utils.getClassValue(document.body, 'action_');
+        if (plugin) {
+            return plugin + '.' + controller + '.' + action;
+        } else {
+            return controller + '.' + action;
+        }
     }
 
     initEvents() {
@@ -54,6 +69,7 @@ class EpiApp {
         // Popup links
         // TODO: create a widget
         Utils.listenEvent(document, 'click', (ev) => this.openPopupLink(ev), 'a.popup, a.popup *');
+        Utils.listenEvent(document, 'click', (ev) => this.openTabLink(ev), 'a.tab, a.tab *');
         Utils.listenEvent(document, 'click', (ev) => this.openDetailLink(ev), 'a.frame, a.frame *');
 
         // Listen to messages
@@ -70,7 +86,6 @@ class EpiApp {
         //this.focusContent();
 
     }
-
 
     /**
      * Send an error log entry to the server
@@ -173,6 +188,10 @@ class EpiApp {
             status = message.detail.data.status || status;
             let errors = message.detail.data.errors || {};
 
+            if (!containerWidget && message.detail.sender) {
+                containerWidget = message.detail.sender.getFrame(true, true);
+            }
+
             message = message.detail.data.msg;
             if (errors) {
               message = message + '<br>' + Object.entries(errors).flatMap(
@@ -240,7 +259,7 @@ class EpiApp {
     /**
      * Return the content pane which contains the element.
      *
-     * //TODO: remove redundancy with base.js: getContentPane()
+     * //TODO: remove redundancy with base.js: getFrame()
      *
      * Used to determine whether the scope of the widget should be constrained to AJAX content.
      * See popups.js.
@@ -252,7 +271,7 @@ class EpiApp {
      * @param {boolean} widget Return the widget or the HTML element?
      * @return {*|Document|HTMLElement|BaseWidget}
      */
-    getContentPane(element, widget=true) {
+    getFrame(element, widget=true) {
         if (!element) {
             return document;
         }
@@ -408,7 +427,7 @@ class EpiApp {
                     window.history.pushState(url, "Epigraf", url);
                 }
 
-                const frame = this.getContentPane(container);
+                const frame = this.getFrame(container);
                 this.replaceDataSnippets(data, container);
 
                 // Messages
@@ -535,6 +554,31 @@ class EpiApp {
     }
 
     /**
+     * Tab link handler
+     *
+     * @param {Event} event
+     * @returns {boolean}
+     */
+    openTabLink(event) {
+        // Single clicks only
+        if (event.detail > 1) {
+            return;
+        }
+
+        const a = event.target.closest('a');
+        let url = a.href;
+        if (url && !event.ctrlKey) {
+            App.openTab(url);
+            event.preventDefault();
+            return false;
+        }
+    }
+
+    openTab(url) {
+        window.open(url);
+    }
+
+    /**
      * Frame link handler
      *
      * @param event
@@ -579,9 +623,14 @@ class EpiApp {
         }
 
         if (url) {
-            const target = a.dataset.frameTarget || 'details';
-            const caption = a.dataset.frameCaption || 'Details';
-            App.openDetails(url, {external:true, frameTarget: target, frameCaption: caption, force: false});
+            const linkOptions = {
+                external: a.dataset.frameExternal || true,
+                frameTarget: a.dataset.frameTarget || 'details',
+                frameCaption: a.dataset.frameCaption || 'Details',
+                force: false
+            };
+
+            App.openDetails(url, linkOptions);
             event.preventDefault();
             return false;
         }
@@ -594,8 +643,6 @@ class EpiApp {
      * @param options Object with the following keys
      *                - url
      *                - actions
-     *
-     * @returns {TabFrame}
      */
     openDetails(data, options) {
 
@@ -618,13 +665,20 @@ class EpiApp {
             return;
         }
 
-        options.frameTarget = options.frameTarget || 'details';
-        options.frameCaption = options.frameCaption || 'Details';
-        const tabsheet = tabsheetsWidget.createTab(options.frameTarget, options.frameCaption);
-        const detailWidget = App.createWidget(tabsheet,'frame');
-        detailWidget.showData(options);
+       setTimeout(() => {
+           // TODO: Use the ajaxQueue in showData()?
+           //       Note that not only the table but also the map markers rely on openDetails()
+           // if (App.ajaxQueue.stopped) {
+           //     return;
+           // }
 
-        return detailWidget;
+           options.frameTarget = options.frameTarget || 'details';
+           options.frameCaption = options.frameCaption || 'Details';
+           const tabsheet = tabsheetsWidget.createTab(options.frameTarget, options.frameCaption);
+           const detailWidget = App.createWidget(tabsheet,'frame');
+           detailWidget.showData(options);
+
+       }, 200);
     }
 
     /**

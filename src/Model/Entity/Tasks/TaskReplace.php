@@ -47,13 +47,13 @@ class TaskReplace extends BaseTask
         $regexReplace = array_values(array_intersect_key($regexes, array_combine($regexReplace, $regexReplace)));
 
         //Replace
-        $inputfile = $this->job->getCurrentInputFile();
+        $inputfile = $this->job->getCurrentInputFilePath();
         $filecontent = file_get_contents($inputfile);
 
         $filecontent = preg_replace($regexSearch, $regexReplace, $filecontent);
         $filecontent = str_replace("\r", "", $filecontent);
 
-        $outputfile = $this->job->getCurrentOutputFile();
+        $outputfile = $this->job->getCurrentOutputFilePath();
         Files::replaceFile($outputfile, $filecontent);
 
         return true;

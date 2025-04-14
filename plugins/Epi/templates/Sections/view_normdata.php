@@ -18,7 +18,7 @@
     <div class="doc-section doc-section-normdata">
         <div class="doc-section-name"><?= __('Norm data') ?></div>
         <div class="doc-section-content">
-            <?php foreach ($article->norm_data_parsed as $item): ?>
+            <?php foreach ($article->normDataParsed as $item): ?>
                 <div class="doc-section-item">
                     <?php if (is_array($item)): ?>
                         <?= $this->Html->link($item['value'] ?? '', $item['url'] ?? '') ?>

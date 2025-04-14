@@ -47,8 +47,12 @@ class DropdownWidgetBase extends BaseWidget {
      *
      *  c) The toggle or the container has a data-pane-align-to attribute with a css selector:
      *     The pane will be aligned to the closest element matched by the selector.
+     *
+     * @param {boolean} first True if the function is called for the first time.
+     *                        In this case, it is called a second time to adjust for potential scrollbar
+     *                        changes due to positioning.
      */
-    positionDropdown(event) {
+    positionDropdown(first = true) {
         if (!this.widgetElement || !this.pane || this.pane.classList.contains('widget-dropdown-pane-frame')) {
             return;
         }
@@ -88,7 +92,7 @@ class DropdownWidgetBase extends BaseWidget {
         // to prevents the dropdown pane growing bigger than the content container width.
         let referenceWidth;
         let referenceOffsetLeft;
-        const contentPane = this.getContentPane(false);
+        const contentPane = this.getFrame(false);
         if  (contentPane && (contentPane !== document)) {
             referenceWidth = contentPane.getBoundingClientRect().width;
             referenceOffsetLeft = this.widgetElement.getBoundingClientRect().left - contentPane.getBoundingClientRect().left;
@@ -102,6 +106,12 @@ class DropdownWidgetBase extends BaseWidget {
         const maxHeight = (window.innerHeight - alignRect.bottom - 50);
         const minHeight = 250;
 
+        // Constrain the pane size
+        this.pane.style.maxHeight = maxHeight + 'px';
+        if (this.pane.offsetHeight > maxHeight) {
+            this.pane.style.height = maxHeight + 'px';
+        }
+
         // Case a) The pane is inside a wrapper that also contains the input:
         if (!this.pane.classList.contains('widget-dropdown-pane-moved')) {
             const minWidth = 100;
@@ -111,26 +121,26 @@ class DropdownWidgetBase extends BaseWidget {
         // Cases b) and c) The pane is moved to the body element and/or aligned to another element
         else {
             // Flip position if the pane does not fit
-            const spaceLeft = alignRect.left;
+            const spaceLeft = window.innerWidth - alignRect.left;
             const spaceRight = window.innerWidth - alignRect.right;
             const spaceTop = alignRect.top;
             const spaceBottom = window.innerHeight - alignRect.bottom;
 
             let position = this.pane.dataset.widgetDropdownPosition || 'bottomleft';
 
-            if ((spaceLeft < targetWidth) && (position === 'left')) {
+            if ((spaceLeft < targetWidth) && (position.includes('left'))) {
                 const newPosition = (spaceRight < targetWidth) ? 'full' : 'right';
                 position = position.replace('left', newPosition);
             }
-            else if ((spaceRight < targetWidth)  && (position === 'right')) {
+            else if ((spaceRight < targetWidth)  && (position.includes('right'))) {
                 const newPosition = (spaceLeft < targetWidth) ? 'full' : 'left';
                 position = position.replace('right', newPosition);
             }
-            else if ((spaceLeft < targetWidth) && (position !== 'right')) {
+            else if ((spaceLeft < targetWidth) && (!position.includes('right'))) {
                 const newPosition = (spaceLeft < targetWidth) ? 'full' : 'left';
                 position = position.replace('right', newPosition);
             }
-            else if ((spaceRight < targetWidth) && (position !== 'left')) {
+            else if ((spaceRight < targetWidth) && (!position.includes('left'))) {
                 const newPosition = (spaceRight < targetWidth) ? 'full' : 'right';
                 position = position.replace('left', newPosition);
             }
@@ -188,19 +198,17 @@ class DropdownWidgetBase extends BaseWidget {
                 this.pane.style.top = (alignRect.bottom + 1) + 'px';
                 this.pane.style.width = Math.max(targetWidth, alignRect.width) + 'px';
             }
+        }
 
-            // Constrain the pane size
-            this.pane.style.maxHeight = maxHeight + 'px';
-            if (this.pane.offsetHeight > maxHeight) {
-                this.pane.style.height = maxHeight + 'px';
-            }
+        if (first) {
+            this.positionDropdown(false);
         }
     }
 }
 /**
- * Create a dropdown selector
+ * Create a dropdown button with a pane
  *
- * A dropdown selector consists of a toggle button and of
+ * A dropdown consists of a toggle button and of
  * a pane containing the content. The pane is hidden by default
  * and will be toggled by clicking the button.
  *
@@ -250,7 +258,7 @@ export class DropdownWidget extends DropdownWidgetBase {
 
         this.listenEvent(this.toggle,'click', event => this.toggleDropdown(event));
         this.listenEvent(document,'click', event => this.outsideDropdown(event));
-        this.listenEvent(window,'resize', event => this.positionDropdown(event));
+        this.listenEvent(window,'resize', event => this.positionDropdown());
     }
 
     /**
@@ -297,7 +305,7 @@ export class DropdownWidget extends DropdownWidgetBase {
     outsideDropdown(event) {
         if (this.widgetElement.contains(event.target)) {
             return true;
-        } else if (this.pane.contains(event.target)) { //  && event.target.matches('div.checkbox *, .selector-grouplabel *, input')
+        } else if (this.pane && this.pane.contains(event.target)) { //  && event.target.matches('div.checkbox *, .selector-grouplabel *, input')
             return true;
         } else {
             this.closeDropdown(event);
@@ -311,8 +319,12 @@ export class DropdownWidget extends DropdownWidgetBase {
      */
     closeDropdown(event) {
         this.widgetElement.classList.remove('active');
-        this.pane.classList.remove('active');
-        this.toggle.classList.remove('active');
+        if (this.pane) {
+            this.pane.classList.remove('active');
+        }
+        if (this.toggle) {
+            this.toggle.classList.remove('active');
+        }
     }
 
     /**
@@ -487,9 +499,9 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         this.listenEvent(document,'click', event => this.onDocumentClick(event));
 
         // Position dropdown
-        this.listenEvent(window,'resize', event => this.positionDropdown(event));
-        this.listenEvent(this.widgetElement,'epi:load:content', event => this.positionDropdown(event));
-        this.listenEvent(this.pane,'epi:load:content', event => this.positionDropdown(event));
+        this.listenEvent(window,'resize', event => this.positionDropdown());
+        this.listenEvent(this.widgetElement,'epi:load:content', event => this.positionDropdown());
+        this.listenEvent(this.pane,'epi:load:content', event => this.positionDropdown());
         //document.addEventListener('scroll', this.positionDropdown);
     }
 
@@ -613,7 +625,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
             this.inputTimeout = setTimeout(() => this.loadResults(term), 200);
         }
 
-        // Instant filering for non ajax panes
+        // Instant filtering for non ajax panes
         else {
             this.loadResults(term);
         }
@@ -785,7 +797,8 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
             const nodes = this.pane.querySelectorAll('[data-' + this.valueAttribute + ']');
             nodes.forEach(node => {
                 const checked = node.querySelector('input:checked');
-                const matches = (term === '') || (node.textContent.toLowerCase().indexOf(term) > -1);
+                const matchAgainst = node.dataset.searchText || node.textContent;
+                const matches = (term === '') || (matchAgainst.toLowerCase().indexOf(term.toLowerCase()) > -1);
                 node.classList.toggle('list-item-hide', !matches && !checked);
             });
 
@@ -793,7 +806,8 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
             // TODO: implement filter function WidgetTree() class
             const treeNodes = this.pane.querySelectorAll('.item-nochildren[data-' + this.valueAttribute + ']');
             treeNodes.forEach(node => {
-                const matches = (term === '') || (node.textContent.toLowerCase().indexOf(term) > -1);
+                const matchAgainst = node.dataset.searchText || node.textContent;
+                const matches = (term === '') || (matchAgainst.toLowerCase().indexOf(term.toLowerCase()) > -1);
                 node.classList.toggle('item-hidden', !matches);
             });
 
@@ -1009,6 +1023,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
     getValue() {
         return this.input_id ? this.input_id.value : undefined;
     }
+
 }
 
 /**

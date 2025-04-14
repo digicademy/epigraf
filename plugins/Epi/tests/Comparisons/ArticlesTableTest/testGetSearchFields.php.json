@@ -7,7 +7,8 @@
     "norm_data": "- Normdaten",
     "status": "Status",
     "text": "Text",
-    "text.comment": "- Comment",
-    "text.content": "- Content",
-    "text.translation": "- Translation"
+    "text.notes": "- Notes",
+    "text.translation": "- Translation",
+    "text.text": "- Text",
+    "text.transcription": "- Transcription"
 }

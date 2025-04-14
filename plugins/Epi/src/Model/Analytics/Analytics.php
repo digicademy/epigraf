@@ -688,15 +688,15 @@ class Analytics
                 continue;
             }
 
-            $sql = 'FROM footnotes LEFT JOIN ' . $linktab . ' ON ' . $linktab . '.deleted = 0 AND footnotes.from_id = ' . $linktab .
-                '.id AND ' . $linktab . '.' . $linkfeld . ' LIKE CONCAT("%",footnotes.from_tagid,"%") ' .
+            $sql = 'FROM footnotes LEFT JOIN ' . $linktab . ' AS source ON source.deleted = 0 AND footnotes.from_id = source.id AND ' .
+                'source.' . $linkfeld . ' LIKE CONCAT("%",footnotes.from_tagid,"%") ' .
                 'WHERE footnotes.deleted = 0 AND footnotes.from_tab = "' .
-                $linktab . '" AND footnotes.from_field = "' . $linkfeld . '" AND ' . $linktab . '.id IS NULL';
+                $linktab . '" AND footnotes.from_field = "' . $linkfeld . '" AND source.id IS NULL';
 
-            $clear = 'UPDATE footnotes LEFT JOIN ' . $linktab . ' ON ' . $linktab . '.deleted = 0 AND footnotes.from_id = ' . $linktab .
-                '.id AND ' . $linktab . '.' . $linkfeld . ' LIKE CONCAT("%",footnotes.from_tagid,"%") SET footnotes.deleted = 3 ' .
-                'WHERE footnotes.deleted = 0 AND footnotes.from_tab = "' .
-                $linktab . '" AND footnotes.from_field = "' . $linkfeld . '" AND ' . $linktab . '.id IS NULL';
+            $clear = 'UPDATE footnotes LEFT JOIN ' . $linktab . ' AS source ON source.deleted = 0 AND footnotes.from_id = source.id AND ' .
+                 'source.' . $linkfeld . ' LIKE CONCAT("%",footnotes.from_tagid,"%") SET footnotes.deleted = 3 ' .
+                'WHERE footnotes.deleted = 0 AND footnotes.from_tab = "' . $linktab .
+                '" AND footnotes.from_field = "' . $linkfeld . '" AND source.id IS NULL';
 
             $queries[] = [
                 'sql' => $sql,

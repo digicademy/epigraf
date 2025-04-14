@@ -35,6 +35,7 @@ class NotesFixture extends TestFixture
         'category' => ['type' => 'string', 'length' => 300, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
         'content' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
         'format' => ['type' => 'string', 'length' => 15, 'null' => false, 'default' => 'markdown', 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
+        'norm_iri' => ['type' => 'string', 'length' => 1500, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
         '_indexes' => [
             'published' => ['type' => 'index', 'columns' => ['published'], 'length' => []],
         ],
@@ -58,6 +59,7 @@ class NotesFixture extends TestFixture
             [
                 'id' => 2,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2017-10-30 11:34:43',
@@ -317,6 +319,7 @@ Gustav Willgeroth, Die Mecklenburgisch-Schwerinschen Pfarren seit dem dreißigj�
             [
                 'id' => 4,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2017-10-30 11:54:55',
@@ -495,6 +498,7 @@ Gustav Willgeroth (Hg.), [Die  mecklenburgischen Aerzte von den ältesten Zeiten
             [
                 'id' => 5,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2017-11-22 09:58:57',
@@ -572,6 +576,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 11,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-03-01 09:16:35',
@@ -591,6 +596,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 8,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-01-22 14:01:42',
@@ -606,6 +612,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 9,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-02-28 15:16:02',
@@ -642,6 +649,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 10,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-02-28 15:36:30',
@@ -670,6 +678,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 12,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-08-01 14:10:44',
@@ -682,6 +691,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 6,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2017-11-22 10:00:57',
@@ -704,6 +714,7 @@ Mobil: 0170/63 61 254
             [
                 'id' => 13,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-08-13 09:02:50',
@@ -748,6 +759,7 @@ Standort: Stadtarchiv Wismar - Ratsakten 14. Jh. - 1945 - 21. (XXIII) Geistliche
             [
                 'id' => 14,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-09-20 07:58:25',
@@ -909,6 +921,7 @@ Zur Mühle 3
             [
                 'id' => 15,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-10-18 12:36:05',
@@ -925,6 +938,7 @@ Zur Mühle 3
             [
                 'id' => 16,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-11-08 10:00:34',
@@ -1120,6 +1134,7 @@ Gruppe von 10 Objekten um Balthasar von Schöneich und Catharina Stralendorf   (
             [
                 'id' => 17,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-11-26 12:22:57',
@@ -1170,6 +1185,7 @@ __R__eusable
             [
                 'id' => 18,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-11-27 10:08:27',
@@ -1441,6 +1457,7 @@ Reguläre Ausrücke testen: [https://regex101.com/](https://regex101.com/)
             [
                 'id' => 19,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-12-18 14:29:58',
@@ -1453,6 +1470,7 @@ Reguläre Ausrücke testen: [https://regex101.com/](https://regex101.com/)
             [
                 'id' => 20,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2018-12-19 10:16:45',
@@ -1482,6 +1500,7 @@ April 2020
             [
                 'id' => 21,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2019-01-15 14:43:58',
@@ -1530,6 +1549,7 @@ Meisterzeichen Conrad Willers
             [
                 'id' => 22,
                 'version_id' => 0,
+                'norm_iri' => '',
                 'deleted' => 0,
                 'published' => null, 'menu'=>1,
                 'created' => '2019-01-15 15:14:17',

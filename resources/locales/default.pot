@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-09-17 16:59+0200\n"
+"POT-Creation-Date: 2025-03-02 14:15+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,223 +14,236 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ./src/Command/PermissionCommand.php:161
-msgid "The permission {0} has been granted to {1}."
-msgstr ""
-
-#: ./src/Command/PermissionCommand.php:164
-msgid "The permission {0} could not granted to {1}."
-msgstr ""
-
-#: ./src/Command/PermissionCommand.php:185
-#: ./src/Command/UserCommand.php:176
-msgid "The user does not exist."
-msgstr ""
-
-#: ./src/Command/PermissionCommand.php:188
-#: ./src/Command/UserCommand.php:179
-msgid "The user has been removed."
-msgstr ""
-
-#: ./src/Command/PermissionCommand.php:191
-#: ./src/Command/UserCommand.php:182
-msgid "The user could not be removed. Please, try again."
-msgstr ""
-
-#: ./src/Command/UserCommand.php:152
-msgid "The user {0} has been created."
-msgstr ""
-
-#: ./src/Command/UserCommand.php:155
-msgid "The user {0} could not be created. Maybe the user is already present in the database."
-msgstr ""
-
-#: ./src/Controller/AppController.php:432
-msgid "Documentation"
-msgstr ""
-
-#: ./src/Controller/AppController.php:475
-msgid "Manage databases"
-msgstr ""
-
-#: ./src/Controller/AppController.php:496
-msgid "Databases"
-msgstr ""
-
-#: ./src/Controller/AppController.php:507
-#: ./src/Model/Table/DatabanksTable.php:260
-msgid "Projects"
-msgstr ""
-
-#: ./src/Controller/AppController.php:518
-#: ./src/Model/Table/DatabanksTable.php:270
-msgid "Articles"
-msgstr ""
-
-#: ./src/Controller/AppController.php:529
-#: ./src/Model/Table/DatabanksTable.php:278
-#: ./src/Model/Table/DocsTable.php:224
-msgid "Categories"
-msgstr ""
-
-#: ./src/Controller/AppController.php:540
-#: ./src/Model/Table/DatabanksTable.php:286
-msgid "Files"
-msgstr ""
-
-#: ./src/Controller/AppController.php:551
-#: ./src/Model/Table/DatabanksTable.php:294
-msgid "Notes"
-msgstr ""
-
-#: ./src/Controller/AppController.php:562
-#: ./src/Model/Table/DatabanksTable.php:310
-msgid "Types"
-msgstr ""
-
-#: ./src/Controller/AppController.php:574
-#: ./src/Controller/AppController.php:608
-#: ./src/Model/Table/DatabanksTable.php:302
-msgid "Users"
-msgstr ""
-
-#: ./src/Controller/AppController.php:586
-msgid "Analytics"
-msgstr ""
-
-#: ./src/Controller/AppController.php:603
-msgid "Pipelines"
-msgstr ""
-
-#: ./src/Controller/AppController.php:613
-msgid "Repository"
-msgstr ""
-
-#: ./src/Controller/AppController.php:620
-msgid "Help"
-msgstr ""
-
-#: ./src/Controller/AppController.php:625
-msgid "Wiki"
-msgstr ""
-
-#: ./src/Controller/AppController.php:630
-msgid "Pages"
-msgstr ""
-
-#: ./src/Controller/AppController.php:1111
-msgid "You are not allowed to access the selected database."
-msgstr ""
-
-#: ./src/Controller/AppController.php:1310
-msgid "The job was created"
-msgstr ""
-
-#: ./src/Controller/AppController.php:1323
-#: ./src/Controller/JobsController.php:198
-msgid "The job could not be created. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:115
-msgid "The database has been saved."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:120
-msgid "The database could not be saved. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:142
-msgid "The database connection has been saved."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:147
-msgid "The database folders have been created."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:151
-msgid "The database folders could not be created. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:158
-msgid "The database has been created."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:161
-msgid "The database could not be created. Please, check your permissions."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:168
-#: ./src/Controller/DatabanksController.php:265
-msgid "The database has been initialized."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:171
-msgid "The database could not be initialized. Please, check your permissions."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:188
-msgid "The database connection could not be saved. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:211
-msgid "The database has been backed up."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:215
-msgid "The database could not be backed up. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:239
-msgid "The file has been imported."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:244
-msgid "The file could not be imported. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:269
-#: ./src/Controller/DatabanksController.php:306
-msgid "The database could not be initialized. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:302
-msgid "The database could not be created. Please, check your permissions and check the database name."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:309
-msgid "The database has been created and initialized."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:331
-msgid "The database has been dropped."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:335
-msgid "The database could not be dropped. Please, try again."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:354
-msgid "The database connection has been deleted."
-msgstr ""
-
-#: ./src/Controller/DatabanksController.php:356
-msgid "The database connection could not be deleted. Please, try again."
-msgstr ""
-
-#: ./src/Controller/JobsController.php:253
-msgid "The export job could not be created. Please, try again."
-msgstr ""
-
-#: ./src/Controller/JobsController.php:308
+#: ./src/Command/JobsCommand.php:168
+#: ./src/Controller/JobsController.php:285
 msgid "The job could not be saved. Please try again."
 msgstr ""
 
-#: ./src/Controller/JobsController.php:326
+#: ./src/Command/PermissionCommand.php:163
+msgid "The permission {0} has been granted to {1}."
+msgstr ""
+
+#: ./src/Command/PermissionCommand.php:166
+msgid "The permission {0} could not granted to {1}."
+msgstr ""
+
+#: ./src/Command/PermissionCommand.php:187
+#: ./src/Command/UserCommand.php:178
+msgid "The user does not exist."
+msgstr ""
+
+#: ./src/Command/PermissionCommand.php:190
+#: ./src/Command/UserCommand.php:181
+msgid "The user has been removed."
+msgstr ""
+
+#: ./src/Command/PermissionCommand.php:193
+#: ./src/Command/UserCommand.php:184
+msgid "The user could not be removed. Please, try again."
+msgstr ""
+
+#: ./src/Command/UserCommand.php:153
+msgid "The user {0} has been created."
+msgstr ""
+
+#: ./src/Command/UserCommand.php:156
+msgid "The user {0} could not be created. Maybe the user is already present in the database."
+msgstr ""
+
+#: ./src/Controller/AppController.php:489
+msgid "Documentation"
+msgstr ""
+
+#: ./src/Controller/AppController.php:531
+msgid "Manage databases"
+msgstr ""
+
+#: ./src/Controller/AppController.php:569
+msgid "Databases"
+msgstr ""
+
+#: ./src/Controller/AppController.php:577
+#: ./src/Model/Table/DatabanksTable.php:306
+msgid "Projects"
+msgstr ""
+
+#: ./src/Controller/AppController.php:588
+#: ./src/Model/Table/DatabanksTable.php:322
+msgid "Articles"
+msgstr ""
+
+#: ./src/Controller/AppController.php:599
+#: ./src/Model/Table/DatabanksTable.php:336
+#: ./src/Model/Table/DocsTable.php:223
+msgid "Categories"
+msgstr ""
+
+#: ./src/Controller/AppController.php:610
+#: ./src/Model/Table/DatabanksTable.php:350
+msgid "Files"
+msgstr ""
+
+#: ./src/Controller/AppController.php:621
+#: ./src/Model/Table/DatabanksTable.php:364
+msgid "Notes"
+msgstr ""
+
+#: ./src/Controller/AppController.php:632
+#: ./src/Model/Table/DatabanksTable.php:392
+msgid "Types"
+msgstr ""
+
+#: ./src/Controller/AppController.php:644
+#: ./src/Controller/AppController.php:678
+#: ./src/Model/Table/DatabanksTable.php:378
+msgid "Users"
+msgstr ""
+
+#: ./src/Controller/AppController.php:656
+msgid "Analytics"
+msgstr ""
+
+#: ./src/Controller/AppController.php:673
+msgid "Pipelines"
+msgstr ""
+
+#: ./src/Controller/AppController.php:683
+msgid "Repository"
+msgstr ""
+
+#: ./src/Controller/AppController.php:690
+msgid "Help"
+msgstr ""
+
+#: ./src/Controller/AppController.php:695
+msgid "Wiki"
+msgstr ""
+
+#: ./src/Controller/AppController.php:700
+msgid "Pages"
+msgstr ""
+
+#: ./src/Controller/AppController.php:1241
+msgid "You are not allowed to access the selected database."
+msgstr ""
+
+#: ./src/Controller/AppController.php:1408
+msgid "The job was created"
+msgstr ""
+
+#: ./src/Controller/AppController.php:1421
+#: ./src/Controller/JobsController.php:164
+msgid "The job could not be created. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:116
+msgid "The database has been saved."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:121
+msgid "The database could not be saved. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:135
+msgid "Examples"
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:145
+msgid "The database name is invalid."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:150
+msgid "The database connection has been saved."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:155
+msgid "The database folders have been created."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:159
+msgid "The database folders could not be created. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:166
+msgid "The database has been created."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:169
+msgid "The database could not be created. Please, check your permissions."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:176
+#: ./src/Controller/DatabanksController.php:275
+msgid "The database has been initialized."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:179
+msgid "The database could not be initialized. Please, check your permissions."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:196
+msgid "The database connection could not be saved. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:221
+msgid "The database has been backed up."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:225
+msgid "The database could not be backed up. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:249
+msgid "The file has been imported."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:254
+msgid "The file could not be imported. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:279
+#: ./src/Controller/DatabanksController.php:316
+msgid "The database could not be initialized. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:312
+msgid "The database could not be created. Please, check your permissions and check the database name."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:319
+msgid "The database has been created and initialized."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:341
+msgid "The database has been dropped."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:345
+msgid "The database could not be dropped. Please, try again."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:364
+msgid "The database connection has been deleted."
+msgstr ""
+
+#: ./src/Controller/DatabanksController.php:367
+msgid "The database connection could not be deleted. Please, try again."
+msgstr ""
+
+#: ./src/Controller/JobsController.php:223
+msgid "The export job could not be created. Please, try again."
+msgstr ""
+
+#: ./src/Controller/JobsController.php:288
+msgid "The job worker failed."
+msgstr ""
+
+#: ./src/Controller/JobsController.php:307
 msgid "The job has been finished."
 msgstr ""
 
 #: ./src/Controller/PermissionsController.php:60
-#: ./src/Model/Entity/Databank.php:848
+#: ./src/Model/Entity/Databank.php:1046
 msgid "Permissions"
 msgstr ""
 
@@ -248,622 +261,746 @@ msgstr ""
 msgid "The pipeline has been deleted."
 msgstr ""
 
-#: ./src/Controller/PipelinesController.php:169
+#: ./src/Controller/PipelinesController.php:170
 msgid "The pipeline could not be deleted. Please, try again."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:71
+#: ./src/Controller/SettingsController.php:101
+msgid "System settings"
+msgstr ""
+
+#: ./src/Controller/SettingsController.php:126
+msgid "You are not allowed to access this page."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:77
 msgid "Invalid username or password, try again"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:226
-msgid "{0} active user(s)."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:307
-msgid "The password has been changed."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:311
-msgid "The password could not be changed."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:338
-msgid "Your new access token is {0}"
-msgstr ""
-
-#: ./src/Controller/UsersController.php:341
-#: ./src/Controller/UsersController.php:458
-#: ./src/Controller/UsersController.php:494
-msgid "The user could not be saved. Please, try again."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:345
-#: ./src/Controller/UsersController.php:393
-#: ./src/Controller/UsersController.php:431
-msgid "This operation needs a post request."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:374
-msgid "No database selected."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:380
-msgid "Access has been granted."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:383
-msgid "Access could not be granted."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:414
-#: ./src/Controller/UsersController.php:422
-msgid "Access has been revoked."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:417
-#: ./src/Controller/UsersController.php:425
-msgid "Access could not be revoked."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:455
-#: ./src/Controller/UsersController.php:491
-msgid "The user has been saved."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:515
-msgid "The user has been deleted."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:518
-msgid "The user could not be deleted. Please, try again."
-msgstr ""
-
-#: ./src/Controller/UsersController.php:535
+#: ./src/Controller/UsersController.php:188
 msgid "The user settings have been cleared."
 msgstr ""
 
-#: ./src/Model/Behavior/VersionBehavior.php:124
-msgid "Versioning failed"
+#: ./src/Controller/UsersController.php:260
+msgid "{0} active user(s)."
 msgstr ""
 
-#: ./src/Model/Behavior/VersionedTreeBehavior.php:284
-msgid "Could not move record: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:521
-#: ./src/Model/Entity/BaseEntity.php:567
-#: ./src/Model/Entity/BaseEntity.php:579
-#: ./src/Model/Entity/BaseEntity.php:709
-msgid "Error parsing JSON: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:553
-msgid "Error parsing XML: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:612
-#: ./src/Model/Entity/BaseEntity.php:630
-msgid "Article"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:676
-#: ./src/Model/Entity/BaseEntity.php:719
-msgid "Error encoding JSON: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:701
-msgid "Error injecting IDs: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:808
-msgid "Error parsing original JSON value: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:827
-msgid "Error encoding new JSON value: {0}"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:1014
-msgid "Drafted"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:1015
-msgid "In progress"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:1016
-msgid "Complete"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:1017
-#: ./src/Model/Entity/Databank.php:820
-#: ./src/Model/Entity/Doc.php:220
-#: ./src/Model/Table/DatabanksTable.php:338
-msgid "Published"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:1018
-msgid "Searchable"
-msgstr ""
-
-#: ./src/Model/Entity/BaseEntity.php:1035
-msgid "None"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:257
-msgid "The database is not available."
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:261
-msgid "The database is empty."
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:265
-msgid "The version of the database is not supported."
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:269
-msgid "The database is ready to use."
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:805
-#: ./src/Model/Entity/Doc.php:177
-#: ./src/Model/Entity/Pipeline.php:113
-#: ./src/Model/Entity/Tasks/TaskSort.php:37
-#: ./src/Model/Entity/User.php:304
-#: ./src/Model/Table/DatabanksTable.php:250
-#: ./src/Model/Table/DocsTable.php:276
-#: ./src/Model/Table/PipelinesTable.php:118
-msgid "Name"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:812
-#: ./src/Model/Entity/Pipeline.php:118
-#: ./src/Model/Table/DatabanksTable.php:360
-#: ./src/Model/Table/PipelinesTable.php:125
-msgid "Description"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:816
-#: ./src/Model/Table/DatabanksTable.php:318
-msgid "Version"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:827
-msgid "IRI Prefix"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:831
-#: ./src/Model/Table/JobsTable.php:144
-msgid "Status"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:837
-msgid "Associated Users"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:843
-msgid "Granted SQL-users"
-msgstr ""
-
-#: ./src/Model/Entity/Databank.php:854
-msgid "Backup files"
-msgstr ""
-
-#: ./src/Model/Entity/Doc.php:188
-#: ./src/Model/Table/DocsTable.php:406
-msgid "Content"
-msgstr ""
-
-#: ./src/Model/Entity/Doc.php:197
-#: ./src/Model/Entity/Tasks/TaskAssignCollection.php:38
-#: ./src/Model/Table/DocsTable.php:282
-msgid "Category"
-msgstr ""
-
-#: ./src/Model/Entity/Doc.php:201
-msgid "Add to menu"
-msgstr ""
-
-#: ./src/Model/Entity/Doc.php:210
-msgid "Pretty URL (iri)"
-msgstr ""
-
-#: ./src/Model/Entity/Doc.php:215
-#: ./src/Model/Entity/Tasks/TaskSort.php:35
-msgid "Sort key"
-msgstr ""
-
-#: ./src/Model/Entity/Job.php:665
-msgid "No database selected"
-msgstr ""
-
-#: ./src/Model/Entity/Job.php:921
-msgid "Error executing task of type {type}: {error}"
-msgstr ""
-
-#: ./src/Model/Entity/Job.php:1120
-msgid "Selected records ({0})"
-msgstr ""
-
-#: ./src/Model/Entity/Job.php:1126
-msgid "All records ({0})"
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobImport.php:139
-msgid "Error loading data from source \"{source}\": {error}."
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobImport.php:308
-msgid "Could not copy file {0}."
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobImport.php:324
-msgid "{0} unsolved references."
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobTransfer.php:51
-msgid "Recover trees"
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobTransfer.php:52
-msgid "Init versioning"
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobTransfer.php:53
-msgid "Transfer comments"
-msgstr ""
-
-#: ./src/Model/Entity/Jobs/JobTransfer.php:54
-msgid "Copy files"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:72
-#: ./src/Model/Table/PermissionsTable.php:735
-#: ./src/Model/Table/PermissionsTable.php:745
-msgid "User"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:80
-#: ./src/Model/Entity/User.php:299
-#: ./src/Model/Table/PermissionsTable.php:756
-#: ./src/Model/Table/UsersTable.php:436
-msgid "Role"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:89
-msgid "Requested by"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:97
-#: ./src/Model/Table/PermissionsTable.php:799
-msgid "Permission Type"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:105
-#: ./src/Model/Table/PermissionsTable.php:807
-msgid "Endpoint name"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:111
-#: ./src/Model/Table/PermissionsTable.php:776
-msgid "Entity Type"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:119
-msgid "Entity Name"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:123
-#: ./src/Model/Table/PermissionsTable.php:793
-msgid "Entity ID"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:128
-#: ./src/Model/Table/DocsTable.php:304
-#: ./src/Model/Table/JobsTable.php:172
-#: ./src/Model/Table/PermissionsTable.php:826
-#: ./src/Model/Table/UsersTable.php:526
-msgid "Created on"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:133
-#: ./src/Model/Table/DocsTable.php:299
-#: ./src/Model/Table/JobsTable.php:166
-#: ./src/Model/Table/PermissionsTable.php:820
-#: ./src/Model/Table/UsersTable.php:520
-msgid "Last modified"
-msgstr ""
-
-#: ./src/Model/Entity/Permission.php:139
-#: ./src/Model/Table/PermissionsTable.php:814
-msgid "Expires"
-msgstr ""
-
-#: ./src/Model/Entity/Pipeline.php:121
-#: ./src/Model/Table/DocsTable.php:287
-msgid "IRI-Fragment"
-msgstr ""
-
-#: ./src/Model/Entity/Pipeline.php:144
-msgid "Tasks"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/BaseTaskMutate.php:105
-msgid "Error mutating entitites: {error}."
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskAssignCollection.php:51
-msgid "Property"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskAssignProject.php:35
-msgid "Project"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskCopyFiles.php:46
-msgid "Empty source path"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskSort.php:36
-msgid "Lemma"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskSort.php:39
-msgid "Sort number"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskSort.php:40
-msgid "Tree order"
-msgstr ""
-
-#: ./src/Model/Entity/Tasks/TaskSort.php:45
-msgid "Sort field"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:250
-msgid "The IRI is missing."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:254
-msgid "No default database selected"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:263
-msgid "No access to default database. Did you forget to grant access?"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:294
-msgid "Username"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:295
-msgid "The username should contain the real name of the person. Only alphanumeric characters are allowed. Maximum length is 50 characters."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:305
-msgid "First and last name."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:309
-msgid "Acronym"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:310
-msgid "First letters of the name."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:314
-msgid "Email address"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:315
-msgid "Please provide an email address to contact the user."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:319
-#: ./src/Model/Table/UsersTable.php:446
-msgid "Contact"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:320
-msgid "Please provide additional information about how to contact the user, for example the affiliation."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:324
-msgid "Password"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:328
-msgid "Please enter a strong password and remember it well. The password can't be restored. If you loose it, you have to enter a new password."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:336
-msgid "The access token is used for API access and for access from EpiDesktop. Leave empty to automatically create an access token."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:342
-msgid "Default Database"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:344
-msgid "Select the database that should open after you login."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:350
-msgid "Default Article Pipeline"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:352
-msgid "Only Epigraf-Desktop users: Select the pipeline that exports single articles."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:358
-msgid "Default Book Pipeline"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:360
-msgid "Only Epigraf-Desktop users: Select the pipeline that exports a complete book."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:366
-msgid "Language"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:368
-msgid "The language in which Epigraf talks to you."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:372
-msgid "Default"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:373
-msgid "Theme"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:375
-msgid "The user interface appearance."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:379
-#: ./src/Model/Table/PipelinesTable.php:132
-msgid "IRI fragment"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:381
-msgid " Usually the IRI equals the username. The IRI is used to match users in the main database to users in the project databases."
-msgstr ""
-
-#: ./src/Model/Entity/User.php:385
-msgid "IRI path"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:391
-#: ./src/Model/Table/DatabanksTable.php:347
-#: ./src/Model/Table/PipelinesTable.php:139
-msgid "Created"
-msgstr ""
-
-#: ./src/Model/Entity/User.php:396
-#: ./src/Model/Table/DatabanksTable.php:353
-#: ./src/Model/Table/PipelinesTable.php:146
-msgid "Modified"
-msgstr ""
-
-#: ./src/Model/Table/DatabanksTable.php:324
-msgid "Available"
-msgstr ""
-
-#: ./src/Model/Table/DatabanksTable.php:331
-msgid "Valid"
-msgstr ""
-
-#: ./src/Model/Table/DatabanksTable.php:367
-#: ./src/Model/Table/JobsTable.php:136
-#: ./src/Model/Table/PipelinesTable.php:111
-msgid "ID"
-msgstr ""
-
-#: ./src/Model/Table/DocsTable.php:208
-msgid "Without category"
-msgstr ""
-
-#: ./src/Model/Table/DocsTable.php:232
-msgid "List all"
-msgstr ""
-
-#: ./src/Model/Table/DocsTable.php:293
-msgid "Order"
-msgstr ""
-
-#: ./src/Model/Table/JobsTable.php:140
-msgid "Type"
-msgstr ""
-
-#: ./src/Model/Table/JobsTable.php:148
-msgid "Progress"
-msgstr ""
-
-#: ./src/Model/Table/JobsTable.php:152
-msgid "Max progress"
-msgstr ""
-
-#: ./src/Model/Table/JobsTable.php:156
-msgid "Pipeline"
-msgstr ""
-
-#: ./src/Model/Table/JobsTable.php:161
-#: ./src/Model/Table/UsersTable.php:460
+#: ./src/Controller/UsersController.php:316
+#: ./src/Model/Table/JobsTable.php:290
+#: ./src/Model/Table/UsersTable.php:472
 msgid "Database"
 msgstr ""
 
+#: ./src/Controller/UsersController.php:336
+msgid "Select the default user database first."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:347
+msgid "The password has been changed."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:351
+msgid "The password could not be changed."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:378
+msgid "Your new access token is {0}"
+msgstr ""
+
+#: ./src/Controller/UsersController.php:381
+#: ./src/Controller/UsersController.php:549
+#: ./src/Controller/UsersController.php:585
+msgid "The user could not be saved. Please, try again."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:385
+msgid "This operation needs a post request."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:410
+#: ./src/Controller/UsersController.php:485
+msgid "Wildcard grants are not yet supported."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:424
+msgid "No database selected."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:444
+msgid "Access has been granted."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:447
+msgid "Access could not be granted."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:518
+msgid "Access has been revoked."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:521
+msgid "Access could not be revoked."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:546
+#: ./src/Controller/UsersController.php:582
+msgid "The user has been saved."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:606
+msgid "The user has been deleted."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:609
+msgid "The user could not be deleted. Please, try again."
+msgstr ""
+
+#: ./src/Datasource/Services/LlmService.php:88
+#: ./src/Datasource/Services/LlmService.php:204
+msgid "Database name is missing."
+msgstr ""
+
+#: ./src/Datasource/Services/LlmService.php:105
+msgid "Table does not support data export."
+msgstr ""
+
+#: ./src/Datasource/Services/LlmService.php:132
+msgid "Annotation type is missing."
+msgstr ""
+
+#: ./src/Datasource/Services/LlmService.php:183
+msgid "Codebook is empty (category=norm_iri, description=lemma+comment and example=content are required)."
+msgstr ""
+
+#: ./src/Datasource/Services/LlmService.php:220
+msgid "Record not found"
+msgstr ""
+
+#: ./src/Model/Behavior/VersionBehavior.php:138
+msgid "Versioning failed"
+msgstr ""
+
+#: ./src/Model/Behavior/VersionedTreeBehavior.php:308
+msgid "Could not move record: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:590
+#: ./src/Model/Entity/BaseEntity.php:690
+#: ./src/Model/Entity/BaseEntity.php:702
+#: ./src/Model/Entity/BaseEntity.php:864
+msgid "Error parsing JSON: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:676
+msgid "Error parsing XML: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:775
+msgid "Article"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:830
+#: ./src/Model/Entity/BaseEntity.php:874
+msgid "Error encoding JSON: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:856
+msgid "Error injecting IDs: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:920
+msgid "Error parsing original JSON value: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:938
+msgid "Error encoding new JSON value: {0}"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:1127
+msgid "Drafted"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:1128
+msgid "In progress"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:1129
+msgid "Complete"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:1130
+#: ./src/Model/Entity/Doc.php:234
+#: ./src/Model/Table/DatabanksTable.php:426
+msgid "Published"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:1131
+msgid "Searchable"
+msgstr ""
+
+#: ./src/Model/Entity/BaseEntity.php:1148
+msgid "None"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:335
+msgid "The database is not available."
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:339
+msgid "The database is empty."
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:343
+msgid "The version of the database is not supported."
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:347
+msgid "The database is ready to use."
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:996
+#: ./src/Model/Entity/Databank.php:1003
+#: ./src/Model/Entity/Doc.php:191
+#: ./src/Model/Entity/Pipeline.php:187
+#: ./src/Model/Entity/Tasks/TaskBatchSort.php:37
+#: ./src/Model/Entity/User.php:334
+#: ./src/Model/Table/DatabanksTable.php:291
+#: ./src/Model/Table/DocsTable.php:275
+#: ./src/Model/Table/PipelinesTable.php:114
+msgid "Name"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1007
+#: ./src/Model/Entity/Doc.php:211
+#: ./src/Model/Entity/Tasks/TaskAssignProperty.php:45
+#: ./src/Model/Table/DatabanksTable.php:300
+#: ./src/Model/Table/DocsTable.php:281
+msgid "Category"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1010
+#: ./src/Model/Entity/Pipeline.php:198
+#: ./src/Model/Table/DatabanksTable.php:448
+#: ./src/Model/Table/PipelinesTable.php:121
+msgid "Description"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1014
+#: ./src/Model/Table/DatabanksTable.php:406
+msgid "Version"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1018
+#: ./src/Model/Entity/Job.php:1334
+#: ./src/Model/Table/JobsTable.php:277
+msgid "Progress"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1025
+msgid "IRI Prefix"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1029
+#: ./src/Model/Entity/Job.php:1331
+#: ./src/Model/Table/JobsTable.php:268
+msgid "Status"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1035
+msgid "Associated Users"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1041
+msgid "Granted SQL-users"
+msgstr ""
+
+#: ./src/Model/Entity/Databank.php:1052
+msgid "Backup files"
+msgstr ""
+
+#: ./src/Model/Entity/Doc.php:202
+#: ./src/Model/Table/DocsTable.php:405
+msgid "Content"
+msgstr ""
+
+#: ./src/Model/Entity/Doc.php:215
+msgid "Add to menu"
+msgstr ""
+
+#: ./src/Model/Entity/Doc.php:224
+msgid "Pretty URL (iri)"
+msgstr ""
+
+#: ./src/Model/Entity/Doc.php:229
+#: ./src/Model/Entity/Tasks/TaskBatchSort.php:35
+msgid "Sort key"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:782
+msgid "No database selected"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:877
+msgid "The file {0} is not available for download."
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1056
+msgid "Error executing task of type {type}: {error}"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1264
+msgid "Selected records ({0})"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1270
+msgid "All records ({0})"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1330
+msgid "Job type"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1332
+msgid "Delayed"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1333
+msgid "Queue status"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1336
+#: ./src/Model/Entity/User.php:421
+#: ./src/Model/Table/DatabanksTable.php:435
+#: ./src/Model/Table/PipelinesTable.php:135
+msgid "Created"
+msgstr ""
+
+#: ./src/Model/Entity/Job.php:1341
+#: ./src/Model/Entity/User.php:426
+#: ./src/Model/Table/DatabanksTable.php:441
+#: ./src/Model/Table/PipelinesTable.php:142
+msgid "Modified"
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobImport.php:123
+msgid "Error loading data from source \"{source}\": {error}."
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobImport.php:294
+msgid "Could not copy file {0}."
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobImport.php:310
+msgid "{0} unsolved references."
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobTransfer.php:38
+msgid "Init versioning"
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobTransfer.php:39
+msgid "Recover trees"
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobTransfer.php:42
+msgid "Copy files"
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobTransfer.php:44
+msgid "Snippets"
+msgstr ""
+
+#: ./src/Model/Entity/Jobs/JobTransfer.php:56
+msgid "Publication states"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:82
 #: ./src/Model/Table/PermissionsTable.php:766
+#: ./src/Model/Table/PermissionsTable.php:776
+msgid "User"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:90
+#: ./src/Model/Entity/User.php:329
+#: ./src/Model/Table/PermissionsTable.php:787
+#: ./src/Model/Table/UsersTable.php:448
+msgid "Role"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:99
+msgid "Requested by"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:107
+#: ./src/Model/Table/PermissionsTable.php:830
+msgid "Permission Type"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:115
+#: ./src/Model/Table/PermissionsTable.php:838
+msgid "Endpoint name"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:121
+#: ./src/Model/Table/PermissionsTable.php:807
+msgid "Entity Type"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:129
+msgid "Entity Name"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:133
+#: ./src/Model/Table/PermissionsTable.php:824
+msgid "Entity ID"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:138
+#: ./src/Model/Table/DocsTable.php:303
+#: ./src/Model/Table/JobsTable.php:309
+#: ./src/Model/Table/PermissionsTable.php:857
+#: ./src/Model/Table/UsersTable.php:538
+msgid "Created on"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:143
+#: ./src/Model/Table/DocsTable.php:298
+#: ./src/Model/Table/JobsTable.php:303
+#: ./src/Model/Table/PermissionsTable.php:851
+#: ./src/Model/Table/UsersTable.php:532
+msgid "Last modified"
+msgstr ""
+
+#: ./src/Model/Entity/Permission.php:149
+#: ./src/Model/Table/PermissionsTable.php:845
+msgid "Expires"
+msgstr ""
+
+#: ./src/Model/Entity/Pipeline.php:191
+#: ./src/Model/Table/JobsTable.php:259
+msgid "Type"
+msgstr ""
+
+#: ./src/Model/Entity/Pipeline.php:193
+msgid "Export"
+msgstr ""
+
+#: ./src/Model/Entity/Pipeline.php:193
+msgid "Import"
+msgstr ""
+
+#: ./src/Model/Entity/Pipeline.php:201
+#: ./src/Model/Table/DocsTable.php:286
+msgid "IRI-Fragment"
+msgstr ""
+
+#: ./src/Model/Entity/Pipeline.php:229
+msgid "Tasks"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/BaseTaskMutate.php:115
+msgid "Error mutating entitites: {error}."
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignNumber.php:36
+msgid "Literature"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignProject.php:33
+msgid "Project"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignProperty.php:56
+msgid "Property"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignProperty.php:97
+msgid "Collection"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:32
+msgid "Prompt template"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:34
+msgid "Leave empty for default prompts. Alternatively provide the name of a prompt template that is supported by the server."
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:40
+msgid "System prompt"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:42
+msgid "Leave empty to use the selected prompt template. Alternatively, insert the system prompt."
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:48
+msgid "Summary name"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:50
+msgid "To generate multiple summaries per article, provide a short name for each summary."
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskAssignSummary.php:68
+msgid "Summary"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskBatchSort.php:36
+msgid "Lemma"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskBatchSort.php:39
+msgid "Sort number"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskBatchSort.php:40
+msgid "Tree order"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskBatchSort.php:50
+msgid "Sort field"
+msgstr ""
+
+#: ./src/Model/Entity/Tasks/TaskCopyFiles.php:47
+msgid "Empty source path"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:260
+msgid "Revoke"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:279
+msgid "The IRI is missing."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:283
+msgid "No default database selected"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:293
+msgid "No access to default database. Did you forget to grant access?"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:324
+msgid "Username"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:325
+msgid "The username should contain the real name of the person. Only alphanumeric characters are allowed. Maximum length is 50 characters."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:335
+msgid "First and last name."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:339
+msgid "Acronym"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:340
+msgid "First letters of the name."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:344
+msgid "Email address"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:345
+msgid "Please provide an email address to contact the user."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:349
+#: ./src/Model/Table/UsersTable.php:458
+msgid "Contact"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:350
+msgid "Please provide additional information about how to contact the user, for example the affiliation."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:354
+msgid "Password"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:358
+msgid "Please enter a strong password and remember it well. The password can't be restored. If you loose it, you have to enter a new password."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:366
+msgid "The access token is used for API access and for access from EpiDesktop. Leave empty to automatically create an access token."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:372
+msgid "Default Database"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:374
+msgid "Select the database that should open after you login."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:380
+msgid "Default Article Pipeline"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:382
+msgid "Only Epigraf-Desktop users: Select the pipeline that exports single articles."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:388
+msgid "Default Book Pipeline"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:390
+msgid "Only Epigraf-Desktop users: Select the pipeline that exports a complete book."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:396
+msgid "Language"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:398
+msgid "The language in which Epigraf talks to you."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:402
+msgid "Default"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:403
+msgid "Theme"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:405
+msgid "The user interface appearance."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:409
+#: ./src/Model/Table/PipelinesTable.php:128
+msgid "IRI fragment"
+msgstr ""
+
+#: ./src/Model/Entity/User.php:411
+msgid " Usually the IRI equals the username. The IRI is used to match users in the main database to users in the project databases."
+msgstr ""
+
+#: ./src/Model/Entity/User.php:415
+msgid "IRI path"
+msgstr ""
+
+#: ./src/Model/Table/DatabanksTable.php:412
+msgid "Available"
+msgstr ""
+
+#: ./src/Model/Table/DatabanksTable.php:419
+msgid "Valid"
+msgstr ""
+
+#: ./src/Model/Table/DatabanksTable.php:455
+#: ./src/Model/Table/JobsTable.php:255
+#: ./src/Model/Table/PipelinesTable.php:107
+msgid "ID"
+msgstr ""
+
+#: ./src/Model/Table/DocsTable.php:207
+msgid "Without category"
+msgstr ""
+
+#: ./src/Model/Table/DocsTable.php:231
+msgid "List all"
+msgstr ""
+
+#: ./src/Model/Table/DocsTable.php:292
+msgid "Order"
+msgstr ""
+
+#: ./src/Model/Table/JobsTable.php:281
+msgid "Delay"
+msgstr ""
+
+#: ./src/Model/Table/JobsTable.php:285
+msgid "Pipeline"
+msgstr ""
+
+#: ./src/Model/Table/JobsTable.php:296
+msgid "Creator"
+msgstr ""
+
+#: ./src/Model/Table/PermissionsTable.php:797
 msgid "Request"
 msgstr ""
 
-#: ./src/Model/Table/PermissionsTable.php:786
+#: ./src/Model/Table/PermissionsTable.php:817
 msgid "Entity name"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:429
+#: ./src/Model/Table/UsersTable.php:441
 msgid "User name"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:453
+#: ./src/Model/Table/UsersTable.php:465
 msgid "Email"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:470
+#: ./src/Model/Table/UsersTable.php:482
 msgid "Article pipeline"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:481
+#: ./src/Model/Table/UsersTable.php:493
 msgid "Book pipeline"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:492
+#: ./src/Model/Table/UsersTable.php:504
 msgid "Active"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:502
+#: ./src/Model/Table/UsersTable.php:514
 msgid "Last action"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:508
+#: ./src/Model/Table/UsersTable.php:520
 msgid "SQL connections"
 msgstr ""
 
-#: ./src/Model/Table/UsersTable.php:513
+#: ./src/Model/Table/UsersTable.php:525
 msgid "IRI"
 msgstr ""
 
-#: ./src/Utilities/Files/Files.php:148
+#: ./src/Utilities/Files/Files.php:221
 msgid "The folder already exists, please choose another name."
 msgstr ""
 
-#: ./src/Utilities/Files/Files.php:173
+#: ./src/Utilities/Files/Files.php:249
 msgid "The file already exists, please choose another filename."
 msgstr ""
 
-#: ./src/View/AppView.php:341
-#: ./src/View/AppView.php:342
+#: ./src/View/AppView.php:361
+#: ./src/View/AppView.php:362
 msgid "Remove tabsheet"
 msgstr ""
 
-#: ./src/View/AppView.php:373
-#: ./src/View/AppView.php:374
+#: ./src/View/AppView.php:393
+#: ./src/View/AppView.php:394
 msgid "Add filter"
 msgstr ""
 
-#: ./src/View/AppView.php:382
-#: ./src/View/AppView.php:383
+#: ./src/View/AppView.php:402
+#: ./src/View/AppView.php:403
+#: ./src/View/AppView.php:532
 msgid "Close"
 msgstr ""
 
-#: ./src/View/AppView.php:390
-#: ./src/View/AppView.php:391
+#: ./src/View/AppView.php:410
+#: ./src/View/AppView.php:411
 msgid "Apply filter"
+msgstr ""
+
+#: ./src/View/AppView.php:492
+msgid "Move"
+msgstr ""
+
+#: ./src/View/AppView.php:505
+#: ./src/View/AppView.php:506
+msgid "Remove selected section"
 msgstr ""
 

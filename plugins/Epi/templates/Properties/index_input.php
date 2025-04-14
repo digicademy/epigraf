@@ -22,6 +22,7 @@
     $type = $database->types['properties'][$scope] ?? null;
     $seek = $this->getConfig('options')['params']['seek'] ?? null;
     $append = $this->getConfig('options')['params']['append'] ?? null;
+    $empty = $this->getConfig('options')['params']['empty'] ?? null;
     $find  = $this->getConfig('options')['params']['find'] ?? '';
 ?>
 
@@ -53,7 +54,14 @@
                 'controller' => 'Properties',
                 'action' => 'index',
                 $scope,
-                '?' => ['template' => 'choose', 'show'=>'content', 'references' => false, 'append' => $append, 'find' => $find]
+                '?' => [
+                    'template' => 'choose',
+                    'show'=>'content',
+                    'references' => false,
+                    'append' => $append,
+                    'empty' => $empty ?? 0,
+                    'find' => $find
+                ]
             ],
             //'text' => $selected ? $selected->path : '',
             'value' => $selectedNode ? $selectedNode->id : null,

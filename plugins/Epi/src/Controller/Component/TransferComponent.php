@@ -31,13 +31,11 @@ use Epi\Model\Table\BaseTable;
 /**
  * Transfer component
  *
- * Import data.
- * Transfer data between databases.
- * - See TransferCompontent->transfer() method.
+ * Import data, transfer data between databases, and manipulate data in batches.
+ *
+ * - See TransferComponent->transfer() method.
  * - See JobTransfer which derivates from JobImport.
  * - See Transfer/transfer.php for the settings.
- *
- * Batch manipulate data.
  *
  * TODO: rename to JobComponent
  *
@@ -160,15 +158,18 @@ class TransferComponent extends Component
     /**
      * Import method
      *
-     * @param string $tablename @deprecated use $this->model->getTable()
      * @param string $scope The table scope
      *
      * @return \Cake\Http\Response|null|void
-     *
      * @throws BadRequestException if record not found
      */
-    public function import($tablename = 'articles', $scope = null)
+    public function import($scope = null)
     {
+        if (empty($this->model)) {
+            throw new BadRequestException(__('Model not configured'));
+        }
+        $tableName = $this->model->getTable();
+
         $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
 
         // Create import folder
@@ -230,11 +231,15 @@ class TransferComponent extends Component
         $job = false;
         if (!empty($source) && file_exists($filePath)) {
 
+            // Delayed jobs will be processed by a worker
+            $delayedJob = !empty(Configure::read('Jobs.delay', false));
+
             $jobdata = [
                 'typ' => 'import',
+                'delay' => $delayedJob ? 1 : 0,
                 'config' => [
                     'database' => $this->controller->activeDatabase['caption'],
-                    'table' => $tablename,
+                    'table' => $tableName,
                     'scope' => $scope,
                     'source' => $filePath,
                     'redirect' => Router::url(
@@ -298,15 +303,19 @@ class TransferComponent extends Component
     /**
      * Transfer records from source to target database
      **
-     * @param string $tablename @deprecated use $this->model->getTable()
      * @param string $scope The table scope
      * @param array $params Filter parameters
      *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
      */
-    public function transfer($tablename = 'articles', $scope = null, $params = [])
+    public function transfer($scope = null, $params = [])
     {
+        if (empty($this->model)) {
+            throw new BadRequestException(__('Model not configured'));
+        }
+        $tableName = $this->model->getTable();
+
         // Detect stage
         $current = Databank::removePrefix(BaseTable::getDatabaseName());
         $source = $this->request->getQuery('source', $current);
@@ -358,7 +367,7 @@ class TransferComponent extends Component
         $jobConfig = [
             'database' => $target,
             'source' => $source,
-            'table' => $tablename,
+            'table' => $tableName,
             'scope' => $scope,
 
             'params' =>
@@ -395,13 +404,20 @@ class TransferComponent extends Component
 
 
         $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
-        $jobdata = ['typ' => 'transfer', 'config' => $jobConfig];
+        // Delayed jobs will be processed by a worker
+        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+
+        $jobdata = [
+            'typ' => 'transfer',
+            'delay' => $delayedJob ? 1 : 0,
+            'config' => $jobConfig
+        ];
         $job = $this->Jobs->newEntity($jobdata)->typedJob;
 
         // Preview
         if ($stage === 'preview') {
             $page = $this->request->getQuery('page', 1);
-            $preview = $job->preview(['page' => $page]);
+            $preview = $job->preview(['page' => $page] + $jobConfig);
             $errors = $job->taskErrors;
 
             if (!empty($errors)) {
@@ -449,14 +465,18 @@ class TransferComponent extends Component
     /**
      * Manipulate records identified by query parameters
      *
-     * @param string $tablename @deprecated use $this->model->getTable()
      * @param string $scope The table scope
      *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
      */
-    public function mutate($tablename = 'articles', $scope = null)
+    public function mutate($scope = null)
     {
+        if (empty($this->model)) {
+            throw new BadRequestException(__('Model not configured'));
+        }
+        $tableName = $this->model->getTable();
+
         // Prepare job
         $database = BaseTable::getDatabaseName();
         $params = $this->request->getQueryParams();
@@ -465,14 +485,21 @@ class TransferComponent extends Component
             $params['scope'] = $scope;
         }
 
+        $allowedTasks = $this->model->mutateGetTasks();
+        $task = $params['task'] ?? '';
+
+        // Delayed jobs will be processed by a worker
+        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+
         $jobdata = [
             'typ' => 'mutate',
+            'delay' =>  $delayedJob ? 1 : 0,
             'config' => [
                 'database' => $database,
-                'table' => $tablename,
+                'table' => $tableName,
                 'scope' => $scope,
-                'params' => $params, //TODO: restrict to dataParams
-                'task' => $params['task'] ?? '',
+                'params' => $params, //TODO: restrict to dataParams.
+                'task' => $task,
                 'selection' => $params['selection'] ?? 'selected',
 
                 'redirect' =>
@@ -494,6 +521,14 @@ class TransferComponent extends Component
             // TODO: better use patch function and merge in afterMarshal or beforeMarshal?
             $job->mergeJson('config', $this->request->getData());
 
+            $task = $job->config['task'] ?? '';
+            if (!isset($allowedTasks[$task]) || empty($task)) {
+                $this->controller->Answer->error(
+                    __('You have no permission to execute the selected task.'),
+                    ['action' => 'mutate', $scope]
+                );
+            }
+
             // TODO: validate, config.task should never be empty
             if ($this->Jobs->save($job)) {
                 $this->controller->Answer->success(
@@ -508,9 +543,7 @@ class TransferComponent extends Component
                     ['job_id' => $job->id]
                 );
 
-            }
-            else {
-
+            } else {
                 $this->controller->Answer->error(
                     __('The job could not be created. Please, try again.'),
                     ['action' => 'index']

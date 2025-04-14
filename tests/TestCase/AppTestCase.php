@@ -10,20 +10,19 @@
 namespace App\Test\TestCase;
 
 use App\Model\Entity\Databank;
+use App\Model\Table\BaseTable;
 use App\Test\Utilities\CompareHtmlTrait;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
 use App\Cache\Cache;
 use Cake\Chronos\Chronos;
 use Cake\Core\Configure;
-use Cake\Datasource\ConnectionManager;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\StringCompareTrait;
 use Cake\TestSuite\TestCase;
 use App\Test\Utilities\Constraint\JsonMatches;
 use Epi\Model\Entity\BaseEntity;
 use Epi\Model\Entity\Type;
-use Epi\Model\Table\BaseTable;
 use IvoPetkov\HTML5DOMDocument;
 use Laminas\Diactoros\UploadedFile;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -174,7 +173,6 @@ class AppTestCase extends TestCase
             [
                 'id' => 1,
                 'name' => 'Article with "Quotes"',
-                'internalUrl' => 'mytesturl/1',
                 'published' => PUBLICATION_PUBLISHED,
                 'sections' => []
             ]
@@ -448,10 +446,13 @@ class AppTestCase extends TestCase
      * @return void
      */
     static protected function truncateDatabase($database) {
-        /** @var \Cake\Database\Connection $connection */
-        $connection = ConnectionManager::get( 'test_projects');
-        $connection->getDriver()->connect();
 
+        $oldDatabaseName = BaseTable::getDatabaseName('test_projects');
+
+        /** @var \Cake\Database\Connection $connection */
+        $connection = BaseTable::setDatabase($database,'test_projects' );
+
+        $connection->getDriver()->connect();
         $collection = $connection->getSchemaCollection();
         $tables = $collection->listTablesWithoutViews();
         $schemas = array_map(function ($table) use ($collection) {
@@ -469,6 +470,7 @@ class AppTestCase extends TestCase
 //        $connection->execute('DROP DATABASE IF EXISTS '. $database);
 //        $connection->execute('CREATE DATABASE '. $database . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
         $connection->getDriver()->disconnect();
+        BaseTable::setDatabase($oldDatabaseName,'test_projects' );
     }
 
     /**
@@ -541,13 +543,6 @@ class AppTestCase extends TestCase
 
             // Check errors
             $error = $response['job']['error'] ?? '';
-            // TODO: decide whether to use model (Export) or table (TransferComponent)
-            $model = $response['job']['config']['model'] ?? $response['job']['config']['table'] ?? '';
-            if ($error) {
-                echo "{$response['job']['config']['database']} {$model} {$error}" . "\n";
-            } else {
-                echo "{$response['job']['config']['database']} {$model}";
-            }
             $this->assertEquals('',$error);
         }
     }
@@ -956,12 +951,13 @@ class AppTestCase extends TestCase
      * and the content equals the test comparison file
      *
      * @param string $suffix A suffix to distinguish different comparison files in the same test
+     * @param string $contentType The expected content type, default is 'application/json', for example 'application/geo+json'
      * @return void
      */
-    public function assertJsonResponseEqualsComparison($suffix = ''): void
+    public function assertJsonResponseEqualsComparison($suffix = '', $contentType = 'application/json'): void
     {
         $this->assertResponseOk();
-        $this->assertContentType('application/json');
+        $this->assertContentType($contentType);
         $compare = $this->saveBodyToComparisonJson($suffix);
         $this->assertJsonStringEqualsComparison($compare, $suffix);
     }

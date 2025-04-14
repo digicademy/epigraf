@@ -1,3 +1,4 @@
+
 /**
  * Epigraf 5.0
  *
@@ -316,8 +317,11 @@ export class BaseWidget extends BaseModel {
             if (event === undefined) {
                 this.setFocus(true);
             } else {
-                const hasFocus = this.widgetElement.contains(event.target) && (event.type !== 'focusout');
-                this.setFocus(hasFocus);
+                if (this.widgetElement.contains(event.target)) {
+                    this.setFocus(event.type !== 'focusout');
+                } else if (event.type !== 'focusout') {
+                    this.setFocus(false);
+                }
             }
         }
     }
@@ -329,6 +333,7 @@ export class BaseWidget extends BaseModel {
      */
     setFocus(focus = true) {
         if (this.widgetElement && this.widgetElement instanceof Element) {
+
             if (this.hasFocus === focus) {
                 return;
             }
@@ -356,8 +361,8 @@ export class BaseWidget extends BaseModel {
      */
     doFocus() {
         if (this.widgetElement && this.widgetElement instanceof Element) {
-           this.setFocus(true);
-           this.widgetElement.focus();
+            this.setFocus(true);
+            this.widgetElement.focus();
         }
     }
 
@@ -395,7 +400,7 @@ export class BaseWidget extends BaseModel {
 
 
     /**
-     * Return the content pane widget which contains the current widget.
+     * Return the frame widget which contains the current widget.
      *
      * Used to determine whether the scope of the widget should be constrained to AJAX content.
      * See popups.js.
@@ -404,15 +409,24 @@ export class BaseWidget extends BaseModel {
      * for widgets within the sidebar, this is the sidebar elements widget.
      *
      * @param {boolean} widget By default, return the widget. Set to false to return the HTML element or document instead.
+     * @param {boolean} getSelf Whether to return the widget itself if it is a content pane
      * @return {BaseWidget}
      */
-    getContentPane(widget = true) {
+    getFrame(widget = true, getSelf = false) {
 
         if (!this.widgetElement || (this.widgetElement === document)) {
             return widget ? undefined : document;
         }
 
-        const pane = this.widgetElement.closest('.widget-content-pane');
+        let pane;
+        if (getSelf && this.widgetElement.classList.contains('widget-content-pane')) {
+           pane = this.widgetElement;
+        }
+
+        if (!pane) {
+            pane = this.widgetElement.closest('.widget-content-pane');
+        }
+
         if (!widget) {
             return (pane && !pane.classList.contains('widget-content-pane-main')) ? pane : document;
         }
@@ -432,7 +446,6 @@ export class BaseWidget extends BaseModel {
             && (!this.widgetElement.closest('.widget-content-pane-main'));
     }
 }
-
 /**
  * Base class for widgets interacting with a document and its models
  *
@@ -748,7 +761,7 @@ export class BaseForm extends BaseWidget {
      */
     unlockForm(targetUrl, async=false) {
         if (!targetUrl) {
-            this.closeWindow(true);
+            this.cancelForm(true);
             return;
         }
 
@@ -766,7 +779,7 @@ export class BaseForm extends BaseWidget {
 
             // TODO: overwrite in BaseFrame?
             if (async && this.loadUrl) {
-              this.loadUrl(targetUrl, {lock: lockId});
+              this.loadUrl(targetUrl, {lock: lockId, focus: false});
             } else {
                 const cancelInput = Utils.spawnFromString('<input type="hidden" name="lock" value="' + lockId + '">');
                 const cancelForm = document.createElement("form");
@@ -779,6 +792,7 @@ export class BaseForm extends BaseWidget {
         } else if (this.loadUrl) {
             this.loadUrl(targetUrl);
         }
+        this.cancelForm(false);
     }
 
     /**
@@ -825,6 +839,64 @@ export class BaseForm extends BaseWidget {
     onKeyDown(event) {
         if ((event.keyCode === 13) && (event.target.tagName === 'INPUT')) {
             event.preventDefault();
+        }
+    }
+
+    /**
+     * Get the entity ID of the form
+     *
+     * @return {string}
+     */
+    getEntityId() {
+        if (!this.formElement) {
+            return;
+        }
+
+        let entityDoc = this.formElement.querySelector('[data-root-table][data-root-id]');
+        entityDoc = entityDoc || this.formElement.closest('[data-root-table][data-root-id]');
+        if (entityDoc && entityDoc.dataset.rootTable && entityDoc.dataset.rootId) {
+            return entityDoc.dataset.rootTable + '-' + entityDoc.dataset.rootId;
+        }
+    }
+
+    /**
+     * Focus the first input element in the widget
+     */
+    focusWidget() {
+
+        let input = this.widgetElement.querySelector('[autofocus]');
+        input = !input ? this.widgetElement.querySelector('select, input[type=text], .widget-xmleditor') : input;
+
+        if (input) {
+            // Set focus
+            input.removeAttribute('autofocus');
+            input.focus();
+
+            // Select input text
+            if (typeof input.select === 'function') {
+                input.select();
+            }
+        }
+    }
+
+    /**
+     * Close the form and emit teh event epi:cancel:row
+     *
+     * @param {boolean} close Whether to close the window
+     * @return {boolean}
+     */
+    cancelForm(close = true) {
+        if (!this.formElement) {
+            return false;
+        }
+
+        if (close) {
+            this.closeWindow(true);
+        }
+
+        const entityId = this.getEntityId();
+        if (entityId) {
+            this.emitEvent('epi:cancel:row', {row: entityId, sender: this});
         }
     }
 
@@ -943,14 +1015,6 @@ export class BaseForm extends BaseWidget {
      */
     onSavePost() {
 
-        // Get entity table and ID
-        let entityDoc = this.formElement.querySelector('[data-root-table][data-root-id]');
-        entityDoc = entityDoc || this.formElement.closest('[data-root-table][data-root-id]');
-        let entityId = undefined;
-        if (entityDoc && entityDoc.dataset.rootTable && entityDoc.dataset.rootId) {
-            entityId = entityDoc.dataset.rootTable + '-' + entityDoc.dataset.rootId;
-        }
-
         // Serialize form data
         let url;
         let formData = null;
@@ -959,18 +1023,7 @@ export class BaseForm extends BaseWidget {
 
         // GET request forms
         if (requestType.toUpperCase() ===  "GET") {
-            url = new URL(this.formElement.getAttribute('action'), App.baseUrl);
-            const formParams =  new URLSearchParams(new FormData(this.formElement));
-            let urlParams = url.searchParams;
-            urlParams =
-                new URLSearchParams({
-                    ...Object.fromEntries(urlParams),
-                    ...Object.fromEntries(formParams)
-                });
-            urlParams = urlParams.toString();
-
-            url.search = urlParams;
-            url = url.toString();
+            url = Utils.formToUrl(this.formElement, App.baseUrl);
         }
 
         // POST request forms
@@ -998,7 +1051,7 @@ export class BaseForm extends BaseWidget {
             async: true,
             contentType: contentType, //this is required
             processData: false, //this is required
-            success: (data, textStatus, jqXHR) => self.onSaveSuccess(entityId, data, textStatus, xhr),
+            success: (data, textStatus, jqXHR) => self.onSaveSuccess(self.getEntityId(), data, textStatus, xhr),
             error: (jqXHR) => self.onSaveFailed(xhr),
             complete: (jqXHR) =>  self.onSaveEnd(xhr)
         });
@@ -1075,7 +1128,7 @@ export class BaseForm extends BaseWidget {
             }
         }
         // Advertise the new data
-        if ((entityState === 'update') && entityId) {
+        if ((entityState === 'update') && entityId && !deletedIds.includes(entityId)) {
             this.emitEvent('epi:update:row', {row: entityId, sender: this});
         }
         else if ((entityState === 'moved') && entityId) {

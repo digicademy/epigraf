@@ -8,8 +8,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T15:10:26+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-12T13:10:26+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -46,6 +46,8 @@
                 "sections": [
                     {
                         "id": 17,
+                        "sectiontype": "outputoptions",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -56,8 +58,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T15:10:26+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-12T13:10:26+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -95,8 +97,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T15:10:26+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-12T13:10:26+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -139,8 +141,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T15:10:26+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-12T13:10:26+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -177,8 +179,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T15:10:26+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-12T13:10:26+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -216,8 +218,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T15:10:26+02:00",
-                            "modified": "2021-11-14T14:25:02+01:00",
+                            "created": "2021-06-12T13:10:26+02:00",
+                            "modified": "2021-11-14T13:25:02+01:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -261,8 +263,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T15:10:26+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-12T13:10:26+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -299,6 +301,8 @@
                 "sections": [
                     {
                         "id": 17,
+                        "sectiontype": "outputoptions",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -314,8 +318,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:12:52+02:00",
-                "modified": "2024-09-22T18:01:56+02:00",
+                "created": "2021-06-12T14:12:52+02:00",
+                "modified": "2024-09-22T16:01:56+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -352,6 +356,8 @@
                 "sections": [
                     {
                         "id": 16,
+                        "sectiontype": "signatures",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -362,8 +368,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:12:52+02:00",
-                "modified": "2022-04-01T11:55:27+02:00",
+                "created": "2021-06-12T14:12:52+02:00",
+                "modified": "2022-04-01T09:55:27+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 3,
@@ -402,8 +408,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:12:52+02:00",
-                        "modified": "2024-09-22T18:01:56+02:00",
+                        "created": "2021-06-12T14:12:52+02:00",
+                        "modified": "2024-09-22T16:01:56+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 2,
@@ -440,7 +446,15 @@
                 "sections": [
                     {
                         "id": 5,
+                        "sectiontype": "text",
+                        "norm_iri": null,
                         "articles_id": 1
+                    },
+                    {
+                        "id": 147,
+                        "sectiontype": "text",
+                        "norm_iri": null,
+                        "articles_id": 3
                     }
                 ]
             },
@@ -450,8 +464,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:12:51+02:00",
-                "modified": "2022-04-01T11:55:27+02:00",
+                "created": "2021-06-12T14:12:51+02:00",
+                "modified": "2022-04-01T09:55:27+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -491,8 +505,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:12:52+02:00",
-                        "modified": "2024-09-22T18:01:56+02:00",
+                        "created": "2021-06-12T14:12:52+02:00",
+                        "modified": "2024-09-22T16:01:56+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 2,
@@ -528,10 +542,14 @@
                 "sections": [
                     {
                         "id": 16,
+                        "sectiontype": "signatures",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 14,
+                        "sectiontype": "references",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -542,8 +560,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:12:52+02:00",
-                "modified": "2024-09-22T18:02:01+02:00",
+                "created": "2021-06-12T14:12:52+02:00",
+                "modified": "2024-09-22T16:02:01+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -580,14 +598,20 @@
                 "sections": [
                     {
                         "id": 15,
+                        "sectiontype": "locations",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 14,
+                        "sectiontype": "references",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 9,
+                        "sectiontype": "heraldry",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -598,8 +622,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:12:52+02:00",
-                "modified": "2022-04-01T11:55:27+02:00",
+                "created": "2021-06-12T14:12:52+02:00",
+                "modified": "2022-04-01T09:55:27+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -637,8 +661,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:12:52+02:00",
-                        "modified": "2024-09-22T18:02:01+02:00",
+                        "created": "2021-06-12T14:12:52+02:00",
+                        "modified": "2024-09-22T16:02:01+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -681,8 +705,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:12:52+02:00",
-                "modified": "2022-04-01T11:55:27+02:00",
+                "created": "2021-06-12T14:12:52+02:00",
+                "modified": "2022-04-01T09:55:27+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 11,
@@ -719,8 +743,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T16:12:52+02:00",
-                    "modified": "2022-04-01T11:55:27+02:00",
+                    "created": "2021-06-12T14:12:52+02:00",
+                    "modified": "2022-04-01T09:55:27+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 9,
@@ -758,8 +782,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T16:12:52+02:00",
-                            "modified": "2024-09-22T18:02:01+02:00",
+                            "created": "2021-06-12T14:12:52+02:00",
+                            "modified": "2024-09-22T16:02:01+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 8,
@@ -808,8 +832,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:18:22+02:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2021-06-12T14:18:22+02:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -846,6 +870,8 @@
                 "sections": [
                     {
                         "id": 15,
+                        "sectiontype": "locations",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -856,8 +882,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:18:22+02:00",
-                "modified": "2022-04-01T11:02:36+02:00",
+                "created": "2021-06-12T14:18:22+02:00",
+                "modified": "2022-04-01T09:02:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -895,8 +921,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:18:22+02:00",
-                        "modified": "2022-06-18T12:15:59+02:00",
+                        "created": "2021-06-12T14:18:22+02:00",
+                        "modified": "2022-06-18T10:15:59+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -939,8 +965,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:18:22+02:00",
-                "modified": "2022-04-01T11:02:36+02:00",
+                "created": "2021-06-12T14:18:22+02:00",
+                "modified": "2022-04-01T09:02:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -977,8 +1003,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T16:18:22+02:00",
-                    "modified": "2022-04-01T11:02:36+02:00",
+                    "created": "2021-06-12T14:18:22+02:00",
+                    "modified": "2022-04-01T09:02:36+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -1016,8 +1042,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T16:18:22+02:00",
-                            "modified": "2022-06-18T12:15:59+02:00",
+                            "created": "2021-06-12T14:18:22+02:00",
+                            "modified": "2022-06-18T10:15:59+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -1061,8 +1087,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:18:22+02:00",
-                "modified": "2022-04-01T11:02:36+02:00",
+                "created": "2021-06-12T14:18:22+02:00",
+                "modified": "2022-04-01T09:02:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -1103,8 +1129,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:18:22+02:00",
-                "modified": "2022-04-01T11:02:36+02:00",
+                "created": "2021-06-12T14:18:22+02:00",
+                "modified": "2022-04-01T09:02:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -1144,8 +1170,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:18:22+02:00",
-                        "modified": "2022-04-01T11:02:36+02:00",
+                        "created": "2021-06-12T14:18:22+02:00",
+                        "modified": "2022-04-01T09:02:36+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -1181,6 +1207,8 @@
                 "sections": [
                     {
                         "id": 15,
+                        "sectiontype": "locations",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -1196,8 +1224,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:29:43+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-12T14:29:43+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -1234,6 +1262,8 @@
                 "sections": [
                     {
                         "id": 13,
+                        "sectiontype": "conditions",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -1244,8 +1274,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:29:43+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-12T14:29:43+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -1283,8 +1313,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:29:43+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-12T14:29:43+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -1327,8 +1357,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:29:43+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-12T14:29:43+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -1365,8 +1395,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T16:29:43+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-12T14:29:43+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -1404,8 +1434,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T16:29:43+02:00",
-                            "modified": "2021-11-14T14:25:02+01:00",
+                            "created": "2021-06-12T14:29:43+02:00",
+                            "modified": "2021-11-14T13:25:02+01:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -1454,8 +1484,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:38:55+02:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2021-06-12T14:38:55+02:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -1492,6 +1522,8 @@
                 "sections": [
                     {
                         "id": 12,
+                        "sectiontype": "materials",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -1502,8 +1534,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:38:55+02:00",
-                "modified": "2022-04-01T12:00:37+02:00",
+                "created": "2021-06-12T14:38:55+02:00",
+                "modified": "2022-04-01T10:00:37+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -1541,8 +1573,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:38:55+02:00",
-                        "modified": "2022-06-18T12:15:59+02:00",
+                        "created": "2021-06-12T14:38:55+02:00",
+                        "modified": "2022-06-18T10:15:59+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -1585,8 +1617,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:38:55+02:00",
-                "modified": "2022-04-01T12:00:37+02:00",
+                "created": "2021-06-12T14:38:55+02:00",
+                "modified": "2022-04-01T10:00:37+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -1623,8 +1655,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T16:38:55+02:00",
-                    "modified": "2022-04-01T12:00:37+02:00",
+                    "created": "2021-06-12T14:38:55+02:00",
+                    "modified": "2022-04-01T10:00:37+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -1662,8 +1694,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T16:38:55+02:00",
-                            "modified": "2022-06-18T12:15:59+02:00",
+                            "created": "2021-06-12T14:38:55+02:00",
+                            "modified": "2022-06-18T10:15:59+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -1707,8 +1739,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:38:55+02:00",
-                "modified": "2022-04-01T12:00:37+02:00",
+                "created": "2021-06-12T14:38:55+02:00",
+                "modified": "2022-04-01T10:00:37+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -1749,8 +1781,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:38:54+02:00",
-                "modified": "2022-04-01T12:00:37+02:00",
+                "created": "2021-06-12T14:38:54+02:00",
+                "modified": "2022-04-01T10:00:37+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -1790,8 +1822,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:38:55+02:00",
-                        "modified": "2022-04-01T12:00:37+02:00",
+                        "created": "2021-06-12T14:38:55+02:00",
+                        "modified": "2022-04-01T10:00:37+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -1827,6 +1859,8 @@
                 "sections": [
                     {
                         "id": 12,
+                        "sectiontype": "materials",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -1837,8 +1871,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:38:54+02:00",
-                "modified": "2022-04-01T12:00:37+02:00",
+                "created": "2021-06-12T14:38:54+02:00",
+                "modified": "2022-04-01T10:00:37+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -1875,8 +1909,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T16:38:55+02:00",
-                    "modified": "2022-04-01T12:00:37+02:00",
+                    "created": "2021-06-12T14:38:55+02:00",
+                    "modified": "2022-04-01T10:00:37+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -1924,8 +1958,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:48:41+02:00",
-                "modified": "2023-04-08T02:10:22+02:00",
+                "created": "2021-06-12T14:48:41+02:00",
+                "modified": "2023-04-08T00:10:22+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -1962,6 +1996,8 @@
                 "sections": [
                     {
                         "id": 11,
+                        "sectiontype": "objecttypes",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -1972,8 +2008,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:48:41+02:00",
-                "modified": "2023-04-08T02:10:36+02:00",
+                "created": "2021-06-12T14:48:41+02:00",
+                "modified": "2023-04-08T00:10:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -2010,8 +2046,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": 0,
-                    "created": "2021-06-12T16:48:41+02:00",
-                    "modified": "2023-04-08T02:11:13+02:00",
+                    "created": "2021-06-12T14:48:41+02:00",
+                    "modified": "2023-04-08T00:11:13+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -2049,8 +2085,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T16:48:41+02:00",
-                            "modified": "2023-04-08T02:10:22+02:00",
+                            "created": "2021-06-12T14:48:41+02:00",
+                            "modified": "2023-04-08T00:10:22+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -2094,8 +2130,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": 0,
-                "created": "2021-06-12T16:48:41+02:00",
-                "modified": "2023-04-08T02:11:13+02:00",
+                "created": "2021-06-12T14:48:41+02:00",
+                "modified": "2023-04-08T00:11:13+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -2133,8 +2169,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:48:41+02:00",
-                        "modified": "2023-04-08T02:10:22+02:00",
+                        "created": "2021-06-12T14:48:41+02:00",
+                        "modified": "2023-04-08T00:10:22+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -2177,8 +2213,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:48:41+02:00",
-                "modified": "2023-04-08T02:10:22+02:00",
+                "created": "2021-06-12T14:48:41+02:00",
+                "modified": "2023-04-08T00:10:22+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -2219,8 +2255,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:48:41+02:00",
-                "modified": "2023-04-08T02:10:36+02:00",
+                "created": "2021-06-12T14:48:41+02:00",
+                "modified": "2023-04-08T00:10:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -2257,8 +2293,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-12T16:48:41+02:00",
-                    "modified": "2023-04-08T02:10:22+02:00",
+                    "created": "2021-06-12T14:48:41+02:00",
+                    "modified": "2023-04-08T00:10:22+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -2301,8 +2337,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-12T16:48:41+02:00",
-                "modified": "2023-04-08T02:10:36+02:00",
+                "created": "2021-06-12T14:48:41+02:00",
+                "modified": "2023-04-08T00:10:36+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -2342,8 +2378,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-12T16:48:41+02:00",
-                        "modified": "2023-04-08T02:10:22+02:00",
+                        "created": "2021-06-12T14:48:41+02:00",
+                        "modified": "2023-04-08T00:10:22+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -2379,6 +2415,8 @@
                 "sections": [
                     {
                         "id": 11,
+                        "sectiontype": "objecttypes",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -2394,8 +2432,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-13T18:27:22+02:00",
-                "modified": "2022-04-01T12:02:44+02:00",
+                "created": "2021-06-13T16:27:22+02:00",
+                "modified": "2022-04-01T10:02:44+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -2436,8 +2474,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-13T18:27:21+02:00",
-                "modified": "2022-04-01T12:02:44+02:00",
+                "created": "2021-06-13T16:27:21+02:00",
+                "modified": "2022-04-01T10:02:44+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -2477,8 +2515,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-13T18:27:22+02:00",
-                        "modified": "2022-04-01T12:02:44+02:00",
+                        "created": "2021-06-13T16:27:22+02:00",
+                        "modified": "2022-04-01T10:02:44+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -2514,6 +2552,8 @@
                 "sections": [
                     {
                         "id": 10,
+                        "sectiontype": "measures",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -2524,8 +2564,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-13T18:27:21+02:00",
-                "modified": "2022-04-01T12:02:44+02:00",
+                "created": "2021-06-13T16:27:21+02:00",
+                "modified": "2022-04-01T10:02:44+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -2562,8 +2602,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-13T18:27:22+02:00",
-                    "modified": "2022-04-01T12:02:44+02:00",
+                    "created": "2021-06-13T16:27:22+02:00",
+                    "modified": "2022-04-01T10:02:44+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -2606,8 +2646,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-13T18:27:22+02:00",
-                "modified": "2022-04-01T12:02:44+02:00",
+                "created": "2021-06-13T16:27:22+02:00",
+                "modified": "2022-04-01T10:02:44+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -2648,8 +2688,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-13T18:27:22+02:00",
-                "modified": "2022-04-01T12:02:44+02:00",
+                "created": "2021-06-13T16:27:22+02:00",
+                "modified": "2022-04-01T10:02:44+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -2689,8 +2729,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-13T18:27:22+02:00",
-                        "modified": "2022-04-01T12:02:44+02:00",
+                        "created": "2021-06-13T16:27:22+02:00",
+                        "modified": "2022-04-01T10:02:44+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -2726,6 +2766,8 @@
                 "sections": [
                     {
                         "id": 10,
+                        "sectiontype": "measures",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -2736,8 +2778,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-13T18:27:22+02:00",
-                "modified": "2022-04-01T12:02:44+02:00",
+                "created": "2021-06-13T16:27:22+02:00",
+                "modified": "2022-04-01T10:02:44+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -2774,8 +2816,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-13T18:27:22+02:00",
-                    "modified": "2022-04-01T12:02:44+02:00",
+                    "created": "2021-06-13T16:27:22+02:00",
+                    "modified": "2022-04-01T10:02:44+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -2823,8 +2865,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T14:42:43+02:00",
-                "modified": "2022-07-03T16:08:02+02:00",
+                "created": "2021-06-14T12:42:43+02:00",
+                "modified": "2022-07-03T14:08:02+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -2862,8 +2904,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2022-01-02T01:47:18+01:00",
-                        "modified": "2022-06-18T12:07:41+02:00",
+                        "created": "2022-01-02T00:47:18+01:00",
+                        "modified": "2022-06-18T10:07:41+02:00",
                         "modified_by": 1,
                         "created_by": 1,
                         "root_id": 44,
@@ -2884,8 +2926,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2022-01-02T01:45:52+01:00",
-                            "modified": "2022-10-22T11:21:01+02:00",
+                            "created": "2022-01-02T00:45:52+01:00",
+                            "modified": "2022-10-22T09:21:01+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 0,
@@ -2922,8 +2964,8 @@
                                 "version_id": null,
                                 "job_id": null,
                                 "published": null,
-                                "created": "2022-01-02T01:45:42+01:00",
-                                "modified": "2022-06-18T12:15:59+02:00",
+                                "created": "2022-01-02T00:45:42+01:00",
+                                "modified": "2022-06-18T10:15:59+02:00",
                                 "created_by": 1,
                                 "modified_by": 1,
                                 "sortno": 1,
@@ -2969,6 +3011,8 @@
                 "sections": [
                     {
                         "id": 9,
+                        "sectiontype": "heraldry",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -2979,8 +3023,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T14:42:43+02:00",
-                "modified": "2022-07-03T16:08:02+02:00",
+                "created": "2021-06-14T12:42:43+02:00",
+                "modified": "2022-07-03T14:08:02+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -3018,8 +3062,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2022-06-10T16:40:32+02:00",
-                        "modified": "2022-06-18T12:07:41+02:00",
+                        "created": "2022-06-10T14:40:32+02:00",
+                        "modified": "2022-06-18T10:07:41+02:00",
                         "modified_by": 1,
                         "created_by": 1,
                         "root_id": 43,
@@ -3040,8 +3084,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-12T16:12:52+02:00",
-                            "modified": "2024-09-22T18:02:01+02:00",
+                            "created": "2021-06-12T14:12:52+02:00",
+                            "modified": "2024-09-22T16:02:01+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 8,
@@ -3083,6 +3127,8 @@
                 "sections": [
                     {
                         "id": 9,
+                        "sectiontype": "heraldry",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3098,8 +3144,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-01-02T01:45:52+01:00",
-                "modified": "2022-11-27T03:09:51+01:00",
+                "created": "2022-01-02T00:45:52+01:00",
+                "modified": "2022-11-27T02:09:51+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 0,
@@ -3137,8 +3183,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2022-01-02T01:45:42+01:00",
-                    "modified": "2022-06-18T12:15:59+02:00",
+                    "created": "2022-01-02T00:45:42+01:00",
+                    "modified": "2022-06-18T10:15:59+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 3,
@@ -3178,6 +3224,8 @@
                 "sections": [
                     {
                         "id": 8,
+                        "sectiontype": "brands",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3188,8 +3236,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-01-02T01:45:52+01:00",
-                "modified": "2022-10-22T11:21:01+02:00",
+                "created": "2022-01-02T00:45:52+01:00",
+                "modified": "2022-10-22T09:21:01+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 0,
@@ -3226,8 +3274,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2022-01-02T01:45:42+01:00",
-                    "modified": "2022-06-18T12:15:59+02:00",
+                    "created": "2022-01-02T00:45:42+01:00",
+                    "modified": "2022-06-18T10:15:59+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -3267,14 +3315,20 @@
                 "sections": [
                     {
                         "id": 9,
+                        "sectiontype": "heraldry",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 8,
+                        "sectiontype": "brands",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 5,
+                        "sectiontype": "text",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3290,8 +3344,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-01-02T01:45:42+01:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2022-01-02T00:45:42+01:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3328,14 +3382,20 @@
                 "sections": [
                     {
                         "id": 9,
+                        "sectiontype": "heraldry",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 8,
+                        "sectiontype": "brands",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 5,
+                        "sectiontype": "text",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3346,8 +3406,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-01-02T01:45:42+01:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2022-01-02T00:45:42+01:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 3,
@@ -3384,6 +3444,8 @@
                 "sections": [
                     {
                         "id": 8,
+                        "sectiontype": "brands",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3399,8 +3461,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T14:48:34+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T12:48:34+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3437,6 +3499,8 @@
                 "sections": [
                     {
                         "id": 7,
+                        "sectiontype": "images",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3447,8 +3511,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T14:48:34+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T12:48:34+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -3485,8 +3549,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T14:48:34+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T12:48:34+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -3529,8 +3593,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T14:48:34+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T12:48:34+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -3577,8 +3641,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-06-29T03:05:53+02:00",
-                "modified": "2022-06-29T01:05:55+02:00",
+                "created": "2022-06-29T01:05:53+02:00",
+                "modified": "2022-06-28T23:05:55+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3615,6 +3679,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3625,8 +3691,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-11-27T02:44:40+01:00",
-                "modified": "2022-11-27T01:44:42+01:00",
+                "created": "2022-11-27T01:44:40+01:00",
+                "modified": "2022-11-27T00:44:42+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 3,
@@ -3663,6 +3729,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3673,8 +3741,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-11-27T02:44:40+01:00",
-                "modified": "2022-11-27T01:44:42+01:00",
+                "created": "2022-11-27T01:44:40+01:00",
+                "modified": "2022-11-27T00:44:42+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -3711,6 +3779,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3726,8 +3796,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-06-29T03:06:04+02:00",
-                "modified": "2022-06-29T01:06:06+02:00",
+                "created": "2022-06-29T01:06:04+02:00",
+                "modified": "2022-06-28T23:06:06+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3764,6 +3834,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3779,8 +3851,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-06-29T03:06:15+02:00",
-                "modified": "2022-06-29T01:06:18+02:00",
+                "created": "2022-06-29T01:06:15+02:00",
+                "modified": "2022-06-28T23:06:18+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3817,6 +3889,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3832,8 +3906,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-06-29T03:06:25+02:00",
-                "modified": "2022-06-29T01:06:28+02:00",
+                "created": "2022-06-29T01:06:25+02:00",
+                "modified": "2022-06-28T23:06:28+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3870,6 +3944,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3885,8 +3961,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-06-29T03:06:37+02:00",
-                "modified": "2022-06-29T01:06:39+02:00",
+                "created": "2022-06-29T01:06:37+02:00",
+                "modified": "2022-06-28T23:06:39+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -3923,6 +3999,8 @@
                 "sections": [
                     {
                         "id": 6,
+                        "sectiontype": "index",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3938,8 +4016,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-03-27T21:05:33+02:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2022-03-27T19:05:33+02:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": null,
@@ -3976,6 +4054,8 @@
                 "sections": [
                     {
                         "id": 5,
+                        "sectiontype": "text",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -3986,8 +4066,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2022-03-27T21:05:33+02:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2022-03-27T19:05:33+02:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": null,
@@ -4024,233 +4104,8 @@
                 "sections": [
                     {
                         "id": 4,
-                        "articles_id": 1
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "propertytype": "paragraphs",
-        "properties": [
-            {
-                "id": 107,
-                "deleted": 0,
-                "version_id": null,
-                "job_id": null,
-                "published": null,
-                "created": "2021-06-14T16:39:52+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
-                "created_by": 1,
-                "modified_by": 1,
-                "sortno": 8,
-                "sortkey": "Absatz 2",
-                "propertytype": "paragraphs",
-                "signature": null,
-                "file_name": null,
-                "properties_id": null,
-                "lemma": "Absatz 2",
-                "name": "Absatz 2 ",
-                "unit": "Absatz 2 Einheit",
-                "comment": "Absatz 2 Bemerk",
-                "content": null,
-                "elements": null,
-                "keywords": "Absatz,Break",
-                "source_from": null,
-                "ishidden": 0,
-                "iscategory": 0,
-                "norm_type": null,
-                "norm_data": "Absatz 2 Norm",
-                "norm_iri": null,
-                "import_db": "EX DB Absatz 2 ",
-                "import_id": "Absatz 2 ID ",
-                "related_id": null,
-                "mergedto_id": null,
-                "splitfrom_id": null,
-                "parent_id": null,
-                "level": 0,
-                "lft": 8,
-                "rght": 14,
-                "links": [],
-                "property": null,
-                "sections": []
-            },
-            {
-                "id": 106,
-                "deleted": 0,
-                "version_id": null,
-                "job_id": null,
-                "published": null,
-                "created": "2021-06-14T16:39:52+02:00",
-                "modified": "2021-06-14T16:39:53+02:00",
-                "created_by": 1,
-                "modified_by": 1,
-                "sortno": 9,
-                "sortkey": "Absatz 2a",
-                "propertytype": "paragraphs",
-                "signature": null,
-                "file_name": null,
-                "properties_id": null,
-                "lemma": "Absatz 2a",
-                "name": "Absatz 2a",
-                "unit": "Absatz 2a Einheit",
-                "comment": "Absatz 2a Bemerk",
-                "content": null,
-                "elements": null,
-                "keywords": "Break",
-                "source_from": null,
-                "ishidden": 1,
-                "iscategory": 1,
-                "norm_type": null,
-                "norm_data": "Absatz 2a Norm",
-                "norm_iri": null,
-                "import_db": "EX DB Absatz 2a",
-                "import_id": "Absatz 2a ID",
-                "related_id": null,
-                "mergedto_id": null,
-                "splitfrom_id": null,
-                "parent_id": 107,
-                "level": 1,
-                "lft": 9,
-                "rght": 11,
-                "property": null,
-                "ancestors": [
-                    {
-                        "id": 107,
-                        "deleted": 0,
-                        "version_id": null,
-                        "job_id": null,
-                        "published": null,
-                        "created": "2021-06-14T16:39:52+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
-                        "created_by": 1,
-                        "modified_by": 1,
-                        "sortno": 8,
-                        "sortkey": "Absatz 2",
-                        "propertytype": "paragraphs",
-                        "signature": null,
-                        "file_name": null,
-                        "properties_id": null,
-                        "lemma": "Absatz 2",
-                        "name": "Absatz 2 ",
-                        "unit": "Absatz 2 Einheit",
-                        "comment": "Absatz 2 Bemerk",
-                        "content": null,
-                        "elements": null,
-                        "keywords": "Absatz,Break",
-                        "source_from": null,
-                        "ishidden": 0,
-                        "iscategory": 0,
-                        "norm_type": null,
-                        "norm_data": "Absatz 2 Norm",
+                        "sectiontype": "text",
                         "norm_iri": null,
-                        "import_db": "EX DB Absatz 2 ",
-                        "import_id": "Absatz 2 ID ",
-                        "related_id": null,
-                        "mergedto_id": null,
-                        "splitfrom_id": null,
-                        "parent_id": null,
-                        "level": 0,
-                        "lft": 8,
-                        "rght": 14
-                    }
-                ],
-                "links": [],
-                "sections": [
-                    {
-                        "id": 4,
-                        "articles_id": 1
-                    }
-                ]
-            },
-            {
-                "id": 105,
-                "deleted": 0,
-                "version_id": null,
-                "job_id": null,
-                "published": null,
-                "created": "2021-06-14T16:39:52+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
-                "created_by": 1,
-                "modified_by": 1,
-                "sortno": 12,
-                "sortkey": null,
-                "propertytype": "paragraphs",
-                "signature": null,
-                "file_name": null,
-                "properties_id": null,
-                "lemma": "siehe",
-                "name": null,
-                "unit": "Absatz 2b Einheit",
-                "comment": "Absatz 2b Bemerk",
-                "content": null,
-                "elements": null,
-                "keywords": "Break",
-                "source_from": null,
-                "ishidden": 0,
-                "iscategory": 0,
-                "norm_type": null,
-                "norm_data": "Absatz 2b Norm",
-                "norm_iri": null,
-                "import_db": "EX DB Absatz 2b",
-                "import_id": "Absatz 2b ID ",
-                "related_id": 106,
-                "mergedto_id": null,
-                "splitfrom_id": null,
-                "parent_id": 107,
-                "level": 1,
-                "lft": 12,
-                "rght": 13,
-                "property": null,
-                "ancestors": [
-                    {
-                        "id": 107,
-                        "deleted": 0,
-                        "version_id": null,
-                        "job_id": null,
-                        "published": null,
-                        "created": "2021-06-14T16:39:52+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
-                        "created_by": 1,
-                        "modified_by": 1,
-                        "sortno": 8,
-                        "sortkey": "Absatz 2",
-                        "propertytype": "paragraphs",
-                        "signature": null,
-                        "file_name": null,
-                        "properties_id": null,
-                        "lemma": "Absatz 2",
-                        "name": "Absatz 2 ",
-                        "unit": "Absatz 2 Einheit",
-                        "comment": "Absatz 2 Bemerk",
-                        "content": null,
-                        "elements": null,
-                        "keywords": "Absatz,Break",
-                        "source_from": null,
-                        "ishidden": 0,
-                        "iscategory": 0,
-                        "norm_type": null,
-                        "norm_data": "Absatz 2 Norm",
-                        "norm_iri": null,
-                        "import_db": "EX DB Absatz 2 ",
-                        "import_id": "Absatz 2 ID ",
-                        "related_id": null,
-                        "mergedto_id": null,
-                        "splitfrom_id": null,
-                        "parent_id": null,
-                        "level": 0,
-                        "lft": 8,
-                        "rght": 14
-                    }
-                ],
-                "links": [],
-                "sections": [
-                    {
-                        "id": 5,
-                        "articles_id": 1
-                    },
-                    {
-                        "id": 4,
                         "articles_id": 1
                     }
                 ]
@@ -4266,8 +4121,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:48:55+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:48:55+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -4304,6 +4159,8 @@
                 "sections": [
                     {
                         "id": 5,
+                        "sectiontype": "text",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -4314,8 +4171,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:48:55+02:00",
-                "modified": "2021-06-14T15:48:59+02:00",
+                "created": "2021-06-14T13:48:55+02:00",
+                "modified": "2021-06-14T13:48:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -4354,8 +4211,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:48:55+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:48:55+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -4392,6 +4249,8 @@
                 "sections": [
                     {
                         "id": 4,
+                        "sectiontype": "text",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -4402,8 +4261,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:48:55+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:48:55+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -4440,8 +4299,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:48:55+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T13:48:55+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -4489,8 +4348,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:48:49+02:00",
-                "modified": "2022-04-01T12:22:38+02:00",
+                "created": "2021-06-14T14:48:49+02:00",
+                "modified": "2022-04-01T10:22:38+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -4527,10 +4386,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -4541,8 +4404,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:48:49+02:00",
-                "modified": "2022-04-01T12:22:38+02:00",
+                "created": "2021-06-14T14:48:49+02:00",
+                "modified": "2022-04-01T10:22:38+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -4580,8 +4443,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T16:48:49+02:00",
-                        "modified": "2022-04-01T12:22:38+02:00",
+                        "created": "2021-06-14T14:48:49+02:00",
+                        "modified": "2022-04-01T10:22:38+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -4624,8 +4487,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:48:49+02:00",
-                "modified": "2022-04-01T12:22:38+02:00",
+                "created": "2021-06-14T14:48:49+02:00",
+                "modified": "2022-04-01T10:22:38+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -4662,8 +4525,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T16:48:49+02:00",
-                    "modified": "2022-04-01T12:22:38+02:00",
+                    "created": "2021-06-14T14:48:49+02:00",
+                    "modified": "2022-04-01T10:22:38+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -4701,8 +4564,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T16:48:49+02:00",
-                            "modified": "2022-04-01T12:22:38+02:00",
+                            "created": "2021-06-14T14:48:49+02:00",
+                            "modified": "2022-04-01T10:22:38+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -4746,8 +4609,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:48:49+02:00",
-                "modified": "2022-04-01T12:22:38+02:00",
+                "created": "2021-06-14T14:48:49+02:00",
+                "modified": "2022-04-01T10:22:38+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -4788,8 +4651,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:48:49+02:00",
-                "modified": "2022-04-01T12:22:38+02:00",
+                "created": "2021-06-14T14:48:49+02:00",
+                "modified": "2022-04-01T10:22:38+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -4829,8 +4692,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T16:48:49+02:00",
-                        "modified": "2022-04-01T12:22:38+02:00",
+                        "created": "2021-06-14T14:48:49+02:00",
+                        "modified": "2022-04-01T10:22:38+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -4866,10 +4729,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -4880,8 +4747,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:48:49+02:00",
-                "modified": "2022-04-01T12:22:38+02:00",
+                "created": "2021-06-14T14:48:49+02:00",
+                "modified": "2022-04-01T10:22:38+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -4918,8 +4785,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T16:48:49+02:00",
-                    "modified": "2022-04-01T12:22:38+02:00",
+                    "created": "2021-06-14T14:48:49+02:00",
+                    "modified": "2022-04-01T10:22:38+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -4967,8 +4834,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:54:37+02:00",
-                "modified": "2022-04-01T12:14:33+02:00",
+                "created": "2021-06-14T14:54:37+02:00",
+                "modified": "2022-04-01T10:14:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -5005,6 +4872,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5015,8 +4884,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:54:36+02:00",
-                "modified": "2022-04-01T12:14:33+02:00",
+                "created": "2021-06-14T14:54:36+02:00",
+                "modified": "2022-04-01T10:14:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -5056,8 +4925,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T16:54:37+02:00",
-                        "modified": "2022-04-01T12:14:33+02:00",
+                        "created": "2021-06-14T14:54:37+02:00",
+                        "modified": "2022-04-01T10:14:33+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -5093,6 +4962,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5103,8 +4974,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:54:36+02:00",
-                "modified": "2022-04-01T12:14:33+02:00",
+                "created": "2021-06-14T14:54:36+02:00",
+                "modified": "2022-04-01T10:14:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -5141,8 +5012,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T16:54:37+02:00",
-                    "modified": "2022-04-01T12:14:33+02:00",
+                    "created": "2021-06-14T14:54:37+02:00",
+                    "modified": "2022-04-01T10:14:33+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -5185,8 +5056,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:54:36+02:00",
-                "modified": "2022-04-01T12:14:33+02:00",
+                "created": "2021-06-14T14:54:36+02:00",
+                "modified": "2022-04-01T10:14:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -5223,6 +5094,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5233,8 +5106,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:54:36+02:00",
-                "modified": "2022-04-01T12:14:33+02:00",
+                "created": "2021-06-14T14:54:36+02:00",
+                "modified": "2022-04-01T10:14:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -5274,8 +5147,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T16:54:36+02:00",
-                        "modified": "2022-04-01T12:14:33+02:00",
+                        "created": "2021-06-14T14:54:36+02:00",
+                        "modified": "2022-04-01T10:14:33+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -5311,6 +5184,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5321,8 +5196,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:54:36+02:00",
-                "modified": "2022-04-01T12:14:33+02:00",
+                "created": "2021-06-14T14:54:36+02:00",
+                "modified": "2022-04-01T10:14:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -5359,8 +5234,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T16:54:36+02:00",
-                    "modified": "2022-04-01T12:14:33+02:00",
+                    "created": "2021-06-14T14:54:36+02:00",
+                    "modified": "2022-04-01T10:14:33+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -5408,8 +5283,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:57:50+02:00",
-                "modified": "2022-04-01T12:15:07+02:00",
+                "created": "2021-06-14T14:57:50+02:00",
+                "modified": "2022-04-01T10:15:07+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -5446,10 +5321,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5460,8 +5339,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:57:49+02:00",
-                "modified": "2022-06-18T12:15:59+02:00",
+                "created": "2021-06-14T14:57:49+02:00",
+                "modified": "2022-06-18T10:15:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -5499,8 +5378,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T16:57:50+02:00",
-                        "modified": "2022-04-01T12:15:07+02:00",
+                        "created": "2021-06-14T14:57:50+02:00",
+                        "modified": "2022-04-01T10:15:07+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -5543,8 +5422,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:57:49+02:00",
-                "modified": "2022-04-01T12:15:07+02:00",
+                "created": "2021-06-14T14:57:49+02:00",
+                "modified": "2022-04-01T10:15:07+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -5581,8 +5460,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T16:57:49+02:00",
-                    "modified": "2022-06-18T12:15:59+02:00",
+                    "created": "2021-06-14T14:57:49+02:00",
+                    "modified": "2022-06-18T10:15:59+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -5620,8 +5499,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T16:57:50+02:00",
-                            "modified": "2022-04-01T12:15:07+02:00",
+                            "created": "2021-06-14T14:57:50+02:00",
+                            "modified": "2022-04-01T10:15:07+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -5665,8 +5544,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:57:49+02:00",
-                "modified": "2022-04-01T12:15:07+02:00",
+                "created": "2021-06-14T14:57:49+02:00",
+                "modified": "2022-04-01T10:15:07+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -5702,6 +5581,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5712,8 +5593,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:57:49+02:00",
-                "modified": "2022-04-01T12:15:07+02:00",
+                "created": "2021-06-14T14:57:49+02:00",
+                "modified": "2022-04-01T10:15:07+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -5753,8 +5634,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T16:57:49+02:00",
-                        "modified": "2022-04-01T12:15:07+02:00",
+                        "created": "2021-06-14T14:57:49+02:00",
+                        "modified": "2022-04-01T10:15:07+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -5790,6 +5671,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5800,8 +5683,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T16:57:49+02:00",
-                "modified": "2022-04-01T12:15:07+02:00",
+                "created": "2021-06-14T14:57:49+02:00",
+                "modified": "2022-04-01T10:15:07+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -5838,8 +5721,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T16:57:49+02:00",
-                    "modified": "2022-04-01T12:15:07+02:00",
+                    "created": "2021-06-14T14:57:49+02:00",
+                    "modified": "2022-04-01T10:15:07+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -5887,8 +5770,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:03:28+02:00",
-                "modified": "2022-04-01T12:15:30+02:00",
+                "created": "2021-06-14T15:03:28+02:00",
+                "modified": "2022-04-01T10:15:30+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -5925,10 +5808,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -5939,8 +5826,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:03:28+02:00",
-                "modified": "2022-04-01T12:15:30+02:00",
+                "created": "2021-06-14T15:03:28+02:00",
+                "modified": "2022-04-01T10:15:30+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -5978,8 +5865,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:03:28+02:00",
-                        "modified": "2022-04-01T12:15:30+02:00",
+                        "created": "2021-06-14T15:03:28+02:00",
+                        "modified": "2022-04-01T10:15:30+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -6022,8 +5909,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:03:28+02:00",
-                "modified": "2022-04-01T12:15:30+02:00",
+                "created": "2021-06-14T15:03:28+02:00",
+                "modified": "2022-04-01T10:15:30+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -6060,8 +5947,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:03:28+02:00",
-                    "modified": "2022-04-01T12:15:30+02:00",
+                    "created": "2021-06-14T15:03:28+02:00",
+                    "modified": "2022-04-01T10:15:30+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -6099,8 +5986,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T17:03:28+02:00",
-                            "modified": "2022-04-01T12:15:30+02:00",
+                            "created": "2021-06-14T15:03:28+02:00",
+                            "modified": "2022-04-01T10:15:30+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -6144,8 +6031,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:03:28+02:00",
-                "modified": "2022-04-01T12:15:30+02:00",
+                "created": "2021-06-14T15:03:28+02:00",
+                "modified": "2022-04-01T10:15:30+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -6181,6 +6068,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -6191,8 +6080,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:03:28+02:00",
-                "modified": "2022-04-01T12:15:30+02:00",
+                "created": "2021-06-14T15:03:28+02:00",
+                "modified": "2022-04-01T10:15:30+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -6232,8 +6121,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:03:28+02:00",
-                        "modified": "2022-04-01T12:15:30+02:00",
+                        "created": "2021-06-14T15:03:28+02:00",
+                        "modified": "2022-04-01T10:15:30+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -6269,6 +6158,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -6279,8 +6170,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:03:28+02:00",
-                "modified": "2022-04-01T12:15:30+02:00",
+                "created": "2021-06-14T15:03:28+02:00",
+                "modified": "2022-04-01T10:15:30+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -6317,8 +6208,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:03:28+02:00",
-                    "modified": "2022-04-01T12:15:30+02:00",
+                    "created": "2021-06-14T15:03:28+02:00",
+                    "modified": "2022-04-01T10:15:30+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -6366,8 +6257,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:06:58+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:06:58+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -6404,6 +6295,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -6414,8 +6307,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:06:58+02:00",
-                "modified": "2021-06-14T17:07:00+02:00",
+                "created": "2021-06-14T15:06:58+02:00",
+                "modified": "2021-06-14T15:07:00+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -6455,8 +6348,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:06:58+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:06:58+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -6492,6 +6385,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -6502,8 +6397,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:06:58+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:06:58+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -6540,8 +6435,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:06:58+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:06:58+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -6584,8 +6479,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:06:58+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:06:58+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -6626,8 +6521,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:06:58+02:00",
-                "modified": "2021-06-14T17:07:00+02:00",
+                "created": "2021-06-14T15:06:58+02:00",
+                "modified": "2021-06-14T15:07:00+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -6667,8 +6562,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:06:58+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:06:58+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -6704,10 +6599,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -6718,8 +6617,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:06:58+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:06:58+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -6756,8 +6655,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:06:58+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:06:58+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -6805,8 +6704,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:10:37+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:10:37+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -6843,10 +6742,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -6857,8 +6760,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:10:37+02:00",
-                "modified": "2021-06-14T17:10:39+02:00",
+                "created": "2021-06-14T15:10:37+02:00",
+                "modified": "2021-06-14T15:10:39+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -6896,8 +6799,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:10:37+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:10:37+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -6940,8 +6843,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:10:37+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:10:37+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -6978,8 +6881,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:10:37+02:00",
-                    "modified": "2021-06-14T17:10:39+02:00",
+                    "created": "2021-06-14T15:10:37+02:00",
+                    "modified": "2021-06-14T15:10:39+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -7017,8 +6920,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T17:10:37+02:00",
-                            "modified": "2021-11-14T14:25:02+01:00",
+                            "created": "2021-06-14T15:10:37+02:00",
+                            "modified": "2021-11-14T13:25:02+01:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -7062,8 +6965,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:10:37+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:10:37+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -7099,6 +7002,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7109,8 +7014,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:10:37+02:00",
-                "modified": "2021-06-14T17:10:39+02:00",
+                "created": "2021-06-14T15:10:37+02:00",
+                "modified": "2021-06-14T15:10:39+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -7150,8 +7055,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:10:37+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:10:37+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -7187,6 +7092,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7197,8 +7104,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:10:37+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:10:37+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -7235,8 +7142,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:10:37+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:10:37+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -7284,8 +7191,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:19:43+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:19:43+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -7322,10 +7229,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7336,8 +7247,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:19:43+02:00",
-                "modified": "2021-06-14T17:19:45+02:00",
+                "created": "2021-06-14T15:19:43+02:00",
+                "modified": "2021-06-14T15:19:45+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -7375,8 +7286,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:19:43+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:19:43+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -7419,8 +7330,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:19:43+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:19:43+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -7457,8 +7368,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:19:43+02:00",
-                    "modified": "2021-06-14T17:19:45+02:00",
+                    "created": "2021-06-14T15:19:43+02:00",
+                    "modified": "2021-06-14T15:19:45+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -7496,8 +7407,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T17:19:43+02:00",
-                            "modified": "2021-11-14T14:25:02+01:00",
+                            "created": "2021-06-14T15:19:43+02:00",
+                            "modified": "2021-11-14T13:25:02+01:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -7541,8 +7452,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:19:43+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:19:43+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -7578,6 +7489,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7588,8 +7501,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:19:43+02:00",
-                "modified": "2021-06-14T17:19:45+02:00",
+                "created": "2021-06-14T15:19:43+02:00",
+                "modified": "2021-06-14T15:19:45+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -7629,8 +7542,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:19:43+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:19:43+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -7666,6 +7579,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7676,8 +7591,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:19:43+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:19:43+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -7714,8 +7629,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:19:43+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:19:43+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -7763,8 +7678,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:22:25+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:22:25+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -7801,6 +7716,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7811,8 +7728,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:22:25+02:00",
-                "modified": "2021-06-14T17:22:26+02:00",
+                "created": "2021-06-14T15:22:25+02:00",
+                "modified": "2021-06-14T15:22:26+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -7852,8 +7769,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:22:25+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:22:25+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -7889,6 +7806,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -7899,8 +7818,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:22:25+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:22:25+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -7937,8 +7856,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:22:25+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:22:25+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -7981,8 +7900,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:22:25+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:22:25+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -8018,6 +7937,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8028,8 +7949,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:22:25+02:00",
-                "modified": "2021-06-14T17:22:26+02:00",
+                "created": "2021-06-14T15:22:25+02:00",
+                "modified": "2021-06-14T15:22:26+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -8069,8 +7990,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:22:25+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:22:25+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -8106,6 +8027,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8116,8 +8039,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:22:24+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:22:24+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -8154,8 +8077,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:22:25+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:22:25+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -8203,8 +8126,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:25:37+02:00",
-                "modified": "2023-11-24T10:02:13+01:00",
+                "created": "2021-06-14T15:25:37+02:00",
+                "modified": "2023-11-24T09:02:13+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -8241,10 +8164,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8255,8 +8182,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:25:37+02:00",
-                "modified": "2023-11-24T10:02:13+01:00",
+                "created": "2021-06-14T15:25:37+02:00",
+                "modified": "2023-11-24T09:02:13+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -8296,8 +8223,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:25:37+02:00",
-                        "modified": "2023-11-24T10:02:13+01:00",
+                        "created": "2021-06-14T15:25:37+02:00",
+                        "modified": "2023-11-24T09:02:13+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -8333,6 +8260,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8343,8 +8272,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:25:37+02:00",
-                "modified": "2023-11-24T10:02:13+01:00",
+                "created": "2021-06-14T15:25:37+02:00",
+                "modified": "2023-11-24T09:02:13+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -8385,8 +8314,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:25:37+02:00",
-                "modified": "2023-11-24T10:02:13+01:00",
+                "created": "2021-06-14T15:25:37+02:00",
+                "modified": "2023-11-24T09:02:13+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -8426,8 +8355,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:25:37+02:00",
-                        "modified": "2023-11-24T10:02:13+01:00",
+                        "created": "2021-06-14T15:25:37+02:00",
+                        "modified": "2023-11-24T09:02:13+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -8463,6 +8392,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8478,8 +8409,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:28:48+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:28:48+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -8516,10 +8447,14 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8530,8 +8465,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:28:48+02:00",
-                "modified": "2021-06-14T17:28:50+02:00",
+                "created": "2021-06-14T15:28:48+02:00",
+                "modified": "2021-06-14T15:28:50+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -8569,8 +8504,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:28:48+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:28:48+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -8613,8 +8548,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:28:48+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:28:48+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -8651,8 +8586,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:28:48+02:00",
-                    "modified": "2021-06-14T17:28:50+02:00",
+                    "created": "2021-06-14T15:28:48+02:00",
+                    "modified": "2021-06-14T15:28:50+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -8690,8 +8625,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T17:28:48+02:00",
-                            "modified": "2021-11-14T14:25:02+01:00",
+                            "created": "2021-06-14T15:28:48+02:00",
+                            "modified": "2021-11-14T13:25:02+01:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -8735,8 +8670,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:28:48+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:28:48+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -8772,6 +8707,8 @@
                 "sections": [
                     {
                         "id": 22,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8782,8 +8719,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:28:48+02:00",
-                "modified": "2021-06-14T17:28:50+02:00",
+                "created": "2021-06-14T15:28:48+02:00",
+                "modified": "2021-06-14T15:28:50+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -8823,8 +8760,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:28:48+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:28:48+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -8860,6 +8797,8 @@
                 "sections": [
                     {
                         "id": 3,
+                        "sectiontype": "inscription",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -8870,8 +8809,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:28:48+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:28:48+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -8908,8 +8847,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T17:28:48+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T15:28:48+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -8957,8 +8896,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:39:56+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T15:39:56+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -8999,8 +8938,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:39:56+02:00",
-                "modified": "2021-06-14T17:39:59+02:00",
+                "created": "2021-06-14T15:39:56+02:00",
+                "modified": "2021-06-14T15:39:59+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -9038,8 +8977,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:39:56+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:39:56+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -9082,8 +9021,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T17:39:56+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T15:39:56+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -9122,8 +9061,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T17:39:56+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T15:39:56+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -9160,6 +9099,8 @@
                 "sections": [
                     {
                         "id": 1,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -9175,8 +9116,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:21:12+02:00",
-                "modified": "2022-04-04T10:54:33+02:00",
+                "created": "2021-06-14T13:21:12+02:00",
+                "modified": "2022-04-04T08:54:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -9213,6 +9154,8 @@
                 "sections": [
                     {
                         "id": 20,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -9223,8 +9166,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:22:30+02:00",
-                "modified": "2022-04-04T10:54:33+02:00",
+                "created": "2021-06-14T13:22:30+02:00",
+                "modified": "2022-04-04T08:54:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -9262,8 +9205,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:21:12+02:00",
-                        "modified": "2022-04-04T10:54:33+02:00",
+                        "created": "2021-06-14T13:21:12+02:00",
+                        "modified": "2022-04-04T08:54:33+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -9306,8 +9249,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:22:30+02:00",
-                "modified": "2022-04-04T10:54:33+02:00",
+                "created": "2021-06-14T13:22:30+02:00",
+                "modified": "2022-04-04T08:54:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 4,
@@ -9344,8 +9287,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:22:30+02:00",
-                    "modified": "2022-04-04T10:54:33+02:00",
+                    "created": "2021-06-14T13:22:30+02:00",
+                    "modified": "2022-04-04T08:54:33+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -9383,8 +9326,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T15:21:12+02:00",
-                            "modified": "2022-04-04T10:54:33+02:00",
+                            "created": "2021-06-14T13:21:12+02:00",
+                            "modified": "2022-04-04T08:54:33+02:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,
@@ -9428,8 +9371,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:21:12+02:00",
-                "modified": "2022-04-04T10:54:33+02:00",
+                "created": "2021-06-14T13:21:12+02:00",
+                "modified": "2022-04-04T08:54:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 7,
@@ -9466,10 +9409,14 @@
                 "sections": [
                     {
                         "id": 1,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 23,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -9480,8 +9427,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:21:12+02:00",
-                "modified": "2022-04-04T10:54:33+02:00",
+                "created": "2021-06-14T13:21:12+02:00",
+                "modified": "2022-04-04T08:54:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -9520,8 +9467,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:21:12+02:00",
-                        "modified": "2022-04-04T10:54:33+02:00",
+                        "created": "2021-06-14T13:21:12+02:00",
+                        "modified": "2022-04-04T08:54:33+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 7,
@@ -9558,6 +9505,8 @@
                 "sections": [
                     {
                         "id": 18,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -9568,8 +9517,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:21:12+02:00",
-                "modified": "2022-04-04T10:54:33+02:00",
+                "created": "2021-06-14T13:21:12+02:00",
+                "modified": "2022-04-04T08:54:33+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 10,
@@ -9606,8 +9555,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:21:12+02:00",
-                    "modified": "2022-04-04T10:54:33+02:00",
+                    "created": "2021-06-14T13:21:12+02:00",
+                    "modified": "2022-04-04T08:54:33+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 7,
@@ -9655,8 +9604,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:42:47+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:42:47+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -9693,6 +9642,8 @@
                 "sections": [
                     {
                         "id": 1,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -9703,8 +9654,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:42:47+02:00",
-                "modified": "2021-06-14T15:42:51+02:00",
+                "created": "2021-06-14T13:42:47+02:00",
+                "modified": "2021-06-14T13:42:51+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -9742,8 +9693,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:42:47+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:42:47+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -9786,8 +9737,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:42:47+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:42:47+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -9826,8 +9777,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:42:47+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:42:47+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -9864,6 +9815,8 @@
                 "sections": [
                     {
                         "id": 20,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -9874,8 +9827,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:42:47+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:42:47+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -9916,8 +9869,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:42:46+02:00",
-                "modified": "2021-06-14T15:42:51+02:00",
+                "created": "2021-06-14T13:42:46+02:00",
+                "modified": "2021-06-14T13:42:51+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -9956,8 +9909,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:42:47+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:42:47+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -9994,10 +9947,14 @@
                 "sections": [
                     {
                         "id": 23,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 18,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10008,8 +9965,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:42:46+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:42:46+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -10046,8 +10003,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:42:47+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T13:42:47+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -10095,8 +10052,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:39:21+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:39:21+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -10133,6 +10090,8 @@
                 "sections": [
                     {
                         "id": 1,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10143,8 +10102,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:39:21+02:00",
-                "modified": "2021-06-14T15:39:24+02:00",
+                "created": "2021-06-14T13:39:21+02:00",
+                "modified": "2021-06-14T13:39:24+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -10183,8 +10142,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:39:21+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:39:21+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -10221,6 +10180,8 @@
                 "sections": [
                     {
                         "id": 23,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10231,8 +10192,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:39:21+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:39:21+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -10271,8 +10232,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:39:21+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:39:21+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -10309,6 +10270,8 @@
                 "sections": [
                     {
                         "id": 18,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10319,8 +10282,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:39:21+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:39:21+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -10361,8 +10324,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:39:21+02:00",
-                "modified": "2021-06-14T15:39:24+02:00",
+                "created": "2021-06-14T13:39:21+02:00",
+                "modified": "2021-06-14T13:39:24+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -10401,8 +10364,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:39:21+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:39:21+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -10439,6 +10402,8 @@
                 "sections": [
                     {
                         "id": 20,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10449,8 +10414,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:39:21+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:39:21+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -10487,8 +10452,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:39:21+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T13:39:21+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 8,
@@ -10536,8 +10501,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:35:43+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:35:43+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -10573,6 +10538,8 @@
                 "sections": [
                     {
                         "id": 18,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10583,8 +10550,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:35:43+02:00",
-                "modified": "2021-06-14T15:35:45+02:00",
+                "created": "2021-06-14T13:35:43+02:00",
+                "modified": "2021-06-14T13:35:45+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -10623,8 +10590,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:35:43+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:35:43+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -10661,6 +10628,8 @@
                 "sections": [
                     {
                         "id": 1,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10671,8 +10640,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:35:43+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:35:43+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -10711,8 +10680,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:35:43+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:35:43+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -10749,10 +10718,14 @@
                 "sections": [
                     {
                         "id": 23,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 20,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10768,8 +10741,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:05:50+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:05:50+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -10810,8 +10783,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:05:50+02:00",
-                "modified": "2021-06-14T15:05:50+02:00",
+                "created": "2021-06-14T13:05:50+02:00",
+                "modified": "2021-06-14T13:05:50+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -10850,8 +10823,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:05:50+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:05:50+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -10888,14 +10861,20 @@
                 "sections": [
                     {
                         "id": 1,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 23,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     },
                     {
                         "id": 18,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -10906,8 +10885,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:05:50+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:05:50+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -10944,8 +10923,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:05:50+02:00",
-                    "modified": "2021-11-14T14:25:02+01:00",
+                    "created": "2021-06-14T13:05:50+02:00",
+                    "modified": "2021-11-14T13:25:02+01:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 1,
@@ -10988,8 +10967,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:05:50+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:05:50+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 8,
@@ -11030,8 +11009,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:05:50+02:00",
-                "modified": "2021-06-14T15:05:50+02:00",
+                "created": "2021-06-14T13:05:50+02:00",
+                "modified": "2021-06-14T13:05:50+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 9,
@@ -11069,8 +11048,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:05:50+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:05:50+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -11113,8 +11092,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:05:50+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:05:50+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 12,
@@ -11153,8 +11132,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:05:50+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:05:50+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 8,
@@ -11191,6 +11170,8 @@
                 "sections": [
                     {
                         "id": 20,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -11206,8 +11187,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:27:09+02:00",
-                "modified": "2021-11-14T14:25:02+01:00",
+                "created": "2021-06-14T13:27:09+02:00",
+                "modified": "2021-11-14T13:25:02+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 1,
@@ -11244,6 +11225,8 @@
                 "sections": [
                     {
                         "id": 23,
+                        "sectiontype": "inscriptiontext",
+                        "norm_iri": null,
                         "articles_id": 1
                     }
                 ]
@@ -11254,8 +11237,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:27:08+02:00",
-                "modified": "2021-06-14T15:27:10+02:00",
+                "created": "2021-06-14T13:27:08+02:00",
+                "modified": "2021-06-14T13:27:10+02:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 2,
@@ -11293,8 +11276,8 @@
                         "version_id": null,
                         "job_id": null,
                         "published": null,
-                        "created": "2021-06-14T15:27:09+02:00",
-                        "modified": "2021-11-14T14:25:02+01:00",
+                        "created": "2021-06-14T13:27:09+02:00",
+                        "modified": "2021-11-14T13:25:02+01:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 1,
@@ -11337,8 +11320,8 @@
                 "version_id": null,
                 "job_id": null,
                 "published": null,
-                "created": "2021-06-14T15:27:08+02:00",
-                "modified": "2022-01-25T01:31:34+01:00",
+                "created": "2021-06-14T13:27:08+02:00",
+                "modified": "2022-01-25T00:31:34+01:00",
                 "created_by": 1,
                 "modified_by": 1,
                 "sortno": 5,
@@ -11375,8 +11358,8 @@
                     "version_id": null,
                     "job_id": null,
                     "published": null,
-                    "created": "2021-06-14T15:27:08+02:00",
-                    "modified": "2021-06-14T15:27:10+02:00",
+                    "created": "2021-06-14T13:27:08+02:00",
+                    "modified": "2021-06-14T13:27:10+02:00",
                     "created_by": 1,
                     "modified_by": 1,
                     "sortno": 2,
@@ -11414,8 +11397,8 @@
                             "version_id": null,
                             "job_id": null,
                             "published": null,
-                            "created": "2021-06-14T15:27:09+02:00",
-                            "modified": "2021-11-14T14:25:02+01:00",
+                            "created": "2021-06-14T13:27:09+02:00",
+                            "modified": "2021-11-14T13:25:02+01:00",
                             "created_by": 1,
                             "modified_by": 1,
                             "sortno": 1,

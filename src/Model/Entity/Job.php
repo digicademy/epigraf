@@ -23,13 +23,16 @@ use Cake\Log\Engine\FileLog;
 use Cake\Log\Log;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Throwable;
+use Predis\Client;
 
 /**
  * Job Entity
  *
  * # Database fields (without inherited fields)
  * @property string $typ
+ * @property int $delay If this is a delayed job, a number greater than 0.
  * @property string $status
  * @property array $config
  * @property int $progress
@@ -41,11 +44,15 @@ use Throwable;
  * @property string $exceptionMessage
  * @property string|null $entityClass
  * @property string $indexKey
+ * @property string|null $queueStatus
+ * @property bool $isCanceled
+ * @property string $progressLabel Progress indicator in the form "2/10".
  *
  * @property null|string $redirect
  * @property array $redirectParams
  * @property string $redirectUrl
  * @property string $downloadUrl
+ * @property string $cancelUrl
  *
  * @property string $jobPath
  * @property string $databasePath
@@ -165,6 +172,82 @@ class Job extends BaseEntity
     }
 
     /**
+     * Get the Redis client to manage the queue
+     *
+     * @return Client
+     */
+    protected function getRedisClient() {
+        return new Client([
+            'scheme' => Configure::read('Jobs.scheme', 'tcp'),
+            'host'   => Configure::read('Jobs.host', 'localhost'),
+            'port'   => Configure::read('Jobs.port', 6379),
+            'read_write_timeout' => -1
+        ]);
+    }
+
+    /**
+     * Add this job to the queue
+     *
+     * @return void
+     */
+    public function toQueue() {
+        $data = [
+            'job_id' => $this->id,
+            'job_type' => $this->typ
+        ];
+
+        $queueName = Configure::read('Jobs.queue_name');
+        $statusName = Configure::read('Jobs.status_name');
+
+        $redis = $this->getRedisClient();
+        $redis->hset($statusName, $this->id, "waiting");
+        $redis->rpush($queueName, json_encode($data));
+    }
+
+    /**
+     * Get the status from the queue
+     *
+     * @return string|null
+     */
+    protected function _getQueueStatus() {
+        if (!Configure::read('Jobs.delay')) {
+            return null;
+        }
+
+        $statusName = Configure::read('Jobs.status_name');
+        return $this->getRedisClient()->hget($statusName, $this->id);
+    }
+
+    /**
+     * Cancel the job
+     *
+     * @return Job
+     */
+    public function cancel(): Job {
+        if (Configure::read('Jobs.delay')) {
+            $redis = $this->getRedisClient();
+            $statusName = Configure::read('Jobs.status_name');
+            $redis->hset($statusName, $this->id, "canceled");
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * Check whether the job is canceled
+     *
+     * @return bool
+     */
+    protected function _getIsCanceled(): bool {
+        if (!Configure::read('Jobs.delay')) {
+            return false;
+        }
+        $statusName = Configure::read('Jobs.status_name');
+        return $this->getRedisClient()->hget($statusName, $this->id) === 'canceled';
+    }
+
+    /**
      * Initialize classes
      *
      * @return void
@@ -274,7 +357,6 @@ class Job extends BaseEntity
         if (!class_exists('HistoricDates')) {
             class_alias('App\Utilities\Converters\HistoricDates', 'HistoricDates');
         }
-
     }
 
     /**
@@ -388,13 +470,16 @@ class Job extends BaseEntity
      *
      * @return void
      */
-    public function addTaskError($msg, $context, $e)
+    public function addTaskError($msg, $context, $e = null)
     {
-        $context['error'] = $e->getMessage();
+        $context['error'] =  !empty($e) ? $e->getMessage() : '';
         $context['scope'] = 'jobs';
         $this->_taskErrors[] = $msg;
 
-        $msg .= "\n" . $this->_getExceptionMessage($e) . "\n\n";
+        if (!empty($e)) {
+            $msg .= "\n" . $this->_getExceptionMessage($e) . "\n\n";
+        }
+
         Log::write('error', $msg, $context);
     }
 
@@ -472,18 +557,34 @@ class Job extends BaseEntity
      */
     public function _getNexturl()
     {
-        if ($this->status == 'work') {
+        if (in_array($this->status, ['init', 'work'])) {
             return Router::url([
                 'plugin' => false,
                 'controller' => 'Jobs',
                 'action' => 'execute',
                 $this->id,
-                'database' => $this->config['database'],
+                'database' => $this->config['database'] ?? '',
                 '?' => ['timeout' => $this->timeout]
             ]);
         }
 
         return false;
+    }
+
+    /**
+     * Get cancel URL
+     *
+     * @return string
+     */
+    public function _getCancelUrl()
+    {
+        return Router::url([
+            'plugin' => false,
+            'controller' => 'Jobs',
+            'action' => 'cancel',
+            $this->id,
+            'database' => $this->config['database'] ?? ''
+        ]);
     }
 
     /**
@@ -509,11 +610,15 @@ class Job extends BaseEntity
      */
     protected function _getDownloadUrl()
     {
+        $params =  ['download' => $this->config['download'] ?? ''];
+        if (!empty($this->config['force'])) {
+            $params['force'] = '1';
+        }
         return Router::url([
             'controller' => 'Jobs',
             'action' => 'execute',
             $this->id,
-            '?' => ['download' => $this->config['download'] ?? '0']
+            '?' => $params
         ]);
     }
 
@@ -526,18 +631,15 @@ class Job extends BaseEntity
      */
     protected function _getRedirect()
     {
-        if ($this->status == 'work') {
-            return null;
+        if ($this->status === 'finish') {
+            if (!empty($this->config['download'])) {
+                return $this->downloadUrl;
+            }
+            elseif (!empty($this->config['redirect'])) {
+                return $this->redirectUrl;
+            }
         }
-        elseif ($this->status == 'download') {
-            return $this->downloadUrl;
-        }
-        elseif ($this->status == 'finish') {
-            return $this->redirectUrl;
-        }
-        else {
-            return null;
-        }
+        return null;
     }
 
     /**
@@ -589,9 +691,11 @@ class Job extends BaseEntity
     /**
      * Get current task
      *
-     * Returns the last element if pipeline is finished.
+     * Returns the last element if the pipeline is finished.
      *
-     * @param bool $last
+     * @param bool $last If the progress is beyond the number of tasks,
+     *                   return the last task (true)
+     *                   or the finish task (false)
      * @return mixed|string[]
      */
     public function getCurrentTask($last = false)
@@ -617,8 +721,7 @@ class Job extends BaseEntity
     /**
      * Update current pipeline task
      *
-     * @param $current
-     *
+     * @param array $current Task array
      * @return void
      */
     public function updateCurrentTask($current)
@@ -699,14 +802,12 @@ class Job extends BaseEntity
      *
      * @return string
      */
-    public function getCurrentInputFile()
+    public function getCurrentInputFilePath()
     {
         $current = $this->getCurrentTask();
-
         $filename = empty($current['inputfile']) ? 'job_' . $this->id . '.xml' : $current['inputfile'];
-        $filepath = $this->jobPath . $filename;
 
-        return $filepath;
+        return $this->jobPath . $filename;
     }
 
     /**
@@ -733,22 +834,50 @@ class Job extends BaseEntity
     }
 
     /**
-     * Get current output path specified by job id
+     * Get the current output file name
      *
      * @return string
      */
-    public function getCurrentOutputFile()
+    public function getCurrentOutputFileName()
     {
         $current = $this->getCurrentTask(true);
-        $ext = empty($current['extension']) ? 'xml' : trim($current['extension'], " \n\r\t\v\x00/.");
+        $filename =  $current['outputfile'] ?? '';
+        if (empty($filename)) {
+            $ext = empty($current['extension']) ? 'xml' : trim($current['extension'], " \n\r\t\v\x00/.");
+            $filename = 'job_' . $this->id . '.' . $ext;
+        }
+        return $filename;
+    }
 
-        $filename = empty($current['outputfile']) ? ('job_' . $this->id . '.' . $ext) : $current['outputfile'];
-        $filepath = $this->jobPath . $filename;
+    /**
+     * Get the path of the current output file
+     *
+     * @param string|null $filename If the job results in multiple output files, set the filename
+     * @return string
+     */
+    public function getCurrentOutputFilePath($filename = null)
+    {
+        $current = $this->getCurrentTask(true);
 
-        $current['outputfile'] = $filename;
-        $this->updateCurrentTask($current);
+        if (!empty($filename) ) {
+            $downloads = str_replace("\r\n", "\n", $current['files'] ?? '');
+            $downloads = explode("\n", $downloads);
+            if (!in_array($filename,  $downloads)) {
+                $filename = null;
+            }
+        }
 
-        return $filepath;
+        else {
+            $filename = $this->getCurrentOutputFileName();
+            $current['outputfile'] = $filename;
+            $this->updateCurrentTask($current);
+        }
+
+        if (empty($filename)) {
+            throw new RecordNotFoundException(__('The file {0} is not available for download.', $filename));
+        }
+
+        return $this->jobPath . $filename;
     }
 
     /**
@@ -799,9 +928,6 @@ class Job extends BaseEntity
     public function updateProgress($steps = 1)
     {
         if ($this->status == 'finish') {
-            return;
-        }
-        if ($this->status == 'download') {
             return;
         }
 
@@ -896,9 +1022,6 @@ class Job extends BaseEntity
                     $this->task_init();
                     $this->status = 'work';
                 }
-                elseif ($this->status == 'download') {
-                    $this->status = 'download';
-                }
                 elseif ($current['type'] === 'finish') {
                     $this->status = 'finish';
                 }
@@ -959,7 +1082,7 @@ class Job extends BaseEntity
      * @param $dbname
      * @return Databank
      */
-    public function activateDatabank($dbname)
+    public function activateDatabank($dbname) : Databank
     {
         BaseTable::setDatabase($dbname);
 
@@ -985,6 +1108,9 @@ class Job extends BaseEntity
 
         // Database
         $config['database'] = $queryparams['database'] ?? null;
+
+        // Server
+        $config['server'] = Router::url('/', true);
 
         // Search conditions
         $config['model'] = 'articles';
@@ -1109,6 +1235,9 @@ class Job extends BaseEntity
         // 3. Transfer to job config
         //
         $this->config['tasks'] = $options_job;
+        $this->config['pipeline_name'] = $pipeline->name;
+//        $this->config['pipeline_progress'] = 0;
+
         return $this;
     }
 
@@ -1183,6 +1312,38 @@ class Job extends BaseEntity
         }
 
         return $params;
+    }
+
+    protected function _getProgressLabel()
+    {
+        return $this->progress . '/' . $this->progressmax;
+    }
+
+    /**
+     * Return fields to be rendered in view/edit table
+     *
+     * @return array[]
+     */
+    protected function _getHtmlFields()
+    {
+        $fields = [
+            'typ' => ['caption' => __('Job type')],
+            'status' => ['caption' => __('Status')],
+            'delay' => ['caption' => __('Delayed')],
+            'queueStatus' => ['caption' => __('Queue status')],
+            'progressLabel' => ['caption' => __('Progress')],
+            'created' => [
+                'caption' => __('Created'),
+                'action' => 'view'
+            ],
+
+            'modified' => [
+                'caption' => __('Modified'),
+                'action' => 'view'
+            ]
+        ];
+
+        return $fields;
     }
 }
 

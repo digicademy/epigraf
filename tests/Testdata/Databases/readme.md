@@ -15,6 +15,20 @@ The dumps were created with HeidiSQL from the local databases
   ```
   mysqldump --routines --quick -h mysql -u root -proot epi_test > "/var/www/html/tests/Testdata/Databases/test_projects.sql"
   ```
+  Before creating the dump, it is advised to delete deleted records from the test database:
+  ```
+  DELETE FROM articles WHERE deleted <> 0;
+  DELETE FROM files WHERE deleted <> 0;
+  DELETE FROM footnotes WHERE deleted <> 0;
+  DELETE FROM items WHERE deleted <> 0;
+  DELETE FROM links WHERE deleted <> 0;
+  DELETE FROM notes WHERE deleted <> 0;
+  DELETE FROM projects WHERE deleted <> 0;
+  DELETE FROM properties WHERE deleted <> 0;
+  DELETE FROM sections WHERE deleted <> 0;
+  DELETE FROM `types` WHERE deleted <> 0;
+  DELETE FROM users WHERE deleted <> 0;
+  ```
 
 - test_epigraf.sql was assembled with specific content.
   Docs, for example, were dumped using the following criteria:

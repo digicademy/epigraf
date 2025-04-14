@@ -1,0 +1,86 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Epigraf\n"
+"POT-Creation-Date: 2025-03-02 14:18+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jakob Jünger <jakobjuenger@freenet.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:604
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:669
+msgid "You are not allowed to access this page, please login."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:611
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:678
+msgid "Page not found."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:629
+msgid "Entity not found"
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:683
+msgid "Page not found"
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:735
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:815
+msgid "The {0} has been saved."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:741
+msgid "The {0} could not be saved, please try again."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:785
+msgid "The table is open in EpiDesktop. Close or unlock in EpiDesktop."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:818
+msgid "The {0} could not be saved. Please, try again."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:858
+msgid "The {0} has dependencies. Please remove the dependencies first."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:873
+msgid "The {0} has been deleted."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:877
+msgid "The {0} could not be deleted. Please, try again."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/AnswerComponent.php:133
+msgid "Please log in to access this location."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/LockComponent.php:62
+msgid "The dataset is locked by your account. Close it in other windows and try again."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/LockComponent.php:65
+msgid "Another user edits the dataset. Please, try again later."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:40
+msgid "Locked"
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:43
+msgid "Another user edits the dataset. Please try again later."
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:66
+msgid "Unlocked"
+msgstr ""
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:69
+msgid "Could not unlock the entity"
+msgstr ""
+

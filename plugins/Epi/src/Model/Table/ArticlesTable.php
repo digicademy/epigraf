@@ -10,22 +10,24 @@
 
 namespace Epi\Model\Table;
 
-use App\Model\Entity\InvalidTaskException;
-use App\Model\Entity\Jobs\JobMutate;
+use App\Datasource\Paging\TotalPaginator;
+use App\Datasource\Services\ServiceFactory;
 use App\Model\Interfaces\ExportTableInterface;
-use App\Model\Interfaces\MutateTableInterface;
+use App\Model\Table\BaseTable as AppBaseTable;
 use App\Model\Table\SaveManyException;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
+use App\Utilities\Converters\Objects;
 use App\Utilities\Text\TextParser;
+use App\View\MarkdownView;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
+use Cake\Database\Expression\AggregateExpression;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
-use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Epi\Model\Behavior\IndexBehavior;
 use Epi\Model\Entity\Article;
@@ -46,6 +48,13 @@ use Epi\Model\Entity\SectionPath;
  */
 class ArticlesTable extends BaseTable implements ExportTableInterface
 {
+
+    /**
+     * The field containing a default caption
+     *
+     * @var string
+     */
+    public $captionField = 'name';
 
     public $parameters = [
         'id' => 'list-integer', // For updating stale rows in paginator.js
@@ -70,8 +79,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         'term' => 'string',
         'highlight' => 'string',
         'projects' => 'list-integer',
-        'properties' => 'hybrid-list-integer',
-        'descent' => 'hybrid-list-boolean',
+        'properties' => 'nested-list', // Example: properties.objecttypes.selected=1,2,3.
 
         'references' => 'list-integer',
 
@@ -82,9 +90,10 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         'selected' => 'list',
         'columns' => 'list',
         'sort' => 'list',
+        'direction' => 'list',
 
         'template' => 'string',
-        'mode' => 'string',
+        'mode' => 'constant-mode',
         'shape' => 'string',
         'idents' => 'string',
 
@@ -350,12 +359,12 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * Set root and container property of the items
      *
      * @param EventInterface $event
-     * @param $entity
-     * @param $options
+     * @param EntityInterface $entity
+     * @param array $options
      *
      * @return void
      */
-    public function beforeSave(EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, $entity, $options = []): void
     {
         if (!empty($entity->sections)) {
             foreach ($entity->sections as $section) {
@@ -366,6 +375,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         if ($options['addsections'] ?? false) {
             $entity->addDefaultSections(true);
         }
+
     }
 
     /**
@@ -373,7 +383,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
-     * @param $options
+     * @param array $options
      *
      * @return void
      */
@@ -425,6 +435,9 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     /**
      * Find articles by geolocation
      *
+     * ### Options
+     * - tile (string) The tile coordinates in the format "zoom/y/x"
+     *
      * @param Query $query
      * @param array $options
      *
@@ -432,45 +445,50 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      */
     public function findHasGeolocation(Query $query, array $options)
     {
+
         if (!empty($options['tile'])) {
-            $options['tile'] = explode('/', $options['tile'] ?? '');
 
-            // See https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
-            $zoom = (int)$options['tile'][0] ?? 0;
-            $ytile = (int)$options['tile'][1] ?? 0;
-            $xtile = (int)$options['tile'][2] ?? 0;
+            $filter = $this->getFilter([]);
+            $geoConditions = [];
+            foreach ($filter['geodata'] ?? [] as $itemType => $itemField) {
 
-            $n = pow(2, $zoom);
-            $lon_deg_west = $xtile / $n * 360.0 - 180.0;
-            $lon_deg_east = ($xtile + 1) / $n * 360.0 - 180.0;
-            $lat_deg_north = rad2deg(atan(sinh(pi() * (1 - 2 * $ytile / $n))));
-            $lat_deg_south = rad2deg(atan(sinh(pi() * (1 - 2 * ($ytile + 1) / $n))));
+                $geoQuery = $this
+                    ->find()
+                    ->select(['Articles.id'])
+                    ->join($this->_tilesJoin(
+                        $options['tile'],
+                        $itemType,
+                        $itemField,
+                        $options['items']['published'] ?? []
+                    ));
 
-            $query = $query
-                //->having(['distance IS NOT'=>null])
-                ->join($this->_tilesJoin($query, $options))
-                ->where([
-                    'CAST(JSON_VALUE(geo_tiles.`value`,\'$.lat\') AS DOUBLE) > ' . $lat_deg_south,
-                    'CAST(JSON_VALUE(geo_tiles.`value`,\'$.lat\') AS DOUBLE) <= ' . $lat_deg_north,
-                    'CAST(JSON_VALUE(geo_tiles.`value`,\'$.lng\') AS DOUBLE) > ' . $lon_deg_west,
-                    'CAST(JSON_VALUE(geo_tiles.`value`,\'$.lng\') AS DOUBLE) <= ' . $lon_deg_east
-                ]);
-
-            if (!empty($options['items']['published'])) {
-                $query = $query
-                    ->where([
-                        'geo_tiles.published IN' => $options['items']['published']
-                    ]);
+                $geoConditions[] = ['Articles.id IN' => $geoQuery];
             }
+            $query = $query->where(['OR' => $geoConditions]);
+        }
 
-//            if (!empty($options['quality'])) {
-//                $query = $query
-//                    ->where([
-//                        'CAST(JSON_VALUE(geo_tiles.`value`,\'$.val\') AS INTEGER) >= ' . $options['quality'],
-//                    ]);
-//            }
+        return $query;
+    }
 
-            return $query;
+    /**
+     * Find articles without geolocation distance
+     *
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
+    public function findHasNoGeolocation(Query $query, array $options): Query
+    {
+        $filter = $this->getFilter($options);
+        foreach ($filter['geodata'] ?? [] as $itemType => $itemField) {
+
+            $geoQuery = $this
+                ->find()
+                ->select(['Articles.id'])
+                ->join($this->_geoJoin($itemType, $itemField));
+
+            $query = $query->where(['Articles.id NOT IN' => $geoQuery]);
         }
 
         return $query;
@@ -676,10 +694,14 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * Find articles by properties
      *
      * ### Options
-     * - properties (array) Either an array with propertytype as key and list of IDs as values
-     *              or an array with property IDs
-     * - descent (array) An array with propertytype as key and boolean as value
-     *
+     * - properties (array) Either an array with property IDs or a nested list.
+     *                      The nested list contains the propertytype on the first levem,
+     *                      and the following keys on the second:
+     *                      - selected with a list of the IDs
+     *                      - flags: an enum list with the values
+     *                               inv (=inverse selection),
+     *                               all (=select all),
+     *                               des (=descendent properties)
      * @param Query $query
      * @param array $options
      * @return Query
@@ -698,23 +720,68 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $properties = ['' => $properties];
         }
 
-        foreach ($properties as $propertyType => $propertiesIds) {
+        // Selected IDs
+        foreach ($properties as $propertyType => $propertyParams) {
+            $propertyIds = $propertyParams['selected'] ?? $propertyParams;
 
-            if (!$propertiesIds) {
+            if (in_array('all', $propertyParams['flags'] ?? [])) {
+                $hasItemsQuery = $this
+                    ->find()
+                    ->select(['Articles.id'])
+                    ->innerJoinWith('Items.Properties', function (Query $query) use ($propertyType) {
+                        $query = $query->where(['Properties.propertytype' => $propertyType]);
+                        return $query;
+                    });
+
+                $hasLinksQuery = $this
+                    ->find()
+                    ->select(['Articles.id'])
+                    ->innerJoinWith('Links.Properties', function (Query $query) use ($propertyType) {
+                        $query = $query->where(['Properties.propertytype' => $propertyType]);
+                        return $query;
+                    });
+
+                if (in_array('inv', $propertyParams['flags'] ?? [])) {
+                    $query = $query
+                        ->where([
+                            'AND' => [
+                                ['Articles.id NOT IN' => $hasItemsQuery],
+                                ['Articles.id NOT IN' => $hasLinksQuery]
+                            ]
+                        ]);
+                }
+                else {
+                    $query = $query
+                        ->where([
+                            'OR' => [
+                                ['Articles.id IN' => $hasItemsQuery],
+                                ['Articles.id IN' => $hasLinksQuery]
+                            ]
+                        ]);
+                }
+                continue;
+            }
+
+            // show all (no filter) or nothing
+            if (!$propertyIds) {
+                if (in_array('inv', $propertyParams['flags'] ?? [])) {
+                    $query = $query
+                        ->where(['0 = 1']);
+                }
                 continue;
             }
 
             // Collect child IDs
-            if ($options['descent'][$propertyType] ?? false) {
-                $propertiesIds = $this->Items->Properties->find('descendants', ['ids' => $propertiesIds]);
+            if (in_array('des', $propertyParams['flags'] ?? [])) {
+                $propertyIds = $this->Items->Properties->find('descendants', ['ids' => $propertyIds]);
             }
 
             // Items
             $itemsQuery = $this
                 ->find()
                 ->select(['Articles.id'])
-                ->innerJoinWith('Items.Properties', function (Query $query) use ($propertiesIds) {
-                    $query = $query->where(['Properties.id IN' => $propertiesIds]);
+                ->innerJoinWith('Items.Properties', function (Query $query) use ($propertyIds) {
+                    $query = $query->where(['Properties.id IN' => $propertyIds]);
                     return $query;
                 });
 
@@ -722,19 +789,30 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $linksQuery = $this
                 ->find()
                 ->select(['Articles.id'])
-                ->innerJoinWith('Links.Properties', function (Query $query) use ($propertiesIds) {
-                    $query = $query->where(['Properties.id IN' => $propertiesIds]);
+                ->innerJoinWith('Links.Properties', function (Query $query) use ($propertyIds) {
+                    $query = $query->where(['Properties.id IN' => $propertyIds]);
                     return $query;
                 });
 
             // Filter
-            $query = $query
-                ->where([
-                    'or' => [
-                        ['Articles.id IN' => $itemsQuery],
-                        ['Articles.id IN' => $linksQuery],
-                    ]
-                ]);
+            if (in_array('inv', $propertyParams['flags'] ?? [])) {
+                $query = $query
+                    ->where([
+                        'AND' => [
+                            ['Articles.id NOT IN' => $itemsQuery],
+                            ['Articles.id NOT IN' => $linksQuery],
+                        ]
+                    ]);
+            }
+            else {
+                $query = $query
+                    ->where([
+                        'OR' => [
+                            ['Articles.id IN' => $itemsQuery],
+                            ['Articles.id IN' => $linksQuery],
+                        ]
+                    ]);
+            }
         }
 
         return $query;
@@ -754,16 +832,20 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     {
 
         //Term
-        $term = $options['term'];
-        $terms = explode(' ', $term);
-        $conditions = array_map(function ($term) {
-            return (['ItemsSearch.content LIKE' => '%' . $term . '%']);
-        }, $terms);
+        $term = $options['term'] ?? '';
+        $fields = ['ItemsSearch.content'];
+        $operator = 'LIKE';
+        $type = 'string';
 
         $field = explode('.', $options['field'] ?? 'text');
         if (!empty($field[1])) {
-            $conditions[] = ['ItemsSearch.value IN' => $field[1]];
+            $filter = ['ItemsSearch.value IN' => $field[1]];
+        } else {
+            $filter = [];
         }
+
+        $conditions = Arrays::termConditions($term, $fields, $operator, $type, $filter);
+        $terms =  preg_split('/[ |]/', $term, -1, PREG_SPLIT_NO_EMPTY);
 
         $query = $query
             ->distinct()
@@ -827,8 +909,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $query = $query->find('hasItemType', ['itemtypes' => $params['itemtypes'] ?? []]);
 
         $query = $query->find('hasProperties', ['properties' => $params['lane']]);
-        $query = $query->find('hasProperties',
-            ['properties' => $params['properties'], 'descent' => $params['descent'] ?? []]);
+        $query = $query->find('hasProperties', ['properties' => $params['properties']]);
         $query = $query->find('hasGeolocation', $params);
 
         //TODO: join project publication state
@@ -850,7 +931,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     public function findContainFields(Query $query, array $options)
     {
         // Contain sections and items
-        $contain_sections = function ($q) use ($options) {
+        $containSections = function ($q) use ($options) {
             $q = $q
                 ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name']);
 
@@ -861,10 +942,26 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             return $q;
         };
 
-        $contain_items = function ($q) use ($options) {
-            $types = $options['itemtypes'] ?? [];
-            if (!empty($types)) {
-                $q = $q->where(['Items.itemtype IN' => $types]);
+        $containItems = function ($q) use ($options, $query) {
+
+            $itemConditions = [];
+            $itemTypes = $options['itemtypes'] ?? [];
+            if (!empty($itemTypes)) {
+                $itemConditions['Items.itemtype IN'] = $itemTypes;
+            }
+
+            $sectionTypes = $options['sectiontypes'] ?? [];
+            if (!empty($sectionTypes)) {
+                $itemConditions['Items.sections_id IN'] = $query
+                    ->cleanCopy()
+                    ->select('id', true)
+                    ->innerJoinWith('Sections', function (Query $sectionsQuery) use ($options) {
+                        return $sectionsQuery->where(['Sections.sectiontype IN' =>  $options['sectiontypes']]);
+                    });
+            }
+
+            if (!empty($itemConditions)) {
+                $q = $q->where($itemConditions);
             }
             return $q;
         };
@@ -875,9 +972,9 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
             'Projects',
 
-            'Sections' => $contain_sections,
+            'Sections' => $containSections,
 
-            'Items' => $contain_items,
+            'Items' => $containItems,
             'Items.Properties',
             'Items.Types',
 
@@ -910,12 +1007,21 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     /**
      * Get distance field
      *
-     * @param $query
-     * @param $options
+     * The calculated distance to the position provided in the options,
+     * which defaults to Mainz.
      *
-     * @return mixed
+     * ### Options
+     * - lat The reference location
+     * - lng The reference location
+     *
+     * @param Query $query
+     * @param array $options
+     * @param string $tableName The table or join name with geodata records.
+     * @param string $fieldName The field containing geodata in a JSON value (with lat & lng keys) .
+     *
+     * @return AggregateExpression An expression to be used in select statements of find operations
      */
-    protected function _distanceField($query, $options)
+    protected function _distanceField($query, $options, $tableName, $fieldName)
     {
 
         // Default position Mainz
@@ -929,13 +1035,13 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 ( 6371 * ACOS(
                   (
                     cos( radians(' . $options['lat'] . ') ) *
-                    cos( radians(CAST(JSON_VALUE(geo_items.`value`,\'$.lat\') AS DOUBLE)) )  *
-                    cos( radians(CAST(JSON_VALUE(geo_items.`value`,\'$.lng\') AS DOUBLE)) - radians(' . $options['lng'] . ') )
+                    cos( radians(CAST(JSON_VALUE(' . $tableName. '.`' . $fieldName . '`,\'$.lat\') AS DOUBLE)) )  *
+                    cos( radians(CAST(JSON_VALUE(' . $tableName. '.`' . $fieldName . '`,\'$.lng\') AS DOUBLE)) - radians(' . $options['lng'] . ') )
                   )
                   +
                    (
                       sin( radians(' . $options['lat'] . ') )  *
-                      sin( radians(CAST(JSON_VALUE(geo_items.`value`,\'$.lat\') AS DOUBLE)))
+                      sin( radians(CAST(JSON_VALUE(' . $tableName. '.`' . $fieldName . '`,\'$.lat\') AS DOUBLE)))
                     )
                   )
                 )'
@@ -945,47 +1051,195 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     /**
      * Get distance join
      *
-     * @param $query
-     * @param $options
-     *
-     * @return string[]
+     * @param string $itemtype The alias will be the item type prefixed by 'geo_dist_'.
+     * @param boolean $property Whether to join the property table
+     * @return array
      */
-    protected function _distanceJoin($query, $options)
+    protected function _distanceJoin($itemtype, $property = false)
     {
-        $joinType = 'geolocations';
-
-        return [
+        $itemAlias = 'geo_dist_' . $itemtype;
+        $itemJoin = [
             'table' => 'items',
-            'alias' => 'geo_items',
+            'alias' => $itemAlias,
             'type' => 'LEFT',
             'conditions' =>
-                "geo_items.articles_id = Articles.id AND " .
-                "geo_items.itemtype = \"{$joinType}\" AND " .
-                "geo_items.deleted = 0"
+                $itemAlias . ".articles_id = Articles.id AND " .
+                $itemAlias . ".itemtype = \"{$itemtype}\" AND " .
+                $itemAlias . ".deleted = 0"
         ];
+
+        if ($property) {
+            $propertyAlias = $itemAlias . '_properties';
+            $propertyJoin = [
+                'table' => 'properties',
+                'alias' => $propertyAlias,
+                'type' => 'LEFT',
+                'conditions' =>
+                    $itemAlias . '.properties_id = ' . $propertyAlias . '.id AND ' .
+                    $propertyAlias . ".deleted = 0"
+            ];
+
+            return [$itemJoin, $propertyJoin];
+        }
+
+        return $itemJoin;
     }
 
     /**
-     * Get titles join
+     * Join geo data
      *
-     * @param $query
-     * @param $options
+     * @param string $itemtype The alias will be the item type prefixed by 'geo_dist_'.
+     * @param string $fieldName The field containing geodata in a JSON value (with lat & lng keys).
+     *                          The field name can be prefixed with 'property.' to join the property table.
      *
-     * @return string[]
+     * @return array
      */
-    protected function _tilesJoin($query, $options)
+    protected function _geoJoin($itemtype, $fieldName)
     {
-        $joinType = 'geolocations';
+        $fieldName = explode('.', $fieldName);
+        $propertyJoin = ($fieldName[0] ?? '') === 'property';
+        $valueField = count($fieldName) > 1 ? $fieldName[1] : $fieldName[0];
 
-        return [
-            'table' => 'items',
-            'alias' => 'geo_tiles',
-            'type' => 'LEFT',
-            'conditions' =>
-                "geo_tiles.articles_id = Articles.id AND " .
-                "geo_tiles.itemtype = \"{$joinType}\" AND " .
-                "geo_tiles.deleted = 0"
+        $itemAlias = 'geo_' . $itemtype;
+
+        if ($propertyJoin) {
+            $itemJoin = [
+                'table' => 'items',
+                'alias' => $itemAlias,
+                'type' => 'INNER',
+                'conditions' =>
+                    $itemAlias . ".articles_id = Articles.id AND " .
+                    $itemAlias . ".itemtype = \"{$itemtype}\" AND " .
+                    $itemAlias . ".deleted = 0"
+            ];
+
+
+            $propertyAlias = $itemAlias . '_property';
+            $propertyJoin = [
+                'table' => 'properties',
+                'alias' => $propertyAlias,
+                'type' => 'INNER',
+                'conditions' =>
+                    $itemAlias . '.properties_id = ' . $propertyAlias . '.id AND ' .
+                    $propertyAlias . ".deleted = 0 AND " .
+                    'JSON_VALUE(' . $propertyAlias . '.`' . $valueField . '`,\'$.lat\') IS NOT NULL AND ' .
+                    'JSON_VALUE(' . $propertyAlias . '.`' . $valueField . '`,\'$.lng\') IS NOT NULL'
+            ];
+
+            return [$itemJoin, $propertyJoin];
+        }
+        else {
+            $itemJoin = [
+                'table' => 'items',
+                'alias' => $itemAlias,
+                'type' => 'INNER',
+                'conditions' =>
+                    $itemAlias . ".articles_id = Articles.id AND " .
+                    $itemAlias . ".itemtype = \"{$itemtype}\" AND " .
+                    $itemAlias . ".deleted = 0 AND " .
+                    'JSON_VALUE(' . $itemAlias . '.`' . $valueField . '`,\'$.lat\') IS NOT NULL AND ' .
+                    'JSON_VALUE(' . $itemAlias . '.`' . $valueField . '`,\'$.lng\') IS NOT NULL'
+            ];
+            return $itemJoin;
+        }
+    }
+
+    /**
+     * Get tiles join
+     *
+     * @param string $tile The tile coordinates in the format "zoom/y/x".
+     * @param string $itemType The item type containing the geo data or linking to the property with geo data.
+     * @param string $fieldName The field containing geo data as JSON value with lat & lng keys.
+     *                          The field name can be prefixed with 'property.' to join the properties table.
+     * @param integer[] $published An array of publication values, or an empty array.
+     * @return array An array that defines inner joins
+     */
+    protected function _tilesJoin($tile, $itemType, $fieldName, $published = [])
+    {
+        // Get fields and join aliases
+        $fieldName = explode('.', $fieldName);
+        $valueField = count($fieldName) > 1 ? $fieldName[1] : $fieldName[0];
+        $propertyJoin = ($fieldName[0] ?? '') === 'property';
+
+        $itemAlias = 'geo_tile_' . $itemType;
+        $propertyAlias = $itemAlias . '_property';
+        $geoAlias = $propertyJoin ? $propertyAlias : $itemAlias;
+
+        // Tile conditions
+        $tile = explode('/', $tile);
+
+        // See https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
+        $zoom = (int)$tile[0] ?? 0;
+        $ytile = (int)$tile[1] ?? 0;
+        $xtile = (int)$tile[2] ?? 0;
+
+        $n = pow(2, $zoom);
+        $lon_deg_west = $xtile / $n * 360.0 - 180.0;
+        $lon_deg_east = ($xtile + 1) / $n * 360.0 - 180.0;
+        $lat_deg_north = rad2deg(atan(sinh(pi() * (1 - 2 * $ytile / $n))));
+        $lat_deg_south = rad2deg(atan(sinh(pi() * (1 - 2 * ($ytile + 1) / $n))));
+
+        $geoConditions = [
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lat\') AS DOUBLE) > ' . $lat_deg_south,
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lat\') AS DOUBLE) <= ' . $lat_deg_north,
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lng\') AS DOUBLE) > ' . $lon_deg_west,
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lng\') AS DOUBLE) <= ' . $lon_deg_east
         ];
+
+        if (!empty($published)) {
+            $geoConditions[] = $geoAlias . '.published IN (' . implode(',', $published) . ')';
+        }
+
+        // Property joins
+        if ($propertyJoin) {
+
+            $itemConditions = [
+                $itemAlias . ".articles_id = Articles.id",
+                $itemAlias . ".itemtype = \"{$itemType}\"",
+                $itemAlias . ".deleted = 0"
+            ];
+            if (!empty($published)) {
+                $itemConditions[] = $itemAlias . '.published IN (' . implode(',', $published) . ')';
+            }
+
+            $itemJoin = [
+                'table' => 'items',
+                'alias' => $itemAlias,
+                'type' => 'INNER',
+                'conditions' => $itemConditions
+            ];
+
+            $geoConditions = [
+                $itemAlias . '.properties_id = ' . $propertyAlias . '.id',
+                $propertyAlias . ".deleted = 0"
+            ] + $geoConditions;
+
+            $propertyJoin = [
+                'table' => 'properties',
+                'alias' => $propertyAlias,
+                'type' => 'INNER',
+                'conditions' => $geoConditions
+            ];
+
+            return [$itemJoin, $propertyJoin];
+        }
+
+        // Item join
+        else {
+            $geoConditions = [
+                $itemAlias . ".articles_id = Articles.id",
+                $itemAlias . ".itemtype = \"{$itemType}\"",
+                $itemAlias . ".deleted = 0"
+            ] + $geoConditions;
+
+            $itemJoin = [
+                'table' => 'items',
+                'alias' => $itemAlias,
+                'type' => 'INNER',
+                'conditions' => $geoConditions
+            ];
+            return $itemJoin;
+        }
     }
 
     /**
@@ -998,59 +1252,18 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      */
     public function findContainDistance(Query $query, array $options): Query
     {
-        $query = $query
-            ->select($this);
+        $filter = $this->getFilter([]);
+        foreach ($filter['geodata'] ?? [] as $itemType => $itemField) {
+            $query = $query
+                ->select($this)
+                ->select(['distance' => $this->_distanceField($query, $options, 'geo_dist_' . $itemType, $itemField)])
+                ->join($this->_distanceJoin($itemType))
+                ->group(['Articles.id'])
+                ->having(['distance IS NOT' => null]);
 
-        $query = $query
-            ->select([
-                'distance' => $this->_distanceField($query, $options),
-                //'quality' => $this->_qualityField($query, $options)
-            ])
-            ->having(['distance IS NOT' => null])
-            ->join($this->_distanceJoin($query, $options))
-            ->group(['Articles.id']);
-//
-//        if (!empty($options['quality'])) {
-//            $query = $query
-//                ->having(['quality >= ' . $options['quality']]);
-//        }
-
-        return $query;
-    }
-
-    /**
-     * Find articles without geolocation distance
-     *
-     * @param Query $query
-     * @param array $options
-     *
-     * @return Query
-     */
-    public function findMissingDistance(Query $query, array $options): Query
-    {
-        $query = $query
-            ->select($this);
-
-        $query = $query
-            ->select([
-                    'distance' => $this->_distanceField($query, $options),
-                    //'quality' => $this->_qualityField($query, $options)
-                ]
-            )
-            ->join($this->_distanceJoin($query, $options))
-            ->group(['Articles.id']);
-
-        //if (empty($options['quality'])) {
-        $query = $query->having(['distance IS' => null]);
-//        }
-//        else {
-//            $query = $query->having(
-//                [
-//                    'OR' =>
-//                        ['distance IS' => null, 'quality < ' . $options['quality'], 'quality IS' => null]
-//                ]
-//            );
-//        }
+            // TODO: Allow multiple item types
+            return $query;
+        }
 
         return $query;
     }
@@ -1125,10 +1338,40 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'Types'
         ];
 
+        $itemConditions = [];
+        $sectionConditions = [];
+
         // Snippets
         if (!in_array('search', $options['snippets'] ?? [])) {
-            $contain['Items']['queryBuilder'] = function ($q) {
-                return $q->where(['Items.itemtype !=' => ITEMTYPE_FULLTEXT]); // >limit(50000)
+            $itemConditions[] = ['Items.itemtype !=' => ITEMTYPE_FULLTEXT];
+        }
+
+        // Section types
+        if (!empty($options['sectiontypes'] ?? [])) {
+            $sectionConditions[] = ['Sections.sectiontype IN' => $options['sectiontypes']];
+        }
+
+        if (!empty($sectionConditions)) {
+            $contain['Sections']['queryBuilder'] = function ($q) use ($sectionConditions) {
+                return $q->where(['AND' => $sectionConditions]);
+            };
+
+            // Remove items in sections
+            $contain['Items']['queryBuilder'] = function ($q) use ($sectionConditions) {
+                if (!empty($itemConditions)) {
+                    $q = $q->where(['AND' => $itemConditions]);
+                }
+                $q = $q->innerJoinWith('Sections', function (Query $query) use ($sectionConditions) {
+                    $query = $query->where($sectionConditions);
+                    return $query;
+                });
+                return $q;
+            };
+        }
+
+        elseif (!empty($itemConditions)) {
+            $contain['Items']['queryBuilder'] = function ($q) use ($itemConditions) {
+                return $q->where(['AND' => $itemConditions]); // >limit(50000)
             };
         }
 
@@ -1188,6 +1431,13 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
             /** @var Article $article */
             return $results->each(function ($article) use ($articles, &$options) {
+
+                // See Footnote::getEntityIsVisible() and Link::getEntityIsVisible()
+                // TODO: Better place for this? Put it here because this gets called for each article
+                //       from ArticlesTable::findContainAll()
+                if (!empty($options['sectiontypes'])) {
+                    $article->_filterAnnos = true;
+                }
 
                 // Handle sections
                 // - Initialize stack with empty root item
@@ -1267,6 +1517,9 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
                 // Remove found items
                 $article->items = array_filter($article->items, fn($item) => !in_array($item->id, $foundItems));
+                $article->_nestedItems = true;
+                $article->setHidden(['items']);
+
                 $article->clean();
                 return $article;
             });
@@ -1340,18 +1593,33 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         // TODO: Should this be called in the Job class?
         $this->loadIndex($indexkey);
 
-        // Load data
+        // Filter data
         $query = $this
-            ->find('hasParams', $params)
-            ->find('containAll', $params);
+            ->find('hasParams', $params);
 
-        if (!empty($paging['order'])) {
+        // Add sort criteria
+         if (!empty($params['sort'])) {
+
+            $paginator = new TotalPaginator();
+            $paginatorParams = $params;
+            $paginatorParams['sortableFields'] = $this->getSortableFields($columns);
+            $paginatorParams = $paginator->validateSort($this, $paginatorParams);
+            if (!empty($paginatorParams['order'])) {
+                $query = $query
+//                    ->select($this)
+                    ->find('sortFields', $params)
+                    ->order($paginatorParams['order']);
+            }
+        }
+        else if (!empty($paging['order'])) {
             $pagingFields = Arrays::array_add_prefix($paging['order'], $this->getAlias() . '.', true);
             $query = $query->order($pagingFields);
         }
 
+
         // TODO: remove toArray()
         $entities = $query
+            ->find('containAll', $params)
             ->limit($limit)
             ->offset($offset)
             ->all()
@@ -1419,16 +1687,10 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         // Default modes
         if ($this::$userRole === 'coder') {
-            $params['mode'] = 'code';
+            $params['mode'] = MODE_REVISE;
         }
         elseif (($requestAction === 'edit') && !empty($params['published'])) {
-            $params['mode'] = 'stage';
-        }
-
-        $params['mode'] = Attributes::cleanOption($params['mode'] ?? 'default', ['code', 'default', 'stage'],
-            'default');
-        if (($params['mode'] === 'default')) {
-            unset($params['mode']);
+            $params['mode'] = MODE_STAGE;
         }
 
         $params['action'] = $requestAction;
@@ -1462,7 +1724,15 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Get filter options including lanes
+     * Get filter options including lanes and geodata configuration
+     *
+     * The geodata configuration in the article type is a dict with
+     * itemtypes as keys and extraction paths as values, example:
+     *
+     *   "geodata" : {
+     *     "geolocations" : "value",
+     *     "locations" : "property.content"
+     *    }
      *
      * @param array $params
      * @return array
@@ -1479,6 +1749,20 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         // TODO: only when requested by snippets?
         // TODO: Paginate
         $filter['lanes'] = $this->Items->Properties->find('lanes', $params);
+
+        // Get geodata configuration
+        // TODO: What if different article types have different geodata configurations
+        //       for the same itemtype?
+        if (($params['template'] ?? '') == 'map') {
+            $filter['geodata'] = [];
+
+            // Get config from database
+            $types = $this->getDatabase()->types[$this->getTable()] ?? [];
+            foreach ($types as $typeName => $typeData) {
+                $typeConfig = Objects::extract($typeData, 'merged.geodata') ?? [];
+                $filter['geodata'] = array_merge($filter['geodata'], $typeConfig);
+            }
+        }
 
         return $filter;
     }
@@ -1500,8 +1784,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $missing = $this
                 ->find('hasParams', $params)
                 ->find('containFields', $params)
-                ->find('missingDistance', $params)
-                ->count();
+                ->find('hasNoGeolocation', $params)
+                ->all()->count();
 
             if ($missing) {
                 $summary[] = __('Skipped {0} not geocoded records.', $missing);
@@ -1520,11 +1804,13 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      */
     public function mutateGetTasks(): array
     {
-        return [
+
+        $tasks = [
             'assign_project' => 'Assign project',
-            'assign_collection' => 'Assign collection',
+            'assign_property' => 'Assign category',
             'assign_number' => 'Assign article number',
             'assign_iris' => 'Assign IRIs',
+            'generate_items' => 'Generate items',
 //            'release_collection' => 'Remove from collection',
             'rebuild_tree' => 'Rebuild section order',
             'rebuild_fulltext' => 'Rebuild fulltext index',
@@ -1533,6 +1819,15 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'batch_copy' => 'Copy articles'
 //            'publish' => 'Set publication state',
         ];
+
+        if (in_array(AppBaseTable::$userRole, ['author', 'editor'])) {
+            $tasks = array_intersect_key($tasks, ['assign_project' => true, 'assign_property' => true]);
+        }
+        elseif (!in_array(AppBaseTable::$userRole, ['admin', 'devel'])) {
+            $tasks = [];
+        }
+
+        return $tasks;
     }
 
     /**
@@ -1616,7 +1911,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * @param array $paging Array with the keys 'offset' and 'limit'
      * @return array The mutated entities
      */
-    public function mutateEntitiesAssignCollection($taskParams, $dataParams, $paging): array
+    public function mutateEntitiesAssignProperty($taskParams, $dataParams, $paging): array
     {
         $offset = (int)$paging['offset'] ?? 0;
         $limit = (int)$paging['limit'] ?? 1;
@@ -1655,17 +1950,18 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             // Get or create item by type
             $propertiesId = 'properties-' . $property->id;
 
-            $targetItem = $targetSection->getItemsByType($itemType);
-            $targetItem = array_filter($targetItem, fn($item) => $item['properties_id'] === $property->id);
-            if (!empty($targetItem)) {
-                $targetItem = array_values($targetItem)[0];
+            $targetItems = !empty($targetSection) ? $targetSection->getItemsByType($itemType) : [];
+            $targetItems = array_filter($targetItems, fn($item) => $item['properties_id'] === $property->id);
+            if (!empty($targetItems)) {
+                $targetItem = array_values($targetItems)[0];
                 $itemId = 'items-' . $targetItem->id;
+                $targetId = $targetItem->id;
             }
             else {
                 $iriItemFragment = $taskParams['irifragment'] ?? ($property->propertytype . '~' . $property->iriFragment);
                 $itemId = 'items/' . $itemType . '/' . $article->iriFragment . '~' . $iriItemFragment;
+                $targetId = null;
             }
-
 
             $itemEntity = [
                 'id' => $itemId,
@@ -1699,8 +1995,12 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 if (!empty($targetSection)) {
                     $otherItems = $targetSection->getItemsByType($itemType);
                     $otherItems = Hash::sort($otherItems, '{n}.sortno');
+                    $itemNo = 2;
                     foreach ($otherItems as $itemIdx => $otherItem) {
-                        $entities[] = ['id' => 'items-' . $otherItem->id, 'sortno' => $itemIdx + 2];
+                        if (empty($targetId) || ($otherItem['id'] !== $targetId)) {
+                            $entities[] = ['id' => 'items-' . $otherItem->id, 'sortno' => $itemNo];
+                            $itemNo += 1;
+                        }
                     }
                 }
             }
@@ -1729,7 +2029,103 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     public function mutateEntitiesAssignNumber($taskParams, $dataParams, $paging): array
     {
         $taskParams['irifragment'] = 'articlenumber';
-        return $this->mutateEntitiesAssignCollection($taskParams, $dataParams, $paging);
+        return $this->mutateEntitiesAssignProperty($taskParams, $dataParams, $paging);
+    }
+
+    /**
+     * Mutate entities: Generate items
+     *
+     * TODO: refactor by implementing section and item creation in a separate patchItemValue() function
+     *       with a callback to get the new field value
+     *
+     * ### Task params
+     * - sectionname
+     * - sectiontype
+     * - itemtype
+     * - resultfield
+     * - statefield
+     * - irifragment
+     *
+     * @param array $taskParams
+     * @param array $dataParams
+     * @param array $paging Array with the keys 'offset' and 'limit'
+     * @return array The mutated entities
+     */
+    public function mutateEntitiesGenerateItems($taskParams, $dataParams, $paging): array
+    {
+        $offset = $paging['offset'] ?? 0;
+        $limit = $paging['limit'] ?? 1;
+
+        // Prepare service
+        $view = new MarkdownView();
+        $view->set('database', $this->getDatabase());
+        $apiService = ServiceFactory::create('llm');
+
+        $articles = $this->getExportData($dataParams, ['limit' => $limit, 'offset' => $offset]);
+        $entities = [];
+
+        // Submit tasks
+        /** @var Article $article */
+        $tasks = [];
+        foreach ($articles as $idx => $article) {
+
+            // Get summary
+            $sectionType = $taskParams['sectiontype'];
+            $inputText = $view->renderDocument([$article], ['format' => 'md','ignore' => ['sections' => [$sectionType]]]);
+
+            $task = [
+                'input' => $inputText,
+                'task' => 'summarize'
+            ];
+            if (!empty($taskParams['prompts'])) {
+                $task['prompts'] = $taskParams['prompts'] ?? 'default';
+            }
+            $tasks[$article->id] = $task;
+        }
+        $tasks = $apiService->awaitQueries($tasks, 60);
+
+        // Save result
+        /** @var Article $article */
+        foreach ($articles as $idx => $article) {
+            $task = $tasks[$article->id] ?? [];
+
+            if (($task['state'] ?? 'ERROR') !== 'SUCCESS') {
+                $error = 'Task not completed (' . ($task['state'] ?? '') . ')';
+                $error .= !empty($task['message']) ? (': ' . $task['message']) : '';
+                $result = $error;
+                // $article->setError('mutate', $error);
+            } else {
+                $result = $task['result']['answers'][0]['llm_result'] ?? '';
+            }
+
+            $resultData =  [
+                $taskParams['resultfield'] => $result,
+                $taskParams['statefield'] => $task['state'] ?? 'ERROR'
+            ];
+
+            // Find property ID
+            if (!empty($taskParams['propertytype'])) {
+                $property = $this->Items->Properties->find('all')
+                    ->select(['id'])
+                    ->where([
+                        'propertytype' => $taskParams['propertytype'],
+                        'lemma' => trim($result)
+                    ])
+                    ->order(['lft' => 'ASC'])
+                    ->first();
+                if (!empty($property)) {
+                    $resultData['properties_id'] = 'properties-' . $property->id;
+                }
+            }
+
+            $newEntities = $article->getItemPatch($taskParams, $resultData);
+            $entities = array_merge($entities, $newEntities);
+        }
+
+        $entities = $this->toEntities($entities);
+        $result = $this->saveEntities($entities);
+
+        return $articles;
     }
 
     /**
@@ -1905,4 +2301,5 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         return $entities;
     }
+
 }

@@ -261,7 +261,7 @@ Some widgets implement interactivity for specific content types:
 - The `UploadWidget` handles file upload by drag and drop.
 - The `GridWidget` observes events in item lists and updates their position in a grid.
   The `DragAndDrop` enables items to be moved in the grid and updates the item list.
-- The `ImageViewer` adds an overlay to the page for viewing article images (zoom, rotate, gallery view).
+- The `ImagesWidget` adds an overlay to the page for viewing article images (zoom, rotate, gallery view).
 - The `EpiMap` widget display a map using [Leaflet](https://leafletjs.com/).
   In search mode, the EpiMap widget is integrated into the filter widget architecture to load markers batch-wise via AJAX
   based on zoom and pan actions. In edit mode, markers can be moved by the mouse. The EpiMap widget interacts with an item list

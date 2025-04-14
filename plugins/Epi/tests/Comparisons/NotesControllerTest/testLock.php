@@ -1,8 +1,8 @@
 <?php 
  return array (
   'id' => 7,
-  'created' => Cake\Chronos\Chronos::getTestNow()->toDateTimeString(),
-  'modified' => Cake\Chronos\Chronos::getTestNow()->toDateTimeString(),
+  'created' => '2020-10-29 13:00:58',
+  'modified' => '2020-10-29 13:00:58',
   'created_by' => 1,
   'modified_by' => 1,
   'user_id' => 1,

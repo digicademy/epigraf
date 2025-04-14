@@ -14,6 +14,9 @@ namespace Epi\Model\Entity;
 
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
+use App\Utilities\Files\Files;
+use Cake\Core\Configure;
+use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 
 /**
@@ -444,6 +447,25 @@ class Section extends BaseEntity
     }
 
     /**
+     * Get a list of file names that are not used in the section's items
+     *
+     * @return string[]
+     */
+    protected function _getUnusedFiles()
+    {
+//        $used = array_map(fn($item) => $item->file_properties['filepath'] ?? '', $this->items);
+//        $path = Files::joinPath([
+//            Configure::read('Data.databases') . $this->database_name,
+//            $this->root->file_basepath,
+//            $this->root->fileDefaultpath
+//        ]);
+//        $files = Files::getFiles($path);
+//        $files = array_filter($files, fn($file) => !in_array($file, $used));
+//        return $files;
+        return [];
+    }
+
+    /**
      * Get level of current section
      *
      * @return mixed|null
@@ -571,6 +593,10 @@ class Section extends BaseEntity
      */
     public function getTree($targets = [])
     {
+        if (isset($this->_lookup['tree'])) {
+            return $this->_lookup['tree'];
+        }
+
         $nodes = [];
 
         if (!$this->getEntityIsVisible()) {
@@ -580,7 +606,10 @@ class Section extends BaseEntity
         // Section footnotes
         if (empty($targets) || isset($targets['footnotes'])) {
             foreach ($this->footnotes as $child) {
-                if (!empty($targets['footnotes']) && !in_array($child->from_tagname, $targets['footnotes'])) {
+                if (
+                    !empty($targets['footnotes']) &&
+                    (is_array($targets['footnotes']) || !in_array($child->from_tagname, $targets['footnotes']))
+                ) {
                     continue;
                 }
 
@@ -599,7 +628,10 @@ class Section extends BaseEntity
         // Section annotations
         if (empty($targets) || isset($targets['annotations'])) {
             foreach ($this->annotations as $child) {
-                if (!empty($targets['annotations']) && !in_array($child->from_tagname, $targets['annotations'])) {
+                if (
+                    !empty($targets['annotations']) &&
+                    (is_array($targets['annotations']) && !in_array($child->from_tagname, $targets['annotations']))
+                ) {
                     continue;
                 }
 
@@ -621,7 +653,7 @@ class Section extends BaseEntity
             foreach ($tags as $tagId => $tag) {
                 $nodes[] = [
                     'id' => 'tag-' . $tag['tagid'] ?? '',
-                    'parent_id' => 'items-' . $this->id,
+                    'parent_id' => 'sections-' . $this->id,
                     'caption' => __('Tag') . ' ' . $tag['tagname'] . '#' . $tag['tagid'],
                     'caption_path' => __('Annotation text'),
                     'caption_ext' => __('Annotation text')
@@ -655,7 +687,9 @@ class Section extends BaseEntity
             );
         }
 
+        $this->_lookup['tree'] = $nodes;
         return $nodes;
+        //return collection($nodes)->groupBy('id')->toArray();
     }
 
     /**

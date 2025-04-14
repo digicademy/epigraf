@@ -66,6 +66,7 @@ export class ScrollPaginator extends BaseWidget {
         this.updateWidget();
 
         // Listen for row updates
+        document.addEventListener('epi:cancel:row',(event) => this.onUpdateRow(event));
         document.addEventListener('epi:update:row',(event) => this.onUpdateRow(event));
         document.addEventListener('epi:move:row',(event) => this.onUpdateRow(event));
         document.addEventListener('epi:create:row',(event) => this.onUpdateRow(event));
@@ -139,7 +140,7 @@ export class ScrollPaginator extends BaseWidget {
                 }
 
                 // TODO: jquery left. Is combined with replaceDataSnippets -> leave it as is for now...
-                App.replaceDataSnippets(data, this.getContentPane(false));
+                App.replaceDataSnippets(data, this.getFrame(false));
                 this.loadCursors();
 
                 // TODO: Why hide here and in the complete callback?
@@ -781,11 +782,11 @@ export class ScrollPaginator extends BaseWidget {
      * @param {CustomEvent} event
      */
     onUpdateRow(event) {
-        if (!this.dataList || !this.listName) {
+        if (!this.dataList || !this.listName || !this.tableName) {
             return;
         }
 
-        if (!event.detail.data || !event.detail.data.row) {
+        if (!event.detail.data || !event.detail.data.row || (typeof event.detail.data.row !== 'string')) {
             return;
         }
 
@@ -795,12 +796,15 @@ export class ScrollPaginator extends BaseWidget {
         const isNew = event.type === 'epi:create:row';
         const isDeleted = event.type === 'epi:delete:row';
         const isMoved = event.type === 'epi:move:row';
+            const isCanceled = event.type === 'epi:cancel:row';
 
         if (rowTab && rowId &&  (rowTab === this.tableName)) {
             if (isDeleted) {
                 this.deleteRow(rowId, true, true);
             } else if (isMoved) {
                 this.updateRow(rowId, true, true, true);
+            } else if (isCanceled) {
+                this.seekRow(rowId, false);
             } else {
                 this.updateRow(rowId, true, isNew);
             }

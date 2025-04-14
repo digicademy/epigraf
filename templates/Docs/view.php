@@ -17,27 +17,32 @@
  */
 ?>
 
-<?php $this->sidebarSize(['right' => 3]); ?>
+<?php $this->setSidebarConfig(['right' => ['size' => 3]]); ?>
 
+<!-- Breadcrumbs -->
 <?php if ($user_role !== 'guest'): ?>
-    <?php $this->sidebarInit(['left' => 'expanded','right'=>'expanded']); ?>
-
-    <!-- Breadcrumbs -->
+    <?php $this->setSidebarConfig(['left'=>['init' => 'expanded']]); ?>
     <?php $this->Breadcrumbs->add($title ?? __('Pages'), ['action' => 'index']); ?>
     <?php $this->Breadcrumbs->add($entity->captionPath); ?>
-
-    <!-- TOC -->
-    <?php if (!empty($entity->toc)): ?>
-        <?php $this->beginTabsheet(__('Content'),'content','right'); ?>
-            <?= $this->Menu->renderMenu(
-                    array_merge(['scrollbox' => true, 'tree' => 'fixed'], $entity->toc),
-                    [
-                        'class' => 'widget-scrollsync side-nav'
-                    ]
-            ) ?>
-        <?php $this->endTabsheet(); ?>
-    <?php endif; ?>
+<?php else: ?>
+    <?php // $this->setSidebarConfig(['left'=>['init' => 'collapsed']]); ?>
 <?php endif; ?>
+
+<!-- TOC -->
+<?php if (!empty($entity->toc)): ?>
+    <?php $this->setSidebarConfig(['right'=>['init' => 'expanded']]); ?>
+    <?php $this->beginTabsheet(__('Content'),'content','right'); ?>
+    <?= $this->Menu->renderMenu(
+        array_merge(['scrollbox' => true, 'tree' => 'fixed'], $entity->toc),
+        [
+            'class' => 'widget-scrollsync side-nav'
+        ]
+    ) ?>
+    <?php $this->endTabsheet(); ?>
+<?php else: ?>
+    <?php $this->setSidebarConfig(['right'=>['init' => 'collapsed']]); ?>
+<?php endif; ?>
+
 
 <?= $this->Element->outputHtmlElement(
     'div',

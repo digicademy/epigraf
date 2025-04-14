@@ -43,7 +43,9 @@ class IndexSection extends BaseEntity
      */
     public $_serialize_fields = [
         'id',
-        'articles_id'
+        'articles_id',
+//        'articles_iri',
+//        'sectiontype'
     ];
 
     /**
@@ -53,7 +55,9 @@ class IndexSection extends BaseEntity
      */
     public $_serialize_attributes = [
         'id',
-        'articles_id'
+        'articles_id',
+//        'articles_iri',
+//        'sectiontype'
     ];
 
     /**
@@ -97,10 +101,39 @@ class IndexSection extends BaseEntity
     {
         $data = [
             'id' => $section['id'] ?? null,
+            'sectiontype' => $section['type']['name'] ?? $section['sectiontype'] ?? null,
+            'norm_iri' => $section['norm_iri'] ?? null,
             'articles_id' => $section['articles_id'] ?? null,
+//            'articles_iri' => !empty($section->article) ? $section->article->iriPath : null
         ];
         $options['source'] = 'Epi.Sections';
         parent::__construct($data, $options);
         $this->root = $this;
+    }
+
+    /**
+     * Get the ID as ID, prefixed ID or IRI pathc
+     *
+     * @param array $fieldName The field name as an array of one or two components
+     * @param array $options
+     * @return string|integer|null
+     */
+    public function getIdFormatted($fieldName, $options)
+    {
+        $prefix = $options['prefixIds'] ?? false;
+        $iri = $options['iriIds'] ?? false;
+        if (($prefix === false) && ($iri === true)) {
+            if ($fieldName[0] === 'id') {
+                return $this->iriPath;
+            }
+            // TODO: when cached, parent and article are not loaded
+            elseif (($fieldName[0] === 'parent_id') && !empty($this->parent)) {
+                return $this->parent->iriPath;
+            }
+            elseif (($fieldName[0] === 'articles_id') && !empty($this->article)) {
+                return $this->article->iriPath;
+            }
+        }
+        return parent::getIdFormatted($fieldName, $options);
     }
 }

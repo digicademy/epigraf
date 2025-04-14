@@ -16,7 +16,7 @@
 ?>
 
 <!-- Right sidebar -->
-<?php $this->sidebarSize(['left' => 0, 'right' => 5]); ?>
+<?php $this->setSidebarConfig(['left' => ['size' =>0], 'right' => ['size' => 5]]); ?>
 
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Pipelines')); ?>

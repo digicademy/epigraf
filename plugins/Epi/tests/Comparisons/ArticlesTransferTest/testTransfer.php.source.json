@@ -12,48 +12,6 @@
                 "root_tab": "articles",
                 "from_tab": "items",
                 "from_field": "content",
-                "from_tagname": "p",
-                "from_tagid": "000004436161208671296296385342",
-                "to_tab": "properties",
-                "property": {
-                    "deleted": 0,
-                    "propertytype": "paragraphs",
-                    "lemma": "siehe",
-                    "unit": "Absatz 2b Einheit",
-                    "comment": "Absatz 2b Bemerk",
-                    "keywords": "Break",
-                    "ishidden": 0,
-                    "iscategory": 0,
-                    "norm_data": "Absatz 2b Norm"
-                }
-            },
-            {
-                "deleted": 0,
-                "root_tab": "articles",
-                "from_tab": "items",
-                "from_field": "content",
-                "from_tagname": "p",
-                "from_tagid": "000004436161200284722222217911",
-                "to_tab": "properties",
-                "property": {
-                    "deleted": 0,
-                    "sortkey": "Absatz 2a",
-                    "propertytype": "paragraphs",
-                    "lemma": "Absatz 2a",
-                    "name": "Absatz 2a",
-                    "unit": "Absatz 2a Einheit",
-                    "comment": "Absatz 2a Bemerk",
-                    "keywords": "Break",
-                    "ishidden": 1,
-                    "iscategory": 1,
-                    "norm_data": "Absatz 2a Norm"
-                }
-            },
-            {
-                "deleted": 0,
-                "root_tab": "articles",
-                "from_tab": "items",
-                "from_field": "content",
                 "from_tagname": "h",
                 "from_tagid": "000004436161145244212963020598",
                 "to_tab": "properties",
@@ -69,26 +27,6 @@
                     "ishidden": 0,
                     "iscategory": 0,
                     "norm_data": "\u00dcberschrift 1a Norm"
-                }
-            },
-            {
-                "deleted": 0,
-                "root_tab": "articles",
-                "from_tab": "items",
-                "from_field": "content",
-                "from_tagname": "p",
-                "from_tagid": "000004436160924313657407458602",
-                "to_tab": "properties",
-                "property": {
-                    "deleted": 0,
-                    "propertytype": "paragraphs",
-                    "lemma": "siehe",
-                    "unit": "Absatz 2b Einheit",
-                    "comment": "Absatz 2b Bemerk",
-                    "keywords": "Break",
-                    "ishidden": 0,
-                    "iscategory": 0,
-                    "norm_data": "Absatz 2b Norm"
                 }
             },
             {
@@ -980,6 +918,230 @@
                 "from_field": "content",
                 "from_tagname": "bl",
                 "from_tagid": "000004515581058186342592608309"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "b",
+                "from_tagid": "000004436160887138888888933579"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "i",
+                "from_tagid": "000004436160890414351851976127"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "u",
+                "from_tagid": "000004436160892870370370431668"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "g",
+                "from_tagid": "000004436160895594907407469796"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "k",
+                "from_tagid": "000004436160898130787037028136"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "a",
+                "from_tagid": "000004436160901166666666725447"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "b",
+                "from_tagid": "000004436161152100694444420087"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "i",
+                "from_tagid": "000004436161156358796296327934"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "u",
+                "from_tagid": "000004436161159035879629630111"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "g",
+                "from_tagid": "000004436161161467592592619662"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "k",
+                "from_tagid": "000004436161164633101851986162"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "a",
+                "from_tagid": "000004436161167155092592629748"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "spatium_v",
+                "from_tagid": "000004436165070465277777844244"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "del",
+                "from_tagid": "000004436165076792824074163019"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "cpl",
+                "from_tagid": "000004436165097621527777892480"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "oms",
+                "from_tagid": "000004436165100978009259346871"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "add",
+                "from_tagid": "000004436165104023148148146540"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "vsl",
+                "from_tagid": "000004436165110998842592605012"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "ini",
+                "from_tagid": "000004436342051736111111145522"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "chr",
+                "from_tagid": "000004436342056334490740716638"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "vsl",
+                "from_tagid": "000004436342047435185185246164"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "kap",
+                "from_tagid": "000004436342060210648148155746"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "add",
+                "from_tagid": "000004436342035339120370429044"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "oms",
+                "from_tagid": "000004436342029998842592635716"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "insec",
+                "from_tagid": "000004436342083524305555650834"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "spatium_v",
+                "from_tagid": "000004436341997248842592682649"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "del",
+                "from_tagid": "000004436342008081018518514387"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "cpl",
+                "from_tagid": "000004436342019850694444462751"
             }
         ],
         "footnotes": [
@@ -1014,7 +1176,6 @@
                 "from_sort": 0
             }
         ],
-        "items": [],
         "sections": [
             {
                 "deleted": 0,
@@ -1244,8 +1405,8 @@
                     {
                         "deleted": 0,
                         "itemtype": "locations",
-                        "value": "",
-                        "content": "Erg\u00e4nzung 1, Verweis auf <rec_lit id=\"000004456302493517361111115062\" value=\"Quelle 1 \"><\/rec_lit>",
+                        "value": "0",
+                        "content": "Erg\u00e4nzung 1, Verweis auf <rec_lit id=\"000004456302493517361111115062\" \/>",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -1286,7 +1447,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "locations",
-                        "value": "",
+                        "value": "0",
                         "content": "Erg\u00e4nzung 2",
                         "flagged": false,
                         "file_name": "",
@@ -1350,7 +1511,7 @@
                         "deleted": 0,
                         "itemtype": "literature",
                         "value": "",
-                        "content": "Erg\u00e4nzung 3, Verweis auf <rec_intern id=\"000004456302457709490740746581\" value=\"A\"><\/rec_intern>",
+                        "content": "Erg\u00e4nzung 3, Verweis auf <rec_intern id=\"000004456302457709490740746581\" \/>",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -1920,6 +2081,7 @@
                         "deleted": 0,
                         "itemtype": "heraldry",
                         "value": "",
+                        "content": "",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2255,6 +2417,7 @@
                         "file_path": "signatur-1",
                         "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
                         "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
+                        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
                         "file_online": false,
                         "date_value": "",
                         "source_autopsy": false,
@@ -2300,6 +2463,7 @@
                         "file_path": "signatur-1",
                         "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
                         "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
+                        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
                         "file_online": false,
                         "date_value": "",
                         "source_autopsy": false,
@@ -2371,6 +2535,7 @@
                         "deleted": 0,
                         "itemtype": "placenames",
                         "value": "",
+                        "content": "",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2409,6 +2574,7 @@
                         "deleted": 0,
                         "itemtype": "placenames",
                         "value": "",
+                        "content": "",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2447,6 +2613,7 @@
                         "deleted": 0,
                         "itemtype": "placenames",
                         "value": "",
+                        "content": "",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2664,7 +2831,7 @@
                         "deleted": 0,
                         "itemtype": "text",
                         "value": "",
-                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.<app1 id=\"000004463586776180555555628924\"><\/app1><nl><\/nl><nl><\/nl><h id=\"000004436160878777777777844048\" value=\"\u00dcberschrift 1 \">Text <\/h>Text Text<nl><\/nl>Text Text Text<nl><\/nl>Text <b id=\"000004436160887138888888933579\">Text <\/b><i id=\"000004436160890414351851976127\">Text<\/i><nl><\/nl><u id=\"000004436160892870370370431668\">Text <\/u><g id=\"000004436160895594907407469796\">Text <\/g><k id=\"000004436160898130787037028136\">Text<\/k><nl><\/nl><a id=\"000004436160901166666666725447\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" value=\"LINK\"><\/a> <nl><\/nl><p id=\"000004436160924313657407458602\" value=\"Absatz 2b\">Text Text Text<nl><\/nl>Text Text Text<\/p><nl><\/nl>Literaturverweis im Text: <rec_lit id=\"000004456302666872685185191153\" value=\"Unterautor \"><\/rec_lit><nl><\/nl><nl><\/nl>Externe Verweise<nl><\/nl>- auf einen Artikel: <rec_extern id=\"000004489202490501157407418218\" value=\"Signatur 2[Artikel]\"><\/rec_extern><nl><\/nl>- auf eine Inschrift: <rec_extern id=\"000004489202501042824074077622\" value=\"Signatur 2[Inschrift A]\"><\/rec_extern><nl><\/nl>- auf einen Inschriftenteil: <rec_extern id=\"000004489202513028935185199996\" value=\"Signatur 2[Inschrift A1]\"><\/rec_extern><nl><\/nl>- auf eine Fu\u00dfnote: <rec_extern id=\"000004489202522863425925931578\" value=\"Signatur 2[Fu\u00dfnote 1]\"><\/rec_extern><nl><\/nl><nl><\/nl>Interne Verweise<nl><\/nl>- auf Inschrift B: <rec_intern id=\"000004489203414346064814810841\" value=\"B\"><\/rec_intern><nl><\/nl>- auf Inschriftenteil B2: <rec_intern id=\"000004489202534078703703725732\" value=\"B2\"><\/rec_intern><nl><\/nl>- auf Fu\u00dfnote a: <rec_intern id=\"000004489204161565972222228987\" value=\"Fu\u00dfnote a\"><\/rec_intern><nl><\/nl>- auf Fu\u00dfnote 2: <rec_intern id=\"000004489204172635416666673690\" value=\"Fu\u00dfnote 2\"><\/rec_intern><nl><\/nl>- auf Marke: <rec_ma id=\"000004489204491244212962960464\" value=\"hm001.1121\"><\/rec_ma>",
+                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.<app1 id=\"000004463586776180555555628924\" \/><nl \/><nl \/><h id=\"000004436160878777777777844048\">Text <\/h>Text Text<nl \/>Text Text Text<nl \/>Text <b id=\"000004436160887138888888933579\">Text <\/b><i id=\"000004436160890414351851976127\">Text<\/i><nl \/><u id=\"000004436160892870370370431668\">Text <\/u><g id=\"000004436160895594907407469796\">Text <\/g><k id=\"000004436160898130787037028136\">Text<\/k><nl \/><a id=\"000004436160901166666666725447\" value=\"LINK\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" \/> <nl \/>Text Text Text<nl \/>Text Text Text<nl \/>Literaturverweis im Text: <rec_lit id=\"000004456302666872685185191153\" \/><nl \/><nl \/>Externe Verweise<nl \/>- auf einen Artikel: <rec_extern id=\"000004489202490501157407418218\" \/><nl \/>- auf eine Inschrift: <rec_extern id=\"000004489202501042824074077622\" \/><nl \/>- auf einen Inschriftenteil: <rec_extern id=\"000004489202513028935185199996\" \/><nl \/>- auf eine Fu\u00dfnote: <rec_extern id=\"000004489202522863425925931578\" \/><nl \/><nl \/>Interne Verweise<nl \/>- auf Inschrift B: <rec_intern id=\"000004489203414346064814810841\" \/><nl \/>- auf Inschriftenteil B2: <rec_intern id=\"000004489202534078703703725732\" \/><nl \/>- auf Fu\u00dfnote a: <rec_intern id=\"000004489204161565972222228987\" \/><nl \/>- auf Fu\u00dfnote 2: <rec_intern id=\"000004489204172635416666673690\" \/><nl \/>- auf Marke: <rec_ma id=\"000004489204491244212962960464\" \/>",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2682,7 +2849,6 @@
                             "lemma": "Beschreibung",
                             "name": "Beschreibung",
                             "unit": "",
-                            "comment": "",
                             "norm_data": "",
                             "links": []
                         },
@@ -2724,7 +2890,7 @@
                         "deleted": 0,
                         "itemtype": "text",
                         "value": "",
-                        "content": "<h id=\"000004436161145244212963020598\" value=\"\u00dcberschrift 1a\">TEXT <\/h>TEXT TEXT TEXT <nl><\/nl><b id=\"000004436161152100694444420087\">TEXT <\/b><i id=\"000004436161156358796296327934\">TEXT <\/i><u id=\"000004436161159035879629630111\">TEXT <\/u><g id=\"000004436161161467592592619662\">TEXT <\/g><nl><\/nl><k id=\"000004436161164633101851986162\">TEXT <\/k><a id=\"000004436161167155092592629748\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" value=\"LINK \"><\/a> <nl><\/nl><nl><\/nl><p id=\"000004436161200284722222217911\" value=\"Absatz 2a\">TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl><nl><\/nl><nl><\/nl><\/p><nl><\/nl><p id=\"000004436161208671296296385342\" value=\"Absatz 2b\">TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <\/p><nl><\/nl>",
+                        "content": "<h id=\"000004436161145244212963020598\">TEXT <\/h>TEXT TEXT TEXT <nl \/><b id=\"000004436161152100694444420087\">TEXT <\/b><i id=\"000004436161156358796296327934\">TEXT <\/i><u id=\"000004436161159035879629630111\">TEXT <\/u><g id=\"000004436161161467592592619662\">TEXT <\/g><nl \/><k id=\"000004436161164633101851986162\">TEXT <\/k><a id=\"000004436161167155092592629748\" value=\"LINK \" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" \/> <nl \/><nl \/>TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/><nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2742,7 +2908,6 @@
                             "lemma": "Gliederung: Ebene 1",
                             "name": "Gliederung: Ebene 1",
                             "unit": "",
-                            "comment": "",
                             "norm_data": "",
                             "links": []
                         },
@@ -3666,7 +3831,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "lost",
-                        "value": "",
+                        "value": "0",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -3739,7 +3904,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004474097580738425925958702\" value=\"\"><nl><\/nl>Zwischenraum von 1: <spatium_v id=\"000004436165070465277777844244\" width=\"1\"><\/spatium_v><nl><\/nl>Unbestimmter Verlust: <del id=\"000004436165076792824074163019\" num_sign=\"0\"><\/del><nl><\/nl>Erg<cpl id=\"000004436165097621527777892480\">\u00e4nz\u00e9ng<\/cpl> <nl><\/nl>Ausla <oms id=\"000004436165100978009259346871\">ss\u00f0ung<\/oms> <nl><\/nl>Verzeilenumbruh <vz id=\"000004436165037326388888946670\" value=\"Verszeilenumbruch 1 \"><\/vz> <nl><\/nl><add id=\"000004436165104023148148146540\">Nachtrag<\/add><nl><\/nl>Abk<abr id=\"000004436165108151620370436103\" value=\"\">\u00fcrzung<\/abr><nl><\/nl><vsl id=\"000004436165110998842592605012\">Ve<\/vsl>rsalie <nl><\/nl>Zeilenumbruch <z id=\"000004436165006240740740742383\" value=\"Zeilenumbruch 1a\"><\/z><nl><\/nl><\/bl><nl><\/nl><bl id=\"000004436164974262731481588902\" value=\"Bereich 1a\"><nl><\/nl>Hann bj\u00f3 \u00ed Raums <wtr id=\"000004436165051586805555667815\" value=\"Worttrenner 1 \"><\/wtr> dal \u00ed Raumsd<all id=\"000004436165061471064814812687\" value=\"Buchstabenverbindung 2 \">\u00e6<\/all>lafylk<nl><\/nl><\/bl><nl><\/nl><bl id=\"000004515581058186342592608309\" value=\"\">Alphabetische Fu\u00dfnote: <app2 id=\"000004489202863265046296394325\"><\/app2><nl><\/nl>Numerische Fu\u00dfnote: <app1 id=\"000004489202875583333333330386\"><\/app1><\/bl>",
+                        "content": "<bl id=\"000004474097580738425925958702\"><nl \/>Zwischenraum von 1: <spatium_v id=\"000004436165070465277777844244\" width=\"1\" \/><nl \/>Unbestimmter Verlust: <del id=\"000004436165076792824074163019\" num_sign=\"0\" \/><nl \/>Erg<cpl id=\"000004436165097621527777892480\">\u00e4nz\u00e9ng<\/cpl> <nl \/>Ausla <oms id=\"000004436165100978009259346871\">ss\u00f0ung<\/oms> <nl \/>Verzeilenumbruh <vz id=\"000004436165037326388888946670\" \/> <nl \/><add id=\"000004436165104023148148146540\">Nachtrag<\/add><nl \/>Abk<abr id=\"000004436165108151620370436103\">\u00fcrzung<\/abr><nl \/><vsl id=\"000004436165110998842592605012\">Ve<\/vsl>rsalie <nl \/>Zeilenumbruch <z id=\"000004436165006240740740742383\" \/><nl \/> <\/bl><nl \/><bl id=\"000004436164974262731481588902\"><nl \/>Hann bj\u00f3 \u00ed Raums <wtr id=\"000004436165051586805555667815\" \/> dal \u00ed Raumsd<all id=\"000004436165061471064814812687\">\u00e6<\/all>lafylk<nl \/> <\/bl><nl \/><bl id=\"000004515581058186342592608309\">Alphabetische Fu\u00dfnote: <app2 id=\"000004489202863265046296394325\" \/><nl \/>Numerische Fu\u00dfnote: <app1 id=\"000004489202875583333333330386\" \/><\/bl>",
                         "translation": "\u00dcbersetzung Inschrift A - Teil 1 - Bearbeitung 1",
                         "flagged": false,
                         "file_name": "",
@@ -3748,6 +3913,7 @@
                         "file_online": false,
                         "date_sort": "01234AAA00000000A4",
                         "date_value": "1234",
+                        "date_add": "",
                         "date_start": 1234,
                         "date_end": 1234,
                         "source_autopsy": true,
@@ -3890,7 +4056,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004436341948501157407446979\" value=\"Bereich 1a\"><nl><\/nl><ini id=\"000004436342051736111111145522\">\u00ed<\/ini>nitiale<nl><\/nl>Ch<chr id=\"000004436342056334490740716638\">r<\/chr>onogrammbuchstabe<nl><\/nl>V<vsl id=\"000004436342047435185185246164\">h<\/vsl>\u00e9rsalie<nl><\/nl>Ab<abr id=\"000004436342040472222222267856\" value=\"\">m<kap id=\"000004436342060210648148155746\">a<\/kap>\u00f0r <\/abr> <z id=\"000004436341968184027777873155\" value=\"Zeilenumbruch 1b\"><\/z><nl><\/nl><add id=\"000004436342035339120370429044\">Nachtrag<\/add><nl><\/nl><oms id=\"000004436342029998842592635716\">Auslassung<\/oms><nl><\/nl><all id=\"000004436342068519675925958209\" value=\"Buchstabenverbindung 2 \">Bu<\/all>chstabenverbindung<nl><\/nl>Uns<insec id=\"000004436342083524305555650834\">\u00f0<\/insec>cherer Text<nl><\/nl>Zwischenraum von drei <spatium_v id=\"000004436341997248842592682649\" width=\"3\"><\/spatium_v> Zeichen<nl><\/nl>Unbestimmte Anzahl <del id=\"000004436342008081018518514387\" num_sign=\"0\"><\/del> verlorener Zeichen<nl><\/nl><cpl id=\"000004436342019850694444462751\">Erg<\/cpl>\u00f0nzung<nl><\/nl>Wort<wtr id=\"000004436341987521990740778661\" value=\"Worttrenner 2a\"><\/wtr>trenner<nl><\/nl>Hochge<sup id=\"000004436342078564814814882651\" value=\"Hochgestellt 1 \">stellt<\/sup> <vz id=\"000004436341975421296296344091\" value=\"Verszeilenumbruch 1a\"><\/vz><nl><\/nl><\/bl>",
+                        "content": "<bl id=\"000004436341948501157407446979\"><nl \/><ini id=\"000004436342051736111111145522\">\u00ed<\/ini>nitiale<nl \/>Ch<chr id=\"000004436342056334490740716638\">r<\/chr>onogrammbuchstabe<nl \/>V<vsl id=\"000004436342047435185185246164\">h<\/vsl>\u00e9rsalie<nl \/>Ab<abr id=\"000004436342040472222222267856\">m<kap id=\"000004436342060210648148155746\">a<\/kap>\u00f0r <\/abr> <z id=\"000004436341968184027777873155\" \/><nl \/><add id=\"000004436342035339120370429044\">Nachtrag<\/add><nl \/><oms id=\"000004436342029998842592635716\">Auslassung<\/oms><nl \/><all id=\"000004436342068519675925958209\">Bu<\/all>chstabenverbindung<nl \/>Uns<insec id=\"000004436342083524305555650834\">\u00f0<\/insec>cherer Text<nl \/>Zwischenraum von drei <spatium_v id=\"000004436341997248842592682649\" width=\"3\" \/> Zeichen<nl \/>Unbestimmte Anzahl <del id=\"000004436342008081018518514387\" num_sign=\"0\" \/> verlorener Zeichen<nl \/><cpl id=\"000004436342019850694444462751\">Erg<\/cpl>\u00f0nzung<nl \/>Wort<wtr id=\"000004436341987521990740778661\" \/>trenner<nl \/>Hochge<sup id=\"000004436342078564814814882651\">stellt<\/sup> <vz id=\"000004436341975421296296344091\" \/><nl \/> <\/bl>",
                         "translation": "\u00dcbersetzung \u00d6rvar-Odds saga",
                         "flagged": false,
                         "file_name": "",
@@ -3899,6 +4065,7 @@
                         "file_online": false,
                         "date_sort": "01337AAA00000000A4",
                         "date_value": "1337",
+                        "date_add": "",
                         "date_start": 1337,
                         "date_end": 1337,
                         "source_autopsy": false,
@@ -4845,7 +5012,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "lost",
-                        "value": "",
+                        "value": "0",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -4918,7 +5085,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004436342219936342592692857\" value=\"Bereich 2b\"><ini id=\"000004436342334950231481521590\">\u00de<\/ini>at <chr id=\"000004436342339388888888943282\">v<\/chr>ar eitt <kap id=\"000004436342344737268518577048\">s<\/kap>umar, <z id=\"000004436342244850694444419672\" value=\"Zeilenumbruch 1b\"><\/z><nl><\/nl>at <vsl id=\"000004436342331244212963000975\">G<\/vsl>r\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V<all id=\"000004436342356430555555639778\" value=\"Buchstabenverbindung 1 \">\u00ed<\/all>k austr <vz id=\"000004436342252387731481570820\" value=\"Verszeilenumbruch 2a\"><\/vz><nl><\/nl>eptir <sup id=\"000004436342367437500000062286\" value=\"\">Harald<\/sup> dau<wtr id=\"000004436342265232638888919263\" value=\"Worttrenner 1b\"><\/wtr>\u00f0an, <insec id=\"000004436342370581018518576494\">m\u00e1g <\/insec>sinn, <spatium_v id=\"000004436342271391203703738522\" width=\"1\"><\/spatium_v><nl><\/nl>fyrir \u00fev\u00ed <add id=\"000004436342304277777777828084\">at<\/add><oms id=\"000004436342299424768518527263\">hann<\/oms> <oms id=\"000004436342296030092592678988\">\u00e1tti <\/oms> <cpl id=\"000004436342291663194444404939\">\u00fear<\/cpl> m<del id=\"000004436342276410879629645922\" num_sign=\"0\"><\/del>iklar eignir.<\/bl><nl><\/nl>",
+                        "content": "<bl id=\"000004436342219936342592692857\"><ini id=\"000004436342334950231481521590\">\u00de<\/ini>at <chr id=\"000004436342339388888888943282\">v<\/chr>ar eitt <kap id=\"000004436342344737268518577048\">s<\/kap>umar, <z id=\"000004436342244850694444419672\" \/><nl \/>at <vsl id=\"000004436342331244212963000975\">G<\/vsl>r\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V<all id=\"000004436342356430555555639778\">\u00ed<\/all>k austr <vz id=\"000004436342252387731481570820\" \/><nl \/>eptir <sup id=\"000004436342367437500000062286\">Harald<\/sup> dau<wtr id=\"000004436342265232638888919263\" \/>\u00f0an, <insec id=\"000004436342370581018518576494\">m\u00e1g <\/insec>sinn, <spatium_v id=\"000004436342271391203703738522\" width=\"1\" \/><nl \/>fyrir \u00fev\u00ed <add id=\"000004436342304277777777828084\">at<\/add><oms id=\"000004436342299424768518527263\">hann<\/oms> <oms id=\"000004436342296030092592678988\">\u00e1tti <\/oms> <cpl id=\"000004436342291663194444404939\">\u00fear<\/cpl> m<del id=\"000004436342276410879629645922\" num_sign=\"0\" \/>iklar eignir.<\/bl><nl \/>",
                         "translation": "\u00dcbersetzung Inschrift B Teil 1",
                         "flagged": false,
                         "file_name": "",
@@ -4927,6 +5094,7 @@
                         "file_online": false,
                         "date_sort": "01066AAA00000000A4",
                         "date_value": "1066",
+                        "date_add": "",
                         "date_start": 1066,
                         "date_end": 1066,
                         "source_autopsy": true,
@@ -5004,14 +5172,18 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004489204293021990740747062\" value=\"\"><nl><\/nl><nl><\/nl><\/bl>",
+                        "content": "<bl id=\"000004489204293021990740747062\"><nl \/><nl \/><\/bl>",
+                        "translation": "",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
                         "file_source": "",
                         "file_online": false,
                         "date_value": "",
+                        "date_add": "",
                         "source_autopsy": false,
+                        "source_from": "",
+                        "source_addition": "",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -5149,7 +5321,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004436342493348379629644802\" value=\"Bereich 1a\"><ini id=\"000004436342606019675925920222\">G<\/ini>r\u00edmr <vsl id=\"000004436342597724537037066064\">u<\/vsl>nni <chr id=\"000004436342610309027777859800\">h<\/chr>enni <kap id=\"000004436342614041666666773306\">m<\/kap>ikit, ok l<all id=\"000004436342619626157407418054\" value=\"Buchstabenverbindung 2a\">\u00e6<\/all>tr <oms id=\"000004436342575649305555631787\">hann<\/oms> \u00feat <sup id=\"000004436342629741898148160649\" value=\"\">eptir<\/sup> henni. <z id=\"000004436342516953703703748996\" value=\"Zeilenumbruch 1 \"><\/z><nl><\/nl>H\u00fan <add id=\"000004436342582651620370456862\">var hverri <\/add>konu v\u00e6nni<spatium_v id=\"000004436342550361111111153956\" width=\"1\"><\/spatium_v> ok betr<del id=\"000004436342558008101851960179\" num_sign=\"0\"><\/del> at s\u00e9r <cpl id=\"000004436342570162037037096209\">um<\/cpl> alla hluti,<vz id=\"000004436342523789351851958494\" value=\"Verszeilenumbruch 1b\"><\/vz><nl><\/nl> \u00feeira<abr id=\"000004436342590993055555669897\" value=\"\"> er<\/abr> \u00ed Nor<wtr id=\"000004436342540800925925924686\" value=\"Worttrenner 2a\"><\/wtr>egi v\u00e1ru. <nl><\/nl>\u00deeira f\u00f6r var b\u00fain <insec id=\"000004436342633575231481531016\">vir\u00f0uliga<\/insec>.<\/bl>",
+                        "content": "<bl id=\"000004436342493348379629644802\"><ini id=\"000004436342606019675925920222\">G<\/ini>r\u00edmr <vsl id=\"000004436342597724537037066064\">u<\/vsl>nni <chr id=\"000004436342610309027777859800\">h<\/chr>enni <kap id=\"000004436342614041666666773306\">m<\/kap>ikit, ok l<all id=\"000004436342619626157407418054\">\u00e6<\/all>tr <oms id=\"000004436342575649305555631787\">hann<\/oms> \u00feat <sup id=\"000004436342629741898148160649\">eptir<\/sup> henni. <z id=\"000004436342516953703703748996\" \/><nl \/>H\u00fan <add id=\"000004436342582651620370456862\">var hverri <\/add>konu v\u00e6nni<spatium_v id=\"000004436342550361111111153956\" width=\"1\" \/> ok betr<del id=\"000004436342558008101851960179\" num_sign=\"0\" \/> at s\u00e9r <cpl id=\"000004436342570162037037096209\">um<\/cpl> alla hluti,<vz id=\"000004436342523789351851958494\" \/><nl \/> \u00feeira<abr id=\"000004436342590993055555669897\"> er<\/abr> \u00ed Nor<wtr id=\"000004436342540800925925924686\" \/>egi v\u00e1ru. <nl \/>\u00deeira f\u00f6r var b\u00fain <insec id=\"000004436342633575231481531016\">vir\u00f0uliga<\/insec>.<\/bl>",
                         "translation": "\u00dcbersetzung Inschrift B Teil 2",
                         "flagged": false,
                         "file_name": "",
@@ -5158,6 +5330,7 @@
                         "file_online": false,
                         "date_sort": "00794AAA00000000A4",
                         "date_value": "794",
+                        "date_add": "",
                         "date_start": 794,
                         "date_end": 794,
                         "source_autopsy": false,
@@ -5235,7 +5408,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004489202971068287037045606\" value=\"\"><nl><\/nl>Transkription in B.2.2<nl><\/nl><\/bl>",
+                        "content": "<bl id=\"000004489202971068287037045606\"><nl \/>Transkription in B.2.2<nl \/><\/bl>",
                         "translation": "\u00dcbersetzung in B.2.2",
                         "flagged": false,
                         "file_name": "",
@@ -5243,7 +5416,10 @@
                         "file_source": "",
                         "file_online": false,
                         "date_value": "",
+                        "date_add": "",
                         "source_autopsy": false,
+                        "source_from": "",
+                        "source_addition": "",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -5286,10 +5462,9 @@
         },
         "modifier": {
             "deleted": 0,
-            "usertype": "human",
-            "name": "Testuser",
-            "acronym": "TU",
-            "userrole": 1
+            "name": "Jakob J\u00fcnger",
+            "acronym": "jj",
+            "userrole": 0
         },
         "creator": {
             "deleted": 0,

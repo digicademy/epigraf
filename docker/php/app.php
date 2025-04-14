@@ -27,41 +27,6 @@ return [
      */
     'test' => filter_var(env('TEST', false), FILTER_VALIDATE_BOOLEAN),
 
-    /**
-     * Enforce https
-     *
-     * Disable if https is redirected to http by your gateways (e.g. on Kubernetes)
-     */
-    'enforceHttps' => false,
-
-    /**
-     *  Configure the path in the filesystem where user data is stored
-     *
-     *  Make sure these files are backed up regularly
-     *  and are not overwritten when upgrading the app.
-     *
-     *  All paths should end with the appropriate directory separator
-     */
-     'Data' => array(
-       //Root directory of export and databases directory.
-       //Will be used as root for file administration in the web interface and should contain export and databases directory
-       'root'=> ROOT . DS . 'data' . DS, //default: ROOT . DS . 'data' . DS
-
-       //Files shared between all users (e.g. wiki)
-       'shared'=> ROOT . DS . 'data' . DS.'shared'.DS, //default: ROOT . DS . 'data' . DS.'shared'.DS
-
-       //Every database needs its own directory for storing files like "Hilfsmittel" and pictures.
-       //Subdirectories are automatically created for every database
-       'databases' => ROOT . DS . 'data' . DS . 'databases'.DS //default: ROOT . DS . 'data' . DS . 'databases'.DS,
-     ),
-
-    /**
-     * Default category for context help
-     */
-    'Pages' => [
-        'contexthelp' => 'I. Kontexthilfe'
-    ],
-
 
     /**
      * Configure basic information about the application.
@@ -120,6 +85,13 @@ return [
     ],
 
     /**
+     * Enforce https
+     *
+     * Disable if https is redirected to http by your gateways (e.g. on Kubernetes)
+     */
+    'enforceHttps' => false,
+
+    /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
      * This is useful for busting browser caches.
@@ -129,6 +101,59 @@ return [
      */
     'Asset' => [
         // 'timestamp' => true,
+    ],
+
+    /**
+     *  Configure the path in the filesystem where user data is stored
+     *
+     *  Make sure these files are backed up regularly
+     *  and are not overwritten when upgrading the app.
+     *
+     *  All paths should end with the appropriate directory separator
+     */
+    'Data' => array(
+        //Root directory of export and databases directory.
+        //Will be used as root for file administration in the web interface and should contain export and databases directory
+        'root'=> ROOT . DS . 'data' . DS, //default: ROOT . DS . 'data' . DS
+
+        //Files shared between all users (e.g. wiki)
+        'shared'=> ROOT . DS . 'data' . DS.'shared'.DS, //default: ROOT . DS . 'data' . DS.'shared'.DS
+
+        //Every database needs its own directory for storing files like "Hilfsmittel" and pictures.
+        //Subdirectories are automatically created for every database
+        'databases' => ROOT . DS . 'data' . DS . 'databases'.DS //default: ROOT . DS . 'data' . DS . 'databases'.DS,
+    ),
+
+    /**
+     * Default category for context help
+     */
+    'Pages' => [
+        'contexthelp' => 'I. Kontexthilfe'
+    ],
+
+    /**
+     * Configure external API services
+     */
+    'Services' => [
+        'llm' => [
+            'base_url' => env('DATABOARD_URL', 'https://databoard.uni-muenster.de/'),
+            'access_token' => env('DATABOARD_ACCESSTOKEN', null)
+        ]
+    ],
+
+    /**
+     * Background job configuration:
+     * - Set the connection to the Redis server
+     * - Set delay to `true`
+     * - Start a worker with `bin/cake jobs process`
+     */
+    'Jobs' => [
+        'delay' => env('JOBS_DELAY', false),
+        'scheme' => 'tcp',
+        'host'   =>  env('JOBS_REDIS_HOST', 'localhost'),
+        'port'   => 6379,
+        'queue_name' => 'jobs_queue',
+        'status_name' => 'jobs_status'
     ],
 
     /**
@@ -197,20 +222,24 @@ return [
             //'url' => env('CACHE_CAKEMODEL_URL', null),
         ],
 
+        'views' => [
+            'className' => 'File',
+            'path' => CACHE . 'views' . DS,
+            'duration' => '+1 day'
+        ],
 
-        'views' =>
-            [
-                'className' => 'File',
-                'path' => CACHE . 'views' . DS,
-                'duration' => '+1 day'
-            ],
+        'results' => [
+            'className' => 'File',
+            'path' => CACHE . 'results' . DS,
+            'duration' => '+1 day'
+        ],
 
-        'results' =>
-            [
-                'className' => 'File',
-                'path' => CACHE . 'results' . DS,
-                'duration' => '+1 day'
-            ]
+        'services' => [
+            'className' => 'File',
+            'path' => CACHE . 'services' . DS,
+            'prefix' => 'epi_services_',
+            'duration' => '+1 year'
+        ]
     ],
 
 
@@ -248,6 +277,7 @@ return [
         'skipLog' => [],
         'log' => true,
         'trace' => true,
+        'logger' => \App\Error\ErrorLogger::class
     ],
 
     /**

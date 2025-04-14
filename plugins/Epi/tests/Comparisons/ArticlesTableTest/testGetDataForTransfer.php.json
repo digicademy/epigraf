@@ -3,8 +3,8 @@
         {
             "status": "Status 1 in progress",
             "creator": "users-tmp1",
-            "modifier": "users-tmp1",
-            "created": "2021-06-13T18:10:25+02:00",
+            "modifier": "users-tmp2",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "articles-tmp1",
             "database": "projects",
             "norm_iri": "normiri_1",
@@ -16,7 +16,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-04-01T10:45:59+02:00",
+            "created": "2022-04-01T08:45:59+02:00",
             "id": "users-tmp1",
             "name": "Testuser",
             "acronym": "TU",
@@ -26,18 +26,17 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-04-01T10:45:59+02:00",
-            "id": "users-tmp1",
-            "name": "Testuser",
-            "acronym": "TU",
-            "usertype": "human",
-            "userrole": 1,
-            "norm_iri": "projects~tu",
+            "created": "2024-11-09T13:06:13+01:00",
+            "id": "users-tmp2",
+            "name": "Jakob J\u00fcnger",
+            "acronym": "jj",
+            "userrole": 0,
+            "norm_iri": "juenger",
             "file_copyfrom": ""
         },
         {
             "published": 0,
-            "created": "2021-06-15T00:42:26+02:00",
+            "created": "2021-06-14T22:42:26+02:00",
             "id": "projects-tmp1",
             "name": "Testprojekt 1",
             "signature": "TP1",
@@ -50,7 +49,7 @@
         {
             "norm_iri": "projects~17",
             "comment": "Notizen Datensatz",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp17",
             "articles_id": "articles-tmp1",
             "sortno": 1,
@@ -67,7 +66,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:19+02:00",
+            "created": "2021-06-13T16:12:19+02:00",
             "id": "items-tmp20",
             "itemtype": "outputoptions",
             "norm_iri": "projects~20",
@@ -89,7 +88,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T15:10:26+02:00",
+            "created": "2021-06-12T13:10:26+02:00",
             "id": "properties-tmp6",
             "propertytype": "outputoptions",
             "level": 0,
@@ -109,7 +108,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:19+02:00",
+            "created": "2021-06-13T16:12:19+02:00",
             "id": "items-tmp19",
             "itemtype": "outputoptions",
             "norm_iri": "projects~19",
@@ -131,7 +130,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T15:10:26+02:00",
+            "created": "2021-06-12T13:10:26+02:00",
             "id": "properties-tmp5",
             "propertytype": "outputoptions",
             "level": 0,
@@ -153,7 +152,7 @@
         {
             "norm_iri": "projects~16",
             "comment": "Notizen Signaturen",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp16",
             "articles_id": "articles-tmp1",
             "sortno": 3,
@@ -170,7 +169,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:19+02:00",
+            "created": "2021-06-13T16:12:19+02:00",
             "id": "items-tmp17",
             "itemtype": "signatures",
             "norm_iri": "projects~17",
@@ -192,7 +191,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp12",
             "propertytype": "literature",
             "level": 1,
@@ -214,7 +213,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:19+02:00",
+            "created": "2021-06-13T16:12:19+02:00",
             "id": "items-tmp16",
             "itemtype": "signatures",
             "norm_iri": "projects~16",
@@ -236,7 +235,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:51+02:00",
+            "created": "2021-06-12T14:12:51+02:00",
             "id": "properties-tmp7",
             "parent_id": "properties-tmp12",
             "propertytype": "literature",
@@ -257,7 +256,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp12",
             "propertytype": "literature",
             "level": 1,
@@ -281,7 +280,7 @@
         {
             "norm_iri": "projects~15",
             "comment": "Notizen Standorte",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp15",
             "articles_id": "articles-tmp1",
             "sortno": 5,
@@ -298,15 +297,15 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:19+02:00",
+            "created": "2021-06-13T16:12:19+02:00",
             "id": "items-tmp14",
             "itemtype": "locations",
             "norm_iri": "projects~14",
             "sortno": 1,
             "sections_id": "sections-tmp15",
             "articles_id": "articles-tmp1",
-            "value": "",
-            "content": "Erg\u00e4nzung 1, Verweis auf <rec_lit id=\"000004456302493517361111115062\" value=\"Quelle 1 \"><\/rec_lit>",
+            "value": "0",
+            "content": "Erg\u00e4nzung 1, Verweis auf <rec_lit id=\"000004456302493517361111115062\" \/>",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -321,7 +320,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:18:22+02:00",
+            "created": "2021-06-12T14:18:22+02:00",
             "id": "properties-tmp18",
             "propertytype": "locations",
             "level": 0,
@@ -343,14 +342,14 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:18+02:00",
+            "created": "2021-06-13T16:12:18+02:00",
             "id": "items-tmp13",
             "itemtype": "locations",
             "norm_iri": "projects~13",
             "sortno": 2,
             "sections_id": "sections-tmp15",
             "articles_id": "articles-tmp1",
-            "value": "",
+            "value": "0",
             "content": "Erg\u00e4nzung 2",
             "flagged": false,
             "file_name": "",
@@ -366,7 +365,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:18:22+02:00",
+            "created": "2021-06-12T14:18:22+02:00",
             "id": "properties-tmp14",
             "parent_id": "properties-tmp15",
             "propertytype": "locations",
@@ -387,7 +386,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:18:22+02:00",
+            "created": "2021-06-12T14:18:22+02:00",
             "id": "properties-tmp15",
             "propertytype": "locations",
             "level": 0,
@@ -409,7 +408,7 @@
         {
             "norm_iri": "projects~14",
             "comment": "Notizen Nachweise",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp14",
             "articles_id": "articles-tmp1",
             "sortno": 7,
@@ -426,7 +425,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:18+02:00",
+            "created": "2021-06-13T16:12:18+02:00",
             "id": "items-tmp11",
             "itemtype": "literature",
             "norm_iri": "projects~11",
@@ -434,7 +433,7 @@
             "sections_id": "sections-tmp14",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "Erg\u00e4nzung 3, Verweis auf <rec_intern id=\"000004456302457709490740746581\" value=\"A\"><\/rec_intern>",
+            "content": "Erg\u00e4nzung 3, Verweis auf <rec_intern id=\"000004456302457709490740746581\" \/>",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -449,7 +448,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp10",
             "propertytype": "literature",
             "level": 1,
@@ -471,7 +470,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:12:18+02:00",
+            "created": "2021-06-13T16:12:18+02:00",
             "id": "items-tmp10",
             "itemtype": "literature",
             "norm_iri": "projects~10",
@@ -494,7 +493,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:51+02:00",
+            "created": "2021-06-12T14:12:51+02:00",
             "id": "properties-tmp7",
             "parent_id": "properties-tmp12",
             "propertytype": "literature",
@@ -515,7 +514,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp12",
             "propertytype": "literature",
             "level": 1,
@@ -539,7 +538,7 @@
         {
             "norm_iri": "projects~13",
             "comment": "Notizen Beschaffenheit",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp13",
             "articles_id": "articles-tmp1",
             "sortno": 9,
@@ -556,7 +555,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "items-tmp8",
             "itemtype": "conditions",
             "norm_iri": "projects~8",
@@ -581,7 +580,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:29:43+02:00",
+            "created": "2021-06-12T14:29:43+02:00",
             "id": "properties-tmp24",
             "propertytype": "conditions",
             "level": 0,
@@ -603,7 +602,7 @@
         {
             "norm_iri": "projects~12",
             "comment": "Notizen Material",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp12",
             "articles_id": "articles-tmp1",
             "sortno": 11,
@@ -620,7 +619,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:13:25+02:00",
+            "created": "2021-06-13T16:13:25+02:00",
             "id": "items-tmp28",
             "itemtype": "materials",
             "norm_iri": "projects~28",
@@ -642,7 +641,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:38:55+02:00",
+            "created": "2021-06-12T14:38:55+02:00",
             "id": "properties-tmp30",
             "propertytype": "materials",
             "level": 0,
@@ -664,7 +663,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:13:25+02:00",
+            "created": "2021-06-13T16:13:25+02:00",
             "id": "items-tmp27",
             "itemtype": "materials",
             "norm_iri": "projects~27",
@@ -686,7 +685,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:38:54+02:00",
+            "created": "2021-06-12T14:38:54+02:00",
             "id": "properties-tmp26",
             "parent_id": "properties-tmp29",
             "propertytype": "materials",
@@ -707,7 +706,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:38:55+02:00",
+            "created": "2021-06-12T14:38:55+02:00",
             "id": "properties-tmp29",
             "propertytype": "materials",
             "level": 0,
@@ -729,7 +728,7 @@
         {
             "norm_iri": "projects~11",
             "comment": "Notizen Inschriftentr\u00e4ger",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp11",
             "articles_id": "articles-tmp1",
             "sortno": 13,
@@ -746,7 +745,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:13:25+02:00",
+            "created": "2021-06-13T16:13:25+02:00",
             "id": "items-tmp25",
             "itemtype": "objecttypes",
             "norm_iri": "projects~25",
@@ -768,7 +767,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:48:41+02:00",
+            "created": "2021-06-12T14:48:41+02:00",
             "id": "properties-tmp36",
             "propertytype": "objecttypes",
             "level": 0,
@@ -788,7 +787,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:13:25+02:00",
+            "created": "2021-06-13T16:13:25+02:00",
             "id": "items-tmp24",
             "itemtype": "objecttypes",
             "norm_iri": "projects~24",
@@ -810,7 +809,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:48:41+02:00",
+            "created": "2021-06-12T14:48:41+02:00",
             "id": "properties-tmp32",
             "parent_id": "properties-tmp35",
             "propertytype": "objecttypes",
@@ -831,7 +830,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:48:41+02:00",
+            "created": "2021-06-12T14:48:41+02:00",
             "id": "properties-tmp35",
             "propertytype": "objecttypes",
             "level": 0,
@@ -853,7 +852,7 @@
         {
             "norm_iri": "projects~10",
             "comment": "Notizen Ma\u00dfangaben",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp10",
             "articles_id": "articles-tmp1",
             "sortno": 15,
@@ -870,7 +869,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:13:24+02:00",
+            "created": "2021-06-13T16:13:24+02:00",
             "id": "items-tmp22",
             "itemtype": "measures",
             "norm_iri": "projects~22",
@@ -893,7 +892,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:27:21+02:00",
+            "created": "2021-06-13T16:27:21+02:00",
             "id": "properties-tmp38",
             "parent_id": "properties-tmp42",
             "propertytype": "measures",
@@ -914,7 +913,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:27:22+02:00",
+            "created": "2021-06-13T16:27:22+02:00",
             "id": "properties-tmp42",
             "propertytype": "measures",
             "level": 0,
@@ -934,7 +933,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:13:24+02:00",
+            "created": "2021-06-13T16:13:24+02:00",
             "id": "items-tmp21",
             "itemtype": "measures",
             "norm_iri": "projects~21",
@@ -957,7 +956,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:27:22+02:00",
+            "created": "2021-06-13T16:27:22+02:00",
             "id": "properties-tmp40",
             "parent_id": "properties-tmp41",
             "propertytype": "measures",
@@ -978,7 +977,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:27:22+02:00",
+            "created": "2021-06-13T16:27:22+02:00",
             "id": "properties-tmp41",
             "propertytype": "measures",
             "level": 0,
@@ -1000,7 +999,7 @@
         {
             "norm_iri": "projects~9",
             "comment": "Notizen Wappen",
-            "created": "2021-06-13T18:10:26+02:00",
+            "created": "2021-06-13T16:10:26+02:00",
             "id": "sections-tmp9",
             "articles_id": "articles-tmp1",
             "sortno": 17,
@@ -1017,7 +1016,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:42:46+02:00",
+            "created": "2021-06-14T12:42:46+02:00",
             "id": "items-tmp30",
             "to_id": "sections-tmp3",
             "itemtype": "heraldry",
@@ -1041,7 +1040,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:42:43+02:00",
+            "created": "2021-06-14T12:42:43+02:00",
             "id": "properties-tmp44",
             "propertytype": "heraldry",
             "level": 0,
@@ -1066,7 +1065,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:47:18+01:00",
+            "created": "2022-01-02T00:47:18+01:00",
             "id": "links-tmp55",
             "to_id": "properties-tmp186",
             "from_id": "properties-tmp44",
@@ -1080,7 +1079,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:52+01:00",
+            "created": "2022-01-02T00:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -1102,7 +1101,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:42+01:00",
+            "created": "2022-01-02T00:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1121,7 +1120,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-29T20:59:38+02:00",
+            "created": "2021-06-29T18:59:38+02:00",
             "id": "items-tmp106",
             "itemtype": "heraldry",
             "norm_iri": "projects~106",
@@ -1129,6 +1128,7 @@
             "sections_id": "sections-tmp9",
             "articles_id": "articles-tmp1",
             "value": "",
+            "content": "",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -1143,7 +1143,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:42:43+02:00",
+            "created": "2021-06-14T12:42:43+02:00",
             "id": "properties-tmp44",
             "propertytype": "heraldry",
             "level": 0,
@@ -1168,7 +1168,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:47:18+01:00",
+            "created": "2022-01-02T00:47:18+01:00",
             "id": "links-tmp55",
             "to_id": "properties-tmp186",
             "from_id": "properties-tmp44",
@@ -1182,7 +1182,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:52+01:00",
+            "created": "2022-01-02T00:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -1204,7 +1204,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:42+01:00",
+            "created": "2022-01-02T00:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1223,7 +1223,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:43:38+02:00",
+            "created": "2021-06-14T12:43:38+02:00",
             "id": "items-tmp31",
             "to_id": "sections-tmp2",
             "itemtype": "heraldry",
@@ -1247,7 +1247,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:42:43+02:00",
+            "created": "2021-06-14T12:42:43+02:00",
             "id": "properties-tmp43",
             "propertytype": "heraldry",
             "level": 0,
@@ -1272,7 +1272,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-10T16:40:32+02:00",
+            "created": "2022-06-10T14:40:32+02:00",
             "id": "links-tmp65",
             "to_id": "properties-tmp10",
             "from_id": "properties-tmp43",
@@ -1286,7 +1286,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp10",
             "propertytype": "literature",
             "level": 1,
@@ -1310,7 +1310,7 @@
         {
             "norm_iri": "projects~8",
             "comment": "Notizen Marken",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp8",
             "articles_id": "articles-tmp1",
             "sortno": 19,
@@ -1327,7 +1327,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:47:29+01:00",
+            "created": "2022-01-02T00:47:29+01:00",
             "id": "items-tmp108",
             "itemtype": "brands",
             "norm_iri": "projects~108",
@@ -1350,7 +1350,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:52+01:00",
+            "created": "2022-01-02T00:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -1372,7 +1372,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:42+01:00",
+            "created": "2022-01-02T00:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1391,7 +1391,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:47:29+01:00",
+            "created": "2022-01-02T00:47:29+01:00",
             "id": "items-tmp107",
             "to_id": "sections-tmp22",
             "itemtype": "brands",
@@ -1415,7 +1415,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:52+01:00",
+            "created": "2022-01-02T00:45:52+01:00",
             "id": "properties-tmp185",
             "propertytype": "brands",
             "level": 0,
@@ -1437,7 +1437,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:42+01:00",
+            "created": "2022-01-02T00:45:42+01:00",
             "id": "properties-tmp183",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1459,7 +1459,7 @@
         {
             "norm_iri": "projects~7",
             "comment": "Notizen Abbildungen",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp7",
             "articles_id": "articles-tmp1",
             "sortno": 21,
@@ -1476,7 +1476,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:45:01+02:00",
+            "created": "2021-06-14T12:45:01+02:00",
             "id": "items-tmp33",
             "to_id": "items-tmp30",
             "itemtype": "images",
@@ -1492,6 +1492,7 @@
             "file_path": "signatur-1",
             "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
             "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
+            "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
             "file_online": false,
             "date_value": "",
             "source_autopsy": false,
@@ -1502,7 +1503,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:48:34+02:00",
+            "created": "2021-06-14T12:48:34+02:00",
             "id": "properties-tmp50",
             "propertytype": "imagetypes",
             "level": 0,
@@ -1524,7 +1525,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:00:22+02:00",
+            "created": "2021-06-14T13:00:22+02:00",
             "id": "items-tmp35",
             "to_id": "sections-tmp2",
             "itemtype": "images",
@@ -1540,6 +1541,7 @@
             "file_path": "signatur-1",
             "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
             "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
+            "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
             "file_online": false,
             "date_value": "",
             "source_autopsy": false,
@@ -1550,7 +1552,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T14:48:34+02:00",
+            "created": "2021-06-14T12:48:34+02:00",
             "id": "properties-tmp50",
             "propertytype": "imagetypes",
             "level": 0,
@@ -1574,7 +1576,7 @@
         {
             "norm_iri": "projects~6",
             "comment": "Notizen Register",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp6",
             "articles_id": "articles-tmp1",
             "sortno": 23,
@@ -1591,7 +1593,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:44+02:00",
+            "created": "2022-06-29T01:06:44+02:00",
             "id": "items-tmp753",
             "itemtype": "placenames",
             "norm_iri": "projects~753",
@@ -1599,6 +1601,7 @@
             "sections_id": "sections-tmp6",
             "articles_id": "articles-tmp1",
             "value": "",
+            "content": "",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -1613,7 +1616,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:05:53+02:00",
+            "created": "2022-06-29T01:05:53+02:00",
             "id": "properties-tmp636",
             "propertytype": "placenames",
             "level": 0,
@@ -1632,7 +1635,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "items-tmp769",
             "itemtype": "placenames",
             "norm_iri": "projects~769",
@@ -1640,6 +1643,7 @@
             "sections_id": "sections-tmp6",
             "articles_id": "articles-tmp1",
             "value": "",
+            "content": "",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -1654,7 +1658,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:44:40+01:00",
+            "created": "2022-11-27T01:44:40+01:00",
             "id": "properties-tmp642",
             "propertytype": "placenames",
             "level": 0,
@@ -1673,7 +1677,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "items-tmp768",
             "itemtype": "placenames",
             "norm_iri": "projects~768",
@@ -1681,6 +1685,7 @@
             "sections_id": "sections-tmp6",
             "articles_id": "articles-tmp1",
             "value": "",
+            "content": "",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -1695,7 +1700,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:44:40+01:00",
+            "created": "2022-11-27T01:44:40+01:00",
             "id": "properties-tmp641",
             "propertytype": "placenames",
             "level": 0,
@@ -1714,7 +1719,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:44+02:00",
+            "created": "2022-06-29T01:06:44+02:00",
             "id": "items-tmp752",
             "itemtype": "personnames",
             "norm_iri": "projects~752",
@@ -1737,7 +1742,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:04+02:00",
+            "created": "2022-06-29T01:06:04+02:00",
             "id": "properties-tmp637",
             "propertytype": "personnames",
             "level": 0,
@@ -1756,7 +1761,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:44+02:00",
+            "created": "2022-06-29T01:06:44+02:00",
             "id": "items-tmp751",
             "itemtype": "subjects",
             "norm_iri": "projects~751",
@@ -1779,7 +1784,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:15+02:00",
+            "created": "2022-06-29T01:06:15+02:00",
             "id": "properties-tmp638",
             "propertytype": "subjects",
             "level": 0,
@@ -1798,7 +1803,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:44+02:00",
+            "created": "2022-06-29T01:06:44+02:00",
             "id": "items-tmp750",
             "itemtype": "manufacturers",
             "norm_iri": "projects~750",
@@ -1821,7 +1826,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:25+02:00",
+            "created": "2022-06-29T01:06:25+02:00",
             "id": "properties-tmp639",
             "propertytype": "manufacturers",
             "level": 0,
@@ -1840,7 +1845,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:44+02:00",
+            "created": "2022-06-29T01:06:44+02:00",
             "id": "items-tmp749",
             "itemtype": "icons",
             "norm_iri": "projects~749",
@@ -1863,7 +1868,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:06:37+02:00",
+            "created": "2022-06-29T01:06:37+02:00",
             "id": "properties-tmp640",
             "propertytype": "icons",
             "level": 0,
@@ -1884,7 +1889,7 @@
         {
             "norm_iri": "projects~5",
             "comment": "Notizen Abschnitt 1",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp5",
             "articles_id": "articles-tmp1",
             "sortno": 25,
@@ -1901,7 +1906,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "items-tmp4",
             "itemtype": "text",
             "norm_iri": "projects~4",
@@ -1909,7 +1914,7 @@
             "sections_id": "sections-tmp5",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.<app1 id=\"000004463586776180555555628924\"><\/app1><nl><\/nl><nl><\/nl><h id=\"000004436160878777777777844048\" value=\"\u00dcberschrift 1 \">Text <\/h>Text Text<nl><\/nl>Text Text Text<nl><\/nl>Text <b id=\"000004436160887138888888933579\">Text <\/b><i id=\"000004436160890414351851976127\">Text<\/i><nl><\/nl><u id=\"000004436160892870370370431668\">Text <\/u><g id=\"000004436160895594907407469796\">Text <\/g><k id=\"000004436160898130787037028136\">Text<\/k><nl><\/nl><a id=\"000004436160901166666666725447\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" value=\"LINK\"><\/a> <nl><\/nl><p id=\"000004436160924313657407458602\" value=\"Absatz 2b\">Text Text Text<nl><\/nl>Text Text Text<\/p><nl><\/nl>Literaturverweis im Text: <rec_lit id=\"000004456302666872685185191153\" value=\"Unterautor \"><\/rec_lit><nl><\/nl><nl><\/nl>Externe Verweise<nl><\/nl>- auf einen Artikel: <rec_extern id=\"000004489202490501157407418218\" value=\"Signatur 2[Artikel]\"><\/rec_extern><nl><\/nl>- auf eine Inschrift: <rec_extern id=\"000004489202501042824074077622\" value=\"Signatur 2[Inschrift A]\"><\/rec_extern><nl><\/nl>- auf einen Inschriftenteil: <rec_extern id=\"000004489202513028935185199996\" value=\"Signatur 2[Inschrift A1]\"><\/rec_extern><nl><\/nl>- auf eine Fu\u00dfnote: <rec_extern id=\"000004489202522863425925931578\" value=\"Signatur 2[Fu\u00dfnote 1]\"><\/rec_extern><nl><\/nl><nl><\/nl>Interne Verweise<nl><\/nl>- auf Inschrift B: <rec_intern id=\"000004489203414346064814810841\" value=\"B\"><\/rec_intern><nl><\/nl>- auf Inschriftenteil B2: <rec_intern id=\"000004489202534078703703725732\" value=\"B2\"><\/rec_intern><nl><\/nl>- auf Fu\u00dfnote a: <rec_intern id=\"000004489204161565972222228987\" value=\"Fu\u00dfnote a\"><\/rec_intern><nl><\/nl>- auf Fu\u00dfnote 2: <rec_intern id=\"000004489204172635416666673690\" value=\"Fu\u00dfnote 2\"><\/rec_intern><nl><\/nl>- auf Marke: <rec_ma id=\"000004489204491244212962960464\" value=\"hm001.1121\"><\/rec_ma>",
+            "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.<app1 id=\"000004463586776180555555628924\" \/><nl \/><nl \/><h id=\"000004436160878777777777844048\">Text <\/h>Text Text<nl \/>Text Text Text<nl \/>Text <b id=\"000004436160887138888888933579\">Text <\/b><i id=\"000004436160890414351851976127\">Text<\/i><nl \/><u id=\"000004436160892870370370431668\">Text <\/u><g id=\"000004436160895594907407469796\">Text <\/g><k id=\"000004436160898130787037028136\">Text<\/k><nl \/><a id=\"000004436160901166666666725447\" value=\"LINK\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" \/> <nl \/>Text Text Text<nl \/>Text Text Text<nl \/>Literaturverweis im Text: <rec_lit id=\"000004456302666872685185191153\" \/><nl \/><nl \/>Externe Verweise<nl \/>- auf einen Artikel: <rec_extern id=\"000004489202490501157407418218\" \/><nl \/>- auf eine Inschrift: <rec_extern id=\"000004489202501042824074077622\" \/><nl \/>- auf einen Inschriftenteil: <rec_extern id=\"000004489202513028935185199996\" \/><nl \/>- auf eine Fu\u00dfnote: <rec_extern id=\"000004489202522863425925931578\" \/><nl \/><nl \/>Interne Verweise<nl \/>- auf Inschrift B: <rec_intern id=\"000004489203414346064814810841\" \/><nl \/>- auf Inschriftenteil B2: <rec_intern id=\"000004489202534078703703725732\" \/><nl \/>- auf Fu\u00dfnote a: <rec_intern id=\"000004489204161565972222228987\" \/><nl \/>- auf Fu\u00dfnote 2: <rec_intern id=\"000004489204172635416666673690\" \/><nl \/>- auf Marke: <rec_ma id=\"000004489204491244212962960464\" \/>",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -1924,7 +1929,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-03-27T21:05:33+02:00",
+            "created": "2022-03-27T19:05:33+02:00",
             "id": "properties-tmp197",
             "propertytype": "captions",
             "level": 0,
@@ -1942,7 +1947,7 @@
         {
             "norm_iri": "projects~4",
             "comment": "Notizen Abschnitt 2a",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp4",
             "articles_id": "articles-tmp1",
             "sortno": 27,
@@ -1959,7 +1964,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "items-tmp3",
             "itemtype": "text",
             "norm_iri": "projects~3",
@@ -1967,7 +1972,7 @@
             "sections_id": "sections-tmp4",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<h id=\"000004436161145244212963020598\" value=\"\u00dcberschrift 1a\">TEXT <\/h>TEXT TEXT TEXT <nl><\/nl><b id=\"000004436161152100694444420087\">TEXT <\/b><i id=\"000004436161156358796296327934\">TEXT <\/i><u id=\"000004436161159035879629630111\">TEXT <\/u><g id=\"000004436161161467592592619662\">TEXT <\/g><nl><\/nl><k id=\"000004436161164633101851986162\">TEXT <\/k><a id=\"000004436161167155092592629748\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" value=\"LINK \"><\/a> <nl><\/nl><nl><\/nl><p id=\"000004436161200284722222217911\" value=\"Absatz 2a\">TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl><nl><\/nl><nl><\/nl><\/p><nl><\/nl><p id=\"000004436161208671296296385342\" value=\"Absatz 2b\">TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <nl><\/nl>TEXT TEXT TEXT TEXT <\/p><nl><\/nl>",
+            "content": "<h id=\"000004436161145244212963020598\">TEXT <\/h>TEXT TEXT TEXT <nl \/><b id=\"000004436161152100694444420087\">TEXT <\/b><i id=\"000004436161156358796296327934\">TEXT <\/i><u id=\"000004436161159035879629630111\">TEXT <\/u><g id=\"000004436161161467592592619662\">TEXT <\/g><nl \/><k id=\"000004436161164633101851986162\">TEXT <\/k><a id=\"000004436161167155092592629748\" value=\"LINK \" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" \/> <nl \/><nl \/>TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/><nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -1982,7 +1987,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-03-27T21:05:33+02:00",
+            "created": "2022-03-27T19:05:33+02:00",
             "id": "properties-tmp201",
             "propertytype": "captions",
             "level": 0,
@@ -2000,7 +2005,7 @@
         {
             "norm_iri": "projects~3",
             "comment": "Notizen Inschrift A",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp3",
             "articles_id": "articles-tmp1",
             "sortno": 29,
@@ -2017,7 +2022,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:52:16+02:00",
+            "created": "2021-06-14T14:52:16+02:00",
             "id": "items-tmp56",
             "itemtype": "texttypes",
             "norm_iri": "projects~56",
@@ -2040,7 +2045,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:48:49+02:00",
+            "created": "2021-06-14T14:48:49+02:00",
             "id": "properties-tmp116",
             "propertytype": "texttypes",
             "level": 0,
@@ -2060,7 +2065,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:52:16+02:00",
+            "created": "2021-06-14T14:52:16+02:00",
             "id": "items-tmp55",
             "itemtype": "texttypes",
             "norm_iri": "projects~55",
@@ -2083,7 +2088,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:48:49+02:00",
+            "created": "2021-06-14T14:48:49+02:00",
             "id": "properties-tmp112",
             "parent_id": "properties-tmp113",
             "propertytype": "texttypes",
@@ -2104,7 +2109,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:48:49+02:00",
+            "created": "2021-06-14T14:48:49+02:00",
             "id": "properties-tmp113",
             "propertytype": "texttypes",
             "level": 0,
@@ -2124,7 +2129,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:55:16+02:00",
+            "created": "2021-06-14T14:55:16+02:00",
             "id": "items-tmp58",
             "itemtype": "fonttypes",
             "norm_iri": "projects~58",
@@ -2147,7 +2152,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:54:37+02:00",
+            "created": "2021-06-14T14:54:37+02:00",
             "id": "properties-tmp122",
             "propertytype": "fonttypes",
             "level": 0,
@@ -2167,7 +2172,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:55:16+02:00",
+            "created": "2021-06-14T14:55:16+02:00",
             "id": "items-tmp57",
             "itemtype": "fonttypes",
             "norm_iri": "projects~57",
@@ -2190,7 +2195,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:54:36+02:00",
+            "created": "2021-06-14T14:54:36+02:00",
             "id": "properties-tmp121",
             "parent_id": "properties-tmp122",
             "propertytype": "fonttypes",
@@ -2211,7 +2216,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:54:37+02:00",
+            "created": "2021-06-14T14:54:37+02:00",
             "id": "properties-tmp122",
             "propertytype": "fonttypes",
             "level": 0,
@@ -2231,7 +2236,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:58:27+02:00",
+            "created": "2021-06-14T14:58:27+02:00",
             "id": "items-tmp60",
             "itemtype": "languages",
             "norm_iri": "projects~60",
@@ -2254,7 +2259,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:57:50+02:00",
+            "created": "2021-06-14T14:57:50+02:00",
             "id": "properties-tmp128",
             "propertytype": "languages",
             "level": 0,
@@ -2274,7 +2279,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:58:27+02:00",
+            "created": "2021-06-14T14:58:27+02:00",
             "id": "items-tmp59",
             "itemtype": "languages",
             "norm_iri": "projects~59",
@@ -2297,7 +2302,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:57:49+02:00",
+            "created": "2021-06-14T14:57:49+02:00",
             "id": "properties-tmp124",
             "parent_id": "properties-tmp125",
             "propertytype": "languages",
@@ -2318,7 +2323,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:57:49+02:00",
+            "created": "2021-06-14T14:57:49+02:00",
             "id": "properties-tmp125",
             "propertytype": "languages",
             "level": 0,
@@ -2338,7 +2343,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:07:42+02:00",
+            "created": "2021-06-14T15:07:42+02:00",
             "id": "items-tmp65",
             "itemtype": "techniques",
             "norm_iri": "projects~65",
@@ -2361,7 +2366,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:03:28+02:00",
+            "created": "2021-06-14T15:03:28+02:00",
             "id": "properties-tmp134",
             "propertytype": "techniques",
             "level": 0,
@@ -2381,7 +2386,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:07:42+02:00",
+            "created": "2021-06-14T15:07:42+02:00",
             "id": "items-tmp64",
             "itemtype": "techniques",
             "norm_iri": "projects~64",
@@ -2404,7 +2409,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:03:28+02:00",
+            "created": "2021-06-14T15:03:28+02:00",
             "id": "properties-tmp130",
             "parent_id": "properties-tmp131",
             "propertytype": "techniques",
@@ -2425,7 +2430,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:03:28+02:00",
+            "created": "2021-06-14T15:03:28+02:00",
             "id": "properties-tmp131",
             "propertytype": "techniques",
             "level": 0,
@@ -2445,7 +2450,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:07:42+02:00",
+            "created": "2021-06-14T15:07:42+02:00",
             "id": "items-tmp63",
             "itemtype": "fontheights",
             "norm_iri": "projects~63",
@@ -2467,7 +2472,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:07:41+02:00",
+            "created": "2021-06-14T15:07:41+02:00",
             "id": "items-tmp62",
             "itemtype": "fontheights",
             "norm_iri": "projects~62",
@@ -2489,7 +2494,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:07:41+02:00",
+            "created": "2021-06-14T15:07:41+02:00",
             "id": "items-tmp61",
             "itemtype": "epithets",
             "norm_iri": "projects~61",
@@ -2512,7 +2517,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp140",
             "propertytype": "epithets",
             "level": 0,
@@ -2532,7 +2537,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:49+02:00",
+            "created": "2021-06-14T15:10:49+02:00",
             "id": "items-tmp67",
             "itemtype": "epithets",
             "norm_iri": "projects~67",
@@ -2555,7 +2560,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp136",
             "parent_id": "properties-tmp137",
             "propertytype": "epithets",
@@ -2576,7 +2581,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp137",
             "propertytype": "epithets",
             "level": 0,
@@ -2596,7 +2601,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:49+02:00",
+            "created": "2021-06-14T15:10:49+02:00",
             "id": "items-tmp66",
             "itemtype": "incipits",
             "norm_iri": "projects~66",
@@ -2619,7 +2624,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:37+02:00",
+            "created": "2021-06-14T15:10:37+02:00",
             "id": "properties-tmp146",
             "propertytype": "incipits",
             "level": 0,
@@ -2639,7 +2644,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp76",
             "itemtype": "incipits",
             "norm_iri": "projects~76",
@@ -2662,7 +2667,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:37+02:00",
+            "created": "2021-06-14T15:10:37+02:00",
             "id": "properties-tmp142",
             "parent_id": "properties-tmp143",
             "propertytype": "incipits",
@@ -2683,7 +2688,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:37+02:00",
+            "created": "2021-06-14T15:10:37+02:00",
             "id": "properties-tmp143",
             "propertytype": "incipits",
             "level": 0,
@@ -2703,7 +2708,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp75",
             "itemtype": "formulas",
             "norm_iri": "projects~75",
@@ -2726,7 +2731,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:19:43+02:00",
+            "created": "2021-06-14T15:19:43+02:00",
             "id": "properties-tmp152",
             "propertytype": "formulas",
             "level": 0,
@@ -2746,7 +2751,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp74",
             "itemtype": "formulas",
             "norm_iri": "projects~74",
@@ -2769,7 +2774,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:19:43+02:00",
+            "created": "2021-06-14T15:19:43+02:00",
             "id": "properties-tmp148",
             "parent_id": "properties-tmp149",
             "propertytype": "formulas",
@@ -2790,7 +2795,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:19:43+02:00",
+            "created": "2021-06-14T15:19:43+02:00",
             "id": "properties-tmp149",
             "propertytype": "formulas",
             "level": 0,
@@ -2810,7 +2815,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp73",
             "itemtype": "sources",
             "norm_iri": "projects~73",
@@ -2833,7 +2838,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:22:25+02:00",
+            "created": "2021-06-14T15:22:25+02:00",
             "id": "properties-tmp158",
             "propertytype": "sources",
             "level": 0,
@@ -2853,7 +2858,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp72",
             "itemtype": "sources",
             "norm_iri": "projects~72",
@@ -2876,7 +2881,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:22:25+02:00",
+            "created": "2021-06-14T15:22:25+02:00",
             "id": "properties-tmp154",
             "parent_id": "properties-tmp155",
             "propertytype": "sources",
@@ -2897,7 +2902,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:22:25+02:00",
+            "created": "2021-06-14T15:22:25+02:00",
             "id": "properties-tmp155",
             "propertytype": "sources",
             "level": 0,
@@ -2917,7 +2922,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp71",
             "itemtype": "initials",
             "norm_iri": "projects~71",
@@ -2940,7 +2945,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:25:37+02:00",
+            "created": "2021-06-14T15:25:37+02:00",
             "id": "properties-tmp164",
             "propertytype": "initials",
             "level": 0,
@@ -2960,7 +2965,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp70",
             "itemtype": "initials",
             "norm_iri": "projects~70",
@@ -2983,7 +2988,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:25:37+02:00",
+            "created": "2021-06-14T15:25:37+02:00",
             "id": "properties-tmp160",
             "parent_id": "properties-tmp161",
             "propertytype": "initials",
@@ -3004,7 +3009,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:25:37+02:00",
+            "created": "2021-06-14T15:25:37+02:00",
             "id": "properties-tmp161",
             "propertytype": "initials",
             "level": 0,
@@ -3024,7 +3029,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp69",
             "itemtype": "metres",
             "norm_iri": "projects~69",
@@ -3047,7 +3052,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:28:48+02:00",
+            "created": "2021-06-14T15:28:48+02:00",
             "id": "properties-tmp170",
             "propertytype": "metres",
             "level": 0,
@@ -3067,7 +3072,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:29:30+02:00",
+            "created": "2021-06-14T15:29:30+02:00",
             "id": "items-tmp68",
             "itemtype": "metres",
             "norm_iri": "projects~68",
@@ -3090,7 +3095,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:28:48+02:00",
+            "created": "2021-06-14T15:28:48+02:00",
             "id": "properties-tmp166",
             "parent_id": "properties-tmp167",
             "propertytype": "metres",
@@ -3111,7 +3116,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:28:48+02:00",
+            "created": "2021-06-14T15:28:48+02:00",
             "id": "properties-tmp167",
             "propertytype": "metres",
             "level": 0,
@@ -3133,7 +3138,7 @@
         {
             "norm_iri": "projects~2",
             "comment": "Notzien Inschriftenteil 1",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp2",
             "parent_id": "sections-tmp3",
             "articles_id": "articles-tmp1",
@@ -3151,14 +3156,14 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "items-tmp2",
             "itemtype": "lost",
             "norm_iri": "projects~2",
             "sortno": 0,
             "sections_id": "sections-tmp2",
             "articles_id": "articles-tmp1",
-            "value": "",
+            "value": "0",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -3174,7 +3179,7 @@
         {
             "norm_iri": "projects~1",
             "comment": "Notizen Inschrift A - Inschriftenteil 1 - Bearbeitung 1",
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "sections-tmp1",
             "parent_id": "sections-tmp2",
             "articles_id": "articles-tmp1",
@@ -3192,7 +3197,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-13T18:10:25+02:00",
+            "created": "2021-06-13T16:10:25+02:00",
             "id": "items-tmp1",
             "itemtype": "transcriptions",
             "norm_iri": "projects~1",
@@ -3200,7 +3205,7 @@
             "sections_id": "sections-tmp1",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<bl id=\"000004474097580738425925958702\" value=\"\"><nl><\/nl>Zwischenraum von 1: <spatium_v id=\"000004436165070465277777844244\" width=\"1\"><\/spatium_v><nl><\/nl>Unbestimmter Verlust: <del id=\"000004436165076792824074163019\" num_sign=\"0\"><\/del><nl><\/nl>Erg<cpl id=\"000004436165097621527777892480\">\u00e4nz\u00e9ng<\/cpl> <nl><\/nl>Ausla <oms id=\"000004436165100978009259346871\">ss\u00f0ung<\/oms> <nl><\/nl>Verzeilenumbruh <vz id=\"000004436165037326388888946670\" value=\"Verszeilenumbruch 1 \"><\/vz> <nl><\/nl><add id=\"000004436165104023148148146540\">Nachtrag<\/add><nl><\/nl>Abk<abr id=\"000004436165108151620370436103\" value=\"\">\u00fcrzung<\/abr><nl><\/nl><vsl id=\"000004436165110998842592605012\">Ve<\/vsl>rsalie <nl><\/nl>Zeilenumbruch <z id=\"000004436165006240740740742383\" value=\"Zeilenumbruch 1a\"><\/z><nl><\/nl><\/bl><nl><\/nl><bl id=\"000004436164974262731481588902\" value=\"Bereich 1a\"><nl><\/nl>Hann bj\u00f3 \u00ed Raums <wtr id=\"000004436165051586805555667815\" value=\"Worttrenner 1 \"><\/wtr> dal \u00ed Raumsd<all id=\"000004436165061471064814812687\" value=\"Buchstabenverbindung 2 \">\u00e6<\/all>lafylk<nl><\/nl><\/bl><nl><\/nl><bl id=\"000004515581058186342592608309\" value=\"\">Alphabetische Fu\u00dfnote: <app2 id=\"000004489202863265046296394325\"><\/app2><nl><\/nl>Numerische Fu\u00dfnote: <app1 id=\"000004489202875583333333330386\"><\/app1><\/bl>",
+            "content": "<bl id=\"000004474097580738425925958702\"><nl \/>Zwischenraum von 1: <spatium_v id=\"000004436165070465277777844244\" width=\"1\" \/><nl \/>Unbestimmter Verlust: <del id=\"000004436165076792824074163019\" num_sign=\"0\" \/><nl \/>Erg<cpl id=\"000004436165097621527777892480\">\u00e4nz\u00e9ng<\/cpl> <nl \/>Ausla <oms id=\"000004436165100978009259346871\">ss\u00f0ung<\/oms> <nl \/>Verzeilenumbruh <vz id=\"000004436165037326388888946670\" \/> <nl \/><add id=\"000004436165104023148148146540\">Nachtrag<\/add><nl \/>Abk<abr id=\"000004436165108151620370436103\">\u00fcrzung<\/abr><nl \/><vsl id=\"000004436165110998842592605012\">Ve<\/vsl>rsalie <nl \/>Zeilenumbruch <z id=\"000004436165006240740740742383\" \/><nl \/> <\/bl><nl \/><bl id=\"000004436164974262731481588902\"><nl \/>Hann bj\u00f3 \u00ed Raums <wtr id=\"000004436165051586805555667815\" \/> dal \u00ed Raumsd<all id=\"000004436165061471064814812687\">\u00e6<\/all>lafylk<nl \/> <\/bl><nl \/><bl id=\"000004515581058186342592608309\">Alphabetische Fu\u00dfnote: <app2 id=\"000004489202863265046296394325\" \/><nl \/>Numerische Fu\u00dfnote: <app1 id=\"000004489202875583333333330386\" \/><\/bl>",
             "translation": "\u00dcbersetzung Inschrift A - Teil 1 - Bearbeitung 1",
             "flagged": false,
             "file_name": "",
@@ -3209,6 +3214,7 @@
             "file_online": false,
             "date_sort": "01234AAA00000000A4",
             "date_value": "1234",
+            "date_add": "",
             "date_start": 1234,
             "date_end": 1234,
             "source_autopsy": true,
@@ -3222,7 +3228,7 @@
         {
             "norm_iri": "projects~24",
             "comment": "Notizen Inschr A Teil 2",
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "sections-tmp24",
             "parent_id": "sections-tmp3",
             "articles_id": "articles-tmp1",
@@ -3240,7 +3246,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "items-tmp48",
             "itemtype": "lost",
             "norm_iri": "projects~48",
@@ -3263,7 +3269,7 @@
         {
             "norm_iri": "projects~23",
             "comment": "Inschrift A Teil 2 Bearbeitungsnotizen",
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "sections-tmp23",
             "parent_id": "sections-tmp24",
             "articles_id": "articles-tmp1",
@@ -3281,7 +3287,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "items-tmp46",
             "itemtype": "transcriptions",
             "norm_iri": "projects~46",
@@ -3289,7 +3295,7 @@
             "sections_id": "sections-tmp23",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<bl id=\"000004436341948501157407446979\" value=\"Bereich 1a\"><nl><\/nl><ini id=\"000004436342051736111111145522\">\u00ed<\/ini>nitiale<nl><\/nl>Ch<chr id=\"000004436342056334490740716638\">r<\/chr>onogrammbuchstabe<nl><\/nl>V<vsl id=\"000004436342047435185185246164\">h<\/vsl>\u00e9rsalie<nl><\/nl>Ab<abr id=\"000004436342040472222222267856\" value=\"\">m<kap id=\"000004436342060210648148155746\">a<\/kap>\u00f0r <\/abr> <z id=\"000004436341968184027777873155\" value=\"Zeilenumbruch 1b\"><\/z><nl><\/nl><add id=\"000004436342035339120370429044\">Nachtrag<\/add><nl><\/nl><oms id=\"000004436342029998842592635716\">Auslassung<\/oms><nl><\/nl><all id=\"000004436342068519675925958209\" value=\"Buchstabenverbindung 2 \">Bu<\/all>chstabenverbindung<nl><\/nl>Uns<insec id=\"000004436342083524305555650834\">\u00f0<\/insec>cherer Text<nl><\/nl>Zwischenraum von drei <spatium_v id=\"000004436341997248842592682649\" width=\"3\"><\/spatium_v> Zeichen<nl><\/nl>Unbestimmte Anzahl <del id=\"000004436342008081018518514387\" num_sign=\"0\"><\/del> verlorener Zeichen<nl><\/nl><cpl id=\"000004436342019850694444462751\">Erg<\/cpl>\u00f0nzung<nl><\/nl>Wort<wtr id=\"000004436341987521990740778661\" value=\"Worttrenner 2a\"><\/wtr>trenner<nl><\/nl>Hochge<sup id=\"000004436342078564814814882651\" value=\"Hochgestellt 1 \">stellt<\/sup> <vz id=\"000004436341975421296296344091\" value=\"Verszeilenumbruch 1a\"><\/vz><nl><\/nl><\/bl>",
+            "content": "<bl id=\"000004436341948501157407446979\"><nl \/><ini id=\"000004436342051736111111145522\">\u00ed<\/ini>nitiale<nl \/>Ch<chr id=\"000004436342056334490740716638\">r<\/chr>onogrammbuchstabe<nl \/>V<vsl id=\"000004436342047435185185246164\">h<\/vsl>\u00e9rsalie<nl \/>Ab<abr id=\"000004436342040472222222267856\">m<kap id=\"000004436342060210648148155746\">a<\/kap>\u00f0r <\/abr> <z id=\"000004436341968184027777873155\" \/><nl \/><add id=\"000004436342035339120370429044\">Nachtrag<\/add><nl \/><oms id=\"000004436342029998842592635716\">Auslassung<\/oms><nl \/><all id=\"000004436342068519675925958209\">Bu<\/all>chstabenverbindung<nl \/>Uns<insec id=\"000004436342083524305555650834\">\u00f0<\/insec>cherer Text<nl \/>Zwischenraum von drei <spatium_v id=\"000004436341997248842592682649\" width=\"3\" \/> Zeichen<nl \/>Unbestimmte Anzahl <del id=\"000004436342008081018518514387\" num_sign=\"0\" \/> verlorener Zeichen<nl \/><cpl id=\"000004436342019850694444462751\">Erg<\/cpl>\u00f0nzung<nl \/>Wort<wtr id=\"000004436341987521990740778661\" \/>trenner<nl \/>Hochge<sup id=\"000004436342078564814814882651\">stellt<\/sup> <vz id=\"000004436341975421296296344091\" \/><nl \/> <\/bl>",
             "translation": "\u00dcbersetzung \u00d6rvar-Odds saga",
             "flagged": false,
             "file_name": "",
@@ -3298,6 +3304,7 @@
             "file_online": false,
             "date_sort": "01337AAA00000000A4",
             "date_value": "1337",
+            "date_add": "",
             "date_start": 1337,
             "date_end": 1337,
             "source_autopsy": false,
@@ -3311,7 +3318,7 @@
         {
             "norm_iri": "projects~22",
             "comment": "Notizen Inschrift B",
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "sections-tmp22",
             "articles_id": "articles-tmp1",
             "sortno": 39,
@@ -3328,7 +3335,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:13+02:00",
+            "created": "2021-06-14T15:34:13+02:00",
             "id": "items-tmp98",
             "itemtype": "texttypes",
             "norm_iri": "projects~98",
@@ -3351,7 +3358,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:48:49+02:00",
+            "created": "2021-06-14T14:48:49+02:00",
             "id": "properties-tmp116",
             "propertytype": "texttypes",
             "level": 0,
@@ -3371,7 +3378,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:13+02:00",
+            "created": "2021-06-14T15:34:13+02:00",
             "id": "items-tmp97",
             "itemtype": "texttypes",
             "norm_iri": "projects~97",
@@ -3394,7 +3401,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:48:49+02:00",
+            "created": "2021-06-14T14:48:49+02:00",
             "id": "properties-tmp112",
             "parent_id": "properties-tmp113",
             "propertytype": "texttypes",
@@ -3415,7 +3422,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:48:49+02:00",
+            "created": "2021-06-14T14:48:49+02:00",
             "id": "properties-tmp113",
             "propertytype": "texttypes",
             "level": 0,
@@ -3435,7 +3442,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:13+02:00",
+            "created": "2021-06-14T15:34:13+02:00",
             "id": "items-tmp96",
             "itemtype": "fonttypes",
             "norm_iri": "projects~96",
@@ -3458,7 +3465,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:54:36+02:00",
+            "created": "2021-06-14T14:54:36+02:00",
             "id": "properties-tmp119",
             "propertytype": "fonttypes",
             "level": 0,
@@ -3478,7 +3485,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:13+02:00",
+            "created": "2021-06-14T15:34:13+02:00",
             "id": "items-tmp95",
             "itemtype": "fonttypes",
             "norm_iri": "projects~95",
@@ -3501,7 +3508,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:54:36+02:00",
+            "created": "2021-06-14T14:54:36+02:00",
             "id": "properties-tmp118",
             "parent_id": "properties-tmp119",
             "propertytype": "fonttypes",
@@ -3522,7 +3529,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:54:36+02:00",
+            "created": "2021-06-14T14:54:36+02:00",
             "id": "properties-tmp119",
             "propertytype": "fonttypes",
             "level": 0,
@@ -3542,7 +3549,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:13+02:00",
+            "created": "2021-06-14T15:34:13+02:00",
             "id": "items-tmp94",
             "itemtype": "languages",
             "norm_iri": "projects~94",
@@ -3565,7 +3572,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:57:50+02:00",
+            "created": "2021-06-14T14:57:50+02:00",
             "id": "properties-tmp128",
             "propertytype": "languages",
             "level": 0,
@@ -3585,7 +3592,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp93",
             "itemtype": "languages",
             "norm_iri": "projects~93",
@@ -3608,7 +3615,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:57:49+02:00",
+            "created": "2021-06-14T14:57:49+02:00",
             "id": "properties-tmp125",
             "propertytype": "languages",
             "level": 0,
@@ -3628,7 +3635,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp92",
             "itemtype": "techniques",
             "norm_iri": "projects~92",
@@ -3651,7 +3658,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:03:28+02:00",
+            "created": "2021-06-14T15:03:28+02:00",
             "id": "properties-tmp134",
             "propertytype": "techniques",
             "level": 0,
@@ -3671,7 +3678,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp91",
             "itemtype": "techniques",
             "norm_iri": "projects~91",
@@ -3694,7 +3701,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:03:28+02:00",
+            "created": "2021-06-14T15:03:28+02:00",
             "id": "properties-tmp131",
             "propertytype": "techniques",
             "level": 0,
@@ -3714,7 +3721,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp90",
             "itemtype": "fontheights",
             "norm_iri": "projects~90",
@@ -3736,7 +3743,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp89",
             "itemtype": "fontheights",
             "norm_iri": "projects~89",
@@ -3758,7 +3765,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp88",
             "itemtype": "epithets",
             "norm_iri": "projects~88",
@@ -3781,7 +3788,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp139",
             "parent_id": "properties-tmp140",
             "propertytype": "epithets",
@@ -3802,7 +3809,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp140",
             "propertytype": "epithets",
             "level": 0,
@@ -3822,7 +3829,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp86",
             "itemtype": "epithets",
             "norm_iri": "projects~86",
@@ -3845,7 +3852,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp136",
             "parent_id": "properties-tmp137",
             "propertytype": "epithets",
@@ -3866,7 +3873,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:06:58+02:00",
+            "created": "2021-06-14T15:06:58+02:00",
             "id": "properties-tmp137",
             "propertytype": "epithets",
             "level": 0,
@@ -3886,7 +3893,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp87",
             "itemtype": "incipits",
             "norm_iri": "projects~87",
@@ -3909,7 +3916,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:37+02:00",
+            "created": "2021-06-14T15:10:37+02:00",
             "id": "properties-tmp146",
             "propertytype": "incipits",
             "level": 0,
@@ -3929,7 +3936,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp85",
             "itemtype": "incipits",
             "norm_iri": "projects~85",
@@ -3952,7 +3959,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:10:37+02:00",
+            "created": "2021-06-14T15:10:37+02:00",
             "id": "properties-tmp143",
             "propertytype": "incipits",
             "level": 0,
@@ -3972,7 +3979,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp84",
             "itemtype": "formulas",
             "norm_iri": "projects~84",
@@ -3995,7 +4002,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:19:43+02:00",
+            "created": "2021-06-14T15:19:43+02:00",
             "id": "properties-tmp152",
             "propertytype": "formulas",
             "level": 0,
@@ -4015,7 +4022,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp77",
             "itemtype": "formulas",
             "norm_iri": "projects~77",
@@ -4038,7 +4045,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:19:43+02:00",
+            "created": "2021-06-14T15:19:43+02:00",
             "id": "properties-tmp149",
             "propertytype": "formulas",
             "level": 0,
@@ -4058,7 +4065,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp83",
             "itemtype": "sources",
             "norm_iri": "projects~83",
@@ -4081,7 +4088,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:22:25+02:00",
+            "created": "2021-06-14T15:22:25+02:00",
             "id": "properties-tmp157",
             "parent_id": "properties-tmp158",
             "propertytype": "sources",
@@ -4102,7 +4109,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:22:25+02:00",
+            "created": "2021-06-14T15:22:25+02:00",
             "id": "properties-tmp158",
             "propertytype": "sources",
             "level": 0,
@@ -4122,7 +4129,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp78",
             "itemtype": "sources",
             "norm_iri": "projects~78",
@@ -4145,7 +4152,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:22:25+02:00",
+            "created": "2021-06-14T15:22:25+02:00",
             "id": "properties-tmp155",
             "propertytype": "sources",
             "level": 0,
@@ -4165,7 +4172,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp82",
             "itemtype": "initials",
             "norm_iri": "projects~82",
@@ -4188,7 +4195,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:25:37+02:00",
+            "created": "2021-06-14T15:25:37+02:00",
             "id": "properties-tmp163",
             "parent_id": "properties-tmp164",
             "propertytype": "initials",
@@ -4211,7 +4218,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:25:37+02:00",
+            "created": "2021-06-14T15:25:37+02:00",
             "id": "properties-tmp164",
             "propertytype": "initials",
             "level": 0,
@@ -4231,7 +4238,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp81",
             "itemtype": "initials",
             "norm_iri": "projects~81",
@@ -4254,7 +4261,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:25:37+02:00",
+            "created": "2021-06-14T15:25:37+02:00",
             "id": "properties-tmp164",
             "propertytype": "initials",
             "level": 0,
@@ -4274,7 +4281,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp80",
             "itemtype": "metres",
             "norm_iri": "projects~80",
@@ -4297,7 +4304,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:28:48+02:00",
+            "created": "2021-06-14T15:28:48+02:00",
             "id": "properties-tmp170",
             "propertytype": "metres",
             "level": 0,
@@ -4317,7 +4324,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:34:12+02:00",
+            "created": "2021-06-14T15:34:12+02:00",
             "id": "items-tmp79",
             "itemtype": "metres",
             "norm_iri": "projects~79",
@@ -4340,7 +4347,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:28:48+02:00",
+            "created": "2021-06-14T15:28:48+02:00",
             "id": "properties-tmp167",
             "propertytype": "metres",
             "level": 0,
@@ -4362,7 +4369,7 @@
         {
             "norm_iri": "projects~21",
             "comment": "Notizen Inschrift B Teil 1",
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "sections-tmp21",
             "parent_id": "sections-tmp22",
             "articles_id": "articles-tmp1",
@@ -4380,14 +4387,14 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "items-tmp43",
             "itemtype": "lost",
             "norm_iri": "projects~43",
             "sortno": 0,
             "sections_id": "sections-tmp21",
             "articles_id": "articles-tmp1",
-            "value": "",
+            "value": "0",
             "flagged": false,
             "file_name": "",
             "file_path": "",
@@ -4403,7 +4410,7 @@
         {
             "norm_iri": "projects~20",
             "comment": "Notizen Inschrift B Teil 1 Bearbeitung 1",
-            "created": "2021-06-14T16:42:15+02:00",
+            "created": "2021-06-14T14:42:15+02:00",
             "id": "sections-tmp20",
             "parent_id": "sections-tmp21",
             "articles_id": "articles-tmp1",
@@ -4421,7 +4428,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:16+02:00",
+            "created": "2021-06-14T14:42:16+02:00",
             "id": "items-tmp41",
             "itemtype": "transcriptions",
             "norm_iri": "projects~41",
@@ -4429,7 +4436,7 @@
             "sections_id": "sections-tmp20",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<bl id=\"000004436342219936342592692857\" value=\"Bereich 2b\"><ini id=\"000004436342334950231481521590\">\u00de<\/ini>at <chr id=\"000004436342339388888888943282\">v<\/chr>ar eitt <kap id=\"000004436342344737268518577048\">s<\/kap>umar, <z id=\"000004436342244850694444419672\" value=\"Zeilenumbruch 1b\"><\/z><nl><\/nl>at <vsl id=\"000004436342331244212963000975\">G<\/vsl>r\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V<all id=\"000004436342356430555555639778\" value=\"Buchstabenverbindung 1 \">\u00ed<\/all>k austr <vz id=\"000004436342252387731481570820\" value=\"Verszeilenumbruch 2a\"><\/vz><nl><\/nl>eptir <sup id=\"000004436342367437500000062286\" value=\"\">Harald<\/sup> dau<wtr id=\"000004436342265232638888919263\" value=\"Worttrenner 1b\"><\/wtr>\u00f0an, <insec id=\"000004436342370581018518576494\">m\u00e1g <\/insec>sinn, <spatium_v id=\"000004436342271391203703738522\" width=\"1\"><\/spatium_v><nl><\/nl>fyrir \u00fev\u00ed <add id=\"000004436342304277777777828084\">at<\/add><oms id=\"000004436342299424768518527263\">hann<\/oms> <oms id=\"000004436342296030092592678988\">\u00e1tti <\/oms> <cpl id=\"000004436342291663194444404939\">\u00fear<\/cpl> m<del id=\"000004436342276410879629645922\" num_sign=\"0\"><\/del>iklar eignir.<\/bl><nl><\/nl>",
+            "content": "<bl id=\"000004436342219936342592692857\"><ini id=\"000004436342334950231481521590\">\u00de<\/ini>at <chr id=\"000004436342339388888888943282\">v<\/chr>ar eitt <kap id=\"000004436342344737268518577048\">s<\/kap>umar, <z id=\"000004436342244850694444419672\" \/><nl \/>at <vsl id=\"000004436342331244212963000975\">G<\/vsl>r\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V<all id=\"000004436342356430555555639778\">\u00ed<\/all>k austr <vz id=\"000004436342252387731481570820\" \/><nl \/>eptir <sup id=\"000004436342367437500000062286\">Harald<\/sup> dau<wtr id=\"000004436342265232638888919263\" \/>\u00f0an, <insec id=\"000004436342370581018518576494\">m\u00e1g <\/insec>sinn, <spatium_v id=\"000004436342271391203703738522\" width=\"1\" \/><nl \/>fyrir \u00fev\u00ed <add id=\"000004436342304277777777828084\">at<\/add><oms id=\"000004436342299424768518527263\">hann<\/oms> <oms id=\"000004436342296030092592678988\">\u00e1tti <\/oms> <cpl id=\"000004436342291663194444404939\">\u00fear<\/cpl> m<del id=\"000004436342276410879629645922\" num_sign=\"0\" \/>iklar eignir.<\/bl><nl \/>",
             "translation": "\u00dcbersetzung Inschrift B Teil 1",
             "flagged": false,
             "file_name": "",
@@ -4438,6 +4445,7 @@
             "file_online": false,
             "date_sort": "01066AAA00000000A4",
             "date_value": "1066",
+            "date_add": "",
             "date_start": 1066,
             "date_end": 1066,
             "source_autopsy": true,
@@ -4450,7 +4458,8 @@
         },
         {
             "norm_iri": "projects~378",
-            "created": "2022-11-27T02:45:53+01:00",
+            "comment": "",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "sections-tmp378",
             "parent_id": "sections-tmp21",
             "articles_id": "articles-tmp1",
@@ -4468,7 +4477,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "items-tmp767",
             "itemtype": "transcriptions",
             "norm_iri": "projects~767",
@@ -4476,14 +4485,18 @@
             "sections_id": "sections-tmp378",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<bl id=\"000004489204293021990740747062\" value=\"\"><nl><\/nl><nl><\/nl><\/bl>",
+            "content": "<bl id=\"000004489204293021990740747062\"><nl \/><nl \/><\/bl>",
+            "translation": "",
             "flagged": false,
             "file_name": "",
             "file_path": "",
             "file_source": "",
             "file_online": false,
             "date_value": "",
+            "date_add": "",
             "source_autopsy": false,
+            "source_from": "",
+            "source_addition": "",
             "pos_x": 0,
             "pos_y": 0,
             "pos_z": 0,
@@ -4492,7 +4505,7 @@
         {
             "norm_iri": "projects~19",
             "comment": "Notizen Inschr B Teil 2",
-            "created": "2021-06-14T16:42:15+02:00",
+            "created": "2021-06-14T14:42:15+02:00",
             "id": "sections-tmp19",
             "parent_id": "sections-tmp22",
             "articles_id": "articles-tmp1",
@@ -4510,7 +4523,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:15+02:00",
+            "created": "2021-06-14T14:42:15+02:00",
             "id": "items-tmp39",
             "itemtype": "lost",
             "norm_iri": "projects~39",
@@ -4533,7 +4546,7 @@
         {
             "norm_iri": "projects~18",
             "comment": "Notizen Inschrift B Teil 2 Bearbeitung 1",
-            "created": "2021-06-14T16:42:15+02:00",
+            "created": "2021-06-14T14:42:15+02:00",
             "id": "sections-tmp18",
             "parent_id": "sections-tmp19",
             "articles_id": "articles-tmp1",
@@ -4551,7 +4564,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:15+02:00",
+            "created": "2021-06-14T14:42:15+02:00",
             "id": "items-tmp37",
             "itemtype": "transcriptions",
             "norm_iri": "projects~37",
@@ -4559,7 +4572,7 @@
             "sections_id": "sections-tmp18",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<bl id=\"000004436342493348379629644802\" value=\"Bereich 1a\"><ini id=\"000004436342606019675925920222\">G<\/ini>r\u00edmr <vsl id=\"000004436342597724537037066064\">u<\/vsl>nni <chr id=\"000004436342610309027777859800\">h<\/chr>enni <kap id=\"000004436342614041666666773306\">m<\/kap>ikit, ok l<all id=\"000004436342619626157407418054\" value=\"Buchstabenverbindung 2a\">\u00e6<\/all>tr <oms id=\"000004436342575649305555631787\">hann<\/oms> \u00feat <sup id=\"000004436342629741898148160649\" value=\"\">eptir<\/sup> henni. <z id=\"000004436342516953703703748996\" value=\"Zeilenumbruch 1 \"><\/z><nl><\/nl>H\u00fan <add id=\"000004436342582651620370456862\">var hverri <\/add>konu v\u00e6nni<spatium_v id=\"000004436342550361111111153956\" width=\"1\"><\/spatium_v> ok betr<del id=\"000004436342558008101851960179\" num_sign=\"0\"><\/del> at s\u00e9r <cpl id=\"000004436342570162037037096209\">um<\/cpl> alla hluti,<vz id=\"000004436342523789351851958494\" value=\"Verszeilenumbruch 1b\"><\/vz><nl><\/nl> \u00feeira<abr id=\"000004436342590993055555669897\" value=\"\"> er<\/abr> \u00ed Nor<wtr id=\"000004436342540800925925924686\" value=\"Worttrenner 2a\"><\/wtr>egi v\u00e1ru. <nl><\/nl>\u00deeira f\u00f6r var b\u00fain <insec id=\"000004436342633575231481531016\">vir\u00f0uliga<\/insec>.<\/bl>",
+            "content": "<bl id=\"000004436342493348379629644802\"><ini id=\"000004436342606019675925920222\">G<\/ini>r\u00edmr <vsl id=\"000004436342597724537037066064\">u<\/vsl>nni <chr id=\"000004436342610309027777859800\">h<\/chr>enni <kap id=\"000004436342614041666666773306\">m<\/kap>ikit, ok l<all id=\"000004436342619626157407418054\">\u00e6<\/all>tr <oms id=\"000004436342575649305555631787\">hann<\/oms> \u00feat <sup id=\"000004436342629741898148160649\">eptir<\/sup> henni. <z id=\"000004436342516953703703748996\" \/><nl \/>H\u00fan <add id=\"000004436342582651620370456862\">var hverri <\/add>konu v\u00e6nni<spatium_v id=\"000004436342550361111111153956\" width=\"1\" \/> ok betr<del id=\"000004436342558008101851960179\" num_sign=\"0\" \/> at s\u00e9r <cpl id=\"000004436342570162037037096209\">um<\/cpl> alla hluti,<vz id=\"000004436342523789351851958494\" \/><nl \/> \u00feeira<abr id=\"000004436342590993055555669897\"> er<\/abr> \u00ed Nor<wtr id=\"000004436342540800925925924686\" \/>egi v\u00e1ru. <nl \/>\u00deeira f\u00f6r var b\u00fain <insec id=\"000004436342633575231481531016\">vir\u00f0uliga<\/insec>.<\/bl>",
             "translation": "\u00dcbersetzung Inschrift B Teil 2",
             "flagged": false,
             "file_name": "",
@@ -4568,6 +4581,7 @@
             "file_online": false,
             "date_sort": "00794AAA00000000A4",
             "date_value": "794",
+            "date_add": "",
             "date_start": 794,
             "date_end": 794,
             "source_autopsy": false,
@@ -4580,7 +4594,8 @@
         },
         {
             "norm_iri": "projects~377",
-            "created": "2022-11-27T02:45:52+01:00",
+            "comment": "",
+            "created": "2022-11-27T01:45:52+01:00",
             "id": "sections-tmp377",
             "parent_id": "sections-tmp19",
             "articles_id": "articles-tmp1",
@@ -4598,7 +4613,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "items-tmp766",
             "itemtype": "transcriptions",
             "norm_iri": "projects~766",
@@ -4606,7 +4621,7 @@
             "sections_id": "sections-tmp377",
             "articles_id": "articles-tmp1",
             "value": "",
-            "content": "<bl id=\"000004489202971068287037045606\" value=\"\"><nl><\/nl>Transkription in B.2.2<nl><\/nl><\/bl>",
+            "content": "<bl id=\"000004489202971068287037045606\"><nl \/>Transkription in B.2.2<nl \/><\/bl>",
             "translation": "\u00dcbersetzung in B.2.2",
             "flagged": false,
             "file_name": "",
@@ -4614,14 +4629,17 @@
             "file_source": "",
             "file_online": false,
             "date_value": "",
+            "date_add": "",
             "source_autopsy": false,
+            "source_from": "",
+            "source_addition": "",
             "pos_x": 0,
             "pos_y": 0,
             "pos_z": 0,
             "file_copyfrom": ""
         },
         {
-            "created": "2022-03-15T21:50:04+01:00",
+            "created": "2022-03-15T20:50:04+01:00",
             "id": "footnotes-tmp1",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -4634,7 +4652,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "footnotes-tmp5",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -4647,7 +4665,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "footnotes-tmp6",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -4660,116 +4678,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:18+02:00",
-            "id": "links-tmp16",
-            "to_id": "properties-tmp105",
-            "from_id": "items-tmp3",
-            "from_field": "content",
-            "from_tagid": "000004436161208671296296385342",
-            "from_tagname": "p",
-            "property": "properties-tmp105",
-            "to_value": "siehe",
-            "root_id": "articles-tmp1",
-            "norm_iri": "projects~16",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:39:52+02:00",
-            "id": "properties-tmp105",
-            "parent_id": "properties-tmp107",
-            "propertytype": "paragraphs",
-            "level": 1,
-            "lft": 12,
-            "rght": 13,
-            "related_id": "properties-tmp106",
-            "sortno": 12,
-            "lemma": "siehe",
-            "unit": "Absatz 2b Einheit",
-            "comment": "Absatz 2b Bemerk",
-            "iscategory": 0,
-            "ishidden": 0,
-            "keywords": "Break",
-            "norm_data": "Absatz 2b Norm",
-            "norm_iri": "projects~105",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:39:52+02:00",
-            "id": "properties-tmp107",
-            "propertytype": "paragraphs",
-            "level": 0,
-            "lft": 8,
-            "rght": 14,
-            "sortno": 8,
-            "sortkey": "Absatz 2",
-            "lemma": "Absatz 2",
-            "name": "Absatz 2 ",
-            "unit": "Absatz 2 Einheit",
-            "comment": "Absatz 2 Bemerk",
-            "iscategory": 0,
-            "ishidden": 0,
-            "keywords": "Absatz,Break",
-            "norm_data": "Absatz 2 Norm",
-            "norm_iri": "projects~107",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:42:18+02:00",
-            "id": "links-tmp17",
-            "to_id": "properties-tmp106",
-            "from_id": "items-tmp3",
-            "from_field": "content",
-            "from_tagid": "000004436161200284722222217911",
-            "from_tagname": "p",
-            "property": "properties-tmp106",
-            "to_value": "Absatz 2a",
-            "root_id": "articles-tmp1",
-            "norm_iri": "projects~17",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:39:52+02:00",
-            "id": "properties-tmp106",
-            "parent_id": "properties-tmp107",
-            "propertytype": "paragraphs",
-            "level": 1,
-            "lft": 9,
-            "rght": 11,
-            "sortno": 9,
-            "sortkey": "Absatz 2a",
-            "lemma": "Absatz 2a",
-            "name": "Absatz 2a",
-            "unit": "Absatz 2a Einheit",
-            "comment": "Absatz 2a Bemerk",
-            "iscategory": 1,
-            "ishidden": 1,
-            "keywords": "Break",
-            "norm_data": "Absatz 2a Norm",
-            "norm_iri": "projects~106",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:39:52+02:00",
-            "id": "properties-tmp107",
-            "propertytype": "paragraphs",
-            "level": 0,
-            "lft": 8,
-            "rght": 14,
-            "sortno": 8,
-            "sortkey": "Absatz 2",
-            "lemma": "Absatz 2",
-            "name": "Absatz 2 ",
-            "unit": "Absatz 2 Einheit",
-            "comment": "Absatz 2 Bemerk",
-            "iscategory": 0,
-            "ishidden": 0,
-            "keywords": "Absatz,Break",
-            "norm_data": "Absatz 2 Norm",
-            "norm_iri": "projects~107",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:42:18+02:00",
+            "created": "2021-06-14T14:42:18+02:00",
             "id": "links-tmp18",
             "to_id": "properties-tmp97",
             "from_id": "items-tmp3",
@@ -4783,7 +4692,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:48:55+02:00",
+            "created": "2021-06-14T13:48:55+02:00",
             "id": "properties-tmp97",
             "parent_id": "properties-tmp98",
             "propertytype": "headers",
@@ -4804,7 +4713,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:48:55+02:00",
+            "created": "2021-06-14T13:48:55+02:00",
             "id": "properties-tmp98",
             "propertytype": "headers",
             "level": 0,
@@ -4824,61 +4733,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T16:42:18+02:00",
-            "id": "links-tmp19",
-            "to_id": "properties-tmp105",
-            "from_id": "items-tmp4",
-            "from_field": "content",
-            "from_tagid": "000004436160924313657407458602",
-            "from_tagname": "p",
-            "property": "properties-tmp105",
-            "to_value": "siehe",
-            "root_id": "articles-tmp1",
-            "norm_iri": "projects~19",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:39:52+02:00",
-            "id": "properties-tmp105",
-            "parent_id": "properties-tmp107",
-            "propertytype": "paragraphs",
-            "level": 1,
-            "lft": 12,
-            "rght": 13,
-            "related_id": "properties-tmp106",
-            "sortno": 12,
-            "lemma": "siehe",
-            "unit": "Absatz 2b Einheit",
-            "comment": "Absatz 2b Bemerk",
-            "iscategory": 0,
-            "ishidden": 0,
-            "keywords": "Break",
-            "norm_data": "Absatz 2b Norm",
-            "norm_iri": "projects~105",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:39:52+02:00",
-            "id": "properties-tmp107",
-            "propertytype": "paragraphs",
-            "level": 0,
-            "lft": 8,
-            "rght": 14,
-            "sortno": 8,
-            "sortkey": "Absatz 2",
-            "lemma": "Absatz 2",
-            "name": "Absatz 2 ",
-            "unit": "Absatz 2 Einheit",
-            "comment": "Absatz 2 Bemerk",
-            "iscategory": 0,
-            "ishidden": 0,
-            "keywords": "Absatz,Break",
-            "norm_data": "Absatz 2 Norm",
-            "norm_iri": "projects~107",
-            "file_copyfrom": ""
-        },
-        {
-            "created": "2021-06-14T16:42:18+02:00",
+            "created": "2021-06-14T14:42:18+02:00",
             "id": "links-tmp20",
             "to_id": "properties-tmp98",
             "from_id": "items-tmp4",
@@ -4892,7 +4747,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:48:55+02:00",
+            "created": "2021-06-14T13:48:55+02:00",
             "id": "properties-tmp98",
             "propertytype": "headers",
             "level": 0,
@@ -4912,7 +4767,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:40:04+02:00",
+            "created": "2021-06-14T15:40:04+02:00",
             "id": "links-tmp21",
             "to_id": "properties-tmp171",
             "from_id": "items-tmp1",
@@ -4926,7 +4781,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:39:56+02:00",
+            "created": "2021-06-14T15:39:56+02:00",
             "id": "properties-tmp171",
             "parent_id": "properties-tmp173",
             "propertytype": "abbreviations",
@@ -4946,7 +4801,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:39:56+02:00",
+            "created": "2021-06-14T15:39:56+02:00",
             "id": "properties-tmp173",
             "propertytype": "abbreviations",
             "level": 0,
@@ -4966,7 +4821,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:40:04+02:00",
+            "created": "2021-06-14T15:40:04+02:00",
             "id": "links-tmp22",
             "to_id": "properties-tmp65",
             "from_id": "items-tmp1",
@@ -4980,7 +4835,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:21:12+02:00",
+            "created": "2021-06-14T13:21:12+02:00",
             "id": "properties-tmp65",
             "propertytype": "ligatures",
             "level": 0,
@@ -5000,7 +4855,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:40:04+02:00",
+            "created": "2021-06-14T15:40:04+02:00",
             "id": "links-tmp23",
             "to_id": "properties-tmp92",
             "from_id": "items-tmp1",
@@ -5014,7 +4869,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:47+02:00",
+            "created": "2021-06-14T13:42:47+02:00",
             "id": "properties-tmp92",
             "propertytype": "wordseparators",
             "level": 0,
@@ -5034,7 +4889,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:40:04+02:00",
+            "created": "2021-06-14T15:40:04+02:00",
             "id": "links-tmp24",
             "to_id": "properties-tmp86",
             "from_id": "items-tmp1",
@@ -5048,7 +4903,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp86",
             "propertytype": "indentations",
             "level": 0,
@@ -5068,7 +4923,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:40:04+02:00",
+            "created": "2021-06-14T15:40:04+02:00",
             "id": "links-tmp27",
             "to_id": "properties-tmp79",
             "from_id": "items-tmp1",
@@ -5082,7 +4937,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp79",
             "parent_id": "properties-tmp80",
             "propertytype": "linebindings",
@@ -5103,7 +4958,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp80",
             "propertytype": "linebindings",
             "level": 0,
@@ -5123,7 +4978,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T17:40:04+02:00",
+            "created": "2021-06-14T15:40:04+02:00",
             "id": "links-tmp28",
             "to_id": "properties-tmp61",
             "from_id": "items-tmp1",
@@ -5137,7 +4992,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp61",
             "parent_id": "properties-tmp62",
             "propertytype": "alignments",
@@ -5158,7 +5013,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp62",
             "propertytype": "alignments",
             "level": 0,
@@ -5178,19 +5033,19 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp29",
             "from_id": "items-tmp41",
             "from_field": "content",
             "from_tagid": "000004436342367437500000062286",
             "from_tagname": "sup",
-            "to_value": "Hochgestellt",
+            "to_value": "Hochgestellt in der Transkription",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~29",
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp30",
             "to_id": "properties-tmp66",
             "from_id": "items-tmp41",
@@ -5204,7 +5059,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:21:12+02:00",
+            "created": "2021-06-14T13:21:12+02:00",
             "id": "properties-tmp66",
             "propertytype": "ligatures",
             "level": 0,
@@ -5226,7 +5081,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp31",
             "to_id": "properties-tmp90",
             "from_id": "items-tmp41",
@@ -5240,7 +5095,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:47+02:00",
+            "created": "2021-06-14T13:42:47+02:00",
             "id": "properties-tmp90",
             "parent_id": "properties-tmp92",
             "propertytype": "wordseparators",
@@ -5260,7 +5115,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:47+02:00",
+            "created": "2021-06-14T13:42:47+02:00",
             "id": "properties-tmp92",
             "propertytype": "wordseparators",
             "level": 0,
@@ -5280,7 +5135,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp32",
             "to_id": "properties-tmp82",
             "from_id": "items-tmp41",
@@ -5294,7 +5149,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp82",
             "parent_id": "properties-tmp83",
             "propertytype": "indentations",
@@ -5315,7 +5170,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp83",
             "propertytype": "indentations",
             "level": 0,
@@ -5335,7 +5190,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp33",
             "to_id": "properties-tmp78",
             "from_id": "items-tmp41",
@@ -5349,7 +5204,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp78",
             "parent_id": "properties-tmp80",
             "propertytype": "linebindings",
@@ -5369,7 +5224,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp80",
             "propertytype": "linebindings",
             "level": 0,
@@ -5389,7 +5244,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp34",
             "to_id": "properties-tmp57",
             "from_id": "items-tmp41",
@@ -5403,7 +5258,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp57",
             "parent_id": "properties-tmp59",
             "propertytype": "alignments",
@@ -5423,7 +5278,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp59",
             "propertytype": "alignments",
             "level": 0,
@@ -5443,7 +5298,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp35",
             "to_id": "properties-tmp74",
             "from_id": "items-tmp46",
@@ -5457,7 +5312,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:27:09+02:00",
+            "created": "2021-06-14T13:27:09+02:00",
             "id": "properties-tmp74",
             "propertytype": "verticalalignments",
             "level": 0,
@@ -5477,7 +5332,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:27+02:00",
+            "created": "2021-06-16T10:10:27+02:00",
             "id": "links-tmp36",
             "to_id": "properties-tmp65",
             "from_id": "items-tmp46",
@@ -5491,7 +5346,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:21:12+02:00",
+            "created": "2021-06-14T13:21:12+02:00",
             "id": "properties-tmp65",
             "propertytype": "ligatures",
             "level": 0,
@@ -5511,7 +5366,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:28+02:00",
+            "created": "2021-06-16T10:10:28+02:00",
             "id": "links-tmp37",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -5523,7 +5378,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:28+02:00",
+            "created": "2021-06-16T10:10:28+02:00",
             "id": "links-tmp38",
             "to_id": "properties-tmp88",
             "from_id": "items-tmp46",
@@ -5537,7 +5392,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:46+02:00",
+            "created": "2021-06-14T13:42:46+02:00",
             "id": "properties-tmp88",
             "parent_id": "properties-tmp89",
             "propertytype": "wordseparators",
@@ -5558,7 +5413,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:47+02:00",
+            "created": "2021-06-14T13:42:47+02:00",
             "id": "properties-tmp89",
             "propertytype": "wordseparators",
             "level": 0,
@@ -5578,7 +5433,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:28+02:00",
+            "created": "2021-06-16T10:10:28+02:00",
             "id": "links-tmp39",
             "to_id": "properties-tmp85",
             "from_id": "items-tmp46",
@@ -5592,7 +5447,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp85",
             "parent_id": "properties-tmp86",
             "propertytype": "indentations",
@@ -5613,7 +5468,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp86",
             "propertytype": "indentations",
             "level": 0,
@@ -5633,7 +5488,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:28+02:00",
+            "created": "2021-06-16T10:10:28+02:00",
             "id": "links-tmp40",
             "to_id": "properties-tmp78",
             "from_id": "items-tmp46",
@@ -5647,7 +5502,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp78",
             "parent_id": "properties-tmp80",
             "propertytype": "linebindings",
@@ -5667,7 +5522,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp80",
             "propertytype": "linebindings",
             "level": 0,
@@ -5687,7 +5542,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:10:28+02:00",
+            "created": "2021-06-16T10:10:28+02:00",
             "id": "links-tmp41",
             "to_id": "properties-tmp61",
             "from_id": "items-tmp46",
@@ -5701,7 +5556,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp61",
             "parent_id": "properties-tmp62",
             "propertytype": "alignments",
@@ -5722,7 +5577,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp62",
             "propertytype": "alignments",
             "level": 0,
@@ -5742,19 +5597,19 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp42",
             "from_id": "items-tmp37",
             "from_field": "content",
             "from_tagid": "000004436342629741898148160649",
             "from_tagname": "sup",
-            "to_value": "Hochgestellt",
+            "to_value": "Hochgestellt in der Transkription",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~42",
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp43",
             "to_id": "properties-tmp64",
             "from_id": "items-tmp37",
@@ -5768,7 +5623,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:21:12+02:00",
+            "created": "2021-06-14T13:21:12+02:00",
             "id": "properties-tmp64",
             "parent_id": "properties-tmp65",
             "propertytype": "ligatures",
@@ -5789,7 +5644,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:21:12+02:00",
+            "created": "2021-06-14T13:21:12+02:00",
             "id": "properties-tmp65",
             "propertytype": "ligatures",
             "level": 0,
@@ -5809,7 +5664,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp44",
             "from_id": "items-tmp37",
             "from_field": "content",
@@ -5821,7 +5676,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp45",
             "to_id": "properties-tmp88",
             "from_id": "items-tmp37",
@@ -5835,7 +5690,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:46+02:00",
+            "created": "2021-06-14T13:42:46+02:00",
             "id": "properties-tmp88",
             "parent_id": "properties-tmp89",
             "propertytype": "wordseparators",
@@ -5856,7 +5711,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:42:47+02:00",
+            "created": "2021-06-14T13:42:47+02:00",
             "id": "properties-tmp89",
             "propertytype": "wordseparators",
             "level": 0,
@@ -5876,7 +5731,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp46",
             "to_id": "properties-tmp84",
             "from_id": "items-tmp37",
@@ -5890,7 +5745,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp84",
             "parent_id": "properties-tmp86",
             "propertytype": "indentations",
@@ -5910,7 +5765,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:39:21+02:00",
+            "created": "2021-06-14T13:39:21+02:00",
             "id": "properties-tmp86",
             "propertytype": "indentations",
             "level": 0,
@@ -5930,7 +5785,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp47",
             "to_id": "properties-tmp80",
             "from_id": "items-tmp37",
@@ -5944,7 +5799,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:35:43+02:00",
+            "created": "2021-06-14T13:35:43+02:00",
             "id": "properties-tmp80",
             "propertytype": "linebindings",
             "level": 0,
@@ -5964,7 +5819,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp48",
             "to_id": "properties-tmp61",
             "from_id": "items-tmp37",
@@ -5978,7 +5833,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp61",
             "parent_id": "properties-tmp62",
             "propertytype": "alignments",
@@ -5999,7 +5854,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-14T15:05:50+02:00",
+            "created": "2021-06-14T13:05:50+02:00",
             "id": "properties-tmp62",
             "propertytype": "alignments",
             "level": 0,
@@ -6019,7 +5874,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-16T12:14:13+02:00",
+            "created": "2021-06-16T10:14:13+02:00",
             "id": "links-tmp49",
             "from_id": "items-tmp37",
             "from_field": "content",
@@ -6031,7 +5886,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:39:58+01:00",
+            "created": "2022-01-02T00:39:58+01:00",
             "id": "links-tmp50",
             "to_id": "properties-tmp11",
             "from_id": "items-tmp4",
@@ -6045,7 +5900,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp11",
             "parent_id": "properties-tmp12",
             "propertytype": "literature",
@@ -6066,7 +5921,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp12",
             "propertytype": "literature",
             "level": 1,
@@ -6088,7 +5943,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:39:58+01:00",
+            "created": "2022-01-02T00:39:58+01:00",
             "id": "links-tmp51",
             "to_id": "properties-tmp10",
             "from_id": "items-tmp14",
@@ -6102,7 +5957,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2021-06-12T16:12:52+02:00",
+            "created": "2021-06-12T14:12:52+02:00",
             "id": "properties-tmp10",
             "propertytype": "literature",
             "level": 1,
@@ -6124,7 +5979,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:39:58+01:00",
+            "created": "2022-01-02T00:39:58+01:00",
             "id": "links-tmp52",
             "to_id": "articles-tmp1",
             "from_id": "items-tmp14",
@@ -6146,7 +6001,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:39:58+01:00",
+            "created": "2022-01-02T00:39:58+01:00",
             "id": "links-tmp53",
             "to_id": "sections-tmp3",
             "from_id": "items-tmp11",
@@ -6170,7 +6025,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:25:21+02:00",
+            "created": "2022-06-29T01:25:21+02:00",
             "id": "links-tmp82",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6182,7 +6037,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-29T03:47:45+02:00",
+            "created": "2022-06-29T01:47:45+02:00",
             "id": "links-tmp83",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6194,7 +6049,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp84",
             "from_id": "items-tmp766",
             "from_field": "content",
@@ -6206,7 +6061,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp86",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6218,7 +6073,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp87",
             "to_id": "sections-tmp19",
             "from_id": "items-tmp4",
@@ -6243,7 +6098,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp88",
             "to_id": "footnotes-tmp4",
             "from_id": "items-tmp4",
@@ -6259,7 +6114,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-06-18T12:33:18+02:00",
+            "created": "2022-06-18T10:33:18+02:00",
             "id": "footnotes-tmp4",
             "from_id": "items-tmp369",
             "from_field": "content",
@@ -6271,7 +6126,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp89",
             "to_id": "sections-tmp144",
             "from_id": "items-tmp4",
@@ -6298,7 +6153,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp90",
             "to_id": "sections-tmp145",
             "from_id": "items-tmp4",
@@ -6324,7 +6179,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "links-tmp91",
             "to_id": "articles-tmp3",
             "from_id": "items-tmp4",
@@ -6346,7 +6201,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:49:55+01:00",
+            "created": "2022-11-27T01:49:55+01:00",
             "id": "links-tmp92",
             "to_id": "sections-tmp22",
             "from_id": "items-tmp4",
@@ -6370,7 +6225,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T03:00:11+01:00",
+            "created": "2022-11-27T02:00:11+01:00",
             "id": "links-tmp93",
             "to_id": "footnotes-tmp5",
             "from_id": "items-tmp4",
@@ -6384,7 +6239,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "footnotes-tmp5",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6396,7 +6251,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T03:00:11+01:00",
+            "created": "2022-11-27T02:00:11+01:00",
             "id": "links-tmp94",
             "to_id": "footnotes-tmp6",
             "from_id": "items-tmp4",
@@ -6410,7 +6265,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:45:53+01:00",
+            "created": "2022-11-27T01:45:53+01:00",
             "id": "footnotes-tmp6",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6422,7 +6277,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T03:01:54+01:00",
+            "created": "2022-11-27T02:01:54+01:00",
             "id": "links-tmp95",
             "from_id": "items-tmp767",
             "from_field": "content",
@@ -6434,7 +6289,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T03:10:22+01:00",
+            "created": "2022-11-27T02:10:22+01:00",
             "id": "links-tmp96",
             "to_id": "properties-tmp186",
             "from_id": "items-tmp4",
@@ -6448,7 +6303,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:52+01:00",
+            "created": "2022-01-02T00:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -6470,7 +6325,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T01:45:42+01:00",
+            "created": "2022-01-02T00:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -6489,7 +6344,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2023-08-17T21:27:22+02:00",
+            "created": "2023-08-17T19:27:22+02:00",
             "id": "links-tmp97",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6498,6 +6353,342 @@
             "to_value": "Bereich",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~97",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp109",
+            "from_id": "items-tmp4",
+            "from_field": "content",
+            "from_tagid": "000004436160887138888888933579",
+            "from_tagname": "b",
+            "to_value": "Fett",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~109",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp111",
+            "from_id": "items-tmp4",
+            "from_field": "content",
+            "from_tagid": "000004436160890414351851976127",
+            "from_tagname": "i",
+            "to_value": "Kursiv",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~111",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp113",
+            "from_id": "items-tmp4",
+            "from_field": "content",
+            "from_tagid": "000004436160892870370370431668",
+            "from_tagname": "u",
+            "to_value": "Unterstrichen",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~113",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp115",
+            "from_id": "items-tmp4",
+            "from_field": "content",
+            "from_tagid": "000004436160895594907407469796",
+            "from_tagname": "g",
+            "to_value": "Gesperrt",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~115",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp117",
+            "from_id": "items-tmp4",
+            "from_field": "content",
+            "from_tagid": "000004436160898130787037028136",
+            "from_tagname": "k",
+            "to_value": "Kapit\u00e4lchen",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~117",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp119",
+            "from_id": "items-tmp4",
+            "from_field": "content",
+            "from_tagid": "000004436160901166666666725447",
+            "from_tagname": "a",
+            "to_value": "Link",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~119",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:44+01:00",
+            "id": "links-tmp121",
+            "from_id": "items-tmp3",
+            "from_field": "content",
+            "from_tagid": "000004436161152100694444420087",
+            "from_tagname": "b",
+            "to_value": "Fett",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~121",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp123",
+            "from_id": "items-tmp3",
+            "from_field": "content",
+            "from_tagid": "000004436161156358796296327934",
+            "from_tagname": "i",
+            "to_value": "Kursiv",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~123",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp125",
+            "from_id": "items-tmp3",
+            "from_field": "content",
+            "from_tagid": "000004436161159035879629630111",
+            "from_tagname": "u",
+            "to_value": "Unterstrichen",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~125",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp127",
+            "from_id": "items-tmp3",
+            "from_field": "content",
+            "from_tagid": "000004436161161467592592619662",
+            "from_tagname": "g",
+            "to_value": "Gesperrt",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~127",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp129",
+            "from_id": "items-tmp3",
+            "from_field": "content",
+            "from_tagid": "000004436161164633101851986162",
+            "from_tagname": "k",
+            "to_value": "Kapit\u00e4lchen",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~129",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp131",
+            "from_id": "items-tmp3",
+            "from_field": "content",
+            "from_tagid": "000004436161167155092592629748",
+            "from_tagname": "a",
+            "to_value": "Link",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~131",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp133",
+            "from_id": "items-tmp1",
+            "from_field": "content",
+            "from_tagid": "000004436165070465277777844244",
+            "from_tagname": "spatium_v",
+            "to_value": "Spatium",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~133",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp135",
+            "from_id": "items-tmp1",
+            "from_field": "content",
+            "from_tagid": "000004436165076792824074163019",
+            "from_tagname": "del",
+            "to_value": "Verlust",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~135",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp137",
+            "from_id": "items-tmp1",
+            "from_field": "content",
+            "from_tagid": "000004436165097621527777892480",
+            "from_tagname": "cpl",
+            "to_value": "Erg\u00e4nzung",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~137",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp139",
+            "from_id": "items-tmp1",
+            "from_field": "content",
+            "from_tagid": "000004436165100978009259346871",
+            "from_tagname": "oms",
+            "to_value": "Auslassung",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~139",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp141",
+            "from_id": "items-tmp1",
+            "from_field": "content",
+            "from_tagid": "000004436165104023148148146540",
+            "from_tagname": "add",
+            "to_value": "Nachtrag",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~141",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp143",
+            "from_id": "items-tmp1",
+            "from_field": "content",
+            "from_tagid": "000004436165110998842592605012",
+            "from_tagname": "vsl",
+            "to_value": "Versalie",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~143",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp145",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342051736111111145522",
+            "from_tagname": "ini",
+            "to_value": "Initiale",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~145",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp147",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342056334490740716638",
+            "from_tagname": "chr",
+            "to_value": "Chronogrammbuchstabe",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~147",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp149",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342047435185185246164",
+            "from_tagname": "vsl",
+            "to_value": "Versalie",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~149",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp151",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342060210648148155746",
+            "from_tagname": "kap",
+            "to_value": "Kapitalis",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~151",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp153",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342035339120370429044",
+            "from_tagname": "add",
+            "to_value": "Nachtrag",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~153",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp155",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342029998842592635716",
+            "from_tagname": "oms",
+            "to_value": "Auslassung",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~155",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp157",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342083524305555650834",
+            "from_tagname": "insec",
+            "to_value": "Unsicher",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~157",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp159",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436341997248842592682649",
+            "from_tagname": "spatium_v",
+            "to_value": "Spatium",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~159",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp161",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342008081018518514387",
+            "from_tagname": "del",
+            "to_value": "Verlust",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~161",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2025-02-26T19:11:45+01:00",
+            "id": "links-tmp163",
+            "from_id": "items-tmp46",
+            "from_field": "content",
+            "from_tagid": "000004436342019850694444462751",
+            "from_tagname": "cpl",
+            "to_value": "Erg\u00e4nzung",
+            "root_id": "articles-tmp1",
+            "norm_iri": "projects~163",
             "file_copyfrom": ""
         }
     ]

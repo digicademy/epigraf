@@ -40,7 +40,14 @@
                 <td>
                     <?= $this->Form->control(
                     'task',
-                    ['type' => 'select', 'label'=>false, 'empty'=>true, 'options' => $job->tasks,'data-form-update'=>'task']
+                    [
+                        'type' => 'select',
+                        'label'=>false,
+                        'empty'=>true,
+                        'value' => $job->task ?? $job->config['task'] ?? null,
+                        'options' => $job->tasks,
+                        'data-form-update'=>'task'
+                    ]
                     ) ?>
                 </td>
             </tr>
@@ -55,19 +62,13 @@
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
-            <tr>
-                <th scope="row"><?= __('Parameters') ?></th>
-                <td>
-
-                    <?=	$this->Table->nestedTable($job->dataParams, ['header'=>false]);?>
-                    <?php foreach ($job->dataParams as $key => $value): ?>
-                        <?= $this->Form->hidden($key,['value'=>$value]) ?>
-                    <?php endforeach; ?>
-                </td>
-            </tr>
         </table>
-
     <?= $this->Form->end() ?>
+
+    <?php foreach ($job->dataParams as $key => $value): ?>
+        <?= $this->Form->hidden($key,['value'=>$value]) ?>
+    <?php endforeach; ?>
+
 
     <?php
         $this->Link->beginActionGroup ('content');

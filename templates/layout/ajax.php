@@ -28,7 +28,7 @@
 <?php if ($this->getShowBlock('leftsidebar')): ?>
 
     <?php if ($sidemenu): ?>
-        <?php $sidebar_options['left']['init'] = 'expanded'; ?>
+        <?php $this->setConfig('sidebar', ['left' => ['init' => 'expanded']]); ?>
         <?php $this->beginTabsheet($sidemenu['caption'] ?? __('Menu'), 'sidebar-menu', 'left') ?>
 
         <div class="frame-title">
@@ -60,8 +60,6 @@
     <?= $this->renderSidebar(
         'left',
         [
-            'size'=> $sidebar_size['left'] ?? '2',
-            'init' => $sidebar_options['left']['init'] ?? 'collapsed',
             'edit'=>$sidemenu['edit'] ?? false,
             'add'=> $sidemenu['add'] ?? false,
             'apply' => 'small'
@@ -115,18 +113,9 @@
 
 <?php endif; ?>
 
+<!-- Right sidebar -->
 <?php if ($this->getShowBlock('rightsidebar')): ?>
-
-    <!-- Right sidebar -->
-    <?= $this->renderSidebar(
-        'right',
-        [
-            'size'=> $sidebar_size['right'] ?? '5',
-            'init' => $sidebar_options['right']['init'] ?? 'collapsed',
-            'close'=>true
-        ]
-    ) ?>
-
+    <?= $this->renderSidebar('right', ['close'=>true]) ?>
 <?php endif; ?>
 
 <?php if ($this->getShowBlock('footer')): ?>

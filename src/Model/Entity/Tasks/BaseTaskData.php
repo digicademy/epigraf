@@ -17,6 +17,7 @@ use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
 use App\View\ApiView;
 use App\View\CsvView;
+use App\View\GeoJsonView;
 use App\View\JsonldView;
 use App\View\JsonView;
 use App\View\MarkdownView;
@@ -28,7 +29,7 @@ use Cake\ORM\TableRegistry;
 use Epi\Model\Entity\RootEntity;
 
 /**
- * Output property data in the export pipeline
+ * Output data in the export pipeline
  */
 class BaseTaskData extends BaseTask
 {
@@ -60,7 +61,8 @@ class BaseTaskData extends BaseTask
             'md' => MarkdownView::class,
             'ttl' => TtlView::class,
             'jsonld' => JsonldView::class,
-            'rdf' => RdfView::class
+            'rdf' => RdfView::class,
+            'geojson' => GeoJsonView::class,
         ];
 
         $viewClass = $viewClasses[$format] ?? XmlView::class;
@@ -195,7 +197,7 @@ class BaseTaskData extends BaseTask
 
         // Wrapper (getView() must be called before to update the wrap settings)
         $view = $this->getView();
-        $filenameTemplate = $this->job->getCurrentOutputFile();
+        $filenameTemplate = $this->job->getCurrentOutputFilePath();
 
         if (!$this->rowwise && !empty($this->wrap['prefix']) && ($this->config['offset'] === 0)) {
             Files::appendToFile($filenameTemplate, $this->wrap['prefix']);
@@ -211,6 +213,7 @@ class BaseTaskData extends BaseTask
 
             // All rows at once
             if (!$this->rowwise) {
+
                 $rendered = $view->renderDocument($rows, $options);
                 $rendered = str_replace("\r", "", $rendered);
                 $rendered = "\n" . $rendered;

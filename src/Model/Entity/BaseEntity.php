@@ -516,7 +516,7 @@ class BaseEntity extends Entity
      *
      * ### Options
      * - format: The target output format (not the source field format).
-     *           Rendered formats are 'html', 'txt', 'md', 'jsonld', 'rdf', 'ttl'.
+     *           Rendered formats are 'html', 'txt', 'md', 'jsonld', 'rdf', 'ttl', 'geojson'.
      *           For data transfers, set the format to 'transfer'.
      *           All other formats are considered API output.
      * - prefixIds: Set to true to output table-id style IDs.
@@ -656,9 +656,13 @@ class BaseEntity extends Entity
     /**
      * Output rendered values for HTML, Markdown and full text search indexing
      *
+     * ### Options
+     * - geodata: For geodata fields, an array of values to be added to the rendered GeoJSON value
+     * - default: For geodata fields, an array with default lat and lng values  to be used if the field is empty. Set to true to use ['lat' => 0, 'lng'=>0].
+     *
      * @param mixed $raw The value that should be formatted
      * @param array $fieldName
-     * @param string $outputFormat The output format ('html', 'txt', 'md', 'jsonld', 'rdf', 'ttl')
+     * @param string $outputFormat The output format ('html', 'txt', 'md', 'jsonld', 'rdf', 'ttl', 'geojson')
      * @param string $fieldFormat The input field format
      * @param array $options
      * @return array|bool|float|int|mixed|string|null
@@ -690,8 +694,8 @@ class BaseEntity extends Entity
         }
 
         elseif ($fieldFormat === 'geodata') {
-            $value = $raw;
 
+            $value = $raw;
             if (is_string($value)) {
                 try {
                     $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
@@ -700,42 +704,50 @@ class BaseEntity extends Entity
                 }
             }
 
-            // Workaround to get article for geolocations via items action
-            // TODO: avoid $this->article since base entities should be abstract
-            if ($this->root === $this) {
-                $this->root = $this->article;
+            if (is_null($value['lng'] ?? null) || is_null($value['lat'] ?? null)) {
+                if (!empty($options['default'])) {
+                    $value['lng'] = $options['default']['lng'] ?? 0;
+                    $value['lat'] = $options['default']['lat'] ?? 0;
+                } else {
+                    return null;
+                }
             }
 
-            $url = $this->root->internalUrl;
-            if ((BaseTable::$requestMode ?? 'default') !== 'default') {
+            // Root: The article or the property
+            $root = empty($this->container) ?  $this->root : ($this->container->root ?? $this->container);
+
+            $url = $root->internalUrl;
+            if ((BaseTable::$requestMode ?? MODE_DEFAULT) !== MODE_DEFAULT) {
                 if (is_array($url)) {
-                    $url['?'] = ['mode' => BaseTable::$requestMode ?? 'default'];
+                    $url['?'] = ['mode' => BaseTable::$requestMode];
                 }
                 elseif (is_string($url)) {
-                    $url .= '?mode=' . BaseTable::$requestMode ?? 'default';
+                    $url .= '?mode=' . BaseTable::$requestMode;
                 }
             }
 
-            $value = [
-                "type" => "Feature",
-                "data" => [
-                    "sortno" => $this->sortno ?? 0,
-                    "id" => $this->id,
-                    "signature" => $this->root->signature ?? '',
-                    "name" => $this->root->name ?? '',
-                    "quality" => (int)($this->published ?? 0),
-                    "radius" => (int)($value["radius"] ?? 0),
-
-                    "url" => Router::url($url)
-                ],
-                "geometry" => [
-                    "type" => "Point",
-                    // Careful: geojson uses lnglat, leaflet latlng
-                    "coordinates" => [floatval($value['lng'] ?? null), floatval($value['lat'] ?? null)]
-                ]
+            $geometry = [
+                "type" => "Point",
+                // Careful: geojson uses lnglat, leaflet latlng
+                "coordinates" => [floatval($value['lng'] ?? null), floatval($value['lat'] ?? null)]
             ];
 
-            return json_encode($value);
+            $data = [
+                "id" =>  $options['geodata']['id'] ??  $this->id,
+                "number" => $options['geodata']['sortno'] ?? $this->sortno ?? 0,
+                "caption" => $root->captionPath ?? '',
+                "quality" => (int)($this->published ?? 0),
+                "radius" => (int)($value["radius"] ?? 0),
+                "url" => Router::url($url)
+            ] + ($options['geodata'] ?? []);
+
+            $feature = [
+                "type" => "Feature",
+                "data" => $data,
+                "geometry" => $geometry
+            ];
+
+            return $outputFormat === 'geojson' ? $feature :  json_encode($feature);
         }
 
         elseif ($fieldFormat === 'property') {
@@ -918,12 +930,11 @@ class BaseEntity extends Entity
 
                 if (is_array($oldValue)) {
                     if ($recursive) {
-                        $data[$fieldName] = array_merge_recursive($oldValue, $data[$fieldName]);
+                        $data[$fieldName] = array_replace_recursive($oldValue, $data[$fieldName]);
                     }
                     else {
                         $data[$fieldName] = array_merge($oldValue, $data[$fieldName]);
                     }
-
                 }
 
                 if ($encodeJson) {
@@ -1017,6 +1028,7 @@ class BaseEntity extends Entity
             if (!empty($sourceName)) {
                 $source = $this->fetchTable($sourceName);
                 $tableName = $source->getTable();
+                /** @var $typeField string|null */
                 $typeField = $source->typeField ?? null;
                 $typeName = ($typeField !== null) ? ($this[$typeField] ?? null) : null;
 
@@ -1025,6 +1037,20 @@ class BaseEntity extends Entity
             }
         }
 
+        return null;
+    }
+
+    /**
+     * Get the relative IRI
+     *
+     * @return null|string
+     */
+    protected function _getIriUrl()
+    {
+        $iriPath = $this->iriPath;
+        if (!empty($iriPath)) {
+            return  '/iri/' . $iriPath;
+        }
         return null;
     }
 

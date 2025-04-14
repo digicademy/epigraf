@@ -22,16 +22,7 @@ use App\Utilities\Converters\Attributes;
 ?>
 
 <!-- Sidebar setup -->
-<?php
-    $mode = $this->Link->getMode();
-    if ($mode === 'code') {
-        $this->sidebarSize(['left' => 2, 'right' => 6]);
-        $this->sidebarInit(['left' => 'collapsed','right'=>'expanded']);
-    } else {
-        $this->sidebarSize(['left' => 2, 'right' => 4]);
-        $this->sidebarInit(['left' => 'expanded','right'=>'collapsed']);
-    }
-?>
+<?php $this->setSidebarConfigByMode(); ?>
 
 <!-- Left sidebar -->
 <?= $this->element('../Articles/index_facets') ?>

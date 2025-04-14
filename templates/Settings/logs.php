@@ -32,7 +32,7 @@
 
 <!-- Actions -->
 <?php
-//    $this->setShowBlock(['footer']);
-//    $this->Link->beginActionGroup('bottom');
-//    $this->Link->addAction(__('Download'), ['controller'=>'files','action' => 'download', '?' => ['root' => 'root', 'path' => 'logs', 'filename'=>'error.log']]);
+    $this->setShowBlock(['footer']);
+    $this->Link->beginActionGroup('bottom-right');
+    $this->Link->addAction(__('Download'), ['controller'=>'files','action' => 'download', 'database'=>false, '?' => ['root' => 'root', 'path' => 'logs', 'filename'=>'error.log']]);
 ?>

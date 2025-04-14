@@ -18,14 +18,13 @@
 
     use App\Utilities\Converters\Attributes;
     use Cake\Routing\Router;
-    use Cake\Utility\Hash;
 
 ?>
 
 <?php $scope = $this->getConfig('options')['scope'] ?? ''; ?>
 
-<!-- Right sidebar -->
-<?php $this->sidebarSize(['left' => 0, 'right' => 5]); ?>
+<!-- Sidebar setup -->
+<?php $this->setSidebarConfigByMode(); ?>
 
 <!-- Search -->
 <?php if ($this->getShowBlock('searchbar')): ?>
@@ -62,6 +61,18 @@
                 "label" => __('Search'),
                 'placeholder' => __('Search properties'),
                 'form' => Router::url(['controller' => 'Properties', 'action' => 'index',''])
+            ]
+        ) ?>
+
+        <?= $this->Table->filterSelector(
+            "epi_properties",
+            "articles.projects",
+            $this->getConfig('options')['filter']['projects'] ?? [],
+            $this->getConfig('options')['params']['articles']['projects'] ?? [],
+            [
+                "label" => __('Projects'),
+                'reset' => true,
+                'checkboxlist' => true
             ]
         ) ?>
 
@@ -168,4 +179,9 @@
 
 ?>
 
-<?php $this->Link->downloadButtons (null, 'properties', 'epi_properties'); ?>
+
+<?php
+    $this->Link->beginActionGroup('bottom-right');
+    $this->Link->toggleModes($queryparams);
+    $this->Link->downloadButtons (null, 'properties', 'epi_properties');
+?>

@@ -23,6 +23,7 @@
   array (
     'pipeline_id' => '19',
     'database' => 'projects',
+    'server' => 'http://localhost/',
     'model' => 'articles',
     'table' => 'articles',
     'params' => 
@@ -167,9 +168,9 @@
         ),
       ),
     ),
+    'pipeline_name' => 'DI: Artikel',
     'user_role' => 'author',
     'user_id' => 1,
-    'pipeline_name' => 'DI: Artikel',
     'pipeline_tasks' => 
     array (
       0 => 

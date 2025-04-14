@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-09-17 17:00+0200\n"
+"POT-Creation-Date: 2025-03-02 14:18+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,44 +14,50 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:548
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:604
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:669
 msgid "You are not allowed to access this page, please login."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:555
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:611
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:678
 msgid "Page not found."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:570
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:629
 msgid "Entity not found"
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:613
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:690
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:683
+msgid "Page not found"
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:735
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:815
 msgid "The {0} has been saved."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:618
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:741
 msgid "The {0} could not be saved, please try again."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:662
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:785
 msgid "The table is open in EpiDesktop. Close or unlock in EpiDesktop."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:693
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:818
 msgid "The {0} could not be saved. Please, try again."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:733
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:858
 msgid "The {0} has dependencies. Please remove the dependencies first."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:748
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:873
 msgid "The {0} has been deleted."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:752
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:877
 msgid "The {0} could not be deleted. Please, try again."
 msgstr ""
 
@@ -71,15 +77,15 @@ msgstr ""
 msgid "Locked"
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/LockTrait.php:42
+#: ./plugins/Rest/src/Controller/Component/LockTrait.php:43
 msgid "Another user edits the dataset. Please try again later."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/LockTrait.php:65
+#: ./plugins/Rest/src/Controller/Component/LockTrait.php:66
 msgid "Unlocked"
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/LockTrait.php:67
+#: ./plugins/Rest/src/Controller/Component/LockTrait.php:69
 msgid "Could not unlock the entity"
 msgstr ""
 

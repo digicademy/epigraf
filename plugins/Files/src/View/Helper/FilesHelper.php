@@ -35,20 +35,25 @@ class FilesHelper extends Helper
      *
      * @var string[]
      */
-    public $helpers = ['Form', 'Html', 'Url'];
+    public $helpers = ['Form', 'Html', 'Url', 'Link'];
 
     /**
      * Initialize dropzone
      *
+     * @param array $folder
      * @return string
      */
-    public function dropzone()
+    public function dropzone($folder = ['root'=>null,'path'=>null,'database'=>null], $template = false)
     {
 
+        if (!$this->Link->hasPermission(['action' => 'upload'])) {
+            return '';
+        }
+
         // Upload path variables
-        $root = $this->getView()->get('root');
-        $path = $this->getView()->get('path');
-        $database = $this->getView()->get('database');
+        $root = $folder['root'] ?? $this->getView()->get('root');
+        $path = $folder['path'] ?? $this->getView()->get('path');
+        $database = $folder['database'] ?? $this->getView()->get('database');
 
         // Form
         $url = [
@@ -58,21 +63,29 @@ class FilesHelper extends Helper
 
         ];
         if (!empty($database)) {
-            $url['database'] = Databank::removePrefix($database['name']);
+            $database = is_string($database) ? $database : $database->name;
+            $url['database'] = Databank::removePrefix($database);
         }
 
         $out = $this->Form->create(null, [
                 //'id' => 'FilesUploadDropzone',
                 'type' => 'file',
                 'url' => $url,
-                'class' => 'widget-upload',
-                'data-redirect' => $this->Url->build()
+                'class' => $template ? 'widget-upload-form' : 'widget-upload',
+                'data-redirect' => $this->Url->build(),
+                'data-target-list-name' => $folder['list'] ?? 'files'
             ]
         );
 
         $out .= '<div class="dz-message">You can drop multiple files here or click here to upload.</div>';
         $out .= $this->Form->control('File.path', ['type' => 'hidden', 'value' => $path]);
         $out .= $this->Form->end();
+
+        if ($template) {
+            $out = '<script type="text/template" class="widget-upload">'
+                .$out
+                . '</script>';
+        }
 
         return $out;
     }

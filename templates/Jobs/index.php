@@ -19,6 +19,9 @@
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Jobs')); ?>
 
+<!-- Search bar -->
+    <?= $this->Table->filterBar('jobs') ?>
+
 <!-- Content area -->
 <div class="content-main widget-scrollbox">
     <?= $this->Table->filterTable('jobs', $entities, ['select'=>true, 'actions'=>['view'=>true]]) ?>

@@ -102,7 +102,7 @@ br + br[data-cke-filler] {
 
 /* Font Awesome buttons*/
 .ck-button__symbol.font_awesome {
-    font-family: "Font Awesome 6 Free";
+    font-family: "Font Awesome 6 Free", fantasy;
 }
 
 /* XML Editor */
@@ -117,7 +117,14 @@ br + br[data-cke-filler] {
     overflow: auto;
 }
 
-.widget-xmleditor br[data-cke-filler]:first-child {
-    display: none;
+.doc-section-groups .doc-section-item .widget-xmleditor,
+.doc-section-groups .doc-section-item .widget-xmleditor.ck.ck-editor__editable_inline {
+    overflow: hidden;
 }
 
+.widget-xmleditor br[data-cke-filler]:first-child {
+    /*display: none;*/
+    display: inline;
+    content: " ";
+    padding: 0 0.2em;
+}

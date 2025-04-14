@@ -111,9 +111,14 @@ export class BaseFrame extends BaseForm {
         // Init and open window
         this.openWindow(options.frameTarget || 'details', options.force);
 
+
         // Load URL or show element
         if (options.url !== undefined) {
-            this.loadUrl(options.url, options);
+            if (options.delay) {
+                setTimeout(() => this.loadUrl(options.url, options), options.delay);
+            } else {
+                this.loadUrl(options.url, options);
+            }
         } else if (options.element !== undefined) {
             this.loadElement(options.element, options);
         }
@@ -276,6 +281,11 @@ export class BaseFrame extends BaseForm {
                             return;
                         }
 
+                        // TODO: Better listen to epi:click:button and cancel the event
+                        if (role === 'import') {
+                            return;
+                        }
+
                         // Submit form
                         if (
                             (role === 'submit') || (role === 'save') ||
@@ -301,11 +311,13 @@ export class BaseFrame extends BaseForm {
                                     self.submitForm(event);
                                 } else if (role === 'delete') {
                                     self.unlockForm(form.dataset.deleteUrl, true);
+                                    event.preventDefault();
                                 } else if (role === 'cancel') {
                                     self.unlockForm(form.dataset.cancelUrl, true);
+                                    event.preventDefault();
                                 }
                             } else if (role === 'cancel') {
-                                self.closeWindow(true);
+                                self.cancelForm(true);
                             }
                             return;
                         }
@@ -313,7 +325,7 @@ export class BaseFrame extends BaseForm {
                         // If not submitted or closed...
                         if (button.tagName === 'A') {
                             let url = event.target.dataset.href || button.getAttribute('href');
-                            let options = {};
+                            let options = {focus: true};
                             if (button.dataset.target) {
                                 options.target = button.dataset.target;
                             }
@@ -610,20 +622,7 @@ export class BaseFrame extends BaseForm {
 
         // Focus element
         if (options.focus) {
-            // Find focus element
-            let input = this.widgetElement.querySelector('[autofocus]');
-            input = !input ? this.widgetElement.querySelector('select, input[type=text], .widget-xmleditor') : input;
-
-            if (input) {
-                // Set focus
-                input.removeAttribute('autofocus');
-                input.focus();
-
-                // Select input text
-                if (typeof input.select === 'function') {
-                    input.select();
-                }
-            }
+            this.focusWidget();
         }
 
     }
@@ -660,6 +659,7 @@ export class BaseFrame extends BaseForm {
             window.open(url);
             return;
         } else if (options.target === 'main') {
+            App.ajaxQueue.stop();
             window.location = url;
             return;
         }
@@ -692,6 +692,7 @@ export class BaseFrame extends BaseForm {
         }
 
         const self = this;
+
         $.ajax({
             type: requestType,
             url: url,
@@ -795,6 +796,7 @@ export class MainFrame extends BaseFrame {
             }
             const newUrlWithoutHash = url.split('#')[0];
 
+            App.ajaxQueue.stop();
             if (currentUrlWithoutHash === newUrlWithoutHash) {
                 window.location.href = url;
                 window.location.reload();
@@ -849,6 +851,7 @@ export class TabFrame extends BaseFrame {
 
         super(element, name, parent);
 
+        this.attachElement(element, 'content-pane');
         this.widgetElement.classList.add('widget-content-pane');
 
         const titleElement = Utils.spawnFromString('<div class="frame-title">' +
@@ -874,7 +877,6 @@ export class TabFrame extends BaseFrame {
 
         this.buttonPane = Utils.spawnFromString('<div class="frame-buttons actions-bottom"></div>');
         this.widgetElement.appendChild(this.buttonPane);
-
 
         this.isClosing = false;
 
@@ -918,6 +920,11 @@ export class TabFrame extends BaseFrame {
             tabsheetsWidget.showTab(frame, 'last');
         }
 
+        // Watch reload events (e.g. from the UploadWidget / dropzone)
+        if (!this.listenerReload) {
+            this.listenerReload = event => this.showData(this.options);
+            this.listenEvent(this.widgetElement, 'epi:reload:page', this.listenerReload);
+        }
     }
 
     /**
@@ -943,6 +950,10 @@ export class TabFrame extends BaseFrame {
 
         this.clearData();
         App.sidebarright.hideSidebar();
+
+        if (this.listenerReload) {
+            this.unlistenEvent(this.widgetElement, 'epi:reload:page', this.listenerReload);
+        }
     }
 
 
@@ -1531,13 +1542,13 @@ export class MessageWindow extends PopupWindow {
  * Either provide the URL to load the data list from or an HTML element containing the list
  *
  * ### Options
- * - url {String} Page to be loaded
- * - element {Element} Element to be shown
- * - onSelect {function} Will be called when an element is clicked.
+ * - url {String} Page to be loaded.
+ * - element {Element} Element containing the list.
+ * - onSelect {function} Will be called when an item is selected.
  * - onRemove {function} Will be called when the remove button is clicked.
- * - selectOnClick {boolean} Whether to select an element on click
- * - selectList {boolean} Whether to select the list (=folder) instead of an item (=file or record)
- * - itemtype {string} Only select items of this type
+ * - selectOnClick {boolean} Whether to select an item by clicking it, without using the Apply button.
+ * - selectList {boolean} Whether to select the list (=folder) instead of an item (=file or record).
+ * - itemtype {string} Only select items of this type.
  */
 export class SelectWindow extends PopupWindow {
 
@@ -1589,6 +1600,13 @@ export class SelectWindow extends PopupWindow {
             this.listenerChanged = event => this.onChange(event);
             this.listenEvent(this.widgetElement, 'changed', this.listenerChanged);
         }
+
+        // Watch search input
+        if (!this.listenerKeyDown) {
+            this.listenerKeyDown = event => this.onKeyDown(event);
+            this.listenEvent(this.widgetElement, 'keydown', this.listenerKeyDown);
+        }
+
     }
 
     closeWindow(canceled) {
@@ -1598,7 +1616,9 @@ export class SelectWindow extends PopupWindow {
         if (this.listenerChanged) {
             this.unlistenEvent(this.widgetElement, 'changed', this.listenerChanged);
         }
-
+        if (this.listenerKeyDown) {
+            this.unlistenEvent(this.widgetElement, 'keydown', this.listenerKeyDown);
+        }
         return super.closeWindow();
     }
 
@@ -1612,6 +1632,30 @@ export class SelectWindow extends PopupWindow {
             if (dropdownWidget) {
                 dropdownWidget.openDropdown();
             }
+        }
+    }
+
+    /**
+     * Search input handler
+     *
+     * @param {Event} event The key down event
+     */
+    onKeyDown(event) {
+
+        if (event.keyCode !== 13) {
+            return;
+        }
+
+        const filterElement = event.target.closest('.input-group-filter');
+        if (!filterElement) {
+            return;
+        }
+
+        const filterForm = filterElement.closest('form');
+        if (filterForm) {
+            this.options.url = Utils.formToUrl(filterForm, App.baseUrl);
+            this.showData(this.options)
+            event.preventDefault();
         }
     }
 

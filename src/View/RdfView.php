@@ -34,14 +34,15 @@ class RdfView extends XmlView
 
     static protected $_extension = 'rdf';
 
+
     /**
-     * Init the header variables (resets static variables)
+     * Reset variables before a new document is rendered
      *
-     * @inheritDoc
+     * @param array $options
+     * @return void
      */
-    public function initialize(): void
+    public function resetDocument()
     {
-        parent::initialize();
         static::$_header = [
             '_xml_declaration' => "<?xml version='1.0'?>",
             '_xml_tag' => 'rdf:RDF',
@@ -280,22 +281,32 @@ class RdfView extends XmlView
     public function renderProlog($data, $options)
     {
 
+        $xmlHeader = static::$_header ?? [];
+
         // Convert namespaces to attributes
-        if (!empty(static::$_header['_xml_namespaces'])) {
-            foreach (static::$_header['_xml_namespaces'] ?? [] as $key => $value) {
-                static::$_header['xmlns:' . $key] = $value;
-                static::$_header['_xml_attributes'][] = 'xmlns:' . $key;
+        if (!empty($xmlHeader['_xml_namespaces'])) {
+            foreach ($xmlHeader['_xml_namespaces'] ?? [] as $key => $value) {
+                $xmlHeader['xmlns:' . $key] = $value;
+                $xmlHeader['_xml_attributes'][] = 'xmlns:' . $key;
             }
         }
-        unset(static::$_header['_xml_namespaces']);
+        unset($xmlHeader['_xml_namespaces']);
 
         // Convert base to attribute
-        if (!empty(static::$_header['_xml_base'])) {
-            static::$_header['xml:base'] = static::$_header['_xml_base'];
-            static::$_header['_xml_attributes'][] = 'xml:base';
-            unset(static::$_header['_xml_base']);
+        if (!empty($xmlHeader['_xml_base'])) {
+            $xmlHeader['xml:base'] = $xmlHeader['_xml_base'];
+            $xmlHeader['_xml_attributes'][] = 'xml:base';
+            unset($xmlHeader['_xml_base']);
         }
 
-        return parent::renderProlog($data, $options);
+        $xmlDeclaration = $options['declaration'] ?? $data['_xml_declaration'] ?? static::$_header['_xml_declaration'] ?? '';
+        $xml = empty($xmlDeclaration) ? '' : $xmlDeclaration . "\n";
+
+        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? $xmlHeader['_xml_tag'] ?? 'response';
+        $rootAttributes = static::renderAttributes($xmlHeader, $xmlHeader['_xml_attributes'] ?? []);
+        $xml .= "<{$rootTag}{$rootAttributes}>";
+
+        return $xml;
+
     }
 }

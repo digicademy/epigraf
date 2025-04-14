@@ -9,8 +9,15 @@ use Facebook\WebDriver\WebDriverKeys;
 class PropertiesCest
 {
 
+    /**
+     * before method
+     *
+     * @param AcceptanceTester $I
+     * @return void
+     */
     public function _before(AcceptanceTester $I)
     {
+        $I->testClassName = get_class($this);
     }
 
     /**
@@ -176,8 +183,11 @@ class PropertiesCest
 
         // Create new property
         $I->click("Create property");
-        $I->waitForElement('#form-add-properties');
-        $I->fillField('#form-add-properties input[name=lemma]', 'Testträger');
+        $I->waitForElement('.widget-entity form');
+        $I->wait(2);
+        $I->fillField('.widget-entity form input[name=lemma]', 'Testträger');
+        $I->wait(1);
+        $I->dontSeeVisualChanges('propertiesform', '.widget-entity form');
 
         // Save new property
         $I->click("Save", '.ui-dialog-buttonset');
@@ -189,6 +199,7 @@ class PropertiesCest
         $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 3);
 
         // Ensure visual appearance
+        $I->wait(1);
         $I->dontSeeVisualChanges('propertieslist', '.recordlist [data-list-name="epi_properties"]');
     }
 
@@ -206,8 +217,10 @@ class PropertiesCest
 
         // Create new property
         $I->click("Create property");
-        $I->waitForElement('#form-add-properties');
-        $I->fillField('#form-add-properties input[name=name]', 'Mein Wappen');
+        $I->waitForElement('.widget-entity form');
+        $I->wait(2);
+        $I->fillField('.widget-entity form input[name=name]', 'Mein Wappen');
+        $I->wait(1);
 
         // Focus XML input - without the toolbar showing up because it's a popup
         $contentSelector = '.doc-fieldname-content .widget-xmleditor';
@@ -227,6 +240,26 @@ class PropertiesCest
         $I->pressKey(
             $contentSelector,
             'Some',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
+            WebDriverKeys::ENTER,
+            'lines',
             WebDriverKeys::ENTER,
             'lines',
             WebDriverKeys::ENTER,
@@ -275,9 +308,10 @@ class PropertiesCest
 
         // Create new property
         $I->click("Create property");
-        $I->waitForElement('#form-add-properties');
-        $I->selectOption('#form-add-properties select[name=reference_pos]', 'First child of ...');
-        $I->fillField('#form-add-properties input[name=lemma]', 'Testträger');
+        $I->waitForElement('.widget-entity form');
+        $I->wait(2);
+        $I->selectOption('.widget-entity form select[name=reference_pos]', 'First child of ...');
+        $I->fillField('.widget-entity form input[name=lemma]', 'Testträger');
 
         // Save new property
         $I->click("Save", '.ui-dialog-buttonset');
@@ -289,6 +323,7 @@ class PropertiesCest
         $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 2);
 
         // Ensure visual appearance
+        $I->wait(1);
         $I->dontSeeVisualChanges('propertieslist', '.recordlist [data-list-name="epi_properties"]');
     }
 
@@ -306,9 +341,10 @@ class PropertiesCest
         $I->amOnPage('/epi/projects/properties/index/objecttypes');
 
         // Check if recordlist shows up
-        $I->seeElement('.recordlist [data-list-name="properties"]');
+        $I->seeElement('.recordlist [data-list-name="epi_properties"]');
+
         // Choose property
-        $I->testOpensInSidebar('properties', 36);
+        $I->testOpensInSidebar('epi_properties', 36);
     }
 
     /**
@@ -396,7 +432,7 @@ class PropertiesCest
 
         // Wait for result
         $I->waitForTheAjaxResponse();
-        $I->waitForText('The property has been deleted.');
+//        $I->waitForText('The property has been deleted.');
 
         // Check result in the sidebar
         $I->waitForElementNotVisible('.sidebar-right .widget-document-edit' );

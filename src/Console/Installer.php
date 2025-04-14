@@ -47,34 +47,37 @@ class Installer
         //static::copyJsFiles($rootDir, $io);
         static::createSymlinks($rootDir, $io);
 
+        static::setFolderPermissions($rootDir, $io);
         // ask if the permissions should be changed
-        if ($io->isInteractive()) {
-            $validator = function ($arg) {
-                if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
-                    return $arg;
-                }
-                throw new Exception('This is not a valid answer. Please choose Y or n.');
-            };
-            $setFolderPermissions = $io->askAndValidate(
-                '<info>Set Folder Permissions ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
-                $validator,
-                10,
-                'Y'
-            );
-
-            if (in_array($setFolderPermissions, ['Y', 'y'])) {
-                static::setFolderPermissions($rootDir, $io);
-            }
-        }
-        else {
-            static::setFolderPermissions($rootDir, $io);
-        }
+//        if ($io->isInteractive()) {
+//            $validator = function ($arg) {
+//                if (in_array($arg, ['Y', 'y', 'N', 'n'])) {
+//                    return $arg;
+//                }
+//                throw new Exception('This is not a valid answer. Please choose Y or n.');
+//            };
+//            $setFolderPermissions = $io->askAndValidate(
+//                '<info>Set Folder Permissions ? (Default to Y)</info> [<comment>Y,n</comment>]? ',
+//                $validator,
+//                10,
+//                'Y'
+//            );
+//
+//            if (in_array($setFolderPermissions, ['Y', 'y'])) {
+//                static::setFolderPermissions($rootDir, $io);
+//            }
+//        }
+//        else {
+//            static::setFolderPermissions($rootDir, $io);
+//        }
 
         static::setSecuritySalt($rootDir, $io);
 
         if (class_exists('\Cake\Codeception\Console\Installer')) {
             \Cake\Codeception\Console\Installer::customizeCodeceptionBinary($event);
         }
+
+        static::clearCache($io);
     }
 
     /**
@@ -97,6 +100,7 @@ class Installer
         static::createSymlinks($rootDir, $io);
 
         //static::copyJsFiles($rootDir, $io);
+        static::clearCache($io);
     }
 
     /**
@@ -112,11 +116,11 @@ class Installer
     public static function copyJsFiles($rootDir, $io)
     {
         $files = [
-            $rootDir . '/vendor/components/jquery/jquery.min.js' => $rootDir . '/htdocs/js/jquery/jquery.min.js',
-            $rootDir . '/vendor/enyo/dropzone/dist/dropzone.js' => $rootDir . '/plugins/Widgets/webroot/js/dropzone/dropzone.js',
-            $rootDir . '/vendor/enyo/dropzone/dist/dropzone.css' => $rootDir . '/plugins/Widgets/webroot/css/dropzone/dropzone.css',
-            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf' => $rootDir . '/htdocs/webfonts/fa-solid-900.ttf',
-            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2' => $rootDir . '/htdocs/webfonts/fa-solid-900.woff2'
+//            $rootDir . '/vendor/components/jquery/jquery.min.js' => $rootDir . '/htdocs/js/jquery/jquery.min.js',
+//            $rootDir . '/vendor/enyo/dropzone/dist/dropzone.js' => $rootDir . '/plugins/Widgets/webroot/js/dropzone/dropzone.js',
+//            $rootDir . '/vendor/enyo/dropzone/dist/dropzone.css' => $rootDir . '/plugins/Widgets/webroot/css/dropzone/dropzone.css',
+//            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf' => $rootDir . '/htdocs/webfonts/fa-solid-900.ttf',
+//            $rootDir . '/node_modules/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2' => $rootDir . '/htdocs/webfonts/fa-solid-900.woff2'
         ];
 
         foreach ($files as $from => $to) {
@@ -142,7 +146,6 @@ class Installer
      */
     public static function buildAssetCompress($rootDir, $io)
     {
-        return;
         $command = 'bin/cake asset_compress build';
         exec($command);
         $io->write('Compressed assets.');
@@ -332,4 +335,17 @@ class Installer
         $io->write('Unable to update Security.salt value.');
     }
 
+    /**
+     * Clears the cache for the application.
+     *
+     * @param \Composer\IO\IOInterface $io IO interface to write to console
+     *
+     * @return void
+     */
+    public static function clearCache($io)
+    {
+        $command = 'bin/cake cache clear_all';
+        exec($command);
+        $io->write('Cleared cache.');
+    }
 }

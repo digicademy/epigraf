@@ -110,13 +110,6 @@ class AppController extends Controller
     /**
      * Data passed to the JavaScript App object
      *
-     * @var array $js_data
-     */
-    public $js_data = [];
-
-    /**
-     * Data passed to the JavaScript App object
-     *
      * @var array $js_user
      */
     public $js_user = [];
@@ -131,10 +124,8 @@ class AppController extends Controller
      * - form authentication -> web
      * - token authentication -> api
      *
-     * The mode is determined from the query parameter:
-     * - default If no parameter is set.
-     * - code Coding mode.
-     * - present In presentation mode, this is the default for public users.
+     * The mode is determined from the query parameter
+     * (see the mode definitions in bootstrap.php).
      *
      * The layout is determined from the query parameter, can be empty.
      *
@@ -235,6 +226,7 @@ class AppController extends Controller
         $this->getResponse()->setTypeMap('jsonld', ['application/ld+json']);
         $this->getResponse()->setTypeMap('ttl', ['text/turtle']);
         $this->getResponse()->setTypeMap('md', ['text/markdown']);
+        $this->getResponse()->setTypeMap('geojson', ['application/geo+json']);
 
         parent::initialize();
 
@@ -247,7 +239,8 @@ class AppController extends Controller
                     'jsonld' => 'App.Jsonld',
                     'rdf' => 'App.Rdf',
                     'ttl' => 'App.Ttl',
-                    'md' => 'App.Markdown'
+                    'md' => 'App.Markdown',
+                    'geojson' => 'App.GeoJson',
                 ],
                 'enableBeforeRedirect' => false
             ]
@@ -370,7 +363,6 @@ class AppController extends Controller
         $this->set('theme', $this->theme);
 
         // Transfer data to javascript
-        $this->set('js_data', $this->js_data);
         $this->set('js_user', $this->js_user);
     }
 
@@ -562,7 +554,8 @@ class AppController extends Controller
                         'plugin' => $dbItem['plugin'],
                         'controller' => 'Articles',
                         'action' => 'index',
-                        'database' => $db_name
+                        'database' => $db_name,
+                        '?' => ['load' => true]
                     ]
                 ];
             }
@@ -926,30 +919,32 @@ class AppController extends Controller
      *
      * @return string 'api' for requests with access tokens, othereise 'web'
      */
-    protected function _getRequestScope()
+    public function _getRequestScope()
     {
         return $this->request->getQuery('token', false) ? 'api' : 'web';
     }
 
     /**
-     * Get request mode
+     * Get the request mode, either default or revise.
      *
-     * Two request modes are possible:
-     * - default The default types config is used.
-     *           For view actions, the preview config is merged into the default config.
-     * - code   The code types config is used.
-     *          In this mode, only explicitly configured fields are editable
-     *          and some article sections are fixed for quick access.
-     * - preview The preview types config is used.
+     *  The request mode is not necessarily the final mode used for displaying
+     *  articles or article lists. Modes may be switched by different conditions.
+     *  For example, the stage mode is activated by selecting a publication state in the
+     *  articles list, thus by the publication query parameter.
      *
-     * @return string Depending on the query parameter returns 'code', 'preview' or 'default'
+     * Only the following request modes are activated by the mode query parameter
+     * (see the definitions in bootstrap.php):
+     * - MODE_DEFAULT The default types config is used if a different mode is not activated.
+     * - MODE_REVISE The code types config is used.
+ *
+     * @return string Depending on the query parameter returns one of the predefined modes
      */
     protected function _getRequestMode()
     {
         return Attributes::cleanOption(
             $this->request->getQuery('mode'),
-            ['code'],
-            'default'
+            [MODE_REVISE],
+            MODE_DEFAULT
         );
     }
 
@@ -981,59 +976,6 @@ class AppController extends Controller
     protected function _getRequestPublished()
     {
         return Attributes::commaListToIntegerArray($this->request->getQuery('published', null));
-    }
-
-
-    /**
-     * Get user role
-     *
-     * Note: This method is overridden in the Epi\AppController.
-     * // TODO: Implement own component for all user related methods
-     *
-     * @param array $user The user data from the Auth component
-     * @param string $database The currently selected database
-     * @return mixed|string
-     */
-    public function _getUserRole($user = null, $database = null)
-    {
-        $user = $user ?? $this->Auth->user();
-        $userRole = Attributes::cleanOption(
-            $user['role'] ?? 'guest',
-            array_keys(PermissionsTable::$userRoles),
-            'guest'
-        );
-
-        if (!empty($database) && !in_array($userRole, ['admin', 'devel'])) {
-            $database = Databank::addPrefix($database);
-            $requestScope = $this->_getRequestScope();
-
-            foreach ($user['permissions'] ?? [] as $permission) {
-                if (
-                    (($permission['permission_type'] ?? '') === 'access') &&
-                    (($permission['entity_type'] ?? '') === 'databank') &&
-                    (($permission['entity_name'] ?? '') === $database) &&
-                    (($permission['user_request'] ?? 'web') === $requestScope)
-                ) {
-                    $userRole = $permission['user_role'] ?? $user['role'] ?? '';
-                    break;
-                }
-            }
-        }
-
-        return $userRole;
-    }
-
-    /**
-     * Get user id
-     *
-     * @param $user
-     *
-     * @return integer|null
-     */
-    public function _getUserId($user = null)
-    {
-        $user = $user ?? $this->Auth->user();
-        return $user['id'] ?? null;
     }
 
     /**
@@ -1122,30 +1064,6 @@ class AppController extends Controller
     }
 
     /**
-     * Get the permission mask for a user
-     *
-     * The result is used in AppController::hasGrantedPermission() to determine permissions.
-     *
-     * @param array|null $user If null, the current user is used.
-     * @return array
-     */
-    public function getPermissionMask($user = null)
-    {
-        $action = 'app/' . strtolower($this->request->getParam('controller')) . '/' . strtolower($this->request->getParam('action'));
-
-        $permission = [
-            'user_id' => $this->_getUserId(),
-            'user_role' => $this->_getUserRole($user),
-            'user_request' => $this->_getRequestScope(),
-            'permission_name' => $action,
-            'permission_type' => 'access'
-
-        ];
-
-        return $permission;
-    }
-
-    /**
      * Check whether the user is allowed to access an action
      * by comparing the action and request scope with the $authorized property
      *
@@ -1178,23 +1096,6 @@ class AppController extends Controller
     }
 
     /**
-     * Check whether the user is allowed to access the endpoint
-     * by comparing the request to the permission table.
-     *
-     * The app wide controller and the epi controller provide
-     * specific implementations of getPermissionMask().
-     *
-     * @param array $user The user data from the auth component
-     * @return bool
-     */
-    protected function hasGrantedPermission($user = null)
-    {
-        $permissionTable = $this->fetchTable('Permissions');
-        $permissionMask = $this->getPermissionMask($user);
-        return $permissionTable->hasPermission($permissionMask);
-    }
-
-    /**
      * Determines whether a user is allowed to access an action.
      *
      * Remember that this function or implicitly called functions may be overwritten in other controllers.
@@ -1215,7 +1116,18 @@ class AppController extends Controller
         }
 
         // 3. Check permission database
-        return $this->hasGrantedPermission($user);
+        if ($this->request->getParam('plugin') === 'Epi') {
+            $database = $this->request->getParam('database');
+        } else {
+            $database = null;
+        }
+        return PermissionsTable::hasGrantedPermission(
+            $user,
+            $database,
+            $this->request->getParam('controller'),
+            $this->request->getParam('action'),
+            $this->_getRequestScope()
+        );
     }
 
     /**
@@ -1288,8 +1200,8 @@ class AppController extends Controller
         // Pass to controllers
         $activeDatabase = $this->getRequest()->getParam('database');
         $selectedDatabase = $this->getRequest()->getParam('database') ?? $this->getRequest()->getQuery('database');
-        $this->userRole = $this->_getUserRole($user, $activeDatabase);
-        $this->userDbRole = $this->_getUserRole($user, $selectedDatabase);
+        $this->userRole = PermissionsTable::getUserRole($user, $activeDatabase, $this->_getRequestScope());
+        $this->userDbRole = PermissionsTable::getUserRole($user, $selectedDatabase,  $this->_getRequestScope());
         $this->requestScope = $this->_getRequestScope();
         $this->requestMode = $this->_getRequestMode();
         $this->requestAction = $this->_getRequestAction();
@@ -1308,13 +1220,17 @@ class AppController extends Controller
         BaseTable::$requestPreset = $this->requestPreset;
         BaseTable::$requestPublished = $this->requestPublished;
         BaseTable::$requestAction = $this->requestAction;
+        BaseTable::$requestTarget = $this->request->getRequestTarget();
         BaseTable::$userRole = $this->userRole;
-        BaseTable::$userId = $this->_getUserId($user);
+        BaseTable::$userId = PermissionsTable::getUserId($user);
         BaseTable::$userIri = $this->_getUserIri($user);
         BaseTable::$userSettings = $this->Actions->getUserSettings();
 
         // Pass to JavaScript
         $this->addToJsUser(['role' => $this->userRole, 'scope' => $this->requestScope]);
+
+        // Init tours
+        $this->initTour();
 
         // Pass to view
         $this->set('user', $user);
@@ -1357,53 +1273,6 @@ class AppController extends Controller
     }
 
     /**
-     * Redirect user settings
-     *
-     * If the request params are empty, redirect to the URL
-     * saved in the user settings (= recover the last search settings).
-     *
-     * @return void
-     * @deprecated
-     *
-     */
-    protected function redirectToUserSettings()
-    {
-        // No redirect for API calls
-        if ($this->request->is('api')) {
-            return;
-        }
-
-        // TODO: don't redirect or update settings for sidebar calls
-        //$template = $requestParams['template'] ?? '';
-
-        $requestParams = $this->request->getQueryParams();
-        $requestPath = $this->request->getPath();
-
-        // Should we redirect? Only if no parameters (despite redirect) are set
-        $redirect = $requestParams['redirect'] ?? true;
-        unset($requestParams['redirect']);
-        $redirect = $redirect && !$requestParams;
-
-        if ($redirect) {
-            $params = $this->Actions->getUserSettings('paths', $requestPath);
-            $params = array_diff_key($params, array_flip($this->paramsForNavigation));
-
-            if ($params) {
-                $url = $this->request->getParam('pass');
-                $url['?'] = $params;
-                $this->Answer->redirect($url);
-            }
-        }
-
-        else {
-            $requestParams = array_diff_key($requestParams, array_flip($this->paramsForNavigation));
-            if ($requestParams) {
-                $this->Actions->updateUserSettings('paths', $requestPath, $requestParams);
-            }
-        }
-    }
-
-    /**
      * Reconnect models to a currently activated database
      *
      * After activating a new database you need to reconnect the models
@@ -1431,7 +1300,7 @@ class AppController extends Controller
      */
     protected function addToJsUser($data)
     {
-        $this->js_user = array_merge($this->js_user, $data);
+        $this->js_user = array_replace_recursive($this->js_user, $data);
     }
 
     /**
@@ -1510,5 +1379,13 @@ class AppController extends Controller
     protected function getCacheKey()
     {
         return (BaseTable::$userId ?? 'public') . '_' . md5($this->request->getRequestTarget());
+    }
+
+    protected function initTour()
+    {
+        $tour = $this->getRequest()->getQuery('tour', false);
+        if ($tour) {
+            $this->addToJsUser(['settings'=>['tours' => ['start' => $tour]]]);
+        }
     }
 }

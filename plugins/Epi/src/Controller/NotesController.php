@@ -187,7 +187,7 @@ class NotesController extends AppController
      */
     public function import()
     {
-        $this->Transfer->import('notes');
+        $this->Transfer->import();
     }
 
 }

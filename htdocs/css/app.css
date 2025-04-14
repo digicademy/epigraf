@@ -113,6 +113,7 @@
     --top-menu-db-bg-color: var(--primary-700);
     --top-menu-app-bg-color: var(--primary-800);
     --top-menu-user-bg-color: var(--primary-900);
+    --top-menu-border-color: var(--primary-900);
 
     /* Images */
     --thumb-border-color: var(--neutral-650);
@@ -237,6 +238,9 @@
     --icon-toggle-right: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon transform='rotate(-90 16 12)' points='0,0 32,0 16,24' style='fill: rgb%280, 0, 0%29'></polygon></svg>");
     --icon-fontfamily: "Font Awesome 6 Free";
     --icon-font-size: 1.2em;
+
+    /* Marker */
+    --marker-bg-color: var(--neutral-700);
 }
 
 /** Fonts  */
@@ -330,6 +334,8 @@ html, body {
     padding: 0;
     font-size: 0.8rem;
 
+    border-bottom: 1px solid var(--top-menu-border-color);
+
     display: flex;
     flex-wrap: nowrap;
     flex-shrink: 0;
@@ -344,41 +350,9 @@ html, body {
     /*max-height: calc(100vh - 3rem - 2.7rem - 2px);*/
 }
 
-.sidebar {
-    flex-basis: 16.66%;
 
-    position: relative;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    min-width: 0;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.sidebar-size-2 {
-    flex-basis: 16.66%;
-}
-
-.sidebar-size-3 {
-    flex-basis: 25%;
-}
-
-.sidebar-size-4 {
-    flex-basis: 33.33%;
-}
-
-.sidebar-size-5 {
-    flex-basis: 41.66%;
-}
-
-.sidebar-size-6 {
-    flex-basis: 50%;
-}
-
-
-#content {
+/* TODO: Remove ID */
+#content, .content {
     flex:1;
     position: relative;
     overflow: auto;
@@ -465,6 +439,12 @@ div.content-footer {
     flex:1
 }
 
+.widget-content-pane .content-main {
+    height:100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .content-section {
     margin-bottom: 1em;
 }
@@ -536,6 +516,11 @@ div.content-footer {
 
 .hide {
     display: none!important;
+}
+
+.dragging {
+    user-select: none; /* Disable text selection */
+    cursor: ew-resize;
 }
 
 /* Breakpoints */
@@ -1043,6 +1028,7 @@ nav.breadcrumbs ul li:not(:last-child)::after {
     width: 3em;
     height: 3em;
 }
+
 .loader,
 #loader {
     margin-top: 0.5em;
@@ -1405,7 +1391,7 @@ a[data-linkwrapper] {
 
 /* Overwrite jquery ui styling */
 .ui-widget-content a {
-    color: inherit;
+    color: var(--link-font-color);
 }
 
 /* Pagination */
@@ -1522,7 +1508,8 @@ button:hover {
 a.tiny,
 button.tiny {
     min-width: 1em;
-    height:1.2em;
+    height:1.5em;
+    line-height: 1.5em;
     margin: 0.25em 0.1em 0 0;
     padding:0;
     border:0;
@@ -2410,7 +2397,9 @@ span.element_label {
 /* Polling */
 .widget-job-message {
     padding: 1rem;
+    /*background-color: var( --message-bg-color);*/
 }
+
 .widget-job-message.error {
     background-color: var(--msg-error-bg);
     color: var(--msg-error-color);
@@ -2428,6 +2417,14 @@ span.element_label {
 
 .widget-job-bar {
     margin-bottom: 1em;
+}
+
+.widget-job-results {
+  background-color: var(--pane-bg-color);
+}
+
+.widget-job-results.empty {
+    display: none;
 }
 
 .ui-progressbar-value {

@@ -118,7 +118,8 @@ class NotesControllerTest extends EpiTestCase
         $data = [
             'name' => 'Mainz',
             'category' => 'Tests',
-            'content' => 'testcontent'
+            'content' => 'testcontent',
+            'norm_iri' => ''
         ];
         $this->post('epi/projects/notes/add', $data);
         $this->assertResponseCode(302);

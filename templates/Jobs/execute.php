@@ -23,8 +23,59 @@ use Cake\Utility\Inflector;
 
 <?php $this->Breadcrumbs->add(I18n::getTranslator()->translate(Inflector::humanize($job->typ))) ?>
 
-<div class="content-tight">
+<?= $this->Element->openHtmlElement(
+    'div',
+    [
+        'class' => 'content-tight widget-job',
+        'data-job-nexturl' => $job->nexturl,
+        'data-job-cancel' => $job->cancelUrl,
+        'data-job-redirect' => $job->redirect
+    ]
+) ?>
+
+
+    <?php if (!empty($job->error)): ?>
+        <div class="widget-job-message error">
+            Error: <?= $job->error ?? '' ?>
+        </div>
+    <?php elseif ($job->status === 'error'): ?>
+    <div class="widget-job-message error">
+        <?= __('Error. See the logs for error details.') ?>
+    </div>
+    <?php elseif ($job->status === 'finished'): ?>
+        <div class="widget-job-message success">
+           <?= $job->message ?? __('Finished') ?>
+        </div>
+    <?php else: ?>
+        <div class="widget-job-message"></div>
+    <?php endif; ?>
+
+
+    <?php if (empty($job->error) && !empty($job->nexturl)): ?>
+        <div class="widget-job-bar"></div>
+    <?php endif; ?>
+
+    <?php $downloads = $job->config['downloads'] ?? []; ?>
+    <table class="widget-job-results vertical-table<?= empty($downloads) ? ' empty' : '' ?>">
+        <tr>
+            <th scope="row"><?= __('Results') ?></th>
+            <td>
+                <?php foreach ($downloads as $download): ?>
+                    <?= $this->Html->link($download['caption'], [$job->id, '?' => ['download' => $download['name']]],['target' => '_blank']) ?>
+                    <br>
+                <?php endforeach; ?>
+            </td>
+        </tr>
+    </table>
+
     <table class="vertical-table">
+        <?php if (!empty($job->delay)): ?>
+            <!--tr>
+                <th scope="row"><?= __('Queue Status') ?></th>
+                <td><?= h($job->queueStatus ?? '') ?></td>
+            </tr-->
+        <?php endif; ?>
+
         <tr>
             <th scope="row"><?= __('Pipeline') ?></th>
             <td><?= h($job->config['pipeline_name'] ?? '') ?></td>
@@ -36,10 +87,10 @@ use Cake\Utility\Inflector;
         </tr>
 
         <?php if (!empty($job->config['model'])): ?>
-        <tr>
-            <th scope="row"><?= __('Model') ?></th>
-            <td><?= h($job->config['model'] ?? '') ?></td>
-        </tr>
+            <tr>
+                <th scope="row"><?= __('Model') ?></th>
+                <td><?= h($job->config['model'] ?? '') ?></td>
+            </tr>
         <?php endif; ?>
 
         <?php if (!empty($job->config['source'])): ?>
@@ -58,48 +109,24 @@ use Cake\Utility\Inflector;
 
     </table>
 
-    <div class="content-tight widget-job" data-job-nexturl="<?= $job->nexturl ?>" data-job-redirect="<?= $job->redirect ?>">
+    <?php $this->Link->beginActionGroup ('content'); ?>
+    <?php
+        $this->Link->addAction(
+            empty($job->nexturl) ? __('Close') : __('Cancel'),
+            '#',
+            ['class' => 'widget-job-cancel button', 'data-role' => 'cancel', 'data-target' => 'main']
+        );
+    ?>
 
-            <?php if (!empty($job->error)): ?>
-                <div class="widget-job-message error">
-                    Error: <?= $job->error ?? '' ?>
-                </div>
-            <?php elseif ($job->status === 'error'): ?>
-            <div class="widget-job-message error">
-                <?= __('Error. See the logs for error details.') ?>
-            </div>
-            <?php elseif (empty($job->nexturl)): ?>
-                <div class="widget-job-message success">
-                   <?= __('Finished') ?>
-                </div>
-            <?php else: ?>
-                <div class="widget-job-message"></div>
-            <?php endif; ?>
-
-
-        <?php $this->Link->beginActionGroup ('content'); ?>
-        <?php if (empty($job->error) && !empty($job->nexturl)): ?>
-            <div class="widget-job-bar"></div>
-        <?php endif; ?>
-
-
-        <?php
+    <?php
+        $url = $job->redirect ?? $job->nexturl ?? '#';
+        if (empty($job->error) && !empty($url)) {
             $this->Link->addAction(
-                empty($job->nexturl) ? __('Close') : __('Cancel'),
-                '#',
-                ['class'=>'widget-job-cancel button','data-role'=>'cancel', 'data-target'=>'main']
+                !empty($job->config['download']) ? __('Download') : __('Proceed'),
+                $url,
+                ['class' => 'widget-job-proceed button', 'data-role' => 'proceed', 'data-target'=>'main']
             );
-        ?>
+        }
+    ?>
 
-        <?php
-            if (empty($job->error)) {
-                $this->Link->addAction(
-                    $job->status === 'download' ? __('Download') : __('Proceed'),
-                    $job->redirect ?? $job->nexturl ?? '#',
-                    ['class' => 'widget-job-proceed button', 'data-role' => 'proceed', 'data-target'=>'main']
-                );
-            }
-        ?>
-    </div>
-
-</div>
+<?= $this->Element->closeHtmlElement('div') ?>

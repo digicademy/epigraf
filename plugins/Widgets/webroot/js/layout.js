@@ -31,7 +31,7 @@ export class ResizableSidebar extends BaseWidget {
         this.width = undefined;
 
         // Set ui key for saving settings
-        if (!this.getContentPane()) {
+        if (!this.getFrame()) {
             this.widgetElement.dataset.uiKey = this.getController() + '-' + this.getAction() + '-sidebar-' + orientation;
         }
 
@@ -156,11 +156,14 @@ export class ResizableSidebar extends BaseWidget {
         // TODO: Does not look beautiful, but it works...
         this.isResizing = true;
         this.resizer.classList.add('is-resizing');
+        document.body.classList.add('dragging');
+
         const resizeListener = event => this.resizeSidebar(event);
         document.addEventListener('mousemove', resizeListener, false);
         document.addEventListener('mouseup', () => {
             this.isResizing = false;
             this.resizer.classList.remove('is-resizing');
+            document.body.classList.remove('dragging');
             document.removeEventListener('mousemove', resizeListener, false);
             this.setSetting('width', this.width);
         }, false);
@@ -340,7 +343,7 @@ export class Accordion extends BaseWidget {
     onLinkClick(event) {
         if (event.target.tagName === 'A') {
             const url = event.target.getAttribute('href');
-            if (url.startsWith('#')) {
+            if (url && url.startsWith('#')) {
                 this.showMain();
             }
         }

@@ -13,8 +13,10 @@ namespace App\Model\Table;
 use App\Model\Behavior\ModifierBehavior;
 use App\Model\Behavior\VersionBehavior;
 use App\Model\Entity\Databank;
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
+use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\FactoryLocator;
@@ -59,6 +61,13 @@ class BaseTable extends Table
     public $scopeField = null;
 
     /**
+     * Whether to check field types after marshalling and merge JSON data
+     *
+     * @var bool
+     */
+    public $mergeJson = false;
+
+    /**
      * Default database
      *
      * @var string
@@ -95,6 +104,15 @@ class BaseTable extends Table
      * @var null|string
      */
     public static $requestAction = null;
+
+    /**
+     * Current request target (the URI path)
+     *
+     * USed for deriving cache keas
+     *
+     * @var null|string
+     */
+    public static $requestTarget = null;
 
     /**
      * Current request format
@@ -245,7 +263,32 @@ class BaseTable extends Table
     }
 
     /**
-     * afterSave callback
+     * Transfer temporary IDs to the _import_ids property, so it can be handled in saveLinks()
+     *
+     * @param EventInterface $event
+     * @param EntityInterface $entity
+     * @param ArrayObject $data
+     * @param ArrayObject $options
+     */
+    public function afterMarshal(
+        EventInterface $event,
+        EntityInterface $entity,
+        ArrayObject $data,
+        ArrayObject $options
+    ) {
+
+        // Merge JSON arrays
+        if (!empty($this->mergeJson)) {
+            foreach (($entity->type->merged['fields'] ?? []) as $field => $config) {
+                if (in_array($config['format'] ?? '', ['json', 'geodata'])) {
+                    $entity->mergeJson($field, $data, false);
+                }
+            }
+        }
+    }
+
+    /**
+     * Clear the caches after saving
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
@@ -528,6 +571,25 @@ class BaseTable extends Table
     }
 
     /**
+     * Cache results
+     *
+     * The cache key is derived from the request target if not explicitly provided.
+     *
+     * ### Options
+     * - cachekey: Optional, a custom cache key
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findCached(Query $query, array $options)
+    {
+        $cacheKey = $options['cachekey'] ?? md5($this::$requestTarget);
+        $query = $query->cache($cacheKey, $this->initResultCache());
+        return $query;
+    }
+
+    /**
      * Get database of the current table
      *
      * @return Databank
@@ -583,48 +645,7 @@ class BaseTable extends Table
             return $query;
         }
 
-        $orTerms = array_filter(explode('|', $term));
-
-        $conditions = [
-            'OR' => array_map(
-                function ($andTerms) use ($fields, $operator, $type) {
-                    $andTerms = array_filter(explode(' ', $andTerms));
-                    return array_map(
-                        function ($term) use ($fields, $operator, $type) {
-                            $or = array_map(
-                                function ($field, $key) use ($term, $operator, $type) {
-
-                                    // Nested operator options
-                                    if (!is_numeric($key)) {
-                                        $operator = $field['operator'] ?? $operator;
-                                        $type = $field['type'] ?? $type;
-                                        $field = $key;
-                                    }
-
-                                    // Assemble condition
-                                    if (($operator === 'LIKE') && ($type === 'string')) {
-                                        return [$field . ' LIKE' => "%$term%"];
-                                    }
-                                    elseif (($operator === '=') && ($type === 'string')) {
-                                        return [$field => $term];
-                                    }
-                                    elseif (($operator === '=') && ($type === 'integer') && (ctype_digit($term))) {
-                                        return [$field => $term];
-                                    }
-                                    else {
-                                        return [];
-                                    }
-                                },
-                                $fields, array_keys($fields)
-                            );
-                            return (['OR' => $or]);
-                        },
-                        $andTerms
-                    );
-                },
-                $orTerms
-            )
-        ];
+        $conditions = Arrays::termConditions($term, $fields, $operator, $type);
 
         // Keep selected properties
         if (!empty($selected)) {
@@ -695,7 +716,7 @@ class BaseTable extends Table
             }
 
             $fieldName = $fieldConfig['field'] ?? ($this->getAlias() . '.' . $fieldKey);
-            $type = $fieldConfig['type'] ?? 'text';
+            $type = $fieldConfig['filter'] ?? $fieldConfig['type'] ?? 'text';
             if ($type === 'text') {
                 $conditions[] = [
                     $fieldName . ' LIKE ' => '%' . $params[$fieldKey] . '%',
@@ -1121,7 +1142,6 @@ class BaseTable extends Table
 
             $item['name'] = $colName;
             $item['caption'] = $colCaption;
-
 
             $keyExtract = $item['key'] ?? $colKey;
             $keyParsed = Objects::parseFieldKey($keyExtract, [], $item);

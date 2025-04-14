@@ -31,13 +31,13 @@ class TaskZip extends BaseTask
     {
         $source = $this->config['source'] ?? null;
         if (empty($source)) {
-            $source = $this->job->getCurrentInputFile();
+            $source = $this->job->getCurrentInputFilePath();
         }
         else {
             $source = Files::joinPath([$this->job->jobPath, $source]);
         }
 
-        $outputfile = $this->job->getCurrentOutputFile();
+        $outputfile = $this->job->getCurrentOutputFilePath();
 
         if (is_dir($source)) {
             $result = Files::zipFolder($source, $outputfile);
@@ -46,6 +46,6 @@ class TaskZip extends BaseTask
             $result = Files::zipFile($source, $outputfile);
         }
 
-        return $result;
+        return true;
     }
 }

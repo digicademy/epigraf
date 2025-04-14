@@ -126,6 +126,11 @@ button.button-next,
 
 /* Full screen viewer */
 
+.overlay .loader {
+    top:50%;
+    left:50%;
+}
+
 .content-content .image-viewer-frame {
     flex:1;
 }

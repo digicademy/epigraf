@@ -2,8 +2,8 @@
   <article id="articles-1" database="projects" norm_iri="normiri_1" articletype="epi-article">
     <status>Status 1 in progress</status>
     <norm_data>normdata_1</norm_data>
-    <created>2021-06-13T18:10:25+02:00</created>
-    <modified>2023-08-17T21:27:27+02:00</modified>
+    <created>2021-06-13T16:10:25+02:00</created>
+    <modified>2025-02-26T19:11:42+01:00</modified>
     <signature>Signatur 1</signature>
     <name>Artikel 1 für das Testsystem</name>
     <project id="projects-1" projecttype="epi" database="projects" norm_iri="bookiri">
@@ -18,11 +18,40 @@
         </path>
         <status>3</status>
         <items>
+          <item id="items-866" itemtype="search" sections_id="sections-5" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-5" articles_id="articles-1" sectiontype="text" name="Beschreibung" number="1" sortno="25" level="1" children="0" siblings="16" />
+            </sectionpath>
+            <value>text</value>
+            <content>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.
+
+Text Text Text
+Text Text Text
+Text Text Text
+Text Text Text
+LINK 
+Text Text Text
+Text Text Text
+Literaturverweis im Text: Unterautor 
+
+Externe Verweise
+- auf einen Artikel: Signatur 2
+- auf eine Inschrift: Signatur 2[A]
+- auf einen Inschriftenteil: Signatur 2[A.1]
+- auf eine Fußnote: Signatur 2[1]
+
+Interne Verweise
+- auf Inschrift B: B
+- auf Inschriftenteil B2: B.2
+- auf Fußnote a: a
+- auf Fußnote 2: 2
+- auf Marke: hm001.1121</content>
+          </item>
           <item id="items-4" itemtype="text" sortno="0" sections_id="sections-5" articles_id="articles-1">
             <sectionpath>
               <section id="sections-5" articles_id="articles-1" sectiontype="text" name="Beschreibung" number="1" sortno="25" level="1" children="0" siblings="16" />
             </sectionpath>
-            <content>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.<app1 id="000004463586776180555555628924"></app1><nl></nl><nl></nl><h id="000004436160878777777777844048" data-link-target="properties-98" data-link-value="Überschrift 1">Text </h>Text Text<nl></nl>Text Text Text<nl></nl>Text <b id="000004436160887138888888933579">Text </b><i id="000004436160890414351851976127">Text</i><nl></nl><u id="000004436160892870370370431668">Text </u><g id="000004436160895594907407469796">Text </g><k id="000004436160898130787037028136">Text</k><nl></nl><a id="000004436160901166666666725447" href="https://www.snerpa.is/net/isl/laxdal.htm" value="LINK"></a> <nl></nl><p id="000004436160924313657407458602" data-link-target="properties-105" data-link-value="siehe">Text Text Text<nl></nl>Text Text Text</p><nl></nl>Literaturverweis im Text: <rec_lit id="000004456302666872685185191153" data-link-target="properties-11" data-link-value="Unterautor "></rec_lit><nl></nl><nl></nl>Externe Verweise<nl></nl>- auf einen Artikel: <rec_extern id="000004489202490501157407418218" data-link-target="articles-3" data-link-value="Signatur 2"></rec_extern><nl></nl>- auf eine Inschrift: <rec_extern id="000004489202501042824074077622" data-link-target="sections-145" data-link-value="Signatur 2[A]"></rec_extern><nl></nl>- auf einen Inschriftenteil: <rec_extern id="000004489202513028935185199996" data-link-target="sections-144" data-link-value="Signatur 2[A.1]"></rec_extern><nl></nl>- auf eine Fußnote: <rec_extern id="000004489202522863425925931578" data-link-target="footnotes-4" data-link-value="Signatur 2[1]"></rec_extern><nl></nl><nl></nl>Interne Verweise<nl></nl>- auf Inschrift B: <rec_intern id="000004489203414346064814810841" data-link-target="sections-22" data-link-value="B"></rec_intern><nl></nl>- auf Inschriftenteil B2: <rec_intern id="000004489202534078703703725732" data-link-target="sections-19" data-link-value="B.2"></rec_intern><nl></nl>- auf Fußnote a: <rec_intern id="000004489204161565972222228987" data-link-target="footnotes-6" data-link-value="a"></rec_intern><nl></nl>- auf Fußnote 2: <rec_intern id="000004489204172635416666673690" data-link-target="footnotes-5" data-link-value="2"></rec_intern><nl></nl>- auf Marke: <rec_ma id="000004489204491244212962960464" data-link-target="properties-186" data-link-value="hm001.1121"></rec_ma></content>
+            <content>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.<app1 id="000004463586776180555555628924" /><nl /><nl /><h id="000004436160878777777777844048" data-link-target="properties-98" data-link-iri="properties/headers/projects~98" data-link-value="Überschrift 1">Text </h>Text Text<nl />Text Text Text<nl />Text <b id="000004436160887138888888933579" data-link-target="" data-link-iri="" data-link-value="Fett">Text </b><i id="000004436160890414351851976127" data-link-target="" data-link-iri="" data-link-value="Kursiv">Text</i><nl /><u id="000004436160892870370370431668" data-link-target="" data-link-iri="" data-link-value="Unterstrichen">Text </u><g id="000004436160895594907407469796" data-link-target="" data-link-iri="" data-link-value="Gesperrt">Text </g><k id="000004436160898130787037028136" data-link-target="" data-link-iri="" data-link-value="Kapitälchen">Text</k><nl /><a id="000004436160901166666666725447" value="LINK" href="https://www.snerpa.is/net/isl/laxdal.htm" data-link-target="" data-link-iri="" data-link-value="Link" /> <nl />Text Text Text<nl />Text Text Text<nl />Literaturverweis im Text: <rec_lit id="000004456302666872685185191153" data-link-target="properties-11" data-link-iri="properties/literature/projects~11" data-link-value="Unterautor " /><nl /><nl />Externe Verweise<nl />- auf einen Artikel: <rec_extern id="000004489202490501157407418218" data-link-target="articles-3" data-link-iri="articles/epi-article/normiri_2" data-link-value="Signatur 2" /><nl />- auf eine Inschrift: <rec_extern id="000004489202501042824074077622" data-link-target="sections-145" data-link-iri="sections/inscription/projects~145" data-link-value="Signatur 2[A]" /><nl />- auf einen Inschriftenteil: <rec_extern id="000004489202513028935185199996" data-link-target="sections-144" data-link-iri="sections/inscriptionpart/projects~144" data-link-value="Signatur 2[A.1]" /><nl />- auf eine Fußnote: <rec_extern id="000004489202522863425925931578" data-link-target="footnotes-4" data-link-iri="footnotes/app1/projects~4" data-link-value="Signatur 2[1]" /><nl /><nl />Interne Verweise<nl />- auf Inschrift B: <rec_intern id="000004489203414346064814810841" data-link-target="sections-22" data-link-iri="sections/inscription/projects~22" data-link-value="B" /><nl />- auf Inschriftenteil B2: <rec_intern id="000004489202534078703703725732" data-link-target="sections-19" data-link-iri="sections/inscriptionpart/projects~19" data-link-value="B.2" /><nl />- auf Fußnote a: <rec_intern id="000004489204161565972222228987" data-link-target="footnotes-6" data-link-iri="footnotes/app2/projects~6" data-link-value="a" /><nl />- auf Fußnote 2: <rec_intern id="000004489204172635416666673690" data-link-target="footnotes-5" data-link-iri="footnotes/app1/projects~5" data-link-value="2" /><nl />- auf Marke: <rec_ma id="000004489204491244212962960464" data-link-target="properties-186" data-link-iri="properties/brands/projects~186" data-link-value="hm001.1121" /></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -32,22 +61,11 @@
               <norm_iri>di_description</norm_iri>
             </property>
           </item>
-          <item id="items-53" itemtype="search" sortno="0" sections_id="sections-5" articles_id="articles-1">
-            <sectionpath>
-              <section id="sections-5" articles_id="articles-1" sectiontype="text" name="Beschreibung" number="1" sortno="25" level="1" children="0" siblings="16" />
-            </sectionpath>
-            <value>content</value>
-            <content>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.[1]&lt;H|Text |H&gt;Text TextText Text TextText Text TextText Text TextLINK &lt;p|Text Text TextText Text Text|p&gt;Literaturverweis im Text: Unterautor Externe Verweise- auf einen Artikel: Signatur 2- auf eine Inschrift: Signatur 2[A]- auf einen Inschriftenteil: Signatur 2 [A1]- auf eine Fußnote: Signatur 2 [Fußnote 1]Interne Verweise- auf Inschrift B: B- auf Inschriftenteil B2: B2- auf Fußnote a: Fußnote a- auf Fußnote 2: Fußnote 2- auf Marke: hm001.1121</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
-          </item>
           <item id="items-758" itemtype="search" sortno="0" sections_id="sections-5" articles_id="articles-1">
             <sectionpath>
               <section id="sections-5" articles_id="articles-1" sectiontype="text" name="Beschreibung" number="1" sortno="25" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Abschnitt 1</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -67,7 +85,7 @@
             <sectionpath>
               <section id="sections-15" articles_id="articles-1" sectiontype="locations" name="Standorte" number="1" sortno="5" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Standorte</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -78,7 +96,8 @@
             <sectionpath>
               <section id="sections-15" articles_id="articles-1" sectiontype="locations" name="Standorte" number="1" sortno="5" level="1" children="0" siblings="16" />
             </sectionpath>
-            <content>Ergänzung 1, Verweis auf <rec_lit id="000004456302493517361111115062" data-link-target="properties-10" data-link-value="Quelle 1 "></rec_lit></content>
+            <value>0</value>
+            <content>Ergänzung 1, Verweis auf <rec_lit id="000004456302493517361111115062" data-link-target="properties-10" data-link-iri="properties/literature/projects~10" data-link-value="Quelle 1 " /></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -95,6 +114,7 @@
             <sectionpath>
               <section id="sections-15" articles_id="articles-1" sectiontype="locations" name="Standorte" number="1" sortno="5" level="1" children="0" siblings="16" />
             </sectionpath>
+            <value>0</value>
             <content>Ergänzung 2</content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
@@ -131,7 +151,7 @@
             <sectionpath>
               <section id="sections-13" articles_id="articles-1" sectiontype="conditions" name="Beschaffenheit" number="1" sortno="9" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Beschaffenheit</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -172,7 +192,7 @@
             <sectionpath>
               <section id="sections-10" articles_id="articles-1" sectiontype="measures" name="Maßangaben" number="1" sortno="15" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Maßangaben</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -248,7 +268,7 @@
             <sectionpath>
               <section id="sections-12" articles_id="articles-1" sectiontype="materials" name="Material" number="1" sortno="11" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Material</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -326,7 +346,7 @@
             <sectionpath>
               <section id="sections-11" articles_id="articles-1" sectiontype="objecttypes" name="Inschriftenträger" number="1" sortno="13" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschriftenträger</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -368,11 +388,29 @@
         </path>
         <status>1</status>
         <items>
+          <item id="items-870" itemtype="search" sections_id="sections-4" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-4" articles_id="articles-1" sectiontype="text" name="Gliederung: Ebene 1" number="2" sortno="27" level="1" children="0" siblings="16" />
+            </sectionpath>
+            <value>text</value>
+            <content>TEXT TEXT TEXT TEXT 
+TEXT TEXT TEXT TEXT 
+TEXT LINK  
+
+TEXT TEXT TEXT 
+TEXT TEXT TEXT TEXT 
+TEXT TEXT TEXT TEXT 
+TEXT TEXT TEXT TEXT 
+
+TEXT TEXT TEXT TEXT 
+TEXT TEXT TEXT TEXT 
+TEXT TEXT TEXT TEXT</content>
+          </item>
           <item id="items-3" itemtype="text" sortno="0" sections_id="sections-4" articles_id="articles-1">
             <sectionpath>
               <section id="sections-4" articles_id="articles-1" sectiontype="text" name="Gliederung: Ebene 1" number="2" sortno="27" level="1" children="0" siblings="16" />
             </sectionpath>
-            <content><h id="000004436161145244212963020598" data-link-target="properties-97" data-link-value="Überschrift 1a">TEXT </h>TEXT TEXT TEXT <nl></nl><b id="000004436161152100694444420087">TEXT </b><i id="000004436161156358796296327934">TEXT </i><u id="000004436161159035879629630111">TEXT </u><g id="000004436161161467592592619662">TEXT </g><nl></nl><k id="000004436161164633101851986162">TEXT </k><a id="000004436161167155092592629748" href="https://www.snerpa.is/net/isl/laxdal.htm" value="LINK "></a> <nl></nl><nl></nl><p id="000004436161200284722222217911" data-link-target="properties-106" data-link-value="Absatz 2a">TEXT TEXT TEXT <nl></nl>TEXT TEXT TEXT TEXT <nl></nl>TEXT TEXT TEXT TEXT <nl></nl>TEXT TEXT TEXT TEXT <nl></nl><nl></nl><nl></nl></p><nl></nl><p id="000004436161208671296296385342" data-link-target="properties-105" data-link-value="siehe">TEXT TEXT TEXT TEXT <nl></nl>TEXT TEXT TEXT TEXT <nl></nl>TEXT TEXT TEXT TEXT </p><nl></nl></content>
+            <content><h id="000004436161145244212963020598" data-link-target="properties-97" data-link-iri="properties/headers/projects~97" data-link-value="Überschrift 1a">TEXT </h>TEXT TEXT TEXT <nl /><b id="000004436161152100694444420087" data-link-target="" data-link-iri="" data-link-value="Fett">TEXT </b><i id="000004436161156358796296327934" data-link-target="" data-link-iri="" data-link-value="Kursiv">TEXT </i><u id="000004436161159035879629630111" data-link-target="" data-link-iri="" data-link-value="Unterstrichen">TEXT </u><g id="000004436161161467592592619662" data-link-target="" data-link-iri="" data-link-value="Gesperrt">TEXT </g><nl /><k id="000004436161164633101851986162" data-link-target="" data-link-iri="" data-link-value="Kapitälchen">TEXT </k><a id="000004436161167155092592629748" value="LINK " href="https://www.snerpa.is/net/isl/laxdal.htm" data-link-target="" data-link-iri="" data-link-value="Link" /> <nl /><nl />TEXT TEXT TEXT <nl />TEXT TEXT TEXT TEXT <nl />TEXT TEXT TEXT TEXT <nl />TEXT TEXT TEXT TEXT <nl /><nl />TEXT TEXT TEXT TEXT <nl />TEXT TEXT TEXT TEXT <nl />TEXT TEXT TEXT TEXT <nl /></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -382,22 +420,11 @@
               <norm_iri>di_header1</norm_iri>
             </property>
           </item>
-          <item id="items-52" itemtype="search" sortno="0" sections_id="sections-4" articles_id="articles-1">
-            <sectionpath>
-              <section id="sections-4" articles_id="articles-1" sectiontype="text" name="Gliederung: Ebene 1" number="2" sortno="27" level="1" children="0" siblings="16" />
-            </sectionpath>
-            <value>content</value>
-            <content>Notizen Abschnitt 2a</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
-          </item>
           <item id="items-757" itemtype="search" sortno="0" sections_id="sections-4" articles_id="articles-1">
             <sectionpath>
               <section id="sections-4" articles_id="articles-1" sectiontype="text" name="Gliederung: Ebene 1" number="2" sortno="27" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Abschnitt 2a</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -417,7 +444,7 @@
             <sectionpath>
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschrift A</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -899,6 +926,7 @@
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
               <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
             </sectionpath>
+            <value>0</value>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -908,7 +936,7 @@
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
               <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notzien Inschriftenteil 1</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -926,13 +954,36 @@
         </path>
         <status>2</status>
         <items>
+          <item id="items-878" itemtype="search" sections_id="sections-1" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
+              <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
+              <section id="sections-1" parent_id="sections-2" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="A teil 1 Alias Bearbeitung" number="1" sortno="31" level="3" children="0" siblings="1" />
+            </sectionpath>
+            <value>transcription</value>
+            <content>Zwischenraum von 1: 
+Unbestimmter Verlust: 
+Ergänzéng 
+Ausla ssðung 
+Verzeilenumbruh  
+Nachtrag
+Abkürzung
+Versalie 
+Zeilenumbruch 
+ 
+
+Hann bjó í Raums  dal í Raumsdælafylk
+ 
+Alphabetische Fußnote: 
+Numerische Fußnote:</content>
+          </item>
           <item id="items-1" itemtype="transcriptions" sortno="0" sections_id="sections-1" articles_id="articles-1">
             <sectionpath>
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
               <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
               <section id="sections-1" parent_id="sections-2" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="A teil 1 Alias Bearbeitung" number="1" sortno="31" level="3" children="0" siblings="1" />
             </sectionpath>
-            <content><bl id="000004474097580738425925958702" data-link-target="" data-link-value="Bereich"><nl></nl>Zwischenraum von 1: <spatium_v id="000004436165070465277777844244" width="1"></spatium_v><nl></nl>Unbestimmter Verlust: <del id="000004436165076792824074163019" num_sign="0"></del><nl></nl>Erg<cpl id="000004436165097621527777892480">änzéng</cpl> <nl></nl>Ausla <oms id="000004436165100978009259346871">ssðung</oms> <nl></nl>Verzeilenumbruh <vz id="000004436165037326388888946670" data-link-target="properties-86" data-link-value="Verszeilenumbruch 1 "></vz> <nl></nl><add id="000004436165104023148148146540">Nachtrag</add><nl></nl>Abk<abr id="000004436165108151620370436103" data-link-target="properties-171" data-link-value="siehe">ürzung</abr><nl></nl><vsl id="000004436165110998842592605012">Ve</vsl>rsalie <nl></nl>Zeilenumbruch <z id="000004436165006240740740742383" data-link-target="properties-79" data-link-value="Zeilenumbruch 1a"></z><nl></nl></bl><nl></nl><bl id="000004436164974262731481588902" data-link-target="properties-61" data-link-value="Bereich 1a"><nl></nl>Hann bjó í Raums <wtr id="000004436165051586805555667815" data-link-target="properties-92" data-link-value="Worttrenner 1"></wtr> dal í Raumsd<all id="000004436165061471064814812687" data-link-target="properties-65" data-link-value="Buchstabenverbindung 2 ">æ</all>lafylk<nl></nl></bl><nl></nl><bl id="000004515581058186342592608309" data-link-target="" data-link-value="Bereich">Alphabetische Fußnote: <app2 id="000004489202863265046296394325"></app2><nl></nl>Numerische Fußnote: <app1 id="000004489202875583333333330386"></app1></bl></content>
+            <content><bl id="000004474097580738425925958702" data-link-target="" data-link-iri="" data-link-value="Bereich"><nl />Zwischenraum von 1: <spatium_v id="000004436165070465277777844244" width="1" data-link-target="" data-link-iri="" data-link-value="Spatium" /><nl />Unbestimmter Verlust: <del id="000004436165076792824074163019" num_sign="0" data-link-target="" data-link-iri="" data-link-value="Verlust" /><nl />Erg<cpl id="000004436165097621527777892480" data-link-target="" data-link-iri="" data-link-value="Ergänzung">änzéng</cpl> <nl />Ausla <oms id="000004436165100978009259346871" data-link-target="" data-link-iri="" data-link-value="Auslassung">ssðung</oms> <nl />Verzeilenumbruh <vz id="000004436165037326388888946670" data-link-target="properties-86" data-link-iri="properties/indentations/projects~86" data-link-value="Verszeilenumbruch 1 " /> <nl /><add id="000004436165104023148148146540" data-link-target="" data-link-iri="" data-link-value="Nachtrag">Nachtrag</add><nl />Abk<abr id="000004436165108151620370436103" data-link-target="properties-171" data-link-iri="properties/abbreviations/projects~171" data-link-value="siehe">ürzung</abr><nl /><vsl id="000004436165110998842592605012" data-link-target="" data-link-iri="" data-link-value="Versalie">Ve</vsl>rsalie <nl />Zeilenumbruch <z id="000004436165006240740740742383" data-link-target="properties-79" data-link-iri="properties/linebindings/projects~79" data-link-value="Zeilenumbruch 1a" /><nl /> </bl><nl /><bl id="000004436164974262731481588902" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><nl />Hann bjó í Raums <wtr id="000004436165051586805555667815" data-link-target="properties-92" data-link-iri="properties/wordseparators/projects~92" data-link-value="Worttrenner 1" /> dal í Raumsd<all id="000004436165061471064814812687" data-link-target="properties-65" data-link-iri="properties/ligatures/projects~65" data-link-value="Buchstabenverbindung 2 ">æ</all>lafylk<nl /> </bl><nl /><bl id="000004515581058186342592608309" data-link-target="" data-link-iri="" data-link-value="Bereich">Alphabetische Fußnote: <app2 id="000004489202863265046296394325" /><nl />Numerische Fußnote: <app1 id="000004489202875583333333330386" /></bl></content>
             <translation>Übersetzung Inschrift A - Teil 1 - Bearbeitung 1</translation>
             <date_sort>01234AAA00000000A4</date_sort>
             <date_value>1234</date_value>
@@ -945,26 +996,13 @@
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
           </item>
-          <item id="items-49" itemtype="search" sortno="0" sections_id="sections-1" articles_id="articles-1">
-            <sectionpath>
-              <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
-              <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
-              <section id="sections-1" parent_id="sections-2" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="A teil 1 Alias Bearbeitung" number="1" sortno="31" level="3" children="0" siblings="1" />
-            </sectionpath>
-            <value>content</value>
-            <content>├bereich~Zwischenraum von 1: ├1┤Unbestimmter Verlust: [---]Erg[änzéng] Ausla [(ssðung)] Verzeilenumbruh | &lt;Nachtrag&gt;Abk(ürzung)Versalie Zeilenumbruch /~bereich┤├bereich~Hann bjó í Raums • dal í Raumsd{æ}lafylk~bereich┤├bereich~Alphabetische Fußnote: [a]Numerische Fußnote: [2]~bereich┤</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
-          </item>
           <item id="items-755" itemtype="search" sortno="0" sections_id="sections-1" articles_id="articles-1">
             <sectionpath>
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
               <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
               <section id="sections-1" parent_id="sections-2" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="A teil 1 Alias Bearbeitung" number="1" sortno="31" level="3" children="0" siblings="1" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschrift A - Inschriftenteil 1 - Bearbeitung 1</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -999,7 +1037,7 @@
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
               <section id="sections-24" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschriftenteil 2 A" number="2" sortno="34" level="2" children="1" siblings="2" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschr A Teil 2</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1027,18 +1065,26 @@
         </path>
         <status>1</status>
         <items>
-          <item id="items-45" itemtype="search" sortno="0" sections_id="sections-23" articles_id="articles-1">
+          <item id="items-884" itemtype="search" sections_id="sections-23" articles_id="articles-1">
             <sectionpath>
               <section id="sections-3" articles_id="articles-1" sectiontype="inscription" name="A" alias="Alias Inschrift A" number="1" sortno="29" level="1" children="2" siblings="16" />
               <section id="sections-24" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschriftenteil 2 A" number="2" sortno="34" level="2" children="1" siblings="2" />
               <section id="sections-23" parent_id="sections-24" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschriftenteil 2 A" number="1" sortno="35" level="3" children="0" siblings="1" />
             </sectionpath>
-            <value>content</value>
-            <content>├bereich~ínitialeChronogrammbuchstabeVhérsalieAb(maðr ) /&lt;Nachtrag&gt;[(Auslassung)]{Bu}chstabenverbindungUnsðcherer TextZwischenraum von drei ├3┤ ZeichenUnbestimmte Anzahl [---] verlorener Zeichen[Erg]ðnzungWort•trennerHochgestellt |~bereich┤</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
+            <value>transcription</value>
+            <content>ínitiale
+Chronogrammbuchstabe
+Vhérsalie
+Abmaðr  
+Nachtrag
+Auslassung
+Buchstabenverbindung
+Unsðcherer Text
+Zwischenraum von drei  Zeichen
+Unbestimmte Anzahl  verlorener Zeichen
+Ergðnzung
+Worttrenner
+Hochgestellt</content>
           </item>
           <item id="items-46" itemtype="transcriptions" sortno="0" sections_id="sections-23" articles_id="articles-1">
             <sectionpath>
@@ -1046,7 +1092,7 @@
               <section id="sections-24" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschriftenteil 2 A" number="2" sortno="34" level="2" children="1" siblings="2" />
               <section id="sections-23" parent_id="sections-24" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschriftenteil 2 A" number="1" sortno="35" level="3" children="0" siblings="1" />
             </sectionpath>
-            <content><bl id="000004436341948501157407446979" data-link-target="properties-61" data-link-value="Bereich 1a"><nl></nl><ini id="000004436342051736111111145522">í</ini>nitiale<nl></nl>Ch<chr id="000004436342056334490740716638">r</chr>onogrammbuchstabe<nl></nl>V<vsl id="000004436342047435185185246164">h</vsl>érsalie<nl></nl>Ab<abr id="000004436342040472222222267856" data-link-target="" data-link-value="Abkürzung">m<kap id="000004436342060210648148155746">a</kap>ðr </abr> <z id="000004436341968184027777873155" data-link-target="properties-78" data-link-value="Zeile"></z><nl></nl><add id="000004436342035339120370429044">Nachtrag</add><nl></nl><oms id="000004436342029998842592635716">Auslassung</oms><nl></nl><all id="000004436342068519675925958209" data-link-target="properties-65" data-link-value="Buchstabenverbindung 2 ">Bu</all>chstabenverbindung<nl></nl>Uns<insec id="000004436342083524305555650834">ð</insec>cherer Text<nl></nl>Zwischenraum von drei <spatium_v id="000004436341997248842592682649" width="3"></spatium_v> Zeichen<nl></nl>Unbestimmte Anzahl <del id="000004436342008081018518514387" num_sign="0"></del> verlorener Zeichen<nl></nl><cpl id="000004436342019850694444462751">Erg</cpl>ðnzung<nl></nl>Wort<wtr id="000004436341987521990740778661" data-link-target="properties-88" data-link-value="Worttrenner 2 › Worttrenner 2a"></wtr>trenner<nl></nl>Hochge<sup id="000004436342078564814814882651" data-link-target="properties-74" data-link-value="Hochgestellt 1 ">stellt</sup> <vz id="000004436341975421296296344091" data-link-target="properties-85" data-link-value="Verszeilenumbruch 1a"></vz><nl></nl></bl></content>
+            <content><bl id="000004436341948501157407446979" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><nl /><ini id="000004436342051736111111145522" data-link-target="" data-link-iri="" data-link-value="Initiale">í</ini>nitiale<nl />Ch<chr id="000004436342056334490740716638" data-link-target="" data-link-iri="" data-link-value="Chronogrammbuchstabe">r</chr>onogrammbuchstabe<nl />V<vsl id="000004436342047435185185246164" data-link-target="" data-link-iri="" data-link-value="Versalie">h</vsl>érsalie<nl />Ab<abr id="000004436342040472222222267856" data-link-target="" data-link-iri="" data-link-value="Abkürzung">m<kap id="000004436342060210648148155746" data-link-target="" data-link-iri="" data-link-value="Kapitalis">a</kap>ðr </abr> <z id="000004436341968184027777873155" data-link-target="properties-78" data-link-iri="properties/linebindings/projects~78" data-link-value="Zeile" /><nl /><add id="000004436342035339120370429044" data-link-target="" data-link-iri="" data-link-value="Nachtrag">Nachtrag</add><nl /><oms id="000004436342029998842592635716" data-link-target="" data-link-iri="" data-link-value="Auslassung">Auslassung</oms><nl /><all id="000004436342068519675925958209" data-link-target="properties-65" data-link-iri="properties/ligatures/projects~65" data-link-value="Buchstabenverbindung 2 ">Bu</all>chstabenverbindung<nl />Uns<insec id="000004436342083524305555650834" data-link-target="" data-link-iri="" data-link-value="Unsicher">ð</insec>cherer Text<nl />Zwischenraum von drei <spatium_v id="000004436341997248842592682649" width="3" data-link-target="" data-link-iri="" data-link-value="Spatium" /> Zeichen<nl />Unbestimmte Anzahl <del id="000004436342008081018518514387" num_sign="0" data-link-target="" data-link-iri="" data-link-value="Verlust" /> verlorener Zeichen<nl /><cpl id="000004436342019850694444462751" data-link-target="" data-link-iri="" data-link-value="Ergänzung">Erg</cpl>ðnzung<nl />Wort<wtr id="000004436341987521990740778661" data-link-target="properties-88" data-link-iri="properties/wordseparators/projects~88" data-link-value="Worttrenner 2 › Worttrenner 2a" />trenner<nl />Hochge<sup id="000004436342078564814814882651" data-link-target="properties-74" data-link-iri="properties/verticalalignments/projects~74" data-link-value="Hochgestellt 1 ">stellt</sup> <vz id="000004436341975421296296344091" data-link-target="properties-85" data-link-iri="properties/indentations/projects~85" data-link-value="Verszeilenumbruch 1a" /><nl /> </bl></content>
             <translation>Übersetzung Örvar-Odds saga</translation>
             <date_sort>01337AAA00000000A4</date_sort>
             <date_value>1337</date_value>
@@ -1077,7 +1123,7 @@
               <section id="sections-24" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschriftenteil 2 A" number="2" sortno="34" level="2" children="1" siblings="2" />
               <section id="sections-23" parent_id="sections-24" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschriftenteil 2 A" number="1" sortno="35" level="3" children="0" siblings="1" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Inschrift A Teil 2 Bearbeitungsnotizen</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1097,7 +1143,7 @@
             <sectionpath>
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschrift B</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1539,7 +1585,7 @@
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschrift B Teil 1</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1551,6 +1597,7 @@
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
             </sectionpath>
+            <value>0</value>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -1566,18 +1613,17 @@
         </path>
         <status>1</status>
         <items>
-          <item id="items-40" itemtype="search" sortno="0" sections_id="sections-20" articles_id="articles-1">
+          <item id="items-892" itemtype="search" sections_id="sections-20" articles_id="articles-1">
             <sectionpath>
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
               <section id="sections-20" parent_id="sections-21" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschrift 2 Bearbeitung 1 Teil 1" number="1" sortno="41" level="3" children="0" siblings="2" />
             </sectionpath>
-            <value>content</value>
-            <content>├bereich~Þat var eitt sumar, /at Grímr bjó för sína í V{í}k austr |eptir Harald dau•ðan, mág sinn, ├1┤fyrir því &lt;at&gt;[(hann)] [(átti )] [þar] m[---]iklar eignir.~bereich┤</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
+            <value>transcription</value>
+            <content>Þat var eitt sumar, 
+at Grímr bjó för sína í Vík austr 
+eptir Harald dauðan, mág sinn, 
+fyrir því athann átti  þar miklar eignir.</content>
           </item>
           <item id="items-41" itemtype="transcriptions" sortno="0" sections_id="sections-20" articles_id="articles-1">
             <sectionpath>
@@ -1585,7 +1631,7 @@
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
               <section id="sections-20" parent_id="sections-21" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschrift 2 Bearbeitung 1 Teil 1" number="1" sortno="41" level="3" children="0" siblings="2" />
             </sectionpath>
-            <content><bl id="000004436342219936342592692857" data-link-target="properties-57" data-link-value="siehe"><ini id="000004436342334950231481521590">Þ</ini>at <chr id="000004436342339388888888943282">v</chr>ar eitt <kap id="000004436342344737268518577048">s</kap>umar, <z id="000004436342244850694444419672" data-link-target="properties-78" data-link-value="Zeile"></z><nl></nl>at <vsl id="000004436342331244212963000975">G</vsl>rímr bjó för sína í V<all id="000004436342356430555555639778" data-link-target="properties-66" data-link-value="Buchstabenverbindung 1 ">í</all>k austr <vz id="000004436342252387731481570820" data-link-target="properties-82" data-link-value="Verszeilenumbruch 2a"></vz><nl></nl>eptir <sup id="000004436342367437500000062286" data-link-target="" data-link-value="Hochgestellt">Harald</sup> dau<wtr id="000004436342265232638888919263" data-link-target="properties-90" data-link-value="Worttrenner 1 › siehe"></wtr>ðan, <insec id="000004436342370581018518576494">mág </insec>sinn, <spatium_v id="000004436342271391203703738522" width="1"></spatium_v><nl></nl>fyrir því <add id="000004436342304277777777828084">at</add><oms id="000004436342299424768518527263">hann</oms> <oms id="000004436342296030092592678988">átti </oms> <cpl id="000004436342291663194444404939">þar</cpl> m<del id="000004436342276410879629645922" num_sign="0"></del>iklar eignir.</bl><nl></nl></content>
+            <content><bl id="000004436342219936342592692857" data-link-target="properties-57" data-link-iri="properties/alignments/projects~57" data-link-value="siehe"><ini id="000004436342334950231481521590">Þ</ini>at <chr id="000004436342339388888888943282">v</chr>ar eitt <kap id="000004436342344737268518577048">s</kap>umar, <z id="000004436342244850694444419672" data-link-target="properties-78" data-link-iri="properties/linebindings/projects~78" data-link-value="Zeile" /><nl />at <vsl id="000004436342331244212963000975">G</vsl>rímr bjó för sína í V<all id="000004436342356430555555639778" data-link-target="properties-66" data-link-iri="properties/ligatures/projects~66" data-link-value="Buchstabenverbindung 1 ">í</all>k austr <vz id="000004436342252387731481570820" data-link-target="properties-82" data-link-iri="properties/indentations/projects~82" data-link-value="Verszeilenumbruch 2a" /><nl />eptir <sup id="000004436342367437500000062286" data-link-target="" data-link-iri="" data-link-value="Hochgestellt in der Transkription">Harald</sup> dau<wtr id="000004436342265232638888919263" data-link-target="properties-90" data-link-iri="properties/wordseparators/projects~90" data-link-value="Worttrenner 1 › siehe" />ðan, <insec id="000004436342370581018518576494">mág </insec>sinn, <spatium_v id="000004436342271391203703738522" width="1" /><nl />fyrir því <add id="000004436342304277777777828084">at</add><oms id="000004436342299424768518527263">hann</oms> <oms id="000004436342296030092592678988">átti </oms> <cpl id="000004436342291663194444404939">þar</cpl> m<del id="000004436342276410879629645922" num_sign="0" />iklar eignir.</bl><nl /></content>
             <translation>Übersetzung Inschrift B Teil 1</translation>
             <date_sort>01066AAA00000000A4</date_sort>
             <date_value>1066</date_value>
@@ -1604,7 +1650,7 @@
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
               <section id="sections-20" parent_id="sections-21" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschrift 2 Bearbeitung 1 Teil 1" number="1" sortno="41" level="3" children="0" siblings="2" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschrift B Teil 1 Bearbeitung 1</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1634,26 +1680,13 @@
         </path>
         <status>0</status>
         <items>
-          <item id="items-770" itemtype="search" sortno="0" sections_id="sections-378" articles_id="articles-1">
-            <sectionpath>
-              <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
-              <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
-              <section id="sections-378" parent_id="sections-21" articles_id="articles-1" sectiontype="inscriptiontext" name="2" number="2" sortno="43" level="3" children="0" siblings="2" />
-            </sectionpath>
-            <value>content</value>
-            <content>├bereich~~bereich┤</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
-          </item>
           <item id="items-767" itemtype="transcriptions" sortno="0" sections_id="sections-378" articles_id="articles-1">
             <sectionpath>
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
               <section id="sections-378" parent_id="sections-21" articles_id="articles-1" sectiontype="inscriptiontext" name="2" number="2" sortno="43" level="3" children="0" siblings="2" />
             </sectionpath>
-            <content><bl id="000004489204293021990740747062" data-link-target="" data-link-value="Bereich"><nl></nl><nl></nl></bl></content>
+            <content><bl id="000004489204293021990740747062" data-link-target="" data-link-iri="" data-link-value="Bereich"><nl /><nl /></bl></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -1673,7 +1706,7 @@
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschr B Teil 2</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1701,18 +1734,17 @@
         </path>
         <status>3</status>
         <items>
-          <item id="items-36" itemtype="search" sortno="0" sections_id="sections-18" articles_id="articles-1">
+          <item id="items-899" itemtype="search" sections_id="sections-18" articles_id="articles-1">
             <sectionpath>
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
               <section id="sections-18" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Alias Bearbeitung Teil 2 Inschrift B" number="1" sortno="47" level="3" children="0" siblings="2" />
             </sectionpath>
-            <value>content</value>
-            <content>├bereich~Grímr unni henni mikit, ok l{æ}tr [(hann)] þat eptir henni. /Hún &lt;var hverri &gt;konu vænni├1┤ ok betr[---] at sér [um] alla hluti,| þeira( er) í Nor•egi váru. Þeira för var búin virðuliga.~bereich┤</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
+            <value>transcription</value>
+            <content>Grímr unni henni mikit, ok lætr hann þat eptir henni. 
+Hún var hverri konu vænni ok betr at sér um alla hluti,
+ þeira er í Noregi váru. 
+Þeira för var búin virðuliga.</content>
           </item>
           <item id="items-37" itemtype="transcriptions" sortno="0" sections_id="sections-18" articles_id="articles-1">
             <sectionpath>
@@ -1720,7 +1752,7 @@
               <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
               <section id="sections-18" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Alias Bearbeitung Teil 2 Inschrift B" number="1" sortno="47" level="3" children="0" siblings="2" />
             </sectionpath>
-            <content><bl id="000004436342493348379629644802" data-link-target="properties-61" data-link-value="Bereich 1a"><ini id="000004436342606019675925920222">G</ini>rímr <vsl id="000004436342597724537037066064">u</vsl>nni <chr id="000004436342610309027777859800">h</chr>enni <kap id="000004436342614041666666773306">m</kap>ikit, ok l<all id="000004436342619626157407418054" data-link-target="properties-64" data-link-value="Buchstabenverbindung 2a">æ</all>tr <oms id="000004436342575649305555631787">hann</oms> þat <sup id="000004436342629741898148160649" data-link-target="" data-link-value="Hochgestellt">eptir</sup> henni. <z id="000004436342516953703703748996" data-link-target="properties-80" data-link-value="Zeilenumbruch 1 "></z><nl></nl>Hún <add id="000004436342582651620370456862">var hverri </add>konu vænni<spatium_v id="000004436342550361111111153956" width="1"></spatium_v> ok betr<del id="000004436342558008101851960179" num_sign="0"></del> at sér <cpl id="000004436342570162037037096209">um</cpl> alla hluti,<vz id="000004436342523789351851958494" data-link-target="properties-84" data-link-value="Verszeile"></vz><nl></nl> þeira<abr id="000004436342590993055555669897" data-link-target="" data-link-value="Abkürzung"> er</abr> í Nor<wtr id="000004436342540800925925924686" data-link-target="properties-88" data-link-value="Worttrenner 2 › Worttrenner 2a"></wtr>egi váru. <nl></nl>Þeira för var búin <insec id="000004436342633575231481531016">virðuliga</insec>.</bl></content>
+            <content><bl id="000004436342493348379629644802" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><ini id="000004436342606019675925920222">G</ini>rímr <vsl id="000004436342597724537037066064">u</vsl>nni <chr id="000004436342610309027777859800">h</chr>enni <kap id="000004436342614041666666773306">m</kap>ikit, ok l<all id="000004436342619626157407418054" data-link-target="properties-64" data-link-iri="properties/ligatures/projects~64" data-link-value="Buchstabenverbindung 2a">æ</all>tr <oms id="000004436342575649305555631787">hann</oms> þat <sup id="000004436342629741898148160649" data-link-target="" data-link-iri="" data-link-value="Hochgestellt in der Transkription">eptir</sup> henni. <z id="000004436342516953703703748996" data-link-target="properties-80" data-link-iri="properties/linebindings/projects~80" data-link-value="Zeilenumbruch 1 " /><nl />Hún <add id="000004436342582651620370456862">var hverri </add>konu vænni<spatium_v id="000004436342550361111111153956" width="1" /> ok betr<del id="000004436342558008101851960179" num_sign="0" /> at sér <cpl id="000004436342570162037037096209">um</cpl> alla hluti,<vz id="000004436342523789351851958494" data-link-target="properties-84" data-link-iri="properties/indentations/projects~84" data-link-value="Verszeile" /><nl /> þeira<abr id="000004436342590993055555669897" data-link-target="" data-link-iri="" data-link-value="Abkürzung"> er</abr> í Nor<wtr id="000004436342540800925925924686" data-link-target="properties-88" data-link-iri="properties/wordseparators/projects~88" data-link-value="Worttrenner 2 › Worttrenner 2a" />egi váru. <nl />Þeira för var búin <insec id="000004436342633575231481531016">virðuliga</insec>.</bl></content>
             <translation>Übersetzung Inschrift B Teil 2</translation>
             <date_sort>00794AAA00000000A4</date_sort>
             <date_value>794</date_value>
@@ -1738,7 +1770,7 @@
               <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
               <section id="sections-18" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Alias Bearbeitung Teil 2 Inschrift B" number="1" sortno="47" level="3" children="0" siblings="2" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Inschrift B Teil 2 Bearbeitung 1</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1768,6 +1800,15 @@
         </path>
         <status>0</status>
         <items>
+          <item id="items-903" itemtype="search" sections_id="sections-377" articles_id="articles-1">
+            <sectionpath>
+              <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
+              <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
+              <section id="sections-377" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="2" number="2" sortno="49" level="3" children="0" siblings="2" />
+            </sectionpath>
+            <value>transcription</value>
+            <content>Transkription in B.2.2</content>
+          </item>
           <item id="items-764" itemtype="search" sortno="0" sections_id="sections-377" articles_id="articles-1">
             <sectionpath>
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
@@ -1781,26 +1822,13 @@
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
           </item>
-          <item id="items-765" itemtype="search" sortno="0" sections_id="sections-377" articles_id="articles-1">
-            <sectionpath>
-              <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
-              <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
-              <section id="sections-377" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="2" number="2" sortno="49" level="3" children="0" siblings="2" />
-            </sectionpath>
-            <value>content</value>
-            <content>├bereich~Transkription in B.2.2~bereich┤</content>
-            <flagged>1</flagged>
-            <pos_x>0</pos_x>
-            <pos_y>0</pos_y>
-            <pos_z>0</pos_z>
-          </item>
           <item id="items-766" itemtype="transcriptions" sortno="0" sections_id="sections-377" articles_id="articles-1">
             <sectionpath>
               <section id="sections-22" articles_id="articles-1" sectiontype="inscription" name="B" alias="Alias Inschrift B" number="2" sortno="39" level="1" children="2" siblings="16" />
               <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
               <section id="sections-377" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="2" number="2" sortno="49" level="3" children="0" siblings="2" />
             </sectionpath>
-            <content><bl id="000004489202971068287037045606" data-link-target="" data-link-value="Bereich"><nl></nl>Transkription in B.2.2<nl></nl></bl></content>
+            <content><bl id="000004489202971068287037045606" data-link-target="" data-link-iri="" data-link-value="Bereich"><nl />Transkription in B.2.2<nl /></bl></content>
             <translation>Übersetzung in B.2.2</translation>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
@@ -1819,7 +1847,7 @@
             <sectionpath>
               <section id="sections-9" articles_id="articles-1" sectiontype="heraldry" name="Wappen" number="1" sortno="17" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Wappen</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1838,7 +1866,7 @@
               <name>Wappen 1</name>
               <comment>Notizen Wappen 1</comment>
               <content>Schild 1</content>
-              <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" data-link-target="properties-186" data-link-value="hm001.1121"></rec_ma></elements>
+              <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" data-link-target="properties-186" data-link-iri="properties/brands/projects~186" data-link-value="hm001.1121"></rec_ma></elements>
               <file_name>1024px-Nautical_star.svg.png</file_name>
               <source_from>Nachweis Wappen 1</source_from>
               <links>
@@ -1868,7 +1896,7 @@
               <name>Wappen 1</name>
               <comment>Notizen Wappen 1</comment>
               <content>Schild 1</content>
-              <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" data-link-target="properties-186" data-link-value="hm001.1121"></rec_ma></elements>
+              <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" data-link-target="properties-186" data-link-iri="properties/brands/projects~186" data-link-value="hm001.1121"></rec_ma></elements>
               <file_name>1024px-Nautical_star.svg.png</file_name>
               <source_from>Nachweis Wappen 1</source_from>
               <links>
@@ -1898,7 +1926,7 @@
             <property id="properties-43" sortno="2" sortkey="wappen 002" propertytype="heraldry" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
               <name>Wappen 2</name>
               <comment>Notizen Wappen 2</comment>
-              <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-value="Quelle 1 "></rec_lit></content>
+              <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-iri="properties/literature/projects~10" data-link-value="Quelle 1 "></rec_lit></content>
               <elements>Oberwappen 2</elements>
               <file_name>15320_0_589.jpg</file_name>
               <source_from>Nachweis Wappen 2</source_from>
@@ -1929,7 +1957,7 @@
             <sectionpath>
               <section id="sections-8" articles_id="articles-1" sectiontype="brands" name="Marken" number="1" sortno="19" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Marken</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -1989,7 +2017,7 @@
             <sectionpath>
               <section id="sections-7" articles_id="articles-1" sectiontype="images" name="Abbildungen" number="1" sortno="21" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Abbildungen</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -2007,6 +2035,15 @@
             <file_path>signatur-1</file_path>
             <file_source>C:\Users\Felix Lentge\Desktop\stuff\</file_source>
             <file_copyright>Biblioteca Capitolare Vercelli Copyright</file_copyright>
+            <file_meta>
+              <creator />
+              <source />
+              <licence />
+              <rights />
+              <usageterms />
+              <credit />
+              <marked />
+            </file_meta>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -2030,6 +2067,15 @@
             <file_path>signatur-1</file_path>
             <file_source>C:\Users\Felix Lentge\Desktop\stuff\</file_source>
             <file_copyright>Biblioteca Capitolare Vercelli Copyright</file_copyright>
+            <file_meta>
+              <creator />
+              <source />
+              <licence />
+              <rights />
+              <usageterms />
+              <credit />
+              <marked />
+            </file_meta>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -2055,7 +2101,7 @@
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Register</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -2163,7 +2209,7 @@
             <sectionpath>
               <section id="sections-14" articles_id="articles-1" sectiontype="references" name="Nachweise" number="1" sortno="7" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Nachweise</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -2174,7 +2220,7 @@
             <sectionpath>
               <section id="sections-14" articles_id="articles-1" sectiontype="references" name="Nachweise" number="1" sortno="7" level="1" children="0" siblings="16" />
             </sectionpath>
-            <content>Ergänzung 3, Verweis auf <rec_intern id="000004456302457709490740746581" data-link-target="sections-3" data-link-value="A"></rec_intern></content>
+            <content>Ergänzung 3, Verweis auf <rec_intern id="000004456302457709490740746581" data-link-target="sections-3" data-link-iri="sections/inscription/projects~3" data-link-value="A" /></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -2227,7 +2273,7 @@
             <sectionpath>
               <section id="sections-16" articles_id="articles-1" sectiontype="signatures" name="Signaturen" number="1" sortno="3" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Signaturen</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -2292,7 +2338,7 @@
             <sectionpath>
               <section id="sections-17" articles_id="articles-1" sectiontype="outputoptions" name="Artikel" number="1" sortno="1" level="1" children="0" siblings="16" />
             </sectionpath>
-            <value>comment</value>
+            <value>notes</value>
             <content>Notizen Datensatz</content>
             <flagged>1</flagged>
             <pos_x>0</pos_x>
@@ -2345,45 +2391,6 @@
       </footnote>
     </footnotes>
     <links>
-      <link id="links-16" to_id="properties-105" to_value="siehe" from_id="items-3" from_field="content" from_tagname="p" from_tagid="000004436161208671296296385342" root_id="articles-1">
-        <property id="properties-105" parent_id="properties-107" sortno="12" related_id="properties-106" propertytype="paragraphs" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
-          <lemma>siehe</lemma>
-          <unit>Absatz 2b Einheit</unit>
-          <comment>Absatz 2b Bemerk</comment>
-          <keywords>Break</keywords>
-          <norm_data>Absatz 2b Norm</norm_data>
-          <ancestors>
-            <property id="properties-107" sortno="8" sortkey="Absatz 2" propertytype="paragraphs" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
-              <lemma>Absatz 2</lemma>
-              <name>Absatz 2 </name>
-              <unit>Absatz 2 Einheit</unit>
-              <comment>Absatz 2 Bemerk</comment>
-              <keywords>Absatz,Break</keywords>
-              <norm_data>Absatz 2 Norm</norm_data>
-            </property>
-          </ancestors>
-        </property>
-      </link>
-      <link id="links-17" to_id="properties-106" to_value="Absatz 2a" from_id="items-3" from_field="content" from_tagname="p" from_tagid="000004436161200284722222217911" root_id="articles-1">
-        <property id="properties-106" parent_id="properties-107" sortno="9" sortkey="Absatz 2a" propertytype="paragraphs" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
-          <lemma>Absatz 2a</lemma>
-          <name>Absatz 2a</name>
-          <unit>Absatz 2a Einheit</unit>
-          <comment>Absatz 2a Bemerk</comment>
-          <keywords>Break</keywords>
-          <norm_data>Absatz 2a Norm</norm_data>
-          <ancestors>
-            <property id="properties-107" sortno="8" sortkey="Absatz 2" propertytype="paragraphs" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
-              <lemma>Absatz 2</lemma>
-              <name>Absatz 2 </name>
-              <unit>Absatz 2 Einheit</unit>
-              <comment>Absatz 2 Bemerk</comment>
-              <keywords>Absatz,Break</keywords>
-              <norm_data>Absatz 2 Norm</norm_data>
-            </property>
-          </ancestors>
-        </property>
-      </link>
       <link id="links-18" to_id="properties-97" to_value="Überschrift 1a" from_id="items-3" from_field="content" from_tagname="h" from_tagid="000004436161145244212963020598" root_id="articles-1">
         <property id="properties-97" parent_id="properties-98" sortno="2" sortkey="Überschrift 1a" propertytype="headers" level="1" lft="2" rght="4" iscategory="0" ishidden="0">
           <lemma>Überschrift 1a</lemma>
@@ -2400,25 +2407,6 @@
               <comment>Überschrift 1 Bemerk</comment>
               <keywords>Überschrift,Heading</keywords>
               <norm_data>Überschrift 1 Norm</norm_data>
-            </property>
-          </ancestors>
-        </property>
-      </link>
-      <link id="links-19" to_id="properties-105" to_value="siehe" from_id="items-4" from_field="content" from_tagname="p" from_tagid="000004436160924313657407458602" root_id="articles-1">
-        <property id="properties-105" parent_id="properties-107" sortno="12" related_id="properties-106" propertytype="paragraphs" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
-          <lemma>siehe</lemma>
-          <unit>Absatz 2b Einheit</unit>
-          <comment>Absatz 2b Bemerk</comment>
-          <keywords>Break</keywords>
-          <norm_data>Absatz 2b Norm</norm_data>
-          <ancestors>
-            <property id="properties-107" sortno="8" sortkey="Absatz 2" propertytype="paragraphs" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
-              <lemma>Absatz 2</lemma>
-              <name>Absatz 2 </name>
-              <unit>Absatz 2 Einheit</unit>
-              <comment>Absatz 2 Bemerk</comment>
-              <keywords>Absatz,Break</keywords>
-              <norm_data>Absatz 2 Norm</norm_data>
             </property>
           </ancestors>
         </property>
@@ -2522,7 +2510,7 @@
           </ancestors>
         </property>
       </link>
-      <link id="links-29" to_value="Hochgestellt" from_id="items-41" from_field="content" from_tagname="sup" from_tagid="000004436342367437500000062286" root_id="articles-1" />
+      <link id="links-29" to_value="Hochgestellt in der Transkription" from_id="items-41" from_field="content" from_tagname="sup" from_tagid="000004436342367437500000062286" root_id="articles-1" />
       <link id="links-30" to_id="properties-66" to_value="Buchstabenverbindung 1 " from_id="items-41" from_field="content" from_tagname="all" from_tagid="000004436342356430555555639778" root_id="articles-1">
         <property id="properties-66" sortno="1" sortkey="Buchstabenverbindung 1" propertytype="ligatures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
           <lemma>Buchstabenverbindung 1</lemma>
@@ -2710,7 +2698,7 @@
           </ancestors>
         </property>
       </link>
-      <link id="links-42" to_value="Hochgestellt" from_id="items-37" from_field="content" from_tagname="sup" from_tagid="000004436342629741898148160649" root_id="articles-1" />
+      <link id="links-42" to_value="Hochgestellt in der Transkription" from_id="items-37" from_field="content" from_tagname="sup" from_tagid="000004436342629741898148160649" root_id="articles-1" />
       <link id="links-43" to_id="properties-64" to_value="Buchstabenverbindung 2a" from_id="items-37" from_field="content" from_tagname="all" from_tagid="000004436342619626157407418054" root_id="articles-1">
         <property id="properties-64" parent_id="properties-65" sortno="8" sortkey="Buchstabenverbindung 2a" propertytype="ligatures" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
           <lemma>Buchstabenverbindung 2a</lemma>
@@ -2886,6 +2874,34 @@
         </property>
       </link>
       <link id="links-97" to_value="Bereich" from_id="items-1" from_field="content" from_tagname="bl" from_tagid="000004515581058186342592608309" root_id="articles-1" />
+      <link id="links-109" to_value="Fett" from_id="items-4" from_field="content" from_tagname="b" from_tagid="000004436160887138888888933579" root_id="articles-1" />
+      <link id="links-111" to_value="Kursiv" from_id="items-4" from_field="content" from_tagname="i" from_tagid="000004436160890414351851976127" root_id="articles-1" />
+      <link id="links-113" to_value="Unterstrichen" from_id="items-4" from_field="content" from_tagname="u" from_tagid="000004436160892870370370431668" root_id="articles-1" />
+      <link id="links-115" to_value="Gesperrt" from_id="items-4" from_field="content" from_tagname="g" from_tagid="000004436160895594907407469796" root_id="articles-1" />
+      <link id="links-117" to_value="Kapitälchen" from_id="items-4" from_field="content" from_tagname="k" from_tagid="000004436160898130787037028136" root_id="articles-1" />
+      <link id="links-119" to_value="Link" from_id="items-4" from_field="content" from_tagname="a" from_tagid="000004436160901166666666725447" root_id="articles-1" />
+      <link id="links-121" to_value="Fett" from_id="items-3" from_field="content" from_tagname="b" from_tagid="000004436161152100694444420087" root_id="articles-1" />
+      <link id="links-123" to_value="Kursiv" from_id="items-3" from_field="content" from_tagname="i" from_tagid="000004436161156358796296327934" root_id="articles-1" />
+      <link id="links-125" to_value="Unterstrichen" from_id="items-3" from_field="content" from_tagname="u" from_tagid="000004436161159035879629630111" root_id="articles-1" />
+      <link id="links-127" to_value="Gesperrt" from_id="items-3" from_field="content" from_tagname="g" from_tagid="000004436161161467592592619662" root_id="articles-1" />
+      <link id="links-129" to_value="Kapitälchen" from_id="items-3" from_field="content" from_tagname="k" from_tagid="000004436161164633101851986162" root_id="articles-1" />
+      <link id="links-131" to_value="Link" from_id="items-3" from_field="content" from_tagname="a" from_tagid="000004436161167155092592629748" root_id="articles-1" />
+      <link id="links-133" to_value="Spatium" from_id="items-1" from_field="content" from_tagname="spatium_v" from_tagid="000004436165070465277777844244" root_id="articles-1" />
+      <link id="links-135" to_value="Verlust" from_id="items-1" from_field="content" from_tagname="del" from_tagid="000004436165076792824074163019" root_id="articles-1" />
+      <link id="links-137" to_value="Ergänzung" from_id="items-1" from_field="content" from_tagname="cpl" from_tagid="000004436165097621527777892480" root_id="articles-1" />
+      <link id="links-139" to_value="Auslassung" from_id="items-1" from_field="content" from_tagname="oms" from_tagid="000004436165100978009259346871" root_id="articles-1" />
+      <link id="links-141" to_value="Nachtrag" from_id="items-1" from_field="content" from_tagname="add" from_tagid="000004436165104023148148146540" root_id="articles-1" />
+      <link id="links-143" to_value="Versalie" from_id="items-1" from_field="content" from_tagname="vsl" from_tagid="000004436165110998842592605012" root_id="articles-1" />
+      <link id="links-145" to_value="Initiale" from_id="items-46" from_field="content" from_tagname="ini" from_tagid="000004436342051736111111145522" root_id="articles-1" />
+      <link id="links-147" to_value="Chronogrammbuchstabe" from_id="items-46" from_field="content" from_tagname="chr" from_tagid="000004436342056334490740716638" root_id="articles-1" />
+      <link id="links-149" to_value="Versalie" from_id="items-46" from_field="content" from_tagname="vsl" from_tagid="000004436342047435185185246164" root_id="articles-1" />
+      <link id="links-151" to_value="Kapitalis" from_id="items-46" from_field="content" from_tagname="kap" from_tagid="000004436342060210648148155746" root_id="articles-1" />
+      <link id="links-153" to_value="Nachtrag" from_id="items-46" from_field="content" from_tagname="add" from_tagid="000004436342035339120370429044" root_id="articles-1" />
+      <link id="links-155" to_value="Auslassung" from_id="items-46" from_field="content" from_tagname="oms" from_tagid="000004436342029998842592635716" root_id="articles-1" />
+      <link id="links-157" to_value="Unsicher" from_id="items-46" from_field="content" from_tagname="insec" from_tagid="000004436342083524305555650834" root_id="articles-1" />
+      <link id="links-159" to_value="Spatium" from_id="items-46" from_field="content" from_tagname="spatium_v" from_tagid="000004436341997248842592682649" root_id="articles-1" />
+      <link id="links-161" to_value="Verlust" from_id="items-46" from_field="content" from_tagname="del" from_tagid="000004436342008081018518514387" root_id="articles-1" />
+      <link id="links-163" to_value="Ergänzung" from_id="items-46" from_field="content" from_tagname="cpl" from_tagid="000004436342019850694444462751" root_id="articles-1" />
     </links>
   </article>
   <indexes>
@@ -3249,7 +3265,7 @@
           <name>Wappen 1</name>
           <comment>Notizen Wappen 1</comment>
           <content>Schild 1</content>
-          <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" data-link-target="properties-186" data-link-value="hm001.1121"></rec_ma></elements>
+          <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" data-link-target="properties-186" data-link-iri="properties/brands/projects~186" data-link-value="hm001.1121"></rec_ma></elements>
           <file_name>1024px-Nautical_star.svg.png</file_name>
           <source_from>Nachweis Wappen 1</source_from>
           <links>
@@ -3273,7 +3289,7 @@
         <property id="properties-43" sortno="2" sortkey="wappen 002" propertytype="heraldry" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
           <name>Wappen 2</name>
           <comment>Notizen Wappen 2</comment>
-          <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-value="Quelle 1 "></rec_lit></content>
+          <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-iri="properties/literature/projects~10" data-link-value="Quelle 1 "></rec_lit></content>
           <elements>Oberwappen 2</elements>
           <file_name>15320_0_589.jpg</file_name>
           <source_from>Nachweis Wappen 2</source_from>
@@ -3466,40 +3482,6 @@
           <name>Gliederung: Ebene 1</name>
           <norm_iri>di_header1</norm_iri>
           <sections>
-            <section id="sections-4" articles_id="articles-1" />
-          </sections>
-        </property>
-      </properties>
-    </index>
-    <index propertytype="paragraphs">
-      <properties>
-        <property id="properties-107" sortno="8" sortkey="Absatz 2" propertytype="paragraphs" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
-          <lemma>Absatz 2</lemma>
-          <name>Absatz 2 </name>
-          <unit>Absatz 2 Einheit</unit>
-          <comment>Absatz 2 Bemerk</comment>
-          <keywords>Absatz,Break</keywords>
-          <norm_data>Absatz 2 Norm</norm_data>
-        </property>
-        <property id="properties-106" parent_id="properties-107" sortno="9" sortkey="Absatz 2a" propertytype="paragraphs" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
-          <lemma>Absatz 2a</lemma>
-          <name>Absatz 2a</name>
-          <unit>Absatz 2a Einheit</unit>
-          <comment>Absatz 2a Bemerk</comment>
-          <keywords>Break</keywords>
-          <norm_data>Absatz 2a Norm</norm_data>
-          <sections>
-            <section id="sections-4" articles_id="articles-1" />
-          </sections>
-        </property>
-        <property id="properties-105" parent_id="properties-107" sortno="12" related_id="properties-106" propertytype="paragraphs" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
-          <lemma>siehe</lemma>
-          <unit>Absatz 2b Einheit</unit>
-          <comment>Absatz 2b Bemerk</comment>
-          <keywords>Break</keywords>
-          <norm_data>Absatz 2b Norm</norm_data>
-          <sections>
-            <section id="sections-5" articles_id="articles-1" />
             <section id="sections-4" articles_id="articles-1" />
           </sections>
         </property>

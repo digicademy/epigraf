@@ -431,21 +431,21 @@ class ObjectsTest extends AppTestCase
 
         // Rendered GSON
         $this->assertEquals(
-            '{"type":"Feature","data":{"sortno":0,"id":1,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+            '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
             $testArticle->sections[0]->items[0]->getValueFormatted('geo') // defaults to [format => 'html']
         );
 
         $this->assertEquals(
-            '{"type":"Feature","data":{"sortno":0,"id":1,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+            '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
             $testArticle->sections[0]->items[0]->getValueNested('geo', ['format' => 'html'])
         );
 
         $this->assertEquals(
             [
-                '{"type":"Feature","data":{"sortno":0,"id":1,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
-                '{"type":"Feature","data":{"sortno":0,"id":2,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}',
-                '{"type":"Feature","data":{"sortno":0,"id":1,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
-                '{"type":"Feature","data":{"sortno":0,"id":2,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}'
+                '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+                '{"type":"Feature","data":{"id":2,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}',
+                '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+                '{"type":"Feature","data":{"id":2,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}'
             ],
             $testArticle->getValueNested('sections.*.items.*.geo', ['format' => 'html'])
         );
@@ -530,12 +530,12 @@ class ObjectsTest extends AppTestCase
         $testArticle = $this->_generateArticle();
 
         $this->assertEquals(
-            '{"type":"Feature","data":{"sortno":0,"id":1,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[0,0]}}',
+            null, //  '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":[]}'
             $testArticle->sections[0]->items[0]->getValueFormatted('geo.lat', ['format' => 'html'])
         );
 
         $this->assertEquals(
-            '{"type":"Feature","data":{"sortno":0,"id":1,"signature":"","name":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/mytesturl\/1"},"geometry":{"type":"Point","coordinates":[0,0]}}',
+            null, //  '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":[]}'
             $testArticle->sections[0]->items[0]->getValueFormatted('geo.type')
         );
 

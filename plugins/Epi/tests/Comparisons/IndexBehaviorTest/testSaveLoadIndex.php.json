@@ -1653,8 +1653,7 @@
                 "rght": 2,
                 "sortno": 17,
                 "sortkey": "di_number",
-                "lemma": "di_number",
-                "name": "di_number",
+                "lemma": "Grunddaten: Bandnummer",
                 "norm_iri": "di_di_number"
             },
             "546": {
@@ -1671,8 +1670,7 @@
                 "rght": 34,
                 "sortno": 49,
                 "sortkey": "preliminaries",
-                "lemma": "preliminaries",
-                "name": "preliminaries",
+                "lemma": "Titelei",
                 "norm_iri": "di_preliminaries"
             },
             "518": {
@@ -1689,8 +1687,7 @@
                 "rght": 6,
                 "sortno": 63,
                 "sortkey": "prelim_series",
-                "lemma": "prelim_series",
-                "name": "prelim_series",
+                "lemma": "Reihe",
                 "norm_iri": "di_prelim_series"
             },
             "520": {
@@ -1707,8 +1704,7 @@
                 "rght": 8,
                 "sortno": 69,
                 "sortkey": "prelim_series_title",
-                "lemma": "prelim_series_title",
-                "name": "prelim_series_title",
+                "lemma": "Reihe: Titel",
                 "norm_iri": "di_prelim_series_title"
             },
             "522": {
@@ -1725,8 +1721,7 @@
                 "rght": 10,
                 "sortno": 67,
                 "sortkey": "prelim_series_number",
-                "lemma": "prelim_series_number",
-                "name": "prelim_series_number",
+                "lemma": "Reihe: Bandnummer",
                 "norm_iri": "di_prelim_series_number"
             },
             "524": {
@@ -1743,8 +1738,7 @@
                 "rght": 12,
                 "sortno": 65,
                 "sortkey": "prelim_series_editor",
-                "lemma": "prelim_series_editor",
-                "name": "prelim_series_editor",
+                "lemma": "Reihe: Herausgeber",
                 "norm_iri": "di_prelim_series_editor"
             },
             "526": {
@@ -1761,8 +1755,7 @@
                 "rght": 14,
                 "sortno": 75,
                 "sortkey": "prelim_sub_series",
-                "lemma": "prelim_sub_series",
-                "name": "prelim_sub_series",
+                "lemma": "Reihe: Unterreihe",
                 "norm_iri": "di_prelim_sub_series"
             },
             "528": {
@@ -1779,8 +1772,7 @@
                 "rght": 16,
                 "sortno": 77,
                 "sortkey": "prelim_volume",
-                "lemma": "prelim_volume",
-                "name": "prelim_volume",
+                "lemma": "Band",
                 "norm_iri": "di_prelim_volume"
             },
             "530": {
@@ -1797,8 +1789,7 @@
                 "rght": 18,
                 "sortno": 81,
                 "sortkey": "prelim_volume_title",
-                "lemma": "prelim_volume_title",
-                "name": "prelim_volume_title",
+                "lemma": "Band: Titel",
                 "norm_iri": "di_prelim_volume_title"
             },
             "532": {
@@ -1815,8 +1806,7 @@
                 "rght": 20,
                 "sortno": 79,
                 "sortkey": "prelim_volume_subtitle",
-                "lemma": "prelim_volume_subtitle",
-                "name": "prelim_volume_subtitle",
+                "lemma": "Band: Untertitel",
                 "norm_iri": "di_prelim_volume_subtitle"
             },
             "534": {
@@ -1833,8 +1823,7 @@
                 "rght": 22,
                 "sortno": 83,
                 "sortkey": "prelim_year",
-                "lemma": "prelim_year",
-                "name": "prelim_year",
+                "lemma": "Band: Jahr",
                 "norm_iri": "di_prelim_year"
             },
             "536": {
@@ -1851,8 +1840,7 @@
                 "rght": 24,
                 "sortno": 59,
                 "sortkey": "prelim_publisher",
-                "lemma": "prelim_publisher",
-                "name": "prelim_publisher",
+                "lemma": "Titelei: Verlag",
                 "norm_iri": "di_prelim_publisher"
             },
             "538": {
@@ -1869,8 +1857,7 @@
                 "rght": 26,
                 "sortno": 57,
                 "sortkey": "prelim_print_note",
-                "lemma": "prelim_print_note",
-                "name": "prelim_print_note",
+                "lemma": "Titelei: Druckortvermerk",
                 "norm_iri": "di_prelim_print_note"
             },
             "540": {
@@ -1887,8 +1874,7 @@
                 "rght": 28,
                 "sortno": 53,
                 "sortkey": "prelim_isbn",
-                "lemma": "prelim_isbn",
-                "name": "prelim_isbn",
+                "lemma": "Titelei: ISBN",
                 "norm_iri": "di_prelim_isbn"
             },
             "542": {
@@ -1905,8 +1891,7 @@
                 "rght": 30,
                 "sortno": 61,
                 "sortkey": "prelim_rights",
-                "lemma": "prelim_rights",
-                "name": "prelim_rights",
+                "lemma": "Titelei: Rechtevorbehalt",
                 "norm_iri": "di_prelim_rights"
             },
             "544": {
@@ -1924,7 +1909,6 @@
                 "sortno": 73,
                 "sortkey": "prelim_sponsors",
                 "lemma": "prelim_sponsors",
-                "name": "prelim_sponsors",
                 "norm_iri": "di_prelim_sponsors"
             },
             "548": {
@@ -1941,8 +1925,7 @@
                 "rght": 36,
                 "sortno": 51,
                 "sortkey": "prelim_biblio_note",
-                "lemma": "prelim_biblio_note",
-                "name": "prelim_biblio_note",
+                "lemma": "Titelei: Deutsche Nationalbibliografie",
                 "norm_iri": "di_prelim_biblio_note"
             },
             "550": {
@@ -1959,8 +1942,7 @@
                 "rght": 38,
                 "sortno": 129,
                 "sortkey": "table_of_content",
-                "lemma": "table_of_content",
-                "name": "table_of_content",
+                "lemma": "Teile: Inhaltsverzeichnis",
                 "norm_iri": "di_table_of_content"
             },
             "552": {
@@ -1977,8 +1959,7 @@
                 "rght": 40,
                 "sortno": 47,
                 "sortkey": "prefaces",
-                "lemma": "prefaces",
-                "name": "prefaces",
+                "lemma": "Teile: Vorworte",
                 "norm_iri": "di_prefaces"
             },
             "554": {
@@ -1995,8 +1976,7 @@
                 "rght": 42,
                 "sortno": 29,
                 "sortkey": "introduction",
-                "lemma": "introduction",
-                "name": "introduction",
+                "lemma": "Teile: Einleitung",
                 "norm_iri": "di_introduction"
             },
             "568": {
@@ -2017,8 +1997,7 @@
                 "rght": 56,
                 "sortno": 13,
                 "sortkey": "csv_table",
-                "lemma": "csv_table",
-                "name": "csv_table",
+                "lemma": "Darstellung: Tabelle",
                 "norm_iri": "di_csv_table"
             },
             "562": {
@@ -2039,8 +2018,7 @@
                 "rght": 50,
                 "sortno": 11,
                 "sortkey": "continuation",
-                "lemma": "continuation",
-                "name": "continuation",
+                "lemma": "Darstellung: Fortsetzung des Abschnitts",
                 "norm_iri": "di_continuation"
             },
             "564": {
@@ -2073,8 +2051,7 @@
                 "rght": 54,
                 "sortno": 7,
                 "sortkey": "articles",
-                "lemma": "articles",
-                "name": "articles",
+                "lemma": "Teile: Katalogartikel",
                 "norm_iri": "di_articles"
             },
             "556": {
@@ -2091,8 +2068,7 @@
                 "rght": 44,
                 "sortno": 13,
                 "sortkey": "csv_table",
-                "lemma": "csv_table",
-                "name": "csv_table",
+                "lemma": "Darstellung: Tabelle",
                 "norm_iri": "di_csv_table"
             },
             "570": {
@@ -2109,8 +2085,7 @@
                 "rght": 58,
                 "sortno": 27,
                 "sortkey": "indices",
-                "lemma": "indices",
-                "name": "indices",
+                "lemma": "Teile: Register",
                 "norm_iri": "di_indices"
             },
             "610": {
@@ -2130,8 +2105,7 @@
                 "lft": 97,
                 "rght": 98,
                 "sortno": 3,
-                "lemma": "indexgroup",
-                "name": "indexgruppe",
+                "lemma": "Registergruppe",
                 "norm_iri": "di_indexgroup"
             },
             "576": {
@@ -2148,8 +2122,7 @@
                 "rght": 64,
                 "sortno": 109,
                 "sortkey": "properties_personennamen",
-                "lemma": "personnames",
-                "name": "index_personennamen",
+                "lemma": "Register: Personennamen",
                 "norm_iri": "di_personnames"
             },
             "578": {
@@ -2166,8 +2139,7 @@
                 "rght": 66,
                 "sortno": 93,
                 "sortkey": "properties_hersteller",
-                "lemma": "manufacturers",
-                "name": "index_hersteller",
+                "lemma": "Register: Hersteller",
                 "norm_iri": "di_manufacturers"
             },
             "580": {
@@ -2184,8 +2156,7 @@
                 "rght": 68,
                 "sortno": 107,
                 "sortkey": "properties_ortsnamen",
-                "lemma": "placenames",
-                "name": "index_ortsnamen",
+                "lemma": "Register: Ortsnamen",
                 "norm_iri": "di_placenames"
             },
             "606": {
@@ -2202,8 +2173,7 @@
                 "rght": 94,
                 "sortno": 119,
                 "sortkey": "properties_technik",
-                "lemma": "techniques",
-                "name": "index_technik",
+                "lemma": "Register: Ausf\u00fchrungstechniken",
                 "norm_iri": "di_techniques"
             },
             "630": {
@@ -2220,9 +2190,8 @@
                 "rght": 118,
                 "sortno": 41,
                 "sortkey": "marks",
-                "lemma": "marks",
-                "name": "marks",
-                "norm_iri": "di_marks"
+                "lemma": "Teile: Markenliste",
+                "norm_iri": "di_brands"
             },
             "632": {
                 "sections": {
@@ -2238,8 +2207,7 @@
                 "rght": 120,
                 "sortno": 43,
                 "sortkey": "plates",
-                "lemma": "plates",
-                "name": "plates",
+                "lemma": "Bildtafeln",
                 "norm_iri": "di_plates"
             }
         }

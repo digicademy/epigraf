@@ -211,6 +211,12 @@ class Article extends RootEntity
 
 
     /**
+     * @var boolean Whether items are nested in the sections (true)
+     *              or in the items (false). See ArticlesTable::findCollectItems().
+     */
+    public $_nestedItems = false;
+
+    /**
      * Get whether the field is public
      *
      * @param string|array $fieldName
@@ -425,6 +431,10 @@ class Article extends RootEntity
      */
     public function getTree($targets = [])
     {
+        if (isset($this->_lookup['tree'])) {
+            return $this->_lookup['tree'];
+        }
+
         $nodes = [];
 
         // TODO: Output search results in the tree?
@@ -445,7 +455,10 @@ class Article extends RootEntity
         // Footnotes on article level
         if (isset($targets['footnotes'])) {
             foreach ($this->footnotes as $child) {
-                if (!empty($targets['footnotes']) && !in_array($child->from_tagname, $targets['footnotes'])) {
+                if (
+                    !empty($targets['footnotes']) &&
+                    (is_array($targets['footnotes']) && !in_array($child->from_tagname, $targets['footnotes']))
+                ) {
                     continue;
                 }
 
@@ -479,7 +492,10 @@ class Article extends RootEntity
             );
         }
 
-        return PositionBehavior::addTreePositions($nodes);
+        $nodes = PositionBehavior::addTreePositions($nodes);
+        $this->_lookup['tree'] = collection($nodes)->groupBy('id')->toArray();
+        return $this->_lookup['tree'];
+
     }
 
     /**
@@ -737,16 +753,6 @@ class Article extends RootEntity
     }
 
     /**
-     * Get the URL of the epigraf article
-     *
-     * @return string
-     */
-    protected function _getInternalUrl()
-    {
-        return '/epi/' . Databank::removePrefix($this->databaseName) . '/articles/view/' . $this->id;
-    }
-
-    /**
      * Get the URL to an external resource (e.g. on DIO)
      *
      * Return the first URL in the norm_data field
@@ -755,7 +761,7 @@ class Article extends RootEntity
      */
     protected function _getExternalUrl()
     {
-        $link = $this->norm_data_parsed[0] ?? [];
+        $link = $this->normDataParsed[0] ?? [];
         return $link['url'] ?? '';
     }
 
@@ -1116,9 +1122,73 @@ class Article extends RootEntity
     }
 
     /**
-     * Clear contained sections.
+     * Generate an array of data to be imported as items
      *
-     * * // TODO: clear items, links and footnotes
+     * Provide structure in $itemIds:
+     * - sectiontype The section type. Will only create a new section if a section of this type is not yet present.
+     * - sectionname The name of the section, if a new section has to be created
+     * - itemtype The item type. Will create a new item if no item of this type
+     *            matching the IRI is not present.
+     * - irifragment A postfix added to the full item IRI.
+     *               The full item IRI consists of the article IRI fragment, a tilde, and this value.
+     *
+     * Provide item data in $itemData, indexed by field names.
+     *
+     * @param array $itemIds
+     * @param array $itemData
+     * @return array
+     */
+    public function getItemPatch($itemIds, $itemData)
+    {
+
+        $sectionType = $itemIds['sectiontype'];
+        $sectionData = ['name' => $itemIds['sectionname']];
+        $itemType = $itemIds['itemtype'];
+        $iriItemFragment = Attributes::cleanIdentifier($itemIds['irifragment']);
+
+        $entities = [];
+
+        // Get or create section by type
+        $articlesId = 'articles-' . $this->id;
+        $targetSection = array_values($this->getSections($sectionType))[0] ?? [];
+        if (empty($targetSection)) {
+            $sectionId = 'sections/' . $sectionType . '/' . $this->iriFragment;
+            $sectionEntity = [
+                'id' => $sectionId,
+                'articles_id' => $articlesId,
+            ];
+            $sectionEntity = array_merge($sectionEntity, $sectionData);
+            $entities[] = $sectionEntity;
+        }
+        else {
+            $sectionId = 'sections-' . $targetSection['id'];
+            unset($itemData['sectionname']);
+        }
+
+        // Get or create item by type
+        $fullIriItemFragment = $this->iriFragment . '~' . $iriItemFragment;
+        $itemId = 'items/' . $itemType . '/' . $fullIriItemFragment;
+        $targetItems = !empty($targetSection) ?  $targetSection->getItemsByType($itemType) : [];
+        foreach ($targetItems as $targetItem) {
+             if ($targetItem->norm_iri === $fullIriItemFragment) {
+                 $itemId = 'items-' . $targetItem->id;
+                 break;
+             }
+        }
+
+        $itemEntity = [
+            'id' => $itemId,
+            'sections_id' => $sectionId,
+            'articles_id' => $articlesId,
+        ];
+        $itemEntity = array_merge($itemEntity, $itemData);
+
+        $entities[] = $itemEntity;
+        return $entities;
+    }
+
+    /**
+     * Clear contained sections.
      *
      * @return boolean
      */
@@ -1191,6 +1261,7 @@ class Article extends RootEntity
      */
     public function copyImages($itemtypes, $targetFolder, $metadataConfig)
     {
+        $this->prepareRoot();
         $imageItems = $this->getItemsByType($itemtypes,
             ['published' => [PUBLICATION_PUBLISHED, PUBLICATION_SEARCHABLE]]);
         foreach ($imageItems as $imageItem) {
@@ -1225,7 +1296,7 @@ class Article extends RootEntity
         $items = [];
 
         // Items are attached to the article
-        if (isset($this->_fields['items'])) {
+        if (isset($this->_fields['items']) && !$this->_nestedItems) {
             $items = $this->_fields['items'];
         }
         // Items are attached to the sections
@@ -1514,5 +1585,22 @@ class Article extends RootEntity
         return $updatedItems;
     }
 
+    /**
+     * Get all property IDs referenced in the article
+     *
+     * @return \Generator Property IDs
+     */
+    public function getDataProperties() {
+        foreach (($this->items ?? []) as $item) {
+            if (!empty($item->properties_id)) {
+                yield $item->properties_id;
+            }
+        }
+        foreach (($this->links ?? []) as $link) {
+            if (($link->to_tab === 'properties') && (!empty($link->to_id))) {
+                yield $link->to_id;
+            }
+        }
+    }
 
 }

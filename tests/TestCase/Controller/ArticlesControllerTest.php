@@ -48,6 +48,7 @@ class ArticlesControllerTest extends AppTestCase
         $this->assertRedirect("/epi/projects/articles?projects=1");
     }
 
+
     /**
      * Test search method
      *

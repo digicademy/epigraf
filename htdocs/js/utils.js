@@ -13,7 +13,7 @@
 class Utils {
 
     /**
-     * Hide an element and remeber the original display value
+     * Hide an element and remember the original display value
      * @param element
      */
     static hide(element) {
@@ -34,9 +34,17 @@ class Utils {
         if (!element) {
             return;
         }
+
+        // Set original display value
         if (element.style.display === 'none') {
             element.style.display = element.originalDisplay || 'block';
         }
+
+        // If the original display value was 'none'
+        if (element.style.display === 'none') {
+            element.style.display = 'block';
+        }
+
         if (content !== undefined) {
             element.textContent = content;
         }
@@ -96,6 +104,7 @@ class Utils {
 
         return 0;
     }
+
     /**
      * Scroll an element into view if not already visible
      *
@@ -773,7 +782,6 @@ class Utils {
         }
 
         return value === 1 || value === "1" || value === true || value === "true";
-
     }
 
     /**
@@ -1067,6 +1075,9 @@ class Utils {
 
         // Internal handler that checks the selector
         const handler = (event) => {
+            if (event.defaultPrevented) {
+                return;
+            }
             if ((selector === undefined) || event.target.matches(selector)) {
                 return eventHandler(event);
             }
@@ -1308,6 +1319,15 @@ class Utils {
         return value ? value[0] : '';
     }
 
+    static extractFileName(value) {
+        if (!value) {
+            return;
+        }
+
+        const parts = value.split(/[/\\]/);
+        return parts.pop();
+    }
+
     static parseFormData(formData) {
         const data = {};
         for (const [key, value] of formData.entries()) {
@@ -1316,6 +1336,81 @@ class Utils {
         return data;
     }
 
+    /**
+     * Generate the URL for get requests of a form element
+     *
+     * @param {HTMLFormElement} formElement
+     * @param {string} baseUrl
+     * @return {string}
+     */
+    static formToUrl(formElement, baseUrl) {
+        let url = new URL(formElement.getAttribute('action'), baseUrl);
+        const formParams =  new URLSearchParams(new FormData(formElement));
+        let urlParams = url.searchParams;
+        urlParams =
+            new URLSearchParams({
+                ...Object.fromEntries(urlParams),
+                ...Object.fromEntries(formParams)
+            });
+        urlParams = urlParams.toString();
+
+        url.search = urlParams;
+        return url.toString();
+    }
+
+    /**
+     * Convert a string to an object
+     *
+     * @param {string|object} input The input string. If an object, returns the object without modification.
+     * @param {string} key The key within the object to store the string value
+     * @return {object}
+     */
+    static toObject(input, key = 'data') {
+        // Check if input is an object and not an array
+        if (typeof input === 'object') {
+            return input;
+        } else if (typeof input === 'string') {
+            const data = {};
+            data[key] = input;
+            return data;
+        } else {
+            throw new Error("Input must be an object or a string");
+        }
+    }
+
+    /**
+     * Split a comma separated string value to an array
+     *
+     * Returns an empty array for empty strings.
+     *
+     * @param {string} input
+     * @param {string} separator
+     * @return {[]}
+     */
+    static splitString(input, separator = ',') {
+        if (!input) {
+            return [];
+        }
+
+        if (input === '') {
+            return [];
+        }
+
+        return input.split(separator);
+    }
+
+    /**
+     * Get the prefix of a string
+     *
+     * @param {string} value The input string
+     * @param {string} separator The character that separates the prefix from the rest of the string
+     * @param {string} defaultPrefix The default value if no prefix is found
+     * @return {string}
+     */
+    static getPrefix(value, separator = ':', defaultPrefix = '') {
+        const pos = value.indexOf(separator);
+        return (pos !== -1) ? value.substring(0, pos) : defaultPrefix;
+    }
 }
 
 export default Utils;
@@ -1343,24 +1438,32 @@ $.fn.reverse = [].reverse;
 /**
  *  Replace placeholders with data
  *
+ *  Replaces all placeholders in curly brackets by the corresponding value in the data object.
+ *  Placeholders followed by "|attr" will be preprocessed to safely insert them in HTML attributes.
+ *
  * See https://stackoverflow.com/questions/55538149/how-to-create-template-or-placeholder-in-html-and-add-them-dynamically-to-the-bo
  *
+ * @param {Object} data Object with values to replace in the template (curly bracket placeholders).
  * @returns {string}
  */
 
 if (!String.prototype.formatUnicorn) {
     String.prototype.formatUnicorn = function () {
         "use strict";
-        var str = this.toString();
+        let str = this.toString();
         if (arguments.length) {
-            var t = typeof arguments[0];
-            var key;
-            var args = ("string" === t || "number" === t) ?
+            let t = typeof arguments[0];
+            let key;
+            let args = ("string" === t || "number" === t) ?
                 Array.prototype.slice.call(arguments)
                 : arguments[0];
 
             for (key in args) {
-                str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), args[key]);
+                let plainRegex = new RegExp("\\{" + key + "\\}", "gi");
+                str = str.replace(plainRegex, args[key]);
+
+                let attrRegex = new RegExp("\\{" + key + "\\|attr\\}", "gi");
+                str = str.replace(attrRegex, Utils.encodeHtmlAttribute(args[key]));
             }
         }
 

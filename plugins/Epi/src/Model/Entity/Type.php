@@ -215,7 +215,7 @@ class Type extends RootEntity
      * Loads the subtypes if not already loaded
      *
      * Subtypes are types with a mode different from 'default',
-     * e.g. 'code' or 'preview'
+     * e.g. 'code' or 'preview' (see the MODE-constants defined in bootstrap.php)
      *
      * @return Type[]
      */
@@ -238,10 +238,8 @@ class Type extends RootEntity
         if (is_null($this->_merged)) {
             $config = $this->_fields['config'] ?? [];
             $config = is_array($config) ? $config : [];
-            $action = BaseTable::$requestAction;
 
-            // TODO: replace 'preview' by 'view' in modes
-            $mode = $action === 'view' ? 'preview' : BaseTable::$requestMode;
+            $mode = BaseTable::$requestAction === 'view' ? MODE_PREVIEW : BaseTable::$requestMode;
             $presetName = BaseTable::$requestPreset;
             $presets = [];
 
@@ -374,9 +372,10 @@ class Type extends RootEntity
      * @param array $defaultConfig A key value list of field definitions
      * @param array $defaultFields A list of field names that should be included if no types config is present
      * @param array $required A list of field names that should be included in any case
+     * @param boolean $unnest Whether to unnest JSON fields from the keys key
      * @return array
      */
-    public function getHtmlFields($defaultConfig, $defaultFields = [], $required = [])
+    public function getHtmlFields($defaultConfig, $defaultFields = [], $required = [], $unnest = true)
     {
 
         if (empty($this->merged['fields'])) {
@@ -384,19 +383,33 @@ class Type extends RootEntity
             $fields = array_intersect_key($defaultConfig, array_flip($defaultFields));
         }
 
-        // Take captions and allowed fields from the config
-        // TODO: Why not take the whole config?
+        // Path the defaults with the config
         else {
             $result = [];
 
-            foreach ($required as $field) {
-                $result[$field] = $defaultConfig[$field] ?? [];
+            foreach ($required as $fieldName) {
+                $result[$fieldName] = $defaultConfig[$fieldName] ?? [];
             }
 
-            foreach ($this->merged['fields'] as $field => $caption) {
-                $caption = is_string($caption) ? $caption : ($caption['caption'] ?? '');
-                $result[$field] = $defaultConfig[$field] ?? [];
-                $result[$field]['caption'] = $caption;
+            foreach ($this->merged['fields'] as $fieldName => $fieldConfig) {
+
+                $fieldConfig = is_string($fieldConfig) ? ['caption' => $fieldConfig] : $fieldConfig;
+
+                // Unnest JSON fields
+                if (!empty($fieldConfig['keys']) && $unnest) {
+                    // Map widget
+                    if (!empty($fieldConfig['widgets'])) {
+                        $result[$fieldName] = ['format' => 'widget', 'layout' => 'stacked', 'caption'=> false, 'widgets' => $fieldConfig['widgets']];
+                    }
+
+                    foreach ($fieldConfig['keys'] as $keyName => $keyConfig) {
+                        $keyConfig = is_string($keyConfig) ? ['caption' => $keyConfig] : $keyConfig;
+                        $result[$fieldName . '.' . $keyName] = $keyConfig;
+                    }
+                }
+                else {
+                    $result[$fieldName] = array_replace_recursive($defaultConfig[$fieldName] ?? [], $fieldConfig);
+                }
             }
             $fields = $result;
         }

@@ -12,6 +12,7 @@ namespace App\Model\Table;
 
 use Cake\Database\Schema\TableSchemaInterface;
 use Files\Model\Behavior\FileSystemBehavior;
+use Files\Model\Table\FilesTableTrait;
 
 /**
  * Files table
@@ -22,7 +23,33 @@ use Files\Model\Behavior\FileSystemBehavior;
 class FilesTable extends BaseTable
 {
 
+    use FilesTableTrait;
+
     public $captionField = 'name';
+
+    /**
+     * Request parameter config
+     *
+     * @var string[]
+     */
+    public $parameters = [
+        'id' => 'raw',
+        'root' => 'raw',
+        'path' => 'raw',
+        'filename' => 'raw',
+        'basepath' => 'raw',
+        'folder_id' => 'raw',
+        'list' => 'raw'
+    ];
+
+    /**
+     * The mounts used in this table
+     *
+     * @var string[] Array of mount names (e.g. 'root', 'shared')
+     */
+    public array $mounts = [];
+
+    public string $defaultMount = 'shared';
 
     /**
      * Initialize hook
@@ -39,7 +66,6 @@ class FilesTable extends BaseTable
         $this->setPrimaryKey('id');
 
         $this->setEntityClass('FileRecord');
-        $this->addBehavior('Files.FileSystem');
     }
 
     /**
@@ -53,4 +79,5 @@ class FilesTable extends BaseTable
         $schema->setColumnType('config', 'json');
         return $schema;
     }
+
 }

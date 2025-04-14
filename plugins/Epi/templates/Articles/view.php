@@ -24,17 +24,10 @@ use App\View\AppView;
     $entity->prepareRoot();
 
     // Get template
-    // In the coding template, the default editing mode is false.
-    // Coding has to be explicitly allowed for sections, items and fields.
-    // TODO: better set when merging default and mode specific templates?
-    $templateArticle =  $entity->type['merged'] ?? [];
-    if ($this->Link->getMode() === 'code') {
-        $templateArticle['edit'] = $templateArticle['edit'] ?? false;
-    }
     $options = [
         'edit'=> $this->Link->getEdit(),
         'mode'=> $this->Link->getMode(),
-        'templateArticle'=> $templateArticle
+        'templateArticle'=> $entity->type['merged'] ?? []
     ];
 ?>
 

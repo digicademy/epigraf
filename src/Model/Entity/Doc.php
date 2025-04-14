@@ -151,7 +151,11 @@ class Doc extends BaseEntity implements LockInterface
 
             $html5 = new HTML5();
             $this->format = 'html';
-            $this->content = $html5->saveHTML($events->document());
+            $value = $html5->saveHTML($events->document());
+            $value = preg_replace('/^<!DOCTYPE html>\n/', '', $value);
+            $value = preg_replace('/^<html>/', '', $value);
+            $value = preg_replace('/<\/html>$/', '', $value);
+            $this->content = $value;
 
             $this->_toc = $events->toc;
 

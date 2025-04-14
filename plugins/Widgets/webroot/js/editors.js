@@ -156,9 +156,7 @@ export class XmlEditor extends BaseDocument {
                 (event) => {
                     documentWidget.models.annotations.onCreateAnno(
                         this.widgetElement,
-                        event.detail.data['data-tagid'],
-                        event.detail.data['data-type'],
-                        event.detail.data['data-new']
+                        event.detail.data
                     );
                 }
             );
@@ -169,7 +167,7 @@ export class XmlEditor extends BaseDocument {
                 (event) => {
                     documentWidget.models.annotations.onRemoveAnno(
                         this.widgetElement,
-                        event.detail.data['data-tagid']
+                        event.detail.data
                     );
                 }
             );
@@ -367,6 +365,16 @@ export class XmlEditor extends BaseDocument {
                 }
             }
         );
+    }
+
+    /**
+     * Replace the editor content
+     *
+     * @param {string} value The new content
+     * @param {boolean} isXml Whether the input contains XML that needs to be transformed to HTML
+     */
+    setContent(value, isXml= true) {
+        this.createEditor().then(editor => editor.setData(value));
     }
 
     /**

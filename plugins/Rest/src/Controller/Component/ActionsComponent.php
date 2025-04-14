@@ -15,8 +15,10 @@ namespace Rest\Controller\Component;
 use App\Model\Behavior\TreeCorruptException;
 use App\Model\Entity\BaseEntity;
 use App\Model\Interfaces\ScopedTableInterface;
+use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
 use Cake\Controller\Component;
+use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
@@ -52,7 +54,7 @@ class ActionsComponent extends Component
      * The default controller model needs to support the prepareParameters() function.
      * User settings are stored and loaded from the user record using applyUserSettings().
      *
-     * @return array An array of three elements: params, columns, and paging
+     * @return array An array of four elements: params, columns, paging and filter
      */
     public function prepareParameters()
     {
@@ -474,7 +476,8 @@ class ActionsComponent extends Component
 
         // Check if the entity is published
         $selectedDatabase = $this->getController()->getRequest()->getParam('database');
-        if (($this->getController()->_getUserRole(null, $selectedDatabase) === 'guest') && !$entity->published) {
+        $requestScope = $this->getController()->_getRequestScope();
+        if ((PermissionsTable::getUserRole($this->getController()->Auth->user(), $selectedDatabase, $requestScope) === 'guest') && !$entity->published) {
             $this->Answer->redirectToLogin();
         }
 
@@ -700,7 +703,11 @@ class ActionsComponent extends Component
 
         /** @var BaseEntity $entity */
         $entity = $model->get($id, ['finder' => 'containAll']);
-        $this->Lock->createLock($entity, true);
+
+        if (!Configure::read('debug', false)) {
+            $this->Lock->createLock($entity, true);
+        }
+
 
         if ($this->getController()->getRequest()->is(['patch', 'post', 'put'])) {
             /** @var BaseEntity $entity */

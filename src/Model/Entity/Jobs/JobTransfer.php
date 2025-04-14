@@ -91,6 +91,7 @@ class JobTransfer extends JobImport
             'published' => $params['published'] ?? [],
             'copy' => $params['copy'] ?? false,
             'files' => $params['files'] ?? false,
+            'clear' => $params['clear'] ?? true
         ];
 
         $rows = [];

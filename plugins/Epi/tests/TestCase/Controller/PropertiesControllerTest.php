@@ -4,6 +4,7 @@ namespace Epi\Test\TestCase\Controller;
 
 
 use App\Utilities\Converters\Arrays;
+use Cake\Controller\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\ForbiddenException;
@@ -223,6 +224,40 @@ class PropertiesControllerTest extends EpiTestCase
     }
 
     /**
+     * Test add method
+     *
+     * @return void
+     */
+    public function testAdd()
+    {
+        $this->loginUser('admin');
+        $this->get('epi/projects/properties/add/heraldry');
+
+        $this->assertHtmlEqualsComparison();
+
+        // Test post request
+        $data = [
+            'name' => 'New Coat of Arms',
+            'scope' => 'heraldry',
+            'iri' => 'newcoatofarms'
+        ];
+
+        $this->post('epi/projects/properties/add/heraldry', $data);
+        $this->assertResponseCode(302);
+
+        //Extract id from redirect
+        $id = $this->extractParamFromRedirect('#properties/view/([0-9]+)#');
+
+        // Check if the record was created
+        $propertiesTable = $this->fetchTable('Epi.Properties');
+        $record = $propertiesTable->get($id)->toArray();
+        $record = Arrays::array_remove_keys($record, ['modified']);
+
+        $compare = $this->saveComparisonJson($record);
+        $this->assertJsonStringEqualsComparison($compare);
+    }
+
+    /**
      * Test index method (HTML file)
      *
      * @return void
@@ -251,8 +286,8 @@ class PropertiesControllerTest extends EpiTestCase
             'comment' => 'FontComment'
         ]);
 
-        $properties = $this->fetchTable('Epi.Properties');
-        $data = $properties
+        $propertiesTable = $this->fetchTable('Epi.Properties');
+        $data = $propertiesTable
             ->find()
             ->where(['id' => 119])
             ->disableHydration()
@@ -438,11 +473,21 @@ class PropertiesControllerTest extends EpiTestCase
      */
     public function testMutateNotAuthorized()
     {
-
-        $this->loginUser('author');
+        $this->loginUser('reader');
         $this->expectException(ForbiddenException::class);
-        $this->get('epi/projects/properties/mutate');
+        $this->get('epi/projects/properties/mutate/objecttypes');
+    }
 
+    /**
+     * Test only devel is allowed to recover the tree
+     *
+     * @return void
+     */
+    public function testMutateMissingScope()
+    {
+        $this->loginUser('author');
+        $this->expectException(InvalidParameterException::class);
+        $this->get('epi/projects/properties/mutate');
     }
 
     /**
@@ -466,7 +511,7 @@ class PropertiesControllerTest extends EpiTestCase
         foreach ($scopes as $scope) {
             $this->executeJob(
                 'epi/projects/properties/mutate/' . $scope . '?task=batch_sort&sortby=sortno',
-                'editor'
+                'admin'
             );
         }
 

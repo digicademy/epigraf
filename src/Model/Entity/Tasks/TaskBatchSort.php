@@ -28,6 +28,9 @@ class TaskBatchSort extends BaseTaskMutate
 
         if ($this->job->config['table'] === 'properties') {
             $sortField = $this->job->config['params']['sortby'] ?? 'sortkey';
+
+            $model = $this->job->getModel('properties', 'Epi');
+
             $sortFields = [
                 'sortkey' => __('Sort key'),
                 'lemma' => __('Lemma'), //TODO: not working correctly for nested trees
@@ -36,6 +39,11 @@ class TaskBatchSort extends BaseTaskMutate
                 'sortno' => __('Sort number'),
                 'lft' => __('Tree order')
             ];
+
+            // TODO: check permissions...get task options in the model methods mutateGetTasks()
+            if (!in_array($model::$userRole, ['admin', 'devel'])) {
+                $sortFields = array_intersect_key($sortFields,['sortkey' => true, 'lemma' => true,]); ;
+            }
 
             $fields['config.params.sortby'] =
                 [

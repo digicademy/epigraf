@@ -231,6 +231,7 @@ CREATE TABLE `items` (
   `modified_by` int(11) DEFAULT NULL,
   `sortno` int(11) DEFAULT NULL,
   `itemtype` varchar(500) DEFAULT NULL,
+  `itemgroup` varchar(100) DEFAULT NULL,
   `properties_id` int(11) DEFAULT NULL,
   `value` varchar(1500) DEFAULT NULL,
   `content` mediumtext DEFAULT NULL,
@@ -406,8 +407,8 @@ CREATE TABLE `meta` (
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
 INSERT INTO `meta` VALUES
-(1,0,'0000-00-00 00:00:00','2024-11-28 01:00:37',NULL,NULL,'db_version','4.5'),
-(2,0,'0000-00-00 00:00:00','2024-11-28 01:00:37',NULL,NULL,'db_name','Epigraf');
+(1,0,'0000-00-00 00:00:00','2025-03-27 12:59:33',NULL,NULL,'db_version','4.5'),
+(2,0,'0000-00-00 00:00:00','2025-03-27 12:59:33',NULL,NULL,'db_name','Epigraf');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -735,4 +736,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-28  2:00:37
+-- Dump completed on 2025-03-27 13:59:33

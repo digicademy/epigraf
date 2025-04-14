@@ -11,7 +11,7 @@
 
 <?php
 /**
- * @var \Cake\ORM\Entity $folder The current selected folder
+ * @var \Cake\ORM\Entity $entity The current selected folder
  */
 
 use App\Utilities\Files\Files;
@@ -20,9 +20,11 @@ use Cake\Routing\Router;
 ?>
 
 <?php $this->Breadcrumbs->add(__('Files')); ?>
-<?php if (!empty($folder['root'])) $this->Breadcrumbs->add($folder['root']); ?>
-<?php if (!empty($folder['path'])) $this->Breadcrumbs->add($folder['path']); ?>
-<?php if (!empty($folder['name'])) $this->Breadcrumbs->add($folder['name']); ?>
+<?php if (!empty($entity['root'])) $this->Breadcrumbs->add($entity['root']); ?>
+<?php if (!empty($entity['path'])) $this->Breadcrumbs->add($entity['path']); ?>
+<?php if (!empty($entity['name'])) $this->Breadcrumbs->add($entity['name']); ?>
+
+<?php $listName =  $this->getConfig('options')['params']['list'] ?? 'files'; ?>
 
 <div class="content-main widget-scrollbox">
 	<table class="recordlist">
@@ -37,18 +39,18 @@ use Cake\Routing\Router;
         $data_url =  Router::url([
             'action' => 'select',
             '?' => [
-                'root' => $folder['root'],
-                'path' => $folder->relativeFolder,
-                'basepath' => $folder->basepath
+                'root' => $entity['root'],
+                'path' => $entity->relativeFolder,
+                'basepath' => $entity->basepath
             ]
         ]);
         ?>
 		<tbody
-            data-list-name="files"
-            data-value="<?= $folder->basedFolder ?>"
+            data-list-name="<?= $listName ?>"
+            data-value="<?= $entity->basedFolder ?>"
             data-url="<?= $data_url ?>"
         >
-            <?php foreach ($folder->files as $file): ?>
+            <?php foreach ($entity->files as $file): ?>
 
                <!-- Folders -->
                 <?php if (!empty($file['isfolder'])): ?>
@@ -56,14 +58,14 @@ use Cake\Routing\Router;
                         $data_url =  Router::url([
                             'action' => 'select',
                             '?' => [
-                                'root' => $folder['root'],
-                                'path' => Files::prependPath($folder->basepath, $file['fullname']),
-                                'basepath' => $folder->basepath
+                                'root' => $entity['root'],
+                                'path' => Files::prependPath($entity->basepath, $file['fullname']),
+                                'basepath' => $entity->basepath
                             ]
                         ]);
                     ?>
 
-                    <tr data-list-itemof="files"
+                    <tr data-list-itemof="<?= $listName ?>"
                         data-list-itemtype="folder"
                         data-value="<?= $file['fullname'] ?>"
                         data-url="<?= $data_url ?>"
@@ -80,14 +82,14 @@ use Cake\Routing\Router;
                         $data_url =  Router::url([
                             'action' => 'download',
                             '?' => [
-                                'root' => $folder['root'],
-                                'path' => $folder['relative_path'],
+                                'root' => $entity['root'],
+                                'path' => $entity['relative_path'],
                                 'filename' => $file['name'],
                             ]
                         ]);
                     ?>
 
-                    <tr data-list-itemof="files"
+                    <tr data-list-itemof="<?= $listName ?>"
                         data-list-itemtype="file"
                         data-value="<?= $file['fullname'] ?>"
                         data-url="<?= $data_url ?>"
@@ -103,4 +105,23 @@ use Cake\Routing\Router;
 	</table>
 </div>
 
-<?= $this->Files->dropzone() ?>
+<div data-position="fixed">
+    <?= $this->Files->dropzone(['root'=>$entity->root, 'path' => $entity->relativePath, 'list' => $listName]) ?>
+</div>
+
+<!-- Actions -->
+<?php if ($this->getRequest()->getQuery('template') === 'upload'): ?>
+    <?php
+    $this->setShowBlock(['footer']);
+    $this->Link->beginActionGroup ('bottom');
+
+    $this->Link->addAction(
+        __('Add all to article'),
+        ['?' => ['root'=>$entity->root, 'path' => $entity->relativePath, 'basepath' => $entity->relativePath,'template'=>'upload']],
+        [
+            'class' => 'button button_import',
+            'data-role' => 'import'
+        ]
+    );
+    ?>
+<?php endif; ?>

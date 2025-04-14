@@ -18,6 +18,8 @@ class AcceptanceTester extends \Codeception\Actor
 
     public $shouldOverwriteSnapshots = false;
 
+    public $shouldOverwriteScreenshots = false;
+
     /**
      * Log the tester in
      *
@@ -178,6 +180,17 @@ class AcceptanceTester extends \Codeception\Actor
     }
 
     /**
+     * Scroll to an element
+     *
+     * @param string $selector A CSS selector
+     * @return void
+     */
+    public function scrollIntoView($selector)
+    {
+        $this->executeJS('document.querySelector("' . addslashes($selector) . '").scrollIntoView();');
+    }
+
+    /**
      * Click a toolbutton and select an item in the popup
      *
      * @param string $tooltip The tootip text of the button, e.g. "Buchstabenverbindung [alt+L]"
@@ -282,8 +295,9 @@ class AcceptanceTester extends \Codeception\Actor
 
     public function getTestName()
     {
-        return $this->testClassName .= '.' . $this->getScenario()->current('name');
+        return $this->testClassName . '.' . $this->getScenario()->current('name');
     }
+
     public function assertJsonContent($data, $identifier='')
     {
         // Convert data
@@ -304,6 +318,37 @@ class AcceptanceTester extends \Codeception\Actor
 
         // Assert
         $this->assertJsonStringEqualsJsonFile($fileName, $data);
+    }
+
+    public function getScreenshotName($identifier = '')
+    {
+        $testName = $this->getTestName();
+        $identifier = !empty($identifier) ? '.' . $identifier : '';
+        $fileName = preg_replace('/\W/', '.', $testName . $identifier) . '.png';
+        $fileName = codecept_data_dir('references') . DS . $fileName;
+
+        return $fileName;
+    }
+
+    /**
+     * Compare the reference image with a current screenshot, identified by their identifier name
+     * and their element ID.
+     *
+     * @param string $identifier identifies your test object
+     * @param string|null $elementID DOM ID of the element, which should be screenshotted
+     * @param string|array $excludeElements string of Element name or array of Element names, which should not appear in the screenshot
+     * @param float|null $deviation
+     * @see \Codeception\Module\VisualCeption::dontSeeVisualChanges()
+     */
+    public function dontSeeVisualChanges(string $identifier, ?string $elementID = NULL, array|string $excludeElements = [], ?float $deviation = NULL): void {
+
+        if ($this->shouldOverwriteScreenshots) {
+            $filename = $this->getScreenshotName($identifier);
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
+        }
+        $this->getScenario()->runStep(new \Codeception\Step\Action('dontSeeVisualChanges', func_get_args()));
     }
 
 }

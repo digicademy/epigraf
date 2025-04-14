@@ -11,7 +11,6 @@ import {BaseWidget} from '/js/base.js';
 import Utils from '/js/utils.js';
 
 /**
- * TODO: Rename to MapWidget
  * Displays article locations on a leaflet map. This can happen in two ways:
  *
  * 1. In Articles index view, all locations are displayed on map and are reloaded with AJAX
@@ -19,13 +18,17 @@ import Utils from '/js/utils.js';
  * 2. In single Article view, location (or more locations) of this article are displayed in
  *    the map section. Locations can be added, edited and removed.
  */
-export class EpiMap extends BaseWidget {
+export class MapWidget extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
-        element.widgetMap = this;
         this.mapElement = element;
 
-        this.itemtype = element.dataset.itemtype || 'geolocations';
+        this.rowTable = element.dataset.rowTable || 'items';
+        this.rowTypes = element.dataset.rowTypes ? element.dataset.rowTypes.split(',') : [];
+        this.editTypes = (element.dataset.editTypes || element.dataset.rowTypes || '').split(',');
+        this.fieldName = element.dataset.fieldName || 'value';
+        this.searchText = element.dataset.searchText || '';
+        this.segments = Utils.splitString(element.dataset.segments);
 
         this.apiUrl = null;
         this.requestMode = null;
@@ -55,20 +58,23 @@ export class EpiMap extends BaseWidget {
 
         // Allow dragging in edit mode
         this.editMarkers = mode === 'edit';
+        this.showNumber = this.editMarkers && ((element.dataset.showNumber || '1') === '1');
 
         // Make marker radius toggleable
         this.displayMarkerRadius = false;
 
+        // Content of markers depending on quality
         this.customStyles = {
-            // TODO: remove redundancy between css and the following color definitions
             quality: {
-                0: {fillColor: '#ffb9b9', content: '?'},
-                1: {fillColor: '#ffc256', content: '?'},
-                2: {fillColor: '#49c050', content: ''},
-                3: {fillColor: '#49c050', content: ''},
-                4: {fillColor: '#49c050', content: ''},
+                0: {content: '?'},
+                1: {content: '?'},
+                2: {content: ''},
+                3: {content: ''},
+                4: {content: ''},
             }
         };
+
+        this.facets = {};
 
         // Data for user location / GPS
         this.userMarker = undefined;
@@ -111,35 +117,8 @@ export class EpiMap extends BaseWidget {
         };
 
         if (this.clusterMarkers) {
-            this.cluster = L.markerClusterGroup.layerSupport({
-                iconCreateFunction: (cluster) => {
-
-                    const childCount = cluster.getChildCount();
-                    let sizeClass = ' marker-cluster-';
-                    let size;
-                    if (childCount < 10) {
-                        sizeClass += 'small';
-                        size = 30;
-                    } else if (childCount < 100) {
-                        sizeClass += 'medium';
-                        size = 40;
-                    } else if (childCount < 500) {
-                        sizeClass += 'large';
-                        size = 50;
-                    } else {
-                        sizeClass += 'very-large';
-                        size = 55;
-                    }
-
-                    const childQuality = cluster.getAllChildMarkers().reduce((carry, marker) => Math.min(carry, marker.customData.quality),2);
-                    const qualityClass = ' data-quality-' + childQuality;
-
-                    return new L.DivIcon({
-                        html: '<div><span>' + childCount + '</span></div>',
-                        className: 'marker-cluster' + sizeClass + qualityClass,
-                        iconSize: new L.Point(size, size)
-                    });
-                },
+            this.clusterLayer = L.markerClusterGroup.layerSupport({
+                iconCreateFunction: (cluster) => this.renderCluster(cluster),
                 spiderfyOnMaxZoom: false,
                 showCoverageOnHover: false,
                 zoomToBoundsOnClick: true,
@@ -147,12 +126,12 @@ export class EpiMap extends BaseWidget {
                 // singleMarkerMode: true
             });
 
-            this.map.addLayer(this.cluster);
-            this.markerLayer = this.cluster;
+            this.map.addLayer(this.clusterLayer);
+            this.markerLayer = this.clusterLayer;
 
-            this.cluster.checkIn(this.subGroups[0]);
-            this.cluster.checkIn(this.subGroups[1]);
-            this.cluster.checkIn(this.subGroups[2]);
+            this.clusterLayer.checkIn(this.subGroups[0]);
+            this.clusterLayer.checkIn(this.subGroups[1]);
+            this.clusterLayer.checkIn(this.subGroups[2]);
         }
 
         else {
@@ -163,14 +142,21 @@ export class EpiMap extends BaseWidget {
         this.map.addLayer(this.subGroups[1]);
         this.map.addLayer(this.subGroups[2]);
 
-        // Control elements
-        // this.legend = L.control.layers(null, null, { collapsed: false, position: 'bottomleft' });
-        // this.legend.addOverlay(this.subGroups[0], '<span class="data-quality data-quality-0" data-quality-content="?">ungeprüft</span>');
-        // this.legend.addOverlay(this.subGroups[1], '<span class="data-quality data-quality-1" data-quality-content="?">vermutet</span>');
-        // this.legend.addOverlay(this.subGroups[2], '<span class="data-quality data-quality-2" data-quality-content="">geprüft</span>');
-        // this.legend.addTo(this.map);
+        // Controls
+        this.initControls();
 
-        // Control elements
+        // Listen to legend and filter clicks
+        this.mapElement.addEventListener('click',(event) => this.onLegendClicked(event));
+
+        // Listen to map events
+        this.listenResize(this.mapElement, () => this.map.invalidateSize());
+    }
+
+    /**
+     * Create map controls
+     */
+    initControls() {
+        // Legend control
         this.legend = L.control({position: 'bottomleft'});
 
         this.legend.onAdd = (map) => {
@@ -178,13 +164,20 @@ export class EpiMap extends BaseWidget {
             div.innerHTML += '<span class="data-quality data-quality-2" data-quality-content="">geprüft</span>';
             div.innerHTML += '<span class="data-quality data-quality-1" data-quality-content="?">vermutet</span>';
             div.innerHTML += '<span class="data-quality data-quality-0" data-quality-content="?">ungeprüft</span>';
+
+            if (this.segments.length > 1) {
+                for (let i = 0; i < this.segments.length; i++) {
+                    div.innerHTML += `<span class="data-segment data-segment-${i + 1}">${this.segments[i]}</span>`;
+                }
+            }
             return div;
         };
-        this.mapElement.addEventListener('click',(event) => this.onLegendClicked(event));
         this.legend.addTo(this.map);
 
+        // Scale bar
         this.scaleBar = L.control.scale({position: 'bottomright', maxWidth: 150, imperial: false}).addTo(this.map);
 
+        // Own position
         this.geoLocButton = L.easyButton(
             'btn-geolocation',
             () => {
@@ -193,15 +186,18 @@ export class EpiMap extends BaseWidget {
             },
             'Zoom to user position'
         ).addTo(this.map);
+        this.geoLocButton.button.classList.remove('btn-geolocation-active');
+        this.geoLocButton.button.classList.add('btn-geolocation-inactive');
 
+        // Radius toggle
         this.toggleRadiusButton = L.easyButton(
             'btn-toggle-radius',
             () => this.toggleMarkerRadius(),
             'Toggle marker radius'
         ).addTo(this.map);
-
         this.toggleRadiusButton.button.classList.toggle('active', this.displayMarkerRadius);
 
+        // Zoom to marker button
         this.zoomToMarkerButton = L.easyButton(
             'btn-zoom-to-marker', () => {
                 this.fitMarkers();
@@ -209,10 +205,20 @@ export class EpiMap extends BaseWidget {
             'Zoom to marker'
         ).addTo(this.map);
 
-        this.geoLocButton.button.classList.remove('btn-geolocation-active');
-        this.geoLocButton.button.classList.add('btn-geolocation-inactive');
+        // Search
+        this.geocodeLayer = L.layerGroup();
+        this.geocodeBox;
 
-        this.listenResize(this.mapElement, () => this.map.invalidateSize());
+        const geocoderService = L.Control.Geocoder.nominatim(
+            {serviceUrl: App.baseUrl + 'services/geo/'}
+        );
+        this.geocoder = L.Control.geocoder({
+            query: this.searchText,
+            defaultMarkGeocode: false,
+            geocoder: geocoderService
+        }).on('markgeocode', (e) => this.onGeocode(e))
+          .addTo(this.map)
+
     }
 
     /**
@@ -233,15 +239,15 @@ export class EpiMap extends BaseWidget {
 
         if (this.clusterMarkers) {
             // Click single markers
-            this.cluster
+            this.clusterLayer
                 .on('click', (marker) => {
                     App.openDetails(marker.sourceTarget.customData.url, {'external':true});
                 });
 
             // Click clusters
-            this.cluster
+            this.clusterLayer
                 .on('clusterclick', (c) => {
-                    this.cluster.options.zoomToBoundsOnClick = true;
+                    this.clusterLayer.options.zoomToBoundsOnClick = true;
 
                     const markers = c.layer.getAllChildMarkers();
                     let popupContent;
@@ -258,16 +264,14 @@ export class EpiMap extends BaseWidget {
                     }
 
                     // else, disable default zoom behaviour and create popup
-                    this.cluster.options.zoomToBoundsOnClick = false;
+                    this.clusterLayer.options.zoomToBoundsOnClick = false;
 
                     popupContent = '<ol class="popup-article-list">';
                     for (let marker of markers) {
-                        const name = marker.customData.name || '';
                         popupContent +=
-                            `<li class="data-quality-${marker.customData.quality}" data-quality-content="${this.customStyles.quality[marker.customData.quality].content}">
+                            `<li class="data-quality-${marker.customData.quality || 0}" data-quality-content="${this.customStyles.quality[marker.customData.quality || 0].content}">
                                 <a href="${marker.customData.url}" class="frame" target="_blank">
-                                ${name}
-                                [${marker.customData.signature}]
+                                ${marker.customData.caption || 'No title'}
                                 </a>
                              </li>`;
                     }
@@ -286,6 +290,12 @@ export class EpiMap extends BaseWidget {
             section.addEventListener('epi:add:item', event => this.onItemAdded(event));
             section.addEventListener('epi:remove:item', event => this.onItemRemoved(event));
             section.addEventListener('epi:change:item', event => this.onItemChanged(event));
+
+        }
+
+        const entity = this.mapElement.closest('.widget-entity');
+        if (entity) {
+            entity.addEventListener('epi:change:entity', event => this.onItemChanged(event));
         }
 
     }
@@ -307,11 +317,8 @@ export class EpiMap extends BaseWidget {
         // Cache which markers were loaded by their ID
         this.markersLoaded = {};
 
-        // if (this.markerLayer.clearLayers) {
-        //     this.markerLayer.clearLayers();
-        // }
         if (this.clusterMarkers) {
-            this.cluster.clearLayers();
+            this.clusterLayer.clearLayers();
         }
     }
 
@@ -412,7 +419,7 @@ export class EpiMap extends BaseWidget {
      */
     getTileUrl(tile) {
         // No API URL
-        if (!this.apiUrl || !tile) {
+        if (!this.apiUrl || !tile || !this.rowTypes.length) {
             return false;
         }
 
@@ -420,15 +427,15 @@ export class EpiMap extends BaseWidget {
         let url = new URL(this.apiUrl, App.baseUrl);
         url.searchParams.set('tile', tile.id);
         url.searchParams.set('page', tile.page);
-        url.searchParams.set('itemtypes', this.itemtype);
-        url.searchParams.set('template', 'raw');
-        url.searchParams.set('snippets', 'article');
+        url.searchParams.set('itemtypes', this.rowTypes.join(','));
+        // url.searchParams.set('template', 'raw');
+        url.searchParams.set('snippets', 'article,properties');
         url.searchParams.delete('sort');
         url.searchParams.delete('direction');
         url.searchParams.delete('lat');
         url.searchParams.delete('lng');
         url.searchParams.delete('zoom');
-        url.pathname = url.pathname + '/items.json';
+        url.pathname = url.pathname + '/items.geojson';
         url = url.toString();
 
         return url;
@@ -629,67 +636,33 @@ export class EpiMap extends BaseWidget {
      * @returns {JSON} Formatted geojson data
      */
     extractJsonData(data) {
-        let geoJson = [];
-        for (const item of data.items || []) {
-            if (item.itemtype === this.itemtype) {
-                try {
-                    const value = JSON.parse(item.value);
-                    if (value) {
-
-                        let articleUrl;
-                        if (this.requestMode === 'code') {
-                            articleUrl = 'articles/edit/' + item.articles_id + '?mode=' + this.requestMode;
-                        } else {
-                            articleUrl = 'articles/view/' + item.articles_id + '?mode=' + this.requestMode;
-                        }
-
-                        const feature = {
-                            'type': 'Feature',
-                            'data': {
-                                'sortno': item.sortno || 0,
-                                'id': item.id,
-                                'signature': Utils.getValue(item, 'article.signature', ''),
-                                'name': Utils.getValue(item, 'article.name', ''),
-                                'quality': item.published || 0,
-                                'radius': value.radius || 0,
-                                'url': articleUrl
-                            },
-                            'geometry': {
-                                'type': 'Point',
-                                // Careful: geojson uses lnglat, leaflet latlng
-                                'coordinates': [value.lng, value.lat]
-                            }
-                        };
-                        geoJson.push(feature);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        }
-        return geoJson;
+        return data.features || [];
     }
 
     /**
      * Creates or updates a single marker
      *
+     * @param {*} marker The marker or false for non-existing markers.
      * @param {{
-     *     sortno: number,
+     *     number: number,
      *     id: number,
-     *     signature: string,
-     *     name: string,
+     *     caption: string,
      *     quality: number,
      *     radius: number,
      *     url: string,
      *     lat: string,
      *     lng: string
-     * }} data Coordinates and metadata (e.g. quality) of the marker
-     * @param {*} [marker] Optional: If the marker already exists, update instead of create
+     * }} data New marker data (coordinates and metadata) or false the use the existing data
      * @returns {*} The marker
      */
-    renderMarker(data, marker) {
+    renderMarker( marker, data = null) {
         // Update marker
         if (marker) {
+            if (data == null) {
+                data = marker.customData;
+            }
+
+            // Move to the quality layer
             if (marker.customData.quality !== data.quality) {
                 const oldLayer = this.subGroups[marker.customData.quality] || this.markerLayer;
                 const newLayer = this.subGroups[data.quality] || this.markerLayer;
@@ -697,31 +670,35 @@ export class EpiMap extends BaseWidget {
                 newLayer.addLayer(marker);
             }
 
+            // Update position
             if ((marker.customData.lat !== data.lat) || (marker.customData.lng !== data.lng)) {
                 marker.setLatLng([data.lat, data.lng]);
             }
-        } else {
-            marker = L.marker([data.lat, data.lng], {draggable: this.editMarkers});
+        }
+        // Add marker
+        else {
+            if (data == null) {
+                data = {};
+            }
+            const edit = this.editMarkers && ((data.edit === undefined) || (data.edit));
+            marker = L.marker([data.lat, data.lng], {draggable: edit});
             this.makeMarkerDraggable(marker);
         }
 
         // Set data
         marker.customData = data;
 
-        // Set icon
-        const zoomLevel = this.map.getZoom();
-
-        // Minimum marker radius is 20px, if meters-to-pixel is more AND marker radius should be displayed in general,
-        // set calculated width to marker
+        // Set marker radius (minimum is 10px)
         const hasRadius = (data.radius !== undefined) && Number(data.radius) !== 0;
-        let iconRadius = 20;
+        const zoomLevel = this.map.getZoom();
+        let iconRadius = 10;
         if (hasRadius && this.displayMarkerRadius && zoomLevel > 13) {
             iconRadius = Math.min(Math.max(this.meterToPixel(data.lat, data.radius, zoomLevel), 20), 500);
         }
+        const iconDiameter = iconRadius * 2;
 
         const classNames = [
             'item-marker',
-            `data-quality-${data.quality}`,
             (hasRadius && this.displayMarkerRadius) ? 'area-marker' : 'point-marker'
         ];
 
@@ -732,15 +709,83 @@ export class EpiMap extends BaseWidget {
             classNames.push('area-marker-big');
         }
 
-        const markerContent = this.editMarkers ? data.sortno : (this.customStyles.quality[data.quality].content || '');
+        // Set marker segment
+        if (data.segment) {
+            classNames.push(`marker-segment-${data.segment}`);
+        }
+
+        // Set marker color and content
+        const faceted = data.properties && this.facets;
+        let markerStyle = '';
+        let markerContent;
+
+        if (faceted) {
+            for (const [propertyType, propertyIds] of Object.entries(data.properties)) {
+                for (let propertyId of propertyIds) {
+                    let item = this.facets[propertyId];
+                    if (item && item.color) {
+                        markerStyle = `background-color:${item.color};border-color:${item.color};`;
+                    }
+                }
+            }
+
+            markerContent = '1';
+        } else {
+            markerContent = this.showNumber ? data.number : (this.customStyles.quality[data.quality].content || '');
+            classNames.push(`data-quality-${data.quality}`);
+        }
+
         const markerIcon = L.divIcon({
-            html: `<span class="item-marker-label" data-quality-content="${markerContent}"></span>`,
+            html: `<div class="item-marker-label" data-quality-content="${markerContent}" style="${markerStyle}"></div>`,
             className: classNames.join(' '),
-            iconSize: L.point(iconRadius, iconRadius)
+            iconSize: [iconDiameter, iconDiameter]
         });
         marker.setIcon(markerIcon);
 
         return marker;
+    }
+
+    renderCluster(cluster) {
+        const childCount = cluster.getChildCount();
+        const scale = d3.scaleLinear([10, 500], [30, 80]).clamp(true);
+        const size = scale(childCount);
+
+        const markers = cluster.getAllChildMarkers();
+        let counts = {};
+        let colors = {};
+        markers.forEach(marker => {
+            if (marker.customData.properties) {
+                for (const [propertyType, propertyIds] of Object.entries(marker.customData.properties)) {
+                    for (let propertyId of propertyIds) {
+                        let item = this.facets[propertyId];
+                        if (item && item.color) {
+                            colors[propertyId] = colors[propertyId] || item.color;
+                            counts[propertyId] = counts[propertyId] || 0;
+                            counts[propertyId] += 1;
+                        }
+                    }
+                }
+            }
+        });
+
+        const childQuality = markers.reduce((carry, marker) => Math.min(carry, marker.customData.quality),2);
+        const qualityClass = ' data-quality-' + childQuality;
+
+        let markerHtml;
+        let markerClass;
+        if (Object.keys(counts).length > 0) {
+            markerHtml = PieChartWidget.getSvg(counts, colors, childCount, size);
+            markerClass = 'marker-cluster';
+        } else {
+            markerHtml  = `<div class="item-marker-label"><span style="line-height:${0.85 * size}px;">${childCount}</span></div>`;
+            markerClass = 'marker-cluster' + qualityClass;
+        }
+
+        return new L.DivIcon({
+            html: markerHtml,
+            className: markerClass,
+            iconSize: new L.Point(size, size)
+        });
     }
 
     /**
@@ -755,7 +800,7 @@ export class EpiMap extends BaseWidget {
             update = true;
         } else {
             zoom = this.map.getZoom();
-            update = (zoom >= 14 || this.oldZoomLevel === 14 && zoom === 13);
+            update = (zoom >= 14 || (this.oldZoomLevel === 14 && zoom === 13));
         }
         const bounds = this.map.getBounds();
 
@@ -765,10 +810,7 @@ export class EpiMap extends BaseWidget {
                 const radius = this.markersLoaded[marker].customData.radius;
                 const hasRadius = (radius !== 0) && (radius !== '');
                 if (inMapBounds && hasRadius) {
-                    this.renderMarker(
-                        this.markersLoaded[marker].customData,
-                        this.markersLoaded[marker]
-                    );
+                    this.renderMarker(this.markersLoaded[marker]);
                 }
             }
         }
@@ -782,17 +824,20 @@ export class EpiMap extends BaseWidget {
      */
     addMarkers(data) {
         data.forEach(geoJson => {
-                // Careful: geojson uses lnglat, leaflet latlng -> reverse()
-                const data = geoJson.data;
-                data.lat = geoJson.geometry.coordinates[1];
-                data.lng = geoJson.geometry.coordinates[0];
+                if ((geoJson.geometry.type === "Point") || this.editMarkers) {
+                    // Careful: geojson uses lnglat, leaflet latlng -> reverse()
+                    const data = geoJson.data;
+                    const coord = Utils.getValue(geoJson, 'geometry.coordinates', [0, 0]);
+                    data.lat = coord[1];
+                    data.lng = coord[0];
 
-                if (!this.markersLoaded[data.id]) {
-                    const marker = this.renderMarker(data, false);
-                    this.markersLoaded[data.id] = marker;
+                    if (!this.markersLoaded[data.id]) {
+                        const marker = this.renderMarker(null, data);
+                        this.markersLoaded[data.id] = marker;
 
-                    let layer = this.subGroups[data.quality] || this.markerLayer;
-                    layer.addLayer(marker);
+                        let layer = this.subGroups[data.quality] || this.markerLayer;
+                        layer.addLayer(marker);
+                    }
                 }
             }
         );
@@ -881,9 +926,11 @@ export class EpiMap extends BaseWidget {
 
     /**
      * Toggle the display of the marker radius and update the map.
+     *
+     * @param {boolean} [show] Show or hide the marker radius. Leave empty to toggle.
      */
-    toggleMarkerRadius() {
-        this.displayMarkerRadius = !this.displayMarkerRadius;
+    toggleMarkerRadius(show) {
+        this.displayMarkerRadius = show || !this.displayMarkerRadius;
         this.toggleRadiusButton.button.classList.toggle('active', this.displayMarkerRadius);
         this.rerenderMarkers();
     }
@@ -932,7 +979,7 @@ export class EpiMap extends BaseWidget {
     }
 
     /**
-     * Add and fit first bunch of markers.
+     * Add and fit first bunnch of markers.
      *
      */
     loadMarkersFromDataElement() {
@@ -1024,11 +1071,10 @@ export class EpiMap extends BaseWidget {
             return;
         }
 
-
         let subGroup;
         try {
             let quality = Array.from(event.target.classList).filter(x => x.startsWith('data-quality-'));
-            quality = quality ? quality[0].replace('data-quality-','') : undefined;
+            quality = quality.length > 0 ? quality[0].replace('data-quality-','') : undefined;
             quality = Number(quality);
             subGroup = this.subGroups[quality] || undefined;
         } catch (error) {
@@ -1054,11 +1100,12 @@ export class EpiMap extends BaseWidget {
     /**
      * Fires when new location for article is created. Add marker to map.
      * // TODO: only for items inside a map section
+     * // TODO: Show marker from property
      *
      * @param {Event} event The added item can be found in the event.target property
      */
     onItemAdded(event) {
-        if (event.target.dataset.rowType !== this.itemtype) {
+        if (!this.editTypes.includes(event.target.dataset.rowType)) {
             return;
         }
 
@@ -1068,22 +1115,24 @@ export class EpiMap extends BaseWidget {
             const markerId = event.target.dataset.rowId;
             const mapCenter = this.getCenter();
 
+            let quality = Utils.getInputValue(event.target.querySelector(`[data-row-field='published'] select`), 0);
+            quality = quality === '' ? 0 : quality;
+
             const newMarkerData = [{
                 'type': 'Feature',
                 'data': {
-                    'sortno': 0,
+                    'number': Utils.getInputValue(event.target.querySelector(`[data-row-field='sortno'] input`), 0),
                     'id': markerId,
-                    'signature': null,
-                    'name': null,
-                    'quality': 0,
-                    'radius': 0,
+                    'caption': null,
+                    'quality': quality,
+                    'radius': Utils.getInputValue(event.target.querySelector(`[data-row-field='${this.fieldName}.radius'] input`), 0),
                     'url': null
                 },
                 'geometry': {'type': 'Point', 'coordinates': [mapCenter.lng, mapCenter.lat]}
             }];
 
             this.addMarkers(newMarkerData);
-            this.updateItem(markerId, mapCenter);
+            this.updateRow(markerId, mapCenter);
         });
     }
 
@@ -1093,7 +1142,7 @@ export class EpiMap extends BaseWidget {
      * @param event Item Removed
      */
     onItemRemoved(event) {
-        if (event.target.dataset.rowType !== this.itemtype) {
+        if (!this.rowTypes.includes(event.target.dataset.rowType)) {
             return;
         }
 
@@ -1110,17 +1159,17 @@ export class EpiMap extends BaseWidget {
         if (Object.keys(this.markersLoaded).length === 0) {
             this.hideMap();
         }
-
-
     }
 
     /**
-     * Fires when location for article is changed. Update marker position on map.
+     * Observe location changes and update marker position.
      *
-     * @param event Item changed
+     * // TODO: Show marker from property
+     *
+     * @param {CustomEvent} event The 'epi:change:item' event
      */
     onItemChanged(event) {
-        if (event.target.dataset.rowType !== this.itemtype) {
+        if (!this.editTypes.includes(event.target.dataset.rowType)) {
             return;
         }
 
@@ -1134,41 +1183,38 @@ export class EpiMap extends BaseWidget {
         }
 
         const currentData = Object.assign({}, currentMarker.customData);
-        currentData.sortno = Utils.getInputValue(event.target.querySelector('.doc-fieldname-sortno input'), currentData.sortno);
-        currentData.lat = Utils.getInputValue(event.target.querySelector('.doc-fieldname-value-lat input'), currentData.lat);
-        currentData.lng = Utils.getInputValue(event.target.querySelector('.doc-fieldname-value-lng input'), currentData.lng);
-        currentData.quality = Utils.getInputValue(event.target.querySelector('.doc-fieldname-published select'), currentData.quality);
-        currentData.radius = Utils.getInputValue(event.target.querySelector('.doc-fieldname-value-radius input'), currentData.radius);
 
-        this.renderMarker(currentData, currentMarker);
+        let quality =  Utils.getInputValue(event.target.querySelector(`[data-row-field='published'] select`), currentData.quality);
+        quality = quality === '' ? 0 : quality;
+
+        currentData.lat = Utils.getInputValue(event.target.querySelector(`[data-row-field='${this.fieldName}.lat'] input`), currentData.lat);
+        currentData.lng = Utils.getInputValue(event.target.querySelector(`[data-row-field='${this.fieldName}.lng'] input`), currentData.lng);
+        currentData.radius = Utils.getInputValue(event.target.querySelector(`[data-row-field='${this.fieldName}.radius'] input`), currentData.radius);
+        currentData.number = Utils.getInputValue(event.target.querySelector(`[data-row-field='sortno'] input`), currentData.number);
+        currentData.quality = quality;
+
+        this.renderMarker(currentMarker, currentData);
     }
 
     /**
-     * Update item after the marker has been dragged.
+     * Update a row after the marker has been dragged
      *
-     * @param itemId Shared id of marker and item.
+     * @param rowId Shared id of marker and item.
      * @param coords New coordinates of marker.
+     * @param radius The new radius of the marker.
      */
-    updateItem(itemId, coords) {
-        const section = this.mapElement.closest('.doc-section-content');
-        let item;
-        let inputLat;
-        let inputLng;
+    updateRow(rowId, coords, radius) {
+        const row = document.querySelector(`[data-row-table='${this.rowTable}'][data-row-id='${rowId}']`);
+        if (row) {
+            const inputLat = row.querySelector(`[data-row-field='${this.fieldName}.lat'] input`);
+            const inputLng = row.querySelector(`[data-row-field='${this.fieldName}.lng'] input`);
+            Utils.setInputValue(inputLat, coords.lat);
+            Utils.setInputValue(inputLng, coords.lng);
 
-        if (section) {
-            item = section.querySelector(`.doc-section-item[data-row-id='${itemId}']`);
-        }
-
-        if (item) {
-            inputLat = item.querySelector('.doc-fieldname-value-lat input');
-            inputLng = item.querySelector('.doc-fieldname-value-lng input');
-        }
-
-        if (inputLat) {
-            inputLat.value = coords.lat;
-        }
-        if (inputLng) {
-            inputLng.value = coords.lng;
+            if (radius !== undefined) {
+                const inputRadius = row.querySelector(`[data-row-field='${this.fieldName}.radius'] input`);
+                Utils.setInputValue(inputRadius, radius);
+            }
         }
     }
 
@@ -1187,11 +1233,11 @@ export class EpiMap extends BaseWidget {
         });
 
         marker.on('dragend', () => {
-            const itemId = marker.customData.id;
+            const rowId = marker.customData.id;
             const coords = marker.getLatLng();
             marker.customData.lat = coords.lat;
             marker.customData.lng = coords.lng;
-            this.updateItem(itemId, coords);
+            this.updateRow(rowId, coords);
             this.map.panTo([coords.lat, coords.lng]);
         });
     }
@@ -1210,7 +1256,164 @@ export class EpiMap extends BaseWidget {
         const metersPerPixel = earthCircumference * Math.cos(latitudeRadians) / Math.pow(2, zoomLevel + 8);
         return meters / metersPerPixel;
     }
+
+    /**
+     * Show the geocoding search result on the map.
+     *
+     * @param event
+     */
+    onGeocode(event) {
+        const bbox = event.geocode.bbox;
+        const corners = [
+            [bbox.getSouthEast().lat, bbox.getSouthEast().lng],
+            [bbox.getNorthEast().lat, bbox.getNorthEast().lng],
+            [bbox.getNorthWest().lat, bbox.getNorthWest().lng],
+            [bbox.getSouthWest().lat, bbox.getSouthWest().lng]
+        ];
+
+        // Create polygon if it doesn't exist
+        if (!this.geocodeBox) {
+            const polygon = L.polygon(corners, {weight: 1}).addTo(this.geocodeLayer)
+            this.geocodeBox = {
+                box : polygon,
+            }
+
+            if (this.editMarkers) {
+                polygon.on('click', () => this.onGeocodeApply());
+                polygon.on('mouseover', () => {
+                    polygon.setStyle({weight: 3});
+                });
+                polygon.on('mouseout', () => {
+                    polygon.setStyle({weight: 1});
+                });
+
+            }
+        }
+        // Or update
+        else {
+            this.geocodeBox.box.setLatLngs(corners);
+        }
+
+        this.map.addLayer(this.geocodeLayer);
+        this.map.fitBounds(this.geocodeBox.box.getBounds());
+    }
+
+    onGeocodeApply() {
+        if (!this.geocodeBox) {
+            return;
+        }
+
+        // Last marker in this.markersLoaded
+        let markerId = Object.keys(this.markersLoaded).pop();
+        if (!markerId) {
+
+            const newMarkerData = [{
+                'type': 'Feature',
+                'data': {
+                    'number': 0,
+                    'id': -1,
+                    'caption': null,
+                    'quality': 0,
+                    'radius': 0,
+                    'url': null
+                },
+                'geometry': {'type': 'Point', 'coordinates': [0, 0]}
+            }];
+            this.addMarkers(newMarkerData);
+            markerId = -1;
+        }
+
+        const currentMarker = this.markersLoaded[markerId];
+        if (!currentMarker) {
+            return;
+        }
+
+        const currentData = Object.assign({}, currentMarker.customData);
+        const bounds = this.geocodeBox.box.getBounds();
+        const center = bounds.getCenter();
+        const southEast = bounds.getSouthEast();
+        const distance = Math.round(center.distanceTo(southEast));
+
+        currentData.lat = center.lat;
+        currentData.lng = center.lng;
+        currentData.radius = distance;
+
+        this.map.removeLayer(this.geocodeLayer);
+        this.renderMarker(currentMarker, currentData);
+        this.toggleMarkerRadius(true);
+        this.updateRow(markerId, center, distance);
+    }
+
+    updateColors(data) {
+        this.facets = data;
+
+        if (this.facets) {
+            this.legend.remove();
+        } else {
+            this.legend.addTo(this.map);
+        }
+
+        const bounds = this.map.getBounds();
+        for (const marker in this.markersLoaded) {
+            const inMapBounds = bounds.contains(this.markersLoaded[marker].getLatLng());
+            if (inMapBounds) {
+                this.renderMarker(this.markersLoaded[marker]);
+            }
+        }
+
+        if (this.clusterMarkers) {
+            this.map.eachLayer(layer => {
+                if (layer instanceof L.MarkerCluster) {
+                    // const inMapBounds = bounds.contains(layer.getLatLng());
+                    layer.setIcon(this.renderCluster(layer));
+                }
+            });
+        }
+
+    }
+
+}
+
+/**
+ * Generate pie charts
+ */
+class PieChartWidget {
+
+    static getSvg(values, colors, total, size) {
+        const margin = (0.15 * size) / 2;
+        size = 0.85 * size;
+        values = Array.isArray(values) ? values : Object.values(values);
+        colors = Array.isArray(colors) ? colors : Object.values(colors);
+
+        let pie = d3.pie()(values);
+        let arc = d3.arc().innerRadius(0).outerRadius(size / 2);
+
+        let svg = d3.create("svg")
+            .attr("width", size)
+            .attr("height", size)
+            .attr("style", `margin-top: ${margin}px;margin-left: ${margin}px;`)
+            .attr("viewBox", [-size/2, -size/2, size, size]);
+
+        svg.selectAll("path")
+            .data(pie)
+            .enter()
+            .append("path")
+            .attr("d", arc)
+            .attr("fill", (d, i) => colors[i]);
+
+        // Add total number in the center of the pie chart
+        svg.append("text")
+            .attr("text-anchor", "middle")
+            //.attr("dominant-baseline", "middle")
+            .attr("dy", "0.35em")
+            .attr("fill", "white")
+            .attr("font-size", '0.8rem')
+            .attr("line-height", '0.8rem')
+            .text(total);
+
+        return svg.node().outerHTML;
+    }
 }
 
 window.App.widgetClasses = window.App.widgetClasses || {};
-window.App.widgetClasses['map'] = EpiMap;
+window.App.widgetClasses['map'] = MapWidget;

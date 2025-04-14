@@ -10,12 +10,13 @@
 
 namespace App\Command;
 
-use App\Model\Entity\Databank;
-use App\Model\Table\DatabanksTable;
-use Cake\Command\Command;
 use Cake\Console\Arguments;
+use Cake\Command\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+
+use App\Model\Entity\Databank;
+use App\Model\Table\DatabanksTable;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Http\Exception\NotFoundException;
@@ -236,7 +237,7 @@ class DatabaseCommand extends Command
 
             $conn->execute('CREATE DATABASE IF NOT EXISTS ' . $databasename . ' CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci');
 
-            if (($connectionname == 'projects') || str_starts_with($databasename, 'epi_')) {
+            if (($connectionname === 'projects') || ($connectionname === 'test_projects') || str_starts_with($databasename, 'epi_')) {
                 BaseTable::setDatabase($config['database'], $connectionname, false);
                 $this->createDatabaseRecord($databasename);
             }

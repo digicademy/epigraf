@@ -97,6 +97,33 @@ class Attributes
         return array_combine($keys, $values);
     }
 
+    public static function extractPrefixedNestedList($params, $prefix)
+    {
+        // filter by prefix and remove it from keys
+        $filtered = [];
+        foreach ($params as $key => $value) {
+            if (str_starts_with($key, $prefix)) {
+                $keySansPrefix = substr($key, strlen($prefix));
+                $filtered[$keySansPrefix] = $value;
+            }
+        }
+
+        // build nested array where '_' in the key introduces a new level
+        $nested = [];
+        foreach ($filtered as $key => $value) {
+            $keys = explode('_', $key);
+            $current = &$nested;
+            foreach ($keys as $k) {
+                if (!isset($current[$k])) {
+                    $current[$k] = [];
+                }
+                $current = &$current[$k];
+            }
+            $current = Attributes::commaListToValueArray($value);
+        }
+        return $nested;
+    }
+
     /**
      * Extract prefixed booleans
      *
@@ -253,6 +280,20 @@ class Attributes
 
                 $parsed[$name] = $value;
             }
+            elseif ($method === 'nested-list') {
+                $value = $params[$name] ?? $params[$prefix . $name] ?? '';
+                if ($value === '') {
+                    $value = Attributes::extractPrefixedNestedList($params, $name . '_');
+                    if (empty($value)) {
+                        $value = Attributes::extractPrefixedNestedList($params, $prefix . $name . '_');
+                    }
+                }
+                else {
+                    $value = Attributes::commaListToIntegerArray($value);
+                }
+
+                $parsed[$name] = $value;
+            }
             elseif ($method === 'nested-boolean') {
                 $nestedParams = Attributes::extractQueryParams($params, $name . '_', true);
                 $parsed[$name] = Attributes::unnestQueryParams($nestedParams, fn($x) => Attributes::isTrue($x));
@@ -278,6 +319,16 @@ class Attributes
                 $value = $params[$name] ?? $params[$prefix . $name] ?? '';
                 if ($value !== '') {
                     $parsed[$name] = Attributes::isTrue($value);
+                }
+            }
+            elseif ($method == 'constant-mode') {
+                $mode = Attributes::cleanOption(
+                    $params[$name] ?? MODE_DEFAULT,
+                    [MODE_DEFAULT, MODE_REVISE, MODE_STAGE],
+                    MODE_DEFAULT
+                );
+                if ($mode !== MODE_DEFAULT) {
+                    $parsed[$name] = $mode;
                 }
             }
             else {
@@ -311,6 +362,29 @@ class Attributes
         }
         elseif (is_string($params)) {
             $params = array_map('intval', explode(',', $params));
+            $params = Arrays::array_remove_empty($params);
+        }
+        elseif (is_numeric($params)) {
+            $params = [$params];
+        }
+        return $params;
+    }
+
+    /**
+     * Convert comma separated list of integer or string values to array
+     *
+     * @param $params
+     * @return array|float[]|int[]|mixed|string[]
+     */
+    public static function commaListToValueArray($params)
+    {
+        if ($params === '') {
+            return [];
+        }
+        elseif (is_string($params)) {
+            $params = array_map(function($el) {
+                    return is_numeric($el) ? (int)$el : (string)$el;
+                }, explode(',', $params));
             $params = Arrays::array_remove_empty($params);
         }
         elseif (is_numeric($params)) {
@@ -646,6 +720,36 @@ class Attributes
     }
 
     /**
+     * Check whether a value is not empty and return a default value otherwise
+     *
+     * @param string $value
+     * @param string $default
+     * @return string
+     */
+    public static function nonEmptyOption($value, $default = '')
+    {
+        return empty($value) ? $default : $value;
+    }
+
+    /**
+     * Check whether a value is true or false.
+     * If it is not in the list, return the default value.
+     *
+     * @param string $needle
+     * @param string[] $haystack
+     * @param string $value
+     * @param bool $default
+     * @return bool
+     */
+    public static function isOption($needle, $value, $haystack = [], bool $default = false)
+    {
+        if (isset($haystack[$needle])) {
+            return $haystack[$needle] === $value;
+        }
+        return $default;
+    }
+
+    /**
      * Create a caption from a name or an identifier
      *
      * @param $name
@@ -858,6 +962,18 @@ class Attributes
         return [$value, $type];
     }
 
+    /**
+     * Get the prefix of a string
+     *
+     * @param string $value The input string
+     * @param string $separator The character that separates the prefix from the rest of the string
+     * @param string $default The default value if no prefix is found
+     * @return string
+     */
+    public static function getPrefix($value, $separator = ':', $default = '') {
+        $pos = strpos($value, $separator);
+        return ($pos !== false) ? substr($value, 0, $pos) : $default;
+    }
 
 }
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2024-09-17 16:55+0200\n"
+"POT-Creation-Date: 2025-03-02 14:16+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -22,657 +22,709 @@ msgstr ""
 msgid "Orphans could not be cleared."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/ArticlesController.php:224
+#: ./plugins/Epi/src/Controller/ArticlesController.php:206
 msgid "This article does not exist or is not published."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/ArticlesController.php:390
+#: ./plugins/Epi/src/Controller/ArticlesController.php:356
 msgid "The article has been saved."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/ArticlesController.php:395
+#: ./plugins/Epi/src/Controller/ArticlesController.php:361
 msgid "Could not save article, please try again."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/ArticlesController.php:496
-#: ./plugins/Epi/src/Controller/ProjectsController.php:142
-#: ./plugins/Epi/src/Controller/ProjectsController.php:161
-#: ./plugins/Epi/src/Controller/PropertiesController.php:192
-#: ./plugins/Epi/src/Controller/PropertiesController.php:322
-#: ./plugins/Epi/src/Controller/PropertiesController.php:351
-#: ./plugins/Epi/src/Controller/PropertiesController.php:374
+#: ./plugins/Epi/src/Controller/ArticlesController.php:463
+#: ./plugins/Epi/src/Controller/ProjectsController.php:141
+#: ./plugins/Epi/src/Controller/ProjectsController.php:160
+#: ./plugins/Epi/src/Controller/PropertiesController.php:257
+#: ./plugins/Epi/src/Controller/PropertiesController.php:378
+#: ./plugins/Epi/src/Controller/PropertiesController.php:407
+#: ./plugins/Epi/src/Controller/PropertiesController.php:430
 msgid "The table is open in EpiDesktop. Close or unlock in EpiDesktop."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/ArticlesController.php:548
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:284
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:433
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:514
+#: ./plugins/Epi/src/Controller/ArticlesController.php:515
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:292
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:452
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:550
 msgid "The job could not be created. Please, try again."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/ArticlesController.php:560
+#: ./plugins/Epi/src/Controller/ArticlesController.php:527
 msgid "Recovered tree of article {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:188
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:171
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:317
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:478
+msgid "Model not configured"
+msgstr ""
+
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:193
 msgid "The file could not be uploaded: {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:204
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:209
 msgid "The data could not be saved: {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:217
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:222
 msgid "Data is missing."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:293
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:301
 msgid "You need to post data to this endpoint."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/NotesController.php:88
-#: ./plugins/Epi/templates/Articles/view_document.php:119
+#: ./plugins/Epi/src/Controller/Component/TransferComponent.php:529
+msgid "You have no permission to execute the selected task."
+msgstr ""
+
+#: ./plugins/Epi/src/Controller/NotesController.php:86
+#: ./plugins/Epi/templates/Articles/view_document.php:127
 msgid "Notes"
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:186
-msgid "Only post requests are allowed."
+#: ./plugins/Epi/src/Controller/PropertiesController.php:236
+msgid "The property has been moved."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:208
+#: ./plugins/Epi/src/Controller/PropertiesController.php:241
+msgid "The property could not be moved. Please try again."
+msgstr ""
+
+#: ./plugins/Epi/src/Controller/PropertiesController.php:272
 msgid "Could not move property #{0} to the new target."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:215
+#: ./plugins/Epi/src/Controller/PropertiesController.php:279
 msgid "{0} of {1} properties could not be moved to their new target."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:220
+#: ./plugins/Epi/src/Controller/PropertiesController.php:284
 msgid "Moved {0} properties to new targets."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:250
-#: ./plugins/Epi/src/Controller/PropertiesController.php:288
+#: ./plugins/Epi/src/Controller/PropertiesController.php:315
+#: ./plugins/Epi/src/Controller/PropertiesController.php:344
 msgid "Missing source properties."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:267
+#: ./plugins/Epi/src/Controller/PropertiesController.php:333
 msgid "The properties have been merged."
 msgstr ""
 
-#: ./plugins/Epi/src/Controller/PropertiesController.php:274
-msgid "The properties could not be been merged. Please try again."
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Analytics/Analytics.php:176
-#: ./plugins/Epi/src/Model/Analytics/Analytics.php:181
+#: ./plugins/Epi/src/Model/Analytics/Analytics.php:168
+#: ./plugins/Epi/src/Model/Analytics/Analytics.php:173
 msgid "yes"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Analytics/Analytics.php:176
-#: ./plugins/Epi/src/Model/Analytics/Analytics.php:181
+#: ./plugins/Epi/src/Model/Analytics/Analytics.php:168
+#: ./plugins/Epi/src/Model/Analytics/Analytics.php:173
 msgid "no"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Analytics/Analytics.php:375
+#: ./plugins/Epi/src/Model/Analytics/Analytics.php:367
 msgid "{0} articles"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Analytics/Analytics.php:379
+#: ./plugins/Epi/src/Model/Analytics/Analytics.php:371
 msgid "{0} paths"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:213
+#: ./plugins/Epi/src/Model/Entity/Article.php:305
 msgid "Sections"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:225
+#: ./plugins/Epi/src/Model/Entity/Article.php:317
 msgid "Metadata"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:267
-#: ./plugins/Epi/src/Model/Entity/Article.php:998
-#: ./plugins/Epi/src/Model/Entity/Section.php:638
+#: ./plugins/Epi/src/Model/Entity/Article.php:359
+#: ./plugins/Epi/src/Model/Entity/Article.php:1061
+#: ./plugins/Epi/src/Model/Entity/Section.php:669
 msgid "Section"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:369
-#: ./plugins/Epi/src/Model/Entity/Footnote.php:202
-#: ./plugins/Epi/src/Model/Entity/Item.php:341
-#: ./plugins/Epi/src/Model/Entity/Section.php:583
+#: ./plugins/Epi/src/Model/Entity/Article.php:461
+#: ./plugins/Epi/src/Model/Entity/Footnote.php:198
+#: ./plugins/Epi/src/Model/Entity/Item.php:401
+#: ./plugins/Epi/src/Model/Entity/Section.php:612
 msgid "Footnote"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:384
-#: ./plugins/Epi/src/Model/Entity/Section.php:900
+#: ./plugins/Epi/src/Model/Entity/Article.php:477
+#: ./plugins/Epi/src/Model/Entity/Section.php:957
 msgid "Article"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:487
+#: ./plugins/Epi/src/Model/Entity/Article.php:582
 msgid "The article contains {0} items outside of a section. Ask your personal SQL hacker for help."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:554
+#: ./plugins/Epi/src/Model/Entity/Article.php:649
 msgid "The article contains {0} with empty types. Ask your personal SQL hacker for help."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:568
+#: ./plugins/Epi/src/Model/Entity/Article.php:663
 msgid "The article contains undefined {0} types {1}. "
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1278
+#: ./plugins/Epi/src/Model/Entity/Article.php:1383
 msgid "Article type"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1286
+#: ./plugins/Epi/src/Model/Entity/Article.php:1391
 msgid "Project"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1294
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1361
+#: ./plugins/Epi/src/Model/Entity/Article.php:1399
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1592
 msgid "Title"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1300
+#: ./plugins/Epi/src/Model/Entity/Article.php:1405
 msgid "Article number"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1301
-msgid "A number used to identify articles, e.g. a signature."
+#: ./plugins/Epi/src/Model/Entity/Article.php:1406
+msgid "A number or string used to identify articles, e.g. a signature."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1306
-#: ./plugins/Epi/src/Model/Entity/Project.php:217
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:183
-msgid "Sorting"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Article.php:1307
-msgid "A number used to sort articles."
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Article.php:1312
-msgid "Status"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Article.php:1318
-#: ./plugins/Epi/src/Model/Entity/Project.php:231
-#: ./plugins/Epi/src/Model/Entity/Property.php:617
-#: ./plugins/Epi/src/Model/Entity/Type.php:289
-#: ./plugins/Epi/src/Model/Entity/User.php:218
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1363
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2146
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:742
-#: ./plugins/Epi/src/Model/Table/UsersTable.php:149
-#: ./plugins/Epi/templates/Properties/merge_select.php:60
-#: ./plugins/Epi/templates/Properties/view.php:41
-#: ./plugins/Epi/templates/Properties/view.php:59
-#: ./plugins/Epi/templates/Properties/view.php:78
-#: ./plugins/Epi/templates/Properties/view.php:96
-#: ./plugins/Epi/templates/Properties/view.php:118
-msgid "IRI fragment"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Article.php:1323
-#: ./plugins/Epi/src/Model/Entity/Project.php:239
-#: ./plugins/Epi/src/Model/Entity/User.php:229
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1364
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2153
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:749
+#: ./plugins/Epi/src/Model/Entity/Article.php:1416
+#: ./plugins/Epi/src/Model/Entity/Project.php:248
+#: ./plugins/Epi/src/Model/Entity/User.php:236
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1595
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2192
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:753
 msgid "IRI path"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1329
-#: ./plugins/Epi/src/Model/Entity/Project.php:245
-#: ./plugins/Epi/src/Model/Entity/Property.php:612
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2144
+#: ./plugins/Epi/src/Model/Entity/Article.php:1417
+msgid "A global identifier, automatically generated from the ID."
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1424
+msgid "Status"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1425
+msgid "Your personal status markers for the article."
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1431
+#: ./plugins/Epi/src/Model/Entity/Project.php:226
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:175
+msgid "Sorting"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1432
+msgid "A number used to sort articles."
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1438
+#: ./plugins/Epi/src/Model/Entity/Project.php:263
+#: ./plugins/Epi/src/Model/Entity/Property.php:765
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:209
+#: ./plugins/Epi/src/View/Helper/TypesHelper.php:89
+#: ./plugins/Epi/templates/Sections/view_metrics.php:35
+msgid "Progress"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1439
+msgid "Non-published articles are not visible to guest users."
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Article.php:1448
+#: ./plugins/Epi/src/Model/Entity/Project.php:254
+#: ./plugins/Epi/src/Model/Entity/Property.php:777
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2183
 #: ./plugins/Epi/templates/Sections/view_normdata.php:19
 msgid "Norm data"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1335
-#: ./plugins/Epi/src/Model/Entity/Project.php:254
-#: ./plugins/Epi/src/Model/Entity/Property.php:600
-#: ./plugins/Epi/src/Model/Entity/Type.php:280
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:217
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:735
-#: ./plugins/Epi/templates/Sections/view_metrics.php:35
-msgid "Published"
+#: ./plugins/Epi/src/Model/Entity/Article.php:1449
+msgid "Each line is interpreted as a prefixed identifier, e.g. a URN."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1343
+#: ./plugins/Epi/src/Model/Entity/Article.php:1457
+#: ./plugins/Epi/src/Model/Entity/Property.php:787
 msgid "Created on"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1349
+#: ./plugins/Epi/src/Model/Entity/Article.php:1463
+#: ./plugins/Epi/src/Model/Entity/Property.php:793
 msgid "Created by"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1356
+#: ./plugins/Epi/src/Model/Entity/Article.php:1470
+#: ./plugins/Epi/src/Model/Entity/Property.php:800
 msgid "Last modified"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Article.php:1361
+#: ./plugins/Epi/src/Model/Entity/Article.php:1475
+#: ./plugins/Epi/src/Model/Entity/Property.php:805
 msgid "Modified by"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:798
+#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:856
 msgid "Missing link record for element ID {0}. "
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:978
+#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:1026
 msgid "Error encoding XML: {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:992
-#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:1003
+#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:1040
+#: ./plugins/Epi/src/Model/Entity/BaseEntity.php:1051
 msgid "Error encoding JSON: {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Item.php:360
-#: ./plugins/Epi/src/Model/Entity/Section.php:602
+#: ./plugins/Epi/src/Model/Entity/Item.php:420
+#: ./plugins/Epi/src/Model/Entity/Section.php:631
 msgid "Annotation"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Item.php:376
-#: ./plugins/Epi/src/Model/Entity/Section.php:618
+#: ./plugins/Epi/src/Model/Entity/Item.php:436
+#: ./plugins/Epi/src/Model/Entity/Section.php:647
 msgid "Tag"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Item.php:377
-#: ./plugins/Epi/src/Model/Entity/Item.php:378
-#: ./plugins/Epi/src/Model/Entity/Section.php:619
-#: ./plugins/Epi/src/Model/Entity/Section.php:620
+#: ./plugins/Epi/src/Model/Entity/Item.php:437
+#: ./plugins/Epi/src/Model/Entity/Item.php:438
+#: ./plugins/Epi/src/Model/Entity/Section.php:648
+#: ./plugins/Epi/src/Model/Entity/Section.php:649
 msgid "Annotation text"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Item.php:389
-#: ./plugins/Epi/templates/Sections/sec_stack.php:49
+#: ./plugins/Epi/src/Model/Entity/Item.php:451
 msgid "Content"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Item.php:448
+#: ./plugins/Epi/src/Model/Entity/Item.php:511
 msgid "Missing property {to_tab}-{to_id} in field {from_tab}-{from_id}.{from_field}."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:276
+#: ./plugins/Epi/src/Model/Entity/Link.php:325
 msgid "Missing target property in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:279
+#: ./plugins/Epi/src/Model/Entity/Link.php:329
 msgid "Missing target article in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:282
+#: ./plugins/Epi/src/Model/Entity/Link.php:333
 msgid "Missing target section in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:285
+#: ./plugins/Epi/src/Model/Entity/Link.php:337
 msgid "Missing target footnote in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:289
+#: ./plugins/Epi/src/Model/Entity/Link.php:342
 msgid "Missing source data in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:293
+#: ./plugins/Epi/src/Model/Entity/Link.php:347
 msgid "Missing tag ID in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Link.php:297
+#: ./plugins/Epi/src/Model/Entity/Link.php:352
 msgid "Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:203
+#: ./plugins/Epi/src/Model/Entity/Project.php:212
 msgid "Project type"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:208
-#: ./plugins/Epi/src/Model/Entity/Property.php:529
-#: ./plugins/Epi/src/Model/Entity/Section.php:894
-#: ./plugins/Epi/src/Model/Entity/Type.php:235
-#: ./plugins/Epi/src/Model/Entity/User.php:194
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:197
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2126
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:672
-#: ./plugins/Epi/src/Model/Table/UsersTable.php:146
+#: ./plugins/Epi/src/Model/Entity/Project.php:217
+#: ./plugins/Epi/src/Model/Entity/Property.php:683
+#: ./plugins/Epi/src/Model/Entity/Section.php:951
+#: ./plugins/Epi/src/Model/Entity/Type.php:307
+#: ./plugins/Epi/src/Model/Entity/User.php:201
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:189
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2165
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:679
+#: ./plugins/Epi/src/Model/Table/UsersTable.php:143
 msgid "Name"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:211
+#: ./plugins/Epi/src/Model/Entity/Project.php:220
 msgid "Shortname"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:212
+#: ./plugins/Epi/src/Model/Entity/Project.php:221
 msgid "An abbreviation that only contains letters and numbers, no whitespace or special characters."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:218
+#: ./plugins/Epi/src/Model/Entity/Project.php:227
 msgid "A number used to sort projects."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:222
-#: ./plugins/Epi/src/Model/Entity/Type.php:266
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:231
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:702
+#: ./plugins/Epi/src/Model/Entity/Project.php:231
+#: ./plugins/Epi/src/Model/Entity/Type.php:335
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:223
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:713
 msgid "Description"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:232
+#: ./plugins/Epi/src/Model/Entity/Project.php:240
+#: ./plugins/Epi/src/Model/Entity/Property.php:783
+#: ./plugins/Epi/src/Model/Entity/Type.php:354
+#: ./plugins/Epi/src/Model/Entity/User.php:225
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1594
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2185
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:747
+#: ./plugins/Epi/src/Model/Table/UsersTable.php:146
+#: ./plugins/Epi/templates/Properties/merge_select.php:60
+#: ./plugins/Epi/templates/Properties/view.php:43
+#: ./plugins/Epi/templates/Properties/view.php:61
+#: ./plugins/Epi/templates/Properties/view.php:80
+#: ./plugins/Epi/templates/Properties/view.php:98
+#: ./plugins/Epi/templates/Properties/view.php:120
+msgid "IRI fragment"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Project.php:241
 msgid "In combination with the project type,  identifies the project within the universe and should not be  changed later. Usually the same as the signature."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:248
+#: ./plugins/Epi/src/Model/Entity/Project.php:257
 msgid "Multiple identifiers or URLs can be entered on multiple lines. Namespaces can be used if they are configured in the project type."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:261
-#: ./plugins/Epi/src/Model/Entity/User.php:235
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:756
+#: ./plugins/Epi/src/Model/Entity/Project.php:270
+#: ./plugins/Epi/src/Model/Entity/User.php:242
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:759
 msgid "Created"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Project.php:266
-#: ./plugins/Epi/src/Model/Entity/User.php:240
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1362
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:763
+#: ./plugins/Epi/src/Model/Entity/Project.php:275
+#: ./plugins/Epi/src/Model/Entity/User.php:247
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1593
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:765
 #: ./plugins/Epi/templates/Properties/merge_select.php:61
-#: ./plugins/Epi/templates/Properties/view.php:42
-#: ./plugins/Epi/templates/Properties/view.php:60
-#: ./plugins/Epi/templates/Properties/view.php:79
-#: ./plugins/Epi/templates/Properties/view.php:97
-#: ./plugins/Epi/templates/Properties/view.php:119
+#: ./plugins/Epi/templates/Properties/view.php:44
+#: ./plugins/Epi/templates/Properties/view.php:62
+#: ./plugins/Epi/templates/Properties/view.php:81
+#: ./plugins/Epi/templates/Properties/view.php:99
+#: ./plugins/Epi/templates/Properties/view.php:121
 msgid "Modified"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:425
-msgid "Add after node ..."
+#: ./plugins/Epi/src/Model/Entity/Property.php:574
+msgid "After node ..."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:426
-msgid "Add as child node of ..."
+#: ./plugins/Epi/src/Model/Entity/Property.php:575
+msgid "First child of ..."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:441
+#: ./plugins/Epi/src/Model/Entity/Property.php:590
 msgid "Image"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:452
+#: ./plugins/Epi/src/Model/Entity/Property.php:602
 msgid "Parent"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:470
-msgid "Position"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Property.php:478
-msgid "Reference"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Property.php:501
-msgid "Ancestors"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Entity/Property.php:508
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2125
+#: ./plugins/Epi/src/Model/Entity/Property.php:621
+#: ./plugins/Epi/src/Model/Entity/Property.php:660
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2164
 msgid "Lemma"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:513
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2161
+#: ./plugins/Epi/src/Model/Entity/Property.php:628
+msgid "Position"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Property.php:636
+msgid "Reference"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Property.php:653
+msgid "Ancestors"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Property.php:666
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2200
 msgid "Related"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:534
+#: ./plugins/Epi/src/Model/Entity/Property.php:689
 msgid "Meta property"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:551
+#: ./plugins/Epi/src/Model/Entity/Property.php:707
 msgid "Sort Key"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:556
+#: ./plugins/Epi/src/Model/Entity/Property.php:712
 msgid "Unit"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:566
+#: ./plugins/Epi/src/Model/Entity/Property.php:724
 msgid "Elements"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:571
+#: ./plugins/Epi/src/Model/Entity/Property.php:730
 msgid "Source"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:576
-#: ./plugins/Epi/src/Model/Entity/Type.php:272
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:690
-#: ./plugins/Epi/templates/Properties/index.php:43
-#: ./plugins/Epi/templates/Sections/sec_stack.php:53
+#: ./plugins/Epi/src/Model/Entity/Property.php:736
+#: ./plugins/Epi/src/Model/Entity/Type.php:341
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:702
 msgid "Category"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:581
+#: ./plugins/Epi/src/Model/Entity/Property.php:742
 msgid "Hidden"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:586
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2130
+#: ./plugins/Epi/src/Model/Entity/Property.php:748
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2169
 msgid "Comment"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:592
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2131
+#: ./plugins/Epi/src/Model/Entity/Property.php:755
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2170
 msgid "Keywords"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:596
-#: ./plugins/Epi/src/Model/Entity/Type.php:276
-#: ./plugins/Epi/src/Model/Entity/Type.php:285
+#: ./plugins/Epi/src/Model/Entity/Property.php:760
+#: ./plugins/Epi/src/Model/Entity/Type.php:350
 #: ./plugins/Epi/templates/Analytics/integrity.php:40
 msgid "Number"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Property.php:607
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:203
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2133
+#: ./plugins/Epi/src/Model/Entity/Property.php:772
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:195
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2172
 msgid "Articles"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/RootEntity.php:181
+#: ./plugins/Epi/src/Model/Entity/Property.php:811
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:667
+msgid "ID"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/RootEntity.php:191
 msgid "Missing {type} {from_tagname}#{from_tagid} in field {from_tab}-{from_id}.{from_field}."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/RootEntity.php:197
+#: ./plugins/Epi/src/Model/Entity/RootEntity.php:206
 msgid "Missing configuration for {type} {from_tagname}#{from_tagid} in field {from_tab}-{from_id}.{from_field}."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Section.php:886
+#: ./plugins/Epi/src/Model/Entity/Section.php:943
 msgid "Section type"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Section.php:907
+#: ./plugins/Epi/src/Model/Entity/Section.php:964
 msgid "Parent section"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Section.php:914
+#: ./plugins/Epi/src/Model/Entity/Section.php:971
 msgid "Previous section"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Type.php:156
+#: ./plugins/Epi/src/Model/Entity/Type.php:175
 msgid "Error parsing JSON: {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Type.php:239
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:665
-#: ./plugins/Epi/templates/Transfer/transfer.php:86
+#: ./plugins/Epi/src/Model/Entity/Type.php:300
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:673
+#: ./plugins/Epi/templates/Transfer/transfer.php:93
 msgid "Scope"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Type.php:246
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:709
+#: ./plugins/Epi/src/Model/Entity/Type.php:311
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:718
 msgid "Config"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Type.php:255
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:678
+#: ./plugins/Epi/src/Model/Entity/Type.php:320
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:684
 msgid "Mode"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/Type.php:262
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:696
-#: ./plugins/Epi/templates/Properties/view.php:95
-#: ./plugins/Epi/templates/Properties/view.php:117
+#: ./plugins/Epi/src/Model/Entity/Type.php:327
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:690
+msgid "Preset"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/Type.php:331
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:708
+#: ./plugins/Epi/templates/Properties/view.php:97
+#: ./plugins/Epi/templates/Properties/view.php:119
 msgid "Caption"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:135
-#: ./plugins/Epi/src/Model/Entity/User.php:204
+#: ./plugins/Epi/src/Model/Entity/Type.php:345
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:741
+msgid "Published"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Entity/User.php:140
+#: ./plugins/Epi/src/Model/Entity/User.php:211
 msgid "User role"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:164
+#: ./plugins/Epi/src/Model/Entity/User.php:171
 msgid "Human"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:195
+#: ./plugins/Epi/src/Model/Entity/User.php:202
 msgid "The full name of the user."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:199
-#: ./plugins/Epi/src/Model/Table/UsersTable.php:147
+#: ./plugins/Epi/src/Model/Entity/User.php:206
+#: ./plugins/Epi/src/Model/Table/UsersTable.php:144
 msgid "Acronym"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:200
+#: ./plugins/Epi/src/Model/Entity/User.php:207
 msgid "The first letters of the name in upper case."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:211
+#: ./plugins/Epi/src/Model/Entity/User.php:218
 msgid "User type"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Entity/User.php:223
+#: ./plugins/Epi/src/Model/Entity/User.php:230
 msgid "The IRI fragment is used to match project users to general Epigraf users.  The IRI identifies the user within the universe and should not be changed later."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1466
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1740
 msgid "Skipped {0} not geocoded records."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1469
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1743
 msgid "Please note that the data may contain non-validated locations guessed by naive algorithms."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1689
+#: ./plugins/Epi/src/Model/Table/ArticlesTable.php:1871
 msgid "Collections"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:190
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:182
 msgid "Short name"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:224
+#: ./plugins/Epi/src/Model/Table/ProjectsTable.php:216
 msgid "IRI"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:412
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:425
 msgid "Self-links will collapse the universe. Don't."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2104
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:642
+#: ./plugins/Epi/templates/Properties/add.php:27
+#: ./plugins/Epi/templates/Properties/edit.php:19
+#: ./plugins/Epi/templates/Properties/index_input.php:29
+#: ./plugins/Epi/templates/Properties/index_select.php:27
+#: ./plugins/Epi/templates/Properties/merge.php:23
+#: ./plugins/Epi/templates/Properties/move.php:19
+#: ./plugins/Epi/templates/Properties/view.php:22
+#: ./plugins/Epi/templates/Types/index.php:80
+msgid "Categories"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2131
+msgid "Could not create merged property"
+msgstr ""
+
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2143
 msgid "Could not merge properties: {0}"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2127
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2166
 msgid "Sort key"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2128
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2167
 msgid "Hide name"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2129
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2168
 msgid "Group"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2142
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2181
 #: ./plugins/Epi/templates/Articles/items.php:22
 msgid "Items"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2143
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2182
 msgid "Links"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2160
+#: ./plugins/Epi/src/Model/Table/PropertiesTable.php:2199
 msgid "Level"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:320
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:321
 msgid "Could not parse JSON data, please check you syntax"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:448
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:452
 msgid "For {0}, the {1} configuration is missing."
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:658
-msgid "ID"
-msgstr ""
-
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:684
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:696
 msgid "Sort"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:718
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:726
 msgid "Shortcut"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/TypesTable.php:726
+#: ./plugins/Epi/src/Model/Table/TypesTable.php:733
 msgid "Tag type"
 msgstr ""
 
-#: ./plugins/Epi/src/Model/Table/UsersTable.php:148
+#: ./plugins/Epi/src/Model/Table/UsersTable.php:145
 msgid "Rolle"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files.php:36
+#: ./plugins/Epi/templates/Analytics/files.php:32
 msgid "Item type"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files.php:37
-#: ./plugins/Epi/templates/Analytics/files.php:60
+#: ./plugins/Epi/templates/Analytics/files.php:33
+#: ./plugins/Epi/templates/Analytics/files.php:54
 msgid "File type"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files.php:38
-#: ./plugins/Epi/templates/Analytics/files.php:61
+#: ./plugins/Epi/templates/Analytics/files.php:34
+#: ./plugins/Epi/templates/Analytics/files.php:55
 msgid "Wanted"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files.php:39
+#: ./plugins/Epi/templates/Analytics/files.php:35
 msgid "Online"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files.php:40
+#: ./plugins/Epi/templates/Analytics/files.php:36
 msgid "Available"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files.php:41
-#: ./plugins/Epi/templates/Analytics/files.php:62
+#: ./plugins/Epi/templates/Analytics/files.php:37
+#: ./plugins/Epi/templates/Analytics/files.php:56
 msgid "Missing"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files_cases.php:40
-#: ./plugins/Epi/templates/Analytics/files_cases.php:66
+#: ./plugins/Epi/templates/Analytics/files_cases.php:51
+#: ./plugins/Epi/templates/Analytics/files_cases.php:77
 #: ./plugins/Epi/templates/Analytics/integrity.php:44
 #: ./plugins/Epi/templates/Analytics/integrity_cases.php:36
 msgid "Actions"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/files_cases.php:53
-#: ./plugins/Epi/templates/Analytics/files_cases.php:76
+#: ./plugins/Epi/templates/Analytics/files_cases.php:64
+#: ./plugins/Epi/templates/Analytics/files_cases.php:87
 msgid "View"
 msgstr ""
 
@@ -698,7 +750,7 @@ msgid "Target"
 msgstr ""
 
 #: ./plugins/Epi/templates/Analytics/integrity.php:43
-#: ./plugins/Epi/templates/Analytics/types.php:42
+#: ./plugins/Epi/templates/Analytics/types.php:44
 msgid "Type"
 msgstr ""
 
@@ -715,7 +767,7 @@ msgid "Are you sure you want to clear the selected orphans?"
 msgstr ""
 
 #: ./plugins/Epi/templates/Analytics/integrity_cases.php:30
-#: ./plugins/Epi/templates/Transfer/transfer.php:81
+#: ./plugins/Epi/templates/Transfer/transfer.php:88
 msgid "Table"
 msgstr ""
 
@@ -739,12 +791,12 @@ msgstr ""
 msgid "Desktop"
 msgstr ""
 
-#: ./plugins/Epi/templates/Analytics/types.php:58
+#: ./plugins/Epi/templates/Analytics/types.php:60
 msgid "total"
 msgstr ""
 
 #: ./plugins/Epi/templates/Articles/add.php:20
-#: ./plugins/Epi/templates/Articles/index.php:74
+#: ./plugins/Epi/templates/Articles/index.php:71
 msgid "Create article"
 msgstr ""
 
@@ -756,78 +808,92 @@ msgstr ""
 msgid "Are you sure you want to delete the article \"{0}\"?"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index.php:81
+#: ./plugins/Epi/templates/Articles/index.php:78
 #: ./plugins/Epi/templates/Projects/index.php:79
-#: ./plugins/Epi/templates/Properties/index.php:115
+#: ./plugins/Epi/templates/Properties/index.php:112
 #: ./plugins/Epi/templates/Transfer/import.php:34
 #: ./plugins/Epi/templates/Transfer/preview.php:98
 #: ./plugins/Epi/templates/Types/index.php:102
 msgid "Import"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index.php:84
+#: ./plugins/Epi/templates/Articles/index.php:81
 #: ./plugins/Epi/templates/Projects/index.php:88
-#: ./plugins/Epi/templates/Properties/index.php:127
-#: ./plugins/Epi/templates/Transfer/transfer.php:46
+#: ./plugins/Epi/templates/Properties/index.php:124
+#: ./plugins/Epi/templates/Transfer/transfer.php:48
 #: ./plugins/Epi/templates/Types/index.php:106
 msgid "Transfer"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index.php:94
-#: ./plugins/Epi/templates/Properties/index.php:138
+#: ./plugins/Epi/templates/Articles/index.php:91
+#: ./plugins/Epi/templates/Properties/index.php:135
 msgid "Mutate"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:15
-#: ./plugins/Epi/templates/Articles/index_facets.php:25
+#: ./plugins/Epi/templates/Articles/index_facets.php:21
+#: ./plugins/Epi/templates/Articles/index_facets.php:31
 #: ./plugins/Epi/templates/Projects/add.php:21
 #: ./plugins/Epi/templates/Projects/edit.php:21
 #: ./plugins/Epi/templates/Projects/view.php:20
+#: ./plugins/Epi/templates/Properties/index.php:74
 msgid "Projects"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:34
+#: ./plugins/Epi/templates/Articles/index_facets.php:40
 msgid "Filter projects"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:35
-#: ./plugins/Epi/templates/Articles/index_facets.php:122
-#: ./plugins/Epi/templates/Articles/index_facets.php:166
+#: ./plugins/Epi/templates/Articles/index_facets.php:41
+#: ./plugins/Epi/templates/Articles/index_facets.php:124
+#: ./plugins/Epi/templates/Articles/index_facets.php:178
 msgid "Reset filter"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:45
+#: ./plugins/Epi/templates/Articles/index_facets.php:51
 msgid "Article types"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:60
+#: ./plugins/Epi/templates/Articles/index_facets.php:66
 msgid "Article state"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:121
-#: ./plugins/Epi/templates/Articles/index_facets.php:165
+#: ./plugins/Epi/templates/Articles/index_facets.php:123
+#: ./plugins/Epi/templates/Articles/index_facets.php:177
 msgid "Filter properties"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_facets.php:126
-#: ./plugins/Epi/templates/Articles/index_facets.php:129
-#: ./plugins/Epi/templates/Articles/index_facets.php:170
-#: ./plugins/Epi/templates/Articles/index_facets.php:171
+#: ./plugins/Epi/templates/Articles/index_facets.php:128
+#: ./plugins/Epi/templates/Articles/index_facets.php:182
+msgid "Return articles with the selected properties or their children."
+msgstr ""
+
+#: ./plugins/Epi/templates/Articles/index_facets.php:131
+#: ./plugins/Epi/templates/Articles/index_facets.php:183
 msgid "Include descendants"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_search.php:28
+#: ./plugins/Epi/templates/Articles/index_facets.php:139
+#: ./plugins/Epi/templates/Articles/index_facets.php:185
+msgid "Show only articles without the selected properties. If no properties are selected, articles without any of the properties are returned."
+msgstr ""
+
+#: ./plugins/Epi/templates/Articles/index_facets.php:142
+#: ./plugins/Epi/templates/Articles/index_facets.php:186
+msgid "Invert selection"
+msgstr ""
+
+#: ./plugins/Epi/templates/Articles/index_search.php:35
 #: ./plugins/Epi/templates/Projects/index.php:40
-#: ./plugins/Epi/templates/Properties/index.php:77
+#: ./plugins/Epi/templates/Properties/index.php:62
 #: ./plugins/Epi/templates/Types/index.php:40
 msgid "Search"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_search.php:29
+#: ./plugins/Epi/templates/Articles/index_search.php:36
 msgid "Search articles"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/index_search.php:38
+#: ./plugins/Epi/templates/Articles/index_search.php:45
 msgid "Filter"
 msgstr ""
 
@@ -841,7 +907,7 @@ msgstr ""
 
 #: ./plugins/Epi/templates/Articles/recovertree.php:31
 #: ./plugins/Epi/templates/Articles/recovertree.php:36
-#: ./plugins/Epi/templates/Properties/index.php:175
+#: ./plugins/Epi/templates/Properties/index.php:172
 #: ./plugins/Epi/templates/Transfer/import.php:53
 msgid "Cancel"
 msgstr ""
@@ -854,19 +920,19 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/view_document.php:107
+#: ./plugins/Epi/templates/Articles/view_document.php:118
 msgid "Footnotes"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/view_document.php:128
+#: ./plugins/Epi/templates/Articles/view_document.php:136
 msgid "Backlinks"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/view_document.php:173
+#: ./plugins/Epi/templates/Articles/view_document.php:188
 msgid "Open article"
 msgstr ""
 
-#: ./plugins/Epi/templates/Articles/view_document.php:185
+#: ./plugins/Epi/templates/Articles/view_document.php:206
 msgid "EpiDesktop"
 msgstr ""
 
@@ -896,16 +962,6 @@ msgstr ""
 msgid "Show articles"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/add.php:27
-#: ./plugins/Epi/templates/Properties/edit.php:19
-#: ./plugins/Epi/templates/Properties/index_input.php:27
-#: ./plugins/Epi/templates/Properties/index_select.php:26
-#: ./plugins/Epi/templates/Properties/merge.php:23
-#: ./plugins/Epi/templates/Properties/view.php:20
-#: ./plugins/Epi/templates/Types/index.php:80
-msgid "Categories"
-msgstr ""
-
 #: ./plugins/Epi/templates/Properties/delete.php:20
 msgid "Delete property"
 msgstr ""
@@ -914,28 +970,34 @@ msgstr ""
 msgid "Are you sure you want to delete the property \"{0}[#{1}][{2}]\"?"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/index.php:61
+#: ./plugins/Epi/templates/Properties/index.php:45
+msgid "Jump"
+msgstr ""
+
+#: ./plugins/Epi/templates/Properties/index.php:46
 msgid "Jump to letter, e.g. type \"Me > b\" "
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/index.php:78
+#: ./plugins/Epi/templates/Properties/index.php:63
 msgid "Search properties"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/index.php:106
+#: ./plugins/Epi/templates/Properties/index.php:103
 msgid "Create property"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/index.php:149
+#: ./plugins/Epi/templates/Properties/index.php:146
+#: ./plugins/Epi/templates/Properties/move.php:20
+#: ./plugins/Epi/templates/Properties/view.php:154
 msgid "Move"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/index.php:162
+#: ./plugins/Epi/templates/Properties/index.php:159
 msgid "Save"
 msgstr ""
 
 #: ./plugins/Epi/templates/Properties/merge.php:24
-#: ./plugins/Epi/templates/Properties/view.php:141
+#: ./plugins/Epi/templates/Properties/view.php:143
 msgid "Merge"
 msgstr ""
 
@@ -945,7 +1007,7 @@ msgstr ""
 
 #: ./plugins/Epi/templates/Properties/merge_preview.php:39
 #: ./plugins/Epi/templates/Transfer/import.php:52
-#: ./plugins/Epi/templates/Transfer/transfer.php:124
+#: ./plugins/Epi/templates/Transfer/transfer.php:117
 msgid "Preview"
 msgstr ""
 
@@ -962,29 +1024,29 @@ msgid "Source properties"
 msgstr ""
 
 #: ./plugins/Epi/templates/Properties/merge_select.php:59
-#: ./plugins/Epi/templates/Properties/view.php:40
-#: ./plugins/Epi/templates/Properties/view.php:58
-#: ./plugins/Epi/templates/Properties/view.php:77
+#: ./plugins/Epi/templates/Properties/view.php:42
+#: ./plugins/Epi/templates/Properties/view.php:60
+#: ./plugins/Epi/templates/Properties/view.php:79
 msgid "Path"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/view.php:34
+#: ./plugins/Epi/templates/Properties/view.php:36
 msgid "Merged from"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/view.php:52
+#: ./plugins/Epi/templates/Properties/view.php:54
 msgid "Similar lemmata"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/view.php:71
+#: ./plugins/Epi/templates/Properties/view.php:73
 msgid "Versions"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/view.php:89
+#: ./plugins/Epi/templates/Properties/view.php:91
 msgid "Used in articles"
 msgstr ""
 
-#: ./plugins/Epi/templates/Properties/view.php:111
+#: ./plugins/Epi/templates/Properties/view.php:113
 msgid "Base properties"
 msgstr ""
 
@@ -1028,12 +1090,7 @@ msgstr ""
 msgid "Task"
 msgstr ""
 
-#: ./plugins/Epi/templates/Transfer/mutate.php:59
-#: ./plugins/Epi/templates/Transfer/transfer.php:106
-msgid "Parameters"
-msgstr ""
-
-#: ./plugins/Epi/templates/Transfer/mutate.php:78
+#: ./plugins/Epi/templates/Transfer/mutate.php:79
 msgid "Start"
 msgstr ""
 
@@ -1041,20 +1098,20 @@ msgstr ""
 msgid "{0} records"
 msgstr ""
 
-#: ./plugins/Epi/templates/Transfer/transfer.php:41
+#: ./plugins/Epi/templates/Transfer/transfer.php:43
 msgid "Transfer from {0} into {1}"
 msgstr ""
 
-#: ./plugins/Epi/templates/Transfer/transfer.php:57
+#: ./plugins/Epi/templates/Transfer/transfer.php:63
 msgid "Source database"
 msgstr ""
 
-#: ./plugins/Epi/templates/Transfer/transfer.php:62
+#: ./plugins/Epi/templates/Transfer/transfer.php:68
 msgid "Target database"
 msgstr ""
 
-#: ./plugins/Epi/templates/Transfer/transfer.php:93
-msgid "Options"
+#: ./plugins/Epi/templates/Transfer/transfer.php:102
+msgid "Parameters"
 msgstr ""
 
 #: ./plugins/Epi/templates/Types/add.php:21

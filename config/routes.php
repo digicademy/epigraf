@@ -104,6 +104,11 @@ return function (RouteBuilder $routes): void {
             ['plugin' => 'Epi', 'database' => DATABASE_PUBLIC, 'controller' => 'Iris', 'action' => 'show']
         );
 
+        /* Services */
+        $builder->connect('/services/{service}/*', ['controller' => 'Services', 'action' => 'get'])
+            ->setPass(['service'])
+            ->setPatterns(['service' => '[a-z0-9_-]+']);
+
         /**
          * Connect catchall routes for all controllers.
          *
@@ -127,8 +132,14 @@ return function (RouteBuilder $routes): void {
     /**
      * Add token to links
      *
-     */
-    Router::addUrlFilter(function (array $params, ServerRequest $request) {
+     * @params array $params
+     * * @params ServerRequest $request
+    */
+    Router::addUrlFilter(function (array $params, $request) {
+
+        if (empty($request)) {
+            return $params;
+        }
 
         // For users controller, remove token
         if ((strtolower($params['controller'] ?? '')) == 'users') {
@@ -154,14 +165,21 @@ return function (RouteBuilder $routes): void {
      *
      * Based on the current request and the target URL,
      * the parameter is passed as routing parameter or as query parameter
-     */
-    Router::addUrlFilter(function (array $params, ServerRequest $request) {
+     *
+     * @params array $params
+     * @params ServerRequest $request
+    */
+    Router::addUrlFilter(function (array $params, $request) {
+        if (empty($request)) {
+            return $params;
+        }
+
         $database = $request->getParam('database') ?? $request->getQuery('database');
         if (isset($params['database']) && ($params['database'] === false)) {
             unset($params['?']['database']);
             unset($params['database']);
         }
-        else if ($database) {
+        elseif ($database) {
 
             // URLs completely outside the plugin
             if (!$request->getParam('plugin') && !isset($params['database'])) {
@@ -177,7 +195,6 @@ return function (RouteBuilder $routes): void {
             elseif ($request->getParam('plugin') && !isset($params['database'])) {
                 $params['database'] = $database;
             }
-
         }
 
         // Remove database parameter for login & logout
@@ -194,8 +211,14 @@ return function (RouteBuilder $routes): void {
     /**
      * Persist active theme parameter
      *
+     * @params array $params
+     * @params ServerRequest $request
      */
-    Router::addUrlFilter(function (array $params, ServerRequest $request) {
+    Router::addUrlFilter(function (array $params, $request) {
+        if (empty($request)) {
+            return $params;
+        }
+
         $theme = $request->getQuery('theme', 'default');
         if ($theme !== 'default') {
             $params['?']['theme'] = $theme;
@@ -203,4 +226,5 @@ return function (RouteBuilder $routes): void {
 
         return $params;
     });
+
 };

@@ -168,6 +168,7 @@ database connection, data folders, and the cache. You can use `config/app.defaul
 as a blueprint.
 
 ```
+cp docker/deploy/app.php config/app.deploy.php
 cp docker/deploy/Dockerfile Dockerfile
 
 docker build -t registry.gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epigraf/production .

@@ -10,6 +10,9 @@
 
 namespace Epi\Model\Entity;
 
+use App\Datasource\Services\ServiceFactory;
+use App\Utilities\Converters\Attributes;
+use App\Utilities\Converters\Strings;
 use Cake\ORM\Query;
 use Epi\Model\Traits\TreeTrait;
 
@@ -74,6 +77,11 @@ use Epi\Model\Traits\TreeTrait;
  * @property null|Property $preceding
  * @property array $positionOptions
  * @property array $htmlFields
+ *
+ * # From the the TreeTrait
+ * @property string $path
+ * @property string $parentPath
+ * @property Property $parentNode
  *
  * # Relations
  * @property Query $articles
@@ -251,6 +259,7 @@ class Property extends RootEntity
         'id',
         'created',
         'modified',
+        'published',
         'parent_id',
         'type' => 'propertytype', //TODO: rename in database
         'related_id',
@@ -413,13 +422,14 @@ class Property extends RootEntity
      */
     protected function _getCaptionPath()
     {
-        $segments = [];
-
-        $segments[] = $this->type->caption ?? null;
-        $segments[] = $this->path ?? null;
-        $segments[] = $this->lemma;
-
-        return implode($this->_path_separator, array_filter($segments));
+        return $this->path;
+//        $segments = [];
+//
+//        $segments[] = $this->type->caption ?? null;
+//        $segments[] = $this->path ?? null;
+//        $segments[] = $this->lemma;
+//
+//        return implode($this->_path_separator, array_filter($segments));
     }
 
     /**
@@ -485,7 +495,7 @@ class Property extends RootEntity
     /**
      * Get the reference position
      *
-     * @return null|string
+     * @return null|string 'parent' or 'preceding'
      */
     protected function _getReferencePos()
     {
@@ -840,4 +850,101 @@ class Property extends RootEntity
         return $fields;
     }
 
+    public function reconcile() {
+
+        $services = $this->type['merged']['fields']['norm_data']['services'] ?? [];
+        if (!empty($services)) {
+            $apiService = ServiceFactory::create('reconcile');
+            foreach ($services as $serviceKey => $serviceConfig) {
+                if ((($serviceConfig['service'] ?? '') !== 'reconcile') || empty($serviceConfig['provider'])) {
+                    continue;
+                }
+
+                $term = $this[$serviceConfig['input']] ?? '';
+                if ($term === '') {
+                    continue;
+                }
+
+                $data = [
+                    'q' => $term,
+                    'provider' => $serviceConfig['provider']
+                ];
+
+                if (!empty($serviceConfig['type'])) {
+                    $data['type'] = $serviceConfig['type'];
+                }
+
+                $minScore = $serviceConfig['score'] ?? 20;
+
+                $task = $apiService->query(null, $data);
+                if ($task['state'] === 'SUCCESS') {
+                    foreach ($task['result']['answers'] ?? [] as $answer) {
+                        foreach ($answer['candidates'] ?? [] as $candidate) {
+                            if (!empty($candidate['match']) || ($candidate['score'] ?? 0) > $minScore) {
+                                $value = $candidate['value'] ?? $candidate['id'];
+                                $prefix = Attributes::getPrefix($value);
+
+                                $normData = array_filter(
+                                    explode("\n", $this->norm_data ?? ''),
+                                    function ($line) use ($prefix) {
+                                        return ($line !== '') && (strpos($line, $prefix . ':') !== 0);
+                                    }
+                                );
+
+                                $normData[] = $value;
+                                $this->norm_data = implode("\n", $normData);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    public function updateSortKey() {
+
+        $sortKeyConfig = $this->type['config']['fields']['sortkey']['autofill'] ?? [];
+        if (!empty($sortKeyConfig['source'])) {
+            $value = $this->_fields[$sortKeyConfig['source']] ?? '';
+
+            // TODO: use config
+            $value = mb_strtolower(trim($value));
+            $value = Strings::replaceUmlauts($value);
+            $value = Strings::removeSpecialCharacters($value);
+            $value = Strings::collapseWhitespace($value);
+            $value = Strings::prefixNumbersWithZero($value,5);
+
+            $this['sortkey'] = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get the ID as ID, prefixed ID or IRI path
+     *
+     * @param array $fieldName The field name as an array of one or two components
+     * @param array $options
+     * @return string|integer|null
+     */
+    public function getIdFormatted($fieldName, $options)
+    {
+        $prefix = $options['prefixIds'] ?? false;
+        $iri = $options['iriIds'] ?? false;
+        if (($prefix === false) && ($iri === true)) {
+            if ($fieldName[0] === 'id') {
+                return $this->iriPath;
+            }
+            elseif (($fieldName[0] === 'parent_id') && !empty($this->parent)) {
+                return $this->parent->iriPath;
+            }
+            elseif (($fieldName[0] === 'related_id') && !empty($this->lookup_to)) {
+                return $this->lookup_to->iriPath;
+            }
+        }
+        return parent::getIdFormatted($fieldName, $options);
+    }
 }

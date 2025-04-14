@@ -30,7 +30,7 @@ class TaskBundle extends BaseTask
     public function execute()
     {
 
-        $outputfile = $this->job->getCurrentOutputFile();
+        $outputfile = $this->job->getCurrentOutputFilePath();
         $sourcePath = rtrim($this->job->jobPath, DS);
 
         // Find all files in the source folder

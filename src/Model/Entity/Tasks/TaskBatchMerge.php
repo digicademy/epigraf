@@ -16,15 +16,5 @@ namespace App\Model\Entity\Tasks;
 class TaskBatchMerge extends BaseTaskMutate
 {
 
-    /**
-     * Get parameters that are passed to the mutateEntities method
-     *
-     * @return array
-     */
-    public function getTaskParams()
-    {
-        $params = parent::getTaskParams();
-        $params['cursor'] = $this->config['cursor'] ?? null;
-        return $params;
-    }
+
 }

@@ -69,6 +69,7 @@
     --top-menu-app-bg-color: var(--primary-300);
     --top-menu-db-bg-color: var(--primary-400);
     --top-menu-button-bg-color: var(--primary-300);
+    --top-menu-border-color: var(--primary-200);
 
     --metrics-font-color: var(--neutral-750);
     --problems-font-color: var(--neutral-750);

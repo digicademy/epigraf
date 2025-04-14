@@ -12,10 +12,9 @@ import {ResizableSidebar} from './layout.js';
 import Utils from "/js/utils.js";
 
 /**
- * TODO: Rename to ImagesWidget
  * Class for displaying images of articles
  */
-export class ImageViewer extends BaseWidget{
+export class ImagesWidget extends BaseWidget{
     // TODO: Rename variables in camelCase?
     constructor(element, name, parent) {
         super(element, name, parent);
@@ -201,26 +200,38 @@ export class ImageViewer extends BaseWidget{
         downloadingImage.src = img ? img.dataset.display : '';
 
         // Show metadata
-        const metadata = selected.querySelector('.doc-image-metadata');
-        if (metadata) {
-
-            // Change title in popup
-            const titleElement = this.overlay.querySelector('.overlay-header-title');
-            if (titleElement) {
-                const filename = metadata.querySelector('[data-row-field="file"]').textContent;
-                titleElement.innerText = filename;
-            }
-
-            const metadataElement = this.overlay.querySelector('.metadata-content');
-            if (metadataElement) {
-                metadataElement.replaceChildren(metadata.cloneNode(true));
-            }
-        }
+        this.showMetadata(selected);
 
         // Fit
         this.fitSize();
     }
 
+    getMetadata(selected) {
+        let data = {};
+        const metadata = selected.querySelector('.doc-image-metadata');
+        if (metadata) {
+            data['title'] = metadata.querySelector('[data-row-field="file"]').textContent,
+                data['element'] = metadata.cloneNode(true)
+        }
+        return data;
+    }
+
+    showMetadata(selected) {
+        const metadata = this.getMetadata(selected);
+
+        // Change title
+        const titleElement = this.overlay.querySelector('.overlay-header-title');
+        if (titleElement && metadata['title']) {
+            titleElement.innerText = metadata['title'] || '';
+        }
+
+        // Change detail view
+        const metadataElement = this.overlay.querySelector('.metadata-content');
+        if (metadataElement && metadata['element']) {
+            metadataElement.replaceChildren(metadata['element']);
+        }
+
+    }
 
     /**
      * Close overlay window.
@@ -640,4 +651,4 @@ export class ImageViewer extends BaseWidget{
 
 
 window.App.widgetClasses = window.App.widgetClasses || {};
-window.App.widgetClasses['image-viewer'] = ImageViewer;
+window.App.widgetClasses['image-viewer'] = ImagesWidget;

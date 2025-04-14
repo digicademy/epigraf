@@ -598,7 +598,7 @@ class DocsControllerTest extends AppTestCase
      */
     public function testWikiLock()
     {
-        $this->loginUser('author');
+        $this->loginUser('editor');
         $this->get('docs/lock/wiki/96.json');
 
         $permissions = $this->fetchTable('Permissions');
@@ -619,10 +619,25 @@ class DocsControllerTest extends AppTestCase
      */
     public function testWikiUnlock()
     {
-        $this->loginUser('author');
+        $this->loginUser('editor');
         $this->get('docs/lock/wiki/96');
         $this->get('docs/unlock/wiki/96?force=1');
         $this->assertJsonResponseEqualsComparison();
+    }
+
+    /**
+     * Test unlock method
+     *
+     * @return void
+     */
+    public function testWikiLockForbidden()
+    {
+        $this->loginUser('author');
+        $this->expectException(ForbiddenException::class);
+        $this->get('docs/lock/wiki/96');
+
+        $this->expectException(ForbiddenException::class);
+        $this->get('docs/unlock/wiki/96?force=1');
     }
 
     /**

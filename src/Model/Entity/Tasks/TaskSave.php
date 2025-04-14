@@ -27,21 +27,27 @@ class TaskSave extends BaseTask
      */
     public function execute()
     {
-        // Force download option
-        $current = $this->job->getCurrentTask();
-        $this->job->config['download'] = $current['download'] ?? 0;
 
-
-        if ($this->job->status !== 'download') {
-            $inputfile = $this->job->getCurrentInputFile();
-            $outputfile = $this->job->getCurrentOutputFile();
+        if ($this->job->status !== 'finish') {
+            $inputfile = $this->job->getCurrentInputFilePath();
+            $outputfile = $this->job->getCurrentOutputFilePath();
 
             if ($inputfile != $outputfile) {
                 copy($inputfile, $outputfile);
             }
         }
 
-        $this->job->status = 'download';
+        // Get filename
+        $filename = $this->job->getCurrentOutputFileName();
+        $current = $this->job->getCurrentTask();
+        $current['files'] = $filename;
+        $this->job->updateCurrentTask($current);
+
+        // Set filename and Force download option
+        $this->job->config['download'] = $filename;
+        $this->job->config['force'] = !empty($current['download']);
+        $this->job->status = 'finish';
+
         return true;
     }
 

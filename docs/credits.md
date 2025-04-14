@@ -31,7 +31,9 @@ Epigraf is developed using third-party software under open source licenses.
 - [CakePHP](https://cakephp.org/), MIT License
 - [CKEditor](https://ckeditor.com/), GNU General Public License 2 or later
 - [Codeception](https://codeception.com/), MIT License
-- [dropzone.js](https://www.dropzone.dev/), MIT License
+- [D3](https://github.com/d3/d3/), ISC Licence
+- [Datavana Databoard, Uni Münster](https://databoard.uni-muenster.de/)
+- [Dropzone](https://www.dropzone.dev/), MIT License
 - [ExifTool](https://exiftool.org/), GNU General Public License 1 or later
 - [Font Awesome](https://fontawesome.com/), SIL OFL 1.1 License
 - [Jeykyll](https://jekyllrb.com/), MIT License
@@ -39,6 +41,7 @@ Epigraf is developed using third-party software under open source licenses.
 - [jQueryUI](https://jqueryui.com/), MIT License
 - [jsDoc](https://jsdoc.app/), Apache License, Version 2.0
 - [Leaflet](https://leafletjs.com/), BSD 2-Clause "Simplified" License
+- [Leaflet Control Geocoder](https://github.com/perliedman/leaflet-control-geocoder), BSD 2-Clause "Simplified" License
 - [Leaflet Marker Cluster](https://github.com/Leaflet/Leaflet.markercluster), MIT License
 - [Leaflet Easy Button](https://github.com/CliffCloud/Leaflet.EasyButton), MIT License
 - [Leaflet Gesture Handling](https://github.com/elmarquis/Leaflet.GestureHandling), MIT License
@@ -46,7 +49,9 @@ Epigraf is developed using third-party software under open source licenses.
 - [Lingui](https://lingui.dev/), MIT License
 - [mark.js](https://markjs.io/), MIT License
 - [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/), MIT License
+- [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim), Open Data Commons Open Database License (ODbL)
 - [npm](https://npmjs.com/), Artistic License 2.0,
+- [Open Street Map](https://www.openstreetmap.org), Open Data Commons Open Database License (ODbL)
 - [phpDocumentor](https://phpdoc.org/), MIT License
 - [PHPUnit](https://phpunit.de/index.html), BSD 3-Clause License
 - [Plotly.js](https://github.com/plotly/plotly.js/), MIT License

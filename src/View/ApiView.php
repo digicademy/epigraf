@@ -18,6 +18,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\View\SerializedView;
+use Epi\Model\Entity\Project;
 
 /**
  * A view class that is used for creating API responses with entity data.
@@ -70,7 +71,7 @@ class ApiView extends SerializedView
     public function initialize(): void
     {
         parent::initialize();
-        static::$_header = ['namespaces' => [], 'base' => null];
+        $this->resetDocument();
     }
 
     /**
@@ -241,6 +242,16 @@ class ApiView extends SerializedView
         return $data;
     }
 
+    /**
+     * Reset variables before a new document is rendered
+     *
+     * @param array $options
+     * @return void
+     */
+    public function resetDocument()
+    {
+        static::$_header = ['namespaces' => [], 'base' => null];
+    }
 
     /**
      * Render content before the entity data, e.g. open the XML root tag
@@ -292,6 +303,7 @@ class ApiView extends SerializedView
      */
     public function renderDocument($data, $options)
     {
+
         // First collect the content
         // (which may add attributes to $_header to be rendered in the prolog)
         $content = $this->renderContent($data, $options, $options['level'] ?? 0);

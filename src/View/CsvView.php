@@ -8,7 +8,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetDecorator;
 use Cake\ORM\Entity;
 use Cake\ORM\ResultSet;
-use Cake\View\SerializedView;
+use Epi\Model\Entity\RootEntity;
 use Exception;
 
 /**
@@ -100,13 +100,6 @@ class CsvView extends ApiView
     protected $isFirstBom = true;
 
     /**
-     * Collect rows while rendering content
-     *
-     * @var array
-     */
-    protected $_rows = [];
-
-    /**
      * @var array collect header while generating rows
      */
     protected $_csvHeader = [];
@@ -175,23 +168,6 @@ class CsvView extends ApiView
         return 'text/csv';
     }
 
-
-    /**
-     * Serialize view vars.
-     *
-     * @param array|string $serialize The name(s) of the view variable(s) that
-     *                                need(s) to be serialized
-     * @return string The serialized data or false.
-     */
-    protected function _serialize($serialize): string
-    {
-        // Delay output
-        parent::_serialize($serialize);
-        $content = $this->_renderRow(null, false, true);
-
-        return $content;
-    }
-
     /**
      * Get data from ExportEntityInterface
      *
@@ -206,10 +182,11 @@ class CsvView extends ApiView
     protected function _prepareViewData($data, $options = [], $level = 0)
     {
         $isRows = $options['isRows'] ?? false;
-
-        // TODO: get options outside of _prepareDate to avoid multiple calls
         $requestOptions = $this->getConfig('options');
-        //TODO $keycol = $this->getConfig('keycol');
+
+        // TODO: set option for all exports, rename resulting field from type to rowtype
+        //       to avoid naming conflicts with a potential type entity
+        $requestOptions['types'] = 'merge';
 
         // Entities with the getDataForExport method
         if (is_object($data) && ($data instanceof ExportEntityInterface)) {
@@ -245,15 +222,6 @@ class CsvView extends ApiView
             foreach ($data as $key => &$value) {
                 $value = $this->_prepareViewData($value, $options, $level + 1);
                 $rows = array_merge($rows, $value);
-
-//                //if (is_array($value))
-//                if ($isRows) {
-//                    $rows = array_merge($rows, [$key=>$value]);
-//                } else
-//                //TODO: not working for properties index
-//                {
-//                    $rows = array_merge($rows, $value);
-//                }
             }
             return $rows;
         }
@@ -279,8 +247,7 @@ class CsvView extends ApiView
     public function renderProlog($data, $options)
     {
         $header = $this->getConfig('header', $this->_csvHeader);
-        $this->_renderRow($header, true);
-        return '';
+        return $this->_renderRow($header, true);
     }
 
     /**
@@ -292,8 +259,7 @@ class CsvView extends ApiView
      */
     public function renderEpilog($data, $options)
     {
-        $this->_renderRow($this->getConfig('footer'));
-        return '';
+        return $this->_renderRow($this->getConfig('footer'));
     }
 
     /**
@@ -303,31 +269,52 @@ class CsvView extends ApiView
      * @param array $options
      * @param int $level The level of indentation
      * @return string
+     * @throws Exception When the data is not an array or an object
      */
-    public function renderContent($data, $options = [], $level = 0)
+    public function renderContent($data, $options = [], $level = 0) : string
     {
-        $this->_csvHeader = [];
-        $this->_rows = [];
+//        $data = $this->extractData($data, $options);
 
-        foreach ($data as $viewVar => $rows) {
-            if (is_scalar($rows)) {
-                throw new Exception("'" . $viewVar . "' is not an array or iteratable object.");
+        $this->_csvHeader = [];
+        $out = '';
+
+        // Single entities
+        if (is_object($data) && ($data instanceof RootEntity)) {
+            $out .= $this->renderContent([[$data]], $options, $level);
+        }
+
+        // Set of entities
+        elseif ($data instanceof ResultSet) {
+            $out .= $this->renderContent([$data], $options, $level);
+        }
+
+        // Arrays
+        else {
+            // Objects with toArray method
+            if (is_object($data) && method_exists($data, 'toArray') && is_callable([$data, 'toArray'])) {
+                $data = $data->toArray();
             }
 
-            $this->_rows = $this->_prepareViewData($rows, ['isRows' => true], $level + 1);
-            while (!empty($this->_rows)) {
-                $row = array_shift($this->_rows);
-                // Objects with toArray method
-                if (is_object($row) && method_exists($row, 'toArray') && is_callable([$row, 'toArray'])) {
-                    $row = $row->toArray();
-                }
-                if (is_array($row)) {
-                    $this->_renderRow($row);
+            // Arrays
+            if (is_array($data)) {
+                foreach ($data as $viewVar => $rows) {
+                    if (is_scalar($rows)) {
+                        throw new Exception("'" . $viewVar . "' is not an array or iteratable object.");
+                    }
+
+                    $rows = $this->_prepareViewData($rows, ['isRows' => true], $level + 1);
+                    foreach ($rows as $row) {
+                        if (is_object($row) && method_exists($row, 'toArray') && is_callable([$row, 'toArray'])) {
+                            $row = $row->toArray();
+                        }
+                        if (is_array($row)) {
+                            $out .= $this->_renderRow($row);
+                        }
+                    }
                 }
             }
         }
-
-        return '';
+        return $out;
     }
 
     /**
@@ -335,29 +322,20 @@ class CsvView extends ApiView
      *
      * @param array|null $row Row data
      * @param bool $header If true, the row is considered a header and prefixed to the output
-     * @param bool $reset If true, the static variable is reset and the csv is returned
      * @return string CSV with all data to date
      */
-    protected function _renderRow(?array $row = null, $header = false, $reset = false): string
+    protected function _renderRow(?array $row = null, bool $header = false): string
     {
-        // TODO: can we move the static var to the class and implement a dedicated function to reset it?
-        static $csv = '';
-
-        if ($header) {
-            $csv = (string)$this->_generateRow($row) . $csv;
+        if (empty($row)) {
+            return '';
         }
-        elseif (!empty($row)) {
+
+        if (!$header) {
             $this->_csvHeader = array_unique(array_merge($this->_csvHeader, array_keys($row)));
             $row = array_merge(array_fill_keys($this->_csvHeader, null), $row);
-            $csv .= (string)$this->_generateRow($row);
         }
 
-        $out = $csv;
-        if ($reset) {
-            $csv = '';
-        }
-
-        return $out;
+        return (string)$this->_generateRow($row);
     }
 
     /**

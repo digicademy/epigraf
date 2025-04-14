@@ -11,6 +11,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\Job;
+use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
@@ -39,20 +40,20 @@ class JobsController extends AppController
      */
     public $authorized = [
         'api' => [
-            'reader' => ['execute'],
-            'coder' => ['execute'],
-            'desktop' => ['execute'],
-            'author' => ['execute'],
-            'editor' => ['execute'],
-            'admin' => ['execute'],
-            'devel' => ['execute']
+            'reader' => ['execute', 'cancel'],
+            'coder' => ['execute', 'cancel'],
+            'desktop' => ['execute', 'cancel'],
+            'author' => ['execute', 'cancel'],
+            'editor' => ['execute', 'cancel'],
+            'admin' => ['execute', 'cancel'],
+            'devel' => ['execute', 'cancel']
         ],
         'web' => [
-            'reader' => ['add', 'execute', 'download'],
-            'coder' => ['add', 'execute', 'download'],
-            'desktop' => ['add', 'execute', 'download'],
-            'author' => ['add', 'execute', 'download'],
-            'editor' => ['add', 'execute', 'download']
+            'reader' => ['add', 'execute', 'cancel', 'download'],
+            'coder' => ['add', 'execute', 'cancel', 'download'],
+            'desktop' => ['add', 'execute', 'cancel', 'download'],
+            'author' => ['add', 'execute', 'cancel', 'download'],
+            'editor' => ['add', 'execute', 'cancel', 'download']
         ]
     ];
 
@@ -120,9 +121,12 @@ class JobsController extends AppController
             $pipelines = $pipelinesTable->find('list')->order(['name' => 'asc'])->toArray();
         }
 
+        // Delayed jobs will be processed by a worker
+        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+
         //Create job
         /** @var Job $job */
-        $job = $this->Jobs->newEntity(['typ' => 'export'])->typedJob;
+        $job = $this->Jobs->newEntity(['typ' => 'export', 'delay' => $delayedJob ? 1 : 0])->typedJob;
         $job = $job->patchExportOptions($params);
 
         // Load pipeline
@@ -157,7 +161,7 @@ class JobsController extends AppController
                 ]);
             }
             else {
-                $this->Flash->error(__('The job could not be created. Please, try again.'));
+                $this->Answer->error(__('The job could not be created. Please, try again.'));
             }
         }
 
@@ -174,8 +178,8 @@ class JobsController extends AppController
      * - project_id
      * - articles_ids
      *
-     * @return \Cake\Http\Response|void redirects on successful job execution, renders view otherwise
-     * @throws \Cake\Http\Exception\NotFoundException if no valid database or pipeline is provided in the request
+     * @return \Cake\Http\Response|void Redirects on successful job execution, renders view otherwise.
+     * @throws \Cake\Http\Exception\NotFoundException If no valid database or pipeline is provided in the request.
      */
     public function download()
     {
@@ -183,8 +187,11 @@ class JobsController extends AppController
         $params = $this->request->getQueryParams();
         $params = $this->Jobs->parseRequestParameters($params, null, 'download');
 
+        // Delayed jobs will be processed by a worker
+        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+
         //Create job
-        $job = $this->Jobs->newEntity(['typ' => 'export']);
+        $job = $this->Jobs->newEntity(['typ' => 'export', 'delay' => $delayedJob ? 1 : 0]);
         $job->patchExportOptions($params);
 
         //Check if user has database access
@@ -212,13 +219,15 @@ class JobsController extends AppController
             ]);
         }
         else {
-            $this->Flash->error(__('The export job could not be created. Please, try again.'));
-            return $this->redirect([
-                'plugin' => false,
-                'controller' => 'Jobs',
-                'action' => 'add',
-                '?' => ['database' => $job->config['database'] ?? '']
-            ]);
+            $this->Answer->error(
+                __('The export job could not be created. Please, try again.'),
+                [
+                    'plugin' => false,
+                    'controller' => 'Jobs',
+                    'action' => 'add',
+                    '?' => ['database' => $job->config['database'] ?? '']
+                ]
+            );
         }
     }
 
@@ -227,9 +236,10 @@ class JobsController extends AppController
      *
      * The endpoint delivers three types of results:
      *
-     * a) Render view which will be managed by the Javascript JobWidget in the frontend
-     * b) JSON data for polling from the JobWidget or using epigraf package in R
+     * a) Rendered view which will be managed by the Javascript JobWidget in the frontend
+     * b) JSON data for polling from the JobWidget or using the Epigraf package in R
      * c) Resulting file for download, if the job is finished and the endpoint is not called via AJAX
+     *    In case a job provides several downloads, set the 'download' query parameter to the file name
      *
      * @param string|null $job_id Job id
      *
@@ -243,7 +253,7 @@ class JobsController extends AppController
             throw new NotFoundException('Could not find that job');
         }
 
-        $job = $this->Jobs->get($job_id);
+        $job = $this->Jobs->get($job_id)->typedJob;
 
         //Check if user has database access
         if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
@@ -255,41 +265,85 @@ class JobsController extends AppController
             throw new ForbiddenException('You have no access to the selected job');
         }
 
-        //Process job (timelimit in seconds for one request
-        $timeout = (int)$this->request->getQuery('timeout', 1);
-        $timeout = min([$timeout, 3]);
+        //Process job
+        if ($job->status !== 'finish') {
 
-        if (($job->status === 'init') && ($this->request->is(['post', 'patch', 'put']))) {
-            $timeout = 0;
-        }
+            // Excecute non-delayed jobs
+            if (empty($job['delay'])) {
 
-        $job = $job->execute($timeout);
+                // Set time limit in seconds for one request
+                if (($job->status === 'init') && ($this->request->is(['post', 'patch', 'put']))) {
+                    $timeout = 0;
+                } else {
+                    $timeout = (int)$this->request->getQuery('timeout', 1);
+                    $timeout = min([$timeout, 3]);
+                }
+                $job = $job->execute($timeout);
 
-        //Save Job
-        if (!$this->Jobs->save($job)) {
-            $job->error = __('The job could not be saved. Please try again.');
-        }
-
-        //Send download
-        if ($job->status === 'download') {
-            if (!$this->request->is('ajax')) {
-                $download = $this->request->getQuery('download');
-                $download = ($download == null) || !empty($download);
-                $this->response = $this->response->withFile(
-                    $job->getCurrentOutputFile(),
-                    ['download' => $download]);
-
-                return $this->response;
+                //Save Job
+                if (!$this->Jobs->save($job)) {
+                    $job->error = __('The job could not be saved. Please try again.');
+                }
+            } elseif ($job->queueStatus === 'failed') {
+                $job->error = __('The job worker failed.');
             }
         }
 
-        elseif ($job->status === 'finish') {
+        if ($job->status === 'finish') {
+
+            // Send download file from the results...
+            $download = $this->request->getQuery('download');
+            $forceDownload = $this->request->getQuery('force');
+            if (!$this->request->is('ajax') && !empty($download)) {
+                $this->response = $this->response->withFile(
+                    $job->getCurrentOutputFilePath($download),
+                    ['download' => !empty($forceDownload)]
+                );
+                return $this->response;
+            }
+
+            //...or send redirect URL
             $this->Answer->success(
                 __('The job has been finished.'),
-                $this->request->is('ajax') ? null : $job->redirect,
-                $job->toArray()
+                $this->request->is('ajax') ? null : $job->redirect
             );
         }
+
+        $this->Answer->addAnswer(compact('job'));
+    }
+
+    /**
+     * Cancel a running job
+     *
+     * @param int $jobId
+     * @return \Cake\Http\Response|void
+     */
+    public function cancel($jobId)
+    {
+        if (!$this->request->is('delete')) {
+            throw new NotFoundException('To cancel a job, please issue a DELETE request.');
+        }
+
+        if (empty($jobId)) {
+            throw new NotFoundException('Could not find that job');
+        }
+
+        $job = $this->Jobs->get($jobId);
+
+        //Check if user has database access
+        if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
+            throw new ForbiddenException('You have no access to the selected database');
+        }
+
+        //Check if the current user created the job
+        if (!$this->userHasRole(['admin', 'devel'])  && (($job->config['user_id'] ?? '') !== $this->Jobs::$userId)) {
+            throw new ForbiddenException('You have no access to the selected job');
+        }
+
+        $job = $job->cancel();
+//        if (!$this->Jobs->save($job)) {
+//            $job->error = __('The job could not be canceled. Please try again.');
+//        }
 
         $this->Answer->addAnswer(compact('job'));
     }

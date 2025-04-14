@@ -37,6 +37,7 @@ Specific command actions are:
 - `bin/cake user remove` deletes a user from the application database.
 - `bin/cake permission add` grants permissions to a user.
 - `bin/cake cache clear_all` clears the cache.
+- `bin/cake jobs process` starts a worker for processing background jobs.
 
 ## Configuration
 

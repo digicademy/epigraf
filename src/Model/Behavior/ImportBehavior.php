@@ -11,6 +11,7 @@
 namespace App\Model\Behavior;
 
 use App\Model\Entity\BaseEntity;
+use App\Utilities\Converters\Arrays;
 use Cake\Database\Connection;
 use Cake\Database\Exception\NestedTransactionRollbackException;
 use Cake\ORM\Behavior;
@@ -94,9 +95,13 @@ class ImportBehavior extends Behavior
      * 2. Database IDs follow the scheme "<table>-<id>" where <id> has to be a numeric value.
      * 3. Temporary IDs follow the scheme "<table>-tmp<id>" where <id> an be an alphanumeric value ([a-zA-Z0-9_-]+)
      *
+     * ### Options
+     * - job_id: The job ID
+     * - skipUpdates: Array of table names to skip (create new records, skip updating existing ones)
+     *
      * @param array $data
      * @param array $index Pass the index by reference
-     * @param array $options Add the job_id key
+     * @param array $options
      *
      * @return array
      */
@@ -154,10 +159,10 @@ class ImportBehavior extends Behavior
 
             // Solve IRIs (add them to the index)
             try {
-                $this->solveIris($tableName, $rows);
+                $this->solveIris($tableName, $rows, $options);
             } catch (Exception $e) {
                 $this->addError(
-                    'Error findings IRIs for records linked in table {table}: {error}.',
+                    'Could not find IRIs for records linked in table {table}: {error}.',
                     ['table' => $tableName],
                     $e
                 );
@@ -191,13 +196,16 @@ class ImportBehavior extends Behavior
 
                     $entity = new $entityClass($row, $importOptions);
 
-                    if (!$entity->isNew() && (in_array($tableName, $this->getConfig('skip', [])))) {
+                    if (!$entity->isNew() && (in_array($tableName, $options['skipUpdates'] ?? []))) {
                         continue;
                     }
 
                     if (empty($entity->fieldsImport)) {
                         continue;
                     }
+
+                    // Undelete
+                    $entity['deleted'] = $row['deleted'] ?? 0;
 
                     $entities[] = $entity;
                 }
@@ -222,34 +230,40 @@ class ImportBehavior extends Behavior
      *
      * //TODO: refactor as finder
      *
+     * ### Options
+     * - skipUpdates Array of table names. Records from those tables will not be revived if deleted.
+     *
      * @param array $iris Array of scoped IRIs. If the table has a type-field (e.g. articletype),
      *                    a scoped IRI matches the following schema <type>/<norm_iri>. Otherwise
      *                    the scoped IRI matches <norm_iri>.
      * @return array  Array of table IDs indexed by scoped IRIs
      */
-    public function collectIris($scopedIris)
+    public function collectIris($scopedIris, $options = [])
     {
 
         /** @var BaseTable $model */
         $model = $this->table();
         if (count($scopedIris) && $model->hasField('norm_iri')) {
 
+            // Revitalise deleted records, but take undeleted if possible, by descendant ordering.
+            // The list finder will use the last value in the list.
+            // Records that will be skipped should not be used for IRI lookup, as they will not be revived.
+            $deleted = 0;
+            if (!in_array($model->getTable(), $options['skipUpdates'] ?? [])) {
+                $deleted = [0,1];
+            }
+
             $query = $model
                 ->find('list', [
                     'keyField' => 'scoped_iri',
-                    'valueField' => 'id'
+                    'valueField' => 'id',
+                    'deleted' => $deleted
                 ])
-                ->where(['deleted' => 0]);
+                ->order(['deleted' => 'desc']);
 
 
             $typeField = $model->typeField ?? null;
             if ($typeField !== null) {
-//                $iriExpression = $query->func()->concat([
-//                    $typeField => 'identifier',
-//                    '/',
-//                    'norm_iri' => 'identifier'
-//                ]);
-
                 $iriString = 'CONCAT(' . $typeField . ', "/", norm_iri)';
                 $query = $query
                     ->select([
@@ -266,18 +280,14 @@ class ImportBehavior extends Behavior
 
             return $query->toArray();
         }
-        else {
-            return [];
-        }
+
+        return [];
     }
 
     /**
-     * Collect IDs from imported and saved records
-     *
      * Stores an index of imported IDs and database IDs that need to be linked.
      *
      * @param array $entities Array of entities that were imported and saved.
-     *
      * @return void
      */
     protected function collectIds(array $entities)
@@ -292,11 +302,16 @@ class ImportBehavior extends Behavior
      *
      * The IRIs must match the following scheme: <table>/<type>/<norm_iri>
      *
+     * ### Options
+     * - skipUpdates Array of table names. Records from those tables will not be revived.
+     *              Thus, IRIs are not searched in the deleted records.
+     *
      * @param string $tableName
      * @param array $rows
+     * @param array $options
      * @return void
      */
-    protected function solveIris($tableName, $rows)
+    protected function solveIris($tableName, $rows, $options = [])
     {
         // Get potential IRI fields -> all id fields
         $model = $this->table()->getModel($tableName, 'Epi');
@@ -358,7 +373,7 @@ class ImportBehavior extends Behavior
             if (!$model->hasBehavior('Import')) {
                 throw new Exception('The import behavior is not attached to the model.');
             }
-            $ids = $model->collectIris($scopedIris);
+            $ids = $model->collectIris($scopedIris, $options);
 
             foreach ($ids as $scopedIri => $id) {
                 $qualifiedIri = $iriTable . '/' . $scopedIri;
@@ -520,19 +535,22 @@ class ImportBehavior extends Behavior
         $connection = $this->table()->getConnection();
 
         $result = true;
-        $tables = collection($entities)->groupBy('import_table');
+
+        $tableOrder = ['users', 'properties', 'projects', 'articles', 'sections', 'items', 'footnotes', 'links', 'files'];
+        $tables = Arrays::array_group($entities, 'import_table', false, $tableOrder);
+
         foreach ($tables as $tableName => $entities) {
             try {
                 $connection->begin();
+                $model = $this->table()->getModel($tableName, 'Epi');
 
-                $result = $result && $this->table()->getModel($tableName, 'Epi')->clearEntities($entities);
+                $result = $result && $model->clearEntities($entities);
 
                 $entities = array_filter($entities, function ($x) {
                     return $x->_import_action !== 'skip';
                 });
 
                 if (!empty($entities)) {
-                    $model = $this->table()->getModel($tableName, 'Epi');
                     $result = $result && $model->saveManyFast($entities, $config);
                 }
 
@@ -543,7 +561,14 @@ class ImportBehavior extends Behavior
                 try {
                     $connection->commit();
                 } catch (NestedTransactionRollbackException $e) {
-
+                    $this->addError(
+                        'Error in commit for table {table}: {error}.',
+                        [
+                            'table' => $tableName,
+                            'ids' => implode(' ', array_column($entities, 'id'))
+                        ],
+                        $e
+                    );
                 }
             } catch (Exception $e) {
                 $connection->rollback();
@@ -600,7 +625,8 @@ class ImportBehavior extends Behavior
         }
 
         // Save
-        $result = $model->saveMany($entities);
+        $options = ['checkExisting' => false, 'checkRules' => false];
+        $result = $model->saveMany($entities, $options);
 
         // Enable behaviors
         if (!$versioning && $model->hasBehavior('Version')) {
@@ -623,6 +649,7 @@ class ImportBehavior extends Behavior
 
     protected function addError($msg, $data, $exception)
     {
+        // TODO: format msg with data and exception message
         $this->_errors[] = [
             'message' => $msg,
             'data' => $data,

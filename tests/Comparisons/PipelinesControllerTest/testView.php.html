@@ -8,33 +8,32 @@
     <title>
         DI: Band    </title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
     <!-- CSS frameworks -->
-    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">
+            <link rel="stylesheet" href="/css/theme_default.css">    
     <!-- JS -->
 
     <!-- JS frameworks -->
-    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>
-    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"editor","scope":"web"});}</script>
+            <script src="/js/app.min.js" type="module"></script>    
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"editor","scope":"web","session":{"ui":[]}});}</script>
     <!-- JS widgets -->
-        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
 
     <!-- Additional CSS -->
-
+    
     <!-- Additional JS -->
         </head>
 
-<body class="controller_pipelines             action_view             template_default             theme_default             userrole_editor">
-
+<body class="plugin_ controller_pipelines action_view template_default theme_default userrole_editor">
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -42,23 +41,23 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
 
                 <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-
+                
                     <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/4" class="btn-profile" title="editor"></a>                                            </div>
 
         </nav>
-
+    
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-
-
+        
+                                                        
             <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Tasks</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
                     <div class="frame-title-caption">Tasks</div>
@@ -69,18 +68,17 @@
                     <div class="widget-scrollbox"><ul class="side-nav widget-scrollsync menu-sections widget-tree widget-tree-fixed" data-list-name="menu-left" data-list-add="/pipelines/add_task/21"><li class="first node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-1" data-id="1"><div class="tree-content"><a href="#sections-1">1 Options</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-2" data-id="2"><div class="tree-content"><a href="#sections-2">2 Project data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-3" data-id="3"><div class="tree-content"><a href="#sections-3">3 Article data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-4" data-id="4"><div class="tree-content"><a href="#sections-4">4 Article data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-5" data-id="5"><div class="tree-content"><a href="#sections-5">5 Index data</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-6" data-id="6"><div class="tree-content"><a href="#sections-6">6 Bundle files</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-7" data-id="7"><div class="tree-content"><a href="#sections-7">7 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-8" data-id="8"><div class="tree-content"><a href="#sections-8">8 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-9" data-id="9"><div class="tree-content"><a href="#sections-9">9 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-10" data-id="10"><div class="tree-content"><a href="#sections-10">10 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-11" data-id="11"><div class="tree-content"><a href="#sections-11">11 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-12" data-id="12"><div class="tree-content"><a href="#sections-12">12 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-13" data-id="13"><div class="tree-content"><a href="#sections-13">13 Transform with XSL</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-14" data-id="14"><div class="tree-content"><a href="#sections-14">14 Search and replace</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-15" data-id="15"><div class="tree-content"><a href="#sections-15">15 Save to file</a></div><div class="tree-meta"></div></li><script type="text/template" class="template"><li class="node item item-level-0 item-nochildren" data-list-itemof="menu-left" data-section-id="sections-{id}" data-id="{id}"><div class="tree-content"><a href="#sections-{id}">{sectionname}</a></div><div class="tree-meta"></div></li></script></ul></div>                </div>
                 <div class="frame-footer">
                                     </div>
-                </div></div></div></div></div>
+                </div></div></div></div></div>        
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
                 <div class="content-header">
                     <div class="content-header-title">
-                                                                            <nav class="breadcrumbs">
-                                <ul class="breadcrumbs-trail"><li><a href="/pipelines">Pipelines</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>DI: Band</span></li></ul>                            </nav>
-                                            </div>
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/pipelines">Pipelines</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>DI: Band</span></li></ul></nav>                    </div>
 
                                             <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Tasks</button>
-
+                    
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -88,7 +86,7 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-
+                    
 
 <!-- Breadcrumbs -->
 
@@ -97,7 +95,7 @@
     <div class="pipeline_tasks">
         <div class="tasks_list">
                                             <div id="sections-1" class="doc-section widget-scrollsync-section" data-row-id="1" data-row-type="options" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Options&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="1"><span data-value="name">1 Options</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td colspan="2">
-
+    
         <table class="options_list">
             <thead>
             <tr>
@@ -111,7 +109,7 @@
             </tr>
             </thead>
             <tbody>
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -128,10 +126,10 @@
         <div class="input select"><select name="Tasks[1][options][1][type]" disabled="disabled" id="tasks-1-options-1-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][1][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][1][output]" value="1" checked="checked" disabled="disabled" id="tasks-1-options-1-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -148,10 +146,10 @@
         <div class="input select"><select name="Tasks[1][options][2][type]" disabled="disabled" id="tasks-1-options-2-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][2][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][2][output]" value="1" disabled="disabled" id="tasks-1-options-2-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -168,10 +166,10 @@
         <div class="input select"><select name="Tasks[1][options][3][type]" disabled="disabled" id="tasks-1-options-3-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][3][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][3][output]" value="1" disabled="disabled" id="tasks-1-options-3-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -188,10 +186,10 @@
         <div class="input select"><select name="Tasks[1][options][4][type]" disabled="disabled" id="tasks-1-options-4-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][4][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][4][output]" value="1" disabled="disabled" id="tasks-1-options-4-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -208,10 +206,10 @@
         <div class="input select"><select name="Tasks[1][options][5][type]" disabled="disabled" id="tasks-1-options-5-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][5][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][5][output]" value="1" disabled="disabled" id="tasks-1-options-5-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -228,10 +226,10 @@
         <div class="input select"><select name="Tasks[1][options][6][type]" disabled="disabled" id="tasks-1-options-6-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][6][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][6][output]" value="1" disabled="disabled" id="tasks-1-options-6-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -248,10 +246,10 @@
         <div class="input select"><select name="Tasks[1][options][7][type]" disabled="disabled" id="tasks-1-options-7-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][7][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][7][output]" value="1" disabled="disabled" id="tasks-1-options-7-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -268,10 +266,10 @@
         <div class="input select"><select name="Tasks[1][options][8][type]" disabled="disabled" id="tasks-1-options-8-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][8][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][8][output]" value="1" checked="checked" disabled="disabled" id="tasks-1-options-8-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -288,10 +286,10 @@
         <div class="input select"><select name="Tasks[1][options][9][type]" disabled="disabled" id="tasks-1-options-9-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][9][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][9][output]" value="1" disabled="disabled" id="tasks-1-options-9-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -308,10 +306,10 @@
         <div class="input select"><select name="Tasks[1][options][10][type]" disabled="disabled" id="tasks-1-options-10-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][10][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][10][output]" value="1" disabled="disabled" id="tasks-1-options-10-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -328,10 +326,10 @@
         <div class="input select"><select name="Tasks[1][options][11][type]" disabled="disabled" id="tasks-1-options-11-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][11][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][11][output]" value="1" disabled="disabled" id="tasks-1-options-11-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -348,10 +346,10 @@
         <div class="input select"><select name="Tasks[1][options][12][type]" disabled="disabled" id="tasks-1-options-12-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][12][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][12][output]" value="1" disabled="disabled" id="tasks-1-options-12-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -368,10 +366,10 @@
         <div class="input select"><select name="Tasks[1][options][13][type]" disabled="disabled" id="tasks-1-options-13-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][13][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][13][output]" value="1" disabled="disabled" id="tasks-1-options-13-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -388,10 +386,10 @@
         <div class="input select"><select name="Tasks[1][options][14][type]" disabled="disabled" id="tasks-1-options-14-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][14][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][14][output]" value="1" disabled="disabled" id="tasks-1-options-14-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -408,10 +406,10 @@
         <div class="input select"><select name="Tasks[1][options][15][type]" disabled="disabled" id="tasks-1-options-15-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][15][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][15][output]" value="1" disabled="disabled" id="tasks-1-options-15-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -428,10 +426,10 @@
         <div class="input select"><select name="Tasks[1][options][16][type]" disabled="disabled" id="tasks-1-options-16-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][16][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][16][output]" value="1" disabled="disabled" id="tasks-1-options-16-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -448,10 +446,10 @@
         <div class="input select"><select name="Tasks[1][options][17][type]" disabled="disabled" id="tasks-1-options-17-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][17][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][17][output]" value="1" disabled="disabled" id="tasks-1-options-17-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -468,10 +466,10 @@
         <div class="input select"><select name="Tasks[1][options][18][type]" disabled="disabled" id="tasks-1-options-18-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][18][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][18][output]" value="1" disabled="disabled" id="tasks-1-options-18-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -488,10 +486,10 @@
         <div class="input select"><select name="Tasks[1][options][19][type]" disabled="disabled" id="tasks-1-options-19-type"><option value="check">Check</option><option value="radio" selected="selected">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][19][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][19][output]" value="1" checked="checked" disabled="disabled" id="tasks-1-options-19-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -508,10 +506,10 @@
         <div class="input select"><select name="Tasks[1][options][20][type]" disabled="disabled" id="tasks-1-options-20-type"><option value="check">Check</option><option value="radio" selected="selected">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][20][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][20][output]" value="1" disabled="disabled" id="tasks-1-options-20-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -528,10 +526,10 @@
         <div class="input select"><select name="Tasks[1][options][21][type]" disabled="disabled" id="tasks-1-options-21-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][21][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][21][output]" value="1" disabled="disabled" id="tasks-1-options-21-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -548,10 +546,10 @@
         <div class="input select"><select name="Tasks[1][options][22][type]" disabled="disabled" id="tasks-1-options-22-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][22][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][22][output]" value="1" disabled="disabled" id="tasks-1-options-22-output"></div>    </td>
-
+    
 </tr>
 
-
+                                                        
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
@@ -568,15 +566,15 @@
         <div class="input select"><select name="Tasks[1][options][23][type]" disabled="disabled" id="tasks-1-options-23-type"><option value="check" selected="selected">Check</option><option value="radio">Radio</option><option value="text">Text</option></select></div>    </td>
     <td>
         <div class="input checkbox"><input type="hidden" name="Tasks[1][options][23][output]" disabled="disabled" value="0"><input type="checkbox" name="Tasks[1][options][23][output]" value="1" disabled="disabled" id="tasks-1-options-23-output"></div>    </td>
-
+    
 </tr>
 
-
+                
 
                             </tbody>
         </table>
     </td> </tr>
-<tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-2" class="doc-section widget-scrollsync-section" data-row-id="2" data-row-type="data_projects" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Project data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="2"><span data-value="name">2 Project data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Output IRIs instead of IDs</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-3" class="doc-section widget-scrollsync-section" data-row-id="3" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="3"><span data-value="name">3 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Article types</td><td>epi-book</td><tr><td>All articles in selected projects</td><td>1</td><tr><td>Copy images </td><td>0</td><tr><td>Image item types</td><td></td><tr><td>Image metadata configuration</td><td></td><tr><td>Image folder in the current job folder</td><td></td><tr><td>Output format</td><td></td><tr><td>Data snippets</td><td></td><tr><td>Output IRIs instead of IDs</td><td>0</td><tr><td>Wrap content (add prolog and epilog)</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-4" class="doc-section widget-scrollsync-section" data-row-id="4" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="4"><span data-value="name">4 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Article types</td><td>epi-article</td><tr><td>All articles in selected projects</td><td>0</td><tr><td>Copy images </td><td>0</td><tr><td>Image item types</td><td></td><tr><td>Image metadata configuration</td><td></td><tr><td>Image folder in the current job folder</td><td></td><tr><td>Output format</td><td></td><tr><td>Data snippets</td><td></td><tr><td>Output IRIs instead of IDs</td><td>0</td><tr><td>Wrap content (add prolog and epilog)</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-5" class="doc-section widget-scrollsync-section" data-row-id="5" data-row-type="data_index" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Index data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="5"><span data-value="name">5 Index data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-6" class="doc-section widget-scrollsync-section" data-row-id="6" data-row-type="bundle" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Bundle files&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="6"><span data-value="name">6 Bundle files</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Source folder, relative to the job folder</td><td></td><tr><td>Prefix</td><td>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+<tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-2" class="doc-section widget-scrollsync-section" data-row-id="2" data-row-type="data_projects" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Project data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="2"><span data-value="name">2 Project data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Output IRIs instead of IDs</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-3" class="doc-section widget-scrollsync-section" data-row-id="3" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="3"><span data-value="name">3 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Article types</td><td>epi-book</td><tr><td>All articles in selected projects</td><td>1</td><tr><td>Copy images </td><td>0</td><tr><td>Image item types</td><td></td><tr><td>Image metadata configuration</td><td></td><tr><td>Image folder in the current job folder</td><td></td><tr><td>Output format</td><td></td><tr><td>Data snippets</td><td></td><tr><td>Output IRIs instead of IDs</td><td>0</td><tr><td>Wrap content (add prolog and epilog)</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-4" class="doc-section widget-scrollsync-section" data-row-id="4" data-row-type="data_articles" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Article data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="4"><span data-value="name">4 Article data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Article types</td><td>epi-article</td><tr><td>All articles in selected projects</td><td>0</td><tr><td>Copy images </td><td>0</td><tr><td>Image item types</td><td></td><tr><td>Image metadata configuration</td><td></td><tr><td>Image folder in the current job folder</td><td></td><tr><td>Output format</td><td></td><tr><td>Data snippets</td><td></td><tr><td>Output IRIs instead of IDs</td><td>0</td><tr><td>Wrap content (add prolog and epilog)</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-5" class="doc-section widget-scrollsync-section" data-row-id="5" data-row-type="data_index" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Index data&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="5"><span data-value="name">5 Index data</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Output format</td><td></td><tr><td>Output IRIs instead of IDs</td><td>0</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-6" class="doc-section widget-scrollsync-section" data-row-id="6" data-row-type="bundle" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Bundle files&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="6"><span data-value="name">6 Bundle files</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Source folder, relative to the job folder</td><td></td><tr><td>Prefix</td><td>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
 &lt;book&gt;</td><tr><td>Postfix</td><td>
 &lt;/book&gt;</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-7" class="doc-section widget-scrollsync-section" data-row-id="7" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="7"><span data-value="name">7 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>XSL-T template</td><td>pipelines/templates/epi-trans0.xsl</td><tr><td>Parser</td><td>Saxon</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-8" class="doc-section widget-scrollsync-section" data-row-id="8" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="8"><span data-value="name">8 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>XSL-T template</td><td>pipelines/templates/epi-trans1.xsl</td><tr><td>Parser</td><td>Saxon</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-9" class="doc-section widget-scrollsync-section" data-row-id="9" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="9"><span data-value="name">9 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>XSL-T template</td><td>pipelines/templates/epi-trans2.xsl</td><tr><td>Parser</td><td>Saxon</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-10" class="doc-section widget-scrollsync-section" data-row-id="10" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="10"><span data-value="name">10 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Replacement file</td><td>pipelines/templates/epi-replace-whitespace.txt</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-11" class="doc-section widget-scrollsync-section" data-row-id="11" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="11"><span data-value="name">11 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>XSL-T template</td><td>pipelines/templates/epi-trans-word1.xsl</td><tr><td>Parser</td><td>Saxon</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-12" class="doc-section widget-scrollsync-section" data-row-id="12" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="12"><span data-value="name">12 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Replacement file</td><td>pipelines/templates/epi-silbentrennung.txt</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-13" class="doc-section widget-scrollsync-section" data-row-id="13" data-row-type="transformxsl" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Transform with XSL&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="13"><span data-value="name">13 Transform with XSL</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>XSL-T template</td><td>pipelines/templates/epi-trans-word2.xsl</td><tr><td>Parser</td><td>PHP default</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-14" class="doc-section widget-scrollsync-section" data-row-id="14" data-row-type="replace" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Search and replace&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="14"><span data-value="name">14 Search and replace</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>Replacement file</td><td>pipelines/templates/epi-contract-numbers.txt</td></tr><tr><td>Outputfile</td><td><i>default</i></td></tr></tbody></table></div></div>                                            <div id="sections-15" class="doc-section widget-scrollsync-section" data-row-id="15" data-row-type="save" data-row-config="{&quot;config&quot;:{&quot;name&quot;:{&quot;number&quot;:true,&quot;postfix&quot;:&quot; Save to file&quot;}}}"><div class="doc-section-head"><div class="doc-section-name" data-row-name="15"><span data-value="name">15 Save to file</span></div></div><div class="element_content"><table class="input-set"><tbody><tr><td>File extension</td><td>doc</td><tr><td>Force download</td><td>1</td></tr>
 </tbody></table></div></div>                    </div>
@@ -590,14 +588,10 @@
                 <div class="content-footer"></div>
 
             </div>
-
+        
         <!-- Right sidebar -->
+                    <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
-
-            </div>
-
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><a href="/pipelines/edit/21" data-shortcuts="F2" title="Edit (F2)" aria-label="Edit" aria-keyshortcuts="F2" class="widget-shortcut" data-role="edit" data-target="pipelines-21">Edit</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-pipelines-view" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><a href="/pipelines/edit/21" data-shortcuts="F2" title="Edit (F2)" aria-label="Edit" aria-keyshortcuts="F2" class="widget-shortcut" data-role="edit" data-target="pipelines-21">Edit</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-pipelines-view" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
 </div>
-</body>
-</html>
+</body></html>

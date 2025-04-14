@@ -87,7 +87,7 @@ class BaseEntityHelper extends Helper
 
         // Norm data
         $out_normdata = '';
-        foreach (($entity->norm_data_parsed ?? []) as $norm_data) {
+        foreach (($entity->normDataParsed ?? []) as $norm_data) {
             if (!empty($norm_data['button'])) {
                 $out_normdata .= $this->Html->link($norm_data['button'], $norm_data['url'],
                     ['target' => '_blank', 'class' => 'button']);
@@ -150,15 +150,7 @@ class BaseEntityHelper extends Helper
      */
     public function docContent($entity, $options = [])
     {
-        // In the coding mode, the default editing mode is false.
-        // Coding has to be explicitly allowed for sections, items and fields.
-        if (($options['mode'] ?? '') === 'code') {
-            $action = 'view';
-        }
-        else {
-            $action = $this->_View->getRequest()->getParam('action') ?? 'view';
-        }
-
+        $action = $this->_View->getRequest()->getParam('action') ?? 'view';
         $out = $this->Element->openHtmlElement('div', ['id' => 'doc-' . $entity->id . '-content', 'class' => 'doc-content']);
 
         foreach ($entity->htmlFields as $fieldName => $fieldOptions) {
@@ -173,12 +165,12 @@ class BaseEntityHelper extends Helper
             }
 
             // Public visibility?
-
             // TODO: respect $public = $fieldOptions['public'] ?? true;
             if (!$entity->getFieldIsVisible($fieldName)) {
                 continue;
             }
 
+            $fieldOptions['edit'] = $options['template_article']['edit'] ?? $options['edit'] ?? false;
             $out .= $this->docContentField($entity, $fieldName, $fieldOptions, $action);
         }
 
@@ -209,7 +201,10 @@ class BaseEntityHelper extends Helper
         $classes[] = empty($content) ? 'doc-content-element-empty' : '';
         $classes = array_filter($classes);
 
-        $out = $this->Element->openHtmlElement('div',['class' => $classes, 'data-row-field' => $fieldName]);
+        $out = $this->Element->openHtmlElement(
+            'div',
+            ['class' => $classes, 'data-row-field' => $fieldName]
+        );
         $out .= '<div class="doc-content-fieldname">' . ($options['caption'] ?? '') . '</div>';
 
         if ($help !== '') {
@@ -257,7 +252,11 @@ class BaseEntityHelper extends Helper
     public function sectionList($article, $options = [])
     {
         $out = '';
+        $ignore = $options['ignore']['sections'] ?? [];
         foreach ($article->sections as $section) {
+            if (in_array($section->sectiontype, $ignore)) {
+                continue;
+            }
             $out .= $this->sectionContent($section, $options);
         }
 
@@ -294,12 +293,6 @@ class BaseEntityHelper extends Helper
         $sectionConfig = $section->type['merged'] ?? [];
         $sectionConfig['view'] = Arrays::stringToArray($sectionConfig['view'] ?? 'stack', 'name', 'stack');
         $options['template_section'] = $sectionConfig;
-
-        // In the coding template, the default editing mode is false.
-        // Coding has to be explicitly allowed for sections, items and fields.
-        if ($mode === 'code') {
-            $options['template_section']['edit'] = $options['template_section']['edit'] ?? false;
-        }
 
         //Section start
         $out = $this->sectionStart($section, $options);
@@ -797,10 +790,6 @@ class BaseEntityHelper extends Helper
                 );
         }
 
-//        if ($options['delete'] ?? false) {
-//            $out .= $this->itemRemoveButton($item->sections_id, $item->id);
-//        }
-
         $out .= $this->itemEnd();
         return $out;
     }
@@ -847,11 +836,41 @@ class BaseEntityHelper extends Helper
             }
         }
 
-//        if ($options['delete'] ?? false) {
-//            $out .= $this->itemRemoveButton($item->sections_id, $item->id);
-//        }
+
+        // Add service buttons
+        if ($options['edit'] ?? false) {
+            foreach ($item->type->merged['services'] ?? [] as $serviceName => $serviceOptions) {
+                $out .= $this->itemServiceButton($item, $serviceName, $serviceOptions);
+            }
+        }
 
         $out .= $this->itemEnd();
+        return $out;
+    }
+
+    public function itemServiceButton($item, $serviceName, $serviceOptions)
+    {
+        $out = '';
+        $serviceOptions['database'] = $item->databaseName;
+        $out .= $this->Element->openHtmlElement(
+            'div',
+            [
+                'class' => 'widget-service-button',
+                'data-service-name' => $serviceName,
+                'data-service-item' => $item->id ?? '{id}',
+                'data-service-data' => json_encode($serviceOptions),
+            ]
+        );
+
+        $out .= $this->Html->link(
+            $serviceOptions['caption'] ?? $serviceName,
+            '#',
+            [
+                'class' => 'button tiny',
+            ]
+        );
+
+        $out .= $this->Element->closeHtmlElement('div');
         return $out;
     }
 
@@ -968,13 +987,19 @@ class BaseEntityHelper extends Helper
         $classes[] = $empty ? 'doc-field-empty' : '';
         $classes[] = ($options['class'] ?? false) ? $options['class'] : '';
 
-        // Hide field in view mode if display is set to false
-        $classes[] = (!($fieldConfig['display'] ?? true) && !($options['edit'] ?? false)) ? 'doc-field-hide' : '';
+        if ($fieldNameParts[0] === 'itemgroup') {
+            $classes[] = 'widget-fieldgroup';
+        }
 
-        // Add additional visual classes
-        $classes[] = ($fieldConfig['display'] ?? true) === 'highlight' ? 'doc-field-highlight' : '';
-        $classes[] = ($fieldConfig['display'] ?? true) === 'addendum' ? 'doc-field-addendum' : '';
-        $classes[] = ($fieldConfig['display'] ?? true) === 'more' ? 'doc-field-more' : '';
+        // Hide field in view mode if display is set to false
+        if ((!($fieldConfig['display'] ?? true) && !($options['edit'] ?? false)) ) {
+            $classes[] = 'doc-field-hide';
+        }
+
+        // Add additional visual classes (highlight, addendum, more, hide)
+        if (is_string($fieldConfig['display'] ?? true)) {
+            $classes[] = 'doc-field-' . $fieldConfig['display'];
+        }
         $classes = implode(' ', array_filter($classes));
 
         $itemAttrs = [
@@ -1164,15 +1189,18 @@ class BaseEntityHelper extends Helper
     public function itemFieldXml($item, $fieldNameParts, $edit, $options=[])
     {
         if(is_array($item)) {
-            $content =  $item[$fieldNameParts] ?? ('{'.$fieldNameParts.'}');
+            $placeHolder = '{'.$fieldNameParts[0].'}';
+            $content =  $item[$fieldNameParts[0]] ?? $placeHolder;
+            $contentAttr = $content === $placeHolder ? ('{'.$fieldNameParts[0].'|attr}') : $content;
         } else {
             $content = $item->getValueFormatted($fieldNameParts);
+            $contentAttr = $content;
         }
 
         $out = '';
 
         if ($edit) {
-            $inputOptions = ['value' => $content];
+            $inputOptions = ['value' => $contentAttr];
             $formId = $options['form'] ?? null;
             if ($formId) {
                 $inputOptions['form'] = $formId;
@@ -1625,55 +1653,22 @@ class BaseEntityHelper extends Helper
     }
 
     /**
-     * Render a button that adds items in tables and grids
-     *
-     * @param integer $itemCount
-     * @return string
-     */
-    public function itemAddButton($itemCount = 1)
-    {
-        return '<div class="doc-field doc-field-add">'
-            . '<button class="doc-item-add tiny"
-                data-items-max="'. $itemCount .'"
-                title="' . __('Add item') . '"
-                type="button"
-                aria-label="' . __('Add item') . '">+</button>'
-            . '</div>';
-    }
-
-    /**
-     * Render a button that removes items in tables
-     *
-     * @param string $sectionId The section ID
-     * @param string $itemId The item ID or {id} as a placeholder
-     * @return string
-     */
-    public function itemRemoveButton($sectionId, $itemId)
-    {
-        return '<div class="doc-field doc-field-remove">'
-            . $this->Form->hidden('sections[' . $sectionId . '][items][' . $itemId . '][deleted]', ['value' => 0, 'data-row-field' => 'deleted'])
-            . '<button class="doc-item-remove tiny"
-                title="' . __('Remove item') . '"
-                type="button"
-                aria-label="' . __('Remove item') . '">-</button>'
-            . '</div>';
-
-    }
-
-    /**
      * Render a button that show the full item in a popup
      *
      * @param string $sectionId The section ID
      * @param string $itemId The item ID or {id} as a placeholder
+     * @param boolean $edit Whether show an edit button or a more button
      * @return string
      */
-    public function itemMoreButton($sectionId, $itemId)
+    public function itemMoreButton($sectionId, $itemId, $edit=false)
     {
-        // Pen
+        // Pen or dots
+        $icon = $edit ? "\u{f304}" : "\u{f141}";
+
         return '<div class="doc-field doc-field-more-button">'
             . '<button class="doc-item-more icon tiny" type="button"
                 title="' . __('Show more fields') . '"
-                aria-label="' . __('Remove item') . '">'. "\u{f304}" . '</button>'
+                aria-label="' . __('Show more fields') . '">'. $icon . '</button>'
             . '</div>';
     }
 
@@ -1956,7 +1951,8 @@ class BaseEntityHelper extends Helper
         $data['root_tab'] = $data['root_tab'] ?? $root['table_name'] ?? null;
         $data['root_id'] = $data['root_id'] ?? $root['id'] ?? null;
 
-        $formId = 'form-edit-'
+        $action = Attributes::cleanOption($options['mode'], ['edit', 'add'], 'edit');
+        $formId = 'form-' . $action . '-'
             . ($data['root_tab'] ?? '{rootTab}')
             . '-'
             . ($data['root_id'] ?? '{rootId}');
@@ -2068,13 +2064,7 @@ class BaseEntityHelper extends Helper
         $items = $article->getOrderedFootnotes($typeName);
         $uniqueSectionId = Attributes::uuid('footnotes-');
 
-        // In coding mode, only edit explicitly allowed fields
-        if ($mode === 'code') {
-            $editFootnotes = $edit && ($typeConfig['merged']['edit'] ?? false);
-        } else {
-            $editFootnotes = $edit && ($typeConfig['merged']['edit'] ?? true);
-        }
-
+        $editFootnotes = $edit && ($typeConfig['merged']['edit'] ?? true);
         $divAttributes = [
             'class' => ['doc-section', 'doc-section-footnotes'],
             'data-row-type' => $typeName,
@@ -2236,7 +2226,8 @@ class BaseEntityHelper extends Helper
         ]);
 
         $options['inputField'] = 'footnotes[' . ($footnote['idx'] ?? '{idx}') . '][' . $fieldname . ']';
-        $out .= $this->itemFieldXml($footnote, $fieldname, $options['edit'] ?? false, $options);
+        $fieldNameParts = explode('.', $fieldname);
+        $out .= $this->itemFieldXml($footnote, $fieldNameParts, $options['edit'] ?? false, $options);
 
         $out .= $this->Element->closeHtmlElement('div');
 
@@ -2323,12 +2314,6 @@ class BaseEntityHelper extends Helper
         $sectionConfig = $section->type['merged'] ?? [];
         $sectionConfig['view'] = Arrays::stringToArray($sectionConfig['view'] ?? 'stack', 'name', 'stack');
         $options['template_section'] = $sectionConfig;
-
-        // In the coding template, the default editing mode is false.
-        // Coding has to be explicitly allowed for sections, items and fields.
-        if ($mode === 'code') {
-            $options['template_section']['edit'] = $options['template_section']['edit'] ?? false;
-        }
 
         $empty = $section->getValueIsEmpty('comment');
 
@@ -2505,20 +2490,31 @@ class BaseEntityHelper extends Helper
 
         if (in_array($action, ['edit', 'add', 'delete', 'move'])) {
             // Note: new entities (add mode) have no id yet
-            $options['id'] = trim('form-' . $action . '-' . $entity->table_name . '-' . $entity->id,'-');
+            $entityId = $entity->id ?? $entity->newId;
+            $options['id'] = trim('form-' . $action . '-' . $entity->table_name . '-' . $entityId,'-');
             $options['autocomplete'] = 'off';
 
             if (!$entity->isNew() && !$entity->deleted) {
-                $options['data-cancel-url'] = $this->Url->build(['action' => 'view', $entity->id]);
-                $options['data-delete-url'] = $this->Url->build(['action' => 'delete', $entity->id]);
+                $options['data-cancel-url'] = $this->Url->build(['action' => 'view', $entityId]);
+                $options['data-delete-url'] = $this->Url->build(['action' => 'delete', $entityId]);
             }
 
             if (($action === 'delete') && !$entity->deleted) {
                 $options['type'] = 'delete';
-                $options['data-proceed-url'] = $this->Url->build(['action' => 'index']);
+                if (!$this->_View->getRequest()->is('ajax')) {
+
+                    $proceedUrl = ['action' => 'index'];
+                    if (!empty($entity->fieldsScope)) {
+                        $proceedUrl[] = $entity[$entity->fieldsScope] ?? null;
+                    }
+                    $options['data-proceed-url'] = $this->Url->build($proceedUrl);
+                }
             }
 
             $out .= $this->Form->create($entity, $options);
+            if ($doc && ($action === 'add')) {
+                $out .= $this->Form->hidden('id',['value' => $entityId]);
+            }
 
             if (!empty($entity->lockid)) {
                 $out .= $this->Form->hidden(
@@ -2671,28 +2667,38 @@ class BaseEntityHelper extends Helper
 
         $cellClass = empty($fieldOptions['cellClass']) ? '' : (' class="' . $fieldOptions['cellClass'] . '"');
 
-        $out = '<tr class="' . implode(' ', $rowClasses) . '" data-row-field="' . $fieldName . '">';
+        $edit = in_array($action, ['edit', 'add', 'move']);
 
-        // Use the whole table width
-        if ($fieldOptions['layout'] ?? 'row' === 'stacked') {
-            unset($fieldOptions['layout']);
-            $out .= '<td colspan="2"' . $cellClass . '>';
-            $out .= '<h2>' . $caption . '</h2>';
-            $out .= $this->entityField($entity, $fieldName, $fieldOptions, $action);
-            $out .= '</td>';
+        $fieldLayout = $fieldOptions['layout'] ?? 'row';
+        unset($fieldOptions['layout']);
+        $fieldContent = $this->entityField($entity, $fieldName, $fieldOptions, $action);
+
+        $out = '';
+        if ($edit || !empty($fieldContent)) {
+            $out = '<tr class="' . implode(' ', $rowClasses) . '" data-row-field="' . $fieldName . '">';
+
+            // Use the whole table width
+            if ($fieldLayout === 'stacked') {
+
+                $out .= '<td colspan="2"' . $cellClass . '>';
+                if (!empty($caption)) {
+                    $out .= '<h2>' . $caption . '</h2>';
+                }
+                $out .= $fieldContent;
+                $out .= '</td>';
+            }
+
+            // Caption left, content right
+            else {
+                $out .= '<th scope="row">' . $caption . '</th>';
+
+                $out .= '<td' . $cellClass . '>';
+                $out .= $fieldContent;
+                $out .= '</td>';
+            }
+
+            $out .= '</tr>';
         }
-
-        // Caption left, content right
-        else {
-            $out .= '<th scope="row">' . $caption . '</th>';
-
-            $out .= '<td' . $cellClass . '>';
-            $out .= $this->entityField($entity, $fieldName, $fieldOptions, $action);
-            $out .= '</td>';
-        }
-
-        $out .= '</tr>';
-
         return $out;
     }
 
@@ -2727,21 +2733,30 @@ class BaseEntityHelper extends Helper
         $fieldFormat = is_object($entity) ? $entity->getFieldFormat($fieldName) : 'raw';
         $inputType = $fieldOptions['type'] ?? 'text';
 
-        $edit = in_array($action, ['edit', 'add', 'move']);
+        $edit = $fieldOptions['edit'] ?? in_array($action, ['edit', 'add', 'move']);
+        $services = $fieldOptions['services'] ?? [];
+        unset($fieldOptions['services']);
 
         // Edit fields
         if ($edit) {
             // Restrict to accessible fields
-            $enabled = $entity->isAccessible($fieldName);
+            $fieldNameParts = explode('.',$fieldName);
+            $enabled = $entity->isAccessible($fieldNameParts[0]);
+
+            // Map widget
+            if ($inputFormat === 'widget') {
+                $value = $entity->getValueRaw($fieldName);
+                $out = $this->entityWidgets($entity, $fieldName, $edit, $fieldOptions, $value);
+            }
 
             // XML fields
-            if (($inputFormat === 'typed') && ($fieldFormat === 'xml')) {
+            elseif ($fieldFormat === 'xml') {
                 $out = $this->itemField($entity, $fieldName, ['edit' => true, 'mode' => $enabled ? $action : 'view']);
             }
 
             // Everything else
             else {
-                $stripOptions = ['caption', 'action', 'cellClass', 'extract', 'help', 'format', 'baseUrl'];
+                $stripOptions = ['caption', 'action', 'cellClass', 'extract', 'help', 'format', 'baseUrl', 'autofill'];
                 $inputOptions = array_diff_key($fieldOptions, array_combine($stripOptions, $stripOptions));
                 $inputOptions['label'] = false;
 
@@ -2752,7 +2767,7 @@ class BaseEntityHelper extends Helper
                 }
 
                 // Autofill options
-                $autofill = $entity->type->merged['fields'][$fieldName]['autofill'] ?? [];
+                $autofill = $fieldOptions['autofill'] ?? [];
                 $autofill = !empty($autofill) && (!empty($autofill['force']) || $entity->getValueIsEmpty($fieldName)) ? $autofill : false;
 
                 if (!empty($autofill)) {
@@ -2767,6 +2782,11 @@ class BaseEntityHelper extends Helper
                     $inputOptions['readonly'] = true;
                 }
 
+                // Nested values
+                if (count($fieldNameParts) > 1) {
+                    $inputOptions['value'] = $entity->getValueRaw($fieldName);
+                }
+
                 $out = $this->Form->control($fieldName, $inputOptions);
             }
 
@@ -2774,6 +2794,10 @@ class BaseEntityHelper extends Helper
             if (isset($fieldOptions['help'])) {
                 $out .= '<p class="table-help">' . $fieldOptions['help'] . '</p>';
             }
+
+            // Add service buttons
+            $out .= $this->entityFieldServiceButton($entity, $services);
+
         }
 
         // View fields
@@ -2803,7 +2827,10 @@ class BaseEntityHelper extends Helper
             }
 
             // Links
-            if ($inputFormat === 'url') {
+            if (($value === '') || is_null($value)) {
+                $out = '';
+            }
+            elseif ($inputFormat === 'url') {
                 $out = $this->entityFieldUrl($entity, $fieldName, $edit, $fieldOptions, $value);
             }
             // Images
@@ -2841,6 +2868,14 @@ class BaseEntityHelper extends Helper
             //Passwords
             elseif ($fieldFormat === 'token') {
                 $out = $this->entityFieldToken($entity, $fieldName, $edit, $fieldOptions, $value);
+            }
+            // Map widget
+            elseif ($inputFormat === 'widget') {
+                $out = $this->entityWidgets($entity, $fieldName, $edit, $fieldOptions, $value);
+            }
+            // XML fields
+            elseif ($fieldFormat === 'xml') {
+                $out = $this->itemField($entity, $fieldName, ['edit' => false]);
             }
             // Get from types
             elseif ($inputFormat === 'typed') {
@@ -2922,7 +2957,10 @@ class BaseEntityHelper extends Helper
         $out = '';
         if (!empty($entity->norm_data)) {
             $normdata = [];
-            foreach ($entity->norm_data_parsed as $item) {
+            foreach ($entity->normDataParsed as $item) {
+                if (empty($item)) {
+                    continue;
+                }
                 $normdata[] = is_array($item) ?
                     $this->Html->link($item['value'] ?? '', $item['url'] ?? '', ['target' => '_blank']) :
                     $item;
@@ -3082,6 +3120,98 @@ class BaseEntityHelper extends Helper
 
         return $out;
     }
+
+
+    public function entityFieldServiceButton($entity, $services) {
+        $out = '';
+
+        foreach ($services ?? [] as $serviceName => $serviceOptions) {
+            // TODO: Think about the naming scheme, widget-service-button would be better but is already taken
+            $out .= $this->Element->openHtmlElement(
+                'div',
+                [
+                    'class' => 'widget-reconcile-button',
+                    'data-service-name' => $serviceName,
+                    'data-service-data' => json_encode($serviceOptions)
+                ]
+            );
+
+            $out .= $this->Html->link(
+                $serviceOptions['caption'] ?? $serviceName,
+                '#',
+                [
+                    'class' => 'button tiny widget-shortcut',
+                    'data-shortcuts' => 'Alt+R',
+                    'area-keyshortcuts' => 'Alt+R'
+                ]
+            );
+
+            $out .= $this->Element->closeHtmlElement('div');
+        }
+
+        if ($out !== '') {
+            $out = $this->Element->outputHtmlElement('div', $out, ['class' => 'field-buttons']);
+        }
+        return $out;
+    }
+
+    /**
+     * Output section widgets
+     *
+     * ### Options
+     * - edit
+     * - mode
+     * - article
+     * - section
+     * - template_article
+     * - template_section.view
+     *
+     * @param BaseEntity $entity
+     * @param string $fieldName
+     * @param boolean $edit
+     * @param array $fieldOptions
+     * @param mixed $value
+     * @param array $options
+     * @return string
+     */
+    public function entityWidgets($entity, $fieldName, $edit, $fieldOptions, $value)
+    {
+        $out = '';
+        if (!empty($fieldOptions['widgets']['map'] ?? false)) {
+
+            // Skip empty map in view mode
+            if (!$edit) {
+                try {
+                    $value = json_decode($entity->getValueRaw($fieldName), true);
+                } catch (Exception $e) {
+                    $value = [];
+                }
+
+                if ((($value['lat'] ?? '') === '') || (($value['lng'] ?? '') === '')) {
+                    return $out;
+                }
+            }
+
+            $options = [
+                'entities' => [$entity],
+                'rowTable' => $entity->tableName,
+                'rowType' => $entity->type->name,
+                'searchText' => $entity->captionPath,
+                'fieldName' => $fieldName,
+                'sortno' => false,
+                'edit' => $edit
+            ];
+            $out .= $this->getView()->element('../Properties/widget_map', $options);
+        }
+//        if (!empty($options['template_section']['view']['widgets']['thumbs'] ?? false)) {
+//            $out .= $this->getView()->element('../Sections/widget_thumbs', $options);
+//        }
+//        if (!empty($options['template_section']['view']['widgets']['grid'] ?? false)) {
+//            $out .= $this->getView()->element('../Sections/widget_grid', $options);
+//        }
+        return $out;
+    }
+
 
     public function taskContent($task, $options = [])
     {

@@ -41,19 +41,14 @@ export default class XmleditorXmltagCommand extends Command {
 	}
 
 	/**
-	 * Executes the command. Applies attributeData to the selection.
-	 * If no value is passed, it removes the attribute from the selection.
+	 * Executes the command
 	 *
 	 * @protected
-	 * @param {Object} [typeData] Options for the executed command.
-	 * @fires execute
+	 * @param {Object} commandData Options for the executed command.
 	 */
-	execute( commandData = {} ) {
+	execute(commandData = {} ) {
 
 		const typeData = this.editor.config.get('tagSet')[commandData['data-type']];
-		const callbacks = this.editor.config.get('callbacks') || {};
-
-		let attributeData;
 
 		// Format tag
 		if (typeData.config.tag_type === 'format') {
@@ -74,7 +69,6 @@ export default class XmleditorXmltagCommand extends Command {
         if (commandData.initiator === 'shortcut') {
             this.collapseSelection();
         }
-
 	}
 
 	refresh() {
@@ -125,7 +119,6 @@ export default class XmleditorXmltagCommand extends Command {
             writer.setSelection(pos);
 		});
 
-
 		return attributeData;
 	}
 
@@ -143,16 +136,19 @@ export default class XmleditorXmltagCommand extends Command {
 		model.change( writer => {
 				//const ranges = model.schema.getValidRanges( model.document.selection.getRanges(), XML_BRACKET );
 				const ranges = model.document.selection.getRanges();
+                let newPos;
+                let isEmpty = false;
 
 				for ( const range of ranges ) {
                     let flatranges;
+                    isEmpty = range.isCollapsed;
                     if (range.isCollapsed) {
                         flatranges = [range];
                     } else {
                         flatranges = range.getMinimalFlatRanges();
                     }
 
-					for ( const flatrange of flatranges ) {
+					for (const flatrange of flatranges ) {
                         // Pass a copy of attributes so data-new can be deleted
 						let bracketWrapper = writer.createElement( XML_BRACKET, { ...attributeData});
                         delete attributeData['data-new'];
@@ -160,7 +156,7 @@ export default class XmleditorXmltagCommand extends Command {
 
 						let wrapperRange = model.createRangeIn(bracketWrapper);
 						let bracketContent = writer.createElement( XML_BRACKET_CONTENT);
-						writer.wrap( wrapperRange,bracketContent);
+						writer.wrap( wrapperRange, bracketContent);
 
                         // TODO: create in bracket downcaster
 						let bracketOpenData = {'data-value' : this.getTagBracketOpen(typeName)};
@@ -169,10 +165,25 @@ export default class XmleditorXmltagCommand extends Command {
 						let bracketOpen = writer.createElement(XML_BRACKET_OPEN, bracketOpenData);
 						let bracketClose = writer.createElement(XML_BRACKET_CLOSE, bracketCloseData);
 
-						writer.insert( bracketOpen,bracketWrapper,0);
-						writer.append( bracketClose,bracketWrapper,'after');
+						writer.insert(bracketOpen, bracketWrapper,0);
+						writer.append(bracketClose, bracketWrapper,'after');
+
+                        newPos = writer.createPositionAt(bracketContent, 'end');
 					}
 				}
+
+                // if (isEmpty) {
+                //     const textNode = writer.createText('');
+                //     writer.insert(textNode, newPos, 'before');
+                //     const posBefore = writer.createPositionBefore(textNode);
+                //     const posAfter = writer.createPositionAfter(textNode);
+                //     const newSel = writer.createRange(posBefore, posAfter);
+                //     writer.setSelection(newSel);
+                // } else
+
+                if (newPos) {
+                    writer.setSelection(newPos);
+                }
 		});
 
         return attributeData;
@@ -271,11 +282,19 @@ export default class XmleditorXmltagCommand extends Command {
     }
 
 	newAttributeData(typeName) {
+        let selectedText = '';
+        const model = this.editor.model;
+        if (!model.document.selection.isCollapsed) {
+            selectedText = this.editor.data.stringify(model.getSelectedContent(model.document.selection));
+            selectedText = selectedText.replace(/\s*data-tagid="[^"]*"/g, '');
+        }
+
 		return {
 			'data-type' : typeName,
 			'data-tagid' : generateUUID(),
             'data-value' : this.getTagValue(typeName),
-            'data-new': true
+            'data-new': true,
+            'data-selected' : selectedText
 		};
 	}
 }

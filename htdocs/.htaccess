@@ -2,4 +2,5 @@
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+    RewriteRule "^/\.well-known/traffic-advice$" - [T=application/trafficadvice+json,END]
 </IfModule>

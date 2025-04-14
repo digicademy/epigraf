@@ -36,6 +36,14 @@ class RootEntity extends BaseEntity
     public $_lookup = [];
 
     /**
+     * Whether to filter out annotations for data exports that are in invisible fields.
+     * Set to true for filtered data.
+     *
+     * @var bool
+     */
+    public $_filterAnnos = false;
+
+    /**
      * Get links by tag ID
      *
      * @return array
@@ -84,13 +92,16 @@ class RootEntity extends BaseEntity
      */
     protected function _getFootnoteTypes()
     {
-        $footnoteTypes = $this->table->getDatabase()->types['footnotes'] ?? [];
-        $footnoteTypes = array_intersect_key($footnoteTypes, array_flip($this->type['merged']['footnotes'] ?? []));
+        // From config
+        $footnoteTypesConfig = $this->table->getDatabase()->types['footnotes'] ?? [];
+        $footnoteTypesConfig = array_intersect_key($footnoteTypesConfig, array_flip($this->type['merged']['footnotes'] ?? []));
 
-        return array_merge(
-            array_map(fn($x) => [], $this->footnotes_by_type),
-            $footnoteTypes
-        );
+        // Additional from data
+        $footnoteTypes = array_map(fn($x) => [], $this->footnotes_by_type);
+        $footnoteTypes = array_diff_key($footnoteTypes, $footnoteTypesConfig);
+
+        // Merge
+        return array_merge($footnoteTypesConfig, $footnoteTypes);
     }
 
     /**
@@ -111,6 +122,10 @@ class RootEntity extends BaseEntity
         // Filter out unpublished footnotes for guests
         if (($this->currentUserRole === 'guest') || !empty(\App\Model\Table\BaseTable::$requestPublished)) {
             $footnotes = array_filter($footnotes, fn($footnote) => $footnote->number !== -INF);
+        }
+
+        if ($this->_filterAnnos) {
+            $footnotes = array_filter($footnotes, fn($footnote) => $footnote->getEntityIsVisible());
         }
 
         return $footnotes;

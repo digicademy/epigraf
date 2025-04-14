@@ -199,8 +199,7 @@ class DatabanksTable extends BaseTable
      * Throws a BadRequestException if the database is not available.
      *
      * @param $dbname
-     *
-     * @return array|\Cake\Datasource\EntityInterface
+     * @return Databank
      */
     public function activateDatabase($dbname)
     {

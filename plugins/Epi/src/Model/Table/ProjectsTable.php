@@ -20,12 +20,20 @@ use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Query;
 use Cake\Validation\Validator;
 use Epi\Model\Entity\Project;
+use Epi\Model\Traits\TransferTrait;
 
 /**
  * Projects table
  */
 class ProjectsTable extends BaseTable implements ExportTableInterface
 {
+
+    use TransferTrait;
+
+    /**
+     * @var int Default export limit used in TransferTrait
+     */
+    protected $exportLimit = 1;
 
     /**
      * Type field for scoped queries and IRI paths
@@ -64,8 +72,7 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
             'properties' => 'merge',
             'published' => 'list-integer'
         ],
-        'properties' => 'hybrid-list-integer',
-        'descent' => 'hybrid-list-boolean',
+        'properties' => 'nested-list',
         'load' => 'list',
         'save' => 'list'
     ];
@@ -142,9 +149,7 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * afterSave callback
-     *
-     * Clear the caches
+     * Clear the caches after saving
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
@@ -283,13 +288,14 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
      */
     public function findHasArticleOptions(Query $query, array $options)
     {
-        $articles_options = $options['articles'] ?? [];
-        $articles_options['descent'] = $options['descent'] ?? [];
-        $articles_options['properties'] = $options['properties'] ?? [];
+        $articlesOptions = $options['articles'] ?? [];
+        $articlesOptions['properties'] = $options['properties'] ?? [];
 
-        if ($articles_options) {
+        $articlesOptions = array_filter($articlesOptions);
+
+        if (!empty($articlesOptions)) {
             $articlesQuery = $this->Articles
-                ->find('hasParams', $articles_options)
+                ->find('hasParams', $articlesOptions)
                 ->select(['Articles.projects_id']);
 
             $query = $query->where(['Projects.id IN' => $articlesQuery]);
@@ -444,45 +450,4 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
             ->order(['projecttype' => 'ASC', 'name' => 'ASC', FIELD_PROJECTS_SIGNATURE => 'ASC']);
     }
 
-
-    /**
-     * Called from JobExport
-     *
-     * @param $params
-     * @return int Number of rows for calculating the progress bar
-     */
-    public function getExportCount($params): int
-    {
-        $params = $this->parseRequestParameters($params);
-        return $this
-            ->find('hasParams', $params)
-            ->count();
-
-    }
-
-    /**
-     * Get data for export
-     *
-     * @implements ExportTableInterface
-     * @param array $params
-     * @param array $paging
-     * @param string $indexkey
-     * @return Project[]
-     */
-    public function getExportData($params, $paging = [], $indexkey = ''): array
-    {
-        $offset = $paging['offset'] ?? 0;
-        $limit = $paging['limit'] ?? 1;
-
-        $params = $this->parseRequestParameters($params);
-
-        // Load data
-        $projects = $this
-            ->find('hasParams', $params)
-            ->limit($limit)
-            ->offset($offset)
-            ->toArray();
-
-        return $projects;
-    }
 }

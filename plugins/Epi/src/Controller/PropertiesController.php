@@ -73,7 +73,9 @@ class PropertiesController extends AppController
                 'move',
                 'merge',
                 'lock',
-                'unlock'
+                'unlock',
+                'mutate'
+//                'mutate' => ['task' => ['batch_sort']]
             ],
             'editor' => [
                 'index',
@@ -87,7 +89,9 @@ class PropertiesController extends AppController
                 'move',
                 'merge',
                 'lock',
-                'unlock'
+                'unlock',
+                'mutate'
+//                'mutate' => ['task' => ['batch_sort']]
             ]
         ]
     ];
@@ -375,7 +379,7 @@ class PropertiesController extends AppController
             );
         }
 
-        $this->Transfer->import('properties', $propertytype);
+        $this->Transfer->import($propertytype);
     }
 
     /**
@@ -404,7 +408,7 @@ class PropertiesController extends AppController
             );
         }
 
-        return $this->Transfer->mutate('properties', $scope);
+        return $this->Transfer->mutate($scope);
     }
 
     /**
@@ -427,10 +431,8 @@ class PropertiesController extends AppController
             );
         }
 
-//        [$params, $columns, $paging, $filter] = $this->Actions->prepareParameters();
-//        unset($params['propertytype']);
         $params = $this->request->getQueryParams();
-        $this->Transfer->transfer('properties', $scope, $params);
+        $this->Transfer->transfer($scope, $params);
     }
 
 }

@@ -93,6 +93,49 @@
     color: gray;
 }
 
+.legend .data-segment {
+    cursor: pointer;
+}
+
+.legend .data-segment::before {
+    content: "";
+    color: white;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: -2em;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+}
+
+/* Triangle */
+.legend .data-segment-3::before {
+    border-radius: 0;
+    border:0 !important;
+    content: "\25B3";
+    color:black;
+    font-size:2em;
+
+    /*clip-path: polygon(50% 0%, 0% 100%, 100% 100%);*/
+}
+
+/* Square */
+.legend .data-segment-2::before {
+    border-radius:  0 ;
+}
+
+/* Pentagon */
+.legend .data-segment-4::before {
+    border-radius: 0;
+    border:0 !important;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
+
 .leaflet-bar button {
     padding: 0;
 }
@@ -116,13 +159,6 @@
     height: 100%;
 }
 
-.btn-toggle-radius.active {
-    background-image: url('../img/leaflet/radius_visible.svg');
-}
-
-.btn-toggle-radius:not(.active) {
-    background-image: url('../img/leaflet/radius_hidden.svg');
-}
 
 .btn-toggle-radius {
     display: block;
@@ -132,6 +168,15 @@
     width: 100%;
     height: 100%;
 }
+
+.easy-button-button .btn-toggle-radius {
+    background-image: url('../img/leaflet/radius_hidden.svg');
+}
+
+.easy-button-button.active .btn-toggle-radius {
+    background-image: url('../img/leaflet/radius_visible.svg');
+}
+
 
 .btn-zoom-to-marker {
     background-image: url('../img/leaflet/marker.svg');
@@ -154,13 +199,39 @@
 }
 
 .item-marker {
-    color: white;
-    border-radius: 50%;
     line-height: 18px;
     text-align: center;
     font-weight: bold;
-    border: 1px solid black;
 }
+
+.item-marker .item-marker-label {
+    color: white;
+    height:100%;
+    width:100%;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: var(--marker-bg-color);
+}
+
+/* Triangle */
+.marker-segment-3 .item-marker-label {
+    border-radius: 0;
+    border:0 !important;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* Square */
+.marker-segment-2 .item-marker-label {
+    border-radius: 0;
+}
+
+/* Pentagon */
+.marker-segment-4 .item-marker-label {
+    border-radius: 0;
+    border:0 !important;
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+}
+
 
 .item-marker-label::before {
     content: attr(data-quality-content);
@@ -171,6 +242,10 @@
     transform: translate(-50%, -50%);
 }
 
+.marker-segment-3 .item-marker-label::before {
+    top:65%
+}
+
 .item-marker.area-marker.zoomed-in{
     border: 1px dotted black;
 }
@@ -179,70 +254,42 @@
     border: 0;
 }
 
+.item-marker.area-marker-big {
+    /*box-shadow: 0 0 15px 10px rgba(0, 0, 100, 0.2);*/
+}
 
 /* Cluster */
 
 .marker-cluster {
     color:white;
-}
-
-.marker-cluster-small,
-.marker-cluster-medium,
-.marker-cluster-large,
-.marker-cluster-very-large {
     background-color: var(--cluster-outer);
     border-radius: 50%;
 }
 
-.marker-cluster-small div {
-    background-color: var(--cluster-inner);
+.marker-cluster div {
+    width: 85%;
+    height: 85%;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    margin-left: 7.5%;
+    margin-top: 7.5%;
 }
 
-.marker-cluster-small div span {
+.marker-cluster div span {
     display: block;
     line-height: 20px;
 }
 
-.marker-cluster-medium div {
-    background-color: var(--cluster-inner);
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-}
-
-.marker-cluster-medium div span {
-    display: block;
-    line-height: 30px;
-}
-
-.marker-cluster-large div {
-    background-color: var(--cluster-inner);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-}
-
-.marker-cluster-large div span {
-    display: block;
-    line-height: 40px;
-}
-
-.marker-cluster-very-large div {
-    background-color: var(--cluster-inner);
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-}
-
-.marker-cluster-very-large div span {
-    line-height: 45px;
-}
 
 /* Popups */
 
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0;
+}
+
+.leaflet-popup-scrolled {
+    border:0;
+}
 
 ol.popup-article-list {
     margin-left: 1.5em;
@@ -278,28 +325,28 @@ ol.popup-article-list {
     background-color: rgba(var(--rgb-data-qual-outer-2), var(--opacity-cluster-marker));
 }
 
-.marker-cluster.data-quality-4 div,
-.marker-cluster.data-quality-3 div,
-.marker-cluster.data-quality-2 div {
+.marker-cluster.data-quality-4 .item-marker-label,
+.marker-cluster.data-quality-3 .item-marker-label,
+.marker-cluster.data-quality-2 .item-marker-label {
     background-color: rgb(var(--rgb-data-qual-2));
 }
 
-.item-marker.data-quality-4,
-span.data-quality-4::before,
-li.data-quality-4::before,
-.item-marker.data-quality-3,
-span.data-quality-3::before,
+.item-marker.data-quality-4 .item-marker-label,
+.item-marker.data-quality-3 .item-marker-label,
+.item-marker.data-quality-2 .item-marker-label,
 li.data-quality-3::before,
-.item-marker.data-quality-2,
-span.data-quality-2::before,
-li.data-quality-2::before {
+li.data-quality-4::before,
+li.data-quality-2::before,
+span.data-quality-4::before,
+span.data-quality-3::before,
+span.data-quality-2::before {
     background-color: rgb(var(--rgb-data-qual-2));
     border-color: rgb(var(--rgb-data-qual-border-2));
 }
 
-.data-quality-4.area-marker.zoomed-in,
-.data-quality-3.area-marker.zoomed-in,
-.data-quality-2.area-marker.zoomed-in {
+.data-quality-4.area-marker.zoomed-in .item-marker-label,
+.data-quality-3.area-marker.zoomed-in .item-marker-label,
+.data-quality-2.area-marker.zoomed-in .item-marker-label {
     background-color: rgba(var(--rgb-data-qual-2), var(--opacity-area-marker));
 }
 
@@ -309,19 +356,19 @@ li.data-quality-2::before {
     background-color: rgba(var(--rgb-data-qual-outer-1), var(--opacity-cluster-marker));
 }
 
-.marker-cluster.data-quality-1 div {
+.marker-cluster.data-quality-1 .item-marker-label {
     background-color: rgb(var(--rgb-data-qual-1));
 }
 
 
-.item-marker.data-quality-1,
+.item-marker.data-quality-1 .item-marker-label,
 span.data-quality-1::before,
 li.data-quality-1::before {
     background-color: rgb(var(--rgb-data-qual-1));
     border-color: rgb(var(--rgb-data-qual-border-1));
 }
 
-.data-quality-1.area-marker.zoomed-in {
+.data-quality-1.area-marker.zoomed-in .item-marker-label {
     background-color: rgba(var(--rgb-data-qual-1), var(--opacity-area-marker));
 }
 
@@ -332,17 +379,26 @@ li.data-quality-1::before {
     background-color: rgba(var(--rgb-data-qual-outer-0), var(--opacity-cluster-marker));
 }
 
-.marker-cluster.data-quality-0 div {
+.marker-cluster.data-quality-0 .item-marker-label {
     background-color: rgb(var(--rgb-data-qual-0));
 }
 
-.item-marker.data-quality-0,
+.item-marker.data-quality-0 .item-marker-label,
 span.data-quality-0::before,
 li.data-quality-0::before {
     background-color: rgb(var(--rgb-data-qual-0));
     border-color: rgb(var(--rgb-data-qual-border-0));
 }
 
-.data-quality-0.area-marker.zoomed-in {
+.data-quality-0.area-marker.zoomed-in .item-marker-label {
     background-color: rgba(var(--rgb-data-qual-0), var(--opacity-area-marker));
+}
+
+
+/** Search box **/
+.leaflet-control-geocoder-form input,
+.leaflet-control-geocoder-form input:focus {
+    margin:0;
+    border:0;
+    outline:0;
 }

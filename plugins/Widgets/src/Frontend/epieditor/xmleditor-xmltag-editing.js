@@ -111,32 +111,32 @@ export class XmleditorXmltagEditing extends Plugin {
             this.editor.editing.view.scrollToTheSelection();
         }, {priority: 'high'});
 
-
-        /**
-         * Iterate all children and remove the tagid attribute
-         *
-         * @param elm CKEditor view element or view document fragment
-         * @param {UpcastWriter} writer A view writer
-         */
-        const removeTagidFromView = function (elm, writer) {
-            for (const node of elm.getChildren()) {
-                if (node.is('element')) {
-                    writer.removeAttribute('data-tagid', node);
-                    removeTagidFromView(node, writer);
-                }
-            }
-        }
-
         /**
          * Paste handling: remove the tagid from the view document fragment prepared by CKEditor
          */
         this.editor.plugins.get('ClipboardPipeline').on('inputTransformation', (evt, data) => {
             const writer = new UpcastWriter();
-            removeTagidFromView(data.content, writer);
+            this.removeTagidFromView(data.content, writer);
         });
 
 
         return this;
+    }
+
+
+    /**
+     * Iterate all children and remove the tagid attribute
+     *
+     * @param elm CKEditor view element or view document fragment
+     * @param {UpcastWriter} writer A view writer
+     */
+    removeTagidFromView(elm, writer) {
+        for (const node of elm.getChildren()) {
+            if (node.is('element')) {
+                writer.removeAttribute('data-tagid', node);
+                this.removeTagidFromView(node, writer);
+            }
+        }
     }
 
     viewToModelPositionBracket(model) {
@@ -215,12 +215,11 @@ export class XmleditorXmltagEditing extends Plugin {
         });
 
         // Check if any of the elements was inserted or removed
-        const removeChanges = changes.filter(change => (change.type === 'remove' && elementTypes.includes(change.name)));
         const insertChanges = changes.filter(change => (change.type === 'insert' && elementTypes.includes(change.name)));
 
         insertChanges.forEach(change => {
             const node = change.position.nodeAfter;
-            if (removeChanges.length > 0) {
+            if (node.parent && (node.parent.rootName === '$graveyard')) {
                 this.onElementRemoved(editor, node);
             } else {
                 this.onElementInserted(editor, node);
@@ -402,39 +401,7 @@ export class XmleditorXmltagEditing extends Plugin {
                     return;
                 }
 
-                // Create model element.
-                let typeName = viewItem.getAttribute('data-type') || '';
-                let tagId = viewItem.getAttribute('data-tagid') || generateUUID();
-                let typeData = this.editor.config.get('tagSet')[typeName];
-
-                //TODO: remove 'data-' prefix in model elements?
-                let tagData = {
-                    'data-type': typeName,
-                    'data-tagid': tagId
-                };
-
-                // Default: use all attributes
-                // TODO: make dry, see tagCreateElement()
-                if (!typeData) {
-                    tagData['data-unstyled'] = true;
-
-                    const typeAttributes = Array.from(viewItem.getAttributeKeys()).reduce(function(carry, attrKey) {
-                        if (attrKey.startsWith('data-attr-')) {
-                            attrKey =  attrKey.substring('data-attr-'.length);
-                            carry[attrKey] = attrKey;
-                        }
-                        return carry;
-                    }, {});
-                    typeData = {'config' : {'attributes': typeAttributes}};
-                }
-
-                const tagAttributes = Utils.getValue(typeData, 'config.attributes');
-                if (tagAttributes) {
-                    for (const [key, value] of Object.entries(tagAttributes)) {
-                        tagData['data-attr-' + key] = viewItem.getAttribute('data-attr-' + key) || '';
-                    }
-                }
-
+                const tagData = this.viewToModelAttributes(viewItem);
                 const modelElement = writer.createElement(XML_BRACKET, tagData);
 
                 // Insert element on a current cursor location.
@@ -576,48 +543,7 @@ export class XmleditorXmltagEditing extends Plugin {
                 classes: ['xml_text']
             },
             model: (viewElement, {writer: modelWriter}) => {
-
-                // Base attributes
-                let typeName = viewElement.getAttribute('data-type');
-                let tagId = viewElement.getAttribute('data-tagid') || generateUUID();
-                let tagValue = viewElement.getAttribute('data-link-value');
-                // const linkTarget = = viewElement.getAttribute('data-link-target');
-
-                const typeData = this.editor.config.get('tagSet')[typeName];
-                if (!tagValue) {
-                    // Get the text content and remove prefix and postfix
-                    tagValue = viewElement.childCount > 0 ? viewElement.getChild(0).data : '';
-
-                    if (tagValue && typeData) {
-                        const prefix = Utils.getValue(typeData,['config.prefix','config.html.prefix'], '');
-                        if (prefix && (typeof tagValue === "string") && tagValue.startsWith(prefix)) {
-                            tagValue = tagValue.slice(prefix.length);
-                        }
-
-                        const postfix = Utils.getValue(typeData,['config.postfix','config.html.postfix'], '');
-                        if (postfix && (typeof tagValue === "string") && tagValue.endsWith(postfix)) {
-                            tagValue = tagValue.slice(0, -postfix.length);
-                        }
-
-                    }
-                }
-
-
-                let tagData = {
-                    'data-type': typeName,
-                    'data-tagid': tagId,
-                    'data-value': tagValue
-                    // 'data-link-target': linkTarget
-                };
-
-                // Additional attributes
-                const tagAttributes = Utils.getValue(typeData, 'config.attributes');
-                if (tagAttributes) {
-                    for (const [key, value] of Object.entries(tagAttributes)) {
-                        tagData['data-attr-' + key] = viewElement.getAttribute('data-attr-' + key) || '';
-                    }
-                }
-
+                const tagData = this.viewToModelAttributes(viewElement);
                 return modelWriter.createElement(XML_TAG, tagData);
             },
             converterProperty: 'low'
@@ -665,7 +591,7 @@ export class XmleditorXmltagEditing extends Plugin {
 
                 // Update attributes
                 let newAttributes = {};
-                newAttributes[data.attributeKey] = data.attributeNewValue;
+                newAttributes[data.attributeKey] = data.attributeNewValue || '';
 
                 // Get new tag content
                 let tagContent = self.tagRenderAttributes(modelElement, newAttributes);
@@ -807,8 +733,8 @@ export class XmleditorXmltagEditing extends Plugin {
      * @return {boolean}
      */
     tagCreateAttributes(modelElement, data, conversionApi) {
-        const attrKey = data.attributeKey;
-        if (!attrKey.startsWith('data-value') && !attrKey.startsWith('data-attr-')) {
+        let attrKey = data.attributeKey;
+        if (!attrKey.startsWith('data-value') && !attrKey.startsWith('data-attr-') && !attrKey.startsWith('data-target')) {
             return false;
         }
 
@@ -817,7 +743,11 @@ export class XmleditorXmltagEditing extends Plugin {
 
         // Set attributes
         let newAttributes = {};
-        newAttributes[attrKey] = data.attributeNewValue;
+        if (attrKey === 'data-target') {
+            attrKey = 'data-link-target';
+        }
+        newAttributes[attrKey] = data.attributeNewValue || '';
+
 
         this.tagSetAttributes(
             viewElement,
@@ -839,7 +769,6 @@ export class XmleditorXmltagEditing extends Plugin {
      * @return {string}
      */
     tagRenderAttributes(modelElement, newAttributes= {}) {
-
 
         const typeName = modelElement.getAttribute('data-type');
         let typeData = this.editor.config.get('tagSet')[typeName];
@@ -1059,25 +988,9 @@ export class XmleditorXmltagEditing extends Plugin {
                     return;
                 }
 
-                // Base attributes
-                let typeName = viewItem.getAttribute('data-type') || '';
-                let tagId = viewItem.getAttribute('data-tagid') || generateUUID();
-
-                let tagData = {
-                    'data-type': typeName,
-                    'data-tagid': tagId,
-                };
-
-                // Additional attributes
-                const typeData = this.editor.config.get('tagSet')[typeName];
-                const tagAttributes = Utils.getValue(typeData, 'config.attributes');
-                if (tagAttributes) {
-                    for (const [key, value] of Object.entries(tagAttributes)) {
-                        tagData['data-attr-' + key] = viewItem.getAttribute('data-attr-' + key) || '';
-                    }
-                }
-
-                let modelElement = writer.createElement(XML_FORMAT, tagData);
+                // Create element
+                const tagData = this.viewToModelAttributes(viewItem);
+                const modelElement = writer.createElement(XML_FORMAT, tagData);
 
                 // Insert element on a current cursor location.
                 if (!safeInsert(modelElement, data.modelCursor)) {
@@ -1141,39 +1054,31 @@ export class XmleditorXmltagEditing extends Plugin {
             return false;
         }
 
-        // TODO: wrap all changes into one undo step, see https://ckeditor.com/docs/ckeditor5/latest/framework/architecture/editing-engine.html#changing-the-model
-
-        // Move formatted content behind the format tag
-        if (tag.name === XML_FORMAT) {
-            editor.model.change(writer => {
-                writer.move(writer.createRangeIn(tag), tag, 'after');
-            });
-
-        }
-
-        // Move bracket content outside the bracket
-        else if (tag.name === XML_BRACKET) {
-            let content = tag ? this.findDescendant(tag, (elm) => {
-                return elm.name === XML_BRACKET_CONTENT;
-            }) : null;
-
-            if (content) {
-                editor.model.change(writer => {
-                    writer.move(writer.createRangeIn(content), tag, 'after');
-                });
-            }
-        }
-
-        // Move bracket content outside the bracket
-        else if (tag.name === XML_BRACKET_CONTENT) {
-            let bracket = tag.parent;
-            editor.model.change(writer => {
-                writer.move(writer.createRangeIn(tag), bracket, 'after');
-            });
-        }
-
-        // Remove tag
         editor.model.change(writer => {
+            // Move formatted content behind the format tag
+            if (tag.name === XML_FORMAT) {
+                writer.move(writer.createRangeIn(tag), tag, 'after');
+            }
+
+            // Move bracket content outside the bracket
+            else if (tag.name === XML_BRACKET) {
+                let content = tag ? this.findDescendant(tag, (elm) => {
+                    return elm.name === XML_BRACKET_CONTENT;
+                }) : null;
+
+                if (content) {
+                    writer.move(writer.createRangeIn(content), tag, 'after');
+
+                }
+            }
+
+            // Move bracket content outside the bracket
+            else if (tag.name === XML_BRACKET_CONTENT) {
+                let bracket = tag.parent;
+                writer.move(writer.createRangeIn(tag), bracket, 'after');
+            }
+
+            // Remove tag
             writer.remove(tag);
         });
 
@@ -1234,6 +1139,74 @@ export class XmleditorXmltagEditing extends Plugin {
 
             }
         });
+    }
+
+    /**
+     * Convert view attributes to model attributes
+     *
+     * @param  {ViewElement} viewElement Ckeditor view element
+     * @return {object} An object with the attributes to be passed to the model element
+     */
+    viewToModelAttributes(viewElement) {
+        // Base attributes
+        let typeName = viewElement.getAttribute('data-type') || '';
+        let tagId = viewElement.getAttribute('data-tagid') || generateUUID();
+        let linkValue = viewElement.getAttribute('data-link-value') || '';
+
+        let typeData = this.editor.config.get('tagSet')[typeName];
+
+        if (!linkValue) {
+            // Get the text content and remove prefix and postfix
+            linkValue = viewElement.childCount > 0 ? viewElement.getChild(0).data : '';
+
+            if (linkValue && typeData) {
+                const prefix = Utils.getValue(typeData,['config.prefix','config.html.prefix'], '');
+                if (prefix && (typeof linkValue === "string") && linkValue.startsWith(prefix)) {
+                    linkValue = linkValue.slice(prefix.length);
+                }
+
+                const postfix = Utils.getValue(typeData,['config.postfix','config.html.postfix'], '');
+                if (postfix && (typeof linkValue === "string") && linkValue.endsWith(postfix)) {
+                    linkValue = linkValue.slice(0, -postfix.length);
+                }
+
+            }
+        }
+
+        let tagData = {
+            'data-type': typeName,
+            'data-tagid': tagId,
+            'data-value': linkValue,
+            'data-target': viewElement.getAttribute('data-link-target') || '', // TODO: What for, is this still necessary?
+            'data-target-tab': viewElement.getAttribute('data-target-tab') || '',
+            'data-target-id': viewElement.getAttribute('data-target-id') || ''
+        };
+
+        // Default: use all attributes
+        // TODO: make dry, see tagCreateElement()
+        if (!typeData) {
+            tagData['data-unstyled'] = true;
+
+            const typeAttributes = Array.from(viewElement.getAttributeKeys()).reduce(function(carry, attrKey) {
+                if (attrKey.startsWith('data-attr-')) {
+                    attrKey =  attrKey.substring('data-attr-'.length);
+                    carry[attrKey] = attrKey;
+                }
+                return carry;
+            }, {});
+            typeData = {'config' : {'attributes': typeAttributes}};
+        }
+
+
+        // Additional attributes
+        const tagAttributes = Utils.getValue(typeData, 'config.attributes');
+        if (tagAttributes) {
+            for (const [key, value] of Object.entries(tagAttributes)) {
+                tagData['data-attr-' + key] = viewElement.getAttribute('data-attr-' + key) || '';
+            }
+        }
+
+        return tagData;
     }
 }
 

@@ -10,6 +10,7 @@
 
 namespace App\Utilities\Converters;
 
+use App\Utilities\Text\TextParser;
 use Cake\Collection\Collection;
 use Cake\Collection\CollectionInterface;
 
@@ -24,15 +25,35 @@ class Arrays
      * Group items in an associate array by field
      *
      * @param array $items
-     * @param string $field
+     * @param string $field Field to group by
+     * @param bool $single Whether to return a single item or an array of items in each group
+     * @param array $order An array of field values. The result is ordered by this array.
      * @return array
      */
-    public static function array_group($items, $field)
+    public static function array_group($items, $field, $single = false, $order = [])
     {
         $grouped = [];
+
         foreach ($items as $item) {
-            $grouped[$item[$field] ?? ''][] = $item;
+            if ($single) {
+                $grouped[$item[$field] ?? ''] = $item;
+            } else {
+                $grouped[$item[$field] ?? ''][] = $item;
+            }
         }
+
+        if (!empty($order)) {
+            $order = array_flip($order);
+            uksort(
+                $grouped,
+                function ($a, $b) use ($order) {
+                    $posA = $order[$a] ?? INF;
+                    $posB = $order[$b] ?? INF;
+                    return $posA - $posB;
+                }
+            );
+        }
+
         return $grouped;
     }
 
@@ -129,19 +150,71 @@ class Arrays
      * Remove null values, empty strings and empty arrays
      *
      * @param array $data
-     * @param array $keep Keep values
+     * @param array $keep Keys to keep even if they are empty
+     * @param array $remove Key to check. If empty, all keys are checked
      * @return array
      */
-    public static function array_remove_empty(array $data, array $keep = [])
+    public static function array_remove_empty(array $data, array $keep = [], array $remove = [])
     {
         return array_filter(
             $data,
-            fn($value, $key) => in_array($key, $keep) || (
+            fn($value, $key) =>
+                (
+                    in_array($key, $keep) ||
+                    (!empty($remove) && !in_array($key, $remove))
+                ) ||
+                (
                     !is_null($value) && ($value !== '') &&
                     (!is_array($value) || !empty($value))
                 ),
             ARRAY_FILTER_USE_BOTH
         );
+    }
+
+    /**
+     * Remove null values, empty strings and empty arrays
+     *
+     * @param array $data
+     * @param array $keep Keys to keep even if they are empty
+     * @param array $remove Key to check. If empty, all keys are checked
+     * @return array
+     */
+    public static function array_remove_empty_recursive(array $data, array $keep = [], array $remove = [])
+    {
+        if (is_object($data) && method_exists($data, 'toArray') && is_callable([$data, 'toArray'])) {
+            $data = $data->toArray();
+        }
+
+        if (!is_array($data)) {
+            return $data;
+        }
+
+        foreach ($data as $key => &$value) {
+//            if (is_object($value) && method_exists($value, 'toArray') && is_callable([$value, 'toArray'])) {
+//                $value = $value->toArray();
+//            }
+
+            if (in_array($key, $keep)) {
+                continue;
+            }
+
+            if  (empty($remove) || in_array($key, $remove)) {
+
+                if (!(
+                    !is_null($value) && ($value !== '') &&
+                    (!is_array($value) || !empty($value))
+                )) {
+                    unset($data[$key]);
+                    continue;
+                }
+            }
+
+            if (is_array($value)) {
+                $data[$key] = Arrays::array_remove_empty_recursive($value, $keep, $remove);
+            }
+
+        }
+        return $data;
     }
 
     /**
@@ -715,6 +788,70 @@ class Arrays
             ),
             $array
         );
+    }
+
+    /**
+     * Construct query conditions from a search term
+     *
+     * @param string $term
+     * @param array $fields
+     * @param string $operator
+     * @param string $type
+     * @param array $filter
+     * @return array
+     */
+    public static function termConditions($term, $fields, $operator, $type, $filter = [])
+    {
+
+        $orTerms = array_filter(explode('|', $term));
+
+        $conditions = [
+            'OR' => array_map(
+                function ($andTerm) use ($fields, $operator, $type, $filter) {
+                    $andTerms = TextParser::tokenize($andTerm); // user can use quotes to keep words together
+                    $andConditions =  array_map(
+                        function ($term) use ($fields, $operator, $type) {
+                            $or = array_map(
+                                function ($field, $key) use ($term, $operator, $type) {
+
+                                    // Nested operator options
+                                    if (!is_numeric($key)) {
+                                        $operator = $field['operator'] ?? $operator;
+                                        $type = $field['type'] ?? $type;
+                                        $field = $key;
+                                    }
+
+                                    // Assemble condition
+                                    if (($operator === 'LIKE') && ($type === 'string')) {
+                                        return [$field . ' LIKE' => "%$term%"];
+                                    }
+                                    elseif (($operator === '=') && ($type === 'string')) {
+                                        return [$field => $term];
+                                    }
+                                    elseif (($operator === '=') && ($type === 'integer') && (ctype_digit($term))) {
+                                        return [$field => $term];
+                                    }
+                                    else {
+                                        return [];
+                                    }
+                                },
+                                $fields, array_keys($fields)
+                            );
+                            return (['OR' => $or]);
+                        },
+                        $andTerms
+                    );
+
+                    if (!empty($filter)) {
+                        $andConditions[] = $filter;
+                    }
+                    return $andConditions;
+                },
+                $orTerms
+            )
+        ];
+
+        return $conditions;
     }
 
 }

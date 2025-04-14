@@ -488,7 +488,7 @@ class ArticlesTableTest extends EpiTestCase
 			'projects' => 5,
 			'articletypes' => 'epi-article',
 			'properties' => [
-				'id' => 341
+				'selected' => [341]
 			]
 		];
 
@@ -505,7 +505,7 @@ class ArticlesTableTest extends EpiTestCase
 			'articles_projects' => 5,
 			'articles_articletypes' => 'epi-article',
 			'properties' => [
-				'id' => 341
+				'selected' => [341]
 			]
 		];
 
@@ -513,6 +513,19 @@ class ArticlesTableTest extends EpiTestCase
 			->parseRequestParameters($queryparams2);
 
 		$this->assertEquals($articles1, $articles2);
+
+        // With underscore separated property parameter
+        $queryparams3 = [
+            'term' => 'neu angelegt',
+            'field' => 'status',
+            'projects' => 5,
+            'articletypes' => 'epi-article',
+            'properties_selected' => "341"
+        ];
+
+        $articles3 = $this->Articles
+            ->parseRequestParameters($queryparams3);
+        $this->assertEquals($articles1, $articles3);
 
 		// With empty parameters
 		$queryparamsEmpty1 = [

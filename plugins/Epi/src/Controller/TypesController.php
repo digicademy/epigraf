@@ -162,7 +162,7 @@ class TypesController extends AppController
      */
     public function import($scope = null)
     {
-        $this->Transfer->import('types', $scope);
+        $this->Transfer->import($scope);
     }
 
     /**
@@ -176,7 +176,7 @@ class TypesController extends AppController
     public function transfer($scope = null)
     {
         $requestParams = $this->request->getQueryParams();
-        $this->Transfer->transfer('types', $scope, $requestParams);
+        $this->Transfer->transfer($scope, $requestParams);
     }
 
 }

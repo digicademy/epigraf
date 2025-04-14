@@ -1097,112 +1097,98 @@
   <index propertytype="datakeys">
     <properties>
       <property id="properties-514" sortno="17" sortkey="di_number" propertytype="datakeys" level="0" lft="1" rght="2">
-        <lemma>di_number</lemma>
-        <name>di_number</name>
+        <lemma>Grunddaten: Bandnummer</lemma>
         <norm_iri>di_di_number</norm_iri>
         <sections>
           <section id="sections-162" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-518" sortno="63" sortkey="prelim_series" propertytype="datakeys" level="0" lft="5" rght="6">
-        <lemma>prelim_series</lemma>
-        <name>prelim_series</name>
+        <lemma>Reihe</lemma>
         <norm_iri>di_prelim_series</norm_iri>
         <sections>
           <section id="sections-166" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-520" sortno="69" sortkey="prelim_series_title" propertytype="datakeys" level="0" lft="7" rght="8">
-        <lemma>prelim_series_title</lemma>
-        <name>prelim_series_title</name>
+        <lemma>Reihe: Titel</lemma>
         <norm_iri>di_prelim_series_title</norm_iri>
         <sections>
           <section id="sections-168" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-522" sortno="67" sortkey="prelim_series_number" propertytype="datakeys" level="0" lft="9" rght="10">
-        <lemma>prelim_series_number</lemma>
-        <name>prelim_series_number</name>
+        <lemma>Reihe: Bandnummer</lemma>
         <norm_iri>di_prelim_series_number</norm_iri>
         <sections>
           <section id="sections-170" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-524" sortno="65" sortkey="prelim_series_editor" propertytype="datakeys" level="0" lft="11" rght="12">
-        <lemma>prelim_series_editor</lemma>
-        <name>prelim_series_editor</name>
+        <lemma>Reihe: Herausgeber</lemma>
         <norm_iri>di_prelim_series_editor</norm_iri>
         <sections>
           <section id="sections-172" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-526" sortno="75" sortkey="prelim_sub_series" propertytype="datakeys" level="0" lft="13" rght="14">
-        <lemma>prelim_sub_series</lemma>
-        <name>prelim_sub_series</name>
+        <lemma>Reihe: Unterreihe</lemma>
         <norm_iri>di_prelim_sub_series</norm_iri>
         <sections>
           <section id="sections-174" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-528" sortno="77" sortkey="prelim_volume" propertytype="datakeys" level="0" lft="15" rght="16">
-        <lemma>prelim_volume</lemma>
-        <name>prelim_volume</name>
+        <lemma>Band</lemma>
         <norm_iri>di_prelim_volume</norm_iri>
         <sections>
           <section id="sections-176" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-530" sortno="81" sortkey="prelim_volume_title" propertytype="datakeys" level="0" lft="17" rght="18">
-        <lemma>prelim_volume_title</lemma>
-        <name>prelim_volume_title</name>
+        <lemma>Band: Titel</lemma>
         <norm_iri>di_prelim_volume_title</norm_iri>
         <sections>
           <section id="sections-178" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-532" sortno="79" sortkey="prelim_volume_subtitle" propertytype="datakeys" level="0" lft="19" rght="20">
-        <lemma>prelim_volume_subtitle</lemma>
-        <name>prelim_volume_subtitle</name>
+        <lemma>Band: Untertitel</lemma>
         <norm_iri>di_prelim_volume_subtitle</norm_iri>
         <sections>
           <section id="sections-180" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-534" sortno="83" sortkey="prelim_year" propertytype="datakeys" level="0" lft="21" rght="22">
-        <lemma>prelim_year</lemma>
-        <name>prelim_year</name>
+        <lemma>Band: Jahr</lemma>
         <norm_iri>di_prelim_year</norm_iri>
         <sections>
           <section id="sections-182" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-536" sortno="59" sortkey="prelim_publisher" propertytype="datakeys" level="0" lft="23" rght="24">
-        <lemma>prelim_publisher</lemma>
-        <name>prelim_publisher</name>
+        <lemma>Titelei: Verlag</lemma>
         <norm_iri>di_prelim_publisher</norm_iri>
         <sections>
           <section id="sections-184" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-538" sortno="57" sortkey="prelim_print_note" propertytype="datakeys" level="0" lft="25" rght="26">
-        <lemma>prelim_print_note</lemma>
-        <name>prelim_print_note</name>
+        <lemma>Titelei: Druckortvermerk</lemma>
         <norm_iri>di_prelim_print_note</norm_iri>
         <sections>
           <section id="sections-186" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-540" sortno="53" sortkey="prelim_isbn" propertytype="datakeys" level="0" lft="27" rght="28">
-        <lemma>prelim_isbn</lemma>
-        <name>prelim_isbn</name>
+        <lemma>Titelei: ISBN</lemma>
         <norm_iri>di_prelim_isbn</norm_iri>
         <sections>
           <section id="sections-188" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-542" sortno="61" sortkey="prelim_rights" propertytype="datakeys" level="0" lft="29" rght="30">
-        <lemma>prelim_rights</lemma>
-        <name>prelim_rights</name>
+        <lemma>Titelei: Rechtevorbehalt</lemma>
         <norm_iri>di_prelim_rights</norm_iri>
         <sections>
           <section id="sections-190" articles_id="articles-2" />
@@ -1210,63 +1196,55 @@
       </property>
       <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" level="0" lft="31" rght="32">
         <lemma>prelim_sponsors</lemma>
-        <name>prelim_sponsors</name>
         <norm_iri>di_prelim_sponsors</norm_iri>
         <sections>
           <section id="sections-192" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-546" sortno="49" sortkey="preliminaries" propertytype="datakeys" level="0" lft="33" rght="34">
-        <lemma>preliminaries</lemma>
-        <name>preliminaries</name>
+        <lemma>Titelei</lemma>
         <norm_iri>di_preliminaries</norm_iri>
         <sections>
           <section id="sections-164" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-548" sortno="51" sortkey="prelim_biblio_note" propertytype="datakeys" level="0" lft="35" rght="36">
-        <lemma>prelim_biblio_note</lemma>
-        <name>prelim_biblio_note</name>
+        <lemma>Titelei: Deutsche Nationalbibliografie</lemma>
         <norm_iri>di_prelim_biblio_note</norm_iri>
         <sections>
           <section id="sections-196" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-550" sortno="129" sortkey="table_of_content" propertytype="datakeys" level="0" lft="37" rght="38">
-        <lemma>table_of_content</lemma>
-        <name>table_of_content</name>
+        <lemma>Teile: Inhaltsverzeichnis</lemma>
         <norm_iri>di_table_of_content</norm_iri>
         <sections>
           <section id="sections-198" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-552" sortno="47" sortkey="prefaces" propertytype="datakeys" level="0" lft="39" rght="40">
-        <lemma>prefaces</lemma>
-        <name>prefaces</name>
+        <lemma>Teile: Vorworte</lemma>
         <norm_iri>di_prefaces</norm_iri>
         <sections>
           <section id="sections-200" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-554" sortno="29" sortkey="introduction" propertytype="datakeys" level="0" lft="41" rght="42">
-        <lemma>introduction</lemma>
-        <name>introduction</name>
+        <lemma>Teile: Einleitung</lemma>
         <norm_iri>di_introduction</norm_iri>
         <sections>
           <section id="sections-202" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-556" sortno="13" sortkey="csv_table" propertytype="datakeys" level="0" lft="43" rght="44">
-        <lemma>csv_table</lemma>
-        <name>csv_table</name>
+        <lemma>Darstellung: Tabelle</lemma>
         <norm_iri>di_csv_table</norm_iri>
         <sections>
           <section id="sections-242" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-562" sortno="11" sortkey="continuation" propertytype="datakeys" level="0" lft="49" rght="50">
-        <lemma>continuation</lemma>
-        <name>continuation</name>
+        <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
         <norm_iri>di_continuation</norm_iri>
         <sections>
           <section id="sections-210" articles_id="articles-2" />
@@ -1281,16 +1259,14 @@
         </sections>
       </property>
       <property id="properties-566" sortno="7" sortkey="articles" propertytype="datakeys" level="0" lft="53" rght="54">
-        <lemma>articles</lemma>
-        <name>articles</name>
+        <lemma>Teile: Katalogartikel</lemma>
         <norm_iri>di_articles</norm_iri>
         <sections>
           <section id="sections-238" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-568" sortno="13" sortkey="csv_table" propertytype="datakeys" level="0" lft="55" rght="56">
-        <lemma>csv_table</lemma>
-        <name>csv_table</name>
+        <lemma>Darstellung: Tabelle</lemma>
         <norm_iri>di_csv_table</norm_iri>
         <sections>
           <section id="sections-208" articles_id="articles-2" />
@@ -1298,48 +1274,42 @@
         </sections>
       </property>
       <property id="properties-570" sortno="27" sortkey="indices" propertytype="datakeys" level="0" lft="57" rght="58">
-        <lemma>indices</lemma>
-        <name>indices</name>
+        <lemma>Teile: Register</lemma>
         <norm_iri>di_indices</norm_iri>
         <sections>
           <section id="sections-244" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-576" sortno="109" sortkey="properties_personennamen" propertytype="datakeys" level="0" lft="63" rght="64">
-        <lemma>personnames</lemma>
-        <name>index_personennamen</name>
+        <lemma>Register: Personennamen</lemma>
         <norm_iri>di_personnames</norm_iri>
         <sections>
           <section id="sections-250" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-578" sortno="93" sortkey="properties_hersteller" propertytype="datakeys" level="0" lft="65" rght="66">
-        <lemma>manufacturers</lemma>
-        <name>index_hersteller</name>
+        <lemma>Register: Hersteller</lemma>
         <norm_iri>di_manufacturers</norm_iri>
         <sections>
           <section id="sections-252" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-580" sortno="107" sortkey="properties_ortsnamen" propertytype="datakeys" level="0" lft="67" rght="68">
-        <lemma>placenames</lemma>
-        <name>index_ortsnamen</name>
+        <lemma>Register: Ortsnamen</lemma>
         <norm_iri>di_placenames</norm_iri>
         <sections>
           <section id="sections-254" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-606" sortno="119" sortkey="properties_technik" propertytype="datakeys" level="0" lft="93" rght="94">
-        <lemma>techniques</lemma>
-        <name>index_technik</name>
+        <lemma>Register: Ausführungstechniken</lemma>
         <norm_iri>di_techniques</norm_iri>
         <sections>
           <section id="sections-282" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-610" sortno="3" propertytype="datakeys" level="0" lft="97" rght="98">
-        <lemma>indexgroup</lemma>
-        <name>indexgruppe</name>
+        <lemma>Registergruppe</lemma>
         <norm_iri>di_indexgroup</norm_iri>
         <sections>
           <section id="sections-248" articles_id="articles-2" />
@@ -1347,16 +1317,14 @@
         </sections>
       </property>
       <property id="properties-630" sortno="41" sortkey="marks" propertytype="datakeys" level="0" lft="117" rght="118">
-        <lemma>marks</lemma>
-        <name>marks</name>
-        <norm_iri>di_marks</norm_iri>
+        <lemma>Teile: Markenliste</lemma>
+        <norm_iri>di_brands</norm_iri>
         <sections>
           <section id="sections-306" articles_id="articles-2" />
         </sections>
       </property>
       <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" level="0" lft="119" rght="120">
-        <lemma>plates</lemma>
-        <name>plates</name>
+        <lemma>Bildtafeln</lemma>
         <norm_iri>di_plates</norm_iri>
         <sections>
           <section id="sections-308" articles_id="articles-2" />

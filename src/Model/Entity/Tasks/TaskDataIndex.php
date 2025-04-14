@@ -39,10 +39,12 @@ class TaskDataIndex extends BaseTaskData
         $index = $table->getIndexes($indexkey);
 
         if (!empty($index)) {
+            $options = $this->getRenderOptions();
+
             $view = $this->getView();
-            $rendered = $view->renderContent($index);
+            $rendered = $view->renderContent($index, $options);
             $rendered = str_replace("\r", "", $rendered);
-            Files::appendToFile($this->job->getCurrentOutputFile(), $rendered);
+            Files::appendToFile($this->job->getCurrentOutputFilePath(), $rendered);
         }
         $table->clearIndex($indexkey);
 

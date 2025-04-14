@@ -40,6 +40,8 @@ class TotalPaginator extends NumericPaginator
         'level' => 'level', // Level field name
         'seek' => null,
         'cursor' => null,
+//        'sort' => 'id',
+//        'direction' => 'ASC',
         'children' => true,
         'collapsed' => false,
         'sortableFields' => null,
@@ -338,12 +340,12 @@ class TotalPaginator extends NumericPaginator
      * Extend the base class to allow multiple sort fields.
      *
      * Each field is separated by a comma in the sort key.
-     * In the direction key, add correcponding asc or desc values, separated by comma.
+     * In the direction key, add corresponding asc or desc values, separated by comma.
      *
      * @param \Cake\Datasource\RepositoryInterface $object Repository object.
      * @param array $options The pagination options being used for this request.
      * @return array An array of options with sort + direction removed and
-     *   replaced with order if possible.
+     *               replaced with order if possible.
      */
     public function validateSort(RepositoryInterface $object, array $options): array
     {

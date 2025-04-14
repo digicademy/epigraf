@@ -10,6 +10,7 @@
 
 namespace App\Model\Table;
 
+use App\Utilities\Converters\Attributes;
 use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
@@ -29,6 +30,46 @@ class JobsTable extends BaseTable
     public $captionField = 'id';
 
     /**
+     * Request parameter config
+     *
+     * @var string[]
+     */
+    public $parameters = [
+        'id' => 'list',
+        'pipeline' => 'raw',
+        'scope' => 'string',
+        'selection' => 'raw',
+        'created_by' => 'list',
+        'columns' => 'list',
+        'typ' => 'list',
+        'status' => 'list'
+    ];
+
+    /**
+     * Predefined job types
+     *
+     * @var string[]
+     */
+    static $jobTypes = [
+        'export' => 'Export',
+        'import' => 'Import',
+        'transfer' => 'Transfer',
+        'mutate' => 'Mutate'
+    ];
+
+    /**
+     * Predefined job status values
+     *
+     * @var string[]
+     */
+    static $jobStates = [
+        'init' => 'Waiting',
+        'work' => 'Pending',
+        'finish' => 'Done',
+        'error' => 'Failed'
+    ];
+
+    /**
      * Initialize hook
      *
      * @param array $config
@@ -45,6 +86,20 @@ class JobsTable extends BaseTable
         $this->belongsTo('Pipelines', [
             'foreignKey' => 'pipelines_id',
             'joinType' => Query::JOIN_TYPE_INNER
+        ]);
+
+        $this->belongsTo('Creator', [
+            'className' => 'Users',
+            'foreignKey' => 'created_by',
+            'joinType' => \Cake\ORM\Query::JOIN_TYPE_LEFT,
+            'propertyName' => 'creator'
+        ]);
+
+        $this->belongsTo('Modifier', [
+            'className' => 'Users',
+            'foreignKey' => 'modified_by',
+            'joinType' => Query::JOIN_TYPE_LEFT,
+            'propertyName' => 'modifier'
         ]);
     }
 
@@ -117,6 +172,24 @@ class JobsTable extends BaseTable
     }
 
     /**
+     * Put delayed jobs into the queue after saving
+     *
+     * @param EventInterface $event
+     * @param EntityInterface $entity
+     * @param array $options
+     * @return void
+     */
+    public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
+    {
+        parent::afterSave($event, $entity, $options);
+
+        if ($entity->isNew() && !empty($entity->delay)) {
+            $entity->toQueue();
+        }
+    }
+
+
+    /**
      * Extract search parameters from request parameters
      *
      * Sets the pipeline ID based on pipeline query parameter or user settings.
@@ -128,37 +201,42 @@ class JobsTable extends BaseTable
      */
     public function parseRequestParameters(array $requestParameters = [], $requestPath = '', $requestAction = ''): array
     {
-        if (!in_array($requestAction, ['add', 'download'])) {
-            return $requestParameters;
-        }
+        unset($requestParameters['page']);
 
-        $pipeline_id = $requestParameters['pipeline'] ?? null;
+        if (in_array($requestAction, ['add', 'download'])) {
+            $params = $requestParameters;
 
-        // Pipeline from user settings
-        if (is_null($pipeline_id)) {
-            $user = BaseTable::$user;
-            if (($requestParameters['scope'] ?? 'article') == 'book') {
-                $pipeline_id = $user['pipeline_book_id'] ?? null;
+            $pipeline_id = $params['pipeline'] ?? null;
+
+            // Pipeline from user settings
+            if (is_null($pipeline_id)) {
+                $user = BaseTable::$user;
+                if (($params['scope'] ?? 'article') == 'book') {
+                    $pipeline_id = $user['pipeline_book_id'] ?? null;
+                }
+                else {
+                    $pipeline_id = $user['pipeline_article_id'] ?? null;
+                }
+                $params['pipeline'] = $pipeline_id;
+                unset($params['scope']);
             }
-            else {
-                $pipeline_id = $user['pipeline_article_id'] ?? null;
+
+            // Pipeline from norm_iri
+            elseif (!is_numeric($pipeline_id)) {
+                $pipelinesTable = $this->fetchTable('Pipelines');
+                $pipeline_id = $pipelinesTable
+                    ->find('all')
+                    ->where(['norm_iri' => $pipeline_id])
+                    ->first();
+
+                $params['pipeline'] = $pipeline_id['id'] ?? null;
             }
-            $requestParameters['pipeline'] = $pipeline_id;
-            unset($requestParameters['scope']);
+
+            return $params;
         }
 
-        // Pipeline from norm_iri
-        elseif (!is_numeric($pipeline_id)) {
-            $pipelinesTable = $this->fetchTable('Pipelines');
-            $pipeline_id = $pipelinesTable
-                ->find('all')
-                ->where(['norm_iri' => $pipeline_id])
-                ->first();
-
-            $requestParameters['pipeline'] = $pipeline_id['id'] ?? null;
-        }
-
-        return $requestParameters;
+        $params = Attributes::parseQueryParams($requestParameters, $this->parameters, 'articles');
+        return $params;
     }
 
     /**
@@ -179,18 +257,28 @@ class JobsTable extends BaseTable
             ],
             'typ' => [
                 'caption' => __('Type'),
-                'default' => true
+                'type' => 'select',
+                'empty' => true,
+                'sort' => true,
+                'options' => JobsTable::$jobTypes,
+                'filter' => 'select',
+                'default' => true,
             ],
             'status' => [
                 'caption' => __('Status'),
+                'type' => 'select',
+                'empty' => true,
+                'sort' => true,
+                'options' => JobsTable::$jobStates,
+                'filter' => 'select',
                 'default' => true
             ],
-            'progress' => [
+            'progress_label' => [
                 'caption' => __('Progress'),
                 'default' => true
             ],
-            'progressmax' => [
-                'caption' => __('Max progress'),
+            'delay' => [
+                'caption' => __('Delay'),
                 'default' => true
             ],
             'pipeline' => [
@@ -201,6 +289,14 @@ class JobsTable extends BaseTable
             'database' => [
                 'caption' => __('Database'),
                 'extract' => 'config.database',
+                'default' => true
+            ],
+            'created_by' => [
+                'key' => 'creator.username',
+                'caption' => __('Creator'),
+                'sort' => false,
+                'options' => $this->Creator->find('list')->toArray(),
+                'filter' => 'select',
                 'default' => true
             ],
             'modified' => [
@@ -238,5 +334,22 @@ class JobsTable extends BaseTable
                 'limit' => 100,
                 'maxLimit' => 1000
             ] + $pagination;
+    }
+
+    /**
+     * Contain table data
+     *
+     * @param \Cake\ORM\Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findContainFields(Query $query, array $options)
+    {
+        $query = $query
+            ->contain(['Creator'])
+            ->select($this)
+            ->select($this->Creator);
+
+        return $query;
     }
 }

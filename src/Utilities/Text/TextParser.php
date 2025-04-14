@@ -177,5 +177,57 @@ class TextParser
         $text = preg_replace("/\n+/", "\n", $text);
         return trim($text);
     }
+
+    /**
+     * Split $text, but keep together words that are enclosed in quotation marks
+     *
+     * @param $text
+     * @param $escapeChar
+     * @param $startGroupChar
+     * @param $endGroupChar
+     * @param $splitChar
+     * @return array
+     */
+    static public function tokenize($text, $escapeChar = '\\', $startGroupChar = '"', $endGroupChar = '"', $splitChar = ' ') {
+        $tokenList = array();
+        $currentList = array();
+        $groupMode = false;
+        $escapeMode = false;
+
+        for ($i = 0; $i < strlen($text); $i++) {
+            $e = $text[$i];
+
+            if ($escapeMode) {
+                $currentList[] = $e;
+                $escapeMode = false;
+                continue;
+            }
+
+            if ($e == $escapeChar) {
+                $escapeMode = true;
+                continue;
+            }
+
+            if ($e == $endGroupChar && $groupMode) {
+                $groupMode = false;
+            } elseif ($e == $startGroupChar && !$groupMode) {
+                $groupMode = true;
+            }
+
+            if ($e == $endGroupChar || $e == $startGroupChar) {
+                continue;
+            }
+
+            if ($e == $splitChar && !$groupMode) {
+                $tokenList[] = implode('', $currentList);
+                $currentList = array();
+            } else {
+                $currentList[] = $e;
+            }
+        }
+
+        $tokenList[] = implode('', $currentList);
+        return $tokenList;
+    }
 }
 

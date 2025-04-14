@@ -10,6 +10,7 @@
 
 namespace App\Utilities\Files;
 
+use App\Utilities\Converters\Objects;
 use App\Utilities\XmlParser\XmlMunge;
 use App\View\CsvView;
 use Cake\Filesystem\Folder;
@@ -18,9 +19,6 @@ use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\FrozenTime;
 use Cake\Utility\Hash;
 use FilesystemIterator;
-use lsolesen\pel\PelExif;
-use lsolesen\pel\PelIfd;
-use lsolesen\pel\PelJpeg;
 use Psr\Http\Message\UploadedFileInterface;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
@@ -30,6 +28,7 @@ use SplFileObject;
 use ZipArchive;
 use GMagick;
 use IMagick;
+use XMLReader;
 
 class Files
 {
@@ -137,6 +136,59 @@ class Files
                 }
             }
         }
+    }
+
+    /**
+     * Extract content from an XML file using a path expression
+     *
+     * @param string $inputFile The name of a XML file.
+     * @param string $path Path expression (e.g., "root/item[@type='special']").
+     * @return array An array of XML strings, one for each matched element.
+     */
+    static function extractXmlContent($inputFile, $path)
+    {
+        $result = [];
+        $reader = new XMLReader();
+        try {
+            $reader->open($inputFile);
+
+            // Parse the path expression into components
+            $pathComponents = Objects::parsePath($path);
+
+            $stack = [];
+
+            // Process the XML file node by node
+            while ($reader->read()) {
+                if ($reader->nodeType === XMLReader::ELEMENT) {
+                    $currentDepth = count($stack);
+
+                    // Check if this level matches the path expression
+                    $isMatch = isset($pathComponents[$currentDepth]) &&
+                        $reader->localName === $pathComponents[$currentDepth]['tag'];
+
+                    // Inline attribute matching
+                    if ($isMatch && $pathComponents[$currentDepth]['attr'] && $pathComponents[$currentDepth]['value']) {
+                        $attrName = str_replace('@', '', $pathComponents[$currentDepth]['attr']);
+                        $attrValue = $reader->getAttribute($attrName);
+                        $isMatch = $attrValue === $pathComponents[$currentDepth]['value'];
+                    }
+
+                    $stack[] = $isMatch;
+
+                    if ($isMatch && $currentDepth + 1 === count($pathComponents)) {
+                        $result[] = $reader->readOuterXML();
+                    }
+                }
+                elseif ($reader->nodeType === XMLReader::END_ELEMENT) {
+                    array_pop($stack);
+                }
+            }
+
+        } finally {
+            $reader->close();
+        }
+
+        return $result;
     }
 
     /**
@@ -443,32 +495,34 @@ class Files
         $zip = new ZipArchive();
         $zip->open($zipname, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-        // Create recursive directory iterator
-        /** @var SplFileInfo[] $files */
-        $directory = new RecursiveDirectoryIterator($path);
-        $files = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::LEAVES_ONLY);
+        if (is_dir($path)) {
 
-        foreach ($files as $name => $file) {
-            // Skip directories (they would be added automatically)
-            if (!$file->isDir()) {
-                // Get real and relative path for current file
-                $filePath = $file->getRealPath();
-                $relativePath = ltrim(substr($filePath, strlen($path)), '/');
+            // Create recursive directory iterator
+            /** @var SplFileInfo[] $files */
+            $directory = new RecursiveDirectoryIterator($path);
+            $files = new RecursiveIteratorIterator($directory, RecursiveIteratorIterator::LEAVES_ONLY);
 
-                // Add current file to archive
-                $zip->addFile($filePath, $relativePath);
+            foreach ($files as $name => $file) {
+
+                // Skip directories (they would be added automatically)
+                if (!$file->isDir()) {
+                    // Get real and relative path for current file
+                    $filePath = $file->getRealPath();
+                    $relativePath = ltrim(substr($filePath, strlen($path)), '/');
+
+                    if (!is_file($filePath)) {
+                        continue;
+                    }
+
+                    // Add current file to archive
+                    $zip->addFile($filePath, $relativePath);
+                }
             }
         }
 
         // Zip archive will be created only after closing object
-        if ($zip->numFiles) {
-            $zip->close();
-            return $zipname;
-        }
-        else {
-            $zip->close();
-            return false;
-        }
+        $zip->close();
+        return $zip->numFiles ? $zipname : false;
     }
 
     /**
@@ -497,17 +551,14 @@ class Files
         $zip->open($zipname, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
         // Add current file to archive
-        $zip->addFile($path);
+        if (is_file($path)) {
+            $zip->addFile($path);
+        }
 
         // Zip archive will be created only after closing the object
-        if ($zip->numFiles) {
-            $zip->close();
-            return $zipname;
-        }
-        else {
-            $zip->close();
-            return false;
-        }
+        $zip->close();
+
+        return $zip->numFiles ? $zipname : false;
     }
 
     /**
@@ -1373,12 +1424,11 @@ class Files
     }
 
     /**
-     * Load XML function
+     * Load Epigraf data from a XML file
      *
      * @param string $filename filename
      * @param array $options
-     *
-     * @return array of all data from the XML file in [Model][field] format
+     * @return array Data from the XML file in [Model][field] format
      */
     static public function loadXml($filename, $options = [])
     {
@@ -1654,7 +1704,7 @@ class Files
             $command .= ' -overwrite_original';
         }
         foreach ($metadata as $key => $value) {
-            $command .= ' -XMP-' . $key . '=' . escapeshellarg($value);
+            $command .= ' -' . $key . '=' . escapeshellarg($value);
         }
         $command .= ' ' . $filename;
         exec($command, $output, $return);

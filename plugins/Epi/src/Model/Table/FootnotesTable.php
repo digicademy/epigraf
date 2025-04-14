@@ -59,7 +59,15 @@ class FootnotesTable extends BaseTable
         $this->hasMany('ToLinks', [
             'className' => 'Epi.Links',
             'foreignKey' => 'to_id',
-            'conditions' => ['Links.to_tab' => 'footnotes', 'Links.deleted' => 0]
+            'conditions' => ['ToLinks.to_tab' => 'footnotes', 'ToLinks.deleted' => 0]
+        ]);
+
+        $this->hasMany('FromLinks', [
+            'className' => 'Epi.Links',
+            'foreignKey' => 'from_id',
+            'conditions' => ['FromLinks.from_tab' => 'footnotes', 'FromLinks.deleted' => 0],
+            'dependent' => true,
+            'cascadeCallbacks' => true
         ]);
 
 //        $this->belongsTo(

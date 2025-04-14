@@ -3,470 +3,310 @@
         "modified_by": 4
     },
     "articles-1-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-1-after": {
-        "modified_by": 4,
-        "date_sort": "01234AAA00000000A4",
-        "date_start": 1234,
-        "date_end": 1234
+        "modified_by": 4
     },
     "items-1-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-106-after": {
         "modified_by": 4
     },
     "items-106-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-107-after": {
         "modified_by": 4
     },
     "items-107-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-108-after": {
         "modified_by": 4
     },
     "items-108-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-11-after": {
         "modified_by": 4
     },
     "items-11-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-14-after": {
         "modified_by": 4
     },
     "items-14-before": {
-        "modified_by": 1
-    },
-    "items-2-after": {
-        "modified_by": 4
-    },
-    "items-2-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-3-after": {
         "modified_by": 4
     },
     "items-3-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-30-after": {
         "modified_by": 4
     },
     "items-30-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-31-after": {
         "modified_by": 4
     },
     "items-31-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-33-after": {
         "modified_by": 4,
-        "file_meta": "{\"title\":\"\",\"headline\":\"\",\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
     },
     "items-33-before": {
-        "modified_by": 1
+        "modified_by": 2,
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
     },
     "items-35-after": {
         "modified_by": 4,
-        "file_meta": "{\"title\":\"\",\"headline\":\"\",\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
     },
     "items-35-before": {
-        "modified_by": 1
+        "modified_by": 2,
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
     },
     "items-37-after": {
-        "modified_by": 4,
-        "date_sort": "00794AAA00000000A4",
-        "date_start": 794,
-        "date_end": 794
+        "modified_by": 4
     },
     "items-37-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-4-after": {
         "modified_by": 4
     },
     "items-4-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-41-after": {
-        "modified_by": 4,
-        "date_sort": "01066AAA00000000A4",
-        "date_start": 1066,
-        "date_end": 1066
-    },
-    "items-41-before": {
-        "modified_by": 1
-    },
-    "items-43-after": {
         "modified_by": 4
     },
-    "items-43-before": {
-        "modified_by": 1
+    "items-41-before": {
+        "modified_by": 2
     },
     "items-46-after": {
-        "modified_by": 4,
-        "date_sort": "01337AAA00000000A4",
-        "date_start": 1337,
-        "date_end": 1337
+        "modified_by": 4
     },
     "items-46-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-749-after": {
         "modified_by": 4
     },
     "items-749-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-750-after": {
         "modified_by": 4
     },
     "items-750-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-751-after": {
         "modified_by": 4
     },
     "items-751-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-752-after": {
         "modified_by": 4
     },
     "items-752-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-753-after": {
         "modified_by": 4
     },
     "items-753-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-766-after": {
         "modified_by": 4
     },
     "items-766-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-767-after": {
         "modified_by": 4
     },
     "items-767-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-768-after": {
         "modified_by": 4
     },
     "items-768-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "items-769-after": {
         "modified_by": 4
     },
     "items-769-before": {
-        "modified_by": 1
-    },
-    "links-109-after": {
-        "id": 109,
-        "modified_by": 4,
-        "created_by": 4,
-        "root_id": 1,
-        "root_tab": "articles",
-        "from_id": 4,
-        "from_tab": "items",
-        "from_field": "content",
-        "from_tagname": "b",
-        "from_tagid": "000004436160887138888888933579"
-    },
-    "links-111-after": {
-        "id": 111,
-        "modified_by": 4,
-        "created_by": 4,
-        "root_id": 1,
-        "root_tab": "articles",
-        "from_id": 4,
-        "from_tab": "items",
-        "from_field": "content",
-        "from_tagname": "i",
-        "from_tagid": "000004436160890414351851976127"
-    },
-    "links-113-after": {
-        "id": 113,
-        "modified_by": 4,
-        "created_by": 4,
-        "root_id": 1,
-        "root_tab": "articles",
-        "from_id": 4,
-        "from_tab": "items",
-        "from_field": "content",
-        "from_tagname": "u",
-        "from_tagid": "000004436160892870370370431668"
-    },
-    "links-115-after": {
-        "id": 115,
-        "modified_by": 4,
-        "created_by": 4,
-        "root_id": 1,
-        "root_tab": "articles",
-        "from_id": 4,
-        "from_tab": "items",
-        "from_field": "content",
-        "from_tagname": "g",
-        "from_tagid": "000004436160895594907407469796"
-    },
-    "links-117-after": {
-        "id": 117,
-        "modified_by": 4,
-        "created_by": 4,
-        "root_id": 1,
-        "root_tab": "articles",
-        "from_id": 4,
-        "from_tab": "items",
-        "from_field": "content",
-        "from_tagname": "k",
-        "from_tagid": "000004436160898130787037028136"
-    },
-    "links-119-after": {
-        "id": 119,
-        "modified_by": 4,
-        "created_by": 4,
-        "root_id": 1,
-        "root_tab": "articles",
-        "from_id": 4,
-        "from_tab": "items",
-        "from_field": "content",
-        "from_tagname": "a",
-        "from_tagid": "000004436160901166666666725447"
-    },
-    "links-29-after": {
-        "modified_by": 4
-    },
-    "links-29-before": {
-        "modified_by": 1
-    },
-    "links-37-after": {
-        "modified_by": 4
-    },
-    "links-37-before": {
-        "modified_by": 1
-    },
-    "links-42-after": {
-        "modified_by": 4
-    },
-    "links-42-before": {
-        "modified_by": 1
-    },
-    "links-44-after": {
-        "modified_by": 4
-    },
-    "links-44-before": {
-        "modified_by": 1
-    },
-    "links-49-after": {
-        "modified_by": 4
-    },
-    "links-49-before": {
-        "modified_by": 1
-    },
-    "links-82-after": {
-        "modified_by": 4
-    },
-    "links-82-before": {
-        "modified_by": 1
-    },
-    "links-83-after": {
-        "modified_by": 4
-    },
-    "links-83-before": {
-        "modified_by": 1
-    },
-    "links-84-after": {
-        "modified_by": 4
-    },
-    "links-84-before": {
-        "modified_by": 1
-    },
-    "links-86-after": {
-        "modified_by": 4
-    },
-    "links-86-before": {
-        "modified_by": 1
-    },
-    "links-95-after": {
-        "modified_by": 4
-    },
-    "links-95-before": {
-        "modified_by": 1
-    },
-    "links-97-after": {
-        "modified_by": 4
-    },
-    "links-97-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-1-after": {
         "modified_by": 4
     },
     "sections-1-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-10-after": {
         "modified_by": 4
     },
     "sections-10-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-11-after": {
         "modified_by": 4
     },
     "sections-11-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-12-after": {
         "modified_by": 4
     },
     "sections-12-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-13-after": {
         "modified_by": 4
     },
     "sections-13-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-14-after": {
         "modified_by": 4
     },
     "sections-14-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-15-after": {
         "modified_by": 4
     },
     "sections-15-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-16-after": {
         "modified_by": 4
     },
     "sections-16-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-17-after": {
         "modified_by": 4
     },
     "sections-17-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-18-after": {
         "modified_by": 4
     },
     "sections-18-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-19-after": {
         "modified_by": 4
     },
     "sections-19-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-2-after": {
         "modified_by": 4
     },
     "sections-2-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-20-after": {
         "modified_by": 4
     },
     "sections-20-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-21-after": {
         "modified_by": 4
     },
     "sections-21-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-22-after": {
         "modified_by": 4
     },
     "sections-22-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-23-after": {
         "modified_by": 4
     },
     "sections-23-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-24-after": {
         "modified_by": 4
     },
     "sections-24-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-3-after": {
         "modified_by": 4
     },
     "sections-3-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-377-after": {
         "modified_by": 4
     },
     "sections-377-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-378-after": {
         "modified_by": 4
     },
     "sections-378-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-4-after": {
         "modified_by": 4
     },
     "sections-4-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-5-after": {
         "modified_by": 4
     },
     "sections-5-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-6-after": {
         "modified_by": 4
     },
     "sections-6-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-7-after": {
         "modified_by": 4
     },
     "sections-7-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-8-after": {
         "modified_by": 4
     },
     "sections-8-before": {
-        "modified_by": 1
+        "modified_by": 2
     },
     "sections-9-after": {
         "modified_by": 4
     },
     "sections-9-before": {
-        "modified_by": 1
+        "modified_by": 2
     }
 }

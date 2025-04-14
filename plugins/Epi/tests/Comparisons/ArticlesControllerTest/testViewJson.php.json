@@ -5,8 +5,8 @@
         "database": "projects",
         "norm_iri": "normiri_1",
         "norm_data": "normdata_1",
-        "created": "2021-06-13T18:10:25+02:00",
-        "modified": "2023-08-17T21:27:27+02:00",
+        "created": "2021-06-13T16:10:25+02:00",
+        "modified": "2025-02-26T19:11:42+01:00",
         "articletype": "epi-article",
         "signature": "Signatur 1",
         "name": "Artikel 1 f\u00fcr das Testsystem",
@@ -61,12 +61,33 @@
                                 "siblings": 16
                             }
                         ],
+                        "id": "items-866",
+                        "itemtype": "search",
+                        "sections_id": "sections-5",
+                        "articles_id": "articles-1",
+                        "value": "text",
+                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\n\nText Text Text\nText Text Text\nText Text Text\nText Text Text\nLINK \nText Text Text\nText Text Text\nLiteraturverweis im Text: Unterautor \n\nExterne Verweise\n- auf einen Artikel: Signatur 2\n- auf eine Inschrift: Signatur 2[A]\n- auf einen Inschriftenteil: Signatur 2[A.1]\n- auf eine Fu\u00dfnote: Signatur 2[1]\n\nInterne Verweise\n- auf Inschrift B: B\n- auf Inschriftenteil B2: B.2\n- auf Fu\u00dfnote a: a\n- auf Fu\u00dfnote 2: 2\n- auf Marke: hm001.1121"
+                    },
+                    {
+                        "sectionpath": [
+                            {
+                                "id": "sections-5",
+                                "articles_id": "articles-1",
+                                "sectiontype": "text",
+                                "name": "Beschreibung",
+                                "number": 1,
+                                "sortno": 25,
+                                "level": 1,
+                                "children": 0,
+                                "siblings": 16
+                            }
+                        ],
                         "id": "items-4",
                         "itemtype": "text",
                         "sortno": 0,
                         "sections_id": "sections-5",
                         "articles_id": "articles-1",
-                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\u003Capp1 id=\u0022000004463586776180555555628924\u0022\u003E\u003C\/app1\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Ch id=\u0022000004436160878777777777844048\u0022 data-link-target=\u0022properties-98\u0022 data-link-value=\u0022\u00dcberschrift 1\u0022\u003EText \u003C\/h\u003EText Text\u003Cnl\u003E\u003C\/nl\u003EText Text Text\u003Cnl\u003E\u003C\/nl\u003EText \u003Cb id=\u0022000004436160887138888888933579\u0022\u003EText \u003C\/b\u003E\u003Ci id=\u0022000004436160890414351851976127\u0022\u003EText\u003C\/i\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cu id=\u0022000004436160892870370370431668\u0022\u003EText \u003C\/u\u003E\u003Cg id=\u0022000004436160895594907407469796\u0022\u003EText \u003C\/g\u003E\u003Ck id=\u0022000004436160898130787037028136\u0022\u003EText\u003C\/k\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Ca id=\u0022000004436160901166666666725447\u0022 href=\u0022https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\u0022 value=\u0022LINK\u0022\u003E\u003C\/a\u003E \u003Cnl\u003E\u003C\/nl\u003E\u003Cp id=\u0022000004436160924313657407458602\u0022 data-link-target=\u0022properties-105\u0022 data-link-value=\u0022siehe\u0022\u003EText Text Text\u003Cnl\u003E\u003C\/nl\u003EText Text Text\u003C\/p\u003E\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis im Text: \u003Crec_lit id=\u0022000004456302666872685185191153\u0022 data-link-target=\u0022properties-11\u0022 data-link-value=\u0022Unterautor \u0022\u003E\u003C\/rec_lit\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003EExterne Verweise\u003Cnl\u003E\u003C\/nl\u003E- auf einen Artikel: \u003Crec_extern id=\u0022000004489202490501157407418218\u0022 data-link-target=\u0022articles-3\u0022 data-link-value=\u0022Signatur 2\u0022\u003E\u003C\/rec_extern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf eine Inschrift: \u003Crec_extern id=\u0022000004489202501042824074077622\u0022 data-link-target=\u0022sections-145\u0022 data-link-value=\u0022Signatur 2[A]\u0022\u003E\u003C\/rec_extern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf einen Inschriftenteil: \u003Crec_extern id=\u0022000004489202513028935185199996\u0022 data-link-target=\u0022sections-144\u0022 data-link-value=\u0022Signatur 2[A.1]\u0022\u003E\u003C\/rec_extern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf eine Fu\u00dfnote: \u003Crec_extern id=\u0022000004489202522863425925931578\u0022 data-link-target=\u0022footnotes-4\u0022 data-link-value=\u0022Signatur 2[1]\u0022\u003E\u003C\/rec_extern\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003EInterne Verweise\u003Cnl\u003E\u003C\/nl\u003E- auf Inschrift B: \u003Crec_intern id=\u0022000004489203414346064814810841\u0022 data-link-target=\u0022sections-22\u0022 data-link-value=\u0022B\u0022\u003E\u003C\/rec_intern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf Inschriftenteil B2: \u003Crec_intern id=\u0022000004489202534078703703725732\u0022 data-link-target=\u0022sections-19\u0022 data-link-value=\u0022B.2\u0022\u003E\u003C\/rec_intern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf Fu\u00dfnote a: \u003Crec_intern id=\u0022000004489204161565972222228987\u0022 data-link-target=\u0022footnotes-6\u0022 data-link-value=\u0022a\u0022\u003E\u003C\/rec_intern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf Fu\u00dfnote 2: \u003Crec_intern id=\u0022000004489204172635416666673690\u0022 data-link-target=\u0022footnotes-5\u0022 data-link-value=\u00222\u0022\u003E\u003C\/rec_intern\u003E\u003Cnl\u003E\u003C\/nl\u003E- auf Marke: \u003Crec_ma id=\u0022000004489204491244212962960464\u0022 data-link-target=\u0022properties-186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
+                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\u003Capp1 id=\u0022000004463586776180555555628924\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003E\u003Ch id=\u0022000004436160878777777777844048\u0022 data-link-target=\u0022properties-98\u0022 data-link-iri=\u0022properties\/headers\/projects~98\u0022 data-link-value=\u0022\u00dcberschrift 1\u0022\u003EText \u003C\/h\u003EText Text\u003Cnl \/\u003EText Text Text\u003Cnl \/\u003EText \u003Cb id=\u0022000004436160887138888888933579\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Fett\u0022\u003EText \u003C\/b\u003E\u003Ci id=\u0022000004436160890414351851976127\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kursiv\u0022\u003EText\u003C\/i\u003E\u003Cnl \/\u003E\u003Cu id=\u0022000004436160892870370370431668\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unterstrichen\u0022\u003EText \u003C\/u\u003E\u003Cg id=\u0022000004436160895594907407469796\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Gesperrt\u0022\u003EText \u003C\/g\u003E\u003Ck id=\u0022000004436160898130787037028136\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapit\u00e4lchen\u0022\u003EText\u003C\/k\u003E\u003Cnl \/\u003E\u003Ca id=\u0022000004436160901166666666725447\u0022 value=\u0022LINK\u0022 href=\u0022https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Link\u0022 \/\u003E \u003Cnl \/\u003EText Text Text\u003Cnl \/\u003EText Text Text\u003Cnl \/\u003ELiteraturverweis im Text: \u003Crec_lit id=\u0022000004456302666872685185191153\u0022 data-link-target=\u0022properties-11\u0022 data-link-iri=\u0022properties\/literature\/projects~11\u0022 data-link-value=\u0022Unterautor \u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003EExterne Verweise\u003Cnl \/\u003E- auf einen Artikel: \u003Crec_extern id=\u0022000004489202490501157407418218\u0022 data-link-target=\u0022articles-3\u0022 data-link-iri=\u0022articles\/epi-article\/normiri_2\u0022 data-link-value=\u0022Signatur 2\u0022 \/\u003E\u003Cnl \/\u003E- auf eine Inschrift: \u003Crec_extern id=\u0022000004489202501042824074077622\u0022 data-link-target=\u0022sections-145\u0022 data-link-iri=\u0022sections\/inscription\/projects~145\u0022 data-link-value=\u0022Signatur 2[A]\u0022 \/\u003E\u003Cnl \/\u003E- auf einen Inschriftenteil: \u003Crec_extern id=\u0022000004489202513028935185199996\u0022 data-link-target=\u0022sections-144\u0022 data-link-iri=\u0022sections\/inscriptionpart\/projects~144\u0022 data-link-value=\u0022Signatur 2[A.1]\u0022 \/\u003E\u003Cnl \/\u003E- auf eine Fu\u00dfnote: \u003Crec_extern id=\u0022000004489202522863425925931578\u0022 data-link-target=\u0022footnotes-4\u0022 data-link-iri=\u0022footnotes\/app1\/projects~4\u0022 data-link-value=\u0022Signatur 2[1]\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003EInterne Verweise\u003Cnl \/\u003E- auf Inschrift B: \u003Crec_intern id=\u0022000004489203414346064814810841\u0022 data-link-target=\u0022sections-22\u0022 data-link-iri=\u0022sections\/inscription\/projects~22\u0022 data-link-value=\u0022B\u0022 \/\u003E\u003Cnl \/\u003E- auf Inschriftenteil B2: \u003Crec_intern id=\u0022000004489202534078703703725732\u0022 data-link-target=\u0022sections-19\u0022 data-link-iri=\u0022sections\/inscriptionpart\/projects~19\u0022 data-link-value=\u0022B.2\u0022 \/\u003E\u003Cnl \/\u003E- auf Fu\u00dfnote a: \u003Crec_intern id=\u0022000004489204161565972222228987\u0022 data-link-target=\u0022footnotes-6\u0022 data-link-iri=\u0022footnotes\/app2\/projects~6\u0022 data-link-value=\u0022a\u0022 \/\u003E\u003Cnl \/\u003E- auf Fu\u00dfnote 2: \u003Crec_intern id=\u0022000004489204172635416666673690\u0022 data-link-target=\u0022footnotes-5\u0022 data-link-iri=\u0022footnotes\/app1\/projects~5\u0022 data-link-value=\u00222\u0022 \/\u003E\u003Cnl \/\u003E- auf Marke: \u003Crec_ma id=\u0022000004489204491244212962960464\u0022 data-link-target=\u0022properties-186\u0022 data-link-iri=\u0022properties\/brands\/projects~186\u0022 data-link-value=\u0022hm001.1121\u0022 \/\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -96,38 +117,12 @@
                                 "siblings": 16
                             }
                         ],
-                        "id": "items-53",
-                        "itemtype": "search",
-                        "sortno": 0,
-                        "sections_id": "sections-5",
-                        "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.[1]\r\r\u0026lt;H|Text |H\u0026gt;Text Text\rText Text Text\rText Text Text\rText Text Text\rLINK \r\u0026lt;p|Text Text Text\rText Text Text|p\u0026gt;\rLiteraturverweis im Text: Unterautor \r\rExterne Verweise\r- auf einen Artikel: Signatur 2\r- auf eine Inschrift: Signatur 2[A]\r- auf einen Inschriftenteil: Signatur 2 [A1]\r- auf eine Fu\u00dfnote: Signatur 2 [Fu\u00dfnote 1]\r\rInterne Verweise\r- auf Inschrift B: B\r- auf Inschriftenteil B2: B2\r- auf Fu\u00dfnote a: Fu\u00dfnote a\r- auf Fu\u00dfnote 2: Fu\u00dfnote 2\r- auf Marke: hm001.1121",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
-                    },
-                    {
-                        "sectionpath": [
-                            {
-                                "id": "sections-5",
-                                "articles_id": "articles-1",
-                                "sectiontype": "text",
-                                "name": "Beschreibung",
-                                "number": 1,
-                                "sortno": 25,
-                                "level": 1,
-                                "children": 0,
-                                "siblings": 16
-                            }
-                        ],
                         "id": "items-758",
                         "itemtype": "search",
                         "sortno": 0,
                         "sections_id": "sections-5",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Abschnitt 1",
                         "flagged": true,
                         "pos_x": 0,
@@ -183,7 +178,7 @@
                         "sortno": 0,
                         "sections_id": "sections-15",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Standorte",
                         "flagged": true,
                         "pos_x": 0,
@@ -209,7 +204,8 @@
                         "sortno": 1,
                         "sections_id": "sections-15",
                         "articles_id": "articles-1",
-                        "content": "Erg\u00e4nzung 1, Verweis auf \u003Crec_lit id=\u0022000004456302493517361111115062\u0022 data-link-target=\u0022properties-10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
+                        "value": "0",
+                        "content": "Erg\u00e4nzung 1, Verweis auf \u003Crec_lit id=\u0022000004456302493517361111115062\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/projects~10\u0022 data-link-value=\u0022Quelle 1 \u0022 \/\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -250,6 +246,7 @@
                         "sortno": 2,
                         "sections_id": "sections-15",
                         "articles_id": "articles-1",
+                        "value": "0",
                         "content": "Erg\u00e4nzung 2",
                         "pos_x": 0,
                         "pos_y": 0,
@@ -341,7 +338,7 @@
                         "sortno": 0,
                         "sections_id": "sections-13",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Beschaffenheit",
                         "flagged": true,
                         "pos_x": 0,
@@ -442,7 +439,7 @@
                         "sortno": 0,
                         "sections_id": "sections-10",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Ma\u00dfangaben",
                         "flagged": true,
                         "pos_x": 0,
@@ -622,7 +619,7 @@
                         "sortno": 0,
                         "sections_id": "sections-12",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Material",
                         "flagged": true,
                         "pos_x": 0,
@@ -818,7 +815,7 @@
                         "sortno": 0,
                         "sections_id": "sections-11",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschriftentr\u00e4ger",
                         "flagged": true,
                         "pos_x": 0,
@@ -929,12 +926,33 @@
                                 "siblings": 16
                             }
                         ],
+                        "id": "items-870",
+                        "itemtype": "search",
+                        "sections_id": "sections-4",
+                        "articles_id": "articles-1",
+                        "value": "text",
+                        "content": "TEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT LINK  \n\nTEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \n\nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT \nTEXT TEXT TEXT TEXT"
+                    },
+                    {
+                        "sectionpath": [
+                            {
+                                "id": "sections-4",
+                                "articles_id": "articles-1",
+                                "sectiontype": "text",
+                                "name": "Gliederung: Ebene 1",
+                                "number": 2,
+                                "sortno": 27,
+                                "level": 1,
+                                "children": 0,
+                                "siblings": 16
+                            }
+                        ],
                         "id": "items-3",
                         "itemtype": "text",
                         "sortno": 0,
                         "sections_id": "sections-4",
                         "articles_id": "articles-1",
-                        "content": "\u003Ch id=\u0022000004436161145244212963020598\u0022 data-link-target=\u0022properties-97\u0022 data-link-value=\u0022\u00dcberschrift 1a\u0022\u003ETEXT \u003C\/h\u003ETEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003E\u003Cb id=\u0022000004436161152100694444420087\u0022\u003ETEXT \u003C\/b\u003E\u003Ci id=\u0022000004436161156358796296327934\u0022\u003ETEXT \u003C\/i\u003E\u003Cu id=\u0022000004436161159035879629630111\u0022\u003ETEXT \u003C\/u\u003E\u003Cg id=\u0022000004436161161467592592619662\u0022\u003ETEXT \u003C\/g\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Ck id=\u0022000004436161164633101851986162\u0022\u003ETEXT \u003C\/k\u003E\u003Ca id=\u0022000004436161167155092592629748\u0022 href=\u0022https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\u0022 value=\u0022LINK \u0022\u003E\u003C\/a\u003E \u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cp id=\u0022000004436161200284722222217911\u0022 data-link-target=\u0022properties-106\u0022 data-link-value=\u0022Absatz 2a\u0022\u003ETEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003ETEXT TEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003ETEXT TEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003ETEXT TEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003C\/p\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cp id=\u0022000004436161208671296296385342\u0022 data-link-target=\u0022properties-105\u0022 data-link-value=\u0022siehe\u0022\u003ETEXT TEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003ETEXT TEXT TEXT TEXT \u003Cnl\u003E\u003C\/nl\u003ETEXT TEXT TEXT TEXT \u003C\/p\u003E\u003Cnl\u003E\u003C\/nl\u003E",
+                        "content": "\u003Ch id=\u0022000004436161145244212963020598\u0022 data-link-target=\u0022properties-97\u0022 data-link-iri=\u0022properties\/headers\/projects~97\u0022 data-link-value=\u0022\u00dcberschrift 1a\u0022\u003ETEXT \u003C\/h\u003ETEXT TEXT TEXT \u003Cnl \/\u003E\u003Cb id=\u0022000004436161152100694444420087\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Fett\u0022\u003ETEXT \u003C\/b\u003E\u003Ci id=\u0022000004436161156358796296327934\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kursiv\u0022\u003ETEXT \u003C\/i\u003E\u003Cu id=\u0022000004436161159035879629630111\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unterstrichen\u0022\u003ETEXT \u003C\/u\u003E\u003Cg id=\u0022000004436161161467592592619662\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Gesperrt\u0022\u003ETEXT \u003C\/g\u003E\u003Cnl \/\u003E\u003Ck id=\u0022000004436161164633101851986162\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapit\u00e4lchen\u0022\u003ETEXT \u003C\/k\u003E\u003Ca id=\u0022000004436161167155092592629748\u0022 value=\u0022LINK \u0022 href=\u0022https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Link\u0022 \/\u003E \u003Cnl \/\u003E\u003Cnl \/\u003ETEXT TEXT TEXT \u003Cnl \/\u003ETEXT TEXT TEXT TEXT \u003Cnl \/\u003ETEXT TEXT TEXT TEXT \u003Cnl \/\u003ETEXT TEXT TEXT TEXT \u003Cnl \/\u003E\u003Cnl \/\u003ETEXT TEXT TEXT TEXT \u003Cnl \/\u003ETEXT TEXT TEXT TEXT \u003Cnl \/\u003ETEXT TEXT TEXT TEXT \u003Cnl \/\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -964,38 +982,12 @@
                                 "siblings": 16
                             }
                         ],
-                        "id": "items-52",
-                        "itemtype": "search",
-                        "sortno": 0,
-                        "sections_id": "sections-4",
-                        "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "Notizen Abschnitt 2a",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
-                    },
-                    {
-                        "sectionpath": [
-                            {
-                                "id": "sections-4",
-                                "articles_id": "articles-1",
-                                "sectiontype": "text",
-                                "name": "Gliederung: Ebene 1",
-                                "number": 2,
-                                "sortno": 27,
-                                "level": 1,
-                                "children": 0,
-                                "siblings": 16
-                            }
-                        ],
                         "id": "items-757",
                         "itemtype": "search",
                         "sortno": 0,
                         "sections_id": "sections-4",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Abschnitt 2a",
                         "flagged": true,
                         "pos_x": 0,
@@ -1054,7 +1046,7 @@
                         "sortno": 0,
                         "sections_id": "sections-3",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschrift A",
                         "flagged": true,
                         "pos_x": 0,
@@ -2232,6 +2224,7 @@
                         "sortno": 0,
                         "sections_id": "sections-2",
                         "articles_id": "articles-1",
+                        "value": "0",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0
@@ -2269,7 +2262,7 @@
                         "sortno": 0,
                         "sections_id": "sections-2",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notzien Inschriftenteil 1",
                         "flagged": true,
                         "pos_x": 0,
@@ -2376,12 +2369,60 @@
                                 "siblings": 1
                             }
                         ],
+                        "id": "items-878",
+                        "itemtype": "search",
+                        "sections_id": "sections-1",
+                        "articles_id": "articles-1",
+                        "value": "transcription",
+                        "content": "Zwischenraum von 1: \nUnbestimmter Verlust: \nErg\u00e4nz\u00e9ng \nAusla ss\u00f0ung \nVerzeilenumbruh  \nNachtrag\nAbk\u00fcrzung\nVersalie \nZeilenumbruch \n \n\nHann bj\u00f3 \u00ed Raums  dal \u00ed Raumsd\u00e6lafylk\n \nAlphabetische Fu\u00dfnote: \nNumerische Fu\u00dfnote:"
+                    },
+                    {
+                        "sectionpath": [
+                            {
+                                "id": "sections-3",
+                                "articles_id": "articles-1",
+                                "sectiontype": "inscription",
+                                "name": "A",
+                                "alias": "Alias Inschrift A",
+                                "number": 1,
+                                "sortno": 29,
+                                "level": 1,
+                                "children": 2,
+                                "siblings": 16
+                            },
+                            {
+                                "id": "sections-2",
+                                "parent_id": "sections-3",
+                                "articles_id": "articles-1",
+                                "sectiontype": "inscriptionpart",
+                                "name": "1",
+                                "alias": "A teil 1 Alias",
+                                "number": 1,
+                                "sortno": 30,
+                                "level": 2,
+                                "children": 1,
+                                "siblings": 2
+                            },
+                            {
+                                "id": "sections-1",
+                                "parent_id": "sections-2",
+                                "articles_id": "articles-1",
+                                "sectiontype": "inscriptiontext",
+                                "name": "1",
+                                "alias": "A teil 1 Alias Bearbeitung",
+                                "number": 1,
+                                "sortno": 31,
+                                "level": 3,
+                                "children": 0,
+                                "siblings": 1
+                            }
+                        ],
                         "id": "items-1",
                         "itemtype": "transcriptions",
                         "sortno": 0,
                         "sections_id": "sections-1",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004474097580738425925958702\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl\u003E\u003C\/nl\u003EZwischenraum von 1: \u003Cspatium_v id=\u0022000004436165070465277777844244\u0022 width=\u00221\u0022\u003E\u003C\/spatium_v\u003E\u003Cnl\u003E\u003C\/nl\u003EUnbestimmter Verlust: \u003Cdel id=\u0022000004436165076792824074163019\u0022 num_sign=\u00220\u0022\u003E\u003C\/del\u003E\u003Cnl\u003E\u003C\/nl\u003EErg\u003Ccpl id=\u0022000004436165097621527777892480\u0022\u003E\u00e4nz\u00e9ng\u003C\/cpl\u003E \u003Cnl\u003E\u003C\/nl\u003EAusla \u003Coms id=\u0022000004436165100978009259346871\u0022\u003Ess\u00f0ung\u003C\/oms\u003E \u003Cnl\u003E\u003C\/nl\u003EVerzeilenumbruh \u003Cvz id=\u0022000004436165037326388888946670\u0022 data-link-target=\u0022properties-86\u0022 data-link-value=\u0022Verszeilenumbruch 1 \u0022\u003E\u003C\/vz\u003E \u003Cnl\u003E\u003C\/nl\u003E\u003Cadd id=\u0022000004436165104023148148146540\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl\u003E\u003C\/nl\u003EAbk\u003Cabr id=\u0022000004436165108151620370436103\u0022 data-link-target=\u0022properties-171\u0022 data-link-value=\u0022siehe\u0022\u003E\u00fcrzung\u003C\/abr\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cvsl id=\u0022000004436165110998842592605012\u0022\u003EVe\u003C\/vsl\u003Ersalie \u003Cnl\u003E\u003C\/nl\u003EZeilenumbruch \u003Cz id=\u0022000004436165006240740740742383\u0022 data-link-target=\u0022properties-79\u0022 data-link-value=\u0022Zeilenumbruch 1a\u0022\u003E\u003C\/z\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003C\/bl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cbl id=\u0022000004436164974262731481588902\u0022 data-link-target=\u0022properties-61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl\u003E\u003C\/nl\u003EHann bj\u00f3 \u00ed Raums \u003Cwtr id=\u0022000004436165051586805555667815\u0022 data-link-target=\u0022properties-92\u0022 data-link-value=\u0022Worttrenner 1\u0022\u003E\u003C\/wtr\u003E dal \u00ed Raumsd\u003Call id=\u0022000004436165061471064814812687\u0022 data-link-target=\u0022properties-65\u0022 data-link-value=\u0022Buchstabenverbindung 2 \u0022\u003E\u00e6\u003C\/all\u003Elafylk\u003Cnl\u003E\u003C\/nl\u003E\u003C\/bl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cbl id=\u0022000004515581058186342592608309\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003EAlphabetische Fu\u00dfnote: \u003Capp2 id=\u0022000004489202863265046296394325\u0022\u003E\u003C\/app2\u003E\u003Cnl\u003E\u003C\/nl\u003ENumerische Fu\u00dfnote: \u003Capp1 id=\u0022000004489202875583333333330386\u0022\u003E\u003C\/app1\u003E\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004474097580738425925958702\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl \/\u003EZwischenraum von 1: \u003Cspatium_v id=\u0022000004436165070465277777844244\u0022 width=\u00221\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Spatium\u0022 \/\u003E\u003Cnl \/\u003EUnbestimmter Verlust: \u003Cdel id=\u0022000004436165076792824074163019\u0022 num_sign=\u00220\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Verlust\u0022 \/\u003E\u003Cnl \/\u003EErg\u003Ccpl id=\u0022000004436165097621527777892480\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Erg\u00e4nzung\u0022\u003E\u00e4nz\u00e9ng\u003C\/cpl\u003E \u003Cnl \/\u003EAusla \u003Coms id=\u0022000004436165100978009259346871\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Auslassung\u0022\u003Ess\u00f0ung\u003C\/oms\u003E \u003Cnl \/\u003EVerzeilenumbruh \u003Cvz id=\u0022000004436165037326388888946670\u0022 data-link-target=\u0022properties-86\u0022 data-link-iri=\u0022properties\/indentations\/projects~86\u0022 data-link-value=\u0022Verszeilenumbruch 1 \u0022 \/\u003E \u003Cnl \/\u003E\u003Cadd id=\u0022000004436165104023148148146540\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Nachtrag\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl \/\u003EAbk\u003Cabr id=\u0022000004436165108151620370436103\u0022 data-link-target=\u0022properties-171\u0022 data-link-iri=\u0022properties\/abbreviations\/projects~171\u0022 data-link-value=\u0022siehe\u0022\u003E\u00fcrzung\u003C\/abr\u003E\u003Cnl \/\u003E\u003Cvsl id=\u0022000004436165110998842592605012\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Versalie\u0022\u003EVe\u003C\/vsl\u003Ersalie \u003Cnl \/\u003EZeilenumbruch \u003Cz id=\u0022000004436165006240740740742383\u0022 data-link-target=\u0022properties-79\u0022 data-link-iri=\u0022properties\/linebindings\/projects~79\u0022 data-link-value=\u0022Zeilenumbruch 1a\u0022 \/\u003E\u003Cnl \/\u003E \u003C\/bl\u003E\u003Cnl \/\u003E\u003Cbl id=\u0022000004436164974262731481588902\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl \/\u003EHann bj\u00f3 \u00ed Raums \u003Cwtr id=\u0022000004436165051586805555667815\u0022 data-link-target=\u0022properties-92\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~92\u0022 data-link-value=\u0022Worttrenner 1\u0022 \/\u003E dal \u00ed Raumsd\u003Call id=\u0022000004436165061471064814812687\u0022 data-link-target=\u0022properties-65\u0022 data-link-iri=\u0022properties\/ligatures\/projects~65\u0022 data-link-value=\u0022Buchstabenverbindung 2 \u0022\u003E\u00e6\u003C\/all\u003Elafylk\u003Cnl \/\u003E \u003C\/bl\u003E\u003Cnl \/\u003E\u003Cbl id=\u0022000004515581058186342592608309\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003EAlphabetische Fu\u00dfnote: \u003Capp2 id=\u0022000004489202863265046296394325\u0022 \/\u003E\u003Cnl \/\u003ENumerische Fu\u00dfnote: \u003Capp1 id=\u0022000004489202875583333333330386\u0022 \/\u003E\u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung Inschrift A - Teil 1 - Bearbeitung 1",
                         "date_sort": "01234AAA00000000A4",
                         "date_value": "1234",
@@ -2435,65 +2476,12 @@
                                 "siblings": 1
                             }
                         ],
-                        "id": "items-49",
-                        "itemtype": "search",
-                        "sortno": 0,
-                        "sections_id": "sections-1",
-                        "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "\u251cbereich~\rZwischenraum von 1: \u251c1\u2524\rUnbestimmter Verlust: [---]\rErg[\u00e4nz\u00e9ng] \rAusla [(ss\u00f0ung)] \rVerzeilenumbruh | \r\u0026lt;Nachtrag\u0026gt;\rAbk(\u00fcrzung)\rVersalie \rZeilenumbruch \/\r~bereich\u2524\r\u251cbereich~\rHann bj\u00f3 \u00ed Raums \u2022 dal \u00ed Raumsd{\u00e6}lafylk\r~bereich\u2524\r\u251cbereich~Alphabetische Fu\u00dfnote: [a]\rNumerische Fu\u00dfnote: [2]~bereich\u2524",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
-                    },
-                    {
-                        "sectionpath": [
-                            {
-                                "id": "sections-3",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscription",
-                                "name": "A",
-                                "alias": "Alias Inschrift A",
-                                "number": 1,
-                                "sortno": 29,
-                                "level": 1,
-                                "children": 2,
-                                "siblings": 16
-                            },
-                            {
-                                "id": "sections-2",
-                                "parent_id": "sections-3",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscriptionpart",
-                                "name": "1",
-                                "alias": "A teil 1 Alias",
-                                "number": 1,
-                                "sortno": 30,
-                                "level": 2,
-                                "children": 1,
-                                "siblings": 2
-                            },
-                            {
-                                "id": "sections-1",
-                                "parent_id": "sections-2",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscriptiontext",
-                                "name": "1",
-                                "alias": "A teil 1 Alias Bearbeitung",
-                                "number": 1,
-                                "sortno": 31,
-                                "level": 3,
-                                "children": 0,
-                                "siblings": 1
-                            }
-                        ],
                         "id": "items-755",
                         "itemtype": "search",
                         "sortno": 0,
                         "sections_id": "sections-1",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschrift A - Inschriftenteil 1 - Bearbeitung 1",
                         "flagged": true,
                         "pos_x": 0,
@@ -2632,7 +2620,7 @@
                         "sortno": 0,
                         "sections_id": "sections-24",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschr A Teil 2",
                         "flagged": true,
                         "pos_x": 0,
@@ -2777,17 +2765,12 @@
                                 "siblings": 1
                             }
                         ],
-                        "id": "items-45",
+                        "id": "items-884",
                         "itemtype": "search",
-                        "sortno": 0,
                         "sections_id": "sections-23",
                         "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "\u251cbereich~\r\u00ednitiale\rChronogrammbuchstabe\rVh\u00e9rsalie\rAb(ma\u00f0r ) \/\r\u0026lt;Nachtrag\u0026gt;\r[(Auslassung)]\r{Bu}chstabenverbindung\rUns\u00f0cherer Text\rZwischenraum von drei \u251c3\u2524 Zeichen\rUnbestimmte Anzahl [---] verlorener Zeichen\r[Erg]\u00f0nzung\rWort\u2022trenner\rHochgestellt |\r~bereich\u2524",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
+                        "value": "transcription",
+                        "content": "\u00ednitiale\nChronogrammbuchstabe\nVh\u00e9rsalie\nAbma\u00f0r  \nNachtrag\nAuslassung\nBuchstabenverbindung\nUns\u00f0cherer Text\nZwischenraum von drei  Zeichen\nUnbestimmte Anzahl  verlorener Zeichen\nErg\u00f0nzung\nWorttrenner\nHochgestellt"
                     },
                     {
                         "sectionpath": [
@@ -2835,7 +2818,7 @@
                         "sortno": 0,
                         "sections_id": "sections-23",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004436341948501157407446979\u0022 data-link-target=\u0022properties-61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cini id=\u0022000004436342051736111111145522\u0022\u003E\u00ed\u003C\/ini\u003Enitiale\u003Cnl\u003E\u003C\/nl\u003ECh\u003Cchr id=\u0022000004436342056334490740716638\u0022\u003Er\u003C\/chr\u003Eonogrammbuchstabe\u003Cnl\u003E\u003C\/nl\u003EV\u003Cvsl id=\u0022000004436342047435185185246164\u0022\u003Eh\u003C\/vsl\u003E\u00e9rsalie\u003Cnl\u003E\u003C\/nl\u003EAb\u003Cabr id=\u0022000004436342040472222222267856\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003Em\u003Ckap id=\u0022000004436342060210648148155746\u0022\u003Ea\u003C\/kap\u003E\u00f0r \u003C\/abr\u003E \u003Cz id=\u0022000004436341968184027777873155\u0022 data-link-target=\u0022properties-78\u0022 data-link-value=\u0022Zeile\u0022\u003E\u003C\/z\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cadd id=\u0022000004436342035339120370429044\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Coms id=\u0022000004436342029998842592635716\u0022\u003EAuslassung\u003C\/oms\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Call id=\u0022000004436342068519675925958209\u0022 data-link-target=\u0022properties-65\u0022 data-link-value=\u0022Buchstabenverbindung 2 \u0022\u003EBu\u003C\/all\u003Echstabenverbindung\u003Cnl\u003E\u003C\/nl\u003EUns\u003Cinsec id=\u0022000004436342083524305555650834\u0022\u003E\u00f0\u003C\/insec\u003Echerer Text\u003Cnl\u003E\u003C\/nl\u003EZwischenraum von drei \u003Cspatium_v id=\u0022000004436341997248842592682649\u0022 width=\u00223\u0022\u003E\u003C\/spatium_v\u003E Zeichen\u003Cnl\u003E\u003C\/nl\u003EUnbestimmte Anzahl \u003Cdel id=\u0022000004436342008081018518514387\u0022 num_sign=\u00220\u0022\u003E\u003C\/del\u003E verlorener Zeichen\u003Cnl\u003E\u003C\/nl\u003E\u003Ccpl id=\u0022000004436342019850694444462751\u0022\u003EErg\u003C\/cpl\u003E\u00f0nzung\u003Cnl\u003E\u003C\/nl\u003EWort\u003Cwtr id=\u0022000004436341987521990740778661\u0022 data-link-target=\u0022properties-88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022\u003E\u003C\/wtr\u003Etrenner\u003Cnl\u003E\u003C\/nl\u003EHochge\u003Csup id=\u0022000004436342078564814814882651\u0022 data-link-target=\u0022properties-74\u0022 data-link-value=\u0022Hochgestellt 1 \u0022\u003Estellt\u003C\/sup\u003E \u003Cvz id=\u0022000004436341975421296296344091\u0022 data-link-target=\u0022properties-85\u0022 data-link-value=\u0022Verszeilenumbruch 1a\u0022\u003E\u003C\/vz\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004436341948501157407446979\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl \/\u003E\u003Cini id=\u0022000004436342051736111111145522\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Initiale\u0022\u003E\u00ed\u003C\/ini\u003Enitiale\u003Cnl \/\u003ECh\u003Cchr id=\u0022000004436342056334490740716638\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Chronogrammbuchstabe\u0022\u003Er\u003C\/chr\u003Eonogrammbuchstabe\u003Cnl \/\u003EV\u003Cvsl id=\u0022000004436342047435185185246164\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Versalie\u0022\u003Eh\u003C\/vsl\u003E\u00e9rsalie\u003Cnl \/\u003EAb\u003Cabr id=\u0022000004436342040472222222267856\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003Em\u003Ckap id=\u0022000004436342060210648148155746\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapitalis\u0022\u003Ea\u003C\/kap\u003E\u00f0r \u003C\/abr\u003E \u003Cz id=\u0022000004436341968184027777873155\u0022 data-link-target=\u0022properties-78\u0022 data-link-iri=\u0022properties\/linebindings\/projects~78\u0022 data-link-value=\u0022Zeile\u0022 \/\u003E\u003Cnl \/\u003E\u003Cadd id=\u0022000004436342035339120370429044\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Nachtrag\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl \/\u003E\u003Coms id=\u0022000004436342029998842592635716\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Auslassung\u0022\u003EAuslassung\u003C\/oms\u003E\u003Cnl \/\u003E\u003Call id=\u0022000004436342068519675925958209\u0022 data-link-target=\u0022properties-65\u0022 data-link-iri=\u0022properties\/ligatures\/projects~65\u0022 data-link-value=\u0022Buchstabenverbindung 2 \u0022\u003EBu\u003C\/all\u003Echstabenverbindung\u003Cnl \/\u003EUns\u003Cinsec id=\u0022000004436342083524305555650834\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unsicher\u0022\u003E\u00f0\u003C\/insec\u003Echerer Text\u003Cnl \/\u003EZwischenraum von drei \u003Cspatium_v id=\u0022000004436341997248842592682649\u0022 width=\u00223\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Spatium\u0022 \/\u003E Zeichen\u003Cnl \/\u003EUnbestimmte Anzahl \u003Cdel id=\u0022000004436342008081018518514387\u0022 num_sign=\u00220\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Verlust\u0022 \/\u003E verlorener Zeichen\u003Cnl \/\u003E\u003Ccpl id=\u0022000004436342019850694444462751\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Erg\u00e4nzung\u0022\u003EErg\u003C\/cpl\u003E\u00f0nzung\u003Cnl \/\u003EWort\u003Cwtr id=\u0022000004436341987521990740778661\u0022 data-link-target=\u0022properties-88\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022 \/\u003Etrenner\u003Cnl \/\u003EHochge\u003Csup id=\u0022000004436342078564814814882651\u0022 data-link-target=\u0022properties-74\u0022 data-link-iri=\u0022properties\/verticalalignments\/projects~74\u0022 data-link-value=\u0022Hochgestellt 1 \u0022\u003Estellt\u003C\/sup\u003E \u003Cvz id=\u0022000004436341975421296296344091\u0022 data-link-target=\u0022properties-85\u0022 data-link-iri=\u0022properties\/indentations\/projects~85\u0022 data-link-value=\u0022Verszeilenumbruch 1a\u0022 \/\u003E\u003Cnl \/\u003E \u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung \u00d6rvar-Odds saga",
                         "date_sort": "01337AAA00000000A4",
                         "date_value": "1337",
@@ -2946,7 +2929,7 @@
                         "sortno": 0,
                         "sections_id": "sections-23",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Inschrift A Teil 2 Bearbeitungsnotizen",
                         "flagged": true,
                         "pos_x": 0,
@@ -3005,7 +2988,7 @@
                         "sortno": 0,
                         "sections_id": "sections-22",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschrift B",
                         "flagged": true,
                         "pos_x": 0,
@@ -4103,7 +4086,7 @@
                         "sortno": 0,
                         "sections_id": "sections-21",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschrift B Teil 1",
                         "flagged": true,
                         "pos_x": 0,
@@ -4143,6 +4126,7 @@
                         "sortno": 0,
                         "sections_id": "sections-21",
                         "articles_id": "articles-1",
+                        "value": "0",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0
@@ -4247,17 +4231,12 @@
                                 "siblings": 2
                             }
                         ],
-                        "id": "items-40",
+                        "id": "items-892",
                         "itemtype": "search",
-                        "sortno": 0,
                         "sections_id": "sections-20",
                         "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "\u251cbereich~\u00deat var eitt sumar, \/\rat Gr\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V{\u00ed}k austr |\reptir Harald dau\u2022\u00f0an, m\u00e1g sinn, \u251c1\u2524\rfyrir \u00fev\u00ed \u0026lt;at\u0026gt;[(hann)] [(\u00e1tti )] [\u00fear] m[---]iklar eignir.~bereich\u2524\r",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
+                        "value": "transcription",
+                        "content": "\u00deat var eitt sumar, \nat Gr\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V\u00edk austr \neptir Harald dau\u00f0an, m\u00e1g sinn, \nfyrir \u00fev\u00ed athann \u00e1tti  \u00fear miklar eignir."
                     },
                     {
                         "sectionpath": [
@@ -4305,7 +4284,7 @@
                         "sortno": 0,
                         "sections_id": "sections-20",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004436342219936342592692857\u0022 data-link-target=\u0022properties-57\u0022 data-link-value=\u0022siehe\u0022\u003E\u003Cini id=\u0022000004436342334950231481521590\u0022\u003E\u00de\u003C\/ini\u003Eat \u003Cchr id=\u0022000004436342339388888888943282\u0022\u003Ev\u003C\/chr\u003Ear eitt \u003Ckap id=\u0022000004436342344737268518577048\u0022\u003Es\u003C\/kap\u003Eumar, \u003Cz id=\u0022000004436342244850694444419672\u0022 data-link-target=\u0022properties-78\u0022 data-link-value=\u0022Zeile\u0022\u003E\u003C\/z\u003E\u003Cnl\u003E\u003C\/nl\u003Eat \u003Cvsl id=\u0022000004436342331244212963000975\u0022\u003EG\u003C\/vsl\u003Er\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V\u003Call id=\u0022000004436342356430555555639778\u0022 data-link-target=\u0022properties-66\u0022 data-link-value=\u0022Buchstabenverbindung 1 \u0022\u003E\u00ed\u003C\/all\u003Ek austr \u003Cvz id=\u0022000004436342252387731481570820\u0022 data-link-target=\u0022properties-82\u0022 data-link-value=\u0022Verszeilenumbruch 2a\u0022\u003E\u003C\/vz\u003E\u003Cnl\u003E\u003C\/nl\u003Eeptir \u003Csup id=\u0022000004436342367437500000062286\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Hochgestellt\u0022\u003EHarald\u003C\/sup\u003E dau\u003Cwtr id=\u0022000004436342265232638888919263\u0022 data-link-target=\u0022properties-90\u0022 data-link-value=\u0022Worttrenner 1 \u203a siehe\u0022\u003E\u003C\/wtr\u003E\u00f0an, \u003Cinsec id=\u0022000004436342370581018518576494\u0022\u003Em\u00e1g \u003C\/insec\u003Esinn, \u003Cspatium_v id=\u0022000004436342271391203703738522\u0022 width=\u00221\u0022\u003E\u003C\/spatium_v\u003E\u003Cnl\u003E\u003C\/nl\u003Efyrir \u00fev\u00ed \u003Cadd id=\u0022000004436342304277777777828084\u0022\u003Eat\u003C\/add\u003E\u003Coms id=\u0022000004436342299424768518527263\u0022\u003Ehann\u003C\/oms\u003E \u003Coms id=\u0022000004436342296030092592678988\u0022\u003E\u00e1tti \u003C\/oms\u003E \u003Ccpl id=\u0022000004436342291663194444404939\u0022\u003E\u00fear\u003C\/cpl\u003E m\u003Cdel id=\u0022000004436342276410879629645922\u0022 num_sign=\u00220\u0022\u003E\u003C\/del\u003Eiklar eignir.\u003C\/bl\u003E\u003Cnl\u003E\u003C\/nl\u003E",
+                        "content": "\u003Cbl id=\u0022000004436342219936342592692857\u0022 data-link-target=\u0022properties-57\u0022 data-link-iri=\u0022properties\/alignments\/projects~57\u0022 data-link-value=\u0022siehe\u0022\u003E\u003Cini id=\u0022000004436342334950231481521590\u0022\u003E\u00de\u003C\/ini\u003Eat \u003Cchr id=\u0022000004436342339388888888943282\u0022\u003Ev\u003C\/chr\u003Ear eitt \u003Ckap id=\u0022000004436342344737268518577048\u0022\u003Es\u003C\/kap\u003Eumar, \u003Cz id=\u0022000004436342244850694444419672\u0022 data-link-target=\u0022properties-78\u0022 data-link-iri=\u0022properties\/linebindings\/projects~78\u0022 data-link-value=\u0022Zeile\u0022 \/\u003E\u003Cnl \/\u003Eat \u003Cvsl id=\u0022000004436342331244212963000975\u0022\u003EG\u003C\/vsl\u003Er\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V\u003Call id=\u0022000004436342356430555555639778\u0022 data-link-target=\u0022properties-66\u0022 data-link-iri=\u0022properties\/ligatures\/projects~66\u0022 data-link-value=\u0022Buchstabenverbindung 1 \u0022\u003E\u00ed\u003C\/all\u003Ek austr \u003Cvz id=\u0022000004436342252387731481570820\u0022 data-link-target=\u0022properties-82\u0022 data-link-iri=\u0022properties\/indentations\/projects~82\u0022 data-link-value=\u0022Verszeilenumbruch 2a\u0022 \/\u003E\u003Cnl \/\u003Eeptir \u003Csup id=\u0022000004436342367437500000062286\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Hochgestellt in der Transkription\u0022\u003EHarald\u003C\/sup\u003E dau\u003Cwtr id=\u0022000004436342265232638888919263\u0022 data-link-target=\u0022properties-90\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~90\u0022 data-link-value=\u0022Worttrenner 1 \u203a siehe\u0022 \/\u003E\u00f0an, \u003Cinsec id=\u0022000004436342370581018518576494\u0022\u003Em\u00e1g \u003C\/insec\u003Esinn, \u003Cspatium_v id=\u0022000004436342271391203703738522\u0022 width=\u00221\u0022 \/\u003E\u003Cnl \/\u003Efyrir \u00fev\u00ed \u003Cadd id=\u0022000004436342304277777777828084\u0022\u003Eat\u003C\/add\u003E\u003Coms id=\u0022000004436342299424768518527263\u0022\u003Ehann\u003C\/oms\u003E \u003Coms id=\u0022000004436342296030092592678988\u0022\u003E\u00e1tti \u003C\/oms\u003E \u003Ccpl id=\u0022000004436342291663194444404939\u0022\u003E\u00fear\u003C\/cpl\u003E m\u003Cdel id=\u0022000004436342276410879629645922\u0022 num_sign=\u00220\u0022 \/\u003Eiklar eignir.\u003C\/bl\u003E\u003Cnl \/\u003E",
                         "translation": "\u00dcbersetzung Inschrift B Teil 1",
                         "date_sort": "01066AAA00000000A4",
                         "date_value": "1066",
@@ -4364,7 +4343,7 @@
                         "sortno": 0,
                         "sections_id": "sections-20",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschrift B Teil 1 Bearbeitung 1",
                         "flagged": true,
                         "pos_x": 0,
@@ -4520,64 +4499,12 @@
                                 "siblings": 2
                             }
                         ],
-                        "id": "items-770",
-                        "itemtype": "search",
-                        "sortno": 0,
-                        "sections_id": "sections-378",
-                        "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "\u251cbereich~\r\r~bereich\u2524",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
-                    },
-                    {
-                        "sectionpath": [
-                            {
-                                "id": "sections-22",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B",
-                                "number": 2,
-                                "sortno": 39,
-                                "level": 1,
-                                "children": 2,
-                                "siblings": 16
-                            },
-                            {
-                                "id": "sections-21",
-                                "parent_id": "sections-22",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscriptionpart",
-                                "name": "1",
-                                "alias": "Alias Inschrift 2 Teil 1",
-                                "number": 1,
-                                "sortno": 40,
-                                "level": 2,
-                                "children": 2,
-                                "siblings": 2
-                            },
-                            {
-                                "id": "sections-378",
-                                "parent_id": "sections-21",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscriptiontext",
-                                "name": "2",
-                                "number": 2,
-                                "sortno": 43,
-                                "level": 3,
-                                "children": 0,
-                                "siblings": 2
-                            }
-                        ],
                         "id": "items-767",
                         "itemtype": "transcriptions",
                         "sortno": 0,
                         "sections_id": "sections-378",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004489204293021990740747062\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003Cnl\u003E\u003C\/nl\u003E\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004489204293021990740747062\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl \/\u003E\u003Cnl \/\u003E\u003C\/bl\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0
@@ -4661,7 +4588,7 @@
                         "sortno": 0,
                         "sections_id": "sections-19",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschr B Teil 2",
                         "flagged": true,
                         "pos_x": 0,
@@ -4806,17 +4733,12 @@
                                 "siblings": 2
                             }
                         ],
-                        "id": "items-36",
+                        "id": "items-899",
                         "itemtype": "search",
-                        "sortno": 0,
                         "sections_id": "sections-18",
                         "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "\u251cbereich~Gr\u00edmr unni henni mikit, ok l{\u00e6}tr [(hann)] \u00feat eptir henni. \/\rH\u00fan \u0026lt;var hverri \u0026gt;konu v\u00e6nni\u251c1\u2524 ok betr[---] at s\u00e9r [um] alla hluti,|\r \u00feeira( er) \u00ed Nor\u2022egi v\u00e1ru. \r\u00deeira f\u00f6r var b\u00fain vir\u00f0uliga.~bereich\u2524",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
+                        "value": "transcription",
+                        "content": "Gr\u00edmr unni henni mikit, ok l\u00e6tr hann \u00feat eptir henni. \nH\u00fan var hverri konu v\u00e6nni ok betr at s\u00e9r um alla hluti,\n \u00feeira er \u00ed Noregi v\u00e1ru. \n\u00deeira f\u00f6r var b\u00fain vir\u00f0uliga."
                     },
                     {
                         "sectionpath": [
@@ -4864,7 +4786,7 @@
                         "sortno": 0,
                         "sections_id": "sections-18",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004436342493348379629644802\u0022 data-link-target=\u0022properties-61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cini id=\u0022000004436342606019675925920222\u0022\u003EG\u003C\/ini\u003Er\u00edmr \u003Cvsl id=\u0022000004436342597724537037066064\u0022\u003Eu\u003C\/vsl\u003Enni \u003Cchr id=\u0022000004436342610309027777859800\u0022\u003Eh\u003C\/chr\u003Eenni \u003Ckap id=\u0022000004436342614041666666773306\u0022\u003Em\u003C\/kap\u003Eikit, ok l\u003Call id=\u0022000004436342619626157407418054\u0022 data-link-target=\u0022properties-64\u0022 data-link-value=\u0022Buchstabenverbindung 2a\u0022\u003E\u00e6\u003C\/all\u003Etr \u003Coms id=\u0022000004436342575649305555631787\u0022\u003Ehann\u003C\/oms\u003E \u00feat \u003Csup id=\u0022000004436342629741898148160649\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Hochgestellt\u0022\u003Eeptir\u003C\/sup\u003E henni. \u003Cz id=\u0022000004436342516953703703748996\u0022 data-link-target=\u0022properties-80\u0022 data-link-value=\u0022Zeilenumbruch 1 \u0022\u003E\u003C\/z\u003E\u003Cnl\u003E\u003C\/nl\u003EH\u00fan \u003Cadd id=\u0022000004436342582651620370456862\u0022\u003Evar hverri \u003C\/add\u003Ekonu v\u00e6nni\u003Cspatium_v id=\u0022000004436342550361111111153956\u0022 width=\u00221\u0022\u003E\u003C\/spatium_v\u003E ok betr\u003Cdel id=\u0022000004436342558008101851960179\u0022 num_sign=\u00220\u0022\u003E\u003C\/del\u003E at s\u00e9r \u003Ccpl id=\u0022000004436342570162037037096209\u0022\u003Eum\u003C\/cpl\u003E alla hluti,\u003Cvz id=\u0022000004436342523789351851958494\u0022 data-link-target=\u0022properties-84\u0022 data-link-value=\u0022Verszeile\u0022\u003E\u003C\/vz\u003E\u003Cnl\u003E\u003C\/nl\u003E \u00feeira\u003Cabr id=\u0022000004436342590993055555669897\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003E er\u003C\/abr\u003E \u00ed Nor\u003Cwtr id=\u0022000004436342540800925925924686\u0022 data-link-target=\u0022properties-88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022\u003E\u003C\/wtr\u003Eegi v\u00e1ru. \u003Cnl\u003E\u003C\/nl\u003E\u00deeira f\u00f6r var b\u00fain \u003Cinsec id=\u0022000004436342633575231481531016\u0022\u003Evir\u00f0uliga\u003C\/insec\u003E.\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004436342493348379629644802\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cini id=\u0022000004436342606019675925920222\u0022\u003EG\u003C\/ini\u003Er\u00edmr \u003Cvsl id=\u0022000004436342597724537037066064\u0022\u003Eu\u003C\/vsl\u003Enni \u003Cchr id=\u0022000004436342610309027777859800\u0022\u003Eh\u003C\/chr\u003Eenni \u003Ckap id=\u0022000004436342614041666666773306\u0022\u003Em\u003C\/kap\u003Eikit, ok l\u003Call id=\u0022000004436342619626157407418054\u0022 data-link-target=\u0022properties-64\u0022 data-link-iri=\u0022properties\/ligatures\/projects~64\u0022 data-link-value=\u0022Buchstabenverbindung 2a\u0022\u003E\u00e6\u003C\/all\u003Etr \u003Coms id=\u0022000004436342575649305555631787\u0022\u003Ehann\u003C\/oms\u003E \u00feat \u003Csup id=\u0022000004436342629741898148160649\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Hochgestellt in der Transkription\u0022\u003Eeptir\u003C\/sup\u003E henni. \u003Cz id=\u0022000004436342516953703703748996\u0022 data-link-target=\u0022properties-80\u0022 data-link-iri=\u0022properties\/linebindings\/projects~80\u0022 data-link-value=\u0022Zeilenumbruch 1 \u0022 \/\u003E\u003Cnl \/\u003EH\u00fan \u003Cadd id=\u0022000004436342582651620370456862\u0022\u003Evar hverri \u003C\/add\u003Ekonu v\u00e6nni\u003Cspatium_v id=\u0022000004436342550361111111153956\u0022 width=\u00221\u0022 \/\u003E ok betr\u003Cdel id=\u0022000004436342558008101851960179\u0022 num_sign=\u00220\u0022 \/\u003E at s\u00e9r \u003Ccpl id=\u0022000004436342570162037037096209\u0022\u003Eum\u003C\/cpl\u003E alla hluti,\u003Cvz id=\u0022000004436342523789351851958494\u0022 data-link-target=\u0022properties-84\u0022 data-link-iri=\u0022properties\/indentations\/projects~84\u0022 data-link-value=\u0022Verszeile\u0022 \/\u003E\u003Cnl \/\u003E \u00feeira\u003Cabr id=\u0022000004436342590993055555669897\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003E er\u003C\/abr\u003E \u00ed Nor\u003Cwtr id=\u0022000004436342540800925925924686\u0022 data-link-target=\u0022properties-88\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022 \/\u003Eegi v\u00e1ru. \u003Cnl \/\u003E\u00deeira f\u00f6r var b\u00fain \u003Cinsec id=\u0022000004436342633575231481531016\u0022\u003Evir\u00f0uliga\u003C\/insec\u003E.\u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung Inschrift B Teil 2",
                         "date_sort": "00794AAA00000000A4",
                         "date_value": "794",
@@ -4922,7 +4844,7 @@
                         "sortno": 0,
                         "sections_id": "sections-18",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Inschrift B Teil 2 Bearbeitung 1",
                         "flagged": true,
                         "pos_x": 0,
@@ -5078,6 +5000,53 @@
                                 "siblings": 2
                             }
                         ],
+                        "id": "items-903",
+                        "itemtype": "search",
+                        "sections_id": "sections-377",
+                        "articles_id": "articles-1",
+                        "value": "transcription",
+                        "content": "Transkription in B.2.2"
+                    },
+                    {
+                        "sectionpath": [
+                            {
+                                "id": "sections-22",
+                                "articles_id": "articles-1",
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B",
+                                "number": 2,
+                                "sortno": 39,
+                                "level": 1,
+                                "children": 2,
+                                "siblings": 16
+                            },
+                            {
+                                "id": "sections-19",
+                                "parent_id": "sections-22",
+                                "articles_id": "articles-1",
+                                "sectiontype": "inscriptionpart",
+                                "name": "2",
+                                "alias": "Alias Inschrift B",
+                                "number": 2,
+                                "sortno": 46,
+                                "level": 2,
+                                "children": 2,
+                                "siblings": 2
+                            },
+                            {
+                                "id": "sections-377",
+                                "parent_id": "sections-19",
+                                "articles_id": "articles-1",
+                                "sectiontype": "inscriptiontext",
+                                "name": "2",
+                                "number": 2,
+                                "sortno": 49,
+                                "level": 3,
+                                "children": 0,
+                                "siblings": 2
+                            }
+                        ],
                         "id": "items-764",
                         "itemtype": "search",
                         "sortno": 0,
@@ -5130,64 +5099,12 @@
                                 "siblings": 2
                             }
                         ],
-                        "id": "items-765",
-                        "itemtype": "search",
-                        "sortno": 0,
-                        "sections_id": "sections-377",
-                        "articles_id": "articles-1",
-                        "value": "content",
-                        "content": "\u251cbereich~\rTranskription in B.2.2\r~bereich\u2524",
-                        "flagged": true,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0
-                    },
-                    {
-                        "sectionpath": [
-                            {
-                                "id": "sections-22",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B",
-                                "number": 2,
-                                "sortno": 39,
-                                "level": 1,
-                                "children": 2,
-                                "siblings": 16
-                            },
-                            {
-                                "id": "sections-19",
-                                "parent_id": "sections-22",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscriptionpart",
-                                "name": "2",
-                                "alias": "Alias Inschrift B",
-                                "number": 2,
-                                "sortno": 46,
-                                "level": 2,
-                                "children": 2,
-                                "siblings": 2
-                            },
-                            {
-                                "id": "sections-377",
-                                "parent_id": "sections-19",
-                                "articles_id": "articles-1",
-                                "sectiontype": "inscriptiontext",
-                                "name": "2",
-                                "number": 2,
-                                "sortno": 49,
-                                "level": 3,
-                                "children": 0,
-                                "siblings": 2
-                            }
-                        ],
                         "id": "items-766",
                         "itemtype": "transcriptions",
                         "sortno": 0,
                         "sections_id": "sections-377",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004489202971068287037045606\u0022 data-link-target=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl\u003E\u003C\/nl\u003ETranskription in B.2.2\u003Cnl\u003E\u003C\/nl\u003E\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004489202971068287037045606\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl \/\u003ETranskription in B.2.2\u003Cnl \/\u003E\u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung in B.2.2",
                         "pos_x": 0,
                         "pos_y": 0,
@@ -5242,7 +5159,7 @@
                         "sortno": 0,
                         "sections_id": "sections-9",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Wappen",
                         "flagged": true,
                         "pos_x": 0,
@@ -5284,7 +5201,7 @@
                             "name": "Wappen 1",
                             "comment": "Notizen Wappen 1",
                             "content": "Schild 1",
-                            "elements": "Oberwappen 1\u003Cnl\u003E\u003C\/nl\u003EVerweis auf eine Marke: \u003Crec_ma id=\u0022000004456303270875000000029487\u0022 data-link-target=\u0022properties-186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
+                            "elements": "Oberwappen 1\u003Cnl\u003E\u003C\/nl\u003EVerweis auf eine Marke: \u003Crec_ma id=\u0022000004456303270875000000029487\u0022 data-link-target=\u0022properties-186\u0022 data-link-iri=\u0022properties\/brands\/projects~186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
                             "iscategory": 0,
                             "ishidden": 0,
                             "file_name": "1024px-Nautical_star.svg.png",
@@ -5363,7 +5280,7 @@
                             "name": "Wappen 1",
                             "comment": "Notizen Wappen 1",
                             "content": "Schild 1",
-                            "elements": "Oberwappen 1\u003Cnl\u003E\u003C\/nl\u003EVerweis auf eine Marke: \u003Crec_ma id=\u0022000004456303270875000000029487\u0022 data-link-target=\u0022properties-186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
+                            "elements": "Oberwappen 1\u003Cnl\u003E\u003C\/nl\u003EVerweis auf eine Marke: \u003Crec_ma id=\u0022000004456303270875000000029487\u0022 data-link-target=\u0022properties-186\u0022 data-link-iri=\u0022properties\/brands\/projects~186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
                             "iscategory": 0,
                             "ishidden": 0,
                             "file_name": "1024px-Nautical_star.svg.png",
@@ -5443,7 +5360,7 @@
                             "sortkey": "wappen 002",
                             "name": "Wappen 2",
                             "comment": "Notizen Wappen 2",
-                            "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
+                            "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/projects~10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
                             "elements": "Oberwappen 2",
                             "iscategory": 0,
                             "ishidden": 0,
@@ -5529,7 +5446,7 @@
                         "sortno": 0,
                         "sections_id": "sections-8",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Marken",
                         "flagged": true,
                         "pos_x": 0,
@@ -5690,7 +5607,7 @@
                         "sortno": 0,
                         "sections_id": "sections-7",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Abbildungen",
                         "flagged": true,
                         "pos_x": 0,
@@ -5724,6 +5641,15 @@
                         "file_path": "signatur-1",
                         "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
                         "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
+                        "file_meta": {
+                            "creator": "",
+                            "source": "",
+                            "licence": "",
+                            "rights": "",
+                            "usageterms": "",
+                            "credit": "",
+                            "marked": ""
+                        },
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -5772,6 +5698,15 @@
                         "file_path": "signatur-1",
                         "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
                         "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
+                        "file_meta": {
+                            "creator": "",
+                            "source": "",
+                            "licence": "",
+                            "rights": "",
+                            "usageterms": "",
+                            "credit": "",
+                            "marked": ""
+                        },
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -5842,7 +5777,7 @@
                         "sortno": 0,
                         "sections_id": "sections-6",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Register",
                         "flagged": true,
                         "pos_x": 0,
@@ -6154,7 +6089,7 @@
                         "sortno": 0,
                         "sections_id": "sections-14",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Nachweise",
                         "flagged": true,
                         "pos_x": 0,
@@ -6180,7 +6115,7 @@
                         "sortno": 1,
                         "sections_id": "sections-14",
                         "articles_id": "articles-1",
-                        "content": "Erg\u00e4nzung 3, Verweis auf \u003Crec_intern id=\u0022000004456302457709490740746581\u0022 data-link-target=\u0022sections-3\u0022 data-link-value=\u0022A\u0022\u003E\u003C\/rec_intern\u003E",
+                        "content": "Erg\u00e4nzung 3, Verweis auf \u003Crec_intern id=\u0022000004456302457709490740746581\u0022 data-link-target=\u0022sections-3\u0022 data-link-iri=\u0022sections\/inscription\/projects~3\u0022 data-link-value=\u0022A\u0022 \/\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -6312,7 +6247,7 @@
                         "sortno": 0,
                         "sections_id": "sections-16",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Signaturen",
                         "flagged": true,
                         "pos_x": 0,
@@ -6471,7 +6406,7 @@
                         "sortno": 0,
                         "sections_id": "sections-17",
                         "articles_id": "articles-1",
-                        "value": "comment",
+                        "value": "notes",
                         "content": "Notizen Datensatz",
                         "flagged": true,
                         "pos_x": 0,
@@ -6594,99 +6529,6 @@
         ],
         "links": [
             {
-                "id": "links-16",
-                "to_id": "properties-105",
-                "from_id": "items-3",
-                "from_field": "content",
-                "from_tagid": "000004436161208671296296385342",
-                "from_tagname": "p",
-                "property": {
-                    "id": "properties-105",
-                    "parent_id": "properties-107",
-                    "propertytype": "paragraphs",
-                    "level": 1,
-                    "lft": 12,
-                    "rght": 13,
-                    "related_id": "properties-106",
-                    "sortno": 12,
-                    "lemma": "siehe",
-                    "unit": "Absatz 2b Einheit",
-                    "comment": "Absatz 2b Bemerk",
-                    "iscategory": 0,
-                    "ishidden": 0,
-                    "keywords": "Break",
-                    "norm_data": "Absatz 2b Norm",
-                    "ancestors": [
-                        {
-                            "id": "properties-107",
-                            "propertytype": "paragraphs",
-                            "level": 0,
-                            "lft": 8,
-                            "rght": 14,
-                            "sortno": 8,
-                            "sortkey": "Absatz 2",
-                            "lemma": "Absatz 2",
-                            "name": "Absatz 2 ",
-                            "unit": "Absatz 2 Einheit",
-                            "comment": "Absatz 2 Bemerk",
-                            "iscategory": 0,
-                            "ishidden": 0,
-                            "keywords": "Absatz,Break",
-                            "norm_data": "Absatz 2 Norm"
-                        }
-                    ]
-                },
-                "to_value": "siehe",
-                "root_id": "articles-1"
-            },
-            {
-                "id": "links-17",
-                "to_id": "properties-106",
-                "from_id": "items-3",
-                "from_field": "content",
-                "from_tagid": "000004436161200284722222217911",
-                "from_tagname": "p",
-                "property": {
-                    "id": "properties-106",
-                    "parent_id": "properties-107",
-                    "propertytype": "paragraphs",
-                    "level": 1,
-                    "lft": 9,
-                    "rght": 11,
-                    "sortno": 9,
-                    "sortkey": "Absatz 2a",
-                    "lemma": "Absatz 2a",
-                    "name": "Absatz 2a",
-                    "unit": "Absatz 2a Einheit",
-                    "comment": "Absatz 2a Bemerk",
-                    "iscategory": 1,
-                    "ishidden": 1,
-                    "keywords": "Break",
-                    "norm_data": "Absatz 2a Norm",
-                    "ancestors": [
-                        {
-                            "id": "properties-107",
-                            "propertytype": "paragraphs",
-                            "level": 0,
-                            "lft": 8,
-                            "rght": 14,
-                            "sortno": 8,
-                            "sortkey": "Absatz 2",
-                            "lemma": "Absatz 2",
-                            "name": "Absatz 2 ",
-                            "unit": "Absatz 2 Einheit",
-                            "comment": "Absatz 2 Bemerk",
-                            "iscategory": 0,
-                            "ishidden": 0,
-                            "keywords": "Absatz,Break",
-                            "norm_data": "Absatz 2 Norm"
-                        }
-                    ]
-                },
-                "to_value": "Absatz 2a",
-                "root_id": "articles-1"
-            },
-            {
                 "id": "links-18",
                 "to_id": "properties-97",
                 "from_id": "items-3",
@@ -6731,52 +6573,6 @@
                     ]
                 },
                 "to_value": "\u00dcberschrift 1a",
-                "root_id": "articles-1"
-            },
-            {
-                "id": "links-19",
-                "to_id": "properties-105",
-                "from_id": "items-4",
-                "from_field": "content",
-                "from_tagid": "000004436160924313657407458602",
-                "from_tagname": "p",
-                "property": {
-                    "id": "properties-105",
-                    "parent_id": "properties-107",
-                    "propertytype": "paragraphs",
-                    "level": 1,
-                    "lft": 12,
-                    "rght": 13,
-                    "related_id": "properties-106",
-                    "sortno": 12,
-                    "lemma": "siehe",
-                    "unit": "Absatz 2b Einheit",
-                    "comment": "Absatz 2b Bemerk",
-                    "iscategory": 0,
-                    "ishidden": 0,
-                    "keywords": "Break",
-                    "norm_data": "Absatz 2b Norm",
-                    "ancestors": [
-                        {
-                            "id": "properties-107",
-                            "propertytype": "paragraphs",
-                            "level": 0,
-                            "lft": 8,
-                            "rght": 14,
-                            "sortno": 8,
-                            "sortkey": "Absatz 2",
-                            "lemma": "Absatz 2",
-                            "name": "Absatz 2 ",
-                            "unit": "Absatz 2 Einheit",
-                            "comment": "Absatz 2 Bemerk",
-                            "iscategory": 0,
-                            "ishidden": 0,
-                            "keywords": "Absatz,Break",
-                            "norm_data": "Absatz 2 Norm"
-                        }
-                    ]
-                },
-                "to_value": "siehe",
                 "root_id": "articles-1"
             },
             {
@@ -7033,7 +6829,7 @@
                 "from_field": "content",
                 "from_tagid": "000004436342367437500000062286",
                 "from_tagname": "sup",
-                "to_value": "Hochgestellt",
+                "to_value": "Hochgestellt in der Transkription",
                 "root_id": "articles-1"
             },
             {
@@ -7504,7 +7300,7 @@
                 "from_field": "content",
                 "from_tagid": "000004436342629741898148160649",
                 "from_tagname": "sup",
-                "to_value": "Hochgestellt",
+                "to_value": "Hochgestellt in der Transkription",
                 "root_id": "articles-1"
             },
             {
@@ -8094,6 +7890,258 @@
                 "from_tagid": "000004515581058186342592608309",
                 "from_tagname": "bl",
                 "to_value": "Bereich",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-109",
+                "from_id": "items-4",
+                "from_field": "content",
+                "from_tagid": "000004436160887138888888933579",
+                "from_tagname": "b",
+                "to_value": "Fett",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-111",
+                "from_id": "items-4",
+                "from_field": "content",
+                "from_tagid": "000004436160890414351851976127",
+                "from_tagname": "i",
+                "to_value": "Kursiv",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-113",
+                "from_id": "items-4",
+                "from_field": "content",
+                "from_tagid": "000004436160892870370370431668",
+                "from_tagname": "u",
+                "to_value": "Unterstrichen",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-115",
+                "from_id": "items-4",
+                "from_field": "content",
+                "from_tagid": "000004436160895594907407469796",
+                "from_tagname": "g",
+                "to_value": "Gesperrt",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-117",
+                "from_id": "items-4",
+                "from_field": "content",
+                "from_tagid": "000004436160898130787037028136",
+                "from_tagname": "k",
+                "to_value": "Kapit\u00e4lchen",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-119",
+                "from_id": "items-4",
+                "from_field": "content",
+                "from_tagid": "000004436160901166666666725447",
+                "from_tagname": "a",
+                "to_value": "Link",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-121",
+                "from_id": "items-3",
+                "from_field": "content",
+                "from_tagid": "000004436161152100694444420087",
+                "from_tagname": "b",
+                "to_value": "Fett",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-123",
+                "from_id": "items-3",
+                "from_field": "content",
+                "from_tagid": "000004436161156358796296327934",
+                "from_tagname": "i",
+                "to_value": "Kursiv",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-125",
+                "from_id": "items-3",
+                "from_field": "content",
+                "from_tagid": "000004436161159035879629630111",
+                "from_tagname": "u",
+                "to_value": "Unterstrichen",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-127",
+                "from_id": "items-3",
+                "from_field": "content",
+                "from_tagid": "000004436161161467592592619662",
+                "from_tagname": "g",
+                "to_value": "Gesperrt",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-129",
+                "from_id": "items-3",
+                "from_field": "content",
+                "from_tagid": "000004436161164633101851986162",
+                "from_tagname": "k",
+                "to_value": "Kapit\u00e4lchen",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-131",
+                "from_id": "items-3",
+                "from_field": "content",
+                "from_tagid": "000004436161167155092592629748",
+                "from_tagname": "a",
+                "to_value": "Link",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-133",
+                "from_id": "items-1",
+                "from_field": "content",
+                "from_tagid": "000004436165070465277777844244",
+                "from_tagname": "spatium_v",
+                "to_value": "Spatium",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-135",
+                "from_id": "items-1",
+                "from_field": "content",
+                "from_tagid": "000004436165076792824074163019",
+                "from_tagname": "del",
+                "to_value": "Verlust",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-137",
+                "from_id": "items-1",
+                "from_field": "content",
+                "from_tagid": "000004436165097621527777892480",
+                "from_tagname": "cpl",
+                "to_value": "Erg\u00e4nzung",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-139",
+                "from_id": "items-1",
+                "from_field": "content",
+                "from_tagid": "000004436165100978009259346871",
+                "from_tagname": "oms",
+                "to_value": "Auslassung",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-141",
+                "from_id": "items-1",
+                "from_field": "content",
+                "from_tagid": "000004436165104023148148146540",
+                "from_tagname": "add",
+                "to_value": "Nachtrag",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-143",
+                "from_id": "items-1",
+                "from_field": "content",
+                "from_tagid": "000004436165110998842592605012",
+                "from_tagname": "vsl",
+                "to_value": "Versalie",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-145",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342051736111111145522",
+                "from_tagname": "ini",
+                "to_value": "Initiale",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-147",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342056334490740716638",
+                "from_tagname": "chr",
+                "to_value": "Chronogrammbuchstabe",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-149",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342047435185185246164",
+                "from_tagname": "vsl",
+                "to_value": "Versalie",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-151",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342060210648148155746",
+                "from_tagname": "kap",
+                "to_value": "Kapitalis",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-153",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342035339120370429044",
+                "from_tagname": "add",
+                "to_value": "Nachtrag",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-155",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342029998842592635716",
+                "from_tagname": "oms",
+                "to_value": "Auslassung",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-157",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342083524305555650834",
+                "from_tagname": "insec",
+                "to_value": "Unsicher",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-159",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436341997248842592682649",
+                "from_tagname": "spatium_v",
+                "to_value": "Spatium",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-161",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342008081018518514387",
+                "from_tagname": "del",
+                "to_value": "Verlust",
+                "root_id": "articles-1"
+            },
+            {
+                "id": "links-163",
+                "from_id": "items-46",
+                "from_field": "content",
+                "from_tagid": "000004436342019850694444462751",
+                "from_tagname": "cpl",
+                "to_value": "Erg\u00e4nzung",
                 "root_id": "articles-1"
             }
         ]
@@ -8875,7 +8923,7 @@
                     "name": "Wappen 1",
                     "comment": "Notizen Wappen 1",
                     "content": "Schild 1",
-                    "elements": "Oberwappen 1\u003Cnl\u003E\u003C\/nl\u003EVerweis auf eine Marke: \u003Crec_ma id=\u0022000004456303270875000000029487\u0022 data-link-target=\u0022properties-186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
+                    "elements": "Oberwappen 1\u003Cnl\u003E\u003C\/nl\u003EVerweis auf eine Marke: \u003Crec_ma id=\u0022000004456303270875000000029487\u0022 data-link-target=\u0022properties-186\u0022 data-link-iri=\u0022properties\/brands\/projects~186\u0022 data-link-value=\u0022hm001.1121\u0022\u003E\u003C\/rec_ma\u003E",
                     "iscategory": 0,
                     "ishidden": 0,
                     "file_name": "1024px-Nautical_star.svg.png",
@@ -8936,7 +8984,7 @@
                     "sortkey": "wappen 002",
                     "name": "Wappen 2",
                     "comment": "Notizen Wappen 2",
-                    "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
+                    "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/projects~10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
                     "elements": "Oberwappen 2",
                     "iscategory": 0,
                     "ishidden": 0,
@@ -9366,79 +9414,6 @@
                     "name": "Gliederung: Ebene 1",
                     "norm_iri": "di_header1",
                     "sections": [
-                        {
-                            "id": "sections-4",
-                            "articles_id": "articles-1"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "propertytype": "paragraphs",
-            "properties": [
-                {
-                    "id": "properties-107",
-                    "propertytype": "paragraphs",
-                    "level": 0,
-                    "lft": 8,
-                    "rght": 14,
-                    "sortno": 8,
-                    "sortkey": "Absatz 2",
-                    "lemma": "Absatz 2",
-                    "name": "Absatz 2 ",
-                    "unit": "Absatz 2 Einheit",
-                    "comment": "Absatz 2 Bemerk",
-                    "iscategory": 0,
-                    "ishidden": 0,
-                    "keywords": "Absatz,Break",
-                    "norm_data": "Absatz 2 Norm"
-                },
-                {
-                    "id": "properties-106",
-                    "parent_id": "properties-107",
-                    "propertytype": "paragraphs",
-                    "level": 1,
-                    "lft": 9,
-                    "rght": 11,
-                    "sortno": 9,
-                    "sortkey": "Absatz 2a",
-                    "lemma": "Absatz 2a",
-                    "name": "Absatz 2a",
-                    "unit": "Absatz 2a Einheit",
-                    "comment": "Absatz 2a Bemerk",
-                    "iscategory": 1,
-                    "ishidden": 1,
-                    "keywords": "Break",
-                    "norm_data": "Absatz 2a Norm",
-                    "sections": [
-                        {
-                            "id": "sections-4",
-                            "articles_id": "articles-1"
-                        }
-                    ]
-                },
-                {
-                    "id": "properties-105",
-                    "parent_id": "properties-107",
-                    "propertytype": "paragraphs",
-                    "level": 1,
-                    "lft": 12,
-                    "rght": 13,
-                    "related_id": "properties-106",
-                    "sortno": 12,
-                    "lemma": "siehe",
-                    "unit": "Absatz 2b Einheit",
-                    "comment": "Absatz 2b Bemerk",
-                    "iscategory": 0,
-                    "ishidden": 0,
-                    "keywords": "Break",
-                    "norm_data": "Absatz 2b Norm",
-                    "sections": [
-                        {
-                            "id": "sections-5",
-                            "articles_id": "articles-1"
-                        },
                         {
                             "id": "sections-4",
                             "articles_id": "articles-1"

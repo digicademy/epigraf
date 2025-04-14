@@ -40,6 +40,7 @@ use Cake\Core\Configure;
     <?= $this->fetch('meta') ?>
 
     <!-- CSS frameworks -->
+    <?= $this->Html->css('/js/driver.js/driver.css') ?>
     <?= $this->Html->css('/js/jqueryui/jquery-ui.min.css') ?>
 
     <!-- CSS app -->
@@ -60,6 +61,7 @@ use Cake\Core\Configure;
     <!-- JS -->
 
     <!-- JS frameworks -->
+    <?= $this->Html->script('driver.js/driver.js.iife.js') ?>
     <?= $this->Html->script('jquery/jquery.min.js') ?>
     <?= $this->Html->script('jqueryui/jquery-ui.min.js') ?>
 
@@ -79,7 +81,10 @@ use Cake\Core\Configure;
     <?= $this->Html->script('Widgets.leaflet/leaflet.markercluster.layersupport.js'); ?>
     <?= $this->Html->script('Widgets.leaflet/easy-button.js'); ?>
     <?= $this->Html->script('Widgets.leaflet/leaflet-gesture-handling.min.js'); ?>
+    <?= $this->Html->script('Widgets.leaflet/leaflet-control-geocoder/control.geocoder.js'); ?>
+    <?= $this->Html->css('Widgets.leaflet/leaflet-control-geocoder/control.geocoder.css'); ?>
     <?= $this->Html->script('Widgets.mark/mark.min.js'); ?>
+    <?= $this->Html->script('Widgets.d3/d3.v6.min.js'); ?>
 
     <?php if (Configure::read('production',false)): ?>
         <?= $this->Html->script('Widgets.epieditor.min.js') ?>
@@ -104,11 +109,20 @@ use Cake\Core\Configure;
     ?>
 </head>
 
-<body class="controller_<?= h(strtolower($this->request->getParam('controller') ?? '')) ?>
-             action_<?= h($this->request->getParam('action')) ?>
-             template_<?= h($this->request->getParam('template','default')) ?>
-             theme_<?= h($this->getThemeName())  ?>
-             userrole_<?= h($user_role) ?>">
+<?= $this->Element->openHtmlElement(
+    'body',
+    [
+        'class' => [
+            'plugin_' . h(strtolower($this->request->getParam('plugin') ?? '')),
+            'controller_' . h(strtolower($this->request->getParam('controller') ?? '')),
+            'action_' . h(strtolower($this->request->getParam('action') ?? '')),
+            'template_' . h($this->request->getParam('template','default')),
+            'theme_' . h($this->getThemeName()),
+            'userrole_' . h($user_role)
+        ]
+    ]
+);
+?>
 
 <div class="page-wrapper accordion">
 
@@ -166,7 +180,7 @@ use Cake\Core\Configure;
         <?php if ($this->getShowBlock('leftsidebar')): ?>
 
             <?php if ($sidemenu): ?>
-                <?php $sidebar_options['left']['init'] = 'expanded'; ?>
+                <?php $this->activateSidebar(); ?>
                 <?php $this->beginTabsheet($sidemenu['caption'] ?? __('Menu'), 'sidebar-menu', 'left') ?>
 
                 <div class="frame-title">
@@ -194,8 +208,6 @@ use Cake\Core\Configure;
             <?= $this->renderSidebar(
                 'left',
                 [
-                    'size'=> $sidebar_size['left'] ?? '2',
-                    'init' => $sidebar_options['left']['init'] ?? 'collapsed',
                     'edit'=>$sidemenu['edit'] ?? false,
                     'add'=> $sidemenu['add'] ?? false,
                     'apply' => 'small'
@@ -264,17 +276,7 @@ use Cake\Core\Configure;
 
         <!-- Right sidebar -->
         <?php if ($this->getShowBlock('rightsidebar')): ?>
-
-            <?= $this->renderSidebar(
-                'right',
-                [
-                    'size'=> $sidebar_size['right'] ?? '5',
-                    'init' => $sidebar_options['right']['init'] ?? 'collapsed',
-                    'close' => true
-                ]
-            ) ?>
-
-
+            <?= $this->renderSidebar('right', ['close' => true]) ?>
         <?php endif; ?>
     </div>
 
@@ -283,5 +285,5 @@ use Cake\Core\Configure;
     <?php endif; ?>
 
 </div>
-</body>
+<?= $this->Element->closeHtmlElement('body') ?>
 </html>

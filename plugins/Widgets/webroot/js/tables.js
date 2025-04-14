@@ -113,7 +113,7 @@ export class TableWidget extends BaseWidget {
         this.listenEvent(body, 'click', event => this.toggleSelectMode(event));
 
         // Resize table container
-        this.listenResize(this.scrollbox, (entries) => this.expandLastColumn());
+        this.listenResize(this.scrollbox, (entries) => window.setTimeout(() => this.expandLastColumn(),100));
     }
 
     /**
@@ -438,10 +438,14 @@ export class TableWidget extends BaseWidget {
         a.setAttribute('href', url);
         a.dataset.linkwrapper = 'true';
 
-        if (this.widgetElement.classList.contains("actions-topopup") && url) {
-            a.classList.add('popup');
-        } else if (this.widgetElement.classList.contains("actions-toframe") && !tr.classList.contains("actions-noframe") && url) {
-            a.classList.add('frame');
+        if (url) {
+            if (this.widgetElement.classList.contains("actions-topopup")) {
+                a.classList.add('popup');
+            } else if (this.widgetElement.classList.contains("actions-totab")) {
+                    a.classList.add('tab');
+            } else if (this.widgetElement.classList.contains("actions-toframe") && !tr.classList.contains("actions-noframe")) {
+                a.classList.add('frame');
+            }
         }
 
         Utils.wrapAll(content, a);
@@ -484,6 +488,7 @@ export class TableWidget extends BaseWidget {
         const action = this.getOpenAction(tr);
         const url = action ? action.getAttribute('href') : undefined;
         if (url) {
+            App.ajaxQueue.stop();
             window.location = url;
         }
     }
@@ -529,14 +534,20 @@ export class TableWidget extends BaseWidget {
             return;
         }
 
-        const treeWidget = this.getWidget(this.widgetElement, 'tree');
-
         const key = event.key;
+        let currentRow = this.lastInCurrentSelection;
+        if (key === 'Tab') {
+            if (this.activateEntity(currentRow)) {
+                event.preventDefault();
+                return;
+            }
+        }
+
+        const treeWidget = this.getWidget(this.widgetElement, 'tree');
         const allowedKeys = [
             'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight',
             'PageUp', 'PageDown', 'Home', 'End', 'Enter'
         ];
-        let currentRow = this.lastInCurrentSelection;
 
         if (this.mode !== 'select' || !allowedKeys.includes(key)) {
             return;
@@ -690,8 +701,6 @@ export class TableWidget extends BaseWidget {
                 }
 
                 this.updateSelectLinks();
-                // event.stopPropagation();
-                // return false;
             }
         } else {
             this.unselectRows();
@@ -737,18 +746,26 @@ export class TableWidget extends BaseWidget {
             return false;
         }
 
-        // Open popup
-        if (this.widgetElement.classList.contains("actions-topopup") && url) {
-            App.openPopup(url);
-        }
+        if (url) {
+            // Open popup
+            if (this.widgetElement.classList.contains("actions-topopup")) {
+                App.openPopup(url);
+            }
 
-        // Open frame
-        else if (this.widgetElement.classList.contains("actions-toframe") && !tr.classList.contains("actions-noframe") && url) {
-            App.openDetails(url, {external: true, force: false});
-        }
-        // Open page
-        else if (url) {
-            window.location = url;
+            // Open new tab
+            else if (this.widgetElement.classList.contains("actions-totab")) {
+                App.openTab(url);
+            }
+
+            // Open frame
+            else if (this.widgetElement.classList.contains("actions-toframe") && !tr.classList.contains("actions-noframe")) {
+                App.openDetails(url, {external: true, force: false, focus: false});
+            }
+            // Open page
+            else {
+                App.ajaxQueue.stop();
+                window.location = url;
+            }
         }
 
         return true;
@@ -772,6 +789,12 @@ export class TableWidget extends BaseWidget {
         }
 
         this.handleSelectRow(event);
+
+        if ((this.mode === 'select') && event.ctrlKey) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
+
         this.handleRowAction(event);
     }
 
@@ -793,6 +816,19 @@ export class TableWidget extends BaseWidget {
     }
 
     /**
+     * Focus the entity belonging to a row
+     *
+     * @param {HTMLTableRowElement} row
+     * @param {boolean} open Perform the row action
+     */
+    activateEntity(row) {
+        if (row) {
+            const entityId = this.tableName + '-' + row.dataset.id;
+            return this.emitEvent('epi:focus:entity', {row: entityId, sender: this}, true);
+        }
+    }
+
+    /**
      * Select a row, perform its action and set focus
      *
      * @param {HTMLTableRowElement} row
@@ -802,8 +838,10 @@ export class TableWidget extends BaseWidget {
         if (row) {
             this.selectSingleRow(row);
             this.focusRow(row);
-            if (open && this.widgetElement.classList.contains('actions-toframe')) {
-                this.openRow(row);
+            if (open) {
+                if (this.widgetElement.classList.contains('actions-toframe') || this.widgetElement.classList.contains('actions-totab')) {
+                    this.openRow(row);
+                }
             }
 
         }
@@ -1375,7 +1413,7 @@ export class DragItemsWidget extends BaseWidget {
         );
 
         const payload = JSON.stringify({'moves': moves});
-        const containerWidget = this.getContentPane();
+        const containerWidget = this.getFrame();
         App.ajaxQueue.add(url,
             {
                 type: 'POST',

@@ -10,10 +10,10 @@
 
 namespace Epi\Model\Behavior;
 
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Locator\LocatorAwareTrait;
@@ -290,20 +290,26 @@ class XmlStylesBehavior extends Behavior
             $style = $xmlstyles[$element['name']] ?? [];
             $tagid = $element['attributes']['id'] ?? '';
             $tagname = $element['name'];
-            $tagtype = $style['merged'][$format]['tag_type'] ?? $style['merged']['tag_type'] ?? 'bracket'; // TODO: render unstyled empty tags as standalone tags
+            // TODO: render unstyled empty tags as standalone tags
+            $tagtype = $style['merged'][$format]['tag_type'] ?? $style['merged']['tag_type'] ?? 'bracket';
 
             $element['rename'] = $style['merged'][$format]['tag'] ?? $style['merged']['html_tag'] ?? $style['merged']['tag'] ?? 'span';
             $element['attributes']['data-type'] = $style['name'] ?? $tagname;
             $element['attributes']['data-tagid'] = $tagid;
-            $element['attributes']['class'] = 'xml_tag xml_tag_' . $tagname; //todo: more elegant class handling (use array)
+            // TODO: more elegant class handling (use array)
+            $element['attributes']['class'] = 'xml_tag xml_tag_' . $tagname;
 
             // Count tag order
             if ($element['position'] == 'open') {
-                $totalNumber = empty($counters['tags']) ? 1 : count($counters['tags']) + 1;
-                $counters['tags'][$tagid] = $counters['tags'][$tagid] ?? $totalNumber;
+                if (!isset($counters[$tagname][$tagid])) {
+                    $counters[$tagname][$tagid] = empty($counters[$tagname]) ? 1 : count($counters[$tagname]) + 1;
+                }
 
-                $element['number'] = empty($counters[$tagname]) ? 1 : count($counters[$tagname]) + 1;
-                $counters[$tagname][$tagid] = $counters[$tagname][$tagid] ?? $element['number'];
+                if (!isset($counters['tags'][$tagid])) {
+                    $counters['tags'][$tagid] = empty($counters['tags']) ? 1 : count($counters['tags']) + 1;
+                }
+
+                $element['number'] = $counters[$tagname][$tagid] ?? null;
             } else {
                 $element['number'] = $counters[$tagname][$tagid] ?? null;
             }
@@ -354,6 +360,10 @@ class XmlStylesBehavior extends Behavior
             elseif (($tagtype === 'text') && ($element['position'] === 'open')) {
                 // Attribute content
                 $content = XmlStylesBehavior::renderAttributes($element, $style, $format);
+                $elementContent = $parser->parseCurrentElement();
+                if ($content['text'] === '') {
+                    $content['text'] = $elementContent;
+                }
 
                 $element['customoutput'] = '';
 
@@ -370,8 +380,6 @@ class XmlStylesBehavior extends Behavior
                 } else {
                     $element['customoutput'] .= $content['prefix'] . $content['text'] . $content['postfix'];
                 }
-
-                $parser->parseCurrentElement();
 
             }
 
@@ -429,6 +437,47 @@ class XmlStylesBehavior extends Behavior
     }
 
     /**
+     * Replace <anno> tags with <span> tags and match IRIs to IDs
+     *
+     * Used to post process the LLM annotations.
+     *
+     * @param string $value XML input text
+     * @param string $annoType The annotation type (i.e. the link type as configured in the types table)
+     * @param string $scope The scope of the linked data (i.e. the property type)
+     * @return string XML text with replaced tags
+     */
+    public function renderAnnotations($value, $annoType, $scope) : string
+    {
+        $properties = $this->table()->getExportData(['scope' => $scope]);
+        $properties = Arrays::array_group($properties,'norm_iri', true);
+
+        // Replace opening tags
+        $regexOpen = '/<anno\s+value="([^"]*)"\s*>/';
+        $value = preg_replace_callback(
+            $regexOpen,
+            function ($matches) use ($annoType, $properties){
+                $annoValue = $matches[1];
+
+                $propertyId = $properties[$annoValue]['id'] ?? '';
+                $propertyCaption = $properties[$annoValue]['path'] ?? $annoValue;
+
+                $attributes = " data-link-id=\"{$propertyId}\"";
+                $attributes .= " data-link-value=\"{$propertyCaption}\"";
+                $attributes .= " data-target-tab=\"properties\"";
+                $attributes .= " data-target-id=\"{$propertyId}\"";
+
+                return "<span class=\"xml_format xml_tag_{$annoType}\" data-type=\"{$annoType}\"{$attributes}>";
+            },
+            $value
+        );
+
+        // Replace closing tags
+        $value = str_replace('</anno>', '</span>', $value);
+
+        return $value;
+    }
+
+    /**
      * Convert HTML to XML
      * (replace span ... elements)
      *
@@ -467,8 +516,13 @@ class XmlStylesBehavior extends Behavior
                 }
             }
 
+            // Cleanup (mark.js highlights)
+            if (in_array($element['name'],['mark'])) {
+                $element['customoutput'] .= $parser->parseCurrentElement();
+            }
+
             // Formate
-            if (in_array('xml_format', $classes) && ($element['position'] == 'open')) {
+            elseif (in_array('xml_format', $classes) && ($element['position'] == 'open')) {
                 $element['customoutput'] = $parser->_openElement($element);
                 $element['customoutput'] .= $parser->parseCurrentElement();
                 $element['customoutput'] .= $parser->_closeElement($element);

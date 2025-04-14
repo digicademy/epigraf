@@ -70,7 +70,7 @@ class TaskOptions extends BaseTask
         $options = array_merge($userOptions, $dataOptions);
         $content = "\n  <options " . Attributes::toHtml($options) . "></options>";
 
-        $outputfile = $this->job->getCurrentOutputFile();
+        $outputfile = $this->job->getCurrentOutputFilePath();
         Files::appendToFile($outputfile, $content);
 
         return true;

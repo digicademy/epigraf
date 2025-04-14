@@ -16,6 +16,8 @@
  */
 ?>
 
+<?php // $entity->prepareRoot(); ?>
+
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Categories'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add($entity->type['caption'] ?? h($entity->propertytype)) ?>
@@ -92,15 +94,17 @@
             $related,
             [
                 'columns' => [
+                    'project'=>['caption'=>__('Project'), 'key' => 'project.signature', 'width'=>80, 'default'=>true],
                     'caption'=>['caption'=>__('Caption'), 'default'=>true],
                     'norm_iri'=>['caption'=>__('IRI fragment'), 'default'=>true],
                     'modified'=>['caption'=>__('Modified'), 'default'=>true]
                 ],
-                'actions' => ['view'=>false],
+                'actions' => ['view'=> ['controller' => 'Articles', 'action' => 'view', '{id}']],
+                'click' => 'tab',
                 'more' => [
                     'controller' => 'Articles',
                     'action' => 'index',
-                    '?' => ['properties.' . $entity->propertytype => $entity->id]
+                    '?' => ['properties.' . $entity->propertytype . '.selected' => $entity->id]
                 ]
             ])
         ?>

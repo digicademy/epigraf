@@ -47,8 +47,9 @@
             'label' => __('Image metadata configuration'),
             'placeholder' => __(
                 'Add the JSON configuration for metadata extraction. '
-                . 'Each key is a metadata field in the file, each value is an extraction key for a image item. '
-                . 'Example: {"licence":"file_meta.licence","copyright":"file_copyright"}'
+                . 'Each key is a metadata field in the file, each value is a placeholder extraction key from the perspective of an image item. '
+                . 'The configuration will be merged with the types configuration for the image item. '
+                . 'Example: {"licence":"{file_meta.licence}","{copyright":"file_copyright}"}'
             ),
             'value' => $task['metadata'] ?? ''
         ],
@@ -68,7 +69,8 @@
                 'md' => __('Markdown'),
                 'ttl' => __('Turtle'),
                 'rdf' => __('RDF/XML'),
-                'jsonld' => __('JsonLd')
+                'jsonld' => __('JsonLd'),
+                'geojson' => __('GeoJSON')
             ],
             'value' => $task['format'] ?? 'xml'
         ],

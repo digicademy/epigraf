@@ -86,13 +86,14 @@ use Cake\Utility\Hash;
 ?>
 
 <?php $firstSheet = true; ?>
-<?php foreach ($properties as $propertyType => $propertiesIds): ?>
+<?php foreach ($properties as $propertyType => $propertyParams): ?>
 
     <?php if (!is_string($propertyType)) { continue; } ?>
 
     <?php
+        $propertyIds = $propertyParams['selected'] ?? [];
+
         $propertyCaption = $database->types['properties'][$propertyType]['caption'] ?? $propertyType;
-        $propertyDescent = ($this->getConfig('options')['params']['descent'][$propertyType] ?? false) ? 'checked' : null;
 
         // TODO: init with number
         //$propertyCaption .= '(' . count($propertiesIds) . ')';
@@ -111,8 +112,8 @@ use Cake\Utility\Hash;
              data-filter-action="properties/index/<?= $propertyType ?>?template=select"
              data-filter-propertytype="<?= $propertyType ?>"
              data-filter-caption="<?= $propertyCaption ?>"
-             data-filter-selected="<?= implode(',', is_array($propertiesIds) ? $propertiesIds : []) ?>"
-        >
+             data-filter-selected="<?= implode(',', is_array($propertyIds) ? $propertyIds : []) ?>"
+             data-filter-flags="<?= implode(',', $propertyParams['flags'] ?? []) ?>">
 
             <div class="widget-filter-facets-results widget-scrollbox">
                 <ul class="widget-tree" data-snippet="rows"></ul>
@@ -123,14 +124,39 @@ use Cake\Utility\Hash;
                 <button class="widget-filter-facets-reset" type="button" title="<?= __('Reset filter') ?>" aria-label="<?= __('Reset filter') ?>">&#xe17b;</button>
             </div>
 
-            <div class="widget-filter-facets-filter">
-                <label class="widget-filter-facets-descent" title="<?= __('Include descendants') ?>">
+            <div class="widget-filter-facets-filter widget-filter-facets-options">
+                <label class="widget-filter-facets-all" title="<?= __('Return articles that are linked to any of the properties .') ?>">
+                    <?= $this->Element->outputHtmlElement(
+                        'input',
+                        __('Select all'),
+                        [
+                            'type' => 'checkbox',
+                            'value' => 'all',
+                            'checked' => in_array('all',$propertyParams['flags'] ?? []) ? 'checked' : null
+                        ])
+                    ?>
+                </label>
+
+                <label class="widget-filter-facets-descent" title="<?= __('Return articles with the selected properties or their children.') ?>">
                     <?= $this->Element->outputHtmlElement(
                         'input',
                         __('Include descendants'),
                         [
                             'type' => 'checkbox',
-                            'checked' => $propertyDescent
+                            'value' => 'des',
+                            'checked' => in_array('des',$propertyParams['flags'] ?? []) ? 'checked' : null
+                        ])
+                    ?>
+                </label>
+
+                <label class="widget-filter-facets-inverse" title="<?= __('Show only articles without the selected properties. If no properties are selected, articles without any of the properties are returned.') ?>">
+                    <?= $this->Element->outputHtmlElement(
+                        'input',
+                        __('Invert selection'),
+                        [
+                            'type' => 'checkbox',
+                            'value' => 'inv',
+                            'checked' => in_array('inv',$propertyParams['flags'] ?? []) ? 'checked' : null
                         ])
                     ?>
                 </label>
@@ -161,15 +187,20 @@ use Cake\Utility\Hash;
             <ul class="widget-tree" data-snippet="rows"></ul>
         </div>
 
-
         <div class="widget-filter-facets-filter">
             <input class="widget-filter-facets-term" type="text" placeholder="<?= __('Filter properties') ?>">
             <button class="widget-filter-facets-reset" type="button" title="<?= __('Reset filter') ?>" aria-label="<?= __('Reset filter') ?>">&#xe17b;</button>
         </div>
 
-        <div class="widget-filter-facets-filter">
-            <label class="widget-filter-facets-descent" title="<?= __('Include descendants') ?>">
-                <input type="checkbox"><?= __('Include descendants') ?>
+        <div class="widget-filter-facets-filter widget-filter-facets-options">
+            <label class="widget-filter-facets-all" title="<?= __('Return articles that are linked to any of the properties .') ?>">
+                <input type="checkbox" value="all"><?= __('Select all') ?>
+            </label>
+            <label class="widget-filter-facets-descent" title="<?= __('Return articles with the selected properties or their children.') ?>">
+                <input type="checkbox" value="des"><?= __('Include descendants') ?>
+            </label>
+            <label class="widget-filter-facets-inverse" title="<?= __('Show only articles without the selected properties. If no properties are selected, articles without any of the properties are returned.') ?>">
+                <input type="checkbox" value="inv"><?= __('Invert selection') ?>
             </label>
         </div>
     </div>

@@ -27,12 +27,9 @@ declare(strict_types=1);
 namespace App\View;
 
 use App\Model\Interfaces\ExportEntityInterface;
-use App\Cache\Cache;
-use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\ResultSet;
-use Cake\View\SerializedView;
 use RuntimeException;
 
 /**

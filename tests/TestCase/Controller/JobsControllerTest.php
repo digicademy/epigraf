@@ -197,13 +197,15 @@ class JobsControllerTest extends AppTestCase
      * Test pipeline
      *
      * @param string $params Query parameters as string
-     * @param string $downloadFile File name
-     * @param array $downloadHeaders Expected response headers
+     * @param string $compareFile Name of the file to compare
+     * @param string $downloadFile Download file name
+     * @param string $downloadSize Size of the download file
+     * @param string $contentType Content type of the download file
      *
      * @return void
      * @throws \Exception
      */
-    protected function _testPipeline($params, $downloadFile, $downloadHeaders)
+    protected function _testPipeline($params, $compareFile, $downloadFile, $downloadSize, $contentType)
     {
         // TODO: über get request einsteigen, nicht über post request.
         //       dann post request in stufe 2
@@ -263,10 +265,6 @@ class JobsControllerTest extends AppTestCase
             $response = json_decode($response, true);
             $i = $response['job']['progress'] ?? $i;
 
-            if (($response['job']['status'] ?? '') === 'download') {
-                $i = $response['job']['progressmax'] ?? $i;
-            }
-
             // Determine output file
             $outputfolder = 'job_3';
             $database =  $response['job']['config']['database'] ?? '';
@@ -301,25 +299,48 @@ class JobsControllerTest extends AppTestCase
         // Clean for test
         Files::replaceContent($outputfile, ['/folder="[^"]+"/' => 'folder="job_3"']);
 
-        $copyto = $this->comparisonFile. '/' . $downloadFile;
+        $copyto = $this->comparisonFile. '/' . $compareFile;
         $copyto .= $this->overwriteComparison ? '' : '.status';
         copy($outputfile,$copyto);
 
 
         $this->assertFileEqualsCanonicalizing(
-            $this->comparisonFile. '/' . $downloadFile,
+            $this->comparisonFile. '/' . $compareFile,
             $outputfile
         );
 
         // 3. DOWNLOAD
+        $downloadUrl = '/jobs/execute/3?download=' . $downloadFile .'&force=1';
+
         $this->loginUser('author');
         $this->get('/jobs/execute/3?timeout=-1');
+        $responseHeaders = $this->_response->getHeaders();
+        $this->assertEquals('http://localhost' . $downloadUrl, $responseHeaders['location'][0]);
 
+        $downloadHeaders = [
+            'Content-Type' => [
+                (int) 0 => $contentType
+            ],
+            'Content-Disposition' => [
+                (int) 0 => 'attachment; filename="' . $downloadFile . '"'
+            ],
+            'Content-Transfer-Encoding' => [
+                (int) 0 => 'binary'
+            ],
+            'Accept-Ranges' => [
+                (int) 0 => 'bytes'
+            ],
+            'Content-Length' => [
+                (int) 0 => $downloadSize
+            ]
+        ];
+
+        $this->get($downloadUrl);
         $responseHeaders = $this->_response->getHeaders();
         unset($responseHeaders['x-frame-options']);
         $this->assertSame($downloadHeaders, $responseHeaders);
 
-        $compare = file_get_contents($this->comparisonFile. '/' . $downloadFile);
+        $compare = file_get_contents($this->comparisonFile. '/' . $compareFile);
         $this->assertResponseEquals($compare);
 
         // 4. CLEAN UP
@@ -338,23 +359,10 @@ class JobsControllerTest extends AppTestCase
         $this->_testPipeline(
             'database=projects&project=1&articles=1&pipeline=19',
             'result.doc',
-            [
-                'Content-Type' => [
-                    (int) 0 => 'application/msword'
-                ],
-                'Content-Disposition' => [
-                    (int) 0 => 'attachment; filename="job_3.doc"'
-                ],
-                'Content-Transfer-Encoding' => [
-                    (int) 0 => 'binary'
-                ],
-                'Accept-Ranges' => [
-                    (int) 0 => 'bytes'
-                ],
-                'Content-Length' => [
-                    (int) 0 => '66823'
-                ]
-            ]
+            'job_3.doc',
+            '67038',
+            'application/msword'
+
         );
     }
 
@@ -369,23 +377,9 @@ class JobsControllerTest extends AppTestCase
         $this->_testPipeline(
             'database=projects&project=1&articles=1&pipeline=21',
             'result.doc',
-            [
-                'Content-Type' => [
-                    (int) 0 => 'application/msword'
-                ],
-                'Content-Disposition' => [
-                    (int) 0 => 'attachment; filename="job_3.doc"'
-                ],
-                'Content-Transfer-Encoding' => [
-                    (int) 0 => 'binary'
-                ],
-                'Accept-Ranges' => [
-                    (int) 0 => 'bytes'
-                ],
-                'Content-Length' => [
-                    (int) 0 => '38633'
-                ]
-            ]
+            'job_3.doc',
+            '33743',
+            'application/msword'
         );
     }
 
@@ -400,23 +394,9 @@ class JobsControllerTest extends AppTestCase
         $this->_testPipeline(
             'database=projects&project=1&articles=1&pipeline=16',
             'result.xml',
-            [
-                'Content-Type' => [
-                    (int) 0 => 'application/xml; charset=UTF-8'
-                ],
-                'Content-Disposition' => [
-                    (int) 0 => 'attachment; filename="job_3.xml"'
-                ],
-                'Content-Transfer-Encoding' => [
-                    (int) 0 => 'binary'
-                ],
-                'Accept-Ranges' => [
-                    (int) 0 => 'bytes'
-                ],
-                'Content-Length' => [
-                    (int) 0 => '446196'
-                ]
-            ]
+            'job_3.xml',
+            '450565',
+            'application/xml; charset=UTF-8'
         );
     }
 }

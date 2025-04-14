@@ -8,33 +8,32 @@
     <title>
         Epigraf-Handbuch    </title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
     <!-- CSS frameworks -->
-    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
+    <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">
+            <link rel="stylesheet" href="/css/theme_default.css">    
     <!-- JS -->
 
     <!-- JS frameworks -->
-    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
+    <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>
-    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"author","scope":"web"});}</script>
+            <script src="/js/app.min.js" type="module"></script>    
+    <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"author","scope":"web","session":{"ui":[]}});}</script>
     <!-- JS widgets -->
-        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/mark/mark.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+        <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
 
     <!-- Additional CSS -->
-
+    
     <!-- Additional JS -->
         </head>
 
-<body class="controller_help             action_show             template_default             theme_default             userrole_author">
-
+<body class="plugin_ controller_help action_show template_default theme_default userrole_author">
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -42,23 +41,23 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles">projects</a></li></ul></div></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global active" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
 
                 <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-
+                
                     <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/1" class="btn-profile" title="author"></a>                                            </div>
 
         </nav>
-
+    
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-
-
+        
+                                                        
             <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
                     <div class="frame-title-caption">Categories</div>
@@ -69,18 +68,17 @@
                     <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/help">List all</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Administration">Administration</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Handbuch">Handbuch</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Kontext-Hilfe">Kontext-Hilfe</a></div><div class="tree-meta"></div></li></ul></div>                </div>
                 <div class="frame-footer">
                                             <form method="get" accept-charset="utf-8" id="search" action="/docs/index/help"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
-                </div></div></div></div></div>
+                </div></div></div></div></div>        
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
                 <div class="content-header">
                     <div class="content-header-title">
-                                                                            <nav class="breadcrumbs">
-                                <ul class="breadcrumbs-trail"><li><a href="/docs/index/help">Help</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Epigraf-Handbuch</span></li></ul>                            </nav>
-                                            </div>
+
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/docs/index/help">Help</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Epigraf-Handbuch</span></li></ul></nav>                    </div>
 
                                             <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
-
+                    
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -88,16 +86,15 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
+                    
 
 
+<!-- Breadcrumbs -->
+            
+<!-- TOC -->
+        
 
-
-    <!-- Breadcrumbs -->
-
-    <!-- TOC -->
-
-<div class="widget-codeblocks widget-highlight" data-row-table="docs" data-row-id="73" data-root-table="docs" data-root-id="73" data-highlight=""><!DOCTYPE html>
-<!--
+<div class="widget-codeblocks widget-highlight" data-row-table="docs" data-row-id="73" data-root-table="docs" data-root-id="73" data-highlight=""><!--
 <a class="button tiny" href="/epigraf_desktop">EpigrafDesktop &#8663;</a>
 <a class="button tiny" href="#epigraf_web">EpigrafWeb &#8663;</a>
 <a class="button tiny" href="/docs/view/110">FAQs &#8663;</a>
@@ -180,23 +177,19 @@ Daneben wird jeder Forschungsstelle ein eigener Bereich für die Projektorganisa
 <a href="/docs/view/86">Weiter ...</a></p>
 
 <p><br></p>
-</html>
+
 </div>
     <!-- Actions -->
-
+    
                                     </div>
 
                 <div class="content-footer"></div>
 
             </div>
-
+        
         <!-- Right sidebar -->
+                    <div class="sidebar sidebar-right sidebar-size-3 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="content"><button class="caption">Content</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="content">    <div class="widget-scrollbox"><ul class="widget-scrollsync side-nav widget-tree widget-tree-fixed" ><li class="first node item item-level-1 item-nochildren item-first" data-level="2" data-section-id="toc_1"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#toc_1">Übersicht</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren" data-level="1" data-section-id="epigraf_desktop"><div class="tree-content"><a href="#epigraf_desktop">EpigrafDesktop</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-level="2" data-section-id="toc_3"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#toc_3">Programmaufbau</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-level="2" data-section-id="toc_4"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#toc_4">Themen</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-level="1" data-section-id="epigraf_web"><div class="tree-content"><a href="#epigraf_web">EpigrafWeb</a></div><div class="tree-meta"></div></li></ul></div>    </div></div></div></div></div>            </div>
 
-            <div class="sidebar sidebar-right sidebar-size-3 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="content"><button class="caption">Content</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="content">            <div class="widget-scrollbox"><ul class="widget-scrollsync side-nav widget-tree widget-tree-fixed" ><li class="first node item item-level-1 item-nochildren item-first" data-level="2" data-section-id="toc_1"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#toc_1">Übersicht</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren" data-level="1" data-section-id="epigraf_desktop"><div class="tree-content"><a href="#epigraf_desktop">EpigrafDesktop</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-level="2" data-section-id="toc_3"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#toc_3">Programmaufbau</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-level="2" data-section-id="toc_4"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#toc_4">Themen</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-level="1" data-section-id="epigraf_web"><div class="tree-content"><a href="#epigraf_web">EpigrafWeb</a></div><div class="tree-meta"></div></li></ul></div>        </div></div></div></div></div>
-
-            </div>
-
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-help-show" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-help-show" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
 </div>
-</body>
-</html>
+</body></html>

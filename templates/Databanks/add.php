@@ -22,7 +22,7 @@
 
 <!-- Content area -->
 <div class="content-tight">
-    <?= $this->Form->create($entity,['id'=>'form-add-databanks']) ?>
+    <?= $this->Form->create($entity,['id'=> 'form-add-databanks-' . $entity->newId]) ?>
 
     <?= $this->Form->control(
         'name',

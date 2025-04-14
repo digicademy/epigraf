@@ -113,10 +113,17 @@ class JobImport extends Job
             /** @var \Epi\Model\Table\BaseTable $model */
             $tableName = $this->config['table'] ?? null;
             $model = $this->getModel($tableName, 'Epi');
-            $importBehavior = $model->getBehavior('Import');
-            $importBehavior->setConfig('skip', $this->config['skip'] ?? []);
 
-            $data = $model->toEntities($data, $this->getIndex(), ['job_id' => $this->id ?? null]);
+            $data = $model->toEntities(
+                $data,
+                $this->getIndex(),
+                [
+                    'job_id' => $this->id ?? null,
+                    'skipUpdates' => $this->config['skip'] ?? []
+                ]
+            );
+
+            $importBehavior = $model->getBehavior('Import');
             $this->addTaskErrors($importBehavior->getErrors());
 
         } catch (Exception $e) {
@@ -259,7 +266,7 @@ class JobImport extends Job
         $model = $this->getModel($tableName, 'Epi');
         $importBehavior = $model->getBehavior('Import');
         $importConfig = [
-            'skip' => $this->config['skip'] ?? [],
+            'skipUpdates' => $this->config['skip'] ?? [],
             'tree' => $this->config['tree'] ?? true,
             'versions' => $this->config['versions'] ?? false,
             //'dates' => $this->config['dates'] ?? false,

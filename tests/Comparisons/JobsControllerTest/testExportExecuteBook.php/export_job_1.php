@@ -23,6 +23,7 @@
   array (
     'pipeline_id' => '21',
     'database' => 'projects',
+    'server' => 'http://localhost/',
     'model' => 'articles',
     'table' => 'articles',
     'params' => 
@@ -294,6 +295,7 @@
         ),
       ),
     ),
+    'pipeline_name' => 'DI: Band',
     'user_role' => 'author',
     'user_id' => 1,
   ),

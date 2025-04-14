@@ -81,7 +81,7 @@ table.recordlist.widget-table th {
 }
 
 .table-help {
-
+  color: var(--neutral-700);
 }
 
 .table-input-hidden {

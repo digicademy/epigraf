@@ -108,4 +108,26 @@ class ItemsTableTest extends EpiTestCase
         $this->assertEquals('{"field_new":1}',$item['value']);
 
     }
+
+    /**
+     * Test that geodata (=JSON values) are saved
+     *
+     * @return void
+     */
+    public function testSaveGeodata(): void
+    {
+        // Create new item
+        $item = $this->Items->newEntity([]);
+        $item->type->config = [
+            'fields' => ['value' => ['format' => 'geodata']]
+        ];
+        $this->Items->save($item);
+
+        // Patch nested geodata
+        $item = $this->Items->patchEntity($item,['value'=>['lat' => 1.1,'lng' => 2.2,'radius' => 30]]);
+        $this->Items->save($item);
+
+        $item = $this->Items->get($item->id);
+        $this->assertEquals('{"lat":1.1,"lng":2.2,"radius":30}',$item['value']);
+    }
 }

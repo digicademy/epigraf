@@ -332,6 +332,10 @@ class UsersController extends AppController
         /** @var \App\Model\Entity\User $user */
         $user = $this->Users->get($id, ['contain' => ['Databanks']]);
 
+        if (empty($user->databank)) {
+            throw new RecordNotFoundException(__('Select the default user database first.'));
+        }
+
         if (($this->request->is(['patch', 'post', 'put']))) {
 
             if (

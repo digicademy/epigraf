@@ -71,11 +71,16 @@ class ItemsControllerTest extends EpiTestCase
      *
      * @return void
      */
-    public function testGeoItemsJsonRaw(): void
+    public function testItemsGeoJson(): void
     {
         $this->loginUser('admin');
-        $this->get('/epi/projects/articles/items.json?template=raw&tile=11%2F676%2F1067&itemtypes=geolocations&snippets=article&page=1');
-        $this->assertJsonResponseEqualsComparison();
+        $this->get('/epi/projects/articles/items.geojson?tile=11%2F676%2F1067&itemtypes=geolocations&snippets=article&page=1');
+        $this->assertJsonResponseEqualsComparison('', 'application/geo+json');
+
+        $this->loginUser('admin');
+        $this->get('/epi/projects/articles/items.geojson?tile=11%2F676%2F1067&itemtypes=geolocations&snippets=article,properties&page=1');
+        $this->assertJsonResponseEqualsComparison('.properties', 'application/geo+json');
+
     }
 
     /**
@@ -89,8 +94,7 @@ class ItemsControllerTest extends EpiTestCase
         $this->get('/epi/projects/articles/items.json?itemtypes=geolocations&page=1');
         $this->assertJsonResponseEqualsComparison('.plain');
 
-        //$this->get('/epi/projects/articles/items.json?itemtypes=geolocations&snippets=project,article,section&page=1');
-        $this->get('/epi/projects/articles/items.json?field=signature&columns=signature%2Cname%2Citems_locations%2Citems_date%2Citems_objecttypes%2Cid&template=raw&page=1&itemtypes=geolocations&snippets=article');
+        $this->get('/epi/projects/articles/items.json?columns=value%2Ccontent%2Cid&page=1&itemtypes=geolocations&snippets=article');
         $this->assertJsonResponseEqualsComparison('.snippets');
     }
 

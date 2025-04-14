@@ -136,6 +136,9 @@ class EntityHtmlHelper extends BaseEntityHelper
                 $itemConfig = is_array($itemConfig) ? $itemConfig : ['type' => $itemConfig];
                 $itemType = $itemConfig['type'] ?? 'undefined';
 
+                $mergedConfig = $this->Types->getTypes()['items'][$itemType]['merged'] ?? [];
+                $moreItem = $moreItem || (($mergedConfig['display'] ?? true) === 'more');
+
 //                $itemCount = $itemConfig['count'] ?? '1';
                 $itemsFields = $this->Types->getFields('items', $itemType, ['unnest' => true, 'edit' => false] + $options);
 
@@ -148,9 +151,12 @@ class EntityHtmlHelper extends BaseEntityHelper
                         'fieldname' => $fieldName,
                         'caption' => $fieldConfig['caption'] ?? '',
                         'more' => $moreField,
+                        'display' => $fieldConfig['display'] ?? true,
                         'fieldconfig' => $fieldConfig
                     ];
 
+                    $groupHeaders[$i]['display'] = (!isset($groupHeaders[$i]['display']) && ($fieldConfig['display'] ?? true)) ||
+                        (isset($groupHeaders[$i]['display']) && ($groupHeaders[$i]['display'] ?? false) && ($fieldConfig['display'] ?? true));
                     $groupHeaders[$i]['more'] = ($groupHeaders[$i]['more'] ?? false) || $moreField;
                     $groupHeaders[$i]['captions'][] = $fieldConfig['caption'] ?? '';
                     $moreItem = $moreItem || $moreField;
@@ -166,10 +172,24 @@ class EntityHtmlHelper extends BaseEntityHelper
             $groupClasses[] = ($groupItemCount > 0) ? '' : 'doc-section-groups-empty';
 
             $out .= '<div class="' . implode(' ', array_filter($groupClasses)) . '">';
+
+            if ($template_section['view']['caption'] ?? false) {
+                foreach ($table as $itemConfig) {
+                    $itemConfig = is_array($itemConfig) ? $itemConfig : ['type' => $itemConfig];
+                    $itemType = $itemConfig['type'] ?? 'undefined';
+                    $out .= '<div class="doc-group-caption">'
+                        . $this->Types->getCaption('items', $itemType, ucfirst($itemType))
+                        . '</div>';
+                }
+            }
             $out .= '<div class="doc-group-headers">';
             $out .= '<div class="doc-field doc-field-itemtype"></div>';
 
             foreach ($groupHeaders as $groupHeader) {
+                if (! ($groupHeader['display'] ?? true)) {
+                    continue;
+                }
+
                 $out .= $this->Element->outputHtmlElement(
                     'div',
                     implode(' / ', array_unique($groupHeader['captions'])),
@@ -209,8 +229,13 @@ class EntityHtmlHelper extends BaseEntityHelper
                     );
 
                     foreach ($groupHeaders as $groupHeader) {
+                        if (! ($groupHeader['display'] ?? true)) {
+                            continue;
+                        }
+
                         $fieldName = $groupHeader['fields'][$itemType]['fieldname'] ?? '';
-                        if (empty($fieldName)) {
+                        $display = $groupHeader['fields'][$itemType]['fieldconfig']['display'] ?? true;
+                        if (empty($fieldName) || empty($display)) {
                           $out .= '<div></div>';
                           continue;
                         }

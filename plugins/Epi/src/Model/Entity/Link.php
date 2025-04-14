@@ -388,4 +388,15 @@ class Link extends BaseEntity
         return parent::getIdFormatted($fieldName, $options);
     }
 
+    public function getEntityIsVisible($options = [])
+    {
+        if (!empty($this->root) && !empty($this->root->_filterAnnos) && method_exists($this->root, 'getTree')) {
+            $tree = $this->root->getTree(['articles'=>true,'sections'=>true,'items'=>true,'footnotes'=>true]);
+            if (!isset($tree[$this->from_tab . '-' . $this->from_id])) {
+                return false;
+            }
+        }
+
+        return parent::getEntityIsVisible($options);
+    }
 }

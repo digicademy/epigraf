@@ -2,12 +2,12 @@
     "id": 2,
     "deleted": 0,
     "version_id": null,
-    "job_id": 61013,
+    "job_id": 61954,
     "published": null,
     "created": null,
     "modified": "2020-10-29T13:00:58+01:00",
     "created_by": null,
-    "modified_by": 6,
+    "modified_by": 4,
     "scope": "properties",
     "mode": "default",
     "preset": "default",
@@ -21,7 +21,7 @@
         "displayfield": "name",
         "fields": {
             "name": "Bezeichnung",
-            "lemma": "Schl\u00fcssel",
+            "lemma": "Abk\u00fcrzung",
             "sortkey": {
                 "caption": "Sortierschl\u00fcssel",
                 "autofill": {
@@ -51,17 +51,18 @@
             "id": "ID"
         },
         "columns": {
-            "lemma": "Abk\u00fcrzung",
             "name": {
                 "caption": "Bezeichnung",
                 "default": true
             },
+            "lemma": "Abk\u00fcrzung",
+            "comment": "Bemerkung",
+            "keywords": "Schl\u00fcsselw\u00f6rter",
             "unit": {
                 "caption": "Einheit",
                 "default": true
             },
             "norm_data": "Normdaten",
-            "comment": "Bemerkung",
             "norm_iri": {
                 "caption": "IRI-Fragment",
                 "default": true

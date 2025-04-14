@@ -21,19 +21,37 @@ export class HighlightText extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
         this.terms = Utils.getDataValue(this.widgetElement, 'highlight');
+        this.listenEvent(document, 'epi:save:form', event => this.onBeforeSave(event));
     }
 
     initWidget() {
+        this.highlightDocument();
+        this.jumpToHighlighted();
+    }
+
+    /**
+     * Highlight document content
+     */
+    highlightDocument() {
         this.highlightTerms(this.widgetElement);
 
         // Highlight terms in the satellites as well
         // TODO: move to the satellites code in documents.js
         if (this.widgetElement.classList.contains('widget-document')) {
             document.querySelectorAll('.widget-document-satellite')
-                    .forEach(satellite =>  this.highlightTerms(satellite));
+                .forEach(satellite =>  this.highlightTerms(satellite));
         }
+    }
 
-        this.jumpToHighlighted();
+    unHighlightDocument() {
+        this.unHighlightTerms(this.widgetElement);
+
+        // Highlight terms in the satellites as well
+        // TODO: move to the satellites code in documents.js
+        if (this.widgetElement.classList.contains('widget-document')) {
+            document.querySelectorAll('.widget-document-satellite')
+                .forEach(satellite =>  this.unHighlightTerms(satellite));
+        }
     }
 
     /**
@@ -65,11 +83,36 @@ export class HighlightText extends BaseWidget {
         }
     }
 
+    /**
+     * Remove highlight markup in a container
+     *
+     * @param {Element} container The container element
+     */
+    unHighlightTerms(container) {
+        if (!container || !this.terms) {
+            return;
+        }
+
+        const markInstance = new Mark(container);
+        markInstance.unmark();
+    }
+
     jumpToHighlighted() {
         const highlight = this.widgetElement.querySelector('mark');
         if (highlight) {
             highlight.scrollIntoView();
         }
+    }
+
+    /**
+     * Remove markup before saving.
+     *
+     * TODO: implement event priority to make sure this is always called before
+     *       XMLEditor.onBeforeSave().
+     *
+     */
+    onBeforeSave(event) {
+        this.unHighlightDocument();
     }
 }
 

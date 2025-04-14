@@ -120,7 +120,7 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
     }
 
     /**
-     * Transfer temporary IDs to the _import_ids property so it can be handled in saveLinks()
+     * Transfer temporary IDs to the _import_ids property, so it can be handled in saveLinks()
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
@@ -137,6 +137,7 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
         if (!empty($importIds)) {
             $entity->_import_ids = $importIds;
         }
+        parent::afterMarshal($event, $entity, $data, $options);
     }
 
     /**
@@ -323,14 +324,14 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
     /**
      * Clear entities (delete section of article, items of section)
      *
-     * Only entities containing a field "action" with the value "clear" will be processed
+     * Only entities containing a property `_import_action` with the value "clear" will be processed.
+     * When importing data, the value is passed from the field `_action` in the source data to the `_import_action` field.
      *
      * @param array $entities Array of entities.
      * @return boolean success or failure?
      */
     public function clearEntities($entities)
     {
-        //TODO: clear articles and sections (don't forget their links and footnotes)
         foreach ($entities as $entity) {
             if ($entity->_import_action === 'clear') {
                 $entity->clear();
@@ -459,6 +460,9 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
         }
 
         $method = 'mutateEntities' . Inflector::camelize($taskParams['task']);
+        if (!method_exists($this, $method)) {
+            throw new InvalidTaskException('Task not implemented');
+        }
         return $this->{$method}($taskParams, $dataParams, ['offset' => $offset, 'limit' => $limit]);
     }
 }

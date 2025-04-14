@@ -55,8 +55,14 @@ class ArticlesController extends AppController
             'reader' => ['index', 'view', 'images'],
             'desktop' => ['index', 'view', 'items'],
             'coder' => ['index', 'view', 'edit','unlock', 'lock'],
-            'author' => ['index', 'view', 'items','add','edit','delete', 'unlock', 'lock'],
-            'editor' => ['index', 'view', 'items','add','edit','delete', 'unlock', 'lock']
+            'author' => [
+                'index', 'view', 'items','add','edit', 'delete', 'unlock', 'lock', 'mutate'
+//                'mutate' => ['task' =>['assign_project', 'assign_property']]
+            ],
+            'editor' => [
+                'index', 'view', 'items','add','edit', 'delete', 'unlock', 'lock','mutate'
+//                'mutate' => ['task' => ['assign_project', 'assign_property']]
+            ]
         ]
     ];
 
@@ -133,10 +139,8 @@ class ArticlesController extends AppController
         $query = $this->Articles
             ->find('hasParams', $params)
             ->find('containFields', $params)
-            ->cache(
-                $this->getCacheKey(),
-                $this->Articles->initResultCache()
-            );
+            ->find('cached');
+
 
         $this->paginate = $paging;
         $entities = $this->paginate($query);
@@ -227,14 +231,14 @@ class ArticlesController extends AppController
      * Retrieve list of items inside of articles,
      * filtered by article parameters. Used for map views.
      *
-     * //TODO: use index action
+     * @deprecated Use index action of ArticlesController or implement index action in ItemsController
      *
      * @return \Cake\Http\Response|void|null
+     *
+     *
      */
     public function items()
     {
-        $this->redirectToUserSettings();
-
         // Update user parameters or redirect to user parameters
         $requestParams = $this->request->getQueryParams();
 
@@ -251,28 +255,18 @@ class ArticlesController extends AppController
             ->find('hasArticleParams', $params)
             ->order(['Items.articles_id' => 'ASC', 'Items.id' => 'ASC'])
             ->find('containFields', $params)
-            ->find('deleted', $params);
-
-        if (($params['template'] ?? '') === 'raw') {
-            $query = $query->enableHydration(false);
-        }
+            ->find('deleted', $params)
+            ->find('prepareRoot', $params);
+//            ->find('cached', $params)
 
         // Get items
         $paging['maxLimit'] = 1000;
         $this->paginate = $paging;
         $this->ApiPagination->setConfig('model', 'items');
-
-        // Cache query results
-        $query = $query->cache($this->getCacheKey(), $this->Articles->initResultCache());
-
         $items = $this->paginate($query);
 
-
-        $this->viewBuilder()->setOption('serialize', ['items']);
-        $this->viewBuilder()->setOption('options', compact('params', 'columns'));
-
-        //Search results
-        $this->set(compact('items'));
+        $this->Answer->addOptions(compact('params', 'columns'));
+        $this->Answer->addAnswer(compact('items'));
     }
 
     /**
@@ -318,6 +312,7 @@ class ArticlesController extends AppController
         if (!Configure::read('debug', false)) {
             $this->Lock->createLock($entity, true);
         }
+
         // Save
         if ($this->request->is(['post', 'put'])) {
 
@@ -450,7 +445,7 @@ class ArticlesController extends AppController
             unset($requestParams['field']);
         }
 
-        $this->Transfer->transfer('articles', $scope, $requestParams);
+        $this->Transfer->transfer($scope, $requestParams);
     }
 
     /**
@@ -469,7 +464,7 @@ class ArticlesController extends AppController
             );
         }
 
-        return $this->Transfer->import('articles');
+        return $this->Transfer->import();
     }
 
     /**
@@ -479,7 +474,7 @@ class ArticlesController extends AppController
      */
     public function mutate()
     {
-        return $this->Transfer->mutate('articles');
+        return $this->Transfer->mutate();
     }
 
     /**

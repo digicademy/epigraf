@@ -29,9 +29,9 @@
         "no": 23,
         "deleted": {}
     },
-    "198b844516bbe5e49ae4f42e056ebdcc": {
-        "sql": "FROM footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
-        "clear": "UPDATE footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") SET footnotes.deleted = 3 WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
+    "563c03e7bdf2054714a2f4dd0b70a50c": {
+        "sql": "FROM footnotes LEFT JOIN items AS source ON source.deleted = 0 AND footnotes.from_id = source.id AND source.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND source.id IS NULL",
+        "clear": "UPDATE footnotes LEFT JOIN items AS source ON source.deleted = 0 AND footnotes.from_id = source.id AND source.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") SET footnotes.deleted = 3 WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND source.id IS NULL",
         "sql_count": "SELECT COUNT(*)",
         "sql_records": "SELECT \"footnotes\", footnotes.id, root_tab, root_id",
         "type": "Footnotes with invalid from_tagid (from_tab = items, from_field = content)",

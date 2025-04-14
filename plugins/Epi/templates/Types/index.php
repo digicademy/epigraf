@@ -21,7 +21,7 @@ use Cake\Routing\Router;
 ?>
 
 <!-- Right sidebar -->
-<?php $this->sidebarSize(['right'=>5]); ?>
+<?php $this->setSidebarConfig(['right'=> ['size' =>5]]); ?>
 
 <!-- Content area -->
 <?= $this->Table->getProblems() ?>

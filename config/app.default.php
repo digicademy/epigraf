@@ -34,46 +34,6 @@ return [
     'snow' => false,
 
     /**
-     * Enforce https
-     *
-     * Disable if https is redirected to http by your gateways (e.g. on Kubernetes)
-     */
-    'enforceHttps' => true,
-
-
-    /**
-     *  Configure the path in the filesystem where user data is stored
-     *
-     *  Make sure these files are backed up regularly
-     *  and are not overwritten when upgrading the app.
-     *
-     *  All paths should end with the appropriate directory separator
-     */
-    'Data' => [
-        //Root directory of export and databases directory.
-        //Will be used as root for file administration in the web interface and should contain export and databases directory
-        'root' => '__DIRDATAROOT__',
-        //default: ROOT . DS . 'data' . DS
-
-        //Files shared between all users (e.g. wiki)
-        'shared' => '__DIRSHARED__',
-        //default: ROOT . DS . 'data' . DS.'shared'.DS
-
-        //Every database needs its own directory for storing files like "Hilfsmittel" and pictures.
-        //Subdirectories are automatically created for every database
-        'databases' => '__DIRDATABASES__'
-        //default: ROOT . DS . 'data' . DS . 'databases'.DS,
-    ],
-
-
-    /**
-     * Default category for context help
-     */
-    'Pages' => [
-        'contexthelp' => 'I. Kontexthilfe'
-    ],
-
-    /**
      * Configure basic information about the application.
      *
      * - namespace - The namespace to find app classes under.
@@ -135,6 +95,38 @@ return [
     ],
 
     /**
+     * Enforce https
+     *
+     * Disable if https is redirected to http by your gateways (e.g. on Kubernetes)
+     */
+    'enforceHttps' => true,
+
+
+    /**
+     *  Configure the path in the filesystem where user data is stored
+     *
+     *  Make sure these files are backed up regularly
+     *  and are not overwritten when upgrading the app.
+     *
+     *  All paths should end with the appropriate directory separator
+     */
+    'Data' => [
+        //Root directory of export and databases directory.
+        //Will be used as root for file administration in the web interface and should contain export and databases directory
+        'root' => '__DIRDATAROOT__',
+        //default: ROOT . DS . 'data' . DS
+
+        //Files shared between all users (e.g. wiki)
+        'shared' => '__DIRSHARED__',
+        //default: ROOT . DS . 'data' . DS.'shared'.DS
+
+        //Every database needs its own directory for storing files like "Hilfsmittel" and pictures.
+        //Subdirectories are automatically created for every database
+        'databases' => '__DIRDATABASES__'
+        //default: ROOT . DS . 'data' . DS . 'databases'.DS,
+    ],
+
+    /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
      * This is useful for busting browser caches.
@@ -144,6 +136,44 @@ return [
      */
     'Asset' => [
         'timestamp' => 'force',
+    ],
+
+    /**
+     * Default category for context help
+     */
+    'Pages' => [
+        'contexthelp' => 'I. Kontexthilfe'
+    ],
+
+    /**
+     * Configure external API services
+     *
+     * Please provide your server URL in the geo service useragent field
+     */
+    'Services' => [
+        'llm' => [
+            'base_url' => 'https://databoard.uni-muenster.de/',
+            'access_token' => '__DATABOARD_ACCESSTOKEN__'
+        ],
+        'geo' => [
+            'base_url' => 'https://nominatim.openstreetmap.org/',
+            'useragent' => 'Epigraf/5.0 (github.com/digicademy/epigraf)'
+        ]
+    ],
+
+    /**
+     * Background job configuration:
+     * - Set the connection to the Redis server
+     * - Set delay to `true`
+     * - Start a worker with `bin/cake jobs process`
+     */
+    'Jobs' => [
+        'delay' => false,
+        'scheme' => 'tcp',
+        'host'   =>  env('REDIS_HOST', '__REDISHOST__'),
+        'port'   => 6379,
+        'queue_name' => 'jobs_queue',
+        'status_name' => 'jobs_status'
     ],
 
     /**
@@ -224,6 +254,12 @@ return [
             'className' => 'File',
             'path' => CACHE . 'results' . DS,
             'duration' => '+1 day'
+        ],
+
+        'services' => [
+            'className' => 'File',
+            'path' => CACHE . 'services' . DS,
+            'duration' => '+1 year'
         ]
 
         /** Alternative configuration for Redis */
@@ -270,7 +306,13 @@ return [
 //            'server' => '__REDISHOST__',  // env('REDIS_HOST'),
 //            'prefix' => 'epi_results_',
 //            'duration' => '+1 day'
-//        ]
+//        ],
+//       'services' => [
+//           'className' => RedisEngine::class,
+//           'server' => 'redis',
+//           'prefix' => 'epi_services_',
+//           'duration' => '+1 year'
+//       ]
 
     ],
 

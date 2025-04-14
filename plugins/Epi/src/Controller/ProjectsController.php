@@ -142,7 +142,7 @@ class ProjectsController extends AppController
             );
         }
 
-        return $this->Transfer->import('projects');
+        return $this->Transfer->import();
     }
 
     /**
@@ -163,6 +163,6 @@ class ProjectsController extends AppController
 
         // Get search parameters from request
         [$params, $columns, $paging, $filter] = $this->Actions->prepareParameters();
-        $this->Transfer->transfer('projects', null, $params);
+        $this->Transfer->transfer(null, $params);
     }
 }

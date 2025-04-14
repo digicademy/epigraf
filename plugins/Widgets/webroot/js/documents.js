@@ -9,7 +9,7 @@
 
 import Utils from '/js/utils.js';
 import {i18n}  from '/js/lingui.js';
-import {BaseDocument, BaseForm, ModelEntity, ModelField} from "/js/base.js";
+import {BaseDocument, BaseWidget, BaseForm, ModelEntity, ModelField} from "/js/base.js";
 import {DetachedWindow, DetachedTab} from "./frames.js";
 import {
     ProjectsModel,
@@ -183,6 +183,7 @@ export class DocumentWidget extends BaseDocumentPart {
         // Focus listeners
         this.listenEvent(document,'focusin',(event) => this.onFocusChanged(event));
         this.listenEvent(document,'focusout',(event) => this.onFocusChanged(event));
+        this.listenEvent(document, 'epi:focus:entity', (event) => this.onFocusEntity(event));
 
         // Detach listener
         this.listenEvent(document,'click',(event) => this.onDetachClick(event),'.button-section-detach, button.doc-item-more');
@@ -377,6 +378,12 @@ export class DocumentWidget extends BaseDocumentPart {
         }
     }
 
+    onFocusEntity(event) {
+        if (event.detail.data.id === this.getEntityId()) {
+            this.focusWidget();
+        }
+    }
+
     /**
      * Get or loose focus
      *
@@ -459,6 +466,13 @@ export class DocumentWidget extends BaseDocumentPart {
         if (!this.ownedByDocument(sourceInput)) {
             return;
         }
+
+        // Emit widget change event
+        const entity= this.widgetElement.classList.contains('widget-entity');
+        if (entity) {
+            this.emitEvent('epi:change:entity', {source: sourceInput});
+        }
+
 
         // Set dirty flag and remove autofill flag on the source input
         if (sourceInput.dataset.autofill) {
@@ -556,8 +570,13 @@ export class DocumentWidget extends BaseDocumentPart {
      * Check whether the element is owned by the document or its satellites
      *
      * @param {HTMLElement} element
+     * @return {boolean}
      */
     ownedByDocument(element) {
+        if (!element) {
+            return false;
+        }
+
         // Check the mother document
         if (this.widgetElement && this.widgetElement.contains(element)) {
             return true;
@@ -571,6 +590,35 @@ export class DocumentWidget extends BaseDocumentPart {
         }
 
         return false;
+    }
+
+    /**
+     * Find an element by selector in the document or its satellites
+     *
+     * @param {string} selector
+     * @return {HTMLElement|undefined}
+     */
+    findInDocument(selector) {
+        if (!selector) {
+            return;
+        }
+
+        // Check the mother document
+        let element = this.widgetElement.querySelector(selector);
+
+        // Iterate satellites
+        if (!element) {
+            for (let satellite in this.satellites) {
+                if (this.satellites[satellite].widgetElement) {
+                    let elementInSatellite = this.satellites[satellite].widgetElement.querySelector(selector)
+                    if (elementInSatellite) {
+                        return elementInSatellite;
+                    }
+                }
+            }
+        }
+
+        return element;
     }
 
     /**
@@ -599,7 +647,7 @@ export class DocumentWidget extends BaseDocumentPart {
         //  labelName (rendered in trees) are used
         const nodeTemplate =
             '<li class="node item item-nochildren{selected} item-level-0"' +
-            ' data-list-itemof="targets" data-value="{table}-{id}" data-label="{labelText}">' +
+            ' data-list-itemof="targets" data-value="{table}-{id}" data-search-text="{searchText}" data-label="{labelText}">' +
             // ' <div class="tree-indent tree-indent-leaf"></div>' +
             ' <div class="tree-content"> ' +
             ' <label class="text" title="{labelPath}" data-label="{labelText}">{labelPath}</label>' +
@@ -657,7 +705,7 @@ export class DocumentWidget extends BaseDocumentPart {
  * Section in a document
  *
  * Section widgets are not instantiated automatically for all section elements,
- * they come into live when requested by DocumentWidget::getSection().
+ * they come into live when requested by DocumentWidget::getSectionWidget().
  *
  * The widget handles the detach-button of sections.
  *
@@ -761,7 +809,7 @@ export class SectionWidget extends BaseDocument {
  * Item in a document
  *
  * Item widgets are not instantiated automatically for all item elements,
- * they come into live when requested by DocumentWidget::getItem().
+ * they come into live when requested by DocumentWidget::getItemWidget().
  *
  * The widget handles the more-button of items.
  *
@@ -957,6 +1005,77 @@ export class ItemWidget extends BaseDocument {
     }
 }
 
+export class FieldGroupWidget extends BaseWidget {
+    constructor(element, name, parent) {
+        super(element, name, parent);
+        this.listenEvent(document, 'epi:focus:widgets', (event) => this.onFocusWidgets(event));
+        this.listenEvent(document, 'input', event => this.onInput(event));
+    }
+
+    /**
+     * Handle inputs events for autofill and for sorting items
+     *
+     * @param event {InputEvent} Input event
+     */
+    onInput(event) {
+        const sourceInput = event.target;
+        if (!this.widgetElement.contains(sourceInput)) {
+            return;
+        }
+
+        this.clearGroups();
+        this.highlightGroup(event.target);
+    }
+
+    /**
+     * Called on widget focus changes. Updates group highlighting.
+     *
+     * @param {CustomEvent} event epi:focus:widgets
+     */
+    onFocusWidgets(event) {
+        this.clearGroups();
+
+        if (!event.detail.data.focus) {
+            return;
+        }
+
+        if (!event.detail.data.sender === this.widgetElement) {
+            return;
+        }
+
+        this.highlightGroup(event.target);
+    }
+
+    clearGroups() {
+        document.querySelectorAll('.doc-section-item-highlight').forEach(element => element.classList.remove('doc-section-item-highlight'));
+    }
+
+    highlightGroup(element) {
+        const item = element.closest('.doc-section-item');
+        if (!item) {
+            return;
+        }
+        const groupInput = item.querySelector('.doc-fieldname-itemgroup input');
+        if (!groupInput) {
+            return;
+        }
+        const groupValue = Utils.getInputValue(groupInput);
+        if (groupValue === '') {
+            return;
+        }
+        const section = item.closest('.doc-section');
+        if (!section) {
+            return;
+        }
+        section.querySelectorAll('.doc-section-item').forEach(element => {
+            const elementGroupInput = element.querySelector('.doc-fieldname-itemgroup input');
+            if (elementGroupInput && Utils.getInputValue(elementGroupInput) === groupValue) {
+                element.classList.add('doc-section-item-highlight');
+            }
+        });
+    }
+}
+
 /**
  * Satellite handling
  *
@@ -1048,4 +1167,5 @@ class EntityWidget extends BaseForm {
 window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['document'] = DocumentWidget;
 window.App.widgetClasses['entity'] = EntityWidget;
+window.App.widgetClasses['fieldgroup'] = FieldGroupWidget;
 

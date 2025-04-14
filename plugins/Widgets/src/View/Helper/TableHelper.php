@@ -322,7 +322,8 @@ class TableHelper extends Helper
 
         // Table
         // TODO: rename class recordlist to filter-table
-        $tableClasses = ['recordlist widget-table actions-toframe', $options['class'] ?? null];
+        $clickTarget = $options['click'] ?? 'frame';
+        $tableClasses = ['recordlist widget-table actions-to' . $clickTarget, $options['class'] ?? null];
         if ($options['tree'] ?? false) {
             $tableClasses[] = 'widget-tree';
         }

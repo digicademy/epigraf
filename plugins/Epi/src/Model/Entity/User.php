@@ -129,7 +129,7 @@ class User extends RootEntity
     {
         $type = new DefaultType([
             'scope' => 'users',
-            'mode' => 'default',
+            'mode' => MODE_DEFAULT,
             'name' => 'human',
             'norm_iri' => 'human',
             'config' => [

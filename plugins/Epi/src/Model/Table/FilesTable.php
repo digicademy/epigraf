@@ -10,17 +10,51 @@
 
 namespace Epi\Model\Table;
 
+use App\Utilities\Converters\Arrays;
+use App\Utilities\Converters\Attributes;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
+use Epi\Model\Entity\FileRecord;
+use Files\Model\Behavior\FileSystemBehavior;
+use Files\Model\Table\FilesTableTrait;
 
 /**
  * Files table
+ *
+ * @mixin FileSystemBehavior
  */
 class FilesTable extends BaseTable
 {
 
+    use FilesTableTrait;
+
     public $captionField = 'name';
+
+    /**
+     * Request parameter config
+     *
+     * @var string[]
+     */
+    public $parameters = [
+        'id' => 'raw',
+        'root' => 'raw',
+        'path' => 'raw',
+        'filename' => 'raw',
+        'basepath' => 'raw',
+        'folder_id' => 'raw',
+        'list' => 'raw'
+    ];
+
+    /**
+     * The mounts used in this table
+     *
+     * @var string[] Array of mount names (e.g. 'root', 'shared')
+     */
+    public array $mounts = [];
+
+    public string $defaultMount = 'root';
 
     /**
      * Initialize hook
@@ -38,8 +72,6 @@ class FilesTable extends BaseTable
         $this->setPrimaryKey('id');
 
         $this->setEntityClass('Epi.FileRecord');
-
-        $this->addBehavior('Files.FileSystem');
 
         $this->belongsTo(
             'Items',
@@ -65,13 +97,11 @@ class FilesTable extends BaseTable
     }
 
     /**
-     * afterSave callback
-     *
-     * Clear the caches
+     * Clear the caches after saving
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
-     * @param $options
+     * @param array $options
      * @return void
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])

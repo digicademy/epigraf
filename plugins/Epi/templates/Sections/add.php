@@ -45,16 +45,12 @@
         $mode = $this->Link->getMode();
 
         // Get template
-        $templateArticle =  $entity->type['merged'] ?? [];
-
-        // In the coding template, the default editing mode is false.
-        // Coding has to be explicitly allowed for sections, items and fields.
-        // TODO: implement function that merges default and mode specific templates
-        if ($mode === 'code') {
-            $templateArticle['edit'] = $templateArticle['edit'] ?? false;
-        }
-
-        $options = ['edit'=>$edit, 'mode'=>$mode,'template_article'=> $templateArticle, 'note' => true];
+        $options = [
+            'edit'=>$edit,
+            'mode'=>$mode,
+            'template_article'=> $entity->type['merged'] ?? [],
+            'note' => true
+        ];
     ?>
 
     <?php foreach ($entity->sections as $section): ?>

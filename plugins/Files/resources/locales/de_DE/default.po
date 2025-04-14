@@ -1,0 +1,367 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Epigraf\n"
+"POT-Creation-Date: 2025-03-02 14:18+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jakob Jünger <jakobjuenger@freenet.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:168
+msgid "The folder does not exist yet. Create the folder before adding files."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:642
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:858
+msgid "File not found"
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:687
+msgid "Invalid file type"
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:727
+msgid "The files have been uploaded."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:731
+msgid "Some files could not be uploaded. Please check permissions and try again."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:768
+msgid "Folder updated from origin."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:777
+msgid "Pull failed: "
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:785
+msgid "No valid request."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:813
+msgid "No valid filename, please provide a valid filename"
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:819
+msgid "The file was fetched."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:829
+#: plugins/Files/src/Model/Entity/FileRecord.php:555
+msgid "The file could not be fetched."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:862
+msgid "The file is not a zip archive."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:866
+msgid "File unzipped."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:869
+msgid "File could not be unzipped."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:909
+msgid "The folder could not be created, please provide a valid name."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:925
+msgid "The folder has been created."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:930
+msgid "The folder could not be created. Please, try again."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:953
+msgid "Cleaned file and folder names."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:956
+msgid "Cleaned file and folder names. {} errors occured."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1002
+msgid "{0} folders synchronized."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1040
+msgid "The file or folder could not be renamed."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1056
+msgid "The file could not be uploaded."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1064
+msgid "The file record could not be saved."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1073
+msgid "The file or folder has been saved."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1109
+msgid "The file or folder has been deleted."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1115
+msgid "The file or folder could not be deleted. Please, try again."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1168
+msgid "The item could not be moved."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1175
+msgid "The item has been moved."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1193
+msgid "The folder content could not be moved."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1200
+msgid "The folder content has been moved."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestTrait.php:226
+msgid "The thumb cache has been cleared."
+msgstr ""
+
+#: plugins/Files/src/Controller/Component/FilesRequestTrait.php:229
+msgid "The thumb cache could not be cleared. Please try again."
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:415
+#: plugins/Files/templates/Files/index.php:81
+msgid "Name"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:422
+msgid "Description"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:430
+msgid "Config"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:449
+msgid "Published"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:456
+#: plugins/Files/templates/Files/index.php:130
+#: plugins/Files/templates/Files/view.php:76
+msgid "Download"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:462
+msgid "Display"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:468
+msgid "Folder"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:475
+msgid "Type"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:480
+#: plugins/Files/templates/Files/index.php:84
+msgid "Size"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:486
+msgid "Uploaded"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:492
+#: plugins/Files/templates/Files/index.php:83
+msgid "Modified"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:498
+msgid "Replace the file"
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:543
+msgid "No origin URL provided."
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:548
+msgid "The zip entries are invalid."
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:563
+msgid "Origin file could not be unzipped."
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:570
+msgid "Target folder is not ready."
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:577
+msgid "The zip entry is invalid."
+msgstr ""
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:582
+msgid "Origin content could not be moved to target."
+msgstr ""
+
+#: plugins/Files/src/View/Helper/FilesHelper.php:105
+msgid "The image {0} is not available on the server."
+msgstr ""
+
+#: plugins/Files/templates/Files/delete.php:19
+#: plugins/Files/templates/Files/edit.php:27
+#: plugins/Files/templates/Files/fetch.php:25
+#: plugins/Files/templates/Files/index.php:30
+#: plugins/Files/templates/Files/move.php:18
+#: plugins/Files/templates/Files/newfolder.php:26
+#: plugins/Files/templates/Files/select.php:22
+#: plugins/Files/templates/Files/view.php:23
+msgid "Files"
+msgstr ""
+
+#: plugins/Files/templates/Files/delete.php:26
+msgid "Danger zone! Operations on this page may severely damage content. Data can get lost forever!"
+msgstr ""
+
+#: plugins/Files/templates/Files/delete.php:32
+msgid "This will delete the file or folder \"{0}\" on the server. All data will be deleted forever. Are you sure? Are you really sure?"
+msgstr ""
+
+#: plugins/Files/templates/Files/fetch.php:45
+#: plugins/Files/templates/Files/move.php:64
+msgid "Cancel"
+msgstr ""
+
+#: plugins/Files/templates/Files/fetch.php:52
+msgid "Fetch"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:40
+#: plugins/Files/templates/Files/index.php:43
+msgid "Mounts"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:46
+#: plugins/Files/templates/Files/index.php:47
+msgid "Close"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:86
+msgid "Permissions"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:88
+msgid "Actions"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:105
+#: plugins/Files/templates/Files/index.php:146
+msgid "Open"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:129
+msgid "Details"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:161
+msgid "This folder is linked to an external resource: "
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:171
+msgid "Pull from origin"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:175
+msgid "This will replace all contents in this folder with the origin content. Are you ready to proceed?"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:186
+msgid "Create folder"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:189
+#: plugins/Files/templates/Files/view.php:74
+msgid "Edit"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:190
+msgid "Move folder"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:191
+msgid "Move content"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:192
+msgid "Clear thumbs"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:193
+msgid "Clean names"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:194
+msgid "Sync"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:194
+msgid "This will recurse all files and folders and will stress the server. Are you ready  to proceed?"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:195
+msgid "Fetch file"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:199
+msgid "Download latest file"
+msgstr ""
+
+#: plugins/Files/templates/Files/index.php:201
+msgid "Zip"
+msgstr ""
+
+#: plugins/Files/templates/Files/move.php:29
+msgid "Move to"
+msgstr ""
+
+#: plugins/Files/templates/Files/move.php:48
+msgid "Options"
+msgstr ""
+
+#: plugins/Files/templates/Files/move.php:71
+#: plugins/Files/templates/Files/view.php:75
+msgid "Move"
+msgstr ""
+
+#: plugins/Files/templates/Files/select.php:119
+msgid "Add all to article"
+msgstr ""
+
+#: plugins/Files/templates/Files/view.php:42
+msgid "Preview"
+msgstr ""
+
+#: plugins/Files/templates/Files/view.php:49
+msgid "XMP Metadata"
+msgstr ""
+
+#: plugins/Files/templates/Files/view.php:57
+msgid "Used in articles"
+msgstr ""
+
+#: plugins/Files/templates/Files/view.php:78
+msgid "Unzip"
+msgstr ""
+

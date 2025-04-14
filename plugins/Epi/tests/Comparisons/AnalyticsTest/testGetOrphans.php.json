@@ -209,7 +209,7 @@
         "type": "Null items to properties by properties_id",
         "target": 0,
         "no": 21,
-        "number": 113,
+        "number": 106,
         "status": "warn"
     },
     "65e8eb6945ea8004b62b7c6fe028492a": {
@@ -283,9 +283,9 @@
         "number": 0,
         "status": "ok"
     },
-    "198b844516bbe5e49ae4f42e056ebdcc": {
-        "sql": "FROM footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
-        "clear": "UPDATE footnotes LEFT JOIN items ON items.deleted = 0 AND footnotes.from_id = items.id AND items.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") SET footnotes.deleted = 3 WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND items.id IS NULL",
+    "563c03e7bdf2054714a2f4dd0b70a50c": {
+        "sql": "FROM footnotes LEFT JOIN items AS source ON source.deleted = 0 AND footnotes.from_id = source.id AND source.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND source.id IS NULL",
+        "clear": "UPDATE footnotes LEFT JOIN items AS source ON source.deleted = 0 AND footnotes.from_id = source.id AND source.content LIKE CONCAT(\"%\",footnotes.from_tagid,\"%\") SET footnotes.deleted = 3 WHERE footnotes.deleted = 0 AND footnotes.from_tab = \"items\" AND footnotes.from_field = \"content\" AND source.id IS NULL",
         "sql_count": "SELECT COUNT(*)",
         "sql_records": "SELECT \"footnotes\", footnotes.id, root_tab, root_id",
         "type": "Footnotes with invalid from_tagid (from_tab = items, from_field = content)",
@@ -503,33 +503,13 @@
         "number": 0,
         "status": "ok"
     },
-    "9442ec0e8432a84ced52bf18955e0680": {
-        "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"p\" ",
-        "sql_count": "SELECT COUNT(*)",
-        "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
-        "type": "Links (links of type p) with empty to_id (to_tab = properties)",
-        "target": 0,
-        "no": 50,
-        "number": 0,
-        "status": "ok"
-    },
-    "61d732bbce37291e6cc54db786f43a6c": {
-        "sql": "FROM links AS fromtab LEFT JOIN properties ON properties.deleted = 0 AND fromtab.to_id = properties.id WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NOT NULL AND fromtab.from_tagname = \"p\" AND properties.id IS NULL",
-        "sql_count": "SELECT COUNT(*)",
-        "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
-        "type": "Links (links of type p) with invalid to_id (to_tab = properties)",
-        "target": 0,
-        "no": 51,
-        "number": 0,
-        "status": "ok"
-    },
     "7a70e349ff3b775bfad7cbe786d638d8": {
         "sql": "FROM links AS fromtab WHERE fromtab.deleted = 0 AND  fromtab.to_tab = \"properties\" AND fromtab.to_id IS NULL AND from_tagname = \"h\" ",
         "sql_count": "SELECT COUNT(*)",
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type h) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 52,
+        "no": 50,
         "number": 0,
         "status": "ok"
     },
@@ -539,7 +519,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type h) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 53,
+        "no": 51,
         "number": 0,
         "status": "ok"
     },
@@ -549,7 +529,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type abr) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 54,
+        "no": 52,
         "number": 0,
         "status": "ok"
     },
@@ -559,7 +539,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type abr) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 55,
+        "no": 53,
         "number": 0,
         "status": "ok"
     },
@@ -569,7 +549,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type all) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 56,
+        "no": 54,
         "number": 0,
         "status": "ok"
     },
@@ -579,7 +559,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type all) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 57,
+        "no": 55,
         "number": 0,
         "status": "ok"
     },
@@ -589,7 +569,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type wtr) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 58,
+        "no": 56,
         "number": 0,
         "status": "ok"
     },
@@ -599,7 +579,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type wtr) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 59,
+        "no": 57,
         "number": 0,
         "status": "ok"
     },
@@ -609,7 +589,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type vz) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 60,
+        "no": 58,
         "number": 0,
         "status": "ok"
     },
@@ -619,7 +599,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type vz) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 61,
+        "no": 59,
         "number": 0,
         "status": "ok"
     },
@@ -629,7 +609,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type z) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 62,
+        "no": 60,
         "number": 0,
         "status": "ok"
     },
@@ -639,7 +619,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type z) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 63,
+        "no": 61,
         "number": 0,
         "status": "ok"
     },
@@ -649,7 +629,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type bl) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 64,
+        "no": 62,
         "number": 0,
         "status": "ok"
     },
@@ -659,7 +639,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type bl) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 65,
+        "no": 63,
         "number": 0,
         "status": "ok"
     },
@@ -669,7 +649,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type sup) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 66,
+        "no": 64,
         "number": 0,
         "status": "ok"
     },
@@ -679,7 +659,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type sup) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 67,
+        "no": 65,
         "number": 0,
         "status": "ok"
     },
@@ -689,7 +669,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_lit) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 68,
+        "no": 66,
         "number": 0,
         "status": "ok"
     },
@@ -699,7 +679,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_lit) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 69,
+        "no": 67,
         "number": 0,
         "status": "ok"
     },
@@ -709,7 +689,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_extern) with empty to_id (to_tab = articles)",
         "target": 0,
-        "no": 70,
+        "no": 68,
         "number": 0,
         "status": "ok"
     },
@@ -719,7 +699,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_extern) with invalid to_id (to_tab = articles)",
         "target": 0,
-        "no": 71,
+        "no": 69,
         "number": 0,
         "status": "ok"
     },
@@ -729,7 +709,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_intern) with empty to_id (to_tab = sections)",
         "target": 0,
-        "no": 72,
+        "no": 70,
         "number": 0,
         "status": "ok"
     },
@@ -739,7 +719,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_intern) with invalid to_id (to_tab = sections)",
         "target": 0,
-        "no": 73,
+        "no": 71,
         "number": 0,
         "status": "ok"
     },
@@ -749,7 +729,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_ma) with empty to_id (to_tab = properties)",
         "target": 0,
-        "no": 74,
+        "no": 72,
         "number": 0,
         "status": "ok"
     },
@@ -759,7 +739,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_ma) with invalid to_id (to_tab = properties)",
         "target": 0,
-        "no": 75,
+        "no": 73,
         "number": 0,
         "status": "ok"
     },
@@ -769,7 +749,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_extern) with empty to_id (to_tab = sections)",
         "target": 0,
-        "no": 76,
+        "no": 74,
         "number": 0,
         "status": "ok"
     },
@@ -779,7 +759,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_extern) with invalid to_id (to_tab = sections)",
         "target": 0,
-        "no": 77,
+        "no": 75,
         "number": 0,
         "status": "ok"
     },
@@ -789,7 +769,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_extern) with empty to_id (to_tab = footnotes)",
         "target": 0,
-        "no": 78,
+        "no": 76,
         "number": 0,
         "status": "ok"
     },
@@ -799,7 +779,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_extern) with invalid to_id (to_tab = footnotes)",
         "target": 0,
-        "no": 79,
+        "no": 77,
         "number": 0,
         "status": "ok"
     },
@@ -809,7 +789,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, NULL,NULL",
         "type": "Links (links of type rec_intern) with empty to_id (to_tab = footnotes)",
         "target": 0,
-        "no": 80,
+        "no": 78,
         "number": 0,
         "status": "ok"
     },
@@ -819,7 +799,7 @@
         "sql_records": "SELECT \"links\", fromtab.id, fromtab.to_tab, fromtab.to_id",
         "type": "Links (links of type rec_intern) with invalid to_id (to_tab = footnotes)",
         "target": 0,
-        "no": 81,
+        "no": 79,
         "number": 0,
         "status": "ok"
     },
@@ -829,7 +809,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
         "type": "Links (items of type heraldry) with empty links_id (links_tab = sections)",
         "target": 0,
-        "no": 82,
+        "no": 80,
         "number": 0,
         "status": "ok"
     },
@@ -839,7 +819,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
         "type": "Links (items of type heraldry) with invalid links_id (links_tab = sections)",
         "target": 0,
-        "no": 83,
+        "no": 81,
         "number": 0,
         "status": "ok"
     },
@@ -849,7 +829,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
         "type": "Links (items of type images) with empty links_id (links_tab = items)",
         "target": 0,
-        "no": 84,
+        "no": 82,
         "number": 0,
         "status": "ok"
     },
@@ -859,7 +839,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
         "type": "Links (items of type images) with invalid links_id (links_tab = items)",
         "target": 0,
-        "no": 85,
+        "no": 83,
         "number": 0,
         "status": "ok"
     },
@@ -869,7 +849,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
         "type": "Links (items of type images) with empty links_id (links_tab = sections)",
         "target": 0,
-        "no": 86,
+        "no": 84,
         "number": 0,
         "status": "ok"
     },
@@ -879,7 +859,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
         "type": "Links (items of type images) with invalid links_id (links_tab = sections)",
         "target": 0,
-        "no": 87,
+        "no": 85,
         "number": 0,
         "status": "ok"
     },
@@ -889,7 +869,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, NULL,NULL",
         "type": "Links (items of type brands) with empty links_id (links_tab = sections)",
         "target": 0,
-        "no": 88,
+        "no": 86,
         "number": 0,
         "status": "ok"
     },
@@ -899,7 +879,7 @@
         "sql_records": "SELECT \"items\", fromtab.id, fromtab.links_tab, fromtab.links_id",
         "type": "Links (items of type brands) with invalid links_id (links_tab = sections)",
         "target": 0,
-        "no": 89,
+        "no": 87,
         "number": 0,
         "status": "ok"
     }

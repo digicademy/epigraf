@@ -39,17 +39,17 @@ class FilesController extends AppController
         'api' => [
             'guest' => [],
             'reader' => [],
-            'coder' => ['download', 'display', 'index', 'view'],
+            'coder' => ['download', 'display', 'view'],
             'desktop' => ['download', 'display', 'index', 'view'],
-            'author' => ['download', 'display', 'index', 'view'],
+            'author' => ['download', 'display', 'view'],
             'editor' => ['download', 'display', 'index', 'view'],
             'admin' => ['download', 'display', 'index', 'view'],
             'devel' => ['download', 'display', 'index', 'view']
         ],
         'web' => [
             'guest' => ['download', 'display'],
-            'reader' => ['download', 'display', 'index', 'view'],
-            'coder' => ['download', 'display', 'index', 'view'],
+            'reader' => ['download', 'display', 'view'],
+            'coder' => ['download', 'display', 'view'],
             'desktop' => [
                 'download',
                 'display',
@@ -65,14 +65,8 @@ class FilesController extends AppController
             'author' => [
                 'download',
                 'display',
-                'index',
                 'view',
-                'upload',
-                'delete',
-                'edit',
-                'newfolder',
-                'select',
-                'move'
+                'select'
             ],
             'editor' => [
                 'download',
@@ -149,7 +143,6 @@ class FilesController extends AppController
         $this->loadComponent('Files.FilesRequest',
             [
                 'mounts' => $allowedMounts,
-                'root' => 'shared',
                 'createfolder' => true
             ]);
     }

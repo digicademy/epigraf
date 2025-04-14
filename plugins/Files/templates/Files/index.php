@@ -16,11 +16,12 @@
  *
  * @var \App\View\AppView $this
  * @var string $user_role
- * @var \Files\Model\Entity\FileRecord $folder
+ * @var \Files\Model\Entity\FileRecord $entity
+ * @var \Files\Model\Entity\FileRecord[] $entities
+ *
  * @var string $root
  * @var string $parent_path
  * @var array $mounts
- * @var array $files
  * @var array $thumbtypes
  */
 ?>
@@ -28,12 +29,11 @@
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Files'), ['action' => 'index']); ?>
 <?php if (!empty($root)) $this->Breadcrumbs->add($root); ?>
-<?php if (!empty($path)) $this->Breadcrumbs->add($path); ?>
+<?php if (!empty($entity->relativePath)) $this->Breadcrumbs->add($entity->relativePath); ?>
 
 <!-- Sidebars -->
 <?php
-    $this->sidebarInit(['left' => 'expanded','right'=>'expanded']);
-    $this->sidebarSize(['right'=> 5 ]);
+    $this->setSidebarConfig(['left' => ['init' => 'expanded'], 'right' => ['init' => 'expanded', 'size' => 5]]);
 ?>
 
 <?php $this->beginTabsheet(__('Mounts'), 'sidebar-menu', 'left') ?>
@@ -61,8 +61,9 @@
     </div>
 
     <div class="frame-footer">
-        <?= $this->Files->dropzone() ?>
+        <?= $this->Files->dropzone(['root'=>$root, 'path' => $entity->relativePath]) ?>
     </div>
+
 <?php $this->endTabsheet() ?>
 
 <!-- Paginator -->
@@ -90,7 +91,7 @@
                data-list-action-next="<?= $nexturl ?>"
                data-list-action-get="<?= $geturl ?>">
 
-		<?php if (!empty($path)): ?>
+		<?php if (!empty($entity->relativePath)): ?>
 			<tr class="files-folder actions-noframe">
 				<td><span class="ui-icon ui-icon-folder-collapsed"></span> ..</td>
 				<td></td>
@@ -106,7 +107,7 @@
 
 		<?php endif; ?>
 
-		<?php foreach ($files as $file): ?>
+		<?php foreach ($entities as $file): ?>
 			<!-- Files -->
 			<?php if (empty($file['isfolder'])): ?>
                 <tr class="files-file" data-list-itemof="files"  data-id="<?= $file->id ?>">
@@ -125,7 +126,7 @@
 					<?php endif; ?>
 					<td class="actions">
 						<?= $this->Html->link(__('Details'), ['action' => 'view', $file->id, '?' => ['root' => $root]]) ?>
-						<?= $this->Html->link(__('Download'), ['action' => 'download', '?' => ['root' => $root, 'path' => $path, 'filename' => $file['name']]]) ?>
+						<?= $this->Html->link(__('Download'), ['action' => 'download', '?' => ['root' => $root, 'path' => $entity->relativePath, 'filename' => $file['name']]]) ?>
 					</td>
 				</tr>
 
@@ -141,7 +142,7 @@
 					<td><?= h($file['filePermissions']) ?> <?= h($file['fileOwner']) ?></td>
 					<?php endif; ?>
 					<td class="actions">
-						<?= $this->Html->link(__('Open'), ['action' => 'index', '?' => ['root' => $root, 'path' => (empty($path) ? '' : ($path . '/')) . $file['name']]]) ?>
+						<?= $this->Html->link(__('Open'), ['action' => 'index', '?' => ['root' => $root, 'path' => (empty($entity->relativePath) ? '' : ($entity->relativePath . '/')) . $file['name']]]) ?>
 					</td>
 				</tr>
 			<?php endif; ?>
@@ -151,22 +152,23 @@
 	</table>
 </div>
 
-<?php if (!empty($folder['description']) || !empty($folder['config']['origin'])): ?>
+
+<?php if (!empty($entity['description']) || !empty($entity['config']['origin'])): ?>
 	<div class="content-description">
 		<p>
-            <?php if (empty($folder['description'])): ?>
+            <?php if (empty($entity['description'])): ?>
                 <?= __('This folder is linked to an external resource: ')  ?>
-                <?= $this->Html->link($folder['config']['origin'], $folder['config']['origin']) ?>
+                <?= $this->Html->link($entity['config']['origin'], $entity['config']['origin']) ?>
 
             <?php else: ?>
-			    <?= h($folder['description']) ?>
+			    <?= h($entity['description']) ?>
             <?php endif; ?>
 		</p>
 
-        <?php if (!empty($folder['config']['origin'])): ?>
+        <?php if (!empty($entity['config']['origin'])): ?>
             <?= $this->Link->authLink(
                 __('Pull from origin'),
-                ['action' => 'pull', $folder->id],
+                ['action' => 'pull', $entity->id],
                 [
                     'linktype' => 'post',
                     'confirm' => __('This will replace all contents in this folder with the origin content. Are you ready to proceed?'),
@@ -180,22 +182,22 @@
 <!-- Actions -->
 <?php
     $this->Link->beginActionGroup('bottom');
-    $this->Link->addAction(__('Create folder'), ['action' => 'newfolder', '?' => ['root' => $root, 'path' => $path]], ['data-role'=>'add']);
+    $this->Link->addAction(__('Create folder'), ['action' => 'newfolder', '?' => ['root' => $root, 'path' => $entity->relativePath]], ['data-role'=>'add']);
 
-    if (in_array($user_role, ['devel']) && !empty($path)) {
-        $this->Link->addAction(__('Edit'),['action' => 'edit', '?' => ['root' => $root, 'path' => $path]],['shortcuts' => ['F2']]);
-        $this->Link->addAction(__('Move folder'),['action' => 'move', $folder->id,'item', '?' => ['root' => $root, 'path' => $path]] );
-        $this->Link->addAction(__('Move content'),['action' => 'move', '?' => ['root' => $root, 'path' => $path]] );
-        $this->Link->addAction(__('Clear thumbs'),['action' => 'clearthumbs', '?' => ['root' => $root, 'path' => $path]]);
-        $this->Link->addAction(__('Clean names'),['action' => 'clean', '?' => ['root' => $root, 'path' => $path]]);
-        $this->Link->addAction(__('Sync'),['action' => 'sync', '?' => ['root' => $root, 'path' => $path]],['confirm'=>__('This will recurse all files and folders and will stress the server. Are you ready  to proceed?')]);
-        $this->Link->addAction(__('Fetch file'),['action' => 'fetch', '?' => ['root' => $root, 'path' => $path]]);
+    if (in_array($user_role, ['devel']) && !empty($entity->relativePath)) {
+        $this->Link->addAction(__('Edit'),['action' => 'edit', '?' => ['root' => $root, 'path' => $entity->relativePath]],['shortcuts' => ['F2']]);
+        $this->Link->addAction(__('Move folder'),['action' => 'move', $entity->id,'item', '?' => ['root' => $root, 'path' => $entity->relativePath]] );
+        $this->Link->addAction(__('Move content'),['action' => 'move', '?' => ['root' => $root, 'path' => $entity->relativePath]] );
+        $this->Link->addAction(__('Clear thumbs'),['action' => 'clearthumbs', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
+        $this->Link->addAction(__('Clean names'),['action' => 'clean', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
+        $this->Link->addAction(__('Sync'),['action' => 'sync', '?' => ['root' => $root, 'path' => $entity->relativePath]],['confirm'=>__('This will recurse all files and folders and will stress the server. Are you ready  to proceed?')]);
+        $this->Link->addAction(__('Fetch file'),['action' => 'fetch', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
     }
 
     $this->Link->beginActionGroup('bottom-right');
-    $this->Link->addAction(__('Download latest file'),['action' => 'download', '?' => ['root' => $root, 'path' => $path, 'find' => 'latest']]);
-    if (in_array($user_role, ['devel']) && !empty($path)) {
-        $this->Link->addAction(__('Zip'), ['action' => 'download', $folder->id]);
+    $this->Link->addAction(__('Download latest file'),['action' => 'download', '?' => ['root' => $root, 'path' => $entity->relativePath, 'find' => 'latest']]);
+    if (in_array($user_role, ['devel']) && !empty($entity->relativePath)) {
+        $this->Link->addAction(__('Zip'), ['action' => 'download', $entity->id]);
     }
 ?>
 

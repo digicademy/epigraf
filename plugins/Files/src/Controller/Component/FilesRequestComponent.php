@@ -14,6 +14,7 @@ namespace Files\Controller\Component;
 
 use App\Controller\AppController;
 use App\Model\Table\FilesTable;
+use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\UnauthorizedException;
@@ -108,14 +109,10 @@ class FilesRequestComponent extends Component
         $this->controller = $this->getController();
         $this->request = $this->controller->getRequest();
         $this->model = $this->controller->Files;
+        $this->model->mounts = $this->getConfig('mounts');
 
-        // Behavior
-        $behavior = $this->model->getBehavior('FileSystem');
-        $behavior->setConfig('mounts', $this->getConfig('mounts'));
-
-        // TODO: remove access by folder and file names -> use IDs instead / redirect to IDs
         // TODO: path, file, and folder should be initialized as empty strings (?), see problems.
-        // TODO: Init controller properties in a trait or interface
+        // TODO: Init controller properties in a trait
         // Absolute paths
         $this->controller->rootFolder = false;
         $this->controller->currentFolder = false;
@@ -130,7 +127,7 @@ class FilesRequestComponent extends Component
 
         // Set root dir
         $this->controller->mounts = $this->getConfig('mounts');
-        $this->controller->root = $this->request->getQuery('root', $this->getConfig('root', 'root'));
+        $this->controller->root = $this->request->getQuery('root', $this->model->defaultMount);
 
         $this->updatePropertiesRoot($this->controller->root);
 
@@ -201,7 +198,6 @@ class FilesRequestComponent extends Component
      */
     public function renderDefault()
     {
-//        $this->controller->setRequest($this->request);
         if ($this->getConfig('render', true)) {
             $this->controller->render('Files.Files/' . $this->request->getParam('action'));
         }
@@ -237,7 +233,21 @@ class FilesRequestComponent extends Component
         }
 
 
-        if ($checkPermissions && !$file->isPermitted($this->controller->getPermissionMask())) {
+        if ($this->request->getParam('plugin') === 'Epi') {
+            $database = $this->request->getParam('database');
+        } else {
+            $database = null;
+        }
+
+        if ($checkPermissions && !$file->isPermitted(
+            PermissionsTable::getPermissionMask(
+                $this->controller->Auth->user(),
+                $database,
+                $this->request->getParam('controller'),
+                $this->request->getParam('action'),
+                $this->controller->_getRequestScope()
+            )
+        )) {
             throw new UnauthorizedException('You are not authorized to access the file or folder');
         }
 
@@ -262,7 +272,11 @@ class FilesRequestComponent extends Component
             $redirectAction = $this->request->getParam('action', 'view');
 
             // Carry on the close paramter - used in JS popups to determine whether to close window
-            $flowParams = ['close' => $this->request->getQuery('close', null)];
+            $flowParams = [
+                'close' => $this->request->getQuery('close', null),
+                'template' => $this->request->getQuery('template', null),
+                'list' => $this->request->getQuery('list', null)
+            ];
             $flowParams = array_filter($flowParams, fn($x) => !is_null($x));
 
             $flowParams['basepath'] = $basepath;
@@ -370,7 +384,6 @@ class FilesRequestComponent extends Component
      * Update the controller properties based on a file record from the database
      *
      * @param $file
-     *
      * @return void
      */
     public function updateProperties($file)
@@ -496,7 +509,7 @@ class FilesRequestComponent extends Component
             $fileParams['filename'] = $filename;
         }
 
-        return $this->controller->Answer->success(
+        $this->controller->Answer->success(
             $message,
             [
                 'action' => $successAction,
@@ -506,52 +519,42 @@ class FilesRequestComponent extends Component
     }
 
     /**
-     * Index logic
-     *
-     * Compare database record with filesystem.
-     * Set viewvar files.
+     * File and folder list
      *
      * @param integer $id files record id or null
-     *
      * @return void
      * @throws \Exception
      */
     public function index($id = null)
     {
+        // Get search parameters from request
+        $requestAction = $this->getController()->getRequest()->getParam('action');
+        $requestPath = $this->getController()->getRequest()->getParam('pass')[0] ?? '';
+        $requestParams = $this->getController()->getRequest()->getQueryParams();
+        [$params, $columns, $paging, $filter] = $this->model->prepareParameters($requestParams, $requestPath, $requestAction);
 
-        // Get base folder
-        $folder = $this->getFileEntity($id, 'folder', false);
+        // Get folder entity
+        $entity = $this->model->getFolderEntity($params);
 
-        // Update database if neccessary, but only on first page requests
+        // Update database on first page requests
         if ($this->request->getQuery('page', '1') === '1') {
-            $this->model->syncDatabase($folder->root, $folder->relativeFolder);
+            $entity->syncDatabase();
+            //$this->model->syncDatabase($folder->root, $folder->relativeFolder);
         }
 
-        // Get files and folders
-        $files = $this->model
-            ->find('files', ['root' => $folder->root, 'path' => $folder->relativeFolder])
-            ->where(['name <>' => '']);
+        // Get content
+        $params['root'] = $entity->root;
+        $params['path'] = $entity->relative_folder;
+        $query =  $this->model
+            ->find('hasParams', $params)
+            ->find('containFields', $params);
 
-        $id = $this->request->getQuery('id');
-        if ($id) {
-            $files = $files->where(['id' => $id]);
-        }
+        $this->getController()->paginate = $paging;
+        $entities = $this->getController()->paginate($query);
 
-        $this->controller->paginate = [
-            'order' => ['name' => 'asc'],
-            'limit' => 50
-        ];
+        $this->Answer->addOptions(compact('params', 'columns', 'filter'));
+        $this->Answer->addAnswer(compact('entities', 'entity'));
 
-        $files = $this->controller->paginate($files);
-
-//        // Count missing files and folders
-//        $missing = array_sum(array_map(function ($x) {
-//            return $x['missing'];
-//        }, $files->toArray()));
-//        if ($missing)
-//            $this->controller->Flash->error(__('{0} of the files and folders listed in the database are missing.', $missing));
-
-        $this->controller->set(compact('files', 'folder'));
         $this->renderDefault();
     }
 
@@ -604,8 +607,16 @@ class FilesRequestComponent extends Component
      */
     public function select($id = null)
     {
-        $folder = $this->getFileEntity($id, 'folder', true);
-        $this->controller->set(compact('folder'));
+        $requestAction = $this->getController()->getRequest()->getParam('action');
+        $requestPath = null; // $this->getController()->getRequest()->getParam('pass')[0] ?? '';
+        $requestParams = $this->getController()->getRequest()->getQueryParams();
+        [$params, $columns, $paging, $filter] = $this->model->prepareParameters($requestParams, $requestPath, $requestAction);
+
+        $entity = $this->getFileEntity($id, 'folder', true);
+
+        $this->Answer->addOptions(compact('params', 'columns', 'filter'));
+        $this->Answer->addAnswer(compact( 'entity'));
+
         $this->renderDefault();
     }
 

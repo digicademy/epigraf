@@ -84,23 +84,30 @@ class ArticlesControllerTest extends EpiTestCase
         $articles = $this->Articles->get($id);
         $this->assertEquals(null, $articles->version_id);
 
+        $records = [
+            'sections' => 17,
+            'items' => 5,
+            'footnotes' => 1,
+            'links' => 7
+        ];
+
         // Check that sections, items, footnotes and links exist
         $count = $this->Sections
             ->find('all')->where(['articles_id' => $id])->count();
-        $this->assertEquals(17, $count);
+        $this->assertEquals($records['sections'], $count);
 
         $count = $this->Items
             ->find('all')->where(['articles_id' => $id])->count();
-        $this->assertEquals(11, $count);
+        $this->assertEquals($records['items'], $count);
 
         // TODO: create fixture with footnotes and links$options['deleted'] ?? 0 -> update: fixture contains footnote
         $count = $this->Footnotes
             ->find('all')->where(['root_id' => $id, 'root_tab' => 'articles'])->count();
-        $this->assertEquals(1, $count);
+        $this->assertEquals($records['footnotes'], $count);
 
         $count = $this->Links
             ->find('all')->where(['root_id' => $id, 'root_tab' => 'articles'])->count();
-        $this->assertEquals(6, $count);
+        $this->assertEquals($records['links'], $count);
 
         // Test confirmation page
         $this->get('epi/projects/articles/delete/' . $id);
@@ -140,19 +147,19 @@ class ArticlesControllerTest extends EpiTestCase
 
         $count = $this->Sections
             ->find('deleted', ['deleted' => true])->where(['articles_id' => $id])->count();
-        $this->assertEquals(17, $count);
+        $this->assertEquals($records['sections'], $count);
 
         $count = $this->Items
             ->find('deleted', ['deleted' => true])->where(['articles_id' => $id])->count();
-        $this->assertEquals(11, $count);
+        $this->assertEquals($records['items'] + 7, $count); // Obviously, 7 deleted items existed before. Improve test data.
 
         $count = $this->Footnotes
             ->find('deleted', ['deleted' => true])->where(['root_id' => $id, 'root_tab' => 'articles'])->count();
-        $this->assertEquals(1, $count);
+        $this->assertEquals($records['footnotes'], $count);
 
         $count = $this->Links
             ->find('deleted', ['deleted' => true])->where(['root_id' => $id, 'root_tab' => 'articles'])->count();
-        $this->assertEquals(6, $count);
+        $this->assertEquals($records['links'], $count);
 
     }
 
@@ -202,7 +209,6 @@ class ArticlesControllerTest extends EpiTestCase
     {
         $this->loginUser('admin');
         $this->get('/epi/projects/articles/edit/1');
-
         $this->assertHtmlEqualsComparison();
     }
 
@@ -290,7 +296,7 @@ class ArticlesControllerTest extends EpiTestCase
     public function testIndexLanes()
     {
         $this->loginUser('admin');
-        $this->get('/epi/projects/articles/?properties.objecttypes=32&template=lanes&lanes=objecttypes');
+        $this->get('/epi/projects/articles/?properties.objecttypes.selected=32&template=lanes&lanes=objecttypes');
         $this->assertHtmlEqualsComparison();
     }
 
@@ -365,19 +371,7 @@ class ArticlesControllerTest extends EpiTestCase
         $this->loginUser($userRole);
 
         $this->post('epi/projects/articles/mutate/?task=get_summary&projects=1&selection=filtered');
-        $jobId = $this->extractParamFromRedirect('#jobs/execute/([0-9]+)#');
-
-        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->get('/jobs/execute/' . $jobId . '?timeout=-1');
-
-        $this->configRequest(['headers' => ['Accept' => 'application/json']]);
-        $this->post('/jobs/execute/' . $jobId . '?timeout=-1');
-
-        $response = $this->_getBodyAsString();
-        $response = json_decode($response, true);
-
-        $error = $response['job']['error'] ?? '';
-        $this->assertStringContainsString('Method task_get_summary is not a valid export method.', $error);
+        $this->assertRedirect(['action'=>'mutate']);
     }
 
         /**

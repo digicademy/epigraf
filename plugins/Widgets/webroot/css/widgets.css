@@ -366,8 +366,8 @@ ul.widget-tree li.item.node-cursor *,
     margin-left:0.5em;
 }
 
-.widget-dropdown-selector ul.widget-tree li.item .tree-meta-count,
-.widget-filter-item-facets-container ul.widget-tree li.item .tree-meta-count {
+.widget-dropdown-selector ul.widget-tree li.item .tree-meta,
+.widget-filter-item-facets-container ul.widget-tree li.item .tree-meta {
     color: var(--status-font-color-checked);
 }
 
@@ -409,6 +409,7 @@ ul.widget-tree.menu-sections li.item .tree-meta {
 
 
 button.doc-item-add, button.doc-item-remove, button.doc-item-more,
+a.doc-item-folder,
 a.doc-item-add, a.doc-item-remove, a.doc-item-more {
     white-space: nowrap;
     line-height: 1.5em;
@@ -992,3 +993,72 @@ form .widget-codeblocks pre code {
     display:inline-block;
     margin-right: 0.5rem;
 }
+
+
+
+/** Service bar **/
+.widget-service-button {
+    display: flex;
+}
+
+.widget-reconcile-button {
+    display: inline-block;
+    margin-right:0.5em;
+}
+
+.widget-service-button a, .widget-reconcile-button a {
+    background-color: var(--button-bg-color-inactive);
+    color: var(--button-font-color);
+}
+
+.widget-service-button a:hover, .widget-reconcile-button a:hover {
+  background-color: var(--button-add-bg-color);
+}
+
+.widget-service-button .widget-service-bar {
+    width: 4em;
+    height: 1.45em;
+    margin: 0.2em 0.1em 0 0;
+    border: 0;
+    display: inline-block;
+}
+
+.widget-service-button .widget-service-msg {
+    font-size: 0.9em;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+    margin: 0.25em 0.1em 0 0;
+    background-color: #116d76;
+    color: lightblue;
+    padding: 0 0.2em;
+}
+
+div.textarea + .field-buttons {
+    margin-top:-1em;
+}
+
+.service-answers {
+    overflow: auto;
+}
+
+.service-answer-candidate {
+    margin-bottom: 1em;
+}
+
+.service-answer-candidate-header {
+    background-color: var(--section-header-bg-color);
+    padding:1em;
+}
+
+button.tiny.service-answer-select {
+    float: right;
+    padding:0 0.25em;
+}
+
+.service-answer-candidate-preview, .service-answer-candidate-description {
+  padding:1em 1em 0 1em;
+}
+

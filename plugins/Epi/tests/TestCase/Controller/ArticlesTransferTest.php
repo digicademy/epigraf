@@ -180,9 +180,10 @@ class ArticlesTransferTest extends EpiTestCase
             '*.links.*.article.status','*.links.*.article.norm_data','*.links.*.article.project'
         ];
 
-        $article_source = Arrays::array_remove_null($article_source);
         $article_source = Arrays::array_remove_keys($article_source,$removeFields);
         $article_source = Arrays::array_remove_keys($article_source,$removeNestedFields, true);
+        $article_source = Arrays::array_remove_empty_recursive($article_source,[],['to_tab','comment','links_tab','file_meta']);
+        $article_source = Arrays::array_remove_null($article_source);
 
         $article_source_json = $this->saveComparisonJson($article_source,'.source');
 //        $this->assertJsonStringEqualsComparison($article_source_json,'.source');
@@ -227,9 +228,16 @@ class ArticlesTransferTest extends EpiTestCase
             ->where(['Articles.id'=>1])
             ->toArray();
 
-        $article_target = Arrays::array_remove_null($article_target);
         $article_target = Arrays::array_remove_keys($article_target,$removeFields);
         $article_target = Arrays::array_remove_keys($article_target,$removeNestedFields, true);
+        $article_target = Arrays::array_remove_empty_recursive($article_target,[],['to_tab','comment','links_tab']);
+        $article_target = Arrays::array_remove_null($article_target);
+
+//        foreach ($article_target as $article) {
+//            if (isset($article['links'])) {
+//               $article['links'] = Arrays::array_remove_empty($article['links'],[], ['to_tab']);
+//            }
+//        }
 
         $article_target_json = $this->saveComparisonJson($article_target,'.target');
 //        $this->assertJsonStringEqualsComparison($article_target_json,'.target');

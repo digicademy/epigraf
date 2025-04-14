@@ -24,6 +24,7 @@ use Cake\ORM\RulesChecker;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Cake\Database\Schema\TableSchemaInterface;
+use Epi\Model\Entity\Item;
 
 /**
  * Items Model
@@ -43,6 +44,13 @@ class ItemsTable extends BaseTable
      * @var null|string
      */
     public $typeField = 'itemtype';
+
+    /**
+     * Whether to check field types after marshalling and merge JSON data
+     *
+     * @var bool
+     */
+    public $mergeJson = true;
 
     /**
      * Initialize hook
@@ -304,14 +312,6 @@ class ItemsTable extends BaseTable
             $entity->newproperty = $this->Properties->newEntity($property);
         }
 
-        // Merge JSON arrays
-        foreach (($entity->type->merged['fields'] ?? []) as $field => $config) {
-            if (($config['format'] ?? '') === 'json') {
-                $entity->mergeJson($field, $data, false);
-            }
-        }
-//        $entity->mergeJson('value', $data, false);
-
         parent::afterMarshal($event, $entity, $data, $options);
     }
 
@@ -319,8 +319,8 @@ class ItemsTable extends BaseTable
      * Set the articles ID
      *
      * @param EventInterface $event
-     * @param $entity
-     * @param $options
+     * @param Item $entity
+     * @param array $options
      */
     public function beforeSave(EventInterface $event, $entity, $options)
     {
@@ -367,17 +367,12 @@ class ItemsTable extends BaseTable
     {
         $pagination = parent::getPaginationParams($params, $columns);
 
-        $byDistance = ($params['sort'] ?? '') === 'distance';
-
         // TODO: Why update default order?
+        $byDistance = ($params['sort'] ?? '') === 'distance';
         if ($byDistance) {
             $defaultOrder = ['distance' => 'ASC'];
-        }
-
-        else {
-            $defaultOrder = [
-                FIELD_ARTICLES_SIGNATURE => 'ASC'
-            ];
+        } else {
+            $defaultOrder = [FIELD_ARTICLES_SIGNATURE => 'ASC'];
         }
 
         $limit = 1000;
@@ -435,6 +430,26 @@ class ItemsTable extends BaseTable
         return parent::getColumns($selected, $default, $type);
     }
 
+
+    /**
+     * Set the article as item root
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findPrepareRoot(Query $query, array $options)
+    {
+        return $query->formatResults(
+            function (CollectionInterface $results) use (&$query) {
+                return $results->map(
+                    function ($row) {
+                        return $row->prepareRoot($row->article, $row->article, true);
+                    }
+                );
+            }
+        );
+    }
 
     /**
      * Constructs a database query from request parameters
@@ -596,11 +611,17 @@ class ItemsTable extends BaseTable
             $contain[] = 'Articles.Projects';
         }
 
-        elseif (in_array('article', $snippets)) {
+        if (in_array('article', $snippets)) {
             $contain[] = 'Articles';
         }
 
-        $query = $query->contain($contain);
+        if (in_array('properties', $snippets)) {
+            $contain[] = 'Articles';
+            $contain[] = 'Articles.Items';
+            $contain[] = 'Articles.Links';
+        }
+
+        $query = $query->contain(array_unique($contain));
 
         return $query;
     }
@@ -618,7 +639,7 @@ class ItemsTable extends BaseTable
         return $query->find('list', ['keyField' => 'value', 'valueField' => 'value'])
             ->distinct()
             ->where(['itemtype' => 'search', 'value IS NOT' => null, 'value <>' => ''])
-            ->cache('searchIndexes', $this->initResultCache())
+            ->find('cached', ['cachekey' => 'searchIndexes'])
             ->formatResults(function ($results) {
                 $results = $results->toArray();
                 $results = Arrays::array_add_prefix($results, 'text.', true);

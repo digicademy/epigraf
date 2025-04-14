@@ -1076,14 +1076,14 @@ class Databank extends BaseEntity
             try {
                 $table = $this->fetchTable($this->plugin . '.Types');
                 $cacheConfig = $table->initResultCache();
-                $cacheKey = (BaseTable::$userId ?? 'public') . '_' . (BaseTable::$requestMode ?? 'default') . '_grouped';
+                $cacheKey = (BaseTable::$userId ?? 'public') . '_' . (BaseTable::$requestMode ?? MODE_DEFAULT) . '_grouped';
 
                 $this->_types = Cache::remember(
                     $cacheKey,
                     function () use ($table) {
                         return $this->_types = $table
                             ->find('all')
-                            ->where(['mode' => 'default', 'preset' => 'default'])
+                            ->where(['mode' => MODE_DEFAULT, 'preset' => 'default'])
                             ->contain('Subtypes')
                             ->select([
                                 'scope',

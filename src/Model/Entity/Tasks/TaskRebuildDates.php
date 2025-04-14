@@ -13,9 +13,6 @@ namespace App\Model\Entity\Tasks;
 /**
  * Parse dates and update start, end and sort field
  *
- * # Database fields
- *
- * # Virtual fields
  */
 class TaskRebuildDates extends BaseTaskMutate
 {
