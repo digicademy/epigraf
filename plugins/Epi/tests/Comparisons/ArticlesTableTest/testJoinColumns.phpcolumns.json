@@ -21,6 +21,12 @@
         "default": true,
         "public": true,
         "name": "dates",
+        "search": {
+            "field": "dates.date_sort",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "format": null,
         "width": null
     },
     "locations": {
@@ -56,6 +62,12 @@
                 }
             ]
         },
+        "search": {
+            "field": "locations.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "format": null,
         "width": null
     },
     "sortnos": {
@@ -80,6 +92,12 @@
             ],
             "aggregate": "max"
         },
+        "search": {
+            "field": "sortnos.sortno",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "format": null,
         "width": null
     },
     "topics_priority": {
@@ -104,6 +122,12 @@
         "selectable": false,
         "public": true,
         "name": "topics_priority",
+        "search": {
+            "field": "topics_priority.value",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "format": null,
         "width": null
     }
 }

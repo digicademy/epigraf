@@ -58,6 +58,37 @@ class Utils {
         }
     }
 
+
+    /**
+     * Check if element is visible on page by using "display" CSS property.
+     *
+     * @param {HTMLElement} elm Element to check for visibility
+     * @returns {boolean} True if element is visible, false if otherwise
+     */
+    static isElementVisible(elm) {
+        return window.getComputedStyle(elm).getPropertyValue('display') !== 'none';
+    }
+
+
+    waitFor(selector, timeout = 3000) {
+        return new Promise((resolve, reject) => {
+            const interval = 50;
+            let elapsed = 0;
+            const checkVisible = () => {
+                const el = document.querySelector(selector);
+                if (el && Utils.isElementVisible(el)) {
+                    resolve(el);
+                } else if (elapsed >= timeout) {
+                    reject(new Error("Element not loaded."));
+                } else {
+                    elapsed += interval;
+                    setTimeout(checkVisible, interval);
+                }
+            };
+            checkVisible();
+        });
+    }
+
     /**
      * Scroll an element to the top
      *
@@ -127,10 +158,6 @@ class Utils {
         }
         container = container || element.parentNode;
 
-        // const containerComputedStyle = window.getComputedStyle(container, null);
-        // const containerBorderTopWidth = parseInt(containerComputedStyle.getPropertyValue('border-top-width'));
-        // const containerBorderLeftWidth = parseInt(containerComputedStyle.getPropertyValue('border-left-width'));
-
         const elmBox = element.getBoundingClientRect();
         let conBox = container.getBoundingClientRect();
 
@@ -180,11 +207,6 @@ class Utils {
                 container.scrollLeft = container.scrollLeft + scrollOffset;
             }
         }
-
-        // Safeguard in case manual calculation did not succeed
-        // if ((overTop || overBottom || overLeft || overRight)) {
-        //     element.scrollIntoView();
-        // }
     }
 
     /**
@@ -375,7 +397,7 @@ class Utils {
      */
     static spawnFromString(html, data, first = true) {
         const template = document.createElement('template');
-        template.innerHTML = html.trim().formatUnicorn(data);
+        template.innerHTML = Utils.formatUnicorn(html.trim(), data);
         if (first) {
             return template.content.firstElementChild;
         } else {
@@ -426,7 +448,15 @@ class Utils {
     }
 
     static getInputValue(element, defaultValue) {
-        return element ? element.value : defaultValue;
+        if (!element) {
+            return defaultValue;
+        }
+
+        if (element.type === "checkbox") {
+            return element.checked ? element.value : 0;
+        }
+
+        return element.value;
     }
 
     /**
@@ -669,6 +699,29 @@ class Utils {
             .replace(/&amp;/g, "&");
     }
 
+    /**
+     *  Replace placeholders with data
+     *
+     *  Replaces all placeholders in curly brackets by the corresponding value in the data object.
+     *  Placeholders followed by "|attr" will be preprocessed to safely insert them in HTML attributes.
+     *
+     * See https://stackoverflow.com/questions/55538149/how-to-create-template-or-placeholder-in-html-and-add-them-dynamically-to-the-bo
+     *
+     * @param {String}  str The template string
+     * @param {Object} data Object with values to replace in the template (curly bracket placeholders).
+     * @returns {string}
+     */
+    static formatUnicorn(str, data) {
+        for (const key in data) {
+            let plainRegex = new RegExp("\\{" + key + "\\}", "gi");
+            str = str.replace(plainRegex, data[key]);
+
+            let attrRegex = new RegExp("\\{" + key + "\\|attr\\}", "gi");
+            str = str.replace(attrRegex, Utils.encodeHtmlAttribute(data[key]));
+        }
+
+        return str;
+    }
 
     /**
      * Convert numbers to letters
@@ -774,11 +827,16 @@ class Utils {
      * Evaluate numbers (0,1) and strings ("false","true") to boolean
      *
      * @param {*} value The value to evaluate
+     * @param {boolean} [defaultValue=false] Default value if the value is undefined or null.
      * @returns {boolean}
      */
-    static isTrue(value) {
+    static isTrue(value, defaultValue = false) {
         if (typeof value === 'string') {
             value = value.toLowerCase();
+        }
+
+        if (value === undefined || value === null) {
+            return defaultValue;
         }
 
         return value === 1 || value === "1" || value === true || value === "true";
@@ -792,16 +850,6 @@ class Utils {
      */
     static isString(obj) {
         return (Object.prototype.toString.call(obj) === '[object String]');
-    }
-
-    /**
-     * Check if element is visible on page by using "display" CSS property.
-     *
-     * @param {HTMLElement} elm Element to check for visibility
-     * @returns {boolean} True if element is visible, false if otherwise
-     */
-    static isElementVisible(elm) {
-        return window.getComputedStyle(elm).getPropertyValue('display') !== 'none';
     }
 
     /**
@@ -1078,9 +1126,26 @@ class Utils {
             if (event.defaultPrevented) {
                 return;
             }
-            if ((selector === undefined) || event.target.matches(selector)) {
+            if ((selector === undefined)) {
                 return eventHandler(event);
             }
+
+            const match = event.target.closest(selector);
+            if (match && event.currentTarget.contains(match)) {
+
+                // Make sure mouseover / mouseenter are only triggered once,
+                // not for every child
+                if (
+                    ((event.type === "mouseover") || (event.type === "mouseout")) &&
+                    match.contains(event.relatedTarget)
+                ) {
+                    return;
+                }
+
+                return eventHandler.call(match, event);
+                // return eventHandler(event);
+            }
+
         };
 
         // Keep track in the eventListeners property
@@ -1379,6 +1444,34 @@ class Utils {
     }
 
     /**
+     * Group DOM elements by a data value.
+     *
+     * @param {HTMLElement[]} elms
+     * @param {string} dataAttr In camel case, e.g. 'toType'.
+     * @param {string} emptyKey The key for elements lacking the data attribute.
+     *                          Set to undefined to skip elements without the data value.
+     * @return {{}} Return an object keyed by the data values.
+     *              Each property is an array with the elements having the data value.
+     */
+    static groupElements(elms, dataAttr, emptyKey = '') {
+        const obj = {};
+
+        elms.forEach(el => {
+            let key = el.dataset[dataAttr];
+            if ((key === undefined) && (emptyKey !== undefined)) {
+                key = emptyKey;
+            }
+
+            if (!obj[key]) {
+                obj[key] = [];
+            }
+            obj[key].push(el);
+        });
+
+        return obj;
+    }
+
+    /**
      * Split a comma separated string value to an array
      *
      * Returns an empty array for empty strings.
@@ -1396,7 +1489,11 @@ class Utils {
             return [];
         }
 
-        return input.split(separator);
+        if (Array.isArray(input)) {
+            return input;
+        }
+
+        return input.split(separator).map(str => str.trim()).filter(Boolean);
     }
 
     /**
@@ -1411,6 +1508,86 @@ class Utils {
         const pos = value.indexOf(separator);
         return (pos !== -1) ? value.substring(0, pos) : defaultPrefix;
     }
+
+    /**
+     * Get map of checkbox states in a container.
+     *
+     * @param {HTMLElement} container
+     * @returns {Object} Returns a list with two items.
+     *                   The first item is an object with checkbox names as keys and their checked state as values.
+     *                   The second item is a boolean indicating if all checkboxes are checked.
+     */
+    static evalCheckboxes(container) {
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+        const checkList = {};
+        let all = true;
+        checkboxes.forEach(checkbox => {
+            checkList[checkbox.name] = checkbox.checked;
+            all &&= checkbox.checked;
+        });
+        return [checkList, all];
+    }
+
+
+    /**
+     * Derive a clean ID from a string.
+     *
+     * @param {string} text
+     * @return {string}
+     */
+    static cleanId(text) {
+        return text.toString().toLowerCase().replace(/\s+/g, '-')    // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')                                // Remove all non-word chars
+            .replace(/\-\-+/g, '-')                                  // Replace multiple - with single -
+            .replace(/^-+/, '')                                      // Trim - from start of text
+            .replace(/-+$/, '');                                     // Trim - from end of text
+    }
+
+    /**
+     * Get horizontal distance of two elements in pixels
+     */
+    static getHorizontalDistance(a, b) {
+        const rectA = a.getBoundingClientRect();
+        const rectB = b.getBoundingClientRect();
+
+        return Math.max(rectB.left - rectA.right, rectA.left - rectB.right, 0);
+    }
+
+    /**
+     * similar to the PHP core function array_replace_recursive, works only for objects
+     *
+     * @param {Boolean} joinSimpleValues if true, join simple values at the first level
+     * @param {Object} original
+     */
+    static replaceRecursive(joinSimpleValues, original, ...replacements) {
+        for (const replacement of replacements) {
+            for (const key in replacement) {
+                if (replacement.hasOwnProperty(key)) {
+                    if (
+                        typeof replacement[key] === 'object' &&
+                        replacement[key] !== null &&
+                        !Array.isArray(replacement[key]) &&
+                        typeof original[key] === 'object' &&
+                        original[key] !== null &&
+                        !Array.isArray(original[key])
+                    ) {
+                        original[key] = Utils.replaceRecursive(false, original[key], replacement[key]);
+                    } else {
+                        if (joinSimpleValues
+                            && ['number', 'string', 'boolean'].includes(typeof original[key])
+                            && original[key] !== replacement[key]) {
+                            original[key] += ',' + replacement[key];
+                        }
+                        else {
+                            original[key] = replacement[key];
+                        }
+                    }
+                }
+            }
+        }
+        return original;
+    }
+
 }
 
 export default Utils;
@@ -1458,16 +1635,9 @@ if (!String.prototype.formatUnicorn) {
                 Array.prototype.slice.call(arguments)
                 : arguments[0];
 
-            for (key in args) {
-                let plainRegex = new RegExp("\\{" + key + "\\}", "gi");
-                str = str.replace(plainRegex, args[key]);
-
-                let attrRegex = new RegExp("\\{" + key + "\\|attr\\}", "gi");
-                str = str.replace(attrRegex, Utils.encodeHtmlAttribute(args[key]));
-            }
+            str = Utils.formatUnicorn(str, args);
         }
 
         return str;
     };
 }
-

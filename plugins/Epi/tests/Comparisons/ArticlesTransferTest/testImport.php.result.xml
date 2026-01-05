@@ -41,7 +41,7 @@
               <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
             </sectionpath>
             <content>Better read this one.</content>
-            <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="4" rght="5">
+            <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="2" rght="3">
               <lemma>Good</lemma>
               <name>Good book</name>
               <norm_iri>gooddoi</norm_iri>
@@ -59,7 +59,7 @@
               <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
             </sectionpath>
             <content>Headache.</content>
-            <property id="properties-2" parent_id="properties-3" sortno="1" propertytype="literature" level="1" lft="2" rght="3">
+            <property id="properties-2" parent_id="properties-3" sortno="1" propertytype="literature" level="1" lft="4" rght="5">
               <lemma>Bad</lemma>
               <name>Bad book</name>
               <ancestors>
@@ -95,17 +95,17 @@
           <lemma>Books</lemma>
           <name>Book collection</name>
         </property>
-        <property id="properties-2" parent_id="properties-3" sortno="1" propertytype="literature" level="1" lft="2" rght="3">
-          <lemma>Bad</lemma>
-          <name>Bad book</name>
+        <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="2" rght="3">
+          <lemma>Good</lemma>
+          <name>Good book</name>
+          <norm_iri>gooddoi</norm_iri>
           <sections>
             <section id="sections-2" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="4" rght="5">
-          <lemma>Good</lemma>
-          <name>Good book</name>
-          <norm_iri>gooddoi</norm_iri>
+        <property id="properties-2" parent_id="properties-3" sortno="1" propertytype="literature" level="1" lft="4" rght="5">
+          <lemma>Bad</lemma>
+          <name>Bad book</name>
           <sections>
             <section id="sections-2" articles_id="articles-1" />
           </sections>

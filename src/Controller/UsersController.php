@@ -15,7 +15,12 @@ use App\Model\Entity\User;
 use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\NotFoundException;
+use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
+use DateTime;
+use Cake\Http\Cookie\Cookie;
 use Rest\Controller\Component\LockTrait;
 
 /**
@@ -39,25 +44,27 @@ class UsersController extends AppController
      */
     public $authorized = [
         'api' => [
-            'guest' => ['login'],
-            'reader' => ['login', 'track'],
-            'coder' => ['login', 'track'],
-            'desktop' => ['login', 'track'],
-            'author' => ['login', 'track'],
-            'editor' => ['login', 'track'],
-            'admin' => ['login', 'track'],
-            'devel' => ['login', 'track']
+            'guest' => ['login', 'stop'],
+            'reader' => ['login', 'stop', 'track'],
+            'coder' => ['login', 'stop', 'track'],
+            'desktop' => ['login', 'stop', 'track'],
+            'author' => ['login', 'stop', 'track'],
+            'editor' => ['login', 'stop', 'track'],
+            'admin' => ['login', 'stop', 'track'],
+            'devel' => ['login', 'stop', 'track']
         ],
         'web' => [
-            'guest' => ['login', 'logout'],
-            'bot' => ['logout'],
-            'reader' => ['start', 'login', 'logout', 'track', 'settings', 'view'],
-            'coder' => ['start', 'login', 'logout', 'track', 'settings', 'view'],
-            'desktop' => ['start', 'login', 'logout', 'track', 'settings', 'view', 'edit'],
-            'author' => ['start', 'login', 'logout', 'track', 'settings', 'view', 'edit'],
-            'editor' => ['start', 'login', 'logout', 'track', 'settings', 'view', 'edit']
+            'guest' => ['login', 'logout', 'stop', 'activate'],
+            'bot' => ['stop', 'logout'],
+            'reader' => ['start', 'stop', 'login', 'logout', 'activate', 'track', 'settings', 'view'],
+            'coder' => ['start', 'stop', 'login', 'logout', 'activate', 'track', 'settings', 'view'],
+            'desktop' => ['start', 'stop', 'login', 'logout','activate',  'track', 'settings', 'view', 'edit'],
+            'author' => ['start', 'stop', 'login', 'logout', 'activate', 'track', 'settings', 'view', 'edit'],
+            'editor' => ['start', 'stop', 'login', 'logout', 'activate', 'track', 'settings', 'view', 'edit']
         ]
     ];
+
+    public $help = 'administration/users';
 
     /**
      * Login method
@@ -78,7 +85,38 @@ class UsersController extends AppController
             }
         }
 
-        $loggedIn = !empty($this->Auth->user());
+        $user = $this->Auth->user();
+        $loggedIn = !empty($user);
+
+        // Set user role cookie for one year
+        if ($loggedIn) {
+            $this->response = $this->response
+                ->withCookie(Cookie::create(
+                    'EPIGRAF_ROLE',
+                    'editor',
+                    [
+                        'expires' => new DateTime('+1 year'),
+                        'path' => '/'
+                    ]
+                ));
+
+
+            $hostWithoutPort = explode(':', $this->request->host())[0] ?? '';
+            if (!in_array($hostWithoutPort, ['localhost', '127.0.0.1', '[::1]'])) {
+                $this->response = $this->response
+                    ->withCookie(Cookie::create(
+                        'EPIGRAF_ROLE',
+                        'editor',
+                        [
+                            'expires' => new DateTime('+1 year'),
+                            'path' => '/',
+                            'domain' => '.' . $this->request->domain()
+                        ]
+                    ));
+            }
+        }
+
+        // Redirect to start page if user is logged in
         if ($loggedIn && !$this->request->is('api')) {
             return $this->redirect($this->Auth->redirectUrl());
         }
@@ -136,6 +174,17 @@ class UsersController extends AppController
         else {
             return $this->redirect('/help');
         }
+    }
+
+    /**
+     * Stop method
+     *
+     * Show a message that the user is not allowed to access the requested page.
+     *
+     */
+    public function stop()
+    {
+
     }
 
 
@@ -235,7 +284,7 @@ class UsersController extends AppController
 
         $entities = $this->Users
             ->find('hasParams', $params)
-            ->find('containFields', $params);
+            ->find('containColumns', $params);
 
         $this->paginate = $paging;
         $entities = $this->paginate($entities);
@@ -290,68 +339,39 @@ class UsersController extends AppController
                 'label' => 'Übersicht',
                 'url' => '#toc-overview',
                 'data' => ['data-id' => 'toc-overview']
-            ],
-            [
+            ]
+        ];
+
+        if ($entity->hasSqlAccess) {
+            $this->sidemenu[] = [
                 'label' => 'Epigraf Desktop',
                 'url' => '#toc-epidesktop',
                 'data' => ['data-id' => 'toc-epidesktop']
-            ],
-            [
+            ];
+        }
+
+        if (in_array($this->userRole, ['admin', 'devel'])) {
+            $this->sidemenu[] = [
                 'label' => 'Databases',
                 'url' => '#toc-databases',
                 'data' => ['data-id' => 'toc-databases']
-            ],
-            [
+            ];
+            $this->sidemenu[] = [
                 'label' => 'Permissions',
                 'url' => '#toc-permissions',
                 'data' => ['data-id' => 'toc-permissions']
-            ],
-            [
+            ];
+            $this->sidemenu[] = [
                 'label' => 'User settings',
                 'url' => '#toc-usersettings',
                 'data' => ['data-id' => 'toc-usersettings']
-            ],
-        ];
+            ];
+        }
 
         $columns = array_merge(['database' => __('Database')], PermissionsTable::$userRoles);
 
         $this->Answer->addOptions(compact('columns'));
         $this->Answer->addAnswer(compact('entity'));
-    }
-
-    /**
-     * Set the password of a mySQL user or create a mySQL user
-     *
-     * @param string|null $id user id
-     *
-     * @return \Cake\Http\Response|void
-     * @throws RecordNotFoundException If record not found
-     */
-    public function password($id = null)
-    {
-        /** @var \App\Model\Entity\User $user */
-        $user = $this->Users->get($id, ['contain' => ['Databanks']]);
-
-        if (empty($user->databank)) {
-            throw new RecordNotFoundException(__('Select the default user database first.'));
-        }
-
-        if (($this->request->is(['patch', 'post', 'put']))) {
-
-            if (
-                $user->databank->setPassword(
-                    'epi_' . $user['username'],
-                    $this->request->getData('password')
-                )
-            ) {
-                $this->Flash->success(__('The password has been changed.'));
-                return $this->redirect(['action' => 'view', $id]);
-            }
-            else {
-                $this->Flash->error(__('The password could not be changed.'));
-            }
-        }
-        $this->set('user', $user);
     }
 
     /**
@@ -375,7 +395,7 @@ class UsersController extends AppController
             $token = $this->Users->generateAccesstoken();
             $entity['accesstoken'] = $token;
             if ($this->Users->save($entity)) {
-                $this->Answer->success(__('Your new access token is {0}', $token), ['action' => 'view', $entity->id]);
+                $this->Answer->success(__('Your access token has been recreated.', $token), ['action' => 'view', $entity->id]);
             }
             else {
                 $this->Answer->error(__('The user could not be saved. Please, try again.'));
@@ -560,6 +580,96 @@ class UsersController extends AppController
     }
 
     /**
+     * Generate an activation link
+     *
+     * @param string $id User id
+     * @return void
+     */
+    public function invite($id)
+    {
+        $entity = $this->Users->get($id, ['contain' => []]);
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $entity = $this->Users->generateActivationToken($entity);
+            if ($this->Users->save($entity, ['associated' => false])) {
+                $this->Answer->addOptions(['stage' => 'show']);
+            }
+            else {
+                $this->Answer->error(__('The activation link could not be generated.'));
+            }
+        }
+        $this->Answer->addAnswer(compact('entity'));
+    }
+
+    /**
+     * Send an activation link
+     *
+     * @param string $id User id
+     * @return void
+     */
+    public function mail()
+    {
+        $email = $this->request->getData();
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            if ($this->Users->sendEmail($email)) {
+                $this->Answer->success(__('Email was sent.'));
+            }
+            else {
+                $this->Answer->error(__('Error with sending the email.'));
+            }
+        }
+
+        $this->Answer->addAnswer(compact('email'));
+    }
+
+
+    public function activate($token = null)
+    {
+        if (!$token) {
+            throw new BadRequestException(__('Invalid token'));
+        }
+
+        $entity = $this->Users->find()
+            ->where([
+                'activation_token' => $token,
+                'activation_expires >' => FrozenTime::now()
+            ])
+            ->first();
+
+        if (!$entity) {
+            throw new NotFoundException(__('Token invalid or expired'));
+        }
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $data = $this->request->getData();
+
+            if (empty($data['password'] )) {
+                $this->Answer->error(__('Please set a safe password.'));
+            }
+            elseif ($data['password'] !== $data['repeat']) {
+                $this->Answer->error(__('The passwords do not match.'));
+            } else {
+
+                $entity = $this->Users->patchEntity($entity, $data, ['fields' => ['password']]);
+                $entity->activation_token = null;
+                $entity->activation_expires = null;
+                $entity->activation_state = USER_ACCOUNT_ACTIVE;
+
+                if ($this->Users->save($entity)) {
+                    $this->Answer->success(
+                        __('Password set. You can now log in.'),
+                        ['action' => 'login', '?' => ['redirect' => '/users/view/me']]
+                    );
+                }
+            }
+        }
+
+        $this->Answer->addAnswer(compact('entity'));
+    }
+
+    /**
      * Edit a user account
      *
      * @param string $id User id
@@ -567,6 +677,7 @@ class UsersController extends AppController
      */
     public function edit($id)
     {
+        // TODO: Remove hashed password field from the edit form
         $entity = $this->Users->get($id, ['contain' => []]);
 
         // If the currently logged-in user is an admin or devel,
@@ -626,7 +737,7 @@ class UsersController extends AppController
         if (!in_array($user['role'] ?? '', ['admin', 'devel'])) {
 
             $action = $this->request->getParam('action');
-            if (!in_array($action, ['start', 'login', 'logout', 'settings', 'track'])) {
+            if (!in_array($action, ['start', 'login', 'logout', 'settings', 'track', 'stop'])) {
 
                 $passedParams = $this->request->getParam('pass', []);
                 $entityId = $passedParams[0] ?? null;

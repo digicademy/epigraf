@@ -50,10 +50,11 @@ class EntityMarkdownHelper extends BaseEntityHelper
         $options = [
             'edit'=> $this->Link->getEdit(),
             'mode'=> $this->Link->getMode(),
-            'templateArticle'=>  $entity->type['merged'] ?? []
+            'template_article'=>  $entity->type['merged'] ?? [],
+            'buttons' => false
         ];
 
-//        $options = ['edit' => false, 'mode' => $mode, 'template_article' => $templateArticle];
+//        $options = ['edit' => false, 'mode' => $mode, 'template_article' => $template_article];
         $options['format'] = 'md';
 
         $out = "";
@@ -206,8 +207,9 @@ class EntityMarkdownHelper extends BaseEntityHelper
         // Section content
         if ($sectionConfig['view']['name'] === 'stack') {
             $out = $this->sectionContentStacks($section, $options);
-        }
-        else {
+        } elseif ($sectionConfig['view']['name'] === 'list') {
+            $out = $this->sectionContentLists($section, $options);
+        } else {
             $out = $this->sectionContentTables($section, $options);
         }
 
@@ -381,6 +383,16 @@ class EntityMarkdownHelper extends BaseEntityHelper
     }
 
     /**
+     * Render section content as list
+     *
+     * @param array $options
+     * @return string
+     */
+    public function sectionContentLists($section, $options) {
+        return $this->sectionContentStacks($section, $options);
+    }
+
+    /**
      * Output section content as field stack
      *
      * @param Section $section
@@ -399,10 +411,6 @@ class EntityMarkdownHelper extends BaseEntityHelper
                 $out .= $this->sectionContentStacksStack($items, $options);
             }
         }
-
-        //$items = Arrays::ungroup($groupedItems);
-        //$options['wrap'] = false;
-        //$out .= $this->annoLists($section->root, $items, $options);
 
         return $out;
     }
@@ -531,6 +539,7 @@ class EntityMarkdownHelper extends BaseEntityHelper
      */
     public function sectionWidgets($options)
     {
+        $options['plugin'] = 'Epi';
         $out = '';
         if (!empty($options['template_section']['view']['widgets']['map'] ?? false)) {
             $out .= $this->getView()->element('../Sections/widget_map', $options);
@@ -1136,8 +1145,6 @@ class EntityMarkdownHelper extends BaseEntityHelper
                 $out .= $this->footnoteContent($item, $article, $options, $typeConfig);
                 $out .= "\n";
             }
-
-            //$out .= $this->annoLists($article, $items, ['edit' => $editFootnotes, 'mode' => $mode, 'lists' => ['links']]);
         }
         return $out;
     }

@@ -48,20 +48,8 @@ class PropertiesController extends AppController
         'web' => [
             'guest' => ['index', 'view'],
             'reader' => ['index', 'view', 'select', 'choose'],
-            'coder' => [
-                'index',
-                'view',
-                'select',
-                'choose',
-                'add',
-                'edit',
-                'delete',
-                'move',
-                'merge',
-                'lock',
-                'unlock'
-            ],
-            'desktop' => ['index', 'view', 'select', 'choose'],
+            'coder' => ['index', 'view', 'select', 'choose', 'add', 'edit', 'delete', 'move', 'merge', 'lock', 'unlock', 'export'],
+            'desktop' => ['index', 'view', 'select', 'choose', 'export'],
             'author' => [
                 'index',
                 'view',
@@ -74,6 +62,7 @@ class PropertiesController extends AppController
                 'merge',
                 'lock',
                 'unlock',
+                'export',
                 'mutate'
 //                'mutate' => ['task' => ['batch_sort']]
             ],
@@ -90,11 +79,14 @@ class PropertiesController extends AppController
                 'merge',
                 'lock',
                 'unlock',
+                'export',
                 'mutate'
 //                'mutate' => ['task' => ['batch_sort']]
             ]
         ]
     ];
+
+    public $help = 'introduction/properties';
 
     /**
      * Pagination setup
@@ -196,95 +188,43 @@ class PropertiesController extends AppController
     /**
      * Move properties to a new position
      *
-     * This endpoint supports only POST requests containing a moves field in the payload.
+     * This endpoint supports only POST requests containing
+     * either a single move operation or a batch of move operations.
+     *
+     * ## Single move operation
+     * The payload contains the following keys:
+     * - reference_id The ID of a reference node
+     * - reference_pos The position of the reference node: 'parent' or 'preceding'
+     *
+     * ### Batch move operations
      * The moves field contains an array of all moves.
      * Each move is an array with the following keys:
-     *
      * - id The ID of the property
      * - parent_id The ID of the new parent
      * - preceding_id The ID of the preceding sibling
      *
-     * @param string $id For single moves the property ID, for batch moves the property type
+     * @param string $scope For single moves the property ID, for batch moves the property type
      * @return \Cake\Http\Response|null|void
      */
-    public function move($id)
+    public function move($scope)
     {
-        $batchMove = false;
+        // Check batch move preconditions
         if ($this->request->is(['post', 'put'])) {
             $moves = $this->request->getData('moves', null);
-            $batchMove = !is_null($moves) && is_array($moves);
-        }
-
-        // Move a single entity
-        if (!$batchMove) {
-            $entity = $this->Properties->get($id, ['finder' => 'containAll']);
-
-            if ($this->request->is(['post', 'put'])) {
-
-                $entity = $this->Properties->patchEntity(
-                    $entity, $this->request->getData(),
-                    ['fields' => ['reference_id', 'reference_pos']]
-                );
-
-                $this->Lock->createLock($entity, true);
-                $success = $this->Properties->moveToReference($entity);
-
-                if ($success) {
-                    $this->Lock->releaseLock($entity);
-                    $entity['moved'] = '1';
-                    $this->Answer->success(
-                        __('The property has been moved.')
-                    );
+            if (!is_null($moves) && is_array($moves)) {
+                /* Locks from EpiDesktop */
+                if (empty($scope) | empty($this->activeDatabase->types['properties'][$scope])) {
+                    throw new BadRequestException('No valid property type selected.');
                 }
-                else {
+                if ($this->Lock->isDesktopLocked('properties', $scope)) {
                     $this->Answer->error(
-                        __('The property could not be moved. Please try again.')
+                        __('The table is open in EpiDesktop. Close or unlock in EpiDesktop.')
                     );
                 }
             }
-            $this->Answer->addAnswer(compact('entity'));
         }
 
-        // Process move operations
-        else {
-            /* Locks from EpiDesktop */
-            $scope =$id;
-            if (empty($scope) | empty($this->activeDatabase->types['properties'][$scope])) {
-                throw new BadRequestException('No valid property type selected.');
-            }
-            if ($this->Lock->isDesktopLocked('properties', $scope)) {
-                $this->Answer->error(
-                    __('The table is open in EpiDesktop. Close or unlock in EpiDesktop.')
-                );
-            }
-
-            $errors = [];
-            foreach ($moves as $move) {
-
-                // TODO: lock the items for other move operations
-                $success = $this->Properties->moveTo(
-                    $move['id'] ?? null,
-                    $move['parent_id'] ?? null,
-                    $move['preceding_id'] ?? null
-                );
-
-                if (!$success) {
-                    $errors[] = __('Could not move property #{0} to the new target.', $move['id'] ?? null);
-                }
-            }
-
-            if (!empty($errors)) {
-                $this->Answer->addAnswer(['errors' => $errors]);
-                $this->Answer->error(
-                    __('{0} of {1} properties could not be moved to their new target.', count($errors), count($moves))
-                );
-            }
-            else {
-                $this->Answer->success(
-                    __('Moved {0} properties to new targets.', count($moves))
-                );
-            }
-        }
+        $this->Actions->move($scope);
     }
 
     /**
@@ -361,25 +301,49 @@ class PropertiesController extends AppController
     /**
      * Import properties
      *
-     * @param string|null $propertytype property type
+     * @param string|null $scope The property type
      *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if no valid property type is provided
      */
-    public function import($propertytype = null)
+    public function import($scope = null)
     {
-        if (empty($propertytype) || empty($this->activeDatabase->types['properties'][$propertytype])) {
+        if (empty($scope)) {
+            $scope = $this->request->getQuery('propertytype', null);
+        }
+
+         if (empty($scope) || empty($this->activeDatabase->types['properties'][$scope])) {
             throw new BadRequestException('No valid property type selected.');
         }
 
         /* Locks from EpiDesktop */
-        if ($this->Lock->isDesktopLocked('properties', $propertytype)) {
+        if ($this->Lock->isDesktopLocked('properties', $scope)) {
             $this->Answer->error(
                 __('The table is open in EpiDesktop. Close or unlock in EpiDesktop.')
             );
         }
 
-        $this->Transfer->import($propertytype);
+        $this->Transfer->import($scope);
+    }
+
+
+    /**
+     * Export entities
+     *
+     * @param string $scope The property type
+     * @return Response|void|null
+     */
+    public function export($scope = null)
+    {
+        if (empty($scope)) {
+            $scope = $this->request->getQuery('propertytype', null);
+        }
+
+        if (empty($scope)) {
+            throw new BadRequestException('Missing property type.');
+        }
+
+        return $this->Transfer->export($scope);
     }
 
     /**
@@ -395,8 +359,12 @@ class PropertiesController extends AppController
      * @param string $scope The property type
      * @return Response|void|null
      */
-    public function mutate($scope)
+    public function mutate($scope = null)
     {
+        if (empty($scope)) {
+            $scope = $this->request->getQuery('propertytype', null);
+        }
+
         if (empty($scope)) {
             throw new BadRequestException('Missing property type.');
         }
@@ -414,12 +382,16 @@ class PropertiesController extends AppController
     /**
      * Transfer properties between databases
      *
-     * @param string $scope The property type
+     * @param string $scope The property type. ALternatively, provide the value as query parameter 'propertytype'.
      * @return void
-     * @throws BadRequestException I the scioe is missing.
+     * @throws BadRequestException If the scope is missing.
      */
-    public function transfer($scope)
+    public function transfer($scope = null)
     {
+        if (empty($scope)) {
+            $scope = $this->request->getQuery('propertytype', null);
+        }
+
         if (empty($scope)) {
             throw new BadRequestException('Missing property type.');
         }

@@ -447,7 +447,7 @@ class TreeHelper extends Helper
             'class' => $this->getClasses($item, $propertyType, $cursor, $selected),
 
             // TODO: add epi prefix if necessary
-            'data-list-itemof' => $item->table_name,
+            'data-list-itemof' => $item['table_name'] ?? '',
 
             // TODO: instead of adding suffix '-from' implement different roles (in addition to the
             //       existing roles data-role="manage" and data-role="empty". Make sure, merging

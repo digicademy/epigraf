@@ -1,0 +1,31 @@
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+:root {
+    --tile-border-color: #917D4D;
+    --tile-badge-bg-color: #333333;
+}
+
+#content > div {
+    margin:0 0 0 0;
+    padding:0;
+}
+
+#content > div:first-child {
+    margin-top:0;
+}
+
+.widget-lane {
+    margin-right: 0;
+    margin-bottom:0;
+}
+
+.lane-title {
+    display:none;
+}

@@ -98,6 +98,7 @@ use Cake\Routing\Router;
     $this->Link->beginActionGroup ('bottom');
 
     $this->Link->addCounter();
+    $this->Link->addActionGroupLabel(__('Context Actions'));
     $this->Link->addCreateAction(__('Create type'));
     $this->Link->addAction(__('Import'), ['action' => 'import']);
 
@@ -107,11 +108,12 @@ use Cake\Routing\Router;
         ['action' => 'transfer' , '?' => $queryparams],
         [
             'data-list-select' => 'epi_types',
-            'data-list-param' => 'id', // TODO: was types, still working?
+            'data-list-param' => 'id',
             'class' => 'popup',
             'data-popup-modal' => true
         ]
     );
 
-    $this->Link->downloadButtons (null, 'id', 'epi_types');
+
+    $this->Link->exportButtons($queryparams, 'epi_types');
 ?>

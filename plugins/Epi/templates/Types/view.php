@@ -31,6 +31,6 @@ use Cake\Utility\Inflector;
 <!-- Actions -->
 <?php
     $this->setShowBlock(['footer']);
-    $this->Link->addEditButtons($entity);
+    $this->Link->addEditButtons($entity,['copy' => true]);
     $this->Link->downloadButtons();
 ?>

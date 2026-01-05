@@ -12,7 +12,6 @@ namespace App\Model\Entity\Tasks;
 
 use App\Model\Entity\BaseTask;
 use App\Utilities\Files\Files;
-use Cake\Core\Configure;
 
 /**
  * Extract content from a file
@@ -27,16 +26,16 @@ class TaskExportExtract extends BaseTask
      */
     public function execute(): bool
     {
-        $current = $this->job->getCurrentTask();
+        $current = $this->job->getCurrentTaskConfig();
 
         $path = $current['path'] ?? '';
         if ($path !== '') {
-            $inputfile = $this->job->getCurrentInputFilePath();
+            $inputfile = $this->getCurrentInputFilePath();
             $matches = Files::extractXmlContent($inputfile, $path);
             $filecontent = implode("\n", $matches);
 
             // Save
-            $outputfile = $this->job->getCurrentOutputFilePath();
+            $outputfile = $this->getCurrentOutputFilePath();
             Files::replaceFile($outputfile, $filecontent);
 
             // Wrap

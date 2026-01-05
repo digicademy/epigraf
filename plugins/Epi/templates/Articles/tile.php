@@ -5,6 +5,7 @@ use Cake\Utility\Inflector;
 
 /**
  * @var \Epi\Model\Entity\Article $entity
+ * @var string $datalist If called from a lane template, set the data list name
  */
 ?>
 
@@ -20,12 +21,17 @@ use Cake\Utility\Inflector;
 
 <div class="lane-tile lane-tile-<?= $entity->articletype ?>"
      data-id="<?= $entity->id ?>"
-     data-list-itemof="tiles">
+     data-list-itemof="<?= $datalist ?? 'tiles' ?>">
 
-    <?php if ($this->request->getQuery('link', 'internal') === 'external'): ?>
+    <?php $flow = $this->getConfig('options')['params']['flow'] ?? 'frame' ?>
+    <?php
+      // Deprecated, used for DIO integration. TODO: replace link by flow parameter
+      $flow = $this->request->getQuery('link', 'internal') === 'external' ? 'tab' : $flow
+    ?>
+    <?php if ($flow === 'tab'): ?>
         <a href="<?= $entity->url ?>" target="_blank">
     <?php else: ?>
-        <a href="<?= Router::url($this->Link->openUrl([$entity->id])) ?>" class="frame">
+        <a href="<?= Router::url($this->Link->openUrl([$entity->id])) ?>" class="<?= $flow ?>">
     <?php endif; ?>
 
         <!-- Template with numbers, no content to show -->
@@ -38,12 +44,7 @@ use Cake\Utility\Inflector;
             <div class="lane-tile-content">
                 <div class="lane-tile-content-caption">
                     <?php foreach($columns as $column): ?>
-                        <?php
-                            $column['format'] = 'html';
-                            $column['aggregate'] = $column['aggregate'] ?? 'collapse';
-                            $value = $entity->getValueNested($column['key'], $column);
-                        ?>
-                        <?= $column['prefix'] ?? '' ?>
+                        <?php $value = $entity->getValueRendered($column); ?>
                         <?= h(is_array($value) ? json_encode($value) : $value) ?>
                         <br>
                     <?php endforeach; ?>
@@ -68,11 +69,7 @@ use Cake\Utility\Inflector;
 
             <div class="lane-tile-metadata">
                 <?php foreach($columns as $column): ?>
-                    <?php
-                        $column['format'] = 'html';
-                        $column['aggregate'] = $column['aggregate'] ?? 'collapse';
-                        $value = $entity->getValueNested($column['key'], $column);
-                    ?>
+                    <?php $value = $entity->getValueRendered($column); ?>
                     <?php if (!empty($value)): ?>
                         <span class="lane-tile-icon lane-tile-icon-<?= Inflector::underscore($column['name'] ?? '' ) ?>"><?= $column['icon'] ?? '' ?></span>
                         <?= h(is_array($value) ? json_encode($value) : $value) ?>

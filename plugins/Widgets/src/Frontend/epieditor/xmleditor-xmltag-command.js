@@ -49,6 +49,9 @@ export default class XmleditorXmltagCommand extends Command {
 	execute(commandData = {} ) {
 
 		const typeData = this.editor.config.get('tagSet')[commandData['data-type']];
+        if (!typeData ||!typeData.config) {
+            return;
+        }
 
 		// Format tag
 		if (typeData.config.tag_type === 'format') {
@@ -122,6 +125,7 @@ export default class XmleditorXmltagCommand extends Command {
 		return attributeData;
 	}
 
+
 	/**
 	 * Insert XML BRACKET
      *
@@ -149,6 +153,10 @@ export default class XmleditorXmltagCommand extends Command {
                     }
 
 					for (const flatrange of flatranges ) {
+                        if (this.isLockedPosition(flatrange.start) || this.isLockedPosition(flatrange.end)) {
+                            continue;
+                        }
+
                         // Pass a copy of attributes so data-new can be deleted
 						let bracketWrapper = writer.createElement( XML_BRACKET, { ...attributeData});
                         delete attributeData['data-new'];
@@ -189,6 +197,31 @@ export default class XmleditorXmltagCommand extends Command {
         return attributeData;
 	}
 
+    /**
+     * Check if the position is inside an element that cannot be edited
+     * (opening and closing brackets, texts)
+     *
+     * @param position
+     */
+    isLockedPosition(position) {
+        try {
+            if (position.parent && [XML_BRACKET, XML_BRACKET_OPEN, XML_BRACKET_CLOSE].includes(position.parent.name)) {
+                return true;
+            }
+
+            if (position.nodeAfter && [XML_BRACKET_OPEN].includes(position.nodeAfter.name)) {
+                return true;
+            }
+
+            if (position.nodeBefore && [XML_BRACKET_CLOSE].includes(position.nodeBefore.name)) {
+                return true;
+            }
+        } catch (e) {
+          return true;
+        }
+
+        return false;
+    }
 
     /**
      * Insert XML FORMAT
@@ -211,7 +244,11 @@ export default class XmleditorXmltagCommand extends Command {
                     }
                 );
                 for ( const flatrange of flatranges) {
-                    // Pass a copy of attributes so data-nbew can be deleted
+                    // Skip ranges within brackets and text
+                    if (this.isLockedPosition(flatrange.start) || this.isLockedPosition(flatrange.end)) {
+                        continue;
+                    }
+                    // Pass a copy of attributes so data-new can be deleted
                     let formatWrapper = writer.createElement( XML_FORMAT, {...attributeData});
                     delete attributeData['data-new'];
                     writer.wrap(flatrange, formatWrapper);

@@ -66,13 +66,21 @@
                 'xml' => __('XML'),
                 'json' => __('JSON'),
                 'csv' => __('CSV'),
+                'xlsx' => __('Excel'),
                 'md' => __('Markdown'),
+                'plain' => __('HTML'),
                 'ttl' => __('Turtle'),
                 'rdf' => __('RDF/XML'),
                 'jsonld' => __('JsonLd'),
                 'geojson' => __('GeoJSON')
             ],
             'value' => $task['format'] ?? 'xml'
+        ],
+        'preset' => [
+            'type' => 'text',
+            'label' => __('The preset from the types configuration'),
+            'placeholder' => 'default',
+            'value' => $task['preset'] ?? ''
         ],
         'snippets' => [
             'type' => 'text',

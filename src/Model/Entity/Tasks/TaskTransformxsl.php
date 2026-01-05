@@ -23,6 +23,79 @@ use XSLTProcessor;
 class TaskTransformxsl extends BaseTask
 {
 
+    protected function getInputFiles($inputPath = null, $inputMode = null)
+    {
+        // Folder
+        if ($inputMode === 'folder') {
+            return array_map(
+                function($filename) use ($inputPath) {
+                    return rtrim($inputPath, '/\\') . DS . $filename;
+                },
+                array_values(Files::getFiles($inputPath, '.xml'))
+            );
+        }
+        else {
+            return [$inputPath];
+        }
+    }
+
+    protected function processFiles($todo, $outputPath, $inputMode)
+    {
+        $out = [];
+        foreach ($todo as $inputFile) {
+
+            $outputFile = $outputPath;
+            if ($inputMode === 'folder') {
+                Files::createFolder($outputPath, true);
+                $outputFile .= DS . basename($inputFile);
+            }
+
+            $done = false;
+            if (($this->config['processor'] ?? 'php') == 'saxon') {
+                $done = $this->task_xsl_saxon($inputFile, $outputFile);
+            }
+            else {
+                $done = $this->task_xsl_php($inputFile, $outputFile);
+            }
+            if (!empty($done)) {
+                $out[] = $outputFile;
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * Preview transformation
+     *
+     * @param array $options
+     * @return array
+     */
+    public function preview($options = [])
+    {
+        $inputPath = $this->getCurrentInputFilePath();
+        $inputMode = $this->getCurrentInputMode();
+        $inputFiles = $this->getInputFiles($inputPath, $inputMode);
+
+        if (empty($inputFiles)) {
+            return [];
+        }
+
+        if ($inputMode === 'folder') {
+            $inputFiles = [$inputFiles[0]];
+        }
+
+        if (!empty($inputFiles)) {
+            $outputPath = $this->getCurrentOutputFilePath();
+            $out = $this->processFiles($inputFiles, $outputPath, $inputMode);
+        }
+
+        if (empty($out[0])) {
+            return [];
+        }
+
+        return ['inputpath' => $out[0]];
+    }
+
     /**
      * Concatenate files
      *
@@ -30,15 +103,14 @@ class TaskTransformxsl extends BaseTask
      */
     public function execute()
     {
-        $inputFile = $this->job->getCurrentInputFilePath();
-        $outputFile = $this->job->getCurrentOutputFilePath();
+        $inputPath = $this->getCurrentInputFilePath();
+        $inputMode = $this->getCurrentInputMode();
+        $inputFiles = $this->getInputFiles($inputPath, $inputMode);
 
-        if (($this->config['processor'] ?? 'php') == 'saxon') {
-            return $this->task_xsl_saxon($inputFile, $outputFile);
-        }
-        else {
-            return $this->task_xsl_php($inputFile, $outputFile);
-        }
+        $outputPath = $this->getCurrentOutputFilePath();
+        $out = $this->processFiles($inputFiles, $outputPath, $inputMode);
+
+        return count($out) > 0;
     }
 
     /**

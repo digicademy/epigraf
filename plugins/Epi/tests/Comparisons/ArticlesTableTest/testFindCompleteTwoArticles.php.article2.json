@@ -14,7 +14,7 @@
     "type": {
         "id": 161,
         "deleted": 0,
-        "job_id": 65148,
+        "job_id": 69592,
         "published": 1,
         "modified_by": 2,
         "scope": "articles",
@@ -251,6 +251,7 @@
                 },
                 "source": {
                     "key": "project.name",
+                    "value": "{project.name} {signature}",
                     "icon": "\ud83d\udd6e",
                     "selectable": false,
                     "public": true
@@ -334,10 +335,6 @@
                 "signatures": {
                     "type": "signatures"
                 },
-                "cluster": {
-                    "type": "cluster",
-                    "default": false
-                },
                 "geolocation": {
                     "type": "geolocation",
                     "default": false
@@ -365,7 +362,8 @@
                 "summary": {
                     "type": "summary",
                     "caption": "Zusammenfassung",
-                    "count": "1"
+                    "count": "1",
+                    "default": false
                 }
             },
             "namespaces": {
@@ -379,20 +377,11 @@
                     "caption": "Word",
                     "scope": "article"
                 },
-                "di-articles-doc-bak": {
-                    "caption": "Backup: Word",
-                    "button": false
-                },
                 "di-epidoc": {
                     "caption": "EpiDoc"
                 },
                 "di-book-doc": {
                     "caption": "Band",
-                    "scope": "book",
-                    "button": false
-                },
-                "di-book-doc-bak": {
-                    "caption": "Backup: Band",
                     "scope": "book",
                     "button": false
                 },
@@ -403,12 +392,6 @@
                     "button": false
                 },
                 "dio-export-book": {
-                    "button": false
-                },
-                "dio-export-img-wismar": {
-                    "button": false
-                },
-                "dio-export-img-magdeburg": {
                     "button": false
                 }
             },
@@ -675,7 +658,7 @@
             "footnote": {
                 "id": 1,
                 "deleted": 0,
-                "created": "2022-03-15T20:50:04+01:00",
+                "created": "2022-03-15T19:50:04+01:00",
                 "modified_by": 1,
                 "created_by": 1,
                 "sortno": 13,
@@ -876,7 +859,7 @@
         {
             "id": 166,
             "deleted": 0,
-            "created": "2025-03-27T10:46:28+01:00",
+            "created": "2025-03-27T09:46:28+01:00",
             "modified_by": 2,
             "created_by": 2,
             "root_id": 3,
@@ -893,18 +876,19 @@
                 "deleted": 0,
                 "created": "2021-06-12T14:12:52+02:00",
                 "created_by": 1,
-                "modified_by": 1,
+                "modified_by": 2,
                 "sortno": 3,
                 "sortkey": "Unterautor 1",
                 "propertytype": "literature",
-                "lemma": "Unterautor 1",
-                "name": "Unterautor ",
+                "lemma": "Unterautor 1 mit '",
+                "name": "Unterautor 1 mit '",
                 "unit": "Unterauteinheit 1",
                 "comment": "Unterautorbemerkung 1",
                 "keywords": "Autor,Quelle",
                 "ishidden": 1,
                 "iscategory": 1,
                 "norm_data": "Unterautornorm 1",
+                "norm_iri": "unterautor-1-mit-",
                 "import_db": "Externe Unterautordatenbank",
                 "import_id": "EX DB UAut1",
                 "parent_id": 12,
@@ -914,7 +898,7 @@
                 "type": {
                     "id": 33,
                     "deleted": 0,
-                    "job_id": 62896,
+                    "job_id": 67521,
                     "scope": "properties",
                     "mode": "default",
                     "preset": "default",
@@ -1929,7 +1913,7 @@
             "type": {
                 "id": 134,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 68871,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1971,6 +1955,10 @@
                         },
                         {
                             "type": "placenames",
+                            "count": "*"
+                        },
+                        {
+                            "type": "scriptfeatures",
                             "count": "*"
                         },
                         {
@@ -2111,9 +2099,9 @@
                     "type": {
                         "id": 204,
                         "deleted": 0,
-                        "job_id": 62713,
+                        "job_id": 66763,
                         "published": 1,
-                        "created": "2022-01-15T23:40:26+01:00",
+                        "created": "2022-01-15T22:40:26+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2271,9 +2259,9 @@
                     "type": {
                         "id": 204,
                         "deleted": 0,
-                        "job_id": 62713,
+                        "job_id": 66763,
                         "published": 1,
-                        "created": "2022-01-15T23:40:26+01:00",
+                        "created": "2022-01-15T22:40:26+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2353,7 +2341,7 @@
             "type": {
                 "id": 135,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 68758,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2394,10 +2382,6 @@
                             "count": "*"
                         },
                         {
-                            "type": "scriptfeatures",
-                            "count": "*"
-                        },
-                        {
                             "type": "formulas",
                             "count": "*"
                         },
@@ -2410,14 +2394,6 @@
                             "count": "*"
                         },
                         {
-                            "type": "languages",
-                            "count": "*"
-                        },
-                        {
-                            "type": "metres",
-                            "count": "*"
-                        },
-                        {
                             "type": "sources",
                             "count": "*"
                         },
@@ -2427,6 +2403,14 @@
                         },
                         {
                             "type": "texttypes",
+                            "count": "*"
+                        },
+                        {
+                            "type": "languages",
+                            "count": "*"
+                        },
+                        {
+                            "type": "metres",
                             "count": "*"
                         },
                         {
@@ -2520,7 +2504,7 @@
             "type": {
                 "id": 136,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 68758,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2607,9 +2591,9 @@
                     "type": {
                         "id": 202,
                         "deleted": 0,
-                        "job_id": 62713,
+                        "job_id": 66763,
                         "published": 1,
-                        "created": "2022-01-15T23:36:06+01:00",
+                        "created": "2022-01-15T22:36:06+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2685,7 +2669,7 @@
             "type": {
                 "id": 137,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 68758,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2807,9 +2791,9 @@
                     "type": {
                         "id": 201,
                         "deleted": 0,
-                        "job_id": 62713,
+                        "job_id": 66763,
                         "published": 1,
-                        "created": "2022-01-15T23:34:54+01:00",
+                        "created": "2022-01-15T22:34:54+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2962,7 +2946,7 @@
             "deleted": 0,
             "job_id": 61777,
             "published": 0,
-            "created": "2022-12-03T10:01:24+01:00",
+            "created": "2022-12-03T09:01:24+01:00",
             "scope": "projects",
             "mode": "default",
             "preset": "default",
@@ -3006,7 +2990,7 @@
     "modifier": {
         "id": 2,
         "deleted": 0,
-        "created": "2024-11-09T13:06:13+01:00",
+        "created": "2024-11-09T12:06:13+01:00",
         "name": "Jakob J\u00fcnger",
         "acronym": "jj",
         "userrole": 0,

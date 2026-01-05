@@ -5,35 +5,35 @@
 <head>
     <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-        Users    </title>
+    <title>Users</title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
     <!-- CSS frameworks -->
     <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">    
+            <link rel="stylesheet" href="/css/theme_default.css">
     <!-- JS -->
 
     <!-- JS frameworks -->
     <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>    
+            <script src="/js/app.min.js" type="module"></script>
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"devel","scope":"web","settings":{"columns":{"users":[]}},"session":{"ui":[]}});}</script>
     <!-- JS widgets -->
         <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
 
     <!-- Additional CSS -->
-    
+
     <!-- Additional JS -->
         </head>
 
 <body class="plugin_ controller_users action_index template_default theme_default userrole_devel">
+
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -41,24 +41,24 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global" ><a href="/pipelines">Pipelines</a></li><li class="menu_global active" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div class="widget-dropdown-pane-header">Databases</div><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global" ><a href="/pipelines">Pipelines</a></li><li class="menu_global active" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
 
-                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Menu</div><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-                
-                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/5" class="btn-profile" title="devel"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
+
+                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/5" class="btn btn-icon" title="devel"></a>                                                    <a href="/settings/show/vars" class="btn btn-icon" title="System settings"></a>                            </div>
 
         </nav>
-    
+
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-        
-            
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>        
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
@@ -67,7 +67,7 @@
 
                                                                     </div>
 
-                    
+
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -75,10 +75,10 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-                    
+
 <!-- Search bar -->
 <div class="content-searchbar">
-    <form method="get" accept-charset="utf-8" class="search widget-filter" data-filter-group="users" action="/users/index"><div class="content-searchbar-item widget-filter-item widget-filter-item-searchbar" data-filter-group="users" data-filter-param="uname" data-filter-prefix=""><div class="input-group input-group-filter first"><div class="input-group-label">User name</div><div class="input-group-field"><div class="input text"><input type="text" name="uname" placeholder="" class="search-term" autocomplete="off" id="uname" aria-label=""></div></div></div></div></form></div>
+    <form method="get" accept-charset="utf-8" class="search widget-filter" data-filter-group="users" action="/users/index"><div class="content-searchbar-item widget-filter-item widget-filter-item-searchbar" data-filter-group="users" data-filter-param="uname" data-filter-prefix=""><div class="input-group input-group-filter first"><div class="input-group-label hide-small">User name</div><div class="input-group-field"><div class="input text"><input type="text" name="uname" placeholder="" class="search-term" autocomplete="off" id="uname" aria-label=""></div></div></div></div></form></div>
 
 <!-- Content area -->
 <div class="content-main widget-scrollbox">
@@ -89,10 +89,10 @@
             data-toggle="users-settings-fields"
             data-filter-group="users"
             title="Select columns"
-            aria-label="Select columns">⚙</button><div id="users-settings-fields"
-            class="widget-dropdown-pane"
+            aria-label="Select columns">⚙</button><div class="widget-dropdown-pane-header">Select Columns</div><div id="users-settings-fields"
+            class="widget-dropdown-pane widget-scrollbox"
             data-widget-dropdown-position="right"
-            data-snippet="users-settings-fields"><ul class="selector-columns selector-checkboxes"><li class="selector-reset">Reset selection</li><li data-value="uname"><div class="input checkbox"><input type="hidden" name="fields[uname]" value="0"><label for="fields-uname"><input type="checkbox" name="fields[uname]" value="1" checked="checked" id="fields-uname">User name</label></div></li><li data-value="role"><div class="input checkbox"><input type="hidden" name="fields[role]" value="0"><label for="fields-role"><input type="checkbox" name="fields[role]" value="1" checked="checked" id="fields-role">Role</label></div></li><li data-value="contact"><div class="input checkbox"><input type="hidden" name="fields[contact]" value="0"><label for="fields-contact"><input type="checkbox" name="fields[contact]" value="1" checked="checked" id="fields-contact">Contact</label></div></li><li data-value="email"><div class="input checkbox"><input type="hidden" name="fields[email]" value="0"><label for="fields-email"><input type="checkbox" name="fields[email]" value="1" checked="checked" id="fields-email">Email</label></div></li><li data-value="databank"><div class="input checkbox"><input type="hidden" name="fields[databank]" value="0"><label for="fields-databank"><input type="checkbox" name="fields[databank]" value="1" checked="checked" id="fields-databank">Database</label></div></li><li data-value="pipeline_article"><div class="input checkbox"><input type="hidden" name="fields[pipeline_article]" value="0"><label for="fields-pipeline_article"><input type="checkbox" name="fields[pipeline_article]" value="1" checked="checked" id="fields-pipeline_article">Article pipeline</label></div></li><li data-value="pipeline_book"><div class="input checkbox"><input type="hidden" name="fields[pipeline_book]" value="0"><label for="fields-pipeline_book"><input type="checkbox" name="fields[pipeline_book]" value="1" checked="checked" id="fields-pipeline_book">Book pipeline</label></div></li><li data-value="active"><div class="input checkbox"><input type="hidden" name="fields[active]" value="0"><label for="fields-active"><input type="checkbox" name="fields[active]" value="1" checked="checked" id="fields-active">Active</label></div></li><li data-value="lastaction"><div class="input checkbox"><input type="hidden" name="fields[lastaction]" value="0"><label for="fields-lastaction"><input type="checkbox" name="fields[lastaction]" value="1" checked="checked" id="fields-lastaction">Last action</label></div></li><li data-value="sqlconnections"><div class="input checkbox"><input type="hidden" name="fields[sqlconnections]" value="0"><label for="fields-sqlconnections"><input type="checkbox" name="fields[sqlconnections]" value="1" checked="checked" id="fields-sqlconnections">SQL connections</label></div></li><li data-value="norm_iri"><div class="input checkbox"><input type="hidden" name="fields[norm_iri]" value="0"><label for="fields-norm_iri"><input type="checkbox" name="fields[norm_iri]" value="1" checked="checked" id="fields-norm_iri">IRI</label></div></li></ul></div><a class="asc" href="/users?sort=username&amp;direction=desc">User name</a></th>
+            data-snippet="users-settings-fields"><ul class="selector-columns selector-checkboxes widget-tree widget-dragitems widget-dragitems-enabled" data-list-name="columns"><li class="selector-reset">Reset selection</li><li data-value="uname" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[uname]" value="0"><label for="fields-uname"><input type="checkbox" name="fields[uname]" value="1" checked="checked" id="fields-uname">User name</label></div><span class="grip-icon">⋮</span></li><li data-value="role" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[role]" value="0"><label for="fields-role"><input type="checkbox" name="fields[role]" value="1" checked="checked" id="fields-role">Role</label></div><span class="grip-icon">⋮</span></li><li data-value="contact" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[contact]" value="0"><label for="fields-contact"><input type="checkbox" name="fields[contact]" value="1" checked="checked" id="fields-contact">Contact</label></div><span class="grip-icon">⋮</span></li><li data-value="email" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[email]" value="0"><label for="fields-email"><input type="checkbox" name="fields[email]" value="1" checked="checked" id="fields-email">Email</label></div><span class="grip-icon">⋮</span></li><li data-value="databank" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[databank]" value="0"><label for="fields-databank"><input type="checkbox" name="fields[databank]" value="1" checked="checked" id="fields-databank">Database</label></div><span class="grip-icon">⋮</span></li><li data-value="pipeline_article" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[pipeline_article]" value="0"><label for="fields-pipeline_article"><input type="checkbox" name="fields[pipeline_article]" value="1" checked="checked" id="fields-pipeline_article">Article pipeline</label></div><span class="grip-icon">⋮</span></li><li data-value="pipeline_book" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[pipeline_book]" value="0"><label for="fields-pipeline_book"><input type="checkbox" name="fields[pipeline_book]" value="1" checked="checked" id="fields-pipeline_book">Book pipeline</label></div><span class="grip-icon">⋮</span></li><li data-value="active" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[active]" value="0"><label for="fields-active"><input type="checkbox" name="fields[active]" value="1" checked="checked" id="fields-active">Active</label></div><span class="grip-icon">⋮</span></li><li data-value="lastaction" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[lastaction]" value="0"><label for="fields-lastaction"><input type="checkbox" name="fields[lastaction]" value="1" checked="checked" id="fields-lastaction">Last action</label></div><span class="grip-icon">⋮</span></li><li data-value="sqlconnections" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[sqlconnections]" value="0"><label for="fields-sqlconnections"><input type="checkbox" name="fields[sqlconnections]" value="1" checked="checked" id="fields-sqlconnections">SQL connections</label></div><span class="grip-icon">⋮</span></li><li data-value="norm_iri" data-list-itemof="columms"><div class="input checkbox"><input type="hidden" name="fields[norm_iri]" value="0"><label for="fields-norm_iri"><input type="checkbox" name="fields[norm_iri]" value="1" checked="checked" id="fields-norm_iri">IRI</label></div><span class="grip-icon">⋮</span></li></ul></div><a class="asc" href="/users?sort=username&amp;direction=desc">User name</a></th>
 <th scope="col" data-col="role"><a href="/users?sort=role&amp;direction=asc">Role</a><div class="widget-filter-item widget-filter-item-selector content-searchbar-item" data-filter-group="users" data-filter-param="role"><div class="widget-dropdown-selector" data-url-param="term" data-pane-id="select-pane-role" data-pane-align-to=" th"><input type="button" class="widget-filter-item-selector-button" value=" "><input type="hidden" name="select-input-role" value="" class="input-reference-value"><div id="select-pane-role" class="widget-dropdown-pane widget-checkboxlist"><div><span class="selector-reset">Reset selection</span><ul class="selector-checkboxes" id="selector-group-select-pane-role_"><li data-value="guest"><div class="input checkbox"><input type="hidden" name="select-pane-role__guest" value="0"><label for="select-pane-role__guest"><input type="checkbox" name="select-pane-role__guest" value="1" id="select-pane-role__guest">Gast</label></div></li><li data-value="bot"><div class="input checkbox"><input type="hidden" name="select-pane-role__bot" value="0"><label for="select-pane-role__bot"><input type="checkbox" name="select-pane-role__bot" value="1" id="select-pane-role__bot">Bot</label></div></li><li data-value="reader"><div class="input checkbox"><input type="hidden" name="select-pane-role__reader" value="0"><label for="select-pane-role__reader"><input type="checkbox" name="select-pane-role__reader" value="1" id="select-pane-role__reader">Leser</label></div></li><li data-value="desktop"><div class="input checkbox"><input type="hidden" name="select-pane-role__desktop" value="0"><label for="select-pane-role__desktop"><input type="checkbox" name="select-pane-role__desktop" value="1" id="select-pane-role__desktop">Desktopnutzer</label></div></li><li data-value="coder"><div class="input checkbox"><input type="hidden" name="select-pane-role__coder" value="0"><label for="select-pane-role__coder"><input type="checkbox" name="select-pane-role__coder" value="1" id="select-pane-role__coder">Kodierer</label></div></li><li data-value="author"><div class="input checkbox"><input type="hidden" name="select-pane-role__author" value="0"><label for="select-pane-role__author"><input type="checkbox" name="select-pane-role__author" value="1" id="select-pane-role__author">Bearbeiter</label></div></li><li data-value="editor"><div class="input checkbox"><input type="hidden" name="select-pane-role__editor" value="0"><label for="select-pane-role__editor"><input type="checkbox" name="select-pane-role__editor" value="1" id="select-pane-role__editor">Redakteur</label></div></li><li data-value="admin"><div class="input checkbox"><input type="hidden" name="select-pane-role__admin" value="0"><label for="select-pane-role__admin"><input type="checkbox" name="select-pane-role__admin" value="1" id="select-pane-role__admin">Administrator</label></div></li><li data-value="devel"><div class="input checkbox"><input type="hidden" name="select-pane-role__devel" value="0"><label for="select-pane-role__devel"><input type="checkbox" name="select-pane-role__devel" value="1" id="select-pane-role__devel">Entwickler</label></div></li></ul></div></div></div></div></th>
 <th scope="col" data-col="contact"><a href="/users?sort=contact&amp;direction=asc">Contact</a></th>
 <th scope="col" data-col="email"><a href="/users?sort=email&amp;direction=asc">Email</a></th>
@@ -113,7 +113,7 @@
 
 <h1>Other SQL connections </h1>
 <table class="simple-table"><thead><tr><th>Username</th><th>SQL connections</th></tr></thead><tbody><tr><td>root</td><td>#NUMBER</td></tr></tbody></table>
-    
+
 <!-- Actions -->
 
 
@@ -124,10 +124,10 @@
     </div>
 
             </div>
-        
+
         <!-- Right sidebar -->
                     <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default">5 records</span></li><li><a href="/users/add" data-shortcuts="Ctrl+M" title="Create user (Ctrl+M)" aria-label="Create user" aria-keyshortcuts="Ctrl+M" class="popup actions-set-default widget-shortcut" data-role="add" popup="1" data-popup-modal="1">Create user</a></li><li><a href="/permissions" class="">Permissions</a></li><li><a href="/permissions/endpoints" class="">Endpoints</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><a href="/users.csv" target="_blank" rel="nofollow" data-list-select="users" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/users.xml" target="_blank" rel="nofollow" data-list-select="users" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/users.json" target="_blank" rel="nofollow" data-list-select="users" data-list-param="id" class="">JSON</a></li><li><a href="/help/epiweb-users-index" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><span class="label actions-set-default sandwich-exclude">5 records</span></li><li><a href="/users/add" data-shortcuts="Ctrl+M" title="Create user (Ctrl+M)" aria-label="Create user" aria-keyshortcuts="Ctrl+M" class="popup actions-set-default widget-shortcut" data-role="add" popup="1" data-popup-modal="1">Create user</a></li><li><a href="/permissions" class="">Permissions</a></li><li><a href="/permissions/endpoints" class="">Endpoints</a></li></ul></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-export"><span class="label grouplabel">Download</span></li><li class="action-group action-group-export"><a href="/users.csv" target="_blank" rel="nofollow" data-list-select="users" data-list-param="id" class="">CSV</a></li><li class="action-group action-group-export"><a href="/users.xml" target="_blank" rel="nofollow" data-list-select="users" data-list-param="id" class="">XML</a></li><li class="action-group action-group-export"><a href="/users.json" target="_blank" rel="nofollow" data-list-select="users" data-list-param="id" class="">JSON</a></li><li><a href="help/administration/users" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
 </div>
 </body></html>

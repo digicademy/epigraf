@@ -18,17 +18,15 @@ export class JsonEditor extends BaseWidget {
         super(element, name, parent);
 
         this.editor = undefined;
-        this.initEditor(this.jsonData);
+        this.initEditor();
 
         this.listenEvent(document, 'epi:save:form', event => this.onBeforeSave(event));
     }
 
     /**
      * Initialize editor.
-     *
-     * @param {JSON} data Parsed JSON data from data element
      */
-    async initEditor(data) {
+    async initEditor() {
         await import(/*webpackIgnore: true*/'./ace/ace.js');
         window.ace.config.set('basePath', '/widgets/js/ace');
 
@@ -43,6 +41,18 @@ export class JsonEditor extends BaseWidget {
         });
 
         this.editor.setValue(this.getInputValue());
+        setTimeout(() => this.foldAll(), 70);
+    }
+
+    /**
+     * Collapse all lines in the editor except the root
+     */
+    foldAll() {
+        const session = this.editor.getSession();
+        const lineCount = session.getLength();
+        if (lineCount > 2) {
+            session.foldAll(1, lineCount - 1);
+        }
     }
 
     /**
@@ -154,7 +164,7 @@ export class XmlEditor extends BaseDocument {
                 this.widgetElement,
                 'tag:create',
                 (event) => {
-                    documentWidget.models.annotations.onCreateAnno(
+                    documentWidget.models.tags.onCreateTag(
                         this.widgetElement,
                         event.detail.data
                     );
@@ -165,7 +175,7 @@ export class XmlEditor extends BaseDocument {
                 this.widgetElement,
                 'tag:remove',
                 (event) => {
-                    documentWidget.models.annotations.onRemoveAnno(
+                    documentWidget.models.tags.onRemoveTag(
                         this.widgetElement,
                         event.detail.data
                     );
@@ -411,6 +421,45 @@ export class XmlEditor extends BaseDocument {
     }
 }
 
+
+/**
+ * Dates Editor class for validating historic dates
+ */
+export class DatesEditor extends BaseWidget {
+    constructor(element, name, parent) {
+        super(element, name, parent);
+        this.initEditor();
+    }
+
+    /**
+     * Initialize editor.
+     */
+    async initEditor() {
+        this.listenEvent(this.widgetElement,'input', (ev) => this.onInput(ev));
+        this.listenEvent(this.widgetElement,'keydown', (ev) => this.onKeyDown(ev));
+    }
+
+    async onInput(event) {
+        this.widgetElement.classList.add('dirty');
+    }
+
+    async onKeyDown(event) {
+        if (event.keyCode == 13) {
+            let value = this.widgetElement.value;
+
+            const mod = await import(/* webpackIgnore: true */ './historicdates.js');
+            window.HistoricDates = mod.default;
+            const norm = HistoricDates.normalize(value);
+
+            this.widgetElement.value = norm;
+            this.widgetElement.classList.remove('dirty');
+            event.preventDefault();
+        }
+    }
+
+}
+
 window.App.widgetClasses['jsoneditor'] = JsonEditor;
 window.App.widgetClasses['htmleditor'] = HtmlEditor;
 window.App.widgetClasses['xmleditor'] = XmlEditor;
+window.App.widgetClasses['dateseditor'] = DatesEditor;

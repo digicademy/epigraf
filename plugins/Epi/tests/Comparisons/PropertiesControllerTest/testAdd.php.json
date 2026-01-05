@@ -1,9 +1,10 @@
 {
-    "id": 647,
+    "id": 650,
     "deleted": 0,
     "version_id": null,
     "job_id": null,
     "published": null,
+    "status": null,
     "created": "2020-10-29T13:00:58+01:00",
     "created_by": null,
     "modified_by": null,

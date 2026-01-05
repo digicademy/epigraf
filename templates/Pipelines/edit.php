@@ -35,14 +35,15 @@
         }
     ?>
     <?= $this->Form->create($entity, $options) ?>
+    <?= $this->Form->button('', ['type'=>'submit', 'disabled' => 'disabled', 'style' => 'display:none;','area-hidden'=>true]);  ?>
         <div class="doc-content">
             <?= $this->EntityInput->entityTable($entity, 'edit', true); ?>
         </div>
 
         <?php foreach ($entity->tasks as $task): ?>
             <?php
-            $taskOptions =  $entity->tasksConfig[$task['type'] ?? ''] ?? [];
-            $taskOptions['edit'] = true;
+                $taskOptions =  $entity->tasksConfig[$task['type'] ?? ''] ?? [];
+                $taskOptions['edit'] = true;
             ?>
             <?= $this->EntityInput->taskContent($task, $taskOptions) ?>
 

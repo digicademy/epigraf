@@ -117,6 +117,7 @@ class PipelinesControllerTest extends AppTestCase
         // Test post request
         $data = [
             'name' => 'testpipeline',
+            'type' => 'export',
             'norm_iri' => 'testpipeline',
             'description' => 'do something'
         ];
@@ -155,6 +156,7 @@ class PipelinesControllerTest extends AppTestCase
         $data = [
             'id' => $id,
             'name' => 'new name',
+            'type' => 'export',
             'description' => 'do something else'
         ];
         $this->post('pipelines/edit/' . $id, $data);

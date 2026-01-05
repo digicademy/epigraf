@@ -345,22 +345,27 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
      *
      * See BaseTable->getColumns() for further information.
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected
      * @param array $default
-     * @param string|null $type
+     * @param array $options
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         // Get config from database
         $types = $this->getDatabase()->types[$this->getTable()] ?? [];
         $config = [];
+        $type = $options['type'] ?? null;
         foreach ($types as $typeName => $typeData) {
             if (!empty($type) && ($type !== $typeName)) {
                 continue;
             }
             $typeConfig = Objects::extract($typeData, 'merged.columns');
-            $typeConfig = $this->augmentColumnSetup($typeConfig ?? []);
+            $typeConfig = $this->augmentColumnSetup($typeConfig ?? [], $options['joined'] ?? false);
 
             foreach ($typeConfig as $typeColumn => $typeColumnConfig) {
                 $typeColumnConfig['types'] = [$typeName => $typeColumnConfig] + ($config[$typeColumn]['types'] ?? []);
@@ -369,12 +374,44 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
         }
 
         // Merge with defaults
-        $default = $this->augmentColumnSetup($default);
+        $default = $this->augmentColumnSetup($default, $options['joined'] ?? false);
         $config = $this->mergeColumnSetup($config, $default);
 
         // Filter non-public columns, mark selected columns,
         // add ad-hoc columns, add personalized column widths
-        return parent::getColumns($selected, $config);
+        return parent::getColumns($selected, $config, $options);
+    }
+
+    /**
+     * Get all search configuration for columns
+     *
+     * @return array Column captions, indexed by column keys prefixed with 'columns.'
+     */
+    public function getColumnFilters()
+    {
+        $filters = [];
+        $columns = $this->getColumns();
+        foreach ($columns as $columnName => $columnConfig) {
+            if (!isset($columnConfig['sort'])) {
+                continue;
+            }
+
+            if (empty($columnConfig['selectable'] ?? true)) {
+                continue;
+            }
+
+            $isCount = is_array($columnConfig['sort']) && (($columnConfig['sort']['aggregate'] ?? false) === 'count');
+            if ($isCount) {
+                continue;
+            }
+
+            $filters['columns.' . $columnName] = '- ' . $columnConfig['caption'] ?? $columnName;
+        }
+
+        if (!empty($filters)) {
+            $filters = array_merge(['columns.' => __('Columns')], $filters);
+        }
+        return $filters;
     }
 
     /**
@@ -388,18 +425,25 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
     public function findHasPublicationState(Query $query, array $options)
     {
         // Filter out nonpublic entities for guests
+        $minPublished = PUBLICATION_DRAFTED;
         if ($this::$userRole === 'guest') {
-
             if ((($options['action'] ?? 'index') === 'index') && empty($options['published'])) {
-                $published = PUBLICATION_SEARCHABLE;
+                $minPublished = PUBLICATION_SEARCHABLE;
             }
             else {
-                $published = PUBLICATION_PUBLISHED;
+                $minPublished = PUBLICATION_PUBLISHED;
             }
+        }
 
+        // Filter out non-finished entities for readers
+        else if ($this::$userRole === 'reader') {
+            $minPublished = PUBLICATION_COMPLETE;
+        }
+
+        if (!empty($minPublished)) {
             $query = $query
                 ->where([
-                    $this->getAlias() . '.published >=' => $published
+                    $this->getAlias() . '.published >=' => $minPublished
                 ]);
         }
 

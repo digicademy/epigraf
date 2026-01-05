@@ -7,23 +7,39 @@
         "name": "id",
         "key": "id",
         "sort": "id",
+        "search": {
+            "field": "Articles.id",
+            "type": "integer",
+            "operator": "="
+        },
         "types": {
             "epi-book": {
                 "caption": "ID",
                 "public": true,
                 "name": "id",
                 "key": "id",
-                "sort": "id"
+                "sort": "id",
+                "search": {
+                    "field": "Articles.id",
+                    "type": "integer",
+                    "operator": "="
+                }
             },
             "epi-article": {
                 "name": "id",
                 "caption": "ID",
                 "key": "id",
-                "sort": "id"
+                "sort": "id",
+                "search": {
+                    "field": "Articles.id",
+                    "type": "integer",
+                    "operator": "="
+                }
             }
         },
         "width": 100,
-        "default": false
+        "default": false,
+        "format": null
     },
     "signature": {
         "selected": true,
@@ -34,6 +50,11 @@
         "name": "signature",
         "key": "signature",
         "sort": "signature",
+        "search": {
+            "field": "Articles.signature",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Signatur",
@@ -41,7 +62,12 @@
                 "public": true,
                 "name": "signature",
                 "key": "signature",
-                "sort": "signature"
+                "sort": "signature",
+                "search": {
+                    "field": "Articles.signature",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Signatur",
@@ -49,9 +75,15 @@
                 "public": true,
                 "name": "signature",
                 "key": "signature",
-                "sort": "signature"
+                "sort": "signature",
+                "search": {
+                    "field": "Articles.signature",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
+        "format": null,
         "width": null
     },
     "name": {
@@ -61,6 +93,11 @@
         "name": "name",
         "key": "name",
         "sort": "name",
+        "search": {
+            "field": "Articles.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Titel",
@@ -68,7 +105,12 @@
                 "public": true,
                 "name": "name",
                 "key": "name",
-                "sort": "name"
+                "sort": "name",
+                "search": {
+                    "field": "Articles.name",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Titel",
@@ -76,7 +118,12 @@
                 "public": true,
                 "name": "name",
                 "key": "name",
-                "sort": "name"
+                "sort": "name",
+                "search": {
+                    "field": "Articles.name",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -115,6 +162,11 @@
                 }
             ]
         },
+        "search": {
+            "field": "items_locations.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Standorte",
@@ -148,6 +200,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "items_locations.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -175,6 +232,11 @@
         "default": true,
         "name": "items_date",
         "aggregate": "collapse",
+        "search": {
+            "field": "items_date.date_sort",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Objektdatierung",
@@ -196,7 +258,12 @@
                 },
                 "default": true,
                 "name": "items_date",
-                "aggregate": "collapse"
+                "aggregate": "collapse",
+                "search": {
+                    "field": "items_date.date_sort",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -223,6 +290,11 @@
         "selectable": false,
         "name": "inscriptions_date",
         "aggregate": "collapse",
+        "search": {
+            "field": "inscriptions_date.date_sort",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Inschriftendatierungen",
@@ -244,7 +316,12 @@
                 },
                 "selectable": false,
                 "name": "inscriptions_date",
-                "aggregate": "collapse"
+                "aggregate": "collapse",
+                "search": {
+                    "field": "inscriptions_date.date_sort",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -281,6 +358,11 @@
                 }
             ]
         },
+        "search": {
+            "field": "items_conditions.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Zustand",
@@ -312,6 +394,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "items_conditions.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -351,6 +438,11 @@
                 }
             ]
         },
+        "search": {
+            "field": "items_objecttypes.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Inschriftentr\u00e4ger",
@@ -384,6 +476,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "items_objecttypes.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -421,6 +518,11 @@
                 }
             ]
         },
+        "search": {
+            "field": "items_materials.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Materialien",
@@ -452,6 +554,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "items_materials.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -463,12 +570,22 @@
         "name": "status",
         "key": "status",
         "sort": "status",
+        "search": {
+            "field": "Articles.status",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Status",
                 "name": "status",
                 "key": "status",
-                "sort": "status"
+                "sort": "status",
+                "search": {
+                    "field": "Articles.status",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -479,18 +596,33 @@
         "caption": "Ver\u00f6ffentlicht",
         "key": "published",
         "sort": "published",
+        "search": {
+            "field": "Articles.published",
+            "type": "integer",
+            "operator": "="
+        },
         "types": {
             "epi-book": {
                 "name": "published",
                 "caption": "Ver\u00f6ffentlicht",
                 "key": "published",
-                "sort": "published"
+                "sort": "published",
+                "search": {
+                    "field": "Articles.published",
+                    "type": "integer",
+                    "operator": "="
+                }
             },
             "epi-article": {
                 "name": "published",
                 "caption": "Ver\u00f6ffentlicht",
                 "key": "published",
-                "sort": "published"
+                "sort": "published",
+                "search": {
+                    "field": "Articles.published",
+                    "type": "integer",
+                    "operator": "="
+                }
             }
         },
         "selected": false,
@@ -502,20 +634,35 @@
         "name": "modified",
         "key": "modified",
         "sort": "modified",
+        "search": {
+            "field": "Articles.modified",
+            "type": "timestamp",
+            "operator": "="
+        },
         "types": {
             "epi-book": {
                 "caption": "Ver\u00e4ndert",
                 "default": false,
                 "name": "modified",
                 "key": "modified",
-                "sort": "modified"
+                "sort": "modified",
+                "search": {
+                    "field": "Articles.modified",
+                    "type": "timestamp",
+                    "operator": "="
+                }
             },
             "epi-article": {
                 "caption": "Ver\u00e4ndert",
                 "default": false,
                 "name": "modified",
                 "key": "modified",
-                "sort": "modified"
+                "sort": "modified",
+                "search": {
+                    "field": "Articles.modified",
+                    "type": "timestamp",
+                    "operator": "="
+                }
             }
         },
         "public": false,
@@ -528,20 +675,35 @@
         "name": "created",
         "key": "created",
         "sort": "created",
+        "search": {
+            "field": "Articles.created",
+            "type": "timestamp",
+            "operator": "="
+        },
         "types": {
             "epi-book": {
                 "caption": "Angelegt",
                 "default": false,
                 "name": "created",
                 "key": "created",
-                "sort": "created"
+                "sort": "created",
+                "search": {
+                    "field": "Articles.created",
+                    "type": "timestamp",
+                    "operator": "="
+                }
             },
             "epi-article": {
                 "caption": "Angelegt",
                 "default": false,
                 "name": "created",
                 "key": "created",
-                "sort": "created"
+                "sort": "created",
+                "search": {
+                    "field": "Articles.created",
+                    "type": "timestamp",
+                    "operator": "="
+                }
             }
         },
         "selected": false,
@@ -562,6 +724,11 @@
             },
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "modifier_name.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "key": "modifier.name",
@@ -577,6 +744,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "modifier_name.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             },
             "epi-article": {
@@ -593,6 +765,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "modifier_name.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -614,6 +791,11 @@
             },
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "creator_name.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "key": "creator.name",
@@ -629,6 +811,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "creator_name.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             },
             "epi-article": {
@@ -645,6 +832,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "creator_name.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -657,19 +849,34 @@
         "name": "sortno",
         "key": "sortno",
         "sort": "sortno",
+        "search": {
+            "field": "Articles.sortno",
+            "type": "integer",
+            "operator": "="
+        },
         "types": {
             "epi-book": {
                 "caption": "Artikelsortierung",
                 "public": true,
                 "name": "sortno",
                 "key": "sortno",
-                "sort": "sortno"
+                "sort": "sortno",
+                "search": {
+                    "field": "Articles.sortno",
+                    "type": "integer",
+                    "operator": "="
+                }
             },
             "epi-article": {
                 "name": "sortno",
                 "caption": "Artikelsortierung",
                 "key": "sortno",
-                "sort": "sortno"
+                "sort": "sortno",
+                "search": {
+                    "field": "Articles.sortno",
+                    "type": "integer",
+                    "operator": "="
+                }
             }
         },
         "selected": false,
@@ -681,20 +888,35 @@
         "name": "articletype",
         "key": "articletype",
         "sort": "articletype",
+        "search": {
+            "field": "Articles.articletype",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Artikeltyp",
                 "public": true,
                 "name": "articletype",
                 "key": "articletype",
-                "sort": "articletype"
+                "sort": "articletype",
+                "search": {
+                    "field": "Articles.articletype",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Artikeltyp",
                 "public": true,
                 "name": "articletype",
                 "key": "articletype",
-                "sort": "articletype"
+                "sort": "articletype",
+                "search": {
+                    "field": "Articles.articletype",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -765,6 +987,11 @@
             },
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "project_id.id",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Projekt-ID",
@@ -780,6 +1007,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_id.id",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             },
             "epi-article": {
@@ -796,6 +1028,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_id.id",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -817,6 +1054,11 @@
             },
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "project_signature.signature",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Projekt",
@@ -832,6 +1074,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_signature.signature",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             },
             "epi-article": {
@@ -848,6 +1095,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_signature.signature",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -869,6 +1121,11 @@
             "aggregate": "collapse"
         },
         "name": "project_name",
+        "search": {
+            "field": "project_name.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "key": "project.name",
@@ -884,7 +1141,12 @@
                     },
                     "aggregate": "collapse"
                 },
-                "name": "project_name"
+                "name": "project_name",
+                "search": {
+                    "field": "project_name.name",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Projektname",
@@ -900,6 +1162,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_name.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -922,6 +1189,11 @@
         },
         "public": true,
         "name": "project_sortno",
+        "search": {
+            "field": "project_sortno.sortno",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Projektsortierung",
@@ -938,7 +1210,12 @@
                     "cast": "INTEGER"
                 },
                 "public": true,
-                "name": "project_sortno"
+                "name": "project_sortno",
+                "search": {
+                    "field": "project_sortno.sortno",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Projektsortierung",
@@ -955,7 +1232,12 @@
                     "cast": "INTEGER"
                 },
                 "public": true,
-                "name": "project_sortno"
+                "name": "project_sortno",
+                "search": {
+                    "field": "project_sortno.sortno",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -987,6 +1269,11 @@
             ]
         },
         "name": "project_type",
+        "search": {
+            "field": "project_type.projecttype",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Projekttyp",
@@ -1002,7 +1289,12 @@
                     },
                     "aggregate": "collapse"
                 },
-                "name": "project_type"
+                "name": "project_type",
+                "search": {
+                    "field": "project_type.projecttype",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Projekttyp",
@@ -1017,7 +1309,12 @@
                     },
                     "aggregate": "collapse"
                 },
-                "name": "project_type"
+                "name": "project_type",
+                "search": {
+                    "field": "project_type.projecttype",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -1039,6 +1336,11 @@
             },
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "project_url.url",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Projekt-URL",
@@ -1055,6 +1357,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_url.url",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             },
             "epi-article": {
@@ -1072,6 +1379,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "project_url.url",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1099,6 +1411,11 @@
             ],
             "aggregate": "count"
         },
+        "search": {
+            "field": "images_count.id",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Abbildungen",
@@ -1120,6 +1437,11 @@
                         "sortno"
                     ],
                     "aggregate": "count"
+                },
+                "search": {
+                    "field": "images_count.id",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1147,6 +1469,11 @@
             ],
             "aggregate": "count"
         },
+        "search": {
+            "field": "inscriptions_count.id",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Inschriften",
@@ -1168,6 +1495,11 @@
                         "lft"
                     ],
                     "aggregate": "count"
+                },
+                "search": {
+                    "field": "inscriptions_count.id",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1195,6 +1527,11 @@
             ],
             "aggregate": "count"
         },
+        "search": {
+            "field": "inscriptionparts_count.id",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Inschriftenteile",
@@ -1216,6 +1553,11 @@
                         "lft"
                     ],
                     "aggregate": "count"
+                },
+                "search": {
+                    "field": "inscriptionparts_count.id",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1243,6 +1585,11 @@
             ],
             "aggregate": "count"
         },
+        "search": {
+            "field": "inscriptiontexts_count.id",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Bearbeitungen",
@@ -1264,6 +1611,11 @@
                         "lft"
                     ],
                     "aggregate": "count"
+                },
+                "search": {
+                    "field": "inscriptiontexts_count.id",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1303,6 +1655,11 @@
                 }
             ]
         },
+        "search": {
+            "field": "topics.lemma",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Themen",
@@ -1336,6 +1693,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "topics.lemma",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             },
             "epi-article": {
@@ -1370,6 +1732,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "topics.lemma",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1398,6 +1765,11 @@
         "public": true,
         "name": "topics_priority",
         "aggregate": "collapse",
+        "search": {
+            "field": "topics_priority.value",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-book": {
                 "caption": "Themenpriorit\u00e4t",
@@ -1420,7 +1792,12 @@
                 "selectable": false,
                 "public": true,
                 "name": "topics_priority",
-                "aggregate": "collapse"
+                "aggregate": "collapse",
+                "search": {
+                    "field": "topics_priority.value",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             },
             "epi-article": {
                 "caption": "Themenpriorit\u00e4t",
@@ -1443,7 +1820,12 @@
                 "selectable": false,
                 "public": true,
                 "name": "topics_priority",
-                "aggregate": "collapse"
+                "aggregate": "collapse",
+                "search": {
+                    "field": "topics_priority.value",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
             }
         },
         "selected": false,
@@ -1471,6 +1853,7 @@
     },
     "source": {
         "key": "project.name",
+        "value": "{project.name} {signature}",
         "icon": "\ud83d\udd6e",
         "selectable": false,
         "public": true,
@@ -1486,9 +1869,15 @@
             },
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "source.name",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "key": "project.name",
+                "value": "{project.name} {signature}",
                 "icon": "\ud83d\udd6e",
                 "selectable": false,
                 "public": true,
@@ -1503,6 +1892,11 @@
                         "deleted": 0
                     },
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "source.name",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1542,6 +1936,11 @@
                 }
             ]
         },
+        "search": {
+            "field": "location.lemma",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "key": "items.*[itemtype=locations].property.lemma",
@@ -1575,6 +1974,11 @@
                             ]
                         }
                     ]
+                },
+                "search": {
+                    "field": "location.lemma",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1603,6 +2007,11 @@
             ],
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "date.date_value",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "key": "items.*[itemtype=conditions].date_value",
@@ -1625,6 +2034,11 @@
                         "sortno"
                     ],
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "date.date_value",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },
@@ -1651,6 +2065,11 @@
             ],
             "aggregate": "collapse"
         },
+        "search": {
+            "field": "summary_state.value",
+            "type": "string",
+            "operator": "LIKE"
+        },
         "types": {
             "epi-article": {
                 "caption": "Summary State",
@@ -1671,6 +2090,11 @@
                         "sortno"
                     ],
                     "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "summary_state.value",
+                    "type": "string",
+                    "operator": "LIKE"
                 }
             }
         },

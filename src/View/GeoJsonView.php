@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace App\View;
 
+use Cake\Datasource\ResultSetDecorator;
 use Cake\Datasource\ResultSetInterface;
 
 /**
@@ -53,6 +54,12 @@ class GeoJsonView extends JsonView
             foreach($data as $key => $value) {
                 if ($value instanceof ResultSetInterface) {
                     unset($data[$key]);
+
+                    // Workaround for custom hydration of Group entities in the ItemsTable
+                    if ($value instanceof ResultSetDecorator) {
+                        $value = iterator_to_array($value);
+                    }
+
                     foreach ($value as $entity) {
                         $entityData = $this->extractData($entity, $options);
                         $features = array_merge($features, $entityData['geodata'] ?? []);

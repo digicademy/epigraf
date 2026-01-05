@@ -2,7 +2,7 @@
     "id": 2,
     "deleted": 0,
     "version_id": null,
-    "job_id": 61954,
+    "job_id": 67521,
     "published": null,
     "created": null,
     "modified": "2020-10-29T13:00:58+01:00",
@@ -18,14 +18,14 @@
     "description": "",
     "config": {
         "type": "flat",
-        "displayfield": "name",
+        "displayfield": "lemma",
         "fields": {
-            "name": "Bezeichnung",
-            "lemma": "Abk\u00fcrzung",
+            "lemma": "Bezeichnung",
+            "name": "Abk\u00fcrzung",
             "sortkey": {
                 "caption": "Sortierschl\u00fcssel",
                 "autofill": {
-                    "source": "name",
+                    "source": "lemma",
                     "process": [
                         "sortkey"
                     ]
@@ -51,11 +51,11 @@
             "id": "ID"
         },
         "columns": {
-            "name": {
+            "lemma": {
                 "caption": "Bezeichnung",
                 "default": true
             },
-            "lemma": "Abk\u00fcrzung",
+            "name": "Abk\u00fcrzung",
             "comment": "Bemerkung",
             "keywords": "Schl\u00fcsselw\u00f6rter",
             "unit": {

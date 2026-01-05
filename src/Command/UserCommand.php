@@ -143,18 +143,33 @@ class UserCommand extends Command
         $user->setAccess(['role', 'username', 'norm_iri', 'accesstoken'], true);
         $user = $this->Users->patchEntity($user, [
             'username' => $username,
-            'password' => $password,
             'role' => $role,
             'accesstoken' => $accesstoken,
             'contact' => 'Automatically created user'
         ]);
 
-        if ($this->Users->save($user)) {
+        // Prevent validation for passwords provided in cli (e.g. for test users)
+        $user->password = $password;
+
+        if ($this->Users->save($user,  ['checkRules' => false])) {
             $this->io->out(__("The user {0} has been created.", $username));
         }
         else {
-            $this->io->out(__("The user {0} could not be created. Maybe the user is already present in the database.",
-                $username));
+            $errors = $user->getErrors();
+            if (!empty($errors)) {
+                $this->io->out(
+                    __("The user {0} could not be created: {1}.",
+                        $username,
+                        json_encode($errors)
+                    )
+                );
+            }
+            else {
+                $this->io->out(
+                    __("The user {0} could not be created. Maybe the user is already present in the database.",
+                    $username)
+                );
+            }
         }
     }
 

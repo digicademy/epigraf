@@ -41,6 +41,7 @@ export default class InsertImage extends Plugin {
                 const database = Utils.getDataValue(editor.sourceElement.closest('[data-database]'),'database');
                 const baseUrl = database ? App.databaseUrl : App.baseUrl;
                 let url = new URL('files/select', baseUrl);
+                url.searchParams.set('download', '0');
 
                 let basePath = Utils.getDataValue(editor.sourceElement.closest('[data-file-basepath]'),'fileBasepath');
                 const defaultPath = Utils.getDataValue(editor.sourceElement.closest('[data-file-defaultpath]'),'fileDefaultpath')

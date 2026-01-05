@@ -49,6 +49,7 @@ class WikiController extends AppController
     public $modelClass = 'Docs';
     public $segment = 'wiki';
 
+    public $help = 'introduction/notes';
 
     /**
      * Access permissions

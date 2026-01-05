@@ -12,6 +12,36 @@ import Utils from '/js/utils.js';
 import {i18n}  from '/js/lingui.js';
 import {SelectWindow} from "/widgets/js/frames.js";
 
+/**
+ * Buttons to send data to a service and add the result to the property or article.
+ *
+ * Add a div with the css class widget-service-button and the following data attributes:
+ * - data-service-name: The service name, e.g. 'summarize'.
+ * - data-service-item: The ID of the item the widget belongs to
+ * - data-service-data: The json encoded service configuration.
+ *
+ * For properties, the buttons are added to the target field (norm_data field).
+ * For articles, buttons that use item data, are added to the source item that contains content to be sent to the service.
+ *
+ * Usually, the service name and service data is derived from the service configuration in a property or item.
+ * The configuration includes the following fields:
+ * - task: The task name, e.g. 'summarize'
+ * - prompts: Optionally, the prompt template name to be used for the task. Empty by default.
+ * - database: Database name
+ * - input: The input type, either 'article' (the article id will be send to the service)
+ *          or 'item' (the item content will be send).
+ * - tagname: Optionally, for annotation tasks, the tag name. This should be a tag that is configured as links record.
+ *            If you send a tag name to the services endpoint, the property type will be looked up from the configuration
+ *            to assemble coding rules from the properties.
+ * - itemtype: Optionally, for coding tasks, an item name. This determines what items are created by the service widget.
+ *             The property used in the item will be looked up from the configuration.
+ * - sectiontype: Optionally, for coding tasks, a section type. This determines the section where the item is inserted.
+ * - fields: Optionally, for tasks that return results to be inserted into the source item.
+ *           An object with field names as keys and service response fields as values.
+ *           Example: `{ "content": "result", "value": "state"}`
+ * - multinomial: Optionally, for multinomial tasks, a boolean value to indicate whether the task is multinomial or not.
+
+ */
 export class ServiceWidget extends BaseWidget {
 
     constructor(element, name, parent) {
@@ -87,6 +117,10 @@ export class ServiceButtonWidget extends ServiceWidget {
             return;
         }
 
+        if (!this.emitEvent('epi:save:form', {}, true)) {
+            return false;
+        }
+
         return Utils.getInputValue(fieldElement.querySelector('input'));
     }
 
@@ -113,22 +147,8 @@ export class ServiceButtonWidget extends ServiceWidget {
         let url = '/services/' + taskConfig.service;
 
         // Input
-        let data = {};
-        data['database'] = taskConfig.database || '';
-        data['task'] = taskConfig.task;
-        data['prompts'] = taskConfig.prompts || 'default';
-        data['tagname'] = taskConfig.tagname || '';
-        data['itemtype'] = taskConfig.itemtype || '';
-        data['multinomial'] = taskConfig.multinomial || '';
-
-        if (taskConfig.input === 'article') {
-            const articlesId = this.widgetElement.closest('[data-root-table="articles"]').dataset.rootId;
-            data['record'] = 'articles-' + articlesId;
-        }
-        else if (taskConfig.input === 'item') {
-            data['input'] = this.getItemContent();
-        }
-        else {
+        const data = this.getData(taskConfig);
+        if (data === false) {
             this.error(i18n.t('Invalid service input'));
             return;
         }
@@ -141,6 +161,58 @@ export class ServiceButtonWidget extends ServiceWidget {
             .then(response => response.json())
             .then(response => this.poll(url, response, taskConfig))
             .catch(response => this.error(i18n.t('An error occurred'), response, taskConfig));
+    }
+
+    /**
+     * Get the data to be sent to the service.
+     *
+     * @param {object} taskConfig
+     * @param {Boolean} input Whether to include input data or only options.
+     * @return {object}
+     */
+    getData(taskConfig, input = true) {
+        let data = {};
+        data['database'] = taskConfig.database || '';
+        data['task'] = taskConfig.task;
+        data['prompts'] = taskConfig.prompts || '';
+        data['tagname'] =  Utils.getValue(taskConfig, 'target.tagname', '');
+        data['itemtype'] = Utils.getValue(taskConfig, 'target.itemtype', '');
+        data['multinomial'] = taskConfig.multinomial || '';
+
+        if (input) {
+            if (taskConfig.input === 'article') {
+                const articlesId = this.widgetElement.closest('[data-root-table="articles"]').dataset.rootId;
+                data['record'] = 'articles-' + articlesId;
+            } else if (taskConfig.input === 'item') {
+                data['input'] = this.getItemContent();
+            } else {
+                data = false;
+            }
+        }
+
+        return data;
+    }
+
+    /**
+     * Get the polling URL for the service.
+     *
+     * @param {string} url
+     * @param {string} taskId
+     * @param {object} taskConfig
+     * @return {string}
+     */
+    getPollUrl(url, taskId, taskConfig) {
+        let pollUrl = `${url}/${taskId}?task=${taskConfig.task}`;
+        const data = this.getData(taskConfig);
+
+        const keys = ['database', 'tagname', 'itemtype', 'multinomial'];
+        keys.forEach(key => {
+            if (data[key]) {
+                pollUrl += `&${key}=${data[key]}`;
+            }
+        });
+
+        return pollUrl;
     }
 
     /**
@@ -157,26 +229,13 @@ export class ServiceButtonWidget extends ServiceWidget {
         const taskId = Utils.getValue(response,'task.task_id');
 
         if (state === 'SUCCESS') {
-            this.result(response, taskConfig);
+            this.showResult(response, taskConfig);
         }
         else if  (state !== 'PENDING') {
             this.error(i18n.t('An error occurred'), response, taskConfig);
         }
         else if (taskId) {
-            let pollUrl = `${url}/${taskId}?task=${taskConfig.task}`;
-            if (taskConfig.database) {
-                pollUrl = pollUrl + `&database=${taskConfig.database || ''}`;
-            }
-            if (taskConfig.tagname) {
-                pollUrl = pollUrl + `&tagname=${taskConfig.anno || ''}`;
-            }
-            if (taskConfig.itemtype) {
-                pollUrl = pollUrl + `&itemtype=${taskConfig.itemtype || ''}`;
-            }
-            if (taskConfig.multinomial) {
-                pollUrl = pollUrl + `&multinomial=${taskConfig.multinomial || ''}`;
-            }
-
+            const pollUrl = this.getPollUrl(url, taskId, taskConfig);
             setTimeout(() => {
                 fetch(pollUrl, {
                     method: 'GET',
@@ -184,64 +243,104 @@ export class ServiceButtonWidget extends ServiceWidget {
                 })
                     .then(response => response.json())
                     .then(response => this.poll(url, response, taskConfig))
-                    .catch(response => this.error('An error occurred', response, taskConfig));
+                    .catch(error => this.error('An error occurred: ' + error.message));
             }, this.delay);
         }
     }
 
-    result(response, taskConfig) {
+    showResult(response, taskConfig) {
         if (!this.isPolling) {
             return;
         }
 
         this.success();
 
+        // Default target fields for summarize and annotation tasks
+        let targetFields;
+        let targetContainer;
+        if (taskConfig.task === 'summarize') {
+            targetFields = Utils.getValue(taskConfig, 'target.fields', {'content': 'llm_result', 'value': 'state'});
+            targetContainer = 'item';
+        }
+        else if (taskConfig.task === 'annotate') {
+            targetFields = Utils.getValue(taskConfig, 'target.fields', {'content': 'llm_result', 'value': 'state'});
+            targetContainer = 'item';
+        }
+        else {
+            targetFields = Utils.getValue(taskConfig, 'target.fields', {
+                'properties_id': 'properties_id',
+                'properties_label': 'properties_label',
+                'value': 'value'
+            });
+            targetContainer = 'article';
+        }
+
+        // Get result data and mixin the task state
+        const answers = Utils.getValue(response, 'task.result.answers');
+        const items = [];
+        for (const idx in answers) {
+            let answer = answers[idx];
+            answer['state'] =  Utils.getValue(response, 'task.state');
+            let content = {};
+            for (const fieldName in targetFields) {
+                content[fieldName] = Utils.getValue(answer, targetFields[fieldName]);
+            }
+            items.push(content);
+        }
+
+        if (items.length === 0) {
+            return;
+        }
+
         // Results to be inserted into the source item (summarize & annotation tasks)
-        const resultFields = taskConfig['fields'];
-        const itemElement = this.widgetElement.closest('[data-row-table="items"]');
-        if (itemElement && resultFields) {
+        targetContainer = Utils.getValue(taskConfig,'target.container', targetContainer);
 
-            const responseData = {
-                result: Utils.getValue(response, 'task.result.answers.0.llm_result'),
-                state: Utils.getValue(response, 'task.state')
-            };
+        // TODO: Dry.
 
-            const data = {};
-            data['table'] = itemElement.dataset.rowTable;
-            data['id'] = itemElement.dataset.rowId;
-            data['content'] = {};
-            for (const fieldName in resultFields) {
-                data['content'][fieldName] = Utils.getValue(responseData, resultFields[fieldName]);
+        // Update the target item (target is the source item)
+        if (targetContainer === 'item') {
+            const targetItem = this.widgetElement.closest('[data-row-table="items"]');
+
+            if (targetItem) {
+                const data = {};
+                data['table'] = targetItem.dataset.rowTable;
+                data['id'] = targetItem.dataset.rowId;
+                data['content'] = items[0];
+                this.emitEvent('epi:update:item', data);
             }
-            this.emitEvent('epi:update:item', data);
         }
 
-        // Results to be added as items
-        const itemType = taskConfig['itemtype'];
-        const sectionType = taskConfig['sectiontype'];
-        if (itemType && sectionType) {
-            const answers = Utils.getValue(response, 'task.result.answers');
+        // Add or update items in the same section
+        else if (targetContainer === 'section') {
+            const targetSection = this.widgetElement.closest('[data-row-table="sections"]');
 
-            const itemContent = [];
-            for (const idx in answers) {
-                itemContent.push({
-                    // 'content': Utils.getValue(answers[idx], 'llm_result'),
-                    'properties_id': Utils.getValue(answers[idx], 'properties_id'),
-                    'properties_label': Utils.getValue(answers[idx], 'properties_label'),
-                    'value': Utils.getValue(answers[idx], 'value')
-                });
+            const targetItemtype = Utils.getValue(taskConfig,'target.itemtype');
+            const targetSectiontype = targetSection.dataset.rowType;
+
+            if (targetItemtype && targetSectiontype) {
+                const itemData = {
+                    'itemtype': targetItemtype,
+                    'sectiontype': targetSectiontype, // TODO: Add section ID?
+                    'items': items
+                }
+                this.emitEvent('epi:import:item', itemData);
             }
-
-            const itemData = {
-                'itemtype':  itemType,
-                'sectiontype': sectionType,
-                'items': itemContent
-            }
-
-            this.emitEvent('epi:import:item', itemData);
         }
 
-        this.button.textContent = this.button.dataset.serviceLabel;
+        // Add or update items in other sections
+        else if (targetContainer === 'article') {
+            const targetItemtype = Utils.getValue(taskConfig,'target.itemtype');
+            const targetSectiontype = Utils.getValue(taskConfig,'target.sectiontype');
+
+            if (targetItemtype && targetSectiontype) {
+                const itemData = {
+                    'itemtype': targetItemtype,
+                    'sectiontype': targetSectiontype,
+                    'items': items
+                }
+                this.emitEvent('epi:import:item', itemData);
+            }
+        }
     }
 
     progressShow() {
@@ -284,6 +383,7 @@ export class ServiceButtonWidget extends ServiceWidget {
         this.isPolling = false;
         this.progressHide();
         this.messageHide();
+        this.button.textContent = this.button.dataset.serviceLabel;
     }
 
     error(msg, response, taskConfig) {
@@ -332,8 +432,18 @@ export class ReconcileButtonWidget extends ServiceWidget {
             return;
         }
 
-        const fieldElement = docElement.querySelector('[data-row-field="' + serviceConfig.input + '"] input');
-        return Utils.getInputValue(fieldElement);
+        const inputFieldName = serviceConfig.input;
+        if (inputFieldName === 'path') {
+            const ancestorElement = docElement.querySelector('[data-row-field="parent_id"] input');
+            let pathValue = Utils.getInputValue(ancestorElement);
+            const lemmaElement = docElement.querySelector('[data-row-field="lemma"] input');
+            let lemmaValue = Utils.getInputValue(lemmaElement);
+            return [pathValue, lemmaValue].filter(Boolean).join(', ');
+
+        } else {
+            const fieldElement = docElement.querySelector('[data-row-field="' + inputFieldName + '"] input');
+            return Utils.getInputValue(fieldElement);
+        }
     }
 
     getTargetData() {

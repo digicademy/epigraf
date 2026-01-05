@@ -64,7 +64,20 @@ export class JobWidget extends BaseWidget {
      */
     getRedirectUrl() {
         if (this.widgetElement.dataset.jobRedirect) {
-            return App.baseUrl + this.widgetElement.dataset.jobRedirect;
+            const url = new URL(this.widgetElement.dataset.jobRedirect, App.baseUrl);
+            return url.toString();
+        }
+    }
+
+    /**
+     * Extract the download URL from the widget
+     *
+     * @return {string|undefined}
+     */
+    getDownloadUrl() {
+        if (this.widgetElement.dataset.jobDownload) {
+            const url = new URL(this.widgetElement.dataset.jobDownload, App.baseUrl);
+            return url.toString();
         }
     }
 
@@ -83,11 +96,14 @@ export class JobWidget extends BaseWidget {
      *  @return {boolean} Whether a next action is available (download or polling)
      */
     startPolling() {
-        const target = this.getRedirectUrl();
-        if (target) {
-            this.isPolling = false;
-            this.isFinished = true;
-            this.showProceed('Download', target);
+
+        // If a redirect or download URL is present, the job is already finished
+        const data = {
+            downloadUrl : this.getDownloadUrl(),
+            redirectUrl : this.getRedirectUrl()
+        };
+        if (data.downloadUrl || data.redirectUrl) {
+            this.showProceed(data);
             return true;
         }
 
@@ -112,12 +128,9 @@ export class JobWidget extends BaseWidget {
      * Stop polling
      */
     stopPolling(data) {
-        this.isPolling = false;
-
         if (this.isCancelled) {
             this.showError('Cancelled');
         } else {
-            this.isFinished = true;
             this.showResult(data);
         }
     }
@@ -129,9 +142,14 @@ export class JobWidget extends BaseWidget {
     onButtonClick(event) {
         const role = Utils.getValue(event,'detail.data.role', event.target.dataset.role);
 
-        if (this.isPolling && role === 'cancel') {
-            this.cancel();
-            event.preventDefault();
+         if (role === 'cancel') {
+             if (this.isPolling) {
+                this.cancel();
+                event.preventDefault();
+             } else if (this.isInFrame()) {
+                this.frameWidget.closeWindow();
+                event.preventDefault();
+             }
         }
 
         else if (this.isFinished && role === 'proceed') {
@@ -146,7 +164,11 @@ export class JobWidget extends BaseWidget {
      * @param msg
      */
     showError(msg){
-        this.messageBar.innerHTML =msg;
+        this.isPolling = false;
+
+        msg = msg === undefined ? "An error occured. See the logs for details." : msg;
+
+        this.messageBar.innerHTML = msg;
         this.messageBar.classList.add('error');
         Utils.hide(this.progressBar);
         this.frameWidget.hideButton('proceed');
@@ -165,24 +187,54 @@ export class JobWidget extends BaseWidget {
         Utils.hide(this.progressBar);
     }
 
-    showProceed(caption, url, data) {
+    /**
+     * Open the proceed page
+     *
+     * If downloadURL is present in the data, it will be opened in a new tab.
+     * If redirectURL is present, it will trigger a redirect.
+     *
+     * @param {object} data
+     */
+    showProceed(data) {
         this.showResult(data);
 
-        this.proceedUrl = url;
-        this.frameWidget.showButton('proceed', caption, url);
+        let url;
+        if (data.downloadUrl) {
+            url = data.downloadUrl;
+        } else {
+            url = data.redirectUrl;
+        }
+        url = new URL(url, App.baseUrl);
+        this.proceedUrl = url.toString();
+
+        const caption = data.downloadUrl ? 'Download' : 'Proceed';
+        this.frameWidget.showButton('proceed', caption, this.proceedUrl);
         if (this.isInFrame()) {
             this.frameWidget.showButton('cancel', 'Close');
             this.frameWidget.closeWindow();
         }
 
-        window.location = url;
+        if (data.downloadUrl) {
+            window.open(this.proceedUrl);
+        } else {
+            window.location = this.proceedUrl;
+        }
     }
 
+    /**
+     * Show a success message and show download URLs in the result table
+     *
+     * @param {object} data
+     */
     showResult(data) {
+
+        this.isPolling = false;
+        this.isFinished = true;
+
         const msg = data && data.message ? data.message : 'Finished';
         this.showSuccess(msg);
 
-        const downloads = Utils.getValue(data,'config.downloads');
+        const downloads = Utils.getValue(data,'result.downloads');
         const td = this.resultTable ? this.resultTable.querySelector('td') : undefined;
 
         if (!downloads || !td) {
@@ -259,19 +311,13 @@ export class JobWidget extends BaseWidget {
                 self.messageBar.innerHTML = data.message ? data.message : '';
 
                 // Error
-                if (data.error) {
-                    self.isPolling = false;
-                    self.showError(data.error);
+                if (data.error || (data.status === 'error')) {
+                    self.showError(data.error || Utils.getValue(data, 'result.error'));
                 }
 
-                // Download
-                else if (data.redirect) {
-                    self.isPolling = false;
-                    self.isFinished = true;
-
-                    const target = App.baseUrl + data.redirect;
-                    const caption = (data.download) ? 'Download' : 'Proceed';
-                    self.showProceed(caption, target, data);
+                // Download or redirect
+                else if (data.downloadUrl || data.redirectUrl) {
+                    self.showProceed(data);
                 }
 
                 // Continue
@@ -293,7 +339,6 @@ export class JobWidget extends BaseWidget {
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
-                self.isPolling = false;
                 self.showError(errorThrown);
             },
 
@@ -310,7 +355,7 @@ export class JobWidget extends BaseWidget {
         $(this.progressBar).progressbar("option", "value", false);
         $(this.progressBar).progressbar("option", "max", false);
 
-        // Send a delete request to the server
+        // Send a delete request to the server to cancel the job
         const url = this.getCancelUrl();
         if (url) {
             return fetch(url, {

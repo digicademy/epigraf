@@ -26,7 +26,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2024-11-09T13:06:13+01:00",
+            "created": "2024-11-09T12:06:13+01:00",
             "id": "users-tmp2",
             "name": "Jakob J\u00fcnger",
             "acronym": "jj",
@@ -244,15 +244,15 @@
             "rght": 6,
             "sortno": 5,
             "sortkey": "Unterautor 2",
-            "lemma": "Unterautor 2",
-            "name": "Unterautor 2 ",
+            "lemma": "Langtitel Unterautor 2 mit '",
+            "name": "Kurztitel Unterautor 2 mit '",
             "unit": "Unterautor2 Einheit",
             "comment": "Unterautor 2 Bemerkung",
             "iscategory": 1,
             "ishidden": 1,
             "keywords": "Autor,Karstadt,Ursprung",
             "norm_data": "Unterautor 2 Normdaten",
-            "norm_iri": "projects~7",
+            "norm_iri": "kurztitel-unterautor-2-mit-",
             "file_copyfrom": ""
         },
         {
@@ -456,16 +456,16 @@
             "rght": 13,
             "sortno": 8,
             "sortkey": "Quelle 1",
-            "lemma": "Quelle 1",
-            "name": "Quelle 1 ",
+            "lemma": "Quelle 1 mit &",
+            "name": "Quelle 1 mit &",
             "unit": "Quelleneinheit 1",
-            "comment": "Quelle bemerkung",
+            "comment": "Quelle 1 Bemerkung",
             "iscategory": 1,
             "ishidden": 0,
             "signature": "",
-            "keywords": "Quelle,Karstadt,Ursprung",
-            "norm_data": "Quelle Norm 1",
-            "norm_iri": "projects~10",
+            "keywords": "Karstadt,Ursprung",
+            "norm_data": "Quelle 1 Normdaten",
+            "norm_iri": "quelle-1-mit-",
             "file_name": "",
             "file_copyfrom": ""
         },
@@ -502,15 +502,15 @@
             "rght": 6,
             "sortno": 5,
             "sortkey": "Unterautor 2",
-            "lemma": "Unterautor 2",
-            "name": "Unterautor 2 ",
+            "lemma": "Langtitel Unterautor 2 mit '",
+            "name": "Kurztitel Unterautor 2 mit '",
             "unit": "Unterautor2 Einheit",
             "comment": "Unterautor 2 Bemerkung",
             "iscategory": 1,
             "ishidden": 1,
             "keywords": "Autor,Karstadt,Ursprung",
             "norm_data": "Unterautor 2 Normdaten",
-            "norm_iri": "projects~7",
+            "norm_iri": "kurztitel-unterautor-2-mit-",
             "file_copyfrom": ""
         },
         {
@@ -568,7 +568,7 @@
             "file_path": "",
             "file_source": "",
             "file_online": false,
-            "date_sort": "01234AAA00000000A4",
+            "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
             "date_value": "1234",
             "date_start": 1234,
             "date_end": 1234,
@@ -1065,7 +1065,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:47:18+01:00",
+            "created": "2022-01-01T23:47:18+01:00",
             "id": "links-tmp55",
             "to_id": "properties-tmp186",
             "from_id": "properties-tmp44",
@@ -1079,7 +1079,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:52+01:00",
+            "created": "2022-01-01T23:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -1101,7 +1101,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:42+01:00",
+            "created": "2022-01-01T23:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1168,7 +1168,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:47:18+01:00",
+            "created": "2022-01-01T23:47:18+01:00",
             "id": "links-tmp55",
             "to_id": "properties-tmp186",
             "from_id": "properties-tmp44",
@@ -1182,7 +1182,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:52+01:00",
+            "created": "2022-01-01T23:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -1204,7 +1204,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:42+01:00",
+            "created": "2022-01-01T23:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1280,7 +1280,7 @@
             "from_tagid": "000004472261132811342592685794",
             "from_tagname": "rec_lit",
             "property": "properties-tmp10",
-            "to_value": "Quelle 1 ",
+            "to_value": "Quelle 1 mit &",
             "root_id": "properties-tmp43",
             "norm_iri": "projects~65",
             "file_copyfrom": ""
@@ -1294,16 +1294,16 @@
             "rght": 13,
             "sortno": 8,
             "sortkey": "Quelle 1",
-            "lemma": "Quelle 1",
-            "name": "Quelle 1 ",
+            "lemma": "Quelle 1 mit &",
+            "name": "Quelle 1 mit &",
             "unit": "Quelleneinheit 1",
-            "comment": "Quelle bemerkung",
+            "comment": "Quelle 1 Bemerkung",
             "iscategory": 1,
             "ishidden": 0,
             "signature": "",
-            "keywords": "Quelle,Karstadt,Ursprung",
-            "norm_data": "Quelle Norm 1",
-            "norm_iri": "projects~10",
+            "keywords": "Karstadt,Ursprung",
+            "norm_data": "Quelle 1 Normdaten",
+            "norm_iri": "quelle-1-mit-",
             "file_name": "",
             "file_copyfrom": ""
         },
@@ -1327,7 +1327,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:47:29+01:00",
+            "created": "2022-01-01T23:47:29+01:00",
             "id": "items-tmp108",
             "itemtype": "brands",
             "norm_iri": "projects~108",
@@ -1350,7 +1350,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:52+01:00",
+            "created": "2022-01-01T23:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -1372,7 +1372,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:42+01:00",
+            "created": "2022-01-01T23:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1391,7 +1391,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:47:29+01:00",
+            "created": "2022-01-01T23:47:29+01:00",
             "id": "items-tmp107",
             "to_id": "sections-tmp22",
             "itemtype": "brands",
@@ -1415,7 +1415,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:52+01:00",
+            "created": "2022-01-01T23:45:52+01:00",
             "id": "properties-tmp185",
             "propertytype": "brands",
             "level": 0,
@@ -1437,7 +1437,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:42+01:00",
+            "created": "2022-01-01T23:45:42+01:00",
             "id": "properties-tmp183",
             "propertytype": "brandtypes",
             "level": 0,
@@ -1492,7 +1492,7 @@
             "file_path": "signatur-1",
             "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
             "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
-            "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
+            "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
             "file_online": false,
             "date_value": "",
             "source_autopsy": false,
@@ -1541,7 +1541,7 @@
             "file_path": "signatur-1",
             "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
             "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
-            "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
+            "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
             "file_online": false,
             "date_value": "",
             "source_autopsy": false,
@@ -1635,7 +1635,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "items-tmp769",
             "itemtype": "placenames",
             "norm_iri": "projects~769",
@@ -1658,7 +1658,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:44:40+01:00",
+            "created": "2022-11-27T00:44:40+01:00",
             "id": "properties-tmp642",
             "propertytype": "placenames",
             "level": 0,
@@ -1677,7 +1677,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "items-tmp768",
             "itemtype": "placenames",
             "norm_iri": "projects~768",
@@ -1700,7 +1700,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:44:40+01:00",
+            "created": "2022-11-27T00:44:40+01:00",
             "id": "properties-tmp641",
             "propertytype": "placenames",
             "level": 0,
@@ -3212,7 +3212,7 @@
             "file_path": "",
             "file_source": "",
             "file_online": false,
-            "date_sort": "01234AAA00000000A4",
+            "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
             "date_value": "1234",
             "date_add": "",
             "date_start": 1234,
@@ -3302,7 +3302,7 @@
             "file_path": "",
             "file_source": "",
             "file_online": false,
-            "date_sort": "01337AAA00000000A4",
+            "date_sort": "11337-12-31T23:59:59\/11337-01-01T00:00:00\/11337-12-31T23:59:59\/00\/5",
             "date_value": "1337",
             "date_add": "",
             "date_start": 1337,
@@ -4443,7 +4443,7 @@
             "file_path": "",
             "file_source": "",
             "file_online": false,
-            "date_sort": "01066AAA00000000A4",
+            "date_sort": "11066-12-31T23:59:59\/11066-01-01T00:00:00\/11066-12-31T23:59:59\/00\/5",
             "date_value": "1066",
             "date_add": "",
             "date_start": 1066,
@@ -4459,7 +4459,7 @@
         {
             "norm_iri": "projects~378",
             "comment": "",
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "sections-tmp378",
             "parent_id": "sections-tmp21",
             "articles_id": "articles-tmp1",
@@ -4477,7 +4477,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "items-tmp767",
             "itemtype": "transcriptions",
             "norm_iri": "projects~767",
@@ -4579,7 +4579,7 @@
             "file_path": "",
             "file_source": "",
             "file_online": false,
-            "date_sort": "00794AAA00000000A4",
+            "date_sort": "10794-12-31T23:59:59\/10794-01-01T00:00:00\/10794-12-31T23:59:59\/00\/5",
             "date_value": "794",
             "date_add": "",
             "date_start": 794,
@@ -4595,7 +4595,7 @@
         {
             "norm_iri": "projects~377",
             "comment": "",
-            "created": "2022-11-27T01:45:52+01:00",
+            "created": "2022-11-27T00:45:52+01:00",
             "id": "sections-tmp377",
             "parent_id": "sections-tmp19",
             "articles_id": "articles-tmp1",
@@ -4613,7 +4613,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "items-tmp766",
             "itemtype": "transcriptions",
             "norm_iri": "projects~766",
@@ -4639,7 +4639,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-03-15T20:50:04+01:00",
+            "created": "2022-03-15T19:50:04+01:00",
             "id": "footnotes-tmp1",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -4652,7 +4652,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "footnotes-tmp5",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -4665,7 +4665,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "footnotes-tmp6",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -4829,7 +4829,7 @@
             "from_tagid": "000004436165061471064814812687",
             "from_tagname": "all",
             "property": "properties-tmp65",
-            "to_value": "Buchstabenverbindung 2 ",
+            "to_value": "Buchstabenverbindung 2",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~22",
             "file_copyfrom": ""
@@ -4897,7 +4897,7 @@
             "from_tagid": "000004436165037326388888946670",
             "from_tagname": "vz",
             "property": "properties-tmp86",
-            "to_value": "Verszeilenumbruch 1 ",
+            "to_value": "Verszeilenumbruch 1",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~24",
             "file_copyfrom": ""
@@ -5053,7 +5053,7 @@
             "from_tagid": "000004436342356430555555639778",
             "from_tagname": "all",
             "property": "properties-tmp66",
-            "to_value": "Buchstabenverbindung 1 ",
+            "to_value": "Buchstabenverbindung 1",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~30",
             "file_copyfrom": ""
@@ -5198,7 +5198,7 @@
             "from_tagid": "000004436342244850694444419672",
             "from_tagname": "z",
             "property": "properties-tmp78",
-            "to_value": "Zeile",
+            "to_value": "siehe",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~33",
             "file_copyfrom": ""
@@ -5306,7 +5306,7 @@
             "from_tagid": "000004436342078564814814882651",
             "from_tagname": "sup",
             "property": "properties-tmp74",
-            "to_value": "Hochgestellt 1 ",
+            "to_value": "Hochgestellt 1",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~35",
             "file_copyfrom": ""
@@ -5340,7 +5340,7 @@
             "from_tagid": "000004436342068519675925958209",
             "from_tagname": "all",
             "property": "properties-tmp65",
-            "to_value": "Buchstabenverbindung 2 ",
+            "to_value": "Buchstabenverbindung 2",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~36",
             "file_copyfrom": ""
@@ -5496,7 +5496,7 @@
             "from_tagid": "000004436341968184027777873155",
             "from_tagname": "z",
             "property": "properties-tmp78",
-            "to_value": "Zeile",
+            "to_value": "siehe",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~40",
             "file_copyfrom": ""
@@ -5739,7 +5739,7 @@
             "from_tagid": "000004436342523789351851958494",
             "from_tagname": "vz",
             "property": "properties-tmp84",
-            "to_value": "Verszeile",
+            "to_value": "siehe",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~46",
             "file_copyfrom": ""
@@ -5793,7 +5793,7 @@
             "from_tagid": "000004436342516953703703748996",
             "from_tagname": "z",
             "property": "properties-tmp80",
-            "to_value": "Zeilenumbruch 1 ",
+            "to_value": "Zeilenumbruch 1",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~47",
             "file_copyfrom": ""
@@ -5886,7 +5886,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:39:58+01:00",
+            "created": "2022-01-01T23:39:58+01:00",
             "id": "links-tmp50",
             "to_id": "properties-tmp11",
             "from_id": "items-tmp4",
@@ -5894,7 +5894,7 @@
             "from_tagid": "000004456302666872685185191153",
             "from_tagname": "rec_lit",
             "property": "properties-tmp11",
-            "to_value": "Unterautor ",
+            "to_value": "Unterautor 1 mit '",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~50",
             "file_copyfrom": ""
@@ -5909,15 +5909,15 @@
             "rght": 4,
             "sortno": 3,
             "sortkey": "Unterautor 1",
-            "lemma": "Unterautor 1",
-            "name": "Unterautor ",
+            "lemma": "Unterautor 1 mit '",
+            "name": "Unterautor 1 mit '",
             "unit": "Unterauteinheit 1",
             "comment": "Unterautorbemerkung 1",
             "iscategory": 1,
             "ishidden": 1,
             "keywords": "Autor,Quelle",
             "norm_data": "Unterautornorm 1",
-            "norm_iri": "projects~11",
+            "norm_iri": "unterautor-1-mit-",
             "file_copyfrom": ""
         },
         {
@@ -5943,7 +5943,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:39:58+01:00",
+            "created": "2022-01-01T23:39:58+01:00",
             "id": "links-tmp51",
             "to_id": "properties-tmp10",
             "from_id": "items-tmp14",
@@ -5951,7 +5951,7 @@
             "from_tagid": "000004456302493517361111115062",
             "from_tagname": "rec_lit",
             "property": "properties-tmp10",
-            "to_value": "Quelle 1 ",
+            "to_value": "Quelle 1 mit &",
             "root_id": "articles-tmp1",
             "norm_iri": "projects~51",
             "file_copyfrom": ""
@@ -5965,21 +5965,21 @@
             "rght": 13,
             "sortno": 8,
             "sortkey": "Quelle 1",
-            "lemma": "Quelle 1",
-            "name": "Quelle 1 ",
+            "lemma": "Quelle 1 mit &",
+            "name": "Quelle 1 mit &",
             "unit": "Quelleneinheit 1",
-            "comment": "Quelle bemerkung",
+            "comment": "Quelle 1 Bemerkung",
             "iscategory": 1,
             "ishidden": 0,
             "signature": "",
-            "keywords": "Quelle,Karstadt,Ursprung",
-            "norm_data": "Quelle Norm 1",
-            "norm_iri": "projects~10",
+            "keywords": "Karstadt,Ursprung",
+            "norm_data": "Quelle 1 Normdaten",
+            "norm_iri": "quelle-1-mit-",
             "file_name": "",
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:39:58+01:00",
+            "created": "2022-01-01T23:39:58+01:00",
             "id": "links-tmp52",
             "to_id": "articles-tmp1",
             "from_id": "items-tmp14",
@@ -6001,7 +6001,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:39:58+01:00",
+            "created": "2022-01-01T23:39:58+01:00",
             "id": "links-tmp53",
             "to_id": "sections-tmp3",
             "from_id": "items-tmp11",
@@ -6022,6 +6022,16 @@
             "sectiontype": "inscription",
             "name": "A",
             "alias": "Alias Inschrift A",
+            "norm_iri": "projects~3",
+            "article": "articles-tmp1",
+            "file_copyfrom": ""
+        },
+        {
+            "id": "articles-tmp1",
+            "norm_iri": "normiri_1",
+            "articletype": "epi-article",
+            "signature": "Signatur 1",
+            "name": "Artikel 1 f\u00fcr das Testsystem",
             "file_copyfrom": ""
         },
         {
@@ -6049,7 +6059,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp84",
             "from_id": "items-tmp766",
             "from_field": "content",
@@ -6061,7 +6071,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp86",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6073,7 +6083,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp87",
             "to_id": "sections-tmp19",
             "from_id": "items-tmp4",
@@ -6095,10 +6105,20 @@
             "sectiontype": "inscriptionpart",
             "name": "2",
             "alias": "Alias Inschrift B",
+            "norm_iri": "projects~19",
+            "article": "articles-tmp1",
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "id": "articles-tmp1",
+            "norm_iri": "normiri_1",
+            "articletype": "epi-article",
+            "signature": "Signatur 1",
+            "name": "Artikel 1 f\u00fcr das Testsystem",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp88",
             "to_id": "footnotes-tmp4",
             "from_id": "items-tmp4",
@@ -6126,7 +6146,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp89",
             "to_id": "sections-tmp144",
             "from_id": "items-tmp4",
@@ -6150,10 +6170,20 @@
             "sectiontype": "inscriptionpart",
             "name": "1",
             "alias": "",
+            "norm_iri": "projects~144",
+            "article": "articles-tmp3",
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "id": "articles-tmp3",
+            "norm_iri": "normiri_2",
+            "articletype": "epi-article",
+            "signature": "Signatur 2",
+            "name": "Artikel 2 f\u00fcr das Testsystem",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp90",
             "to_id": "sections-tmp145",
             "from_id": "items-tmp4",
@@ -6176,10 +6206,20 @@
             "sectiontype": "inscription",
             "name": "A",
             "alias": "",
+            "norm_iri": "projects~145",
+            "article": "articles-tmp3",
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "id": "articles-tmp3",
+            "norm_iri": "normiri_2",
+            "articletype": "epi-article",
+            "signature": "Signatur 2",
+            "name": "Artikel 2 f\u00fcr das Testsystem",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "links-tmp91",
             "to_id": "articles-tmp3",
             "from_id": "items-tmp4",
@@ -6201,7 +6241,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:49:55+01:00",
+            "created": "2022-11-27T00:49:55+01:00",
             "id": "links-tmp92",
             "to_id": "sections-tmp22",
             "from_id": "items-tmp4",
@@ -6222,10 +6262,20 @@
             "sectiontype": "inscription",
             "name": "B",
             "alias": "Alias Inschrift B",
+            "norm_iri": "projects~22",
+            "article": "articles-tmp1",
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:00:11+01:00",
+            "id": "articles-tmp1",
+            "norm_iri": "normiri_1",
+            "articletype": "epi-article",
+            "signature": "Signatur 1",
+            "name": "Artikel 1 f\u00fcr das Testsystem",
+            "file_copyfrom": ""
+        },
+        {
+            "created": "2022-11-27T01:00:11+01:00",
             "id": "links-tmp93",
             "to_id": "footnotes-tmp5",
             "from_id": "items-tmp4",
@@ -6239,7 +6289,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "footnotes-tmp5",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6251,7 +6301,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:00:11+01:00",
+            "created": "2022-11-27T01:00:11+01:00",
             "id": "links-tmp94",
             "to_id": "footnotes-tmp6",
             "from_id": "items-tmp4",
@@ -6265,7 +6315,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T01:45:53+01:00",
+            "created": "2022-11-27T00:45:53+01:00",
             "id": "footnotes-tmp6",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6277,7 +6327,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:01:54+01:00",
+            "created": "2022-11-27T01:01:54+01:00",
             "id": "links-tmp95",
             "from_id": "items-tmp767",
             "from_field": "content",
@@ -6289,7 +6339,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-11-27T02:10:22+01:00",
+            "created": "2022-11-27T01:10:22+01:00",
             "id": "links-tmp96",
             "to_id": "properties-tmp186",
             "from_id": "items-tmp4",
@@ -6303,7 +6353,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:52+01:00",
+            "created": "2022-01-01T23:45:52+01:00",
             "id": "properties-tmp186",
             "propertytype": "brands",
             "level": 0,
@@ -6325,7 +6375,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2022-01-02T00:45:42+01:00",
+            "created": "2022-01-01T23:45:42+01:00",
             "id": "properties-tmp184",
             "propertytype": "brandtypes",
             "level": 0,
@@ -6356,7 +6406,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp109",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6368,7 +6418,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp111",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6380,7 +6430,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp113",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6392,7 +6442,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp115",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6404,7 +6454,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp117",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6416,7 +6466,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp119",
             "from_id": "items-tmp4",
             "from_field": "content",
@@ -6428,7 +6478,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:44+01:00",
+            "created": "2025-02-26T18:11:44+01:00",
             "id": "links-tmp121",
             "from_id": "items-tmp3",
             "from_field": "content",
@@ -6440,7 +6490,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp123",
             "from_id": "items-tmp3",
             "from_field": "content",
@@ -6452,7 +6502,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp125",
             "from_id": "items-tmp3",
             "from_field": "content",
@@ -6464,7 +6514,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp127",
             "from_id": "items-tmp3",
             "from_field": "content",
@@ -6476,7 +6526,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp129",
             "from_id": "items-tmp3",
             "from_field": "content",
@@ -6488,7 +6538,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp131",
             "from_id": "items-tmp3",
             "from_field": "content",
@@ -6500,7 +6550,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp133",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6512,7 +6562,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp135",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6524,7 +6574,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp137",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6536,7 +6586,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp139",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6548,7 +6598,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp141",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6560,7 +6610,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp143",
             "from_id": "items-tmp1",
             "from_field": "content",
@@ -6572,7 +6622,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp145",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6584,7 +6634,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp147",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6596,7 +6646,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp149",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6608,7 +6658,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp151",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6620,7 +6670,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp153",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6632,7 +6682,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp155",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6644,7 +6694,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp157",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6656,7 +6706,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp159",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6668,7 +6718,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp161",
             "from_id": "items-tmp46",
             "from_field": "content",
@@ -6680,7 +6730,7 @@
             "file_copyfrom": ""
         },
         {
-            "created": "2025-02-26T19:11:45+01:00",
+            "created": "2025-02-26T18:11:45+01:00",
             "id": "links-tmp163",
             "from_id": "items-tmp46",
             "from_field": "content",

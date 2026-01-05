@@ -357,10 +357,10 @@ class JobsControllerTest extends AppTestCase
     public function testExportExecuteArticle()
     {
         $this->_testPipeline(
-            'database=projects&project=1&articles=1&pipeline=19',
+            'database=projects&project=1&articles=1&pipeline=19&sort=location',
             'result.doc',
             'job_3.doc',
-            '67038',
+            '67069',
             'application/msword'
 
         );
@@ -395,7 +395,7 @@ class JobsControllerTest extends AppTestCase
             'database=projects&project=1&articles=1&pipeline=16',
             'result.xml',
             'job_3.xml',
-            '450565',
+            '451657',
             'application/xml; charset=UTF-8'
         );
     }

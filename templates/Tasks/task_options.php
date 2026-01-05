@@ -75,3 +75,22 @@
         </table>
     <?php endif; ?>
 </td> </tr>
+
+<?php $entityHelper =($options['edit'] ?? false) ? $this->EntityInput : $this->EntityHtml; ?>
+<?=
+$entityHelper->taskTable($task, [
+
+    'format' => [
+        'type' => 'select',
+        'label' => __('Output format'),
+        'options' => [
+            '' => __('No output'),
+            'xml' => __('XML'),
+            'json' => __('JSON'),
+            'csv' => __('CSV'),
+            'md' => __('Markdown')
+        ],
+        'value' => $task['format'] ?? 'xml'
+    ]
+], $options)
+?>

@@ -25,5 +25,6 @@ RUN apt-get clean && \
 
 WORKDIR /var/www/html
 
-# Set www permissions
-RUN usermod -u 1000 www-data
+# Align host and container user ID
+#RUN usermod -u 1000 www-data
+

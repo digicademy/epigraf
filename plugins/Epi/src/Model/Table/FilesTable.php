@@ -10,27 +10,18 @@
 
 namespace Epi\Model\Table;
 
-use App\Utilities\Converters\Arrays;
-use App\Utilities\Converters\Attributes;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
-use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Query;
-use Epi\Model\Entity\FileRecord;
-use Files\Model\Behavior\FileSystemBehavior;
 use Files\Model\Table\FilesTableTrait;
 
 /**
  * Files table
- *
- * @mixin FileSystemBehavior
  */
 class FilesTable extends BaseTable
 {
 
     use FilesTableTrait;
-
-    public $captionField = 'name';
 
     /**
      * Request parameter config
@@ -44,8 +35,12 @@ class FilesTable extends BaseTable
         'filename' => 'raw',
         'basepath' => 'raw',
         'folder_id' => 'raw',
-        'list' => 'raw'
+        'list' => 'raw',
+        'download' => 'boolean'
     ];
+
+
+    public $captionField = 'name';
 
     /**
      * The mounts used in this table
@@ -107,9 +102,7 @@ class FilesTable extends BaseTable
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
         parent::afterSave($event, $entity, $options);
-
-        $this->Articles->clearResultCache();
-        $this->clearViewCache('epi_views_Epi_Articles');
+        $this->Articles->clearCache();
     }
 
     /**

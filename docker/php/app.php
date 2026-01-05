@@ -58,6 +58,14 @@ return [
         'encoding' => env('APP_ENCODING', 'UTF-8'),
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_EN.UTF-8'),
         'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin'),
+
+        // Rate limit for unauthenticated users:
+        // Max requests and time window in seconds
+        'RateLimit' => [
+            'limit' => env('APP_RATE_LIMIT_REQUESTS', 600),
+            'interval' => env('APP_RATE_LIMIT_INTERVAL', 60),
+        ],
+
         'base' => false,
         'dir' => 'src',
         'webroot' => 'htdocs',
@@ -151,7 +159,7 @@ return [
         'delay' => env('JOBS_DELAY', false),
         'scheme' => 'tcp',
         'host'   =>  env('JOBS_REDIS_HOST', 'localhost'),
-        'port'   => 6379,
+        'port'   =>  env('JOBS_REDIS_PORT', 6379),
         'queue_name' => 'jobs_queue',
         'status_name' => 'jobs_status'
     ],
@@ -347,10 +355,10 @@ return [
             'className' => Connection::class,
             'driver' => Mysql::class,
             'persistent' => false,
-            'host' => 'sql',
-            'port'=>'3306',
-            'username' => 'root',
-            'password' => 'root',
+            'host' => env('MYSQL_HOST','sql'),
+            'port'=> env('MYSQL_PORT', '3306'), //Standard mySQL port: 3306
+            'username' => env('MYSQL_USER','root'),
+            'password' => env('MYSQL_PASS', 'root'),
             'database' => 'epigraf',
             'encoding' => 'utf8mb4',
             'timezone' => 'Europe/Berlin',
@@ -388,10 +396,10 @@ return [
             'className' => Connection::class,
             'driver' => Mysql::class,
             'persistent' => false,
-            'host' => 'sql',
-            'port'=>'3306',
-            'username' => 'root',
-            'password' => 'root',
+            'host' => env('MYSQL_HOST','sql'),
+            'port'=> env('MYSQL_PORT', '3306'), //Standard mySQL port: 3306
+            'username' => env('MYSQL_USER','root'),
+            'password' => env('MYSQL_PASS', 'root'),
             'database' => 'projects',
             'encoding' => 'utf8mb4',
             'timezone' => 'Europe/Berlin',

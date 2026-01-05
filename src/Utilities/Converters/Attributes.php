@@ -248,6 +248,14 @@ class Attributes
                 $value = $params[$name] ?? $params[$prefix . $name] ?? '';
                 $parsed[$name] = Attributes::commaListToStringArray($value);
             }
+            elseif ($method === 'list-or-false') {
+                $value = $params[$name] ?? $params[$prefix . $name] ?? '';
+                if (Attributes::isFalse($value)) {
+                    $parsed[$name] = false;
+                } else {
+                    $parsed[$name] = Attributes::commaListToStringArray($value);
+                }
+            }
             elseif ($method === 'list-integer') {
                 $value = $params[$name] ?? $params[$prefix . $name] ?? '';
                 $parsed[$name] = Attributes::commaListToIntegerArray($value);
@@ -464,7 +472,9 @@ class Attributes
      * ### Array structure
      * All key-value pairs on the first level will be rendered as <key>="<value>".
      * If a value contains an array, all array values will be imploded using a whitespace separator.
-     * The style key value gets extra handling:
+     * The data key value receives special treatment:
+     * All array values will be mapped to data-<key>="<value>"; before they are imploded.
+     * The style key value receives special treatment:
      * All array values will be mapped to <key>: <value>; before they are imploded.
      * Nullish array values will be filtered out.
      *
@@ -481,6 +491,18 @@ class Attributes
                         return null;
                     }
                     if (is_array($value)) {
+
+                        if ($key === 'data') {
+                            $dataValues = array_filter($value, fn($x) => $x !== null);
+                            $dataAttr = array_map(function ($key, $value) use ($escape) {
+                                if ($escape) {
+                                    $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+                                }
+                                return 'data-' . $key . '="' . $value . '"';
+                            }, array_keys($dataValues), $dataValues);
+                            // return from within the nested if-branch!
+                            return implode(' ', $dataAttr);
+                        }
 
                         if ($key === 'style') {
                             $value = Attributes::toStyles($value);
@@ -858,7 +880,19 @@ class Attributes
     public static function isTrue($value)
     {
         $value = is_array($value) ? reset($value) : $value;
-        return ($value === 'true') || ($value === '1') || ($value === 1) || ($value === true);
+        return ($value === 'true') || ($value === true) || ($value === '1') || ($value === 1);
+    }
+
+    /**
+     * Return whether a query parameter value evaluates to false
+     *
+     * @param string|integer|boolean $value
+     * @return bool
+     */
+    public static function isFalse($value)
+    {
+        $value = is_array($value) ? reset($value) : $value;
+        return ($value === 'false') || ($value === false) || ($value === '0') || ($value === 0);
     }
 
     /**
@@ -908,7 +942,12 @@ class Attributes
     /**
      * Determine whether a value is a literal or an IRI,
      * convert them to relative IRIs if necessary
-     * or expand them if necessary
+     * or expand them if necessary.
+     *
+     * Literals with '^^' are considered to be typed literals.
+     * The type is the part after '^^'.
+     *
+     * TODO: Options are never passed, do we need them?
      *
      * @param string $value
      * @param string $baseIri
@@ -916,7 +955,11 @@ class Attributes
      * @param mixed $prefixedNames Whether prefixed names are allowed (true),
      *                             should always be expanded ('expand')
      *                             or should be expanded if they are not NCNames ('ncname')
-     * @return array An array with the value and the type
+     * @return array An array with the value and the type. Types:
+     *               - iri
+     *               - prefixed name
+     *               - literal
+     *               - The type added to a literal by '^^'
      */
     public static function parseIriValue($value, $baseIri, $namespaces, $prefixedNames = true)
     {
@@ -959,6 +1002,14 @@ class Attributes
                 }
             }
         }
+
+        // Detect types
+        if ($type === 'literal') {
+            $value = explode('^^',$value, 2);
+            $type = $value[1] ?? 'literal';
+            $value = $value[0] ?? '';
+        }
+
         return [$value, $type];
     }
 

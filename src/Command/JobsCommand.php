@@ -11,6 +11,7 @@
 namespace App\Command;
 
 use App\Model\Table\BaseTable;
+use App\Utilities\Converters\Attributes;
 use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
@@ -19,6 +20,7 @@ use Cake\Core\Configure;
 //use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\Router;
 use Predis\Client;
+use Predis\Connection\ConnectionException;
 
 /**
  * Worker for processing delayed jobs
@@ -81,9 +83,20 @@ class JobsCommand extends Command
         $parser->setDescription('Starts a worker that processes jobs.');
 
         $parser->addArgument('action', [
-            'help' => 'Action.',
-            'choices' => ['process'],
+            'help' => [
+                "process: Start processing jobs from the queue managed by Redis.\n" .
+                "execute: Execute a specific job by its ID.\n"
+            ],
+            'choices' => ['process','execute'],
             'required' => true
+        ]);
+
+        $parser->addOption('id', [
+            'help' => 'Job ID for the execute action.',
+        ]);
+
+        $parser->addOption('stepwise', [
+            'help' => 'Set to 1 to execute just one step in the execute action or to 0 to process all steps. Defaults to 0.',
         ]);
 
         return $parser;
@@ -103,6 +116,10 @@ class JobsCommand extends Command
         $action = $args->getArgument('action');
 
         if ($action == 'process') {
+            $retryNo = 0;
+            $retryMax = Configure::read('Jobs.retries_max', 10);
+            $retryDelay = Configure::read('Jobs.retries_delay', 1000000); // 1sec in microseconds
+
             $redis = new Client([
                 'scheme' => Configure::read('Jobs.scheme', 'tcp'),
                 'host'   => Configure::read('Jobs.host', 'localhost'),
@@ -116,7 +133,28 @@ class JobsCommand extends Command
             while (true) {
                 $io->out("Waiting for jobs...");
 
-                list(, $delayedJob) = $redis->blpop($queueName, 0);
+
+                while ($retryNo < $retryMax) {
+                    try {
+                        list(, $delayedJob) = $redis->blpop($queueName, 0);
+
+                        // Reset retry count on successful pop
+                        $retryNo = 0;
+                        break;
+                    } catch (ConnectionException $e) {
+                        $io->error("Redis connection error: " . $e->getMessage());
+
+                        $retryNo++;
+                        if ($retryNo >= $retryMax) {
+                            $io->error("Max retries reached. Exiting.");
+                            return;
+                        }
+
+                        $io->error("Retrying in " . ($retryDelay / 1000000) . " seconds.");
+                        usleep($retryDelay);
+                    }
+                }
+
                 $jobData = json_decode($delayedJob, true);
                 $jobId = $jobData['job_id'] ?? null;
 
@@ -139,11 +177,30 @@ class JobsCommand extends Command
                     //$redis->rpush($queueName, $jobData);
                 }
             }
+        }
 
+        elseif ($action == 'execute') {
+            $jobId = $args->getOption('id');
+            $stepwise = Attributes::isTrue($args->getOption('stepwise') ?? 0);
+
+            try {
+                $io->out("Executing job: {$jobId}");
+                $this->processJob($jobId, $stepwise);
+                $io->out("Finished job: {$jobId}");
+            } catch (\Exception $e) {
+                $io->error("Error executing job: {$jobId} - " . $e->getMessage());
+            }
         }
     }
 
-    protected function processJob($jobId) {
+    /**
+     * Process a job by its ID
+     *
+     * @param integer $jobId
+     * @param boolean $stepwise Set to true to process only one step of the job
+     * @return void
+     */
+    protected function processJob($jobId, $stepwise = false) {
 
         // Setup route builder
 //        $this->routeBuilder = Router::createRouteBuilder('/');
@@ -160,12 +217,21 @@ class JobsCommand extends Command
         $this->Jobs::$userRole = BaseTable::$userRole;
         $this->Jobs::$userId = BaseTable::$userId;
 
-        Router::fullBaseUrl(rtrim($job->config['server'] ?? Configure::read('App.fullBaseUrl'), '/'));
+        $baseUrl = rtrim($job->config['server'] ?? Configure::read('App.fullBaseUrl') ?? '', '/');
+        if (!empty($baseUrl)) {
+            Router::fullBaseUrl($baseUrl);
+        }
 
+
+        // TODO: Implement 'cancel' status in addition to redis cancel flag
+        // TODO: Implement timeout handling
         while (!in_array($job->status, ['finish', 'error']) && (!$job->isCanceled)) {
             $job = $job->execute();
             if (!$this->Jobs->save($job)) {
                 $job->error = __('The job could not be saved. Please try again.');
+                break;
+            }
+            if ($stepwise) {
                 break;
             }
         }

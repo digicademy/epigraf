@@ -315,6 +315,10 @@
     padding: 1em;
 }
 
+.doc-field-iscaption {
+    font-weight: bold;
+}
+
 .doc-item-highlight .doc-field-highlight {
     font-weight: bold;
     padding:0;
@@ -344,6 +348,23 @@
 .doc-section-stack .doc-field-addendum .doc-field-content {
     flex: 1;
 }
+
+
+.doc-section-stack .doc-item-list .doc-field,
+.doc-section-stack .doc-field-list {
+    display: inline;
+}
+
+.doc-section-stack .doc-item-list .doc-field-caption,
+.doc-section-stack .doc-field-list .doc-field-caption {
+    margin-right: 1em;
+}
+
+.doc-section-stack .doc-item-list .doc-field-content,
+.doc-section-stack .doc-field-list .doc-field-content {
+    display: inline;
+}
+
 
 .doc-section-items, .doc-section-stack {
     flex:3 0 70%;
@@ -393,8 +414,12 @@
     /*padding-left: 3em;*/
     /*width: 30%;*/
     flex:1 0 25%;
-    max-height: 50vh;
+    /*max-height: 50vh;*/
     overflow: auto;
+}
+
+.widget-document-edit .doc-section-link {
+    max-height: 30rem;
 }
 
 .doc-section-links-empty {
@@ -405,7 +430,7 @@
   flex:0 0 auto;
 }
 
-.doc-section-links-hidden .doc-section-link {
+.doc-section-links-hidden div {
     display:none;
 }
 
@@ -429,6 +454,38 @@ button.button-links-toggle::before {
 
 button.button-links-toggle.widget-switch-active::before {
     content: "\f205";
+}
+
+/* Setting buttons for annotations */
+div.doc-section-links div.button-pane {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.3rem;
+}
+
+div.doc-section-links button.button-settings {
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    color: grey;
+}
+
+div.doc-section-links button.button-settings:hover {
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    color: var(--nav-font-color);
+}
+
+div.doc-section-links button.button-settings.active {
+    color: var(--nav-bg-color-active);
+    background-color: var(--widgets-bg-color);
+    border: 1px solid var(--widgets-border-color);
+}
+
+div.doc-section-links button.button-settings.used {
+    background-color: var(--nav-bg-color-active);
+    color: var(--nav-font-color-active);
 }
 
 @media screen and (max-width: 767.98px) {
@@ -465,6 +522,16 @@ button.button-links-toggle.widget-switch-active::before {
     min-height: 1.8em;
 }
 
+.doc-section-link[data-to-id=''] {
+    color:var(--dim-font-color);
+}
+
+
+/* TODO: hide annos in the beginning */
+.doc-section-link:not(tag-problem) {
+    /*display:none;*/
+}
+
 .doc-section-link[data-deleted='1'] {
     display: none;
 }
@@ -473,6 +540,20 @@ button.button-links-toggle.widget-switch-active::before {
     display: inline-block;
     overflow: hidden;
     max-width: 10em;
+}
+
+.doc-section-link[data-group='hide'] {
+    display: none;
+}
+
+/* Decorate filter for annotations */
+span.anno-selector-group {
+    display: inline-block;
+    width: 0.7rem;
+    height: 0.7rem;
+    margin: 0 4px 3px 0;
+    vertical-align: middle;
+    background-color: var(--neutral-500);
 }
 
 .tree-published {
@@ -649,6 +730,10 @@ div.doc-section-link.tag-hover a:hover {
     display: none;
 }
 
+.doc-section-links-hidden .button-settings {
+    display: none;
+}
+
 
 /* Footnotes and annotations */
 
@@ -743,6 +828,10 @@ div.doc-section-link.tag-hover a:hover {
     box-shadow: 3px 3px 3px var(--section-highlight-bg-color);
 
     padding: 1em;
+}
+
+.doc-section-head-hide {
+    display: none;
 }
 
 .doc-section-addendum .doc-section-content .doc-section-stack {
@@ -940,7 +1029,7 @@ span.xml_tag_nl {
 
 .doc-group-headers {
     margin: 0.5em 0.3em;
-    color:#aaa;
+    color: var(--item-header-font-color);
     font-size: 0.8em;
 }
 
@@ -1125,6 +1214,20 @@ span.xml_tag_nl {
 
 }
 
+/* List view for items */
+.doc-section-view-list .doc-section-content .doc-section-item {
+    display:inline-block;
+    margin-right: 1em;
+    padding-left:1em;
+    border-left: 2px solid var(--section-highlight-border-color);
+}
+
+
+/* Empty view for items */
+.doc-section-view-empty .doc-section-content {
+    display:none;
+}
+
 /* Grid */
 .widget-grid {
     width: 100%;
@@ -1277,8 +1380,8 @@ table.doc-section-grid-table .doc-section-item-group {
 }
 
 /* Tags */
-.xml_notstyled .xml_bracket_open,
-.xml_notstyled .xml_bracket_close {
+.xml_notstyled > .xml_bracket_open,
+.xml_notstyled > .xml_bracket_close {
     color: var(--problems-font-color);
     background-color: var(--problems-bg-color);
 }
@@ -1302,6 +1405,13 @@ table.doc-section-grid-table .doc-section-item-group {
 
 .doc-group-caption {
     padding-right: 0.5em;
+    display: block;
+    color: var(--item-header-font-color);
+}
+
+.doc-section-groups .doc-group-caption {
+    display:table-caption;
+    caption-side: top;
 }
 
 /* Item templates */
@@ -1352,11 +1462,6 @@ table.doc-section-grid-table .doc-section-item-group {
     margin-right: 1em;
 }
 
-.theme_minimal .widget-lane {
-    margin-right: 0;
-    margin-bottom:0;
-}
-
 .lane-list {
     display: flex;
     flex-direction: row;
@@ -1375,19 +1480,19 @@ table.doc-section-grid-table .doc-section-item-group {
     text-transform: uppercase;
 }
 
-.theme_minimal .lane-title {
-    display:none;
-}
-
 .lane-tile {
     overflow: hidden;
-    flex-shrink: 0;
     flex-basis: 13em;
+    max-width: 27em;
+    flex-shrink: 0;
     position: relative;
-    width: 13em;
     height: 13em;
     margin-right: 1em;
-    border: 2px solid #917D4D;
+    border: 2px solid var(--tile-border-color);
+}
+
+.sidebar .lane-tile {
+    flex-grow: 1;
 }
 
 .tiles-list .lane-tile {
@@ -1405,7 +1510,7 @@ table.doc-section-grid-table .doc-section-item-group {
 }
 
 .lane-tile-image img {
-    width: 13em;
+    width: 100%;
     height: 13em;
     object-fit: cover;
     object-position: top;
@@ -1438,8 +1543,9 @@ table.doc-section-grid-table .doc-section-item-group {
     font-size: 13px;
     text-align: center;
 
-    background-color: #333333cc;
-    color: #FFFFFF;
+    background-color: var(--tile-badge-bg-color);
+    opacity:var(--tile-badge-bg-opacity);
+    color: var(--tile-badge-color);
 }
 
 .lane-tile-content-caption {
@@ -1462,8 +1568,9 @@ table.doc-section-grid-table .doc-section-item-group {
     font-size: 13px;
     bottom: 1em;
     width: 100%;
-    background-color: #333333cc;
-    color: #FFFFFF;
+    background-color: var(--tile-badge-bg-color);
+    opacity:var(--tile-badge-bg-opacity);
+    color: var(--tile-badge-color);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -1472,7 +1579,7 @@ table.doc-section-grid-table .doc-section-item-group {
 
 .lane-tile-icon {
     color: transparent;
-    text-shadow: 0 0 0 #FFFFFF;
+    text-shadow: 0 0 0 var(--tile-badge-color);
     font-size: 0.8em;
     vertical-align: middle;
 }
@@ -1508,7 +1615,7 @@ table.doc-section-grid-table .doc-section-item-group {
 
 .lane-tile .xml_tag {
     background: none;
-    color: #333333;
+    color: var(--tile-content-color);
 }
 
 .lane-tile .xml_tag_bl .xml_bracket_open,

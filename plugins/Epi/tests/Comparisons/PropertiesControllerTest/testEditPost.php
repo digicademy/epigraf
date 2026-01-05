@@ -5,6 +5,7 @@
   'version_id' => NULL,
   'job_id' => NULL,
   'published' => NULL,
+  'status' => NULL,
   'created' => '2021-06-14 14:54:36',
   'modified' => '2020-10-29 13:00:58',
   'created_by' => 1,

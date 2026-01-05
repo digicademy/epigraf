@@ -13,7 +13,13 @@
     /** @var array $log */
 ?>
 
-<?php $this->Breadcrumbs->add(__('Logs')); ?>
+<!-- Search bar -->
+<div class="content-searchbar">
+    <?= $this->Table->filterBar('log', true) ?>
+</div>
+
+<!-- Content area -->
+<div class="content-main widget-scrollbox">
 
 <?= $this->Table->simpleTable(
     array_reverse(iterator_to_array($log, false)),
@@ -29,6 +35,7 @@
     ['nowrap' => true, 'class'=> 'simple-table widget-table recordlist']
 ) ?>
 
+</div>
 
 <!-- Actions -->
 <?php

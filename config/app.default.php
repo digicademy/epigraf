@@ -67,6 +67,20 @@ return [
 //        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_EN.UTF-8'),
         'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin'),
 //        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'UTC'),
+
+        // Rate limit for unauthenticated users:
+        // Max requests and time window in seconds
+        'RateLimit' => [
+            'limit' => env('APP_RATE_LIMIT_REQUESTS', 600),
+            'interval' => env('APP_RATE_LIMIT_INTERVAL', 60),
+        ],
+
+        // Enable tracking by uncommenting the following lines
+//        'matomo' => [
+//            'url' => 'https://stats.adwmainz.net/',
+//            'siteId' => 41,
+//        ],
+
         'base' => false,
         'dir' => 'src',
         'webroot' => 'htdocs',
@@ -170,7 +184,7 @@ return [
     'Jobs' => [
         'delay' => false,
         'scheme' => 'tcp',
-        'host'   =>  env('REDIS_HOST', '__REDISHOST__'),
+        'host'   =>  env('JOBS_REDIS_HOST', '__REDISHOST__'),
         'port'   => 6379,
         'queue_name' => 'jobs_queue',
         'status_name' => 'jobs_status'

@@ -27,7 +27,7 @@ use App\View\AppView;
     $options = [
         'edit'=> $this->Link->getEdit(),
         'mode'=> $this->Link->getMode(),
-        'templateArticle'=> $entity->type['merged'] ?? []
+        'template_article'=> $entity->type['merged'] ?? []
     ];
 ?>
 

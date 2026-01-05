@@ -53,7 +53,8 @@ class ObjectsTest extends AppTestCase
                 'name' => 'links',
                 'caption' => 'links',
                 'key' => 'links.*',
-                'aggregate' => 'count'
+                'aggregate' => 'count',
+                'format' => null,
             ],
             Objects::parseFieldKey('links=links.*|count')
         );
@@ -63,7 +64,8 @@ class ObjectsTest extends AppTestCase
                 'name' => 'items.*[itemtype="geolocations"]',
                 'caption' => 'items.*[itemtype="geolocations"]',
                 'key' => 'items.*[itemtype="geolocations"]',
-                'aggregate' => false
+                'aggregate' => false,
+                'format' => null,
             ],
             Objects::parseFieldKey('items.*[itemtype="geolocations"]')
         );
@@ -73,9 +75,21 @@ class ObjectsTest extends AppTestCase
                 'name' => 'Geo',
                 'caption' => 'Geo',
                 'key' => 'items.*[itemtype="geolocations"]',
-                'aggregate' => 'first'
+                'aggregate' => 'first',
+                'format' => null,
             ],
             Objects::parseFieldKey('Geo=items.*[itemtype="geolocations"]|first')
+        );
+
+        $this->assertEquals(
+            [
+                'name' => 'Ref',
+                'caption' => 'Ref',
+                'key' => 'items.*[itemtype="literature"]',
+                'aggregate' => 'first',
+                'format' => 'txt',
+            ],
+            Objects::parseFieldKey('Ref=txt:items.*[itemtype="literature"]|first')
         );
     }
 
@@ -145,6 +159,19 @@ class ObjectsTest extends AppTestCase
             ],
             Objects::parsePlaceholder(
                 'Project {projects.*.name} is {projects.*.status}',
+                fn($token) => Objects::extract($testData, $token)
+            )
+        );
+
+        // Escape string.
+        // Two backslashes because in PHP two backslashes denote an escape sequence,
+        // resulting in a single backslash.
+        $this->assertEquals(
+            [
+                'Placeholder with escapes {projects.*.name} has \ escapes'
+            ],
+            Objects::parsePlaceholder(
+                'Placeholder with escapes \{projects.*.name\} has \\ escapes',
                 fn($token) => Objects::extract($testData, $token)
             )
         );
@@ -399,6 +426,39 @@ class ObjectsTest extends AppTestCase
     }
 
 
+    public function testGetValuePlaceholder(): void
+    {
+        $testArticle = $this->_generateArticle();
+
+        $result = $testArticle->getValuePlaceholder('Normdata: {sections.*.items.*.prop.norm_data|split|filter:^wd}', []);
+        $this->assertEquals(
+            [
+                'Normdata: wd:WD1',
+                'Normdata: wd:WD1',
+                'Normdata: wd:WD1',
+                'Normdata: wd:WD1'
+            ],
+            $result
+        );
+
+        $this->assertEquals(
+            ['Normdata: wd:XXX'],
+            $testArticle->getValuePlaceholder('Normdata: {norm_data|split|filter:^wd}', [])
+        );
+
+        // With escaping in regex
+        $this->assertEquals(
+            ['Normdata: wd:XXX', 'Normdata: gnd:YYY'],
+            $testArticle->getValuePlaceholder('Normdata: {norm_data|split|filter:^wd\|gnd}', [])
+        );
+
+        // With escaping in literal
+        $this->assertEquals(
+            ['Norm{data}'],
+            $testArticle->getValuePlaceholder('Norm\{data\}', [])
+        );
+    }
+
     /**
      * Test whether 'parent' in an extraction key works
      *
@@ -431,21 +491,21 @@ class ObjectsTest extends AppTestCase
 
         // Rendered GSON
         $this->assertEquals(
-            '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+            '{"type":"Feature","data":{"id":1,"number":0,"quality":3,"radius":0,"rootId":1},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
             $testArticle->sections[0]->items[0]->getValueFormatted('geo') // defaults to [format => 'html']
         );
 
         $this->assertEquals(
-            '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+            '{"type":"Feature","data":{"id":1,"number":0,"quality":3,"radius":0,"rootId":1},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
             $testArticle->sections[0]->items[0]->getValueNested('geo', ['format' => 'html'])
         );
 
         $this->assertEquals(
             [
-                '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
-                '{"type":"Feature","data":{"id":2,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}',
-                '{"type":"Feature","data":{"id":1,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
-                '{"type":"Feature","data":{"id":2,"number":0,"caption":"Article with \"Quotes\"","quality":3,"radius":0,"url":"\/epi\/projects\/articles\/view\/1"},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}'
+                '{"type":"Feature","data":{"id":1,"number":0,"quality":3,"radius":0,"rootId":1},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+                '{"type":"Feature","data":{"id":2,"number":0,"quality":3,"radius":0,"rootId":1},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}',
+                '{"type":"Feature","data":{"id":1,"number":0,"quality":3,"radius":0,"rootId":1},"geometry":{"type":"Point","coordinates":[1.2,2.1]}}',
+                '{"type":"Feature","data":{"id":2,"number":0,"quality":3,"radius":0,"rootId":1},"geometry":{"type":"Point","coordinates":[2.4,4.2]}}'
             ],
             $testArticle->getValueNested('sections.*.items.*.geo', ['format' => 'html'])
         );

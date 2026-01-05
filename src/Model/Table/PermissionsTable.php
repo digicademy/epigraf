@@ -55,7 +55,7 @@ class PermissionsTable extends BaseTable
     static $permissionTypes = ['access' => 'Access', 'lock' => 'Lock'];
     static $requestTypes = ['web' => 'Web-Zugriff', 'api' => 'API-Zugriff'];
     static $requestModes = [MODE_DEFAULT => 'Default', MODE_PREVIEW => 'Preview', MODE_REVISE => 'Code', MODE_STAGE => 'Stage'];
-    static $entityTypes = ['databank' => 'Databank', 'record' => 'Record'];
+    static $entityTypes = ['databank' => 'Databank', 'record' => 'Record', 'view' => 'View'];
 
     static $_endpoints = null;
     public $captionField = 'id';
@@ -189,6 +189,7 @@ class PermissionsTable extends BaseTable
                 'beforeFilter',
                 'afterFilter',
                 'beforeRender',
+                'isAuthorized',
                 'initialize'
             ];
         }
@@ -394,7 +395,7 @@ class PermissionsTable extends BaseTable
     {
         $permission = [
             'user_id' => PermissionsTable::getUserId($user),
-            'user_role' => PermissionsTable::getUserRole($user, null, $requestScope),
+            'user_role' => PermissionsTable::getUserRole($user, $database, $requestScope),
             'user_request' => $requestScope,
             'permission_type' => 'access'
         ];
@@ -696,6 +697,7 @@ class PermissionsTable extends BaseTable
         $conditions[] = ['OR' => $endpoint_conditions];
 
         // Allow wildcards for databases
+        // TODO: wildcards for view permissions in databases (*.map vs. playground.map)
         unset($conditions['entity_name']);
         $entity_conditions = [];
 
@@ -713,9 +715,14 @@ class PermissionsTable extends BaseTable
      * by comparing the request to the permission table.
      *
      * @param array $user The user data from the auth component
+     * @param string $database The database name
+     * @param string $controller The controller name
+     * @param string $action The action name
+     * @param string $requestScope The request scope (web or api)
+     * @param array $options Additional options to be merged into the permission mask
      * @return bool
      */
-    public static function hasGrantedPermission($user = null, $database = null, $controller = null, $action = null, $requestScope = null)
+    public static function hasGrantedPermission($user = null, $database = null, $controller = null, $action = null, $requestScope = null, $options = [])
     {
         $permissionTable = TableRegistry::getTableLocator()->get('Permissions');
         $permissionMask = PermissionsTable::getPermissionMask(
@@ -725,7 +732,16 @@ class PermissionsTable extends BaseTable
             $action,
             $requestScope
         );
-        return $permissionTable->hasPermission($permissionMask);
+        $permissionMask = array_merge($permissionMask, $options);
+        $allowed = $permissionTable->hasPermission($permissionMask);
+
+        // Grant authorized users all guest permissions
+        if (empty($allowed) && ($permissionMask['user_role'] !== 'guest')) {
+            $permissionMask['user_role'] = 'guest';
+            $allowed = $permissionTable->hasPermission($permissionMask);
+        }
+
+        return $allowed;
     }
 
     /**
@@ -819,13 +835,13 @@ class PermissionsTable extends BaseTable
     }
 
     /**
-     * Contain table data
+     * Contain data necessary for table columns
      *
      * @param Query $query
      * @param array $options
      * @return Query
      */
-    public function findContainFields(Query $query, array $options)
+    public function findContainColumns(Query $query, array $options)
     {
         $query = $query->contain(['Users']);
         return $query;
@@ -848,13 +864,17 @@ class PermissionsTable extends BaseTable
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $users = $this
             ->find('list')
@@ -960,7 +980,7 @@ class PermissionsTable extends BaseTable
             ]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**

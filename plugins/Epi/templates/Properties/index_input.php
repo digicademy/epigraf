@@ -7,6 +7,9 @@
  * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
  *
  */
+
+use App\Utilities\Converters\Arrays;
+
 ?>
 
 <?php
@@ -23,7 +26,38 @@
     $seek = $this->getConfig('options')['params']['seek'] ?? null;
     $append = $this->getConfig('options')['params']['append'] ?? null;
     $empty = $this->getConfig('options')['params']['empty'] ?? null;
+
     $find  = $this->getConfig('options')['params']['find'] ?? '';
+    $find  = $this->getConfig('options')['params']['find'] ?? '';
+
+    $selectedNode = null;
+    foreach ($entities as $property) {
+        if ($property->id === (int)$seek) {
+            $selectedNode = $property;
+            break;
+        }
+    }
+
+    $find = empty($append) ? '' : $find;
+    $find = $selectedNode ? $selectedNode->shortname : $find;
+
+    $queryParams =  [
+        'template' => 'choose',
+        'show'=>'content',
+        'references' => false,
+        'append' => $append,
+        'empty' => $empty ?? 0,
+        'find' => $find
+    ];
+
+    $articleParams = $this->getConfig('options')['params']['articles'] ?? null;
+    if (!empty($articleParams)) {
+        $queryParams = array_merge($queryParams, Arrays::array_add_prefix($articleParams, 'articles.', true));
+    }
+    $projectParams = $this->getConfig('options')['params']['projects'] ?? null;
+    if (!empty($projectParams)) {
+        $queryParams = array_merge($queryParams, Arrays::array_add_prefix($projectParams, 'projects.', true));
+    }
 ?>
 
 <?php $this->Breadcrumbs->add(__('Categories'), ['action' => 'index']); ?>
@@ -31,18 +65,6 @@
 
 
 <div class="content-main widget-scrollbox">
-    <?php
-        $selectedNode = null;
-        foreach ($entities as $property) {
-            if ($property->id === (int)$seek) {
-                $selectedNode = $property;
-                break;
-            }
-        }
-
-        $find = empty($append) ? '' : $find;
-        $find = $selectedNode ? $selectedNode->shortname : $find;
-    ?>
     <?= $this->Form->control('value',
         [
             'label' => false,
@@ -54,14 +76,7 @@
                 'controller' => 'Properties',
                 'action' => 'index',
                 $scope,
-                '?' => [
-                    'template' => 'choose',
-                    'show'=>'content',
-                    'references' => false,
-                    'append' => $append,
-                    'empty' => $empty ?? 0,
-                    'find' => $find
-                ]
+                '?' => $queryParams
             ],
             //'text' => $selected ? $selected->path : '',
             'value' => $selectedNode ? $selectedNode->id : null,

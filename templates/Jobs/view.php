@@ -11,20 +11,44 @@
 
 <?php
 /**
- * @var $job \App\Model\Entity\Job
+ * @var $entity \App\Model\Entity\Job
  */
 ?>
 
 <!-- Breadcrumbs -->
 <?php
 $this->Breadcrumbs->add(__('Jobs'), 'jobs/index');
-$this->Breadcrumbs->add($job->id);
+$this->Breadcrumbs->add($entity->id);
 ?>
 
 <!-- Content area -->
-<?= $this->EntityHtml->entityForm($job, 'view') ?>
+<?= $this->EntityHtml->entityForm($entity, 'view') ?>
 
-<?php if (!empty($job->config['pipeline_tasks'])): ?>
+<?php if (!empty($entity->result['downloads'])): ?>
+    <h2><?= __('Downloads') ?></h2>
+    <table>
+        <thead>
+        <tr>
+            <th><?= __('File') ?></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($entity->result['downloads'] ?? [] as $download): ?>
+            <tr>
+                <td>
+                    <?= $this->Html->link(
+                        $download['caption'],
+                        ['controller'=>'Jobs', 'action' => 'execute',$entity->id, '?' => ['download' => $download['name'],'force'=>'1']],
+                        ['target' => '_blank']
+                    ) ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php endif; ?>
+
+<?php if (!empty($entity->config['pipeline_tasks'])): ?>
     <h2><?= __('Tasks') ?></h2>
     <table>
         <thead>
@@ -36,11 +60,12 @@ $this->Breadcrumbs->add($job->id);
             </tr>
         </thead>
 
-        <?php foreach ($job->config['pipeline_tasks'] as $step => $element): ?>
+        <tbody>
+        <?php foreach ($entity->config['pipeline_tasks'] as $step => $element): ?>
 
             <tr>
                 <td>
-                    <?php if ($step < (int)$job->config['pipeline_progress']): ?>
+                    <?php if ($step < (int)($entity->config['pipeline_progress'] ?? 0)): ?>
                     <span class="badge success">✓</span>
                     <?php endif; ?>
                 </td>
@@ -60,13 +85,28 @@ $this->Breadcrumbs->add($job->id);
             </tr>
 
         <?php endforeach; ?>
+        </tbody>
     </table>
 <?php endif; ?>
 
-<?php if (!empty($job->config)): ?>
+<?php if (!empty($entity->config)): ?>
     <h2><?= __('Config') ?></h2>
 
-    <?php $options = array_diff_key($job->config,['pipeline_tasks'=>false,'pipeline_progress'=>false]); ?>
+    <?php $options = array_diff_key($entity->config,['pipeline_tasks'=>false,'pipeline_progress'=>false]); ?>
     <?=	$this->Table->nestedTable($options);?>
 
 <?php endif; ?>
+
+    <!-- Actions -->
+<?php
+  $this->setShowBlock(['footer']);
+  $this->Link->beginActionGroup ('bottom');
+
+  if (!$entity->isFinished) {
+    $this->Link->addAction(__('Cancel'), ['controller' => 'Jobs', 'action' => 'cancel', $entity->id], ['linktype' => 'post','method' => 'delete']);
+  } else {
+      $this->Link->addAction(__('Run'), ['controller' => 'Jobs', 'action' => 'execute', $entity->id, '?' => ['reset' => 1]]);
+  }
+
+  $this->Link->addAction(__('Edit'), 'jobs/edit/' . $entity->id);
+?>

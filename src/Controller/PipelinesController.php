@@ -41,6 +41,8 @@ class PipelinesController extends AppController
         ]
     ];
 
+    public $help = 'export/pipelines';
+
     /**
      * Retrieve list of pipelines.
      *
@@ -141,7 +143,7 @@ class PipelinesController extends AppController
             }
         }
 
-        $entity->patchDefault();
+        $entity->arrangeTasks();
 
         $this->sidemenu = $entity->getMenu();
         $this->sidemenu['move'] = true;

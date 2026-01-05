@@ -274,6 +274,7 @@ class FilesRequestComponent extends Component
             // Carry on the close paramter - used in JS popups to determine whether to close window
             $flowParams = [
                 'close' => $this->request->getQuery('close', null),
+                'download' => $this->request->getQuery('download', null),
                 'template' => $this->request->getQuery('template', null),
                 'list' => $this->request->getQuery('list', null)
             ];
@@ -547,7 +548,7 @@ class FilesRequestComponent extends Component
         $params['path'] = $entity->relative_folder;
         $query =  $this->model
             ->find('hasParams', $params)
-            ->find('containFields', $params);
+            ->find('containColumns', $params);
 
         $this->getController()->paginate = $paging;
         $entities = $this->getController()->paginate($query);
@@ -581,12 +582,6 @@ class FilesRequestComponent extends Component
                     '?' => ['root' => $entity->root, 'path' => $entity->relativeFolder]
                 ]
             );
-        }
-
-        // Preview data
-        if (in_array($entity->type, ['md', 'xsl', 'txt', 'xml', 'html', 'log'])) {
-            $page = (int)$this->request->getQuery('page', 1);
-            $entity->loadContent($this->controller->rootFolder, $page);
         }
 
         $this->controller->Answer->addAnswer(compact('entity'));
@@ -633,9 +628,9 @@ class FilesRequestComponent extends Component
      */
     public function download($id = null, $download = true, $placeholder = false)
     {
-        // Allow published downloads for guests,
+        // Allow published downloads for guests and readers,
         // private downloads for all
-        $allowPrivate = $this->controller->userRole != 'guest';
+        $allowPrivate = !in_array($this->controller->userRole, ['guest', 'reader']);
         $file = $this->getFileEntity($id);
 
         if (!$allowPrivate && !$file->published) {
@@ -710,15 +705,20 @@ class FilesRequestComponent extends Component
     /**
      * Upload files
      *
-     * Multiupload files via AJAX.
+     * Multiupload files via AJAX or API.
      *
-     * @return false redirect to index method if no AJAX request, upload files otherwise
+     * Payload: A list of files in the File.data (or FileData) field, multipart encoded.
+     *          Additional parameters:
+     *         - File.overwrite (or FileOverwrite): If true, existing files will be overwritten
      *
-     * //todo Upload mit $id
+     * //Todo: Upload using $id
+     *
+     * @return false redirect to index method if no AJAX/API request, upload files otherwise
+     *
      */
     public function upload()
     {
-        if (!$this->request->is('ajax')) {
+        if (!$this->request->is('ajax') & !$this->request->is('api')) {
             $this->controller->Answer->redirect(
                 [
                     'action' => 'index',
@@ -732,11 +732,14 @@ class FilesRequestComponent extends Component
         if ($this->request->is('post')) {
             $uploadpath = $this->controller->currentFolder;
 
+            // The dropzone plugin uses FileData as field name
+            // Other payload data such as the file path will be nested in the File array.
             if (!empty($this->request->getData('FileData'))) {
                 $this->request = $this->request->withData('File.data', $this->request->getData('FileData'));
             }
 
-            $files = Files::saveUploadedFiles($uploadpath, $this->request->getData('File.data'));
+            $overwrite = Attributes::isTrue($this->request->getData('FileOverwrite', false) || $this->request->getData('File.overwrite', false));
+            $files = Files::saveUploadedFiles($uploadpath, $this->request->getData('File.data'), $overwrite);
 
             if (empty($files['error'])) {
                 $this->controller->Flash->success(__('The files have been uploaded.'));
@@ -1137,14 +1140,14 @@ class FilesRequestComponent extends Component
     }
 
     /**
-     * Move folder contents method
+     * Move folder or file
      *
      * @param null|int $id Optional ID of the FileRecord
-     * @param string $scope Move content of folder (content) or file/folder itself (item).
+     * @param null|string $scope Set scope to 'content' to move folder content, but not the folder itself
      *
      * @return void
      */
-    public function move($id = null, $scope = 'content')
+    public function move($id = null, $scope = null)
     {
         // Get folder by ID or request parameters
         $item = $this->getFileEntity($id, '', true);
@@ -1162,7 +1165,7 @@ class FilesRequestComponent extends Component
             if (($scope === 'content') && !$item->isFolder) {
                 throw new BadRequestException('No valid folder.');
             }
-            elseif (($scope === 'item') && ($item->name === '')) {
+            elseif (($scope !== 'content') && ($item->name === '')) {
                 throw new BadRequestException('No valid filename.');
             }
 
@@ -1173,33 +1176,10 @@ class FilesRequestComponent extends Component
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-            if ($scope === 'item') {
-                // Move file or folder
-                $sourceName = $item->relativePath;
-                $targetName = $target . DS . $item->name;
 
-                if (Files::moveFileOrFolder($item->rootFolder, $sourceName, $targetName, $overwrite)) {
-                    $this->controller->Answer->error(
-                        __('The item could not be moved.')
-                    );
+            if ($scope === 'content') {
 
-                }
-                else {
-                    $item->movedto = $target;
-                    $this->controller->Answer->success(
-                        __('The item has been moved.'),
-                        [
-                            'action' => 'view',
-                            $item->id,
-                            '?' => ['root' => $item->root, 'path' => $item->movedto]
-                        ]
-                    );
-                }
-
-            }
-            elseif ($scope === 'content') {
-
-                // Move folder
+                    // Move folder
                 $target_abs = $item->rootFolder . DS . $target;
                 $source_abs = $item->absoluteFolder;
 
@@ -1220,6 +1200,31 @@ class FilesRequestComponent extends Component
                     );
                 }
             }
+             else {
+                // Move file or folder
+                $sourceName = $item->relativePath;
+                $targetName = $target . DS . $item->name;
+
+                if (!Files::moveFileOrFolder($item->rootFolder, $sourceName, $targetName, $overwrite)) {
+                    $this->controller->Answer->error(
+                        __('The item could not be moved.')
+                    );
+
+                }
+                else {
+                    $item->movedto = $target;
+                    $this->controller->Answer->success(
+                        __('The item has been moved.'),
+                        [
+                            'action' => 'view',
+                            $item->id,
+                            '?' => ['root' => $item->root, 'path' => $item->movedto]
+                        ]
+                    );
+                }
+
+            }
+
         }
 
         $this->controller->set(compact('item', 'target'));

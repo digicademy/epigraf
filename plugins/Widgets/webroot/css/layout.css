@@ -51,11 +51,17 @@
     z-index: 100;
     cursor: pointer;
     opacity: 0.8;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-x: right;
-    background-image: url("../img/arrow_left.svg");
-    transition: all 0.5s ease-in-out;
+
+    mask-image: url("../img/arrow_left.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: right;
+    mask-mode: alpha;
+
+    background-color: var(--sidebar-resizer-color);
+    transition: visibility 0s, opacity 0.15s cubic-bezier(.4,0,.2,1) 75ms;
+
+
 }
 
 .sidebar-imploder {
@@ -65,10 +71,15 @@
     height: 2rem;
     z-index: 100;
     cursor: pointer;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position-x: right;
-    background-image: url("../img/arrow_left.svg");
+
+    mask-image: url("../img/arrow_left.svg");
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: right;
+    mask-mode: alpha;
+
+    background-color: var(--sidebar-resizer-color);
+    transition: visibility 0s, opacity 0.15s cubic-bezier(.4,0,.2,1) 75ms;
 }
 
 .sidebar-exploder-left {
@@ -96,7 +107,6 @@
 .sidebar-imploder {
 	visibility: hidden;
 	opacity: 0;
-	transition: visibility 0s, opacity 0.5s linear;
 }
 
 .sidebar-resizer:hover .sidebar-imploder {
@@ -113,18 +123,24 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+
+    transition: all 0.15s cubic-bezier(.4,0,.2,1) 75ms;
 }
+
 
 .sidebar-resizer.is-resizing,
 .sidebar-resizer:hover {
-    background-color: var(--sidebar-resizer-color-hover);
+    background-color: var(--sidebar-resizer-bg-color-hover);
+    border-color: var(--sidebar-resizer-color);
 }
 
 .sidebar-resizer-left {
+    border-right: 2px transparent solid;
 	right: 0;
 }
 
 .sidebar-resizer-right {
+    border-left: 2px transparent solid;
 	left: 0;
 }
 
@@ -170,7 +186,7 @@
 }
 
 .sidebar-collapsed.sidebar-full.sidebar-exploder {
-    background-image: url("../img/arrow_left_green.svg");
+    background-color: var(--sidebar-resizer-active-color);
 }
 
 /* ------------- Accordion ------------- */
@@ -188,14 +204,18 @@
 
 @media screen and (max-width: 767.98px) {
 
-	.accordion {
-		flex-direction: column;
-	}
-
 	.accordion .sidebar-exploder,
 	.accordion .sidebar-imploder {
 		display: none;
 	}
+
+    .accordion .sidebar {
+        display: none;
+    }
+
+    .accordion {
+        flex-direction: column;
+    }
 
 	.accordion-toggle {
 		display: block;
@@ -222,10 +242,6 @@
 		color: var(--nav-font-color-active);
 	}
 
-	.accordion .sidebar {
-		display: none;
-	}
-
 	/* Hide by reducing the height. Note that "display: none" can't be used
 	  because the hidden elements don't have dimensions,
 	  preventing the table layout mechanism (including resizable columns)
@@ -246,6 +262,30 @@
 		display:inherit !important;
 		flex:1;
 	}
+
+    .content-searchbar-item {
+        order: 999; /* fallback */
+    }
+
+    .content-searchbar-item.small-order-1 {
+        order: 1;
+    }
+    .content-searchbar-item.small-order-2 {
+        order: 2;
+    }
+
+    .content-searchbar-item.small-order-3 {
+        order: 3;
+    }
+
+    .content-searchbar-item.small-order-4 {
+        order: 4;
+    }
+
+    .content-searchbar-item.small-order-5 {
+        order: 5;
+    }
+
 }
 
 
@@ -485,9 +525,14 @@
 
     vertical-align: top;
     height: 2em;
-    width: 2em;
-    padding:0;
+    padding:0 0.5em;
     margin:0 0 0.2em 0.2em;
+}
+
+.widget-tabsheets-selectors-manage button.btn-add {
+    height: auto;
+    width: auto;
+    padding: 0.5em 0.5em;
 }
 
 .widget-tabsheets-selectors-manage button.btn-add:hover {
@@ -519,12 +564,6 @@
 /* ------------- Overlay ------------- */
 
 
-.overlay-header-buttons .btn-open,
-.overlay-header-buttons .btn-close {
-    background-size: 50%;
-    padding: 1em;
-}
-
 .overlay {
     position:absolute;
     left:0;
@@ -537,16 +576,38 @@
     flex-direction: column;
 }
 
+.overlay-center {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
 .overlay-header {
     display: flex;
     background-color: var(--top-menu-app-bg-color);
     color: var(--button-font-color);
+    margin-bottom: 1em;
 }
 
 .overlay-header-title {
     padding-left: 1em;
     line-height: 2.2em;
     flex:1;
+}
+
+.overlay-header-buttons .btn-open,
+.overlay-header-buttons .btn-close {
+    background-size: 50%;
+    padding: 1em;
+    height: 100%;
+    width: 2.2em;
 }
 
 .overlay-header-buttons button {
@@ -562,10 +623,70 @@
     margin-left:0.5em;
 }
 
+.overlay-header-buttons button:last-child {
+    margin-right:0;
+}
+
 .overlay-content {
     flex:1;
     display: flex;
-    overflow:auto;
+    overflow: auto;
+}
+
+.overlay-content-inner {
+    width: 85%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--content-bg-color);
+}
+
+.overlay-content-inner button[data-role=add],
+.overlay-content-inner button[type=submit],
+.overlay-content-inner button.role-apply,
+.overlay-content-inner button.role-submit,
+.overlay-content-inner button.role-save {
+    background: inherit;
+}
+
+.overlay-content-inner button[data-role=add]:hover,
+.overlay-content-inner button[type=submit]:hover,
+.overlay-content-inner button.role-apply:hover,
+.overlay-content-inner button.role-submit:hover,
+.overlay-content-inner button.role-save:hover{
+    background: inherit;
+}
+
+.overlay-content-inner a[data-role=add],
+.overlay-content-inner a[data-role=open],
+.overlay-content-inner button.role-open {
+    background: inherit;
+    color: var(--link-font-color);
+}
+
+.overlay-content-inner a[data-role=add]:hover,
+.overlay-content-inner a[data-role=open]:hover,
+.overlay-content-inner button.role-open:hover,
+.overlay-content-inner a[data-role=open]:focus,
+.overlay-content-inner a[data-role=add]:focus,
+.overlay-content-inner button.role-open:focus {
+    background: inherit;
+    color: inherit;
+}
+
+.overlay-content-inner .widget-dropdown-pane {
+    border: 0;
+    box-shadow: none;
+}
+
+.overlay-content-inner .widget-dropdown-pane.dropdown-menu li a {
+    padding:0.5em 0.5em 0.5em 1em;
+}
+
+.overlay-content-inner .widget-dropdown-selector input {
+    margin:0 0.5em 0.5em 0.5em;
+    width: inherit;
 }
 
 .overlay-footer {

@@ -33,6 +33,7 @@ abstract class BaseService {
      * @var array
      */
     public array $config = [
+        'accept' => 'application/json',
         'useragent' => 'Epigraf/5.0 (github.com/digicademy/epigraf)'
     ];
 
@@ -67,8 +68,8 @@ abstract class BaseService {
 
         $this->client = new Client([
             'headers' => [
-                'Accept' => 'application/json',
-                'User-Agent' => ($this->config['useragent'])
+                'Accept' => $this->config['accept'] ?? $this->config['Accept'],
+                'User-Agent' => $this->config['useragent'] ?? $this->config['User-Agent']
             ]
         ]);
     }
@@ -102,6 +103,7 @@ abstract class BaseService {
 
         // Try reading from cache
         $cacheKey = $endpointUrl . '?' . http_build_query($options, '', '&', PHP_QUERY_RFC3986);
+        $cacheKey = md5($cacheKey);
         $answer = Cache::read($this->serviceKey . ':' . $cacheKey,'services');
         if (is_array($answer) && (($answer['status'] ?? 500) === 200)) {
             return $answer;

@@ -14,16 +14,12 @@ namespace Rest\Controller\Component;
 
 use App\Model\Entity\BaseEntity;
 use Cake\Controller\Component;
-use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Exception\RedirectException;
 use Cake\Http\Exception\UnauthorizedException;
-use Cake\Http\Response;
-use Cake\ORM\ResultSet;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Rest\Error\Middleware\RestAnswerException;
-use Cake\Event\EventInterface;
 
 /**
  * Answer component
@@ -130,7 +126,11 @@ class AnswerComponent extends Component
             throw new UnauthorizedException($msg);
         }
 
-        $msg = $msg ?? __('Please log in to access this location.');
+        if (!empty($this->getController()->Auth->user())) {
+            $msg = $msg ?? __('You have no access to the requested page.');
+        } else {
+            $msg = $msg ?? __('Please log in to access this location.');
+        }
         $this->error($msg, $this->getController()->getLoginUrl());
     }
 

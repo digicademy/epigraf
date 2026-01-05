@@ -275,6 +275,13 @@ define('MODE_PREVIEW', 'preview');
 define('MODE_REVISE', 'code');
 define('MODE_STAGE', 'stage');
 
+/**
+ * User account states
+ */
+
+define('USER_ACCOUNT_INACTIVE', 0);
+define('USER_ACCOUNT_PENDING', 1);
+define('USER_ACCOUNT_ACTIVE', 2);
 
 /**
  * Project user roles
@@ -321,15 +328,15 @@ define('LOCKMODE_EPIDESKTOP', 1702146);
  * Serialization formats
  */
 
-define('RENDERED_FORMATS', ['html', 'txt', 'md', 'jsonld', 'rdf', 'ttl','geojson']);
+define('RENDERED_FORMATS', ['html', 'txt', 'md', 'jsonld', 'rdf', 'ttl', 'geojson', 'plain']);
 define('VIEW_FORMATS', ['html', 'md','txt']);
 define('TRIPLE_FORMATS', ['jsonld', 'rdf', 'ttl']);
-define('PLAINTEXT_FORMATS', ['txt', 'md', 'jsonld', 'rdf', 'ttl', 'geojson']);
+define('PLAINTEXT_FORMATS', ['txt', 'md', 'jsonld', 'rdf', 'ttl', 'geojson', 'plain']);
 
 define('API_FORMATS', ['json', 'xml', 'csv']);
 
-define('API_EXTENSIONS', ['json', 'xml', 'csv', 'jsonld', 'rdf', 'ttl', 'md', 'geojson']);
-define('API_CONTENTTYPES', ['application/json', 'application/xml', 'text/csv', 'application/ld+json', 'application/rdf+xml', 'text/turtle', 'text/markdown', 'application/geo+json']);
+define('API_EXTENSIONS', ['json', 'xml', 'csv', 'xlsx', 'jsonld', 'rdf', 'ttl', 'md', 'geojson', 'plain']);
+define('API_CONTENTTYPES', ['application/json', 'application/xml', 'text/csv', 'application/vnd.ms-excel', 'application/ld+json', 'application/rdf+xml', 'text/turtle', 'text/markdown', 'application/geo+json']);
 
 /**
  * Namespaces
@@ -342,3 +349,16 @@ define(
         'hydra' => 'http://www.w3.org/ns/hydra/core#'
     ]
 );
+
+/**
+ * Geo locations
+ */
+
+define('GEO_MAINZ_LAT', 52.147040492349);
+define('GEO_MAINZ_LNG',  13.612060546875);
+
+/**
+ * File formats
+ */
+
+define('FILETYPES_TEXT', ['md', 'xsl', 'txt', 'xml', 'html', 'log', 'csv']);

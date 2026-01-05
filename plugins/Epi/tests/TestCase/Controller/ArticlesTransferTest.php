@@ -3,9 +3,7 @@ namespace Epi\Test\TestCase\Controller;
 
 use App\Model\Entity\Databank;
 use App\Utilities\Converters\Arrays;
-use Cake\Collection\CollectionInterface;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Epi\Test\TestCase\EpiTestCase;
 
 /**
@@ -47,9 +45,7 @@ class ArticlesTransferTest extends EpiTestCase
 
         $this->createDatabase('import');
 
-        $this->fetchTable('Databanks')
-            ->activateDatabase('import');
-
+        $this->fetchTable('Databanks')->activateDatabase('import');
         $this->Articles = $this->fetchTable('Epi.Articles');
     }
 
@@ -63,11 +59,46 @@ class ArticlesTransferTest extends EpiTestCase
         $this->removeDatabase('import');
 
 
-        $this->fetchTable('Databanks')
-            ->activateDatabase('test_projects');
+        $this->fetchTable('Databanks')->activateDatabase('test_projects');
 
         unset($this->Articles);
         parent::tearDown();
+    }
+
+
+    /** Get an array of all rows in all relevant tables in the database
+     *
+     * Used for comparison before and after copy operation.
+     *
+     * @return array
+     */
+    public function getAllRows(): array
+    {
+        $models = [
+            'Epi.Projects' => ['Projects.signature'],
+            'Epi.Articles' => ['Articles.signature'],
+            'Epi.Sections' => ['Sections.lft'],
+            'Epi.Items' => ['Items.itemtype', 'Items.sortno', 'Items.content', 'Items.value'],
+            'Epi.Footnotes' => ['Footnotes.from_tagname', 'Footnotes.from_tagid'],
+            'Epi.Links' => ['Links.from_tagname', 'Links.from_tagid'],
+            'Epi.Properties' => ['Properties.lft']
+        ];
+
+        $allRows = [];
+        foreach ($models as $modelName => $modelOrder) {
+            $model = $this->fetchTable($modelName);
+
+            $query = $model->find('all')->order($modelOrder);
+
+            $rows = array_map(fn($x) => $x->toArray(), $query->toArray());
+            $rows = array_combine(
+                array_map(fn($x) => $modelName . '.' . $x, array_column($rows,'id')),
+                $rows
+            );
+            $allRows = array_merge($allRows,$rows);
+
+        }
+        return $allRows;
     }
 
     /**
@@ -100,7 +131,7 @@ class ArticlesTransferTest extends EpiTestCase
 //        // Import
 //        $this->post('/epi/test_import/articles/import?filename=import/article.csv');
 
-        $this->assertRedirect('/jobs/execute/3?database=import');
+        $this->assertRedirect('/jobs/execute/3?database=import&close=0');
 
         // Poll for 10 rounds at maximum
         $polling = 10;
@@ -192,7 +223,7 @@ class ArticlesTransferTest extends EpiTestCase
         $this->loginUser('admin');
         $this->post(
             'epi/import/articles/transfer'
-            .'?source=projects&articles=1&versions=1'
+            .'?source=projects&id=1&versions=1'
             .'&snippets=comments,editors,published&tree=1',
             []
         );
@@ -225,7 +256,7 @@ class ArticlesTransferTest extends EpiTestCase
 
         $article_target = $this->Articles
             ->find('containAll')
-            ->where(['Articles.id'=>1])
+            ->where(['Articles.id'=>3])
             ->toArray();
 
         $article_target = Arrays::array_remove_keys($article_target,$removeFields);
@@ -246,6 +277,68 @@ class ArticlesTransferTest extends EpiTestCase
         $this->assertGreaterThan(130000, mb_strlen($article_target_json));
         $this->assertTextEquals($article_source_json, $article_target_json);
     }
+
+    /**
+     * Test row copy method
+     *
+     * @return void
+     */
+    public function testCopy()
+    {
+        // Source database: Get article before transfer operation
+        $this->fetchTable('Databanks')->activateDatabase('projects');
+
+       // Get state before copy
+        $rowsBefore = $this->getAllRows();
+
+        //$this->assertNotEquals($rowsBefore1,$rowsBefore);
+
+        // Transfer
+        $this->executeJob(
+            'epi/projects/articles/transfer/?source=projects&id=1&selected=1&tree=1&snippets=comments,editors,published,search,deprecated',
+            'admin',
+            10
+        );
+
+        //$this->assertRedirect('http://localhost/epi/projects/articles/index?selected=1');
+
+        // Target database
+        $this->fetchTable('Databanks')->activateDatabase('projects');
+
+        // Get state after copy
+        $rowsAfter = $this->getAllRows();
+        $rowsNew = array_diff_key($rowsAfter, $rowsBefore);
+        $rowsOld = array_diff_key($rowsAfter, $rowsNew);
+
+        // Assert old rows are unchanged
+        $this->assertEquals($rowsBefore, $rowsOld);
+
+        // Assert new rows all belong to the new article
+        $newRootIds = array_map(fn($x) => empty($x['root_id']) ? ($x['articles_id'] ?? null) : ($x['root_tab']. '-' . $x['root_id']), $rowsNew);
+        $this->assertEquals(array_values(array_filter(array_unique($newRootIds))), [10, 'articles-10']);
+
+        // Assert copy rows are identical to old rows (except ids, modified/created fields and norm_iri)
+        $unsetCols = [
+            'modified','created','modified_by','created_by',
+            'id', 'articles_id','sections_id','root_id',
+            'links_id','from_id','parent_id','job_id','to_id',
+            'lastopen_id', 'lastopen_tab', 'lastopen_field',
+            'norm_iri'
+        ];
+
+        $oldArticleRows = array_filter($rowsBefore, fn($x) => (
+            ((($x['articletype'] ?? '') === 'epi-article') && (($x['id'] ?? 0) === 1)) ||
+            (($x['articles_id'] ?? 0) === 1) ||
+            ((($x['root_tab'] ?? '') === 'articles') && (($x['root_id'] ?? 0) === 1))
+        ));
+        $oldArticleRows = Arrays::array_remove_keys($oldArticleRows,$unsetCols);
+        $oldArticleRows = array_values(Arrays::array_remove_empty_recursive($oldArticleRows));
+
+        $newArticleRows = Arrays::array_remove_keys($rowsNew,$unsetCols);
+        $newArticleRows = array_values(Arrays::array_remove_empty_recursive($newArticleRows));
+        $this->assertEquals($oldArticleRows, $newArticleRows);
+    }
+
 
     /**
      * Test mutate method

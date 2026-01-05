@@ -50,21 +50,24 @@ class ArticlesController extends AppController
             'author' => ['lock', 'unlock'],
             'editor' => ['lock', 'unlock']
         ],
+
         'web' => [
             'guest' => ['view', 'index'],
-            'reader' => ['index', 'view', 'images'],
-            'desktop' => ['index', 'view', 'items'],
-            'coder' => ['index', 'view', 'edit','unlock', 'lock'],
+            'reader' => ['index', 'view'],
+            'desktop' => ['index', 'view', 'items', 'export'],
+            'coder' => ['index', 'view', 'edit','unlock', 'lock', 'export'],
             'author' => [
-                'index', 'view', 'items','add','edit', 'delete', 'unlock', 'lock', 'mutate'
+                'index', 'view', 'items','add','edit', 'delete', 'unlock', 'lock', 'mutate', 'export'
 //                'mutate' => ['task' =>['assign_project', 'assign_property']]
             ],
             'editor' => [
-                'index', 'view', 'items','add','edit', 'delete', 'unlock', 'lock','mutate'
+                'index', 'view', 'items','add','edit', 'delete', 'unlock', 'lock','mutate', 'export'
 //                'mutate' => ['task' => ['assign_project', 'assign_property']]
             ]
         ]
     ];
+
+    public $help = 'introduction/articles';
 
     /**
      * beforeFilter callback
@@ -100,61 +103,37 @@ class ArticlesController extends AppController
      * Retrieve a list of articles.
      *
      * Provides the following query parameters:
-     * - columns [alias fields (deprecated)]
-     * -snippets
+     * - columns
+     * - snippets
      *
-     * -template
-     * -sort
-     * -direction
-     * -shape
-     * -idents
+     * - template
+     * - sort
+     * - direction
+     * - shape
+     * - idents
      *
-     * -deleted
-     * -published
+     * - deleted
+     * - published
      *
-     * -articletypes [alias articles_articletypes]
-     * -sectiontypes
-     * -itemtypes
-     * -propertytypes
-     * -field [alias articles_field]
-     * -term [alias articles_term]
-     * -articles [alias articles_articles]
-     * -projects [alias articles_projects]
-     * -properties
-     * -lat
-     * -lng
-     * -tile
-     * -lanes
-     * -lane
+     * - articletypes [alias articles_articletypes]
+     * - sectiontypes
+     * - itemtypes
+     * - propertytypes
+     * - field [alias articles_field]
+     * - term [alias articles_term]
+     * - articles [alias articles_articles]
+     * - projects [alias articles_projects]
+     * - properties
+     * - lat
+     * - lng
+     * - tile
      *
      * @return \Cake\Http\Response|void|null
      */
     public function index()
     {
-        // Get search parameters from request
-        [$params, $columns, $paging, $filter] = $this->Actions->prepareParameters();
-
-        // Build query and get data
-        // TODO: only fetch necessary data, not complete data (constrain by fields-parameter and by sortableFields)
-        $query = $this->Articles
-            ->find('hasParams', $params)
-            ->find('containFields', $params)
-            ->find('cached');
-
-
-        $this->paginate = $paging;
-        $entities = $this->paginate($query);
-
-        // Summary statistics (missing geocodings)
-        // TODO: implement lazy loading (generator in combination with iteratoraggregate?)
         // TODO: remove ugly api condition, maybe call in view template? Or use snippet parameter?
-        $summary = [];
-        if (!$this->request->is('api')) {
-            $summary = $this->Articles->getSummary($params);
-        }
-
-        $this->Answer->addOptions(compact('params', 'columns', 'filter'));
-        $this->Answer->addAnswer(compact('entities', 'summary'));
+        $this->Actions->index(null, ['summary' => !$this->request->is('api')]);
     }
 
     /**
@@ -252,12 +231,12 @@ class ArticlesController extends AppController
 
         // Build query and get data
         $query = $itemsTable
-            ->find('hasArticleParams', $params)
-            ->order(['Items.articles_id' => 'ASC', 'Items.id' => 'ASC'])
-            ->find('containFields', $params)
+            ->find('hasParams', $params)
+//            ->order(['Items.articles_id' => 'ASC', 'Items.id' => 'ASC'])
+            ->find('containColumns', $params)
             ->find('deleted', $params)
-            ->find('prepareRoot', $params);
-//            ->find('cached', $params)
+            ->find('prepareRoot', $params)
+            ->find('cached');
 
         // Get items
         $paging['maxLimit'] = 1000;
@@ -428,16 +407,15 @@ class ArticlesController extends AppController
      *
      * Transfer article to another database.
      *
-     * @param $scope
-     *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
      */
-    public function transfer($scope = null)
+    public function transfer()
     {
         $requestParams = $this->request->getQueryParams();
 
         // Defaults
+        // TODO: still needed?
         $requestParams['skip'] = 'properties,users,projects';
 
         if (($requestParams['term'] ?? '') === '') {
@@ -445,7 +423,7 @@ class ArticlesController extends AppController
             unset($requestParams['field']);
         }
 
-        $this->Transfer->transfer($scope, $requestParams);
+        $this->Transfer->transfer(null, $requestParams);
     }
 
     /**
@@ -468,6 +446,16 @@ class ArticlesController extends AppController
     }
 
     /**
+     * Export articles
+     *
+     * @return Response|void|null
+     */
+    public function export()
+    {
+        return $this->Transfer->export();
+    }
+
+    /**
      * Manipulate articles
      *
      * @return Response|void|null
@@ -475,60 +463,6 @@ class ArticlesController extends AppController
     public function mutate()
     {
         return $this->Transfer->mutate();
-    }
-
-    /**
-     * Recover tree
-     *
-     * Adjust lft, rght, level in specified tree.
-     *
-     * @deprecated Use mutate
-     * @param $id
-     *
-     * @return \Cake\Http\Response|void|null
-     */
-    public function recovertree($id = null)
-    {
-        // Redirect to job system for all IDs
-        if ($this->request->is('post') && ($id === null)) {
-            //Create job
-            $jobdata = [
-                'type' => 'recover_tree',
-                'config' => [
-                    'database' => $this->activeDatabase['caption'],
-                    'model' => 'Sections',
-                    'scopefield' => 'articles_id'
-                ]
-            ];
-            $jobsTable = $this->fetchTable('Jobs');
-            $job = $jobsTable->newEntity($jobdata);
-
-            if ($jobsTable->save($job)) {
-                return $this->redirect([
-                    'plugin' => false,
-                    'controller' => 'Jobs',
-                    'action' => 'execute',
-                    $job->id,
-                    '?' => ['database' => $job->config['database']]
-                ]);
-            } else {
-                $this->Flash->error(__('The job could not be created. Please, try again.'));
-                $this->redirect(['action' => 'index']);
-            }
-        } // Handle single ID
-        elseif ($this->request->is('post')) {
-            $scopes = [$id];
-
-            foreach ($scopes as $scope) {
-                $this->Articles->Sections->setScope($scope);
-                $this->Articles->Sections->recover();
-            }
-
-            $this->Flash->error(__('Recovered tree of article {0}', $id));
-            $this->redirect(['action' => 'view', $id]);
-        }
-
-        $this->set(compact('id'));
     }
 
 }

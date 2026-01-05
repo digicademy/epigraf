@@ -9,7 +9,7 @@
 
 import Utils from '/js/utils.js';
 import {i18n}  from '/js/lingui.js';
-import {BaseForm} from '/js/base.js';
+import {BaseForm, BaseModel} from '/js/base.js';
 
 /**
  * Base class for the main frame, sidebar frame and popups
@@ -273,8 +273,7 @@ export class BaseFrame extends BaseForm {
                     ariaLabel: button.getAttribute('aria-label', button.textContent),
                     class: classes,
                     role: role,
-                    shortcuts: shortcuts,
-                    ariaKeyshortcuts: button.dataset.shortcuts,
+                    shortcuts : shortcuts,
                     click: function (event) {
                         if (!self.emitEvent('epi:click:button', {button: button, role: role}, true)) {
                             event.preventDefault();
@@ -375,7 +374,7 @@ export class BaseFrame extends BaseForm {
         if (this.buttonPane) {
             const button = this.buttonPane.querySelector('[data-role="' + role + '"],.role-' + role);
             Utils.show(button, caption);
-            if (url) {
+            if (url && button) {
                 if (button.tagName === 'A') {
                     button.setAttribute('href', url);
                 } else {
@@ -915,6 +914,9 @@ export class TabFrame extends BaseFrame {
         this.isClosing = false;
         App.sidebarright.showSidebar(force);
 
+        /**
+         * @type {Tabsheets}
+         */
         const tabsheetsWidget = this.getWidget(this.widgetElement, 'tabsheets');
         if (tabsheetsWidget) {
             tabsheetsWidget.showTab(frame, 'last');
@@ -1116,6 +1118,23 @@ export class TabFrame extends BaseFrame {
 /**
  * Popup window
  *
+ * Buttons in the response are moved into the dialog footer.
+ *
+ * When loading ajax content, the popup flow depends on the buttons and the response URL:
+ * - Close popup & open new tab:
+ *   a) The response contains an 'a' element with the role "download" and a valid URL in the href attribute.
+ *   b) The response URL contains a query parameter "open" with a valid URL.
+ * - Close popup and proceed in the current window:
+ *   The response contains an 'a' element with the role "proceed",
+ *   the target "main" and a valid URL in the href attribute.
+ * - Close the popup:
+ *   a) The response URL contains a query parameter "close" with the value "1".
+ *   b) The response contains no submit buttons and no proceed buttons,
+ *      i.e. no 'a' elements with role "proceed" and target "main".
+ * - Show response in the popup: If the popup is not closed by any of the previous conditions.
+ *
+ *
+ *
  * ### Options
  * - closeIcon The icon to use for the close button (e.g. "ui-icon-closethick")
  *
@@ -1217,8 +1236,8 @@ export class PopupWindow extends BaseFrame {
         this.isClosing = false;
         if (!this.dialog.dialog("isOpen")) {
             this.dialog.dialog({
-                width: this.options.width || 800,
-                height: this.options.height || 600
+                width: Math.min((this.options.width || 800), window.innerWidth - 5),
+                height: Math.min((this.options.height || 600), window.innerHeight)
             });
             this.dialog.dialog("open");
         }
@@ -1355,9 +1374,14 @@ export class PopupWindow extends BaseFrame {
         super.updateActionButtons(actions, options);
 
         if (this.dialog) {
+            for (const button of this.actionButtons) {
+                button['data-shortcuts'] = button.shortcuts;
+                button['aria-keyshortcuts'] = button.shortcuts;
+            }
+
             this.dialog.dialog("option", "buttons", this.actionButtons);
             this.buttonPane = this.widgetElement.closest('.ui-dialog').querySelector('.ui-dialog-buttonpane');
-            // App.initWidgets(this.buttonPane);
+            App.initWidgets(this.buttonPane);
             $(this.buttonPane).find(':tabbable').eq(-1).focus();
         }
     }
@@ -1372,11 +1396,16 @@ export class PopupWindow extends BaseFrame {
             this.emitEvent('epi:clear:widgets');
             this.widgetElement.innerHTML = '';
         }
+
+        if (this.buttonPane) {
+            App.finishWidgets(this.buttonPane);
+        }
+
         super.clearData(showLoader);
     }
 
     /**
-     * Update the page
+     * Update the page or open a new tab
      *
      * @implements BaseForm.onSaveProceed()
      * @param {string} data Data returned from the request
@@ -1385,20 +1414,45 @@ export class PopupWindow extends BaseFrame {
     onSaveProceed(data, xhr) {
 
         let doClose = false;
-        let proceedUrl =null;
+        let proceedUrl = null;
+        let openUrl = null;
 
         if (super.onSaveProceed(data, xhr)) {
-            // Open in new tab
             const responseUrl = new URL(xhr.responseURL);
-            proceedUrl = responseUrl.searchParams.get('open');
-            doClose = Boolean(Number(responseUrl.searchParams.get('close') || 1));
+            const htmlData = new DOMParser().parseFromString(data, 'text/html');
+
+            // Check for a download URL in response content
+            // Check for a URL to open in a new tab in the response URL
+            const downloadLink = htmlData.querySelector('a[data-role="download"]');
+            if (downloadLink) {
+                openUrl = downloadLink.getAttribute('href');
+            } else {
+                openUrl = responseUrl.searchParams.get('open');
+            }
+
+            // Check for a proceed URL in response content
+            const proceedLink = htmlData.querySelector('a[data-role="proceed"]');
+            if (proceedLink && (proceedLink.dataset.target === 'main')) {
+                proceedUrl = proceedLink.getAttribute('href');
+            }
+
+            // Check for a close parameter in the response URL
+            // Check submit buttons
+            const closeParam = responseUrl.searchParams.get('close');
+            const hasSubmitButton = htmlData.querySelector('input[data-role="submit"],button[data-role="submit"]');
+
+            // Only close if explicitly requested by the close parameter
+            // or if there are no submit buttons and no proceed URL and no open URL
+            doClose = Boolean(Number(closeParam || !(hasSubmitButton || proceedUrl || openUrl)));
         }
 
-        if (proceedUrl) {
+        if (openUrl) {
             this.closeWindow();
             window.setTimeout(function () {
-                window.open(proceedUrl);
+                window.open(openUrl);
             }, 1000);
+        } else if (proceedUrl) {
+            window.location = proceedUrl;
         } else if (doClose) {
             this.closeWindow();
         } else {
@@ -1547,8 +1601,9 @@ export class MessageWindow extends PopupWindow {
  * - onSelect {function} Will be called when an item is selected.
  * - onRemove {function} Will be called when the remove button is clicked.
  * - selectOnClick {boolean} Whether to select an item by clicking it, without using the Apply button.
- * - selectList {boolean} Whether to select the list (=folder) instead of an item (=file or record).
- * - itemtype {string} Only select items of this type.
+ * - selectList {boolean} Whether to select the list (=folder).
+ * - selectItem {boolean} Whether to select items (=file or record).
+ * - itemtype {string[]} Only select items of listed types.
  */
 export class SelectWindow extends PopupWindow {
 
@@ -1593,6 +1648,7 @@ export class SelectWindow extends PopupWindow {
         if (!this.listenerClick) {
             this.listenerClick = event => this.onClick(event);
             this.listenEvent(this.widgetElement, 'click', this.listenerClick);
+            this.listenEvent(this.widgetElement, 'dblclick', this.listenerClick);
         }
 
         // Watch dropdown change
@@ -1612,6 +1668,7 @@ export class SelectWindow extends PopupWindow {
     closeWindow(canceled) {
         if (this.listenerClick) {
             this.unlistenEvent(this.widgetElement, 'click', this.listenerClick);
+            this.unlistenEvent(this.widgetElement, 'dblclick', this.listenerClick);
         }
         if (this.listenerChanged) {
             this.unlistenEvent(this.widgetElement, 'changed', this.listenerChanged);
@@ -1666,10 +1723,11 @@ export class SelectWindow extends PopupWindow {
      */
     onClick(event) {
         const selected = event.target.closest('[data-list-itemof]');
-        const matches = !this.options.selectList && selected && (!this.options.itemtype || (this.options.itemtype === selected.dataset.listItemtype));
+        const itemtypes = Utils.splitString(this.options.itemtype);
+        const matches = (this.options.selectItem ||true) && selected && (!itemtypes.length || (itemtypes.includes(selected.dataset.listItemtype)));
 
-        // Select on click
-        if (matches && this.options.selectOnClick) {
+        // Select on click and dblclick
+        if (matches && (this.options.selectOnClick || (event.detail === 2))) {
             if (typeof this.options.onSelect === "function") {
                 this.options.onSelect(selected);
             }
@@ -1691,14 +1749,19 @@ export class SelectWindow extends PopupWindow {
      * @param {SelectWindow} dialog The select window instance
      */
     onSelect(dialog) {
-        // Select the list (=folder)
-        let selected = this.widgetElement.querySelector('[data-list-name]');
-        let matches = true;
+        let matches = false;
+        let selected;
 
         // Or select an item (=file or record)
-        if (!this.options.selectList) {
-            selected = selected ? selected.querySelector('.row-selected') : undefined;
-            matches = selected && (!this.options.itemtype || (this.options.itemtype === selected.dataset.listItemtype));
+        if (this.options.selectItem || true) {
+            selected = this.widgetElement.querySelector('.row-selected');
+            matches = selected && (!this.options.itemtype || (this.options.itemtype.includes(selected.dataset.listItemtype)));
+        }
+
+        // Select the list (=folder)
+        if (!matches && this.options.selectList) {
+            selected = this.widgetElement.querySelector('[data-list-name]');
+            matches = true;
         }
 
         if (matches && (typeof this.options.onSelect === "function")) {
@@ -1890,6 +1953,93 @@ export class DetachedTab extends TabFrame {
         }
     }
 }
+
+export class Overlay extends BaseModel {
+    constructor(pane) {
+        super();
+        this.pane = pane;
+        this.overlay = null;
+        this.closeButton = null;
+        this.content = null;
+
+        this.listenEvent(this.pane,'click', event => this.clickPane(event));
+    }
+
+    clickPane(event) {
+        let timeout = 200;
+        // Delay closing to prevent closing because of accidental clicks or to allow multiple selections.
+        if (event.target.type === 'checkbox') {
+            timeout = App.settings.timeout * 2;
+        }
+        clearTimeout(this.inputTimeout);
+        this.inputTimeout = setTimeout(() => this.close(event), timeout);
+    }
+
+    /**
+     *  Create overlay elements and its children
+     */
+    build(title = null, buttonsSide = 'right') {
+        this.overlay = document.createElement('div');
+        this.paneParent = this.pane.parentElement;
+        const header = document.createElement('div');
+        let headerTitle = null
+        if (title) {
+            headerTitle = document.createElement('div');
+            headerTitle.textContent = title;
+        }
+        const headerButtons = document.createElement('div');
+        this.closeButton = document.createElement('button');
+        this.content = document.createElement('div');
+
+        // set CSS classes
+        this.closeButton.classList.add('btn-close');
+        headerButtons.classList.add('overlay-header-buttons', 'overlay-header-buttons-' + buttonsSide);
+        if (headerTitle) {
+            headerTitle.classList.add('overlay-header-title');
+        }
+        header.classList.add('overlay-header');
+        this.content.classList.add('overlay-content-inner');
+        this.overlay.classList.add('overlay-center');
+
+        this.listenEvent(this.closeButton, 'click', event => this.close(event));
+        this.listenEvent(this.content, 'keyup', event => {
+            if (event.key === "Escape") {
+                this.close(event);
+            }
+        });
+
+        headerButtons.appendChild(this.closeButton);
+        if (headerTitle) {
+            header.appendChild(headerTitle);
+        }
+        header.appendChild(headerButtons);
+        this.content.append(header, this.pane);
+        this.overlay.append(this.content);
+    }
+
+    show() {
+        document.body.appendChild(this.overlay);
+        this.content.setAttribute('tabindex', '0');
+        this.content.focus();
+    }
+
+    close(event) {
+        // move pane back
+        if (this.paneParent) {
+            this.paneParent.appendChild(this.pane);
+        }
+
+        this.unlistenEvent(this.closeButton);
+        this.unlistenEvent(this.content);
+        // toggle toggle-button
+        this.emitEvent(this.overlay, "epi:close:overlay", {"paneId": this.pane.id});
+        this.overlay.remove();
+    }
+
+
+}
+
+
 
 window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['frame'] = TabFrame;

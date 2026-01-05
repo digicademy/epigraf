@@ -38,6 +38,8 @@ class AnalyticsController extends AppController
         ]
     ];
 
+    public $help = 'administration';
+
     /**
      * Side menu items
      *

@@ -63,9 +63,11 @@ class Permission extends BaseEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {

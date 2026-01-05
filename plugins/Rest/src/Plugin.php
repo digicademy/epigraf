@@ -17,6 +17,7 @@ use Cake\Core\PluginApplicationInterface;
 use Cake\Http\MiddlewareQueue;
 use Cake\Http\ServerRequest;
 use Cake\Routing\RouteBuilder;
+use Rest\Middleware\RateLimitMiddleware;
 
 /**
  * REST plugin
@@ -77,7 +78,8 @@ class Plugin extends BasePlugin
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        // Add your middlewares here
+
+        $middlewareQueue->add(new RateLimitMiddleware());
         return $middlewareQueue;
     }
 }

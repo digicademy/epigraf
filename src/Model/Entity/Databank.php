@@ -807,7 +807,7 @@ class Databank extends BaseEntity
             $initsql = Plugin::path($this->plugin) . 'config' . DS . 'schema' . DS . 'dbempty_' . $version . '.sql';
         }
 
-        return $this->import($initsql);
+        return $this->import($initsql, false);
     }
 
     /**
@@ -908,12 +908,19 @@ class Databank extends BaseEntity
     /**
      * Import an sql dump
      *
-     * @param $filename
-     *
+     * @param string $filename File path on the server
+     * @param boolean $relative Whether the filename is relative to the database folder
      * @return bool
      */
-    public function import($filename)
+    public function import($filename, $relative = true)
     {
+        if ($relative) {
+            $filename = Files::joinPath([
+                Configure::read('Data.databases') . $this->name . DS,
+                $filename
+            ]);
+        }
+
         return EpiBaseTable::loadSql($filename, $this->name, 'projects');
     }
 
@@ -945,7 +952,8 @@ class Databank extends BaseEntity
         $mysqldump = 'mysqldump';
 
         $time = Chronos::now();
-        $timestring = $time->format("Y-m-d_h_i_s_") . $time->getTimestamp();
+        $timestring = strtolower(preg_replace('/[+]/','p', $time->toIso8601String()));
+        $timestring = preg_replace('/[^0-9a-zA-Z-]/','_', $timestring . $time->getTimestamp());
 
         $filename = 'backup_' . $this->name . '_' . $timestring;
         $output = '> "' . $path . $filename . '.sql"';
@@ -983,9 +991,11 @@ class Databank extends BaseEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -1009,45 +1019,37 @@ class Databank extends BaseEntity
             'description' => [
                 'caption' => __('Description')
             ],
-
             'version' => [
                 'caption' => __('Version')
             ],
-
             'published' => [
                 'caption' => __('Progress'),
                 'type' => 'select',
                 'options' => $this->publishedOptions,
                 'action' => ['edit', 'view']
             ],
-
             'iriprefix' => [
                 'caption' => __('IRI Prefix')
             ],
-
             'status' => [
                 'caption' => __('Status'),
                 'action' => 'view',
                 'extract' => 'status.msg'
             ],
-
             'users' => [
                 'caption' => __('Associated Users'),
                 'action' => 'view',
                 'extract' => 'users.{n}.username'
             ],
-
             'grants' => [
                 'caption' => __('Granted SQL-users'),
                 'action' => 'view'
             ],
-
             'permissions' => [
                 'caption' => __('Permissions'),
                 'action' => 'view',
                 'extract' => 'permissions.{n}.username'
             ],
-
             'backups' => [
                 'caption' => __('Backup files'),
                 'action' => 'view',
@@ -1080,7 +1082,7 @@ class Databank extends BaseEntity
 
                 $this->_types = Cache::remember(
                     $cacheKey,
-                    function () use ($table) {
+                    function() use ($table) {
                         return $this->_types = $table
                             ->find('all')
                             ->where(['mode' => MODE_DEFAULT, 'preset' => 'default'])
@@ -1125,19 +1127,51 @@ class Databank extends BaseEntity
      * @param string $groupField E.g. 'category'
      * @return array
      */
-    public function getGroupedTypes($scope, $keyField, $valueField, $groupField)
+    public function getPropertyConfig($scope = 'properties', $keyField = 'name', $valueField = 'caption', $groupField = 'category')
     {
         $userRole = $this->currentUserRole ?? 'guest';
-        $showAll = ($userRole !== 'guest');
+        $showAll = !in_array($userRole, ['guest', 'reader']);
 
         $groups = [];
         foreach ($this->types[$scope] ?? [] as $type) {
-            $role = $type->merged['export']['role'] ?? '';
-            if (!$showAll && (in_array($role, ['index', 'search']))) {
+            $exportRole = $type->merged['role'] ?? '';
+            if (! ($showAll || in_array($exportRole, ['index', 'search']))) {
                 continue;
             }
             $groups[$type[$groupField] ?? ''][$type[$keyField] ?? ''] = $type[$valueField] ?? '';
         }
+        return $groups;
+    }
+
+    /**
+     * Get a list of annotation groups
+     *
+     * The group configurations contain the following keys:
+     * - caption: The group caption. If a type without tag_type is found, the type name is used.
+     *            Otherwise, the group name is used.
+     *
+     * @param string[] $scopes The scopes
+     * @param array $excludeTagTypes exclude this tag types
+     * @return array A list of group configurations keyed by group name.
+     */
+    public function getAnnoConfig($scopes = ['links', 'footnotes'], $excludeTagTypes = ['character'])
+    {
+        $groups = [];
+        foreach ($scopes as $scope) {
+            foreach ($this->types[$scope] ?? [] as $type) {
+                $tagType = $type->merged['tag_type'] ?? '';
+                if (in_array($tagType, $excludeTagTypes)) {
+                    continue;
+                }
+                $groupName = $type->merged['group'] ?? '';
+                if (!empty($groupName)) {
+                    $groupConfig = $groups[$groupName] ?? [];
+                    $groupConfig['caption'] = empty($tagType) ? $type->caption : ($groupConfig['caption'] ?? $groupName);
+                    $groups[$groupName] = $groupConfig;
+                }
+            }
+        }
+        ksort($groups);
         return $groups;
     }
 }

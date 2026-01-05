@@ -77,7 +77,7 @@ use Cake\Utility\Hash;
 <!-- Property facets -->
 <?php
     $this->addTabsheetSelector('left',
-        $database->getGroupedTypes('properties', 'name', 'caption', 'category')
+        $database->getPropertyConfig()
     );
 
     // Get selected properties
@@ -93,7 +93,8 @@ use Cake\Utility\Hash;
     <?php
         $propertyIds = $propertyParams['selected'] ?? [];
 
-        $propertyCaption = $database->types['properties'][$propertyType]['caption'] ?? $propertyType;
+        $propertyConfig = $database->types['properties'][$propertyType] ?? [];
+        $propertyCaption = $propertyConfig['caption'] ?? $propertyType;
 
         // TODO: init with number
         //$propertyCaption .= '(' . count($propertiesIds) . ')';
@@ -160,6 +161,17 @@ use Cake\Utility\Hash;
                         ])
                     ?>
                 </label>
+                <label class="widget-filter-facets-details" title="<?= __('Use this property type as grouping for tiles and map colors.') ?>">
+                    <?= $this->Element->outputHtmlElement(
+                        'input',
+                        __('Show details'),
+                        [
+                            'type' => 'checkbox',
+                            'value' => 'grp',
+                            'checked' => in_array('grp',$propertyParams['flags'] ?? []) ? 'checked' : null
+                        ])
+                    ?>
+                </label>
             </div>
         </div>
 
@@ -201,6 +213,9 @@ use Cake\Utility\Hash;
             </label>
             <label class="widget-filter-facets-inverse" title="<?= __('Show only articles without the selected properties. If no properties are selected, articles without any of the properties are returned.') ?>">
                 <input type="checkbox" value="inv"><?= __('Invert selection') ?>
+            </label>
+            <label class="widget-filter-facets-details" title="<?= __('Use this property type as grouping for tiles and map colors.') ?>">
+                <input type="checkbox" value="grp"><?= __('Show details') ?>
             </label>
         </div>
     </div>

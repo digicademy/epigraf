@@ -146,7 +146,12 @@ class PermissionCommand extends Command
             return $this->io->abort('Database name is missing', 4);
         }
 
-        $userid = $this->Users->findByUsername($username)->first()->id;
+        $user = $this->Users->findByUsername($username)->first();
+        if (empty($user)) {
+            return $this->io->abort('User not found', 4);
+        }
+
+        $userid = $user->id;
 
 
         $permission = $this->Permissions->newEntity([]);

@@ -269,6 +269,26 @@ class Objects extends Hash
     }
 
     /**
+     * Parse processing steps
+     *
+     * Processing steps are a list of instructions separated by a pipe character (|).
+     * Each instruction consists of a name and optionally options separated by a colon.
+     *
+     * If the options contain a pipe, the pipe must be escaped by a slash.
+     * Slashes are escaped by a slash as well.
+     *
+     * @param string|array $steps Arrays are returned without modification, strings are parsed
+     * @return array An array of processing steps, each step is a string (including options, if provided)
+     */
+    public static function parseProcessing($steps)
+    {
+        if (is_array($steps)) {
+            return $steps;
+        }
+        return Strings::tokenize($steps, '|', '\\');
+    }
+
+    /**
      * Augment an extraction key to a column configuration array
      *
      * The pattern is `<caption>=<key>|<aggregate>`.
@@ -280,15 +300,19 @@ class Objects extends Hash
      * Examples:
      * modifier=modifier.name
      * links=links.*|count
+     * title=txt:content
      *
      * @param string $path The extraction key
      * @param array $default An array of default column configurations, keyed by column name
      * @param array $options A single column configuration, used as default and merged into the result
      * @return array The augmented column configuration with the keys
-     *               - name: The column name. Everything before the first equal sign or the key itself
-     *               - caption: The column caption. Equals the name if not set in the default configuration or the options
-     *               - key: The extraction key
-     *               - aggregate: The aggregation function, everything after the first pipe
+     *               - name: The column name. Everything before the first equal sign or the key itself.
+     *               - caption: The column caption. Equals the name if not set in the default configuration or the options.
+     *               - key: The extraction key.
+     *               - format: Extraction keys can be prefixed with a format key, followed by a colon.
+     *                         The format key is handled by the extraction method.
+     *                         Examples include 'txt', 'json' or 'html'.
+     *               - aggregate: The aggregation function, everything after the first pipe.
      */
     public static function parseFieldKey($path, array $default = [], array $options = [])
     {
@@ -307,12 +331,36 @@ class Objects extends Hash
         $path = $field[1] ?? $custom['key'] ?? $fieldName;
         $keyParts = explode('|', $path, 2);
 
+        // Split format prefix
+        $keyFormat = explode(':', $keyParts[0], 2);
+        $key = count($keyFormat) > 1 ? $keyFormat[1] : $keyFormat[0];
+        $format = count($keyFormat) > 1 ? $keyFormat[0] : null;
+
         $custom['name'] = $fieldName;
         $custom['caption'] = $custom['caption'] ?? $fieldName;
-        $custom['key'] = $keyParts[0];
+        $custom['key'] = $key;
+        $custom['format'] = $format;
         $custom['aggregate'] = $keyParts[1] ?? $custom['aggregate'] ?? false;
 
         return $custom;
+    }
+
+    /**
+     * Split a path list into an array of paths
+     *
+     * A path list starts with a [ and ends with a ].
+     * Each path is separated by a comma.
+     *
+     * @param string $path
+     * @return string[]
+     */
+    public static function parsePathList($path)
+    {
+        if (str_starts_with($path,'[') && str_ends_with($path,']')) {
+            $path = substr($path, 1, -1);
+            return  Text::tokenize($path, ',', '[', ']');
+        }
+        return [$path];
     }
 
     /**
@@ -323,6 +371,7 @@ class Objects extends Hash
      * Example placeholder strings:
      *
      * - "{project.name}" extracts project.name using getValueFormatted
+     * - "{[project.name,project.signature]}" extracts project.name if not empty, else project.signature
      * - "isPartOf" is a literal
      * - "Number {sortno}" inserts sortno using getValueFormatted into the string
      * - "epi:{iri}" inserts iri using getValueFormatted into the string
@@ -338,6 +387,8 @@ class Objects extends Hash
      * the return value of the callback. The callback receives the
      * token as the first parameter.
      *
+     * TODO: Refactor, extract the parser to a separate function in the Strings class.
+     *
      * @param string $key
      * @param callable $callback
      * @return array|string An array of strings with placeholders replaced (if callback is provided) or an array of tokens
@@ -349,13 +400,14 @@ class Objects extends Hash
         $tokenType = 'literal';
         $escaped = false;
 
+        $reserved = '{}';
+        $escapeChar = '\\';
+
         $addToken = function ($token, $tokenType) use (&$resultTokens, $callback) {
             if (empty($token)) {
                 return;
             }
             elseif ($callback !== null) {
-//                $resultTokens[] = $tokenType === 'literal' ? $token : $callback($token);
-
                 $value = $tokenType === 'literal' ? $token : $callback($token);
                 // Return null if the placeholder string denotes null data (e.g. unpublished data)
                 $value = is_array($value) ? Arrays::array_remove_null($value) : $value;
@@ -379,16 +431,16 @@ class Objects extends Hash
                     $token .= $char;
                     $escaped = false;
                 }
-                // Set escaped flag
-                elseif ($char === '\\') {
+                // Set escaped flag (look ahead, only if reserved characters are escaped
+                elseif (($char === $escapeChar) && (strpbrk($key[$i+1] ?? '', $reserved))) {
                     $escaped = true;
                 }
-                elseif ($char === '{' && ($tokenType === 'literal')) {
+                elseif (($char === '{') && ($tokenType === 'literal')) {
                     $addToken($token, $tokenType);
                     $token = '';
                     $tokenType = 'path';
                 }
-                elseif ($char === '}' && ($tokenType === 'path')) {
+                elseif (($char === '}') && ($tokenType === 'path')) {
                     $addToken($token, $tokenType);
                     $token = '';
                     $tokenType = 'literal';
@@ -420,17 +472,22 @@ class Objects extends Hash
      *
      * The following instructions are supported:
      * - 'first': Return the first element of an array
+     * - 'last': Return the last element of an array
      * - 'min': Return the minimum value of an array
      * - 'max': Return the maximum value of an array
      * - 'collapse': Flatten an array and return a comma-separated list of values
      * - 'count': Return the number of elements in an array
-     * - 'strip': Remove all HTML tags from a string or an array of string
+     * - 'split': Split string at new lines and return result as an array
+     * - 'filter': Return only the elements of an array matching a given pattern
+     * - 'strip': Removes a pattern from a string. By default, all HTML tags from a string or an array of string are removed.
+     *            Alternatively, provide a regex expression in the instruction options.
      * - 'trim': Trim a string. Be default, whitespace is removed from both ends.
      *           Alternatively, provide a string of characters in the instruction options.
      * - 'ltrunc': Remove a prefix from a string.
      *             The prefix is determined by the field value of the root object
      *             as defined in the step options.
      * - 'json': Extract a json value or a value from a nested array
+     * - 'padzero': Pad a number with zeros. The number of digits should be passed as parameter.
      *
      * @param mixed $value Input value
      * @param array $steps A list of processing instructions.
@@ -449,6 +506,9 @@ class Objects extends Hash
             if (is_array($value)) {
                 if ($step === 'first') {
                     $value = reset($value);
+                }
+                elseif ($step === 'last') {
+                    $value = end($value);
                 }
                 elseif ($step === 'min') {
                     $value = min($value);
@@ -470,9 +530,29 @@ class Objects extends Hash
                 elseif ($step === 'count') {
                     $value = count($value);
                 }
-                elseif ($recursive) {
-                    $value = array_map(fn($x) => Objects::processValues($x, [$step]), $value);
+                elseif($step === 'filter') {
+                    $value = array_filter($value, function ($elem) use ($options) {
+                        return preg_match("/$options/", $elem);
+                    });
                 }
+                elseif ($recursive) {
+                    //$value = array_map(fn($x) => Objects::processValues($x, [$step]), $value);
+                    $value = array_reduce(
+                        $value,
+                        function ($carry, $x) use ($step) {
+                            $subValue = Objects::processValues($x, [$step]);
+                            if (!is_array($subValue)) {
+                                $subValue = [$subValue];
+                            }
+                            return array_merge($carry, $subValue);
+                        },
+                        []
+                    );
+                }
+            }
+
+            elseif($step === 'split') {
+                $value = preg_split("/\r?\n\r?/", $value ?? '');
             }
 
             elseif (($step === 'ltrunc') && !empty($root)) {
@@ -488,15 +568,28 @@ class Objects extends Hash
             }
 
             elseif ($step === 'strip') {
-                $value = preg_replace('/<[^>]*>/', '', $value);
+                if ($options === '') {
+                    $options = '<[^>]*>';
+                }
+                $value = preg_replace('/'.$options.'/', '', $value);
             }
 
             elseif ($step === 'padzero') {
                 $value = str_pad($value, intval($options), '0', STR_PAD_LEFT);
             }
             elseif ($step === 'json') {
-                $arrayValue = is_array($value) ? $value : json_decode($value, true);
-                $value = Objects::get($arrayValue, $options);
+                if (is_null($value) || $value === '') {
+                    $value = null;
+                }
+                else if (!is_array($value) && is_string($value)) {
+                    $value = json_decode($value, true);
+                }
+
+                if (is_array($value)) {
+                    $value = Objects::get($value, $options);
+                } else {
+                    $value = null;
+                }
             }
         }
 

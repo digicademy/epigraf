@@ -37,7 +37,13 @@ use App\Model\Entity\Databank;
             [
                 'type' => 'choose',
                 'itemtype'=>'file',
-                'options' => ['controller' => 'Files', 'action' => 'select','?'=>['root'=>'root']]
+                'options' => [
+                    'plugin' => 'Epi',
+                    'database' => $entity->name,
+                    'controller' => 'Files',
+                    'action' => 'select',
+                    '?' => ['root' => 'root', 'path' => 'backup']
+                ]
             ]); ?>
         <p>
             The file format may be plain text or gzip. Multiline comments are not allowed.

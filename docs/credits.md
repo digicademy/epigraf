@@ -51,6 +51,7 @@ Epigraf is developed using third-party software under open source licenses.
 - [Minimal Mistakes](https://mmistakes.github.io/minimal-mistakes/), MIT License
 - [Nominatim](https://wiki.openstreetmap.org/wiki/Nominatim), Open Data Commons Open Database License (ODbL)
 - [npm](https://npmjs.com/), Artistic License 2.0,
+- [OpenSpout](https://github.com/openspout/openspout), MIT License, Apache 2.0 License
 - [Open Street Map](https://www.openstreetmap.org), Open Data Commons Open Database License (ODbL)
 - [phpDocumentor](https://phpdoc.org/), MIT License
 - [PHPUnit](https://phpunit.de/index.html), BSD 3-Clause License

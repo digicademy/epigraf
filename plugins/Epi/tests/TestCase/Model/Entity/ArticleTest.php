@@ -85,7 +85,7 @@ class ArticleTest extends EpiTestCase
 		$id = 1;
 
 		$article = $this->Articles
-            ->find('containFields')
+            ->find('containColumns')
 			->where(['Articles.id'=>$id])
 			->first();
 
@@ -108,6 +108,30 @@ class ArticleTest extends EpiTestCase
         $this->assertEquals('1234',$date);
     }
 
+    public function testGetDataForTransfer()
+    {
+        $article = $this->Articles
+            ->find('containColumns')
+            ->where(['Articles.id'=> 1])
+            ->first();
+
+        $transferOptions = [
+            'copy' => true,
+            'files' => false,
+            'clear' => false
+        ];
+
+        $data = $article->getDataForTransfer($transferOptions);
+
+        $ids = array_column($data,'id');
+        $this->assertArrayEqualsComparison($ids, '.ids.php');
+
+        $toIds = array_column($data,'to_id');
+        $this->assertArrayEqualsComparison($toIds, '.toids.php');
+
+        $this->assertArrayEqualsComparison($data);
+    }
+
     /**
      * Test getting file properties
      *
@@ -126,7 +150,7 @@ class ArticleTest extends EpiTestCase
         );
 
         $article = $this->Articles
-            ->find('containFields')
+            ->find('containColumns')
             ->where(['Articles.id' => 1])
             ->first();
 

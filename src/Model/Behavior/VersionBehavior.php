@@ -107,8 +107,6 @@ class VersionBehavior extends Behavior
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
-     *
-     * @return void
      */
     public function beforeSave(EventInterface $event, EntityInterface $entity)
     {

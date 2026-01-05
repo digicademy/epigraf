@@ -24,12 +24,10 @@
     <?php $this->setSidebarConfig(['left'=>['init' => 'expanded']]); ?>
     <?php $this->Breadcrumbs->add($title ?? __('Pages'), ['action' => 'index']); ?>
     <?php $this->Breadcrumbs->add($entity->captionPath); ?>
-<?php else: ?>
-    <?php // $this->setSidebarConfig(['left'=>['init' => 'collapsed']]); ?>
 <?php endif; ?>
 
 <!-- TOC -->
-<?php if (!empty($entity->toc)): ?>
+<?php if (!empty($entity->toc) && (count($entity['toc']) > 1)): ?>
     <?php $this->setSidebarConfig(['right'=>['init' => 'expanded']]); ?>
     <?php $this->beginTabsheet(__('Content'),'content','right'); ?>
     <?= $this->Menu->renderMenu(

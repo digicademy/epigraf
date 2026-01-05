@@ -39,6 +39,7 @@ class PipelinesFixture extends TestFixture
                         array(
                             'number' => '1',
                             'type' => 'options',
+                            'format' => 'xml',
                             'outputfile' => '',
                         ),
                     1 =>
@@ -74,6 +75,7 @@ class PipelinesFixture extends TestFixture
                             'canskip' => '1',
                             'caption' => 'Bandartikel',
                             'articletypes' => 'epi-book',
+                            'snippets' => 'indexes,paths,editors,comments',
                             'matchprojects' => '1',
                             'outputfile' => '',
                         ),
@@ -84,6 +86,7 @@ class PipelinesFixture extends TestFixture
                             'canskip' => '1',
                             'caption' => 'Katalogartikel',
                             'articletypes' => '',
+                            'snippets' => 'indexes,paths,editors,comments',
                             'matchprojects' => '0',
                             'outputfile' => '',
                         ),
@@ -135,6 +138,7 @@ class PipelinesFixture extends TestFixture
                         array(
                             'number' => '1',
                             'type' => 'options',
+                            'format' => 'xml',
                             'options' =>
                                 array(
                                     2 =>
@@ -144,7 +148,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Allgemeines',
                                             'label' => 'Signatur anzeigen',
                                             'key' => 'signature',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     3 =>
@@ -154,7 +158,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Allgemeines',
                                             'label' => 'Notizen',
                                             'key' => 'notes',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     4 =>
@@ -164,7 +168,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Allgemeines',
                                             'label' => 'Letzte Änderung',
                                             'key' => 'modified',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     5 =>
@@ -174,7 +178,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Register',
                                             'label' => 'Register',
                                             'key' => 'indices',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     6 =>
@@ -184,7 +188,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Register',
                                             'label' => 'Literatur und Quellen',
                                             'key' => 'biblio',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     7 =>
@@ -194,7 +198,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Standorte-Register',
                                             'label' => 'Basis-Standort anzeigen',
                                             'key' => 'base_location',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     8 =>
@@ -204,7 +208,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Ligaturen',
                                             'label' => 'unterstreichen',
                                             'key' => 'ligature_arcs',
-                                            'radio' => '1',
+                                            'type' => 'radio',
                                             'value' => '',
                                         ),
                                     9 =>
@@ -214,7 +218,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Ligaturen',
                                             'label' => 'Ligaturbögen',
                                             'key' => 'ligature_arcs',
-                                            'radio' => '1',
+                                            'type' => 'radio',
                                             'value' => '1',
                                         ),
                                     10 =>
@@ -224,7 +228,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Marken',
                                             'label' => 'zu einer Kategorie zusammenfassen',
                                             'key' => 'marks_together',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     11 =>
@@ -234,7 +238,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Ausgabemodus',
                                             'label' => 'Münchener Reihe',
                                             'key' => 'modus',
-                                            'radio' => '1',
+                                            'type' => 'radio',
                                             'value' => 'projects_bay',
                                         ),
                                     12 =>
@@ -244,7 +248,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Ausgabemodus',
                                             'label' => 'alle anderen Reihen',
                                             'key' => 'modus',
-                                            'radio' => '1',
+                                            'type' => 'radio',
                                             'value' => 'projects_all',
                                         ),
                                 ),
@@ -265,6 +269,7 @@ class PipelinesFixture extends TestFixture
                             'canskip' => '0',
                             'caption' => 'Article data',
                             'articletypes' => '',
+                            'snippets' => 'indexes,paths,editors,comments',
                             'matchprojects' => '0',
                             'outputfile' => '',
                         ),
@@ -370,6 +375,7 @@ class PipelinesFixture extends TestFixture
                         array(
                             'number' => '1',
                             'type' => 'options',
+                            'format' => 'xml',
                             'options' =>
                                 array(
                                     5 =>
@@ -379,7 +385,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Allgemeines',
                                             'label' => 'Signatur',
                                             'key' => 'signature',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     6 =>
@@ -389,7 +395,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Allgemeines',
                                             'label' => 'Notizen',
                                             'key' => 'notes',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     7 =>
@@ -399,7 +405,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Allgemeines',
                                             'label' => 'Letzte Änderung',
                                             'key' => 'modified',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     8 =>
@@ -409,7 +415,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Titelei',
                                             'key' => 'preliminaries',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     9 =>
@@ -419,7 +425,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Inhaltsverzeichnis',
                                             'key' => 'table_of_content',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     10 =>
@@ -429,7 +435,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Vorwort',
                                             'key' => 'prefaces',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     11 =>
@@ -439,7 +445,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Einleitung',
                                             'key' => 'introduction',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     12 =>
@@ -449,7 +455,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Katalog der Inschriften',
                                             'key' => 'articles',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     13 =>
@@ -459,7 +465,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Chronologische Liste der Inschriften',
                                             'key' => 'table_of_inscriptions',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     14 =>
@@ -469,7 +475,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Register',
                                             'key' => 'indices',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     15 =>
@@ -479,7 +485,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Abkürzungen',
                                             'key' => 'abbreviations',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     16 =>
@@ -489,7 +495,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Quellen und Literatur',
                                             'key' => 'biblio',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     17 =>
@@ -499,7 +505,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Liste der bisher erschienenen DI-Bände',
                                             'key' => 'di-volumes',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     18 =>
@@ -509,7 +515,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Zeichnungen',
                                             'key' => 'drawings',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     19 =>
@@ -519,7 +525,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Marken',
                                             'key' => 'marks',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     20 =>
@@ -529,7 +535,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Band',
                                             'label' => 'Bildtafeln',
                                             'key' => 'plates',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     21 =>
@@ -539,7 +545,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Standorte-Register',
                                             'label' => 'Basis-Standort anzeigen',
                                             'key' => 'base_location',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     22 =>
@@ -549,7 +555,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Fußnoten',
                                             'label' => 'Nummern rechtsbündig',
                                             'key' => 'footnotes',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     23 =>
@@ -559,7 +565,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Ligaturen',
                                             'label' => 'unterstreichen',
                                             'key' => 'ligature_arcs',
-                                            'radio' => '1',
+                                            'type' => 'radio',
                                             'value' => '',
                                         ),
                                     24 =>
@@ -569,7 +575,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Ligaturen',
                                             'label' => 'Ligaturbögen',
                                             'key' => 'ligature_arcs',
-                                            'radio' => '1',
+                                            'type' => 'radio',
                                             'value' => '1',
                                         ),
                                     25 =>
@@ -579,7 +585,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Marken',
                                             'label' => 'zu einer Kategorie zusammenfassen ',
                                             'key' => 'marks_together ',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     26 =>
@@ -589,7 +595,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Sonstiges',
                                             'label' => 'Sortierung nach Signatur',
                                             'key' => 'sort_signatures',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                     27 =>
@@ -599,7 +605,7 @@ class PipelinesFixture extends TestFixture
                                             'category' => 'Quellen und Literatur',
                                             'label' => 'DI-Bände ausblenden',
                                             'key' => 'di_volumes_hide',
-                                            'radio' => '0',
+                                            'type' => 'check',
                                             'value' => '',
                                         ),
                                 ),
@@ -620,6 +626,7 @@ class PipelinesFixture extends TestFixture
                             'canskip' => '0',
                             'caption' => 'Article data',
                             'articletypes' => 'epi-book',
+                            'snippets' => 'indexes,paths,editors,comments',
                             'matchprojects' => '1',
                             'outputfile' => '',
                         ),
@@ -630,6 +637,7 @@ class PipelinesFixture extends TestFixture
                             'canskip' => '0',
                             'caption' => 'Article data',
                             'articletypes' => 'epi-article',
+                            'snippets' => 'indexes,paths,editors,comments',
                             'matchprojects' => '0',
                             'outputfile' => '',
                         ),

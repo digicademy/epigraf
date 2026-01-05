@@ -602,7 +602,7 @@ msgstr "Lemma"
 
 #: src/Model/Entity/Tasks/TaskSort.php:39
 msgid "Sort number"
-msgstr "Sortierschlüssel"
+msgstr "Sortiernummer"
 
 #: src/Model/Entity/Tasks/TaskSort.php:40
 msgid "Tree order"

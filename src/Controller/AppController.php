@@ -33,6 +33,7 @@ use App\View\TtlView;
 use App\View\XmlView;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Database\Exception\MissingConnectionException;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\FactoryLocator;
 use Cake\Event\EventInterface;
@@ -40,6 +41,7 @@ use Cake\I18n\I18n;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
+use Exception;
 use Rest\Controller\Component\ActionsComponent;
 use Rest\Controller\Component\AnswerComponent;
 use Rest\Controller\Component\ApiPaginationComponent;
@@ -60,6 +62,9 @@ class AppController extends Controller
      */
     public $pagetitle = [];
 
+    /** @var null Help path for the controller */
+    public $help = null;
+
     public $modelClass;
 
     /**
@@ -67,7 +72,11 @@ class AppController extends Controller
      *
      * @var array $menu
      */
-    public $menu = [];
+    public $menu = [
+        'label' => 'Epigraf »',
+        'escape' => false,
+        'class' => 'menu_public menu-home'
+    ];
 
     /**
      * Side menu items
@@ -226,6 +235,7 @@ class AppController extends Controller
         $this->getResponse()->setTypeMap('jsonld', ['application/ld+json']);
         $this->getResponse()->setTypeMap('ttl', ['text/turtle']);
         $this->getResponse()->setTypeMap('md', ['text/markdown']);
+        $this->getResponse()->setTypeMap('plain', ['text/html']);
         $this->getResponse()->setTypeMap('geojson', ['application/geo+json']);
 
         parent::initialize();
@@ -238,6 +248,7 @@ class AppController extends Controller
                     'csv' => 'App.Csv',
                     'jsonld' => 'App.Jsonld',
                     'rdf' => 'App.Rdf',
+                    'plain' => 'App.Html',
                     'ttl' => 'App.Ttl',
                     'md' => 'App.Markdown',
                     'geojson' => 'App.GeoJson',
@@ -360,6 +371,7 @@ class AppController extends Controller
         $this->set('menu', $this->menu);
         $this->set('sidemenu', $this->sidemenu);
         $this->set('pagetitle', $this->pagetitle);
+        $this->set('pagehelp', $this->help);
         $this->set('theme', $this->theme);
 
         // Transfer data to javascript
@@ -490,24 +502,28 @@ class AppController extends Controller
         ];
 
         // TODO: more elegant reservedItems and menu handling, implement tree for docs?
-        $pages = TableRegistry::getTableLocator()->get('Docs');
-        $pages->setScope('pages');
-        $reservedItems = ['start'];
-        $pages = $pages
-            ->find('list', [
-                'conditions' => ['published' => 1, 'norm_iri NOT IN' => $reservedItems],
-                'contain' => [],
-                'keyField' => 'norm_iri',
-                'valueField' => 'name'
-            ])
-            ->order(['sortkey' => 'ASC', 'name' => 'ASC']);
+        try {
+            $pages = TableRegistry::getTableLocator()->get('Docs');
+            $pages->setScope('pages');
+            $reservedItems = ['start'];
+            $pages = $pages
+                ->find('list', [
+                    'conditions' => ['published' => 1, 'norm_iri NOT IN' => $reservedItems],
+                    'contain' => [],
+                    'keyField' => 'norm_iri',
+                    'valueField' => 'name'
+                ])
+                ->order(['sortkey' => 'ASC', 'name' => 'ASC']);
 
-        foreach ($pages as $key => $name) {
-            $menu[] = array(
-                'label' => $name,
-                'class' => 'menu_public',
-                'url' => ['controller' => 'Pages', 'action' => 'show', $key, 'plugin' => false]
-            );
+            foreach ($pages as $key => $name) {
+                $menu[] = array(
+                    'label' => $name,
+                    'class' => 'menu_public',
+                    'url' => ['controller' => 'Pages', 'action' => 'show', $key, 'plugin' => false]
+                );
+            }
+        } catch (MissingConnectionException $e) {
+            // Do nothing, the error will be thrown later again
         }
 
         return $menu;
@@ -799,16 +815,18 @@ class AppController extends Controller
         unset($redirect['_matchedRoute']);
         $redirect['?']['token'] = false;
 
-        // If alread tried to login on this URL, then redirect to the homepage
+        // If already tried to log in on this URL, then stop
         if (!empty($redirect['?']['login'])) {
-            $redirect = Router::url('/');
+            $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'stop'];
         }
+
+        // Add login parameter signalling the user already tried to log in
         else {
             $redirect['?']['login'] = '1';
             $redirect = Router::url($redirect);
+            $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'login', '?' => ['redirect' => $redirect]];
         }
 
-        $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'login', '?' => ['redirect' => $redirect]];
         return $url;
     }
 
@@ -1027,12 +1045,17 @@ class AppController extends Controller
     public function getAllowedDatabases($user = null)
     {
         if ($this->allowedDatabases === null) {
-            $user = $user ?? $this->Auth->user();
-            $this->allowedDatabases = $this->fetchTable('Databanks')
-                ->find('allowedBy', ['user' => $user])
-                ->all()
-                ->indexBy('name')
-                ->toArray();
+
+            try {
+                $user = $user ?? $this->Auth->user();
+                $this->allowedDatabases = $this->fetchTable('Databanks')
+                    ->find('allowedBy', ['user' => $user])
+                    ->all()
+                    ->indexBy('name')
+                    ->toArray();
+            } catch (Exception $e) {
+                $this->allowedDatabases = [];
+            }
         }
 
         return $this->allowedDatabases;
@@ -1064,22 +1087,26 @@ class AppController extends Controller
     }
 
     /**
-     * Check whether the user is allowed to access an action
-     * by comparing the action and request scope with the $authorized property
+     * Check whether a user role and request scope match authorized actions
      *
-     * @param array $user The user data from the auth component
+     * The given role and scope are compared against the $authorized property.
+     * Placeholders and admin privileges are taken into account.
+     *
+     * @param string $userRole The user role
+     * @param string $requestScope The request scope, one of 'web' or 'api'.
+     * @param string $requestAction The action
      * @return bool
      */
-    protected function hasWiredPermission($user)
+    protected function inWiredPermissions($userRole, $requestScope, $requestAction)
     {
-        $requestScope = $this->_getRequestScope();
-        $userRole = $user['role'] ?? '';
-
-        // Check $authorized property
         $allowedActions = $this->authorized[$requestScope][$userRole] ?? [];
-        if (in_array($this->request->getParam('action'), $allowedActions)) {
+
+        // Check specific actions
+        if (in_array($requestAction, $allowedActions)) {
             return true;
         }
+
+        // Check wildcards
         elseif (in_array('*', $allowedActions)) {
             return true;
         }
@@ -1093,6 +1120,26 @@ class AppController extends Controller
         }
 
         return false;
+    }
+
+    /**
+     * Check whether the user is allowed to access an action
+     * by comparing the action and request scope with the $authorized property
+     *
+     * @param array $user The user data from the auth component
+     * @return bool
+     */
+    protected function hasWiredPermission($user)
+    {
+        $requestScope = $this->_getRequestScope();
+        $requestAction = $this->request->getParam('action');
+        $userRole = PermissionsTable::getUserRole($user, null, $requestScope);
+
+        return $this->inWiredPermissions(
+            $userRole,
+            $requestScope,
+            $requestAction
+        );
     }
 
     /**
@@ -1316,7 +1363,7 @@ class AppController extends Controller
     protected function startJob($type, $config)
     {
 
-        $jobdata = ['typ' => $type, 'config' => $config];
+        $jobdata = ['jobtype' => $type, 'config' => $config];
         $jobsTable = $this->fetchTable('Jobs');
         $job = $jobsTable->newEntity($jobdata);
 
@@ -1358,17 +1405,6 @@ class AppController extends Controller
         }
 
         return $this->_cacheConfigName;
-    }
-
-    /**
-     * Clear view cache
-     *
-     * @return void
-     */
-    protected function clearViewCache()
-    {
-        $this->initViewCache();
-        Cache::clearCache($this->_cacheConfigName);
     }
 
     /**

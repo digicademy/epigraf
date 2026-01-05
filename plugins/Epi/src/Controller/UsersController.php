@@ -35,6 +35,8 @@ class UsersController extends AppController
         'web' => []
     ];
 
+    public $help = 'administration/users';
+
     /**
      * Pagination setup
      *

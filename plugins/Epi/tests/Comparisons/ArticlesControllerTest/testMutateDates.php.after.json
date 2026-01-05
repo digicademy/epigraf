@@ -6,7 +6,7 @@
         "date_value": "1234",
         "date_start": 1234,
         "date_end": 1234,
-        "date_sort": "01234AAA00000000A4",
+        "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
         "sections_id": 13,
         "articles_id": 1
     },
@@ -28,7 +28,7 @@
         "date_value": "1234",
         "date_start": 1234,
         "date_end": 1234,
-        "date_sort": "01234AAA00000000A4",
+        "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
         "sections_id": 1,
         "articles_id": 1
     },
@@ -39,7 +39,7 @@
         "date_value": "794",
         "date_start": 794,
         "date_end": 794,
-        "date_sort": "00794AAA00000000A4",
+        "date_sort": "10794-12-31T23:59:59\/10794-01-01T00:00:00\/10794-12-31T23:59:59\/00\/5",
         "sections_id": 18,
         "articles_id": 1
     },
@@ -50,7 +50,7 @@
         "date_value": "1066",
         "date_start": 1066,
         "date_end": 1066,
-        "date_sort": "01066AAA00000000A4",
+        "date_sort": "11066-12-31T23:59:59\/11066-01-01T00:00:00\/11066-12-31T23:59:59\/00\/5",
         "sections_id": 20,
         "articles_id": 1
     },
@@ -61,7 +61,7 @@
         "date_value": "1337",
         "date_start": 1337,
         "date_end": 1337,
-        "date_sort": "01337AAA00000000A4",
+        "date_sort": "11337-12-31T23:59:59\/11337-01-01T00:00:00\/11337-12-31T23:59:59\/00\/5",
         "sections_id": 23,
         "articles_id": 1
     },

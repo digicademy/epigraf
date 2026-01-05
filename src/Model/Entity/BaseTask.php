@@ -10,6 +10,10 @@
 
 namespace App\Model\Entity;
 
+use App\Utilities\Files\Files;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Exception;
+
 /**
  * Base class for tasks
  *
@@ -54,13 +58,15 @@ class BaseTask
     /**
      * Activate the database
      *
+     * @param string $databankName The database name. Leave empty to use the task or job default.
      * @return Databank
      */
-    protected function activateDatabank()
+    protected function activateDatabank($databankName = null)
     {
         // TODO: Check permissions for the database.
-        $databankName = empty($this->config['database']) ? $this->job->config['database'] : $this->config['database'];
-        /** @var Databank $databank */
+        if (empty($databankName)) {
+            $databankName = empty($this->config['database']) ? $this->job->config['database'] : $this->config['database'];
+        }
         return $this->job->activateDatabank($databankName);
     }
 
@@ -84,6 +90,138 @@ class BaseTask
         $offset = $this->config['offset'];
         $limit = $this->job->limit;
         return compact('offset', 'limit');
+    }
+
+
+    /**
+     * Get current input file
+     *
+     * The full path to the input file is stored in 'inputpath'.
+     * The path relative to the job folder is stored in 'inputfile'.
+     *  In case both are empty, a default file name based on the job id is generated.
+     *
+     * @return string
+     */
+    public function getCurrentInputFilePath()
+    {
+        $task = $this->config ?? [];
+
+        // If present, 'inputpath' contains the full path to the input file
+        $filename = $task['inputpath'] ?? null;
+        if (!empty($filename)) {
+            return $filename;
+        }
+
+        // Otherwise, 'inputfile' may contain the relative path to the input file
+        $filename = $task['inputfile'] ?? null;
+        if (!empty($filename)) {
+            return $this->job->jobPath . $filename;
+        }
+
+        // If no input file is specified, return the default job file
+        $filename = 'job_' . $this->job->id . '.xml';
+        return $this->job->jobPath . $filename;
+    }
+
+    /**
+     * Import modes depend on the source: csv file, xml file or folder (with xml files
+     *
+     * @return string
+     * @throws Exception
+     */
+    protected function getCurrentInputMode()
+    {
+        $inputFile = $this->getCurrentInputFilePath();
+
+        if (empty($inputFile)) {
+            return '';
+        }
+
+        $ext = strtolower(pathinfo($inputFile, PATHINFO_EXTENSION));
+
+        // xml, csv
+        if (is_file($inputFile)) {
+            return $ext;
+        }
+
+        // folder
+        elseif (is_dir($inputFile)) {
+            return 'folder';
+        }
+
+        // unclear
+        else {
+            return '';
+        }
+    }
+
+    /**
+     * Get the current output file name
+     *
+     * @return string
+     */
+    public function getCurrentOutputFileName()
+    {
+        $current = $this->config;
+        $filename =  $current['outputfile'] ?? '';
+        if (empty($filename)) {
+            $ext = empty($current['extension']) ? 'xml' : trim($current['extension'], " \n\r\t\v\x00/.");
+            if (empty($this->job->id)) {
+                $filename = Files::getTempFilename('temp', $ext);
+            }
+            else {
+                $filename = 'job_' . $this->job->id . '.' . $ext;
+            }
+        }
+        return $filename;
+    }
+
+    /**
+     * Get the path of the current output file
+     *
+     * @return string
+     */
+    public function getCurrentOutputFilePath()
+    {
+        $filename = $this->getCurrentOutputFileName();
+
+        $current = $this->config;
+        $current['outputfile'] = $filename;
+        $this->job->updateCurrentTaskConfig($current);
+
+        if (empty($filename)) {
+            throw new RecordNotFoundException(__('The file {0} is not available for download.', $filename));
+        }
+
+        // Make absolute path
+        if (strpos($filename, '/') !== 0 && strpos($filename, '\\') !== 0) {
+            $filename  = $this->job->jobPath . $filename;
+        }
+
+        return $filename;
+    }
+
+    /**
+     * Reset the task progress
+     *
+     * @return true
+     */
+    public function init()
+    {
+        return true;
+    }
+
+    /**
+     * Get a preview of the task results
+     *
+     * Used for import tasks to show a preview of the data that will be imported.
+     *
+     * @param array $options
+     * @return array
+     */
+    public function preview($options = [])
+    {
+        return [];
     }
 
     /**

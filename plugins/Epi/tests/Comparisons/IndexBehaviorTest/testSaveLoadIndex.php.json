@@ -94,14 +94,15 @@
                 "rght": 6,
                 "sortno": 5,
                 "sortkey": "Unterautor 2",
-                "lemma": "Unterautor 2",
-                "name": "Unterautor 2 ",
+                "lemma": "Langtitel Unterautor 2 mit '",
+                "name": "Kurztitel Unterautor 2 mit '",
                 "unit": "Unterautor2 Einheit",
                 "comment": "Unterautor 2 Bemerkung",
                 "iscategory": 1,
                 "ishidden": 1,
                 "keywords": "Autor,Karstadt,Ursprung",
-                "norm_data": "Unterautor 2 Normdaten"
+                "norm_data": "Unterautor 2 Normdaten",
+                "norm_iri": "kurztitel-unterautor-2-mit-"
             },
             "10": {
                 "sections": {
@@ -117,14 +118,15 @@
                 "rght": 13,
                 "sortno": 8,
                 "sortkey": "Quelle 1",
-                "lemma": "Quelle 1",
-                "name": "Quelle 1 ",
+                "lemma": "Quelle 1 mit &",
+                "name": "Quelle 1 mit &",
                 "unit": "Quelleneinheit 1",
-                "comment": "Quelle bemerkung",
+                "comment": "Quelle 1 Bemerkung",
                 "iscategory": 1,
                 "ishidden": 0,
-                "keywords": "Quelle,Karstadt,Ursprung",
-                "norm_data": "Quelle Norm 1"
+                "keywords": "Karstadt,Ursprung",
+                "norm_data": "Quelle 1 Normdaten",
+                "norm_iri": "quelle-1-mit-"
             }
         }
     },

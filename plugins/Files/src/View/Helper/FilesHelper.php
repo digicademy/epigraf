@@ -35,7 +35,7 @@ class FilesHelper extends Helper
      *
      * @var string[]
      */
-    public $helpers = ['Form', 'Html', 'Url', 'Link'];
+    public $helpers = ['Form', 'Html', 'Url', 'Link', 'User'];
 
     /**
      * Initialize dropzone
@@ -46,7 +46,7 @@ class FilesHelper extends Helper
     public function dropzone($folder = ['root'=>null,'path'=>null,'database'=>null], $template = false)
     {
 
-        if (!$this->Link->hasPermission(['action' => 'upload'])) {
+        if (!$this->User->hasPermission(['action' => 'upload'])) {
             return '';
         }
 
@@ -181,12 +181,7 @@ class FilesHelper extends Helper
         if (!empty($file->content)) {
             $out = '<div class="preview">';
             $out .= '<blockquote class="preview widget-filecontent" data-snippet="filecontent">';
-            if ($file->type == 'md') {
-                $out .= Markdown::defaultTransform($file->content);
-            }
-            else {
-                $out .= h($file->content);
-            }
+            $out .= h($file->content);
             $out .= '</blockquote>';
             $out .= '</div>';
             return $out;

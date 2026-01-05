@@ -144,13 +144,13 @@ class IndexBehavior extends Behavior
     /**
      *  clearIndex
      *
-     * @param $cachekey
+     * @param string $cacheKey
      */
-    public function clearIndex($cachekey, $deletecache = true)
+    public function clearIndex($cacheKey, $deletecache = true)
     {
         $this->table()->index = [];
         if ($deletecache) {
-            Cache::delete($cachekey, 'index');
+            Cache::delete($cacheKey, 'index');
         }
     }
 
@@ -283,6 +283,8 @@ class IndexBehavior extends Behavior
             $this->_addProperties($references);
 
             // Add "Siehe unter"
+            // TODO: Ist das sinnvoll? So werden auch Verweisziele reingeholt,
+            //       die im Bestand aktuell nicht genutzt sind.
             $references = $propertiesTable
                 ->find('referencesTo', ['nodes' => $ids]);
             $this->_addProperties($references);

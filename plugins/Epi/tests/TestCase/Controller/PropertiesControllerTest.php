@@ -172,7 +172,7 @@ class PropertiesControllerTest extends EpiTestCase
     }
 
     /**
-     * Test view method (HTML file)
+     * Test index method (XML file)
      *
      * @return void
      */
@@ -486,7 +486,7 @@ class PropertiesControllerTest extends EpiTestCase
     public function testMutateMissingScope()
     {
         $this->loginUser('author');
-        $this->expectException(InvalidParameterException::class);
+        $this->expectException(BadRequestException::class);
         $this->get('epi/projects/properties/mutate');
     }
 

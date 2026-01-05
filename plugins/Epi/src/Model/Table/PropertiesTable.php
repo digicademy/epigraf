@@ -95,6 +95,13 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     public $_recoverQueue = [];
 
     /**
+     * Store move operations for the VersionedTreeBehavior
+     *
+     * @var array
+     */
+    public $_moveQueue = [];
+
+    /**
      * Request parameter config
      *
      * @var string[]
@@ -107,7 +114,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         'empty' => 'raw',
         'manage' => 'raw',
         'published' => 'list-integer',
-        'references' => 'raw',
+        'references' => 'list',
+        'ancestors' => 'raw',
         'field' => 'string',
         'term' => 'string',
 
@@ -120,7 +128,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
 //        'level' => 'raw',
 
         'selected' => 'list',
-        'columns' => 'list',
+        'selection' => 'raw',
+        'columns' => 'list-or-false',
         'load' => 'list',
         'save' => 'list',
         'mode' => 'constant-mode',
@@ -130,7 +139,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             'projects' => 'list',
             'articletypes' => 'list',
             'field' => 'raw',
-            'term' => 'raw'
+            'term' => 'raw',
+            'date' => 'string'
         ]
     ];
 
@@ -149,19 +159,23 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 'Properties.norm_iri',
                 'Properties.norm_data',
                 'Properties.id' => ['type' => 'integer', 'operator' => '=']
-            ]
+            ],
+            'default' => true
         ],
         'lemma' => [
             'caption' => '- Bezeichnung',
-            'scopes' => ['Properties.lemma', 'Properties.name']
+            'scopes' => ['Properties.lemma', 'Properties.name'],
+            'default' => true
         ],
         'keywords' => [
             'caption' => '- Keywords',
-            'scopes' => ['Properties.keywords']
+            'scopes' => ['Properties.keywords'],
+            'configurable' => 'true'
         ],
         'norm_iri' => [
-            'caption' => '- IRI fragment',
-            'scopes' => ['Properties.norm_iri']
+            'caption' => '- IRI Fragment',
+            'scopes' => ['Properties.norm_iri'],
+            'default' => true
         ],
         'norm_data' => [
             'caption' => '- Norm data',
@@ -170,6 +184,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         'id' => [
             'caption' => '- ID',
             'scopes' => ['Properties.id'],
+            'default' => true,
             'type' => 'integer',
             'operator' => '='
         ]
@@ -200,7 +215,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         $this->addBehavior('Epi.XmlStyles', ['fields' => ['content', 'elements', 'source_from']]);
         $this->addBehavior('VersionedTree', [
             'level' => 'level',
-            'recoverOrder' => 'sortno',
+            'recoverOrder' => 'lft',
             'scope' => [$this->scopeField => $this->scopeValue, $this->getAlias() . '.deleted' => 0],
         ]);
         $this->addBehavior('Epi.Position');
@@ -448,8 +463,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     {
         parent::afterSave($event, $entity, $options);
 
-        $this->Items->Articles->clearResultCache();
-        $this->clearViewCache('epi_views_Epi_Articles');
+        $this->Items->Articles->clearCache();
     }
 
     /**
@@ -621,7 +635,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     public function getMenu($published = false)
     {
 
-        $propertyGroups = $this->getDatabase()->getGroupedTypes('properties', 'name', 'caption', 'category');
+        $propertyGroups = $this->getDatabase()->getPropertyConfig();
         $cats = [];
 
         foreach ($propertyGroups as $groupCaption => $propertyTypes) {
@@ -640,7 +654,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             }
         }
         $menu = [
-            'caption' => __('Categories'),
+            'caption' => __('Navigation'),
             'activate' => true,
             'scrollbox' => true,
 //            'search' => true,
@@ -662,54 +676,35 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     public function findHasParams(Query $query, array $options): Query
     {
         $default = [
-            'references' => true,
+            'references' => ['to'],
             'propertytype' => '',
             'term' => '',
             'id' => null,
+            'ancestors' => true,
             'published' => null,
             'articles' => []
         ];
         $params = array_merge($default, $options);
 
-        $contain = [
-            'LinksFrom',
-            'LinksFrom.Properties',
-            'Types'
-        ];
+        // Contain
+        // TODO: Why here? Move to findContain*
+        $query = $query->contain(['Types', 'LinksFrom', 'LinksFrom.Properties']);
 
         //Property type
-        $query = $query
-            ->contain($contain)
-            ->where(['Properties.related_id IS' => null])
-            ->where(['Properties.propertytype' => $params['propertytype']]);
-
-        // Lemma
+        $query = $query->where(['Properties.propertytype' => $params['propertytype']]);
+        $query = $query->find('withRelated', $params);
         $query = $query->find('hasTerm', $params);
-
-
-//        // Project
-//        $project = $this->request->getQuery('project');
-//        if (!empty($project)) {
-//            $properties = $properties->find('hasProject', ['project' => $project]);
-//        }
-
-        // Only properties used in matched articles
         $query = $query->find('hasArticleOptions', $params);
-
-        // ID
-        $query = $query->find('hasId', $params);
-
-        // Published
+        $query = $query->find('hasIds', $params);
         $query = $query->find('hasPublicationState', $params);
-
-        // Ancestors
         $query = $query->find('withAncestors', $params);
 
-        // Article count
-        $query = $query->find('articleCount', $params);
-
-        // Tree position
-        $query = $query->find('treePositions');
+        if ($options['articleCount'] ?? true) {
+            $query = $query->find('articleCount', $params);
+        }
+        if ($options['treePositions'] ?? true) {
+            $query = $query->find('treePositions');
+        }
 
         return $query;
     }
@@ -757,7 +752,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
 
         if (!empty($term) && !empty($field)) {
 
-            $searchConfig = $this->searchFields[$field] ?? [];
+            $searchConfig = $this->getConfiguredSearchFields($options)[$field] ?? [];
 
             $query = $query->find('term', [
                 'term' => $term,
@@ -788,6 +783,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             $itemsQuery = $this->Items->Articles
                 ->find('hasProject', $articles_options)
                 ->find('hasTerm', $articles_options)
+                ->find('hasDate', $articles_options)
                 ->find('hasArticleType', $articles_options)
                 ->find('hasProperties', $articles_options)
                 ->innerJoinWith('Items')
@@ -796,6 +792,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             $linksQuery = $this->Items->Articles
                 ->find('hasProject', $articles_options)
                 ->find('hasTerm', $articles_options)
+                ->find('hasDate', $articles_options)
                 ->find('hasArticleType', $articles_options)
                 ->find('hasProperties', $articles_options)
                 ->innerJoinWith('Links',
@@ -828,7 +825,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      * @param array $options Set 'id' to the property ID.
      * @return Query
      */
-    public function findHasId(Query $query, array $options)
+    public function findHasIds(Query $query, array $options)
     {
         $propertyId = $options['id'] ?? $options['properties'] ?? null;
         if ($propertyId !== null) {
@@ -1103,6 +1100,30 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     }
 
     /**
+     * Find properties with related_id
+     *
+     * By default, only nodes are returned.
+     * Include 'to' in the reference option array to retrieve edges as well.
+     *
+     * ### Options
+     * - references (array) An array with the values 'to' or 'from' or an empty array.
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findWithRelated(Query $query, array $options)
+    {
+        $refs = $options['references'] ?? [];
+        if (!in_array('to', $refs)) {
+            $query = $query->where(['Properties.related_id IS' => null]);
+        } else {
+            $query = $query->contain(['LookupToWithAncestors','MetaProperty']);
+        }
+        return $query;
+    }
+
+    /**
      * Get ancestors and self
      *
      * Can be chained into the query builder. A new query is constructed containing
@@ -1114,6 +1135,10 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      */
     public function findWithAncestors(Query $query, array $options)
     {
+        if (empty($options['ancestors'])) {
+            return $query;
+        }
+
         // Signal to the paginator that the query will be replaced later
         // Prevents level filtering.
         $query = $query->applyOptions(['expand' => true]);
@@ -1161,10 +1186,14 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                     }
 
                     // TODO: replace by contain option
-                    if (!empty($options['references'])) {
+                    $refs = $options['references'] ?? [];
+//                    if (in_array('to', $refs)) {
+//                        $ancestorsQuery = $ancestorsQuery
+//                            ->contain(['ReferencesTo', 'ReferencesTo.LookupToWithAncestors','ReferencesTo.MetaProperty']);
+//                    }
+                    if (in_array('from', $refs)) {
                         $ancestorsQuery = $ancestorsQuery
-                            ->contain(['ReferencesTo', 'ReferencesTo.LookupToWithAncestors'])
-                            ->contain(['ReferencesFrom', 'ReferencesFrom.LookupFromWithAncestors']);
+                            ->contain(['ReferencesFrom', 'ReferencesFrom.LookupFromWithAncestors','ReferencesFrom.MetaProperty']);
                     }
 
                     $contain = $query->getContain();
@@ -1190,7 +1219,9 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      * Expand the result set to include ancestors and self.
      *
      * Similar to findWithAncestors, but pagination is not
-     * applies to the original dataset, but to the ancestors.
+     * applied to the original dataset, but to the ancestors.
+     *
+     * @deprecated Use findWithAncestors instead.
      *
      * @param Query $query
      * @param array $options
@@ -1239,9 +1270,13 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             ->where([$this->getAlias() . '.' . $scopeField => $options['propertytype'] ?? '']);
 
         // TODO: replace by contain option
-        if (!empty($options['references'])) {
+        $refs = $options['references'] ?? [];
+        if (in_array('to', $refs)) {
             $ancestorsQuery = $ancestorsQuery
-                ->contain(['ReferencesTo', 'ReferencesTo.LookupToWithAncestors'])
+                ->contain(['ReferencesTo', 'ReferencesTo.LookupToWithAncestors']);
+        }
+        if (in_array('from', $refs)) {
+            $ancestorsQuery = $ancestorsQuery
                 ->contain(['ReferencesFrom', 'ReferencesFrom.LookupFromWithAncestors']);
         }
 
@@ -1420,7 +1455,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             'propertytype' => $reference->propertytype,
             $displayfield . ' <>' => '',
             $displayfield . ' IS NOT' => null,
-            'LOWER(' . $displayfield . ')' => strtolower($reference->{$displayfield})
+            'LOWER(' . $displayfield . ')' => mb_strtolower($reference->{$displayfield})
         ];
 
         // TODO: check ancestors
@@ -1467,26 +1502,20 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             ->orderAsc('Properties.lft')
             ->where(['Properties.related_id IS' => null]);
 
-        // One lane
-        $lane = $options['lane'] ?? false;
-        if (!empty($lane)) {
-            $query = $query->where(['Properties.id IN' => $lane]);
+
+        // Get from properties
+        $lanes = $options['lanes'] ?? false;
+        $propertyType = empty($lanes) ? $this->getDefaultScope() : $lanes;
+        $selectedProperties = $options['properties'][$propertyType]['selected'] ?? $options['properties'][$propertyType] ?? [];
+
+        $query = $query->where(['Properties.propertytype' => $propertyType]);
+
+
+        if (empty($selectedProperties)) {
+            $query = $query->where(['1=0']);
         }
-
-        // Multiple lanes
         else {
-            $lanes = $options['lanes'] ?? false;
-            $propertyType = empty($lanes) ? $this->getDefaultScope() : $lanes;
-            $selectedProperties = $options['properties'][$propertyType]['selected'] ?? $options['properties'][$propertyType] ?? [];
-
-            $query = $query->where(['Properties.propertytype' => $propertyType]);
-
-            if (empty($selectedProperties)) {
-                $query = $query->where(['1=0']);
-            }
-            else {
-                $query = $query->where(['Properties.id IN' => $selectedProperties]);
-            }
+            $query = $query->where(['Properties.id IN' => $selectedProperties]);
         }
 
         return $query;
@@ -1518,11 +1547,12 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      * Returns a (paginatable) query that retrieves properties and all
      * their children.
      *
-     * @param string $propertytype The propertytype for which to retrieve the properties.
-     * @return Query
+     * @deprecated Use findAncestors instead
      *
      * TODO In case the target DBMS supports it, consider using common table expressions after upgrading to CakePHP 4.1+
-     * @deprecated Use findAncestors instead
+     *
+     * @param string $propertytype The propertytype for which to retrieve the properties.
+     * @return Query
      */
     function getPropertiesWithChildren($propertytype)
     {
@@ -1680,6 +1710,9 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      * matching the given search term, including their parents
      * and children.
      *
+     * @deprecated Use findAncestors instead
+     * TODO In case the target DBMS supports it, consider using common table expressions after upgrading to CakePHP 4.1+
+     *
      * The result will also include the properties (and their parents)
      * that are referenced via the `verweis_id` column.
      *
@@ -1687,8 +1720,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      * @param string $searchTerm The search term.
      * @return Query
      *
-     * TODO In case the target DBMS supports it, consider using common table expressions after upgrading to CakePHP 4.1+
-     * @deprecated Use findAncestors instead
      */
     function searchPropertiesWithChildren($propertytype, $searchTerm)
     {
@@ -1910,6 +1941,71 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         return $filter;
     }
 
+    protected function getConfiguredSearchFields($params = []) {
+
+        if (!($params['propertytype'] ?? false)) {
+            return $this->searchFields;
+        }
+
+        $fieldsConfig = $this->getDatabase()->types['properties'][$params['propertytype']]['merged']['fields'] ?? [];
+        if (empty($fieldsConfig)) {
+            return $this->searchFields;
+        }
+
+        // default search fields
+        $searchFields = [];
+        foreach ($this->searchFields as $field => $spec) {
+            if ($spec['default'] ?? false) {
+                $candidate = array_slice($spec, 0);
+                if ($fieldsConfig[$field]['caption'] ?? false) {
+                    $candidate['caption'] = '- ' . $fieldsConfig[$field]['caption'];
+                    unset($fieldsConfig[$field]);
+                }
+                else {
+                    if ($fieldsConfig[$field] ?? false) {
+                        $candidate['caption'] = '- '. $fieldsConfig[$field];
+                        unset($fieldsConfig[$field]);
+                    }
+                }
+                $searchFields[$field] = $candidate;
+            }
+        }
+
+        // configured search fields
+        $baseScope = ucfirst($this->getTable());
+        $contentSearchFields = [];
+        foreach($fieldsConfig as $field => $config) {
+            if (($config['caption'] ?? false) && ($config['searchfield'] ?? false)) {
+                $caption = $config['caption'];
+                $contentSearchFields[$field] = [
+                    'caption' => '- '. $caption,
+                    'scopes' => [$baseScope . '.' . $field]
+                ];
+            }
+        }
+
+        //  group configured search fields
+        if (!empty($contentSearchFields)) {
+            $scopeElements = array_column($contentSearchFields, 'scopes');
+            $mergedScopes = array_merge(...$scopeElements);
+            $searchFields['groupedContent'] = [
+                'caption' => 'Inhalt', // __('Content'),
+                'scopes' => Arrays::array_unique_mixed($mergedScopes)
+            ];
+        }
+        $searchFields = array_merge($searchFields, $contentSearchFields);
+
+        // set scopes for 'all'
+        if ($searchFields['all'] ?? false) {
+            $scopeElements = array_column($searchFields, 'scopes');
+            $mergedScopes = array_merge(...$scopeElements);
+            $searchFields['all']['scopes'] = Arrays::array_unique_mixed($mergedScopes);
+        }
+
+        return $searchFields;
+
+    }
+
     /**
      * Get all scopes
      *
@@ -2006,9 +2102,9 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      *
      * @param mixed $propertyTargetId
      * @param array $propertySourceIds
-     * @return void
-     */
-    protected function rewireReferences(mixed $propertyTargetId, array $propertySourceIds): void
+     * @return int The number of affected rows
+    */
+    protected function rewire(mixed $propertyTargetId, array $propertySourceIds): int
     {
         // Change references of the items
         $this->Items->updateAllWithVersion(
@@ -2046,12 +2142,30 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
 
         // Delete merged property
         // TODO: update lft/rght
-        $this->updateAllWithVersion(
+        return $this->updateAllWithVersion(
             ['deleted' => 1, 'mergedto_id' => $propertyTargetId],
             ['id IN' => $propertySourceIds, 'deleted' => 0]
         );
     }
 
+    /**
+     * Rewire all references to child properties to the parent property
+     *
+     * @param Property $property
+     * @return bool Whether the operation was successful
+     */
+    public function resolve($property) : bool {
+        $connection = $this->getConnection();
+        $connection->begin();
+        try {
+            $result =  $this->rewire($property->parent_id, [$property->id]);
+            $connection->commit();
+        } catch (Exception $e) {
+            $connection->rollback();
+            throw new Exception(__('Could not merge properties: {0}', [$e->getMessage()]));
+        }
+        return $result > 0;
+    }
 
     /**
      * Merge properties
@@ -2103,13 +2217,16 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                     $fieldName = $separator;
                     $separator = ' / ';
                 }
+
+                $mergedValues = [trim($propertyTarget[$fieldName] ?? '')];
                 foreach ($propertySources as $propertySource) {
-                    $mergedValues = [$propertyTarget[$fieldName]];
-                    if (!in_array($propertySource[$fieldName], $mergedValues)) {
+                    $sourceValue = trim($propertySource[$fieldName] ?? '');
+                    if (!in_array(mb_strtolower($sourceValue), array_map('mb_strtolower', $mergedValues))) {
                         $mergedValues[] = $propertySource[$fieldName];
                     }
-                    $propertyTarget[$fieldName] = implode($separator, array_filter($mergedValues));
                 }
+                $mergedValues = implode($separator, array_unique(array_filter($mergedValues)));
+                $propertyTarget[$fieldName] = $mergedValues;
             }
 
             // Don't merge IRIs if they are different
@@ -2139,7 +2256,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 }
 
                 // Rewire the references to the old properties
-                $this->rewireReferences($propertyTargetId, $propertySourceIds);
+                $this->rewire($propertyTargetId, $propertySourceIds);
 
                 $connection->commit();
 
@@ -2157,13 +2274,17 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
      *
      * TODO: keep all definitions, indexed by: articletype, default, query parameter
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $default = [
             'lemma' => ['caption' => __('Lemma'), 'width' => 200, 'default' => true, 'public' => true],
@@ -2178,7 +2299,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
                 'link' => [
                     'controller' => 'Articles',
                     'action' => 'index',
-                    '?' => ['properties.{propertytype}' => '{id}', 'load' => true]
+                    '?' => ['properties.{propertytype}.selected' => '{id}', 'load' => true]
                 ],
                 'width' => 150,
                 'default' => true
@@ -2205,7 +2326,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             'related_id' => ['caption' => __('Related'), 'width' => 100, 'default' => false]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**
@@ -2221,7 +2342,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             'rebuild_sortkeys' => 'Rebuild sort keys',
             'batch_sort' => 'Sort properties',
             'batch_merge' => 'Merge properties',
-            'batch_reconcile' => 'Reconcile norm data'
+            'batch_reconcile' => 'Reconcile properties'
         ];
 
         if (in_array(AppBaseTable::$userRole, ['author', 'editor'])) {
@@ -2249,6 +2370,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
 //            return 1;
         }
 
+        $params['ancestors'] = false;
+        $params['treePositions'] = false;
         return parent::mutateGetCount($params, $job);
     }
 
@@ -2298,7 +2421,10 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
 
         // Use cursor based pagination instead of offset
         if (($taskParams['cursor'] ?? 0) > 0) {
-            $cursorNode = $this->get($taskParams['cursor']);
+            $cursorNode = $this->find('all', ['deleted'=>[0,1]])
+                ->where(['id' => $taskParams['cursor']])
+                ->firstOrFail();
+//            $cursorNode = $this->get($taskParams['cursor']);
             $cursorConditions = [
                 'OR' => [
                     ['Properties.level' => $cursorNode->level, 'Properties.id >' => $taskParams['cursor'] ?? 0],
@@ -2308,6 +2434,11 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         } else {
             $cursorConditions = ['1=1'];
         }
+
+        $dataParams['articleCount'] = false;
+        $dataParams['treePositions'] = false;
+        $dataParams['ancestors'] = false;
+        $dataParams['treePositions'] = false;
 
         $entities = $this
             ->find('hasParams', $dataParams)
@@ -2349,8 +2480,9 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             throw new BadRequestException('Invalid cursor for task');
         }
         $limit = $paging['limit'] ?? 1;
-
         $dataParams = $this->parseRequestParameters($dataParams);
+        $dataParams['ancestors'] = false;
+        $dataParams['treePositions'] = false;
 
         // Use cursor based pagination instead of offset
         if (($taskParams['cursor'] ?? 0) > 0) {
@@ -2367,9 +2499,12 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
             ->limit($limit)
             ->toArray();
 
+        $targetField = $taskParams['targetfield'] ?? 'norm_data';
+        $reconcileOptions = ['onlyempty' => !empty($taskParams['onlyempty'])];
+
         /** @var Property $entity */
         foreach ($entities as $entity) {
-            $entity->reconcile();
+            $entity->reconcile($targetField, $reconcileOptions);
         }
 
         if (!$this->saveMany($entities, [])) {
@@ -2390,6 +2525,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
     public function mutateEntitiesRebuildSortkeys($taskParams, $dataParams, $paging): array
     {
         $dataParams = $this->parseRequestParameters($dataParams);
+        $dataParams['ancestors'] = false;
+        $dataParams['treePositions'] = false;
 
         $entities = $this
             ->find('hasParams', $dataParams)

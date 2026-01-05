@@ -1,0 +1,26 @@
+{
+    "articles": [
+        {
+            "signature": "Band",
+            "name": "Testprojekt 1"
+        },
+        {
+            "signature": "Signatur 1",
+            "name": "Artikel 1 f\u00fcr das Testsystem",
+            "items_locations": "Standort A , Standort B1 ",
+            "items_date": "1234",
+            "items_objecttypes": "Tr\u00e4ger 1 , Tr\u00e4ger 2a"
+        },
+        {
+            "signature": "Signatur 2",
+            "name": "Artikel 2 f\u00fcr das Testsystem"
+        }
+    ],
+    "pagination": {
+        "count": 4,
+        "page": 1,
+        "page_prev": false,
+        "page_next": true,
+        "perpage": 3
+    }
+}

@@ -11,7 +11,9 @@
 namespace Epi\Model\Entity;
 
 use App\Model\Behavior\TreeCorruptException;
+use App\Model\Entity\BaseTask;
 use App\Model\Entity\Databank;
+use App\Model\Entity\Job;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
 use App\Utilities\Files\Files;
@@ -56,6 +58,7 @@ use App\Utilities\Converters\Arrays;
  * @property string $internalUrl
  * @property mixed|string $externalUrl
  * @property mixed $url
+ * @property string $dataFeed A data feed URL used for triple generation
  *
  * @property string $preview
  * @property array $summary
@@ -65,10 +68,14 @@ use App\Utilities\Converters\Arrays;
  *
  * @property array $htmlFields
  *
+ * # Fields when exporting the article in a pipeline
+ * @property Job $job
+ * @property BaseTask $task
+ *
  * # Relations
  * @property ArticlesTable $table
- * @property Epi\Model\Entity\Section[] $sections
- * @property array $items
+ * @property \Epi\Model\Entity\Section[] $sections
+ * @property \Epi\Model\Entity\Item[] $items
  * @property \Epi\Model\Entity\Project $project
  */
 class Article extends RootEntity
@@ -217,6 +224,21 @@ class Article extends RootEntity
     public $_nestedItems = false;
 
     /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($entity instanceof Article) && ($entity->id === $this->id)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Get whether the field is public
      *
      * @param string|array $fieldName
@@ -228,9 +250,9 @@ class Article extends RootEntity
         $userRole = $this->root->currentUserRole ?? 'guest';
         $requestPublished = $options['published'] ?? \App\Model\Table\BaseTable::$requestPublished ?? [];
 
-        // Don't show backlinks and notes to guests
+        // Don't show backlinks and notes to guests and readers
         if (in_array($fieldName, ['backlinks', 'notes', 'status'])) {
-            return ($userRole !== 'guest') && empty($requestPublished);
+            return !in_array($userRole, ['guest','reader']) && empty($requestPublished);
         }
 
         return parent::getFieldIsVisible($fieldName);
@@ -298,7 +320,7 @@ class Article extends RootEntity
     public function getMenu($meta = false)
     {
         $this->prepareRoot();
-        $guest = ($this->root->currentUserRole ?? 'guest') === 'guest';
+        $showIcons = !in_array($this->root->currentUserRole ?? 'guest', ['guest', 'reader']);
 
         // Menu settings
         $sectionmenu = [
@@ -375,8 +397,8 @@ class Article extends RootEntity
                 'tree_last' => $section['tree_last'] ?? false,
                 'tree_first' => $section['tree_first'] ?? false,
                 'tree_parent' => $section->parent ?? null,
-                'tree-comment' => $guest ? null : (int)!empty($section['comment']),
-                'tree-published' => $guest ? null : $section['published'] ?? PUBLICATION_DRAFTED,
+                'tree-comment' => $showIcons ? (int)!empty($section['comment']) : null,
+                'tree-published' => $showIcons ? $section['published'] ?? PUBLICATION_DRAFTED : null,
                 'class' => $section->empty ? 'menu-section-empty' : ''
             ];
         }
@@ -749,7 +771,7 @@ class Article extends RootEntity
      */
     protected function _getPublishedState()
     {
-        return $this->published ?? $this->project->published;
+        return $this->published ?? $this->project->published ?? PUBLICATION_DRAFTED;
     }
 
     /**
@@ -794,8 +816,16 @@ class Article extends RootEntity
      */
     protected function _getThumb()
     {
-        $guest = ($this->currentUserRole ?? 'guest') === 'guest';
-        $published = $guest ? [PUBLICATION_PUBLISHED, PUBLICATION_SEARCHABLE] : null;
+        $published = null;
+
+        $userRole = $this->currentUserRole ?? 'guest';
+        if ($userRole === 'guest') {
+            $published = [PUBLICATION_PUBLISHED, PUBLICATION_SEARCHABLE];
+        }
+        else if ($userRole === 'reader') {
+            $published = [PUBLICATION_COMPLETE, PUBLICATION_PUBLISHED, PUBLICATION_SEARCHABLE];
+        }
+
         $itemtypes = $this->type->config['preview']['images'] ?? [];
 
         $imageItems = $this->getItemsByType($itemtypes, ['published' => $published, 'sort' => ['published', 'sortno']]);
@@ -1211,7 +1241,7 @@ class Article extends RootEntity
     public function getExportFields($options)
     {
         // Filter out content in link targets
-        if ($this->container instanceof Link) {
+        if (($this->container instanceof Link) || ($this->container instanceof Section)) {
             $fields = [
                 'id',
                 'norm_iri',
@@ -1262,10 +1292,11 @@ class Article extends RootEntity
     public function copyImages($itemtypes, $targetFolder, $metadataConfig)
     {
         $this->prepareRoot();
-        $imageItems = $this->getItemsByType($itemtypes,
-            ['published' => [PUBLICATION_PUBLISHED, PUBLICATION_SEARCHABLE]]);
+        $imageItems = $this->getItemsByType(
+            $itemtypes,
+            ['published' => [PUBLICATION_PUBLISHED, PUBLICATION_SEARCHABLE]]
+        );
         foreach ($imageItems as $imageItem) {
-
             $imageItem->copyImage($targetFolder, $metadataConfig);
         }
         return $imageItems;
@@ -1404,9 +1435,11 @@ class Article extends RootEntity
     }
 
     /**
-     * Return fields to be rendered in view/add/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {

@@ -12,13 +12,14 @@ declare(strict_types=1);
 
 namespace Widgets\View\Helper;
 
-use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
+use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Epi\Model\Entity\Article;
 use Epi\Model\Entity\RootEntity;
 use Rest\Entity\LockInterface;
+use function PHPUnit\Framework\isNull;
 
 /**
  * Link helper
@@ -36,7 +37,7 @@ class LinkHelper extends Helper
      *
      * @var string[]
      */
-    public $helpers = ['Element','Html', 'Url', 'Form', 'Paginator'];
+    public $helpers = ['Element','Html', 'Url', 'Form', 'Paginator', 'User'];
 
     /**
      * Array of action buttons
@@ -150,10 +151,28 @@ class LinkHelper extends Helper
         }
 
         if (!isset($this->groups[$position][$group])) {
-            $this->beginActionGroup($position, $group);
+            $this->beginActionGroup($position);
         }
 
         $this->groups[$position][$group]['actions'][] = ['title' => $title, 'url' => $url, 'options' => $options];
+    }
+
+
+    /**
+     * Add a label to an action group (e.g. for vertical menu layout)
+     *
+     * @param string $title
+     * @param array $options Options for the button with the following keys:
+     *  - class: CSS class string
+     *
+     * @return void
+     */
+    public function addActionGroupLabel(string $title, array $options = [])
+    {
+        $class = isset($options['class']) ? trim($options['class']) : '';
+        $options['class'] = $class ? $class . ' grouplabel' : 'grouplabel';
+
+        return $this->addAction($title, [], $options);
     }
 
     /**
@@ -244,10 +263,11 @@ class LinkHelper extends Helper
      * - roles: array of roles that are allowed to edit the entity
      *
      * @param \App\Model\Entity\BaseEntity $entity
+     * @param array $buttons Edit and unlock buttons will always be added. Add a copy button by `['copy'=>true]`.
      * @param array $options Passed to the addAction() method
      * @return void
      */
-    public function addEditButtons($entity, $options = [])
+    public function addEditButtons($entity, $buttons = [], $options = [])
     {
         $target = $entity->tableName . '-' . $entity->id;
 
@@ -259,6 +279,7 @@ class LinkHelper extends Helper
 
         $this->beginActionGroup ('bottom');
 
+        $this->addActionGroupLabel(__('Edit actions'));
         $this->addAction(
             __('Edit'),
             $editAction,
@@ -284,7 +305,23 @@ class LinkHelper extends Helper
                 ] + $options
             );
         }
+
+        if (!empty($buttons['copy'])) {
+
+            $copyAction = ['action' => 'transfer'];
+            $copyAction['?'] = ['id' => $entity->id,'stage'=>'preview','selected' => $entity->id];
+
+            $this->addAction(
+                __('Copy'),
+                $copyAction,
+                [
+                    'data-role' => 'copy',
+                    'data-target' => $target
+                ] + $options
+            );
+        }
     }
+
     /**
      * Add an edit button
      *
@@ -439,18 +476,19 @@ class LinkHelper extends Helper
     }
 
     /**
-     * Output a confirm and a cancel button for delete actions
+     * Output a confirm and a cancel button for actions
      *
      * @param \App\Model\Entity\BaseEntity $entity
+     * @param string $action The action, necessary for the form attribute
      * @return string
      */
-    public function getConfirmDeleteButtons($entity)
+    public function getConfirmButtons($entity, $action = 'delete')
     {
         $out = '';
 
         // Confirm
         $target = $entity->tableName . '-' . $entity->id;
-        $form = 'form-delete-' . $target;
+        $form = 'form-' . $action . '-' . $target;
 
         $options =  [
             'linktype' => 'button',
@@ -593,21 +631,26 @@ class LinkHelper extends Helper
         $this->addAction(__('Delete'), $url, $options);
     }
 
+    public function setHelpPath($path) {
+        $this->groups['help'] = $path;
+    }
 
     /**
      * Add a link to the help system in the footer, based on plugin, controller and action
      *
+     * @param string $path The path in the help pages
      * @return void
      */
-    public function addHelpAction()
+    public function addHelpAction($path = null)
     {
-        $request = $this->_View->getRequest();
-        $norm_iri = implode('-', array_filter([
-            'epiweb',
-            Inflector::underscore($request->getParam('plugin') ?? ''),
-            Inflector::underscore($request->getParam('controller') ?? ''),
-            Inflector::underscore($request->getParam('action') ?? '')
-        ]));
+        if ($path === null) {
+            $request = $this->_View->getRequest();
+            $path = implode('-', array_filter([
+                Inflector::underscore($request->getParam('plugin') ?? ''),
+                Inflector::underscore($request->getParam('controller') ?? ''),
+                Inflector::underscore($request->getParam('action') ?? '')
+            ]));
+        }
 
         $this->beginActionGroup('bottom-right');
         $this->addAction(
@@ -616,7 +659,7 @@ class LinkHelper extends Helper
                 'plugin' => false,
                 'controller' => 'Help',
                 'action' => 'show',
-                $norm_iri
+                $path
             ],
             [
                 'class' => 'frame help-button',
@@ -658,7 +701,6 @@ class LinkHelper extends Helper
     /**
      * Create buttons to switch the templates
      *
-     * // TODO: use permissions, introduce permission prefix 'template'
      * @param array $queryparams Query parameters, a template-Parameter will be added if not present
      *
      * @return void
@@ -666,19 +708,38 @@ class LinkHelper extends Helper
     public function toggleTemplates($queryparams, $datalist='')
     {
         $items = [
-            'table' => ['caption' => __('Table'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]],
+            'table' => [
+                'caption' => __('Table'),
+                'options' => ['roles' => ['reader', 'desktop', 'coder', 'author', 'editor']]
+            ],
             'map' => [
                 'caption' => __('Map'),
-                'params' => ['sort' => 'distance', 'direction' => 'asc'],
-                'options' => ['roles' => ['author', 'editor']]
+                'options' => ['roles' => ['reader', 'desktop', 'coder', 'author', 'editor']],
+                'params' => ['sort' => 'distance', 'direction' => 'asc']
             ],
-            'tiles' => ['caption' => __('Tiles'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]],
-
-            'lanes' => ['caption' => __('Lanes'), 'options' => ['roles' => []]]
+            'tiles' => [
+                'caption' => __('Tiles'),
+                'options' => ['roles' => ['reader', 'desktop', 'coder', 'author', 'editor']]
+            ],
+            'graph' => [
+                'caption' => __('Graph'),
+                'options' => ['roles' => ['devel']]
+            ],
+            'timeline' => [
+            'caption' => __('Timeline'),
+            'options' => ['roles' => ['devel']]
+            ]
         ];
+
+        // TODO: use permissions for other roles
+        // $this->User->hasPermission($url, ['entity_type' => 'view', 'entity_name' => '*.template.map'])
+
 
         $activeItem = $queryparams['template'] ?? 'table';
         $lastItem = empty($items) ? 'default' : array_key_last($items);
+
+        // add group label
+        $this->addActionGroupLabel(__('Toggle View'), ['group' => 'templates']);
 
         foreach ($items as $name => $options) {
             $queryparams['template'] = $name;
@@ -704,14 +765,15 @@ class LinkHelper extends Helper
     /**
      * Create buttons to switch the modes
      *
-     * // TODO: use permissions, introduce permission prefix 'template'
+     * // TODO: use permissions, introduce permission entity type 'view'
+     *
      * @param array $params Query parameters, a mode-Parameter will be added if not present
-     * @param string|null $entityId The entity ID
+     * @param string|null $path The entity ID or path segment (e.g. property type)
      * @param array $allowed List of allowed modes or empty
      *
      * @return void
      */
-    public function toggleModes($params, $entityId=null, $allowed = [])
+    public function toggleModes($params, $path=null, $allowed = [])
     {
         $items = [
             MODE_DEFAULT => ['caption' => __('Read'), 'options' => ['roles' => ['desktop', 'coder', 'author', 'editor']]],
@@ -723,6 +785,9 @@ class LinkHelper extends Helper
 
         $activeMode = $params['mode'] ?? MODE_DEFAULT;
         $lastMode = empty($items) ? MODE_DEFAULT : array_key_last($items);
+
+        // add group label
+        $this->addActionGroupLabel(__('Toggle Mode'), ['group' => 'modes']);
 
         foreach ($items as $name => $options) {
             $active = $name === $activeMode;
@@ -741,7 +806,8 @@ class LinkHelper extends Helper
             if ($params['mode'] === MODE_DEFAULT) {
                 unset($params['mode']);
             }
-            $this->addAction($options['caption'], [$entityId, '?' => $params], $actionOptions);
+
+            $this->addAction($options['caption'], [$path, '?' => $params], $actionOptions);
         }
     }
 
@@ -795,6 +861,9 @@ class LinkHelper extends Helper
 
         $this->beginActionGroup('bottom-right');
 
+        // add group label
+        $this->addActionGroupLabel(__('Download'), ['group' => 'export']);
+
         // Epigraf data
         $this->addAction(__('CSV'),
             array_merge($url,['_ext' => 'csv']),
@@ -832,16 +901,19 @@ class LinkHelper extends Helper
     /**
      * Add export buttons
      *
+     * TODO: support other entities than only articles and properties
+     *
      * In the article list, leave $article empty.
      * In the article view, hand over the article.
      *
      * @param array $queryparams Additional query parameters
+     * @param string $datalist Name of the datalist, e.g. "epi_articles"
      * @param null|Article $article Hand over an article to create specific pipeline buttons
      * @return void
      */
-    public function exportButtons($queryparams, $article=null)
+    public function exportButtons($queryparams, $dataList, $article = null)
     {
-
+        // General export (F7)
         $action = $this->_View->getRequest()->getParam('action');
         if (in_array($action, ['view', 'index'])) {
             $dataParams = [
@@ -860,17 +932,28 @@ class LinkHelper extends Helper
             ];
         }
 
-        // Get parameters from the article list selection
+        // Get parameters from the table list selection
         if (empty($article)) {
-            $dataParams['data-list-select'] = 'epi_articles';
-            $dataParams['data-list-param'] = 'articles';
+            $dataParams['data-list-select'] = $dataList;
+            $dataParams['data-list-param'] = 'id';
+        }
+        else {
+            $queryparams['selection'] = 'entity';
         }
 
-        // General export (F7)
-        $this->addAction(__('Export'),
-            ['plugin' => false, 'controller' => 'Jobs', 'action' => 'add', '?' => $queryparams],
-            $dataParams
-        );
+        // Build URL
+        $url = ['action' => 'export'];
+        $scopeField = $this->_View->getConfig('options')['scopefield'] ?? null;
+        $scope = isset($scopeField) ? $this->_View->getConfig('options')['params'][$scopeField] ?? null : null;
+        if (isset($scope)) {
+            $url[] = $scope;
+        }
+        $url['?'] = $queryparams;
+
+        // add group label
+        $this->addActionGroupLabel(__('Export'), ['group' => 'export']);
+        // add action
+        $this->addAction(__('Export'), $url, $dataParams);
 
         // Quick export (F6)
         if (!empty($article)) {
@@ -883,8 +966,6 @@ class LinkHelper extends Helper
                 if (!($pipelineConfig['button'] ?? true) || !is_string($pipelineIri)) {
                     continue;
                 }
-
-
 
                 if (in_array($action, ['view', 'index'])) {
                     $buttonOptions = [
@@ -928,14 +1009,18 @@ class LinkHelper extends Helper
     }
 
     /**
-     * Create a link to the help system for the given norm_iri
+     * Create a link to the help system for the given help path
      *
-     * @param string $norm_iri
-     * @param array $data If the page does not exist, it will be created with the provided data
+     * The help system redirects to the wiki if a path does not exist.
+     * In case a page does not exist in the wiki, a page for adding that
+     * page with the caption passed in the $data array is returned.
+     *
+     * @param string $path
+     * @param array $data Additional data (e.g. caption) to be passed to the add action of the wiki controller
      *
      * @return mixed
      */
-    public function helpLink(string $norm_iri, array $data = [])
+    public function helpLink(string $path, array $data = [])
     {
         return
             $this->Html->link(
@@ -944,7 +1029,7 @@ class LinkHelper extends Helper
                     'plugin' => false,
                     'controller' => 'Help',
                     'action' => 'show',
-                    'iri' => $norm_iri,
+                    $path,
                     '?' => $data
                 ],
                 [
@@ -1004,7 +1089,7 @@ class LinkHelper extends Helper
     {
         $this->addLabel(
             $this->_View->Paginator->counter('{{count}}') . __(' records'),
-            ['class' => 'actions-set-default']
+            ['class' => 'actions-set-default sandwich-exclude']
         );
     }
 
@@ -1190,15 +1275,16 @@ class LinkHelper extends Helper
      */
     public function renderSandwichActions(string $itemContainerClass, string $position)
     {
+        $classes = [
+            'actions-' . $position,
+            'widget-sandwich-source',
+            $itemContainerClass,
+        ];
         return $this->Element->outputHtmlElement(
             'nav',
             $this->renderActions($position),
             [
-               'class' => [
-                   'actions-' . $position,
-                   'widget-sandwich-source',
-                   $itemContainerClass,
-               ],
+               'class' => $classes,
                 'data-snippet' => 'actions-' . $position,
                 'data-sandwich-source' => $position
             ]
@@ -1221,21 +1307,32 @@ class LinkHelper extends Helper
         $dropdownPosition = $options['dropdown'] ?? 'topleft';
         $icon = $options['icon'] ?? "\u{f0c9}"; //  '☰'
 
-        $out = '<nav class="widget-sandwich hidden" data-sandwich-sources=".' . $itemContainerClass . '">';
+        $source_list = array_map(function($s) {return '.' . $s;}, explode(' ', $itemContainerClass));
+        $out = '<nav class="widget-sandwich hidden" data-sandwich-sources="' . implode(', ', $source_list) . '">';
 
+        $sandwichPane = 'actions-' .
+            str_replace(' ', '-', $itemContainerClass) .
+            '-sandwich-pane';
         $out .= $this->Element->outputHtmlElement(
             'button',
             $icon,
             [
                 'class' => 'widget-dropdown widget-dropdown-toggle',
-                'data-toggle' => 'actions-' . $itemContainerClass . '-sandwich-pane',
+                'data-toggle' => $sandwichPane,
                 'data-pane-align-to-y' => $options['align-y'] ?? null,
-                'title' => __('More functions'),
-                'aria-label' => __('More functions')
+                'title' => __('Actions'),
+                'aria-label' => __('Actions')
             ]
         );
 
-        $out .= '<div id="actions-' . $itemContainerClass . '-sandwich-pane" '
+        $title = $options['title'] ?? false;
+        if ($title) {
+            $out .= $this->Element->outputHtmlElement('div', $title, [
+                'class' => 'widget-dropdown-pane-header'
+            ]);
+        }
+
+        $out .= '<div id="' . $sandwichPane . '" '
                 . 'class="widget-dropdown-pane dropdown-menu" '
                 . 'data-widget-dropdown-position="' . $dropdownPosition . '">'
                 . '</div>';
@@ -1353,6 +1450,34 @@ class LinkHelper extends Helper
 
         $nexturl = ($paging['nextPage'] ?? false) ? $this->Paginator->generateUrl(['page' => $paging['page'] + 1]) : '';
         return $nexturl;
+    }
+
+    /**
+     * Assemble URL for items, used for graph rendering
+     *
+     * @param array $url URL parameters
+     * @return string
+     */
+    public function itemsUrl($url = [])
+    {
+        $request = $this->_View->getRequest();
+        $queryparams = $request->getQueryParams();
+
+        unset($queryparams['page']);
+        unset($queryparams['sort']);
+        unset($queryparams['direction']);
+
+        // Restrict to content (no nav bars and sidebars)
+        $queryparams['show'] = 'content';
+
+        $url = array_replace_recursive(
+            [
+                '?' => array_merge($queryparams)
+            ],
+            $url
+        );
+
+        return $this->Url->build($url, ['escape' => false]);
     }
 
     /**
@@ -1509,77 +1634,13 @@ class LinkHelper extends Helper
      */
     public function authButton(string $title, $options = []): string
     {
-        $role = $this->_View->get('user_role') ?? 'guest';
-        $allowed = array_merge(($options['roles'] ?? ['*']), ['admin', 'devel']);
-        unset($options['roles']);
-
-        if (in_array($role, $allowed) | in_array('*', $allowed)) {
+        if ($this->User->hasRole($options['roles'] ?? ['*'])) {
+            unset($options['roles']);
             return $this->Form->button($title, $options);
         }
         else {
             return '';
         }
-    }
-
-    /**
-     * Check whether the active user has permission to the endpoint
-     * on the selected database
-     *
-     * TODO: implement a plugin
-     * TODO: check entity_id
-     *
-     * ### Options
-     * - roles The roles that are allowed to access the endpoint.
-     *         By default, all roles are allowed.
-     *
-     * @param array $url
-     * @param array $options
-     * @return bool
-     */
-    public function hasPermission($url, $options = []) {
-        // Check role option
-        $role = $this->_View->get('user_dbrole') ?? 'guest';
-        $allowed = array_merge(($options['roles'] ?? ['*']), ['admin', 'devel']);
-        if (!(in_array($role, $allowed) | in_array('*', $allowed))) {
-            return false;
-        }
-
-        if (!is_array($url)) {
-            return true;
-        }
-
-        // Check hardwired permissions ($authorized property of controllers)
-        $request = $this->_View->getRequest();
-        $endpoint = [
-            'plugin' => strtolower($request->getParam('plugin') ?? ''),
-            'controller' => strtolower($request->getParam('controller') ?? ''),
-            'action' => strtolower($request->getParam('action') ?? '')
-        ];
-        $endpoint = array_merge($endpoint, $url);
-
-        $endpoint['plugin'] = is_string($endpoint['plugin']) ? $endpoint['plugin'] : '';
-        $endpoint['scope'] = strtolower($endpoint['plugin']) === 'epi' ? 'epi' : 'app';
-        unset($endpoint['plugin']);
-        unset($endpoint['?']);
-        if (PermissionsTable::getEndpointHasRole($endpoint, $role, 'web')) {
-            return true;
-        }
-
-        // Check database permissions
-        // 3. Check permission database
-        if ($endpoint['scope'] === 'epi') {
-            $database = $request->getParam('database');
-        } else {
-            $database = null;
-        }
-
-        return PermissionsTable::hasGrantedPermission(
-            $this->_View->get('user', []),
-            $database,
-            $endpoint['controller'],
-            $endpoint['action'],
-            'web'
-        );
     }
 
     /**
@@ -1596,7 +1657,7 @@ class LinkHelper extends Helper
      */
     public function authLink(string $title, $url, array $options = []): string
     {
-        if (!$this->hasPermission($url, $options)) {
+        if (!$this->User->hasPermission($url, $options)) {
             return '';
         }
         unset($options['roles']);
@@ -1746,6 +1807,22 @@ class LinkHelper extends Helper
     }
 
     /**
+     * Based on the config parameters and the request, return the action: view, edit
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        $action = $this->_View->getConfig('options')['params']['action'] ?? null;
+        if (empty($action)) {
+            $request = $this->_View->getRequest();
+            $action = $request->getParam('action', 'view');
+        }
+
+        return $action;
+    }
+
+    /**
      * Get the action arrays for generating links in tables
      *
      * @param string $mode The mode will be passed to the URL
@@ -1754,7 +1831,7 @@ class LinkHelper extends Helper
      */
     public function getActions($mode = MODE_DEFAULT, $params=[])
     {
-        $action = $this->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
+        $action = $this->User->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
         if ($mode === MODE_REVISE) {
             $viewAction = ['action' => $action, '{id}','?' => ['mode' => MODE_REVISE]];
             $openAction =  ['action' => 'view', '{id}'];
@@ -1779,5 +1856,62 @@ class LinkHelper extends Helper
             'open' => $openAction,
             'tab' => $tabAction
         ];
+    }
+
+    /**
+     * Get the matomo tracking code
+     *
+     * Only tracks quest users, i.e. users that are not logged in,
+     * and the first page after login.
+     *
+     * For users that were logged at least once, but now are guests,
+     * set the custom dimension 1 to "editor" so that we can
+     * distinguish between internal and external users.
+     *
+     * Set App.matomo to the tracking URL, e.g. https://stats.adwmainz.net/
+     *
+     * @return string
+     */
+    public function getTrackingCode()
+    {
+        $loggedIn = $this->getView()->get('user_role') !== 'guest';
+        $afterLogin = strpos($this->_View->getRequest()->referer() ?? '', '/users/login') === 0;
+
+        if ($loggedIn && !$afterLogin) {
+            return '';
+        }
+
+        $matomo = Configure::read('App.matomo.url');
+        $matomoId = Configure::read('App.matomo.siteId');
+
+        if (!empty($matomo) && !empty($matomoId)) {
+
+            $script = "<script>";
+            $script .= "var _paq = window._paq = window._paq || [];";
+
+            $matomoRole =  $this->_View->getRequest()->getCookie('EPIGRAF_ROLE', null);
+            if (!empty($matomoRole)) {
+                $script .= "_paq.push(['setCustomDimension',customDimensionId = 1, customDimensionValue = 'editor']);";
+            }
+
+            $script .= "_paq.push(['trackPageView']);";
+            $script .= "_paq.push(['enableLinkTracking']);";
+
+            $script .= "(function() {";
+
+            $script .= "var u='" . $matomo . "';";
+            $script .= "_paq.push(['setTrackerUrl', u+'matomo.php']);";
+            $script .= "_paq.push(['setSiteId', '" . $matomoId . "']);";
+
+            $script .= "var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];"
+                . "g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);";
+
+            $script .= "})();";
+
+            $script .= "</script>";
+
+            return $script;
+        }
+        return '';
     }
 }

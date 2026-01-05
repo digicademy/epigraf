@@ -13,11 +13,35 @@ import Utils from "/js/utils.js";
 
 /**
  * Class for displaying images of articles
+ *
+ * Each img element needs the following attributes:
+ *
+ * - title: Optional, a title for the image
+ * - alt: A description of the image content
+ * - data-display: An URL to get the full image
+ * - data-copyright: The copyright holder
+ * - data-meta: Metadata in JSON format
+ *
+ * Each img element should be wrapped in an item element. This can be a span, div or a element.
+ * Additionally, to find the full image list, all item elements need a common ancestor.
+ *
+ * Set config.imageSelector to a CSS selector that finds all those items.
+ * Set config.containerSelector to a CSS selector that finds the container element.
+ *
+ * You can use the static attachImages() method to init the widget with the appropriate config.
+ *
  */
 export class ImagesWidget extends BaseWidget{
     // TODO: Rename variables in camelCase?
     constructor(element, name, parent) {
         super(element, name, parent);
+
+        this.config = {
+            closeOnOpen: false,
+            recreateContainer: false,
+            containerSelector: '.doc-imagelist',
+            imageSelector: '.doc-image'
+        }
 
         this.overlay = undefined;
         this.overlay_header = undefined;
@@ -43,6 +67,22 @@ export class ImagesWidget extends BaseWidget{
 
         // Load image from hash fragment
         this.selectImageByHash();
+    }
+
+
+    static attachImages(selContainer, selImages) {
+        const elmContainer = document.querySelector(selContainer);
+        if (!elmContainer) {
+            return;
+        }
+        const items = elmContainer.querySelector(selImages);
+        if (!items) {
+            return;
+        }
+
+        const widget = new ImagesWidget(container);
+        widget.config.containerSelector = selContainer;
+        widget.config.imageSelector = selImages;
     }
 
     /**
@@ -74,8 +114,9 @@ export class ImagesWidget extends BaseWidget{
             '    </div>\n' +
             '    <footer class="overlay-footer">\n' +
             '        <div class="overlay-footer-left">\n' +
-            '            <nav></nav>\n' +
+            '        <nav></nav>\n' +
             '        </div>\n' +
+            '        <div class="overlay-footer-title"></div>\n' +
             '    </footer>\n' +
             '</div>';
 
@@ -85,6 +126,11 @@ export class ImagesWidget extends BaseWidget{
     }
 
 
+    /**
+     * Copy images from a page into the image viewer's sidebar, if it is still empty
+     *
+     * @param imageList
+     */
     loadItems(imageList) {
         if (this.items) {
             return;
@@ -92,10 +138,36 @@ export class ImagesWidget extends BaseWidget{
 
         const sidebar = this.overlay.querySelector('.sidebar-left .sidebar-content');
         if (sidebar && imageList) {
-            sidebar.replaceChildren(imageList.cloneNode(true));
+
+            // Either clone the source list directly...
+            if (!this.config.recreateContainer) {
+                imageList = imageList.cloneNode(true);
+            }
+            // ... or create a new container and clone each item into the container
+            else {
+                const items = imageList.querySelectorAll(this.config.imageSelector);
+                imageList = document.createElement('div');
+                imageList.classList.add('image-list');
+                items.forEach(elm => {
+                    const newElm = elm.cloneNode(true);
+                    newElm.classList.remove('hidden');
+                    imageList.append(newElm);
+                });
+            }
+
+            sidebar.replaceChildren(imageList);
         }
 
-        this.items = sidebar.querySelectorAll('.doc-image');
+        this.items = sidebar.querySelectorAll(this.config.imageSelector);
+
+        const navButtons =  this.overlay.querySelector('.overlay-header-buttons-left');
+        if (this.items.length < 2) {
+            this.sideBarLeft.hideSidebar(true);
+            Utils.hide(navButtons);
+        } else {
+            this.sideBarLeft.showSidebar();
+            Utils.show(navButtons);
+        }
     }
 
     /**
@@ -104,11 +176,11 @@ export class ImagesWidget extends BaseWidget{
      * @param event Click
      */
     clickOnImage(event) {
-        if (!event.target.closest('a.link-image') || event.ctrlKey) {
+        if (!event.target.closest('a.link-image') || event.ctrlKey || event.metaKey) {
             return;
         }
 
-        const selected = event.target.closest('.doc-image');
+        const selected = event.target.closest(this.config.imageSelector);
 
         if (selected) {
             event.preventDefault();
@@ -122,18 +194,23 @@ export class ImagesWidget extends BaseWidget{
      * @param selected An image item, either from the article or from the overlay
      */
     selectImageByElement(selected) {
-        const imageList = selected.closest('.doc-imagelist');
 
-        // Prepare overlay
-        this.showOverlay(imageList);
-
-        if (imageList) {
-            this.loadItems(imageList);
-            const siblings = imageList.querySelectorAll('.doc-image');
-            this.currentPosition = Array.from(siblings).findIndex(elm => selected === elm);
+        if (this.isActive() && this.items) {
+            this.currentPosition = Array.from(this.items).findIndex(elm => selected === elm);
         } else {
-            this.currentPosition = 0;
-            this.items = [selected];
+            // Prepare overlay
+            this.showOverlay();
+
+            const imageList = selected.closest(this.config.containerSelector);
+
+            if (imageList) {
+                this.loadItems(imageList);
+                const siblings = imageList.querySelectorAll(this.config.imageSelector);
+                this.currentPosition = Array.from(siblings).findIndex(elm => selected === elm);
+            } else {
+                this.currentPosition = 0;
+                this.items = [selected];
+            }
         }
 
         // Load image
@@ -210,8 +287,8 @@ export class ImagesWidget extends BaseWidget{
         let data = {};
         const metadata = selected.querySelector('.doc-image-metadata');
         if (metadata) {
-            data['title'] = metadata.querySelector('[data-row-field="file"]').textContent,
-                data['element'] = metadata.cloneNode(true)
+            data['title'] = metadata.querySelector('[data-row-field="file"]').textContent;
+            data['element'] = metadata.cloneNode(true);
         }
         return data;
     }
@@ -225,12 +302,31 @@ export class ImagesWidget extends BaseWidget{
             titleElement.innerText = metadata['title'] || '';
         }
 
+        // Change footer
+        const footerElement = this.overlay.querySelector('.overlay-footer-title');
+        if (footerElement && metadata['footer']) {
+            footerElement.innerText = metadata['footer'] || '';
+        }
+
         // Change detail view
         const metadataElement = this.overlay.querySelector('.metadata-content');
         if (metadataElement && metadata['element']) {
             metadataElement.replaceChildren(metadata['element']);
+        } else {
+            this.sideBarRight.hideSidebar(true);
         }
 
+        // Change open button
+        const openElement = this.overlay.querySelector('.btn-open');
+        if (openElement) {
+            Utils.toggle(openElement, selected.dataset.itemUrl || false);
+        }
+
+    }
+
+
+    isActive() {
+        return this.overlay && !this.overlay.classList.contains('hidden');
     }
 
     /**
@@ -239,6 +335,7 @@ export class ImagesWidget extends BaseWidget{
     closeOverlay() {
         if (this.overlay) {
             this.overlay.classList.add('hidden');
+            document.body.classList.remove('no-scroll');
         }
     }
 
@@ -248,12 +345,14 @@ export class ImagesWidget extends BaseWidget{
     showOverlay() {
         if (this.overlay) {
             this.overlay.classList.remove('hidden');
+            document.body.classList.add('no-scroll');
             return;
         }
 
         // Add markup
         this.overlay = this.createOverlay()
         this.overlay.classList.remove('hidden');
+        document.body.classList.add('no-scroll');
 
         // Header bar
         this.overlay_header = this.overlay.querySelector('.overlay-header');
@@ -315,7 +414,10 @@ export class ImagesWidget extends BaseWidget{
         const selected = this.getCurrentImage();
         if (selected && selected.dataset.itemUrl) {
             window.open(selected.dataset.itemUrl, '_blank');
-            this.closeOverlay();
+
+            if (this.config.closeOnOpen) {
+                this.closeOverlay();
+            }
         }
     }
 
@@ -643,9 +745,6 @@ export class ImagesWidget extends BaseWidget{
         img.style.top = `${newTop}px`;
         img.style.position = 'absolute';
     }
-
-
-
 
 }
 

@@ -15,65 +15,68 @@ use App\Model\Entity\Databank;
 <?php
 /**
  * @var AppView $this
- * @var Databank $databank
+ * @var Databank $entity
  */
 ?>
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Databanks'), ['action' => 'index', 'controller' => 'Databanks', 'database' => $this->request->getParam('database')]); ?>
-<?php $this->Breadcrumbs->add($databank['caption']); ?>
+<?php $this->Breadcrumbs->add($entity['caption']); ?>
 
 <!-- Content area -->
-<?= $this->EntityHtml->entityForm($databank, 'view') ?>
+<?= $this->EntityHtml->entityForm($entity, 'view') ?>
 
 
 <!-- Actions -->
 <?php
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup ('bottom');
-    if ($databank->available) {
+    if ($entity->available) {
         $this->Link->addAction(
             __('Show articles'),
-            ['plugin'=>'epi','controller'=>'articles','action' => 'index','database' => $databank->caption],
+            ['plugin'=>'epi','controller'=>'articles','action' => 'index','database' => $entity->caption],
             ['data-target'=>'main','data-role' => 'open']
         );
     }
     $this->Link->addEditAction (
-        ['action' => 'edit', $databank->id],
-        'databanks-' . $databank->id
+        ['action' => 'edit', $entity->id],
+        'databanks-' . $entity->id
     );
 
-    if (!$databank->available) {
+    if (!$entity->available) {
         $this->Link->addAction(
             __('Create database'),
-            ['action' => 'create', $databank->id],
+            ['action' => 'create', $entity->id],
             ['data-role'=>'add']
         );
     }
-    if ($databank->available && $databank->isempty) {
+    if ($entity->available && $entity->isempty) {
         $this->Link->addAction(
             __('Init Database'),
-            ['action' => 'init', $databank->id]
+            ['action' => 'init', $entity->id]
         );
+
     }
-    if ($databank->available) {
+
+    if ($entity->available) {
         $this->Link->addAction(
             __('Backup Database'),
-            ['action' => 'backup', $databank->id]
+            ['action' => 'backup', $entity->id]
+        );
+
+
+        $this->Link->addAction(
+            __('Import Backup'),
+            ['action' => 'import', $entity->id]
         );
 
         $this->Link->addAction(
             __('Drop Database'),
-            ['action' => 'drop', $databank->id]
-        );
-
-        $this->Link->addAction(
-            __('Import Script'),
-            ['action' => 'import', $databank->id]
+            ['action' => 'drop', $entity->id]
         );
 
         $this->Link->addAction(
             __('Import Data'),
-            ['plugin' =>'epi','database'=>$databank->caption,'controller'=>'projects','action' => 'import']
+            ['plugin' =>'epi','database'=>$entity->caption,'controller'=>'projects','action' => 'import']
         );
     }
 

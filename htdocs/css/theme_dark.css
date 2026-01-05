@@ -20,6 +20,23 @@
     --primary-800: hsl(185, 43%, 80%);
     --primary-900: hsl(185, 68%, 91%);
 
+    /* accent */
+    --accent-button-hover: hsl(195, 100%, 33%);
+    --accent-button-normal: hsl(195, 68%, 25%);
+
+    --accent-open-hover: hsl(93,  64%, 39%);
+    --accent-open-normal: hsl(93,  62%, 32%);
+
+    --accent-submit-hover: hsl(40, 100%, 29%);
+    --accent-submit-normal: hsl(40,  89%, 39%);
+
+    /* functions */
+    --function-highlight: hsl(93, 100%, 60%); /* Highlighted text background color */
+    --function-warning: hsl(40, 100%, 50%);   /* Background of warnings, link color in messages */
+    --function-remove: hsl(3, 89%, 39%);      /* Error message background, remove button background */
+    --function-title: hsl(3, 89%, 50%);       /* Breadcrumbs */
+    --function-home: hsl(195, 100%, 31%);     /* Background of top left home and the database button */
+
     /* neutral */
     --neutral-100: #000000;
     --neutral-150: #0A0A0A;
@@ -38,13 +55,6 @@
     --neutral-800: #FAFAFA;
     --neutral-850: #FEFEFE;
     --neutral-900: #FFFFFF;
-
-    /* functions */
-    --function-highlight: hsl(93, 100%, 60%); /* Highlighted text background color */
-    --function-warning: hsl(40, 100%, 50%);   /* Background of warnings, link color in messages */
-    --function-remove: hsl(3, 89%, 39%);      /* Error message background, remove button background */
-    --function-title: hsl(3, 89%, 50%);       /* Breadcrumbs */
-    --function-home: hsl(195, 100%, 31%);     /* Background of top left home and the database button */
 }
 
 /** Overwrite properties **/
@@ -53,6 +63,7 @@
 
     --section-header-bg-color: var(--neutral-200);
     --section-header-sidebar-bg-color: var(--neutral-250);
+    --section-highlight-bg-color: var(--neutral-200);
 
     --button-font-color: var(--neutral-800);
     --button-font-color-hover: var(--neutral-850);
@@ -61,9 +72,17 @@
     --nav-bg-color: var(--primary-400);
     --link-font-color: var(--primary-800);
 
+    --tile-badge-color: var(--neutral-100);
+    --tile-badge-bg-color: var(--neutral-900);
+    --tile-badge-bg-opacity: 0.95;
+
     --table-thead-font-color: var(--primary-800);
     --table-border-color: var(--neutral-200);
     --table-inpane-border-color: var(--neutral-100);
+
+    --table-bg-color-selected: var(--primary-300);
+    --table-bg-color-selected-unfocused: var(--primary-200);
+    --table-bg-color-selected-hover: var(--primary-500);
 
     --top-menu-user-bg-color: var(--primary-200);
     --top-menu-app-bg-color: var(--primary-300);

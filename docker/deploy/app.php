@@ -62,7 +62,7 @@ if (!empty($redisServer)) {
 
         'services' => [
             'className' => RedisEngine::class,
-            'server' => 'redis',
+            'server' => $redisServer,
             'prefix' => 'epi_services_',
             'duration' => '+1 year'
         ]
@@ -225,6 +225,14 @@ return [
         'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin'),
 //        'defaultLocale' => env('APP_DEFAULT_LOCALE', 'de_DE.UTF-8'),
 //        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin'),
+
+        // Rate limit for unauthenticated users:
+        // Max requests and time window in seconds
+        'RateLimit' => [
+            'limit' => env('APP_RATE_LIMIT_REQUESTS', 600),
+            'interval' => env('APP_RATE_LIMIT_INTERVAL', 60),
+        ],
+
         'base' => false,
         'dir' => 'src',
         'webroot' => 'htdocs',
@@ -274,7 +282,7 @@ return [
         'delay' => env('JOBS_DELAY', false),
         'scheme' => 'tcp',
         'host'   =>  env('JOBS_REDIS_HOST', 'localhost'),
-        'port'   => 6379,
+        'port'   =>  env('JOBS_REDIS_PORT', 6379),
         'queue_name' => 'jobs_queue',
         'status_name' => 'jobs_status'
     ],
@@ -382,6 +390,10 @@ return [
         'llm' => [
             'base_url' => env('DATABOARD_URL', 'https://databoard.uni-muenster.de/'),
             'access_token' => env('DATABOARD_ACCESSTOKEN', null)
+        ],
+        'geo' => [
+            'base_url' => 'https://nominatim.openstreetmap.org/',
+            'useragent' => 'Epigraf/5.0 (github.com/digicademy/epigraf)'
         ]
     ],
 
@@ -399,12 +411,12 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'host' => env('MYSQL_HOST'),
-            'port'=>'3306', //Standard mySQL port: 3306
+            'port'=> env('MYSQL_PORT', '3306'), //Standard mySQL port: 3306
             'username' => env('MYSQL_USER'),
             'password' => env('MYSQL_PASS'),
             'database' => 'epigraf',
             'encoding' => 'utf8mb4',
-            'timezone' => 'Europe/Berlin',
+            'timezone' => 'UTC',
             'flags' => [],
             'cacheMetadata' => true,
             'log' => false,
@@ -440,12 +452,12 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'host' => env('MYSQL_HOST'),
-            'port'=>'3306', //Standard mySQL port: 3306
+            'port'=> env('MYSQL_PORT','3306'), //Standard mySQL port: 3306
             'username' => env('MYSQL_USER'),
             'password' => env('MYSQL_PASS'),
             'database' => 'test_epigraf',
             'encoding' => 'utf8mb4',
-            'timezone' => 'Europe/Berlin',
+            'timezone' => 'UTC',
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             'log' => false,
@@ -462,12 +474,12 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'host' => env('MYSQL_HOST'),
-            'port'=>'3306', //Standard mySQL port: 3306
+            'port'=> env('MYSQL_PORT','3306'), //Standard mySQL port: 3306
             'username' => env('MYSQL_USER'),
             'password' => env('MYSQL_PASS'),
             'database' => 'epi_playground',
             'encoding' => 'utf8mb4',
-            'timezone' => 'Europe/Berlin',
+            'timezone' => 'UTC',
             'cacheMetadata' => true,
             'log'=>false
         ],
@@ -480,12 +492,12 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'host' => env('MYSQL_HOST'),
-            'port'=>'3306', //Standard mySQL port: 3306
+            'port'=> env('MYSQL_PORT','3306'), //Standard mySQL port: 3306
             'username' => env('MYSQL_USER'),
             'password' => env('MYSQL_PASS'),
             'database' => 'test_projects',
             'encoding' => 'utf8mb4',
-            'timezone' => 'Europe/Berlin',
+            'timezone' => 'UTC',
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             'log' => false,
@@ -501,12 +513,12 @@ return [
             'driver' => Mysql::class,
             'persistent' => false,
             'host' => env('MYSQL_HOST'),
-            'port'=>'3306', //Standard mySQL port: 3306
+            'port'=> env('MYSQL_PORT','3306'), //Standard mySQL port: 3306
             'username' => env('MYSQL_USER'),
             'password' => env('MYSQL_PASS'),
             'database' => 'test_public',
             'encoding' => 'utf8mb4',
-            'timezone' => 'Europe/Berlin',
+            'timezone' => 'UTC',
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             'log' => false,

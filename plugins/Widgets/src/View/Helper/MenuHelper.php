@@ -12,11 +12,8 @@ declare(strict_types=1);
 
 namespace Widgets\View\Helper;
 
-use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
-use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\Routing\Router;
 
 
 /**
@@ -41,7 +38,7 @@ class MenuHelper extends Helper
      *
      * @var string[]
      */
-    public $helpers = ['Html', 'Url', 'Form', 'Paginator', 'Link', 'Tree'];
+    public $helpers = ['Html', 'Url', 'Form', 'Paginator', 'Link', 'Tree', 'User'];
 
     /**
      * Render menu
@@ -101,7 +98,7 @@ class MenuHelper extends Helper
             }
             else {
                 $keep = in_array($userRole, ['devel']) || in_array($userRole, $x['roles'] ?? [$userRole]);
-                $keep = $keep && $this->Link->hasPermission($x['url'] ?? false, $x);
+                $keep = $keep && $this->User->hasPermission($x['url'] ?? false, $x);
             }
             return $keep;
         }, ARRAY_FILTER_USE_BOTH);
@@ -183,6 +180,7 @@ class MenuHelper extends Helper
                     $out .= '<button class="widget-dropdown widget-dropdown-toggle"'
                         . ' data-toggle="databasemenu-dropdown" >'
                         . $item['label'] . ' &raquo;</button>';
+                    $out .= '<div class="widget-dropdown-pane-header">' . __("Databases") . '</div>';
                     $out .= '<div id="databasemenu-dropdown"'
                         . ' class="widget-dropdown-pane dropdown-menu">'
                         . $this->renderMenu($item['items'], ['class' => 'vertical', 'data' => []])

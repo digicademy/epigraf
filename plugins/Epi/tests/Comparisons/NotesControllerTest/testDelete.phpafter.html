@@ -5,35 +5,35 @@
 <head>
     <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-        Wismar [projects]    </title>
+    <title>Wismar [projects]</title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
     <!-- CSS frameworks -->
     <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">    
+            <link rel="stylesheet" href="/css/theme_default.css">
     <!-- JS -->
 
     <!-- JS frameworks -->
     <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>    
+            <script src="/js/app.min.js" type="module"></script>
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/projects/";window.App.debug = false;window.App.user.load({"role":"author","scope":"web"});}</script>
     <!-- JS widgets -->
         <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
 
     <!-- Additional CSS -->
-    
+
     <!-- Additional JS -->
         </head>
 
 <body class="plugin_epi controller_notes action_delete template_default theme_default userrole_author">
+
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -41,26 +41,26 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_database" ><a href="/epi/projects/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/projects/articles?load=1">Articles</a></li><li class="menu_database" ><a href="/epi/projects/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/projects/files?load=1">Files</a></li><li class="menu_database active" ><a href="/epi/projects/notes?load=1">Notes</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/help?database=projects">Help</a></li><li class="menu_global" ><a href="/wiki?database=projects">Wiki</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >projects &raquo;</button><div class="widget-dropdown-pane-header">Databases</div><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_database" ><a href="/epi/projects/projects?load=1">Projects</a></li><li class="menu_database" ><a href="/epi/projects/articles?load=1">Articles</a></li><li class="menu_database" ><a href="/epi/projects/properties?load=1">Categories</a></li><li class="menu_database" ><a href="/epi/projects/files?load=1">Files</a></li><li class="menu_database active" ><a href="/epi/projects/notes?load=1">Notes</a></li><li class="menu_database spacer" ><span>&nbsp;|&nbsp;</span></li><li class="menu_global" ><a href="/help?database=projects">Help</a></li><li class="menu_global" ><a href="/wiki?database=projects">Wiki</a></li></ul>                </div>
 
-                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Menu</div><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-                
-                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/1?database=projects" class="btn-profile" title="author"></a>                                            </div>
+
+                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/1?database=projects" class="btn btn-icon" title="author"></a>                                            </div>
 
         </nav>
-    
+
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-        
-                                                        
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Navigation</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
-                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-caption">Navigation</div>
                     <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
                 </div>
 
@@ -68,7 +68,7 @@
                     <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes">List all</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Entwicklung">Entwicklung</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Hilfsmittel">Hilfsmittel</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Mecklenburg">Mecklenburg</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="4" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Organisation">Organisation</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="5" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Pommern">Pommern</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="6" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Richtlinien">Richtlinien</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="7" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Rostock">Rostock</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-nochildren item-last" data-id="8" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/epi/projects/notes/show?category=Wismar">Wismar</a></div><div class="tree-meta"></div></li></ul></div>                </div>
                 <div class="frame-footer">
                                             <form method="get" accept-charset="utf-8" id="search" action="/epi/projects/notes"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
-                </div></div></div></div></div>        
+                </div></div></div></div></div>
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
@@ -77,8 +77,8 @@
 
                                                 <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/epi/projects/notes">Notes</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Wismar</span></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Delete</span></li></ul></nav>                    </div>
 
-                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
-                    
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Navigation</button>
+
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -87,21 +87,22 @@
 </div>
 
                 <div class="content-content widget-scrollsync-content">
-                    
+
 
 <!-- Breadcrumbs -->
 
 <!-- Content area -->
-<div class="widget-entity"><form method="post" accept-charset="utf-8" confirm="Are you sure you want to delete the page &quot;Wismar&quot;?" id="form-delete-notes-2" autocomplete="off" action="/epi/projects/notes/delete/2"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><input type="hidden" name="lock" data-lock-url="/epi/projects/notes/lock/2.json" data-unlock-url="/epi/projects/notes/unlock/2.json" value="7"><table class="vertical-table" data-row-table="notes" data-row-id="2" data-row-type="notes" data-row-model="epi_notes" data-root-table="notes" data-root-id="2" data-file-basepath="notes" data-file-defaultpath="wismar" data-database="projects" data-deleted="1"></table></form></div>
+<div class="widget-entity" data-row-table="notes" data-row-id="2" data-row-type="notes" data-row-model="epi_notes" data-root-table="notes" data-root-id="2" data-file-basepath="notes" data-file-defaultpath="wismar" data-database="projects" data-deleted="1"><form method="post" accept-charset="utf-8" confirm="Are you sure you want to delete the page &quot;Wismar&quot;?" id="form-delete-notes-2" autocomplete="off" action="/epi/projects/notes/delete/2"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><button type="submit" disabled="disabled" style="display:none;" area-hidden="1"></button><input type="hidden" name="lock" data-lock-url="/epi/projects/notes/lock/2.json" data-unlock-url="/epi/projects/notes/unlock/2.json" value="7"><fieldset><p class="confirm">Are you sure you want to delete the page "Wismar"?</p><div class="confirm"><button type="submit" form="form-delete-notes-2" data-role="confirm" data-target="notes-2" class="">Yes</button>
+<button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-delete-notes-2" data-role="cancel" data-target="notes-2">Cancel</button></div></fieldset></form></div>
                                     </div>
 
                 <div class="content-footer"></div>
 
             </div>
-        
+
         <!-- Right sidebar -->
                     <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <footer><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-epi-notes-delete?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
+            <footer><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/introduction/notes?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
 </div>
 </body></html>

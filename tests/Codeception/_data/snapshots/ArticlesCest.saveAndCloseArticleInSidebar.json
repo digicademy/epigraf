@@ -61,19 +61,19 @@
     },
     "items-33-after": {
         "modified_by": 4,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
     },
     "items-33-before": {
         "modified_by": 2,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
     },
     "items-35-after": {
         "modified_by": 4,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
     },
     "items-35-before": {
         "modified_by": 2,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"rights\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
+        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
     },
     "items-37-after": {
         "modified_by": 4
@@ -98,6 +98,42 @@
     },
     "items-46-before": {
         "modified_by": 2
+    },
+    "items-55-after": {
+        "modified_by": 4
+    },
+    "items-55-before": {
+        "modified_by": 1
+    },
+    "items-56-after": {
+        "modified_by": 4
+    },
+    "items-56-before": {
+        "modified_by": 1
+    },
+    "items-59-after": {
+        "modified_by": 4
+    },
+    "items-59-before": {
+        "modified_by": 1
+    },
+    "items-60-after": {
+        "modified_by": 4
+    },
+    "items-60-before": {
+        "modified_by": 1
+    },
+    "items-68-after": {
+        "modified_by": 4
+    },
+    "items-68-before": {
+        "modified_by": 1
+    },
+    "items-69-after": {
+        "modified_by": 4
+    },
+    "items-69-before": {
+        "modified_by": 1
     },
     "items-749-after": {
         "modified_by": 4
@@ -152,6 +188,42 @@
     },
     "items-769-before": {
         "modified_by": 2
+    },
+    "items-79-after": {
+        "modified_by": 4
+    },
+    "items-79-before": {
+        "modified_by": 1
+    },
+    "items-80-after": {
+        "modified_by": 4
+    },
+    "items-80-before": {
+        "modified_by": 1
+    },
+    "items-93-after": {
+        "modified_by": 4
+    },
+    "items-93-before": {
+        "modified_by": 1
+    },
+    "items-94-after": {
+        "modified_by": 4
+    },
+    "items-94-before": {
+        "modified_by": 1
+    },
+    "items-97-after": {
+        "modified_by": 4
+    },
+    "items-97-before": {
+        "modified_by": 1
+    },
+    "items-98-after": {
+        "modified_by": 4
+    },
+    "items-98-before": {
+        "modified_by": 1
     },
     "sections-1-after": {
         "modified_by": 4

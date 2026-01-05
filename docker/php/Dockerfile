@@ -7,7 +7,7 @@ WORKDIR /var/www/html
 RUN apt-get update
 
 # Timezone
-ENV TZ Europe/Berlin
+ENV TZ=Europe/Berlin
 
 # Install required components
 RUN apt-cache search libjpeg
@@ -84,7 +84,7 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash \
   && apt-get install -y nodejs
 
 # Install Saxon/c dependencies
-ARG jdk='openjdk-17-jre-headless'
+ARG jdk='openjdk-21-jre-headless'
 RUN mkdir -p /usr/share/man/man1
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -123,8 +123,8 @@ RUN apt-get clean && \
 
 WORKDIR /var/www/html
 
-# Set www permissions
-RUN usermod -u 1000 www-data
+# Align host and container user ID
+#RUN usermod -u 1000 www-data
 
 # Copy custom php.ini
 COPY ./php.ini /usr/local/etc/php/

@@ -283,50 +283,6 @@ class UsersControllerTest extends AppTestCase
     }
 
     /**
-     * Test password method for author role
-     *
-     * @return void
-     */
-    public function testPasswordAuthor()
-    {
-        $this->loginUser('author');
-
-        $this->expectException(ForbiddenException::class);
-        $this->get('users/password/101');
-    }
-
-    /**
-     * Test password method for admin role
-     *
-     * @return void
-     */
-    public function testPasswordAdmin()
-    {
-        $this->loginUser('admin');
-        $this->get('users/password/1');
-        $this->assertHtmlEqualsComparison();
-    }
-
-    /**
-     * Test changing the password
-     *
-     * @return void
-     */
-    public function testPasswordAdminPost()
-    {
-        $this->loginUser('admin');
-        $postData = [
-            'password' => 'myextrasafepassword'
-        ];
-        $this->post('users/password/2', $postData);
-        $this->assertRedirect([
-            'controller' => 'Users',
-            'action' => 'view',
-            2
-        ]);
-    }
-
-    /**
      * Test grant select method for admin role
      *
      * @return void
@@ -483,7 +439,7 @@ class UsersControllerTest extends AppTestCase
         $data = [
             'role' => 'author',
             'username' => 'test',
-            'password' => 'test'
+            'password' => 'testTEST12#'
         ];
         $this->post('/users/edit/1', $data);
         $this->assertResponseCode(302);
@@ -570,7 +526,7 @@ class UsersControllerTest extends AppTestCase
             'username' => 'notallowed',
             'accesstoken' => 'notallowed',
             'contact' => 'New contact information',
-            'password' => 'test'
+            'password' => 'testTEST12#'
         ];
         $this->post('/users/edit/' . $userid, $data);
         $this->assertResponseCode(302);

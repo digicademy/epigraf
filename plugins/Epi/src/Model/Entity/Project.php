@@ -201,9 +201,11 @@ class Project extends RootEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -232,6 +234,7 @@ class Project extends RootEntity
                 'id' => 'textarea_config',
                 'rows' => 15,
                 'format' => 'json',
+                'layout' => 'nested',
                 'type' => 'jsoneditor'
                 //'action' => 'edit'
             ],
@@ -299,6 +302,20 @@ class Project extends RootEntity
             'config' => []
         ]);
         return $type;
+    }
+
+    /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($entity instanceof Project) && ($entity->id === $this->id)) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -18,15 +18,7 @@ use Cake\Utility\Inflector;
 use Rest\Controller\Component\LockTrait;
 
 /**
- * Docs Controller
- *
- * ### Administration of help pages
- *
- * Help pages are called Docs and are stored in the database.
- * When F1 is hit in EpigrafDesktop the show action of
- * docs controller is requested with the norm_iri in the query
- * parameter key. The corresponding help page is opened if it
- * exists, otherwise the request is redirected to the add action.
+ * Pages Controller
  *
  * @property \App\Model\Table\DocsTable $Docs
  */
@@ -67,6 +59,8 @@ class PagesController extends AppController
             'editor' => ['show', 'view', 'index']
         ]
     ];
+
+    public $help = 'administration/pages';
 
     /**
      * Initialization hook method

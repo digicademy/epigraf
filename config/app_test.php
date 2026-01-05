@@ -13,7 +13,8 @@ return [
 
     'App' => [
         'defaultLocale' => env('APP_DEFAULT_LOCALE', 'en_EN.UTF-8'),
-        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin')
+        'defaultTimezone' => env('APP_DEFAULT_TIMEZONE', 'Europe/Berlin'),
+        'matomo' => false
     ],
 
     'Pages' => [

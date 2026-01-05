@@ -95,6 +95,8 @@ class FilesController extends AppController
         ]
     ];
 
+    public $help = 'administration/files';
+
     /**
      * beforeFilter callback
      *

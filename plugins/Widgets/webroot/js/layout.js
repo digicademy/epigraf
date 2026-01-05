@@ -81,15 +81,19 @@ export class ResizableSidebar extends BaseWidget {
     /**
      * Hide sidebar.
      */
-    hideSidebar() {
+    hideSidebar(hideExploder = false) {
         this.sidebar.classList.remove('sidebar-expanded');
         this.sidebar.classList.add('sidebar-collapsed');
 
         this.exploder.classList.remove('sidebar-expanded');
         this.exploder.classList.add('sidebar-collapsed');
 
+        if (hideExploder) {
+            this.exploder.classList.add('sidebar-empty');
+        }
+
         // TODO: use events
-        if (App.accordion) {
+        if (typeof App !== 'undefined'  && App.accordion) {
             App.accordion.showMain();
         }
     }
@@ -126,7 +130,7 @@ export class ResizableSidebar extends BaseWidget {
         this.exploder.classList.remove('sidebar-empty');
 
         // TODO: use events
-        if (App.accordion) {
+        if (typeof App !== 'undefined' && App.accordion) {
             App.accordion.showPanel(this.sidebar);
         }
     }
@@ -571,11 +575,10 @@ export class ScrollSync extends BaseWidget {
 
         this.observer = null;
         this.activeSection = null;
-        this.isScrolling = false;
+        this.isScrolling = 0;
 
         this.content = document.querySelector('.widget-scrollsync-content');
         this.menu = document.querySelector('.widget-scrollsync');
-
         if (this.menu) {
             this.listenEvent(this.menu, 'click', event => this.itemClicked(event));
             this.listenEvent(document, 'keydown', event => this.onKeydown(event));
@@ -599,17 +602,19 @@ export class ScrollSync extends BaseWidget {
      * Creates widget.
      */
     updateWidget() {
-        this.isScrolling = true;
+        this.isScrolling += 1;
         const sections = this.getSections();
 
         sections.forEach(section => {
             if (section.widgetScrollSync === undefined) {
                 section.widgetScrollSync = this;
-                this.observer.observe(section);
+                if (this.observer) {
+                    this.observer.observe(section);
+                }
             }
         });
 
-        this.isScrolling = false;
+        this.isScrolling -= 1;
     }
 
 
@@ -818,7 +823,7 @@ export class ScrollSync extends BaseWidget {
      * @returns {boolean}
      */
     scrollToLi(li, scroll = false) {
-        if (this.isScrolling) {
+        if (this.isScrolling > 0) {
             return false;
         }
 
@@ -826,7 +831,7 @@ export class ScrollSync extends BaseWidget {
             return false;
         }
 
-        this.isScrolling = true;
+        this.isScrolling += 1;
 
         if (li) {
             if (scroll) {
@@ -838,7 +843,7 @@ export class ScrollSync extends BaseWidget {
             );
             li.classList.add('active');
         }
-        this.isScrolling = false;
+        this.isScrolling -= 1;
     }
 
     /**
@@ -863,7 +868,7 @@ export class ScrollSync extends BaseWidget {
      * @returns {boolean}
      */
     scrollToSection(section, scroll = false) {
-        if (this.isScrolling) {
+        if (this.isScrolling > 0) {
             return false;
         }
 
@@ -872,7 +877,7 @@ export class ScrollSync extends BaseWidget {
             return false;
         }
 
-        this.isScrolling = true;
+        this.isScrolling += 1;
         this.activeSection = section;
 
         if (section) {
@@ -890,7 +895,7 @@ export class ScrollSync extends BaseWidget {
 
             this.setActive(section);
         }
-        this.isScrolling = false;
+        this.isScrolling -= 1;
     }
 
     /**

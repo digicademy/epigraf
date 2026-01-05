@@ -74,7 +74,21 @@ class BaseTaskMutate extends BaseTask
      */
     public function progressMax()
     {
+        $databankName = empty($this->config['database']) ? $this->job->config['database'] : $this->config['database'];
+        $this->job->activateDatabank($databankName);
+
         return $this->job->batchCount;
+    }
+
+    /**
+     * Reset the task progress
+     *
+     * @return true
+     */
+    public function init()
+    {
+        $this->config['offset'] = 0;
+        return true;
     }
 
     /**
@@ -121,9 +135,13 @@ class BaseTaskMutate extends BaseTask
             return true;
         }
 
-        $this->config['cursor'] = empty($entities) ? -1 : $entities[count($entities) - 1]['id'] ?? null;
+        if (empty($entities)) {
+            $this->config['cursor'] = -1;
+        } else {
+            $this->config['cursor'] = end($entities)['id'] ?? null;
+        }
         $this->config['offset'] += count($entities);
-        $this->job->updateCurrentTask($this->config);
+        $this->job->updateCurrentTaskConfig($this->config);
 
         // Is the task finished?
         return (count($entities) < $this->job->limit);

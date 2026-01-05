@@ -290,6 +290,20 @@ class FileRecord extends BaseEntity
         return $this->relativePath;
     }
 
+
+    /**
+     * Get the first page of the file content if it is a text file
+     *
+     * @return string
+     */
+    protected function _getContent()
+    {
+        if (!isset($this->_fields['content']) && in_array($this->type, FILETYPES_TEXT)) {
+            $this->loadContent();
+        }
+        return $this->_fields['content'] ?? '';
+    }
+
     /**
      * Get virtual field xmp
      *
@@ -395,12 +409,14 @@ class FileRecord extends BaseEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
+     *
+     * See BaseEntityHelper::entityTable() for the supported options.
      *
      * The config field is only rendered for folders
      * and for users with the devel role.
      *
-     * @return array[]
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -590,16 +606,16 @@ class FileRecord extends BaseEntity
     /**
      * Load file content
      *
-     * @param $rootFolder
      * @return void
      */
-    public function loadContent($rootFolder, $page = 1)
+    public function loadContent($page = 1)
     {
-        $filepath = $rootFolder . DS . $this->path . DS . $this->name;
+        $filepath = $this->fullPath;
         if (file_exists($filepath)) {
-            $this->content = Files::loadContent($filepath, $page);
+            $this->_fields['content'] = Files::loadContent($filepath, $page);
+        } else {
+            $this->_fields['content'] = '';
         }
-
     }
 
     /**

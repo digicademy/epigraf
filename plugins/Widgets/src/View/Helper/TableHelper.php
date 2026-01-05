@@ -16,7 +16,7 @@ use App\Model\Entity\BaseEntity;
 use App\Model\Entity\Databank;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
-use Cake\I18n\I18n;
+use Cake\Datasource\QueryInterface;
 use Cake\ORM\Entity;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
@@ -87,6 +87,10 @@ class TableHelper extends Helper
                 $fieldOptions = ['caption' => $fieldOptions];
             }
 
+            if (is_numeric($field)) {
+                $field = $fieldOptions['caption'];
+            }
+
             $caption = $fieldOptions['caption'] ?? $field;
             $align = $fieldOptions['align'] ?? (in_array($field, $options['align-right'] ?? []) ? 'right' : '');
 
@@ -106,6 +110,9 @@ class TableHelper extends Helper
             foreach ($fields as $field => $fieldOptions) {
                 if (!is_array($fieldOptions)) {
                     $fieldOptions = ['caption' => $fieldOptions];
+                }
+                if (is_numeric($field)) {
+                    $field = $fieldOptions['caption'];
                 }
                 $align = $fieldOptions['align'] ?? (in_array($field, $options['align-right'] ?? []) ? 'right' : '');
 
@@ -192,8 +199,16 @@ class TableHelper extends Helper
     /**
      * Output nested table
      *
-     * @param $array
-     * @param $options
+     * ### Options
+     * - class The class added to the table element
+     * - header Whether to output a header row
+     * - key The key caption in the header row
+     * - value The value caption in the jeader row
+     * - tree Whether to output a foldable tree
+     * - list-name The list name
+     *
+     * @param array $array The nested data
+     * @param array $options
      *
      * @return string
      */
@@ -211,9 +226,21 @@ class TableHelper extends Helper
         ];
         $options = array_merge($default, $options);
 
+        $listName = $options['list-name'] ?? Attributes::uuid('list-');
+        $bodyAttributes = ['data-list-name' => $listName];
+
+        if ($options['tree'] ?? false) {
+            $options['class'] = ['widget-table', 'widget-tree', $options['class']];
+            $bodyAttributes['data-list-tree'] = 'collapsed';
+        }
+
         $array = Arrays::nestedToList($array);
 
-        $out = '<table class="' . $options['class'] . '">';
+        $out = $this->Element->openHtmlElement('table',
+            [
+                'class' => $options['class']
+            ]
+        );
 
         if ($options['header']) {
             $out .= '<thead><tr>';
@@ -222,27 +249,40 @@ class TableHelper extends Helper
             $out .= '</tr></thead>';
         }
 
-        $out .= '<tbody>';
+
+        $out .= $this->Element->openHtmlElement('tbody', $bodyAttributes);
         foreach ($array as $value) {
 
-            $indent = str_repeat("\t", $value['level']) . $value['key'];
-
-            if (isset($value['size'])) {
-                $value = " <i>[" . $value['size'] . "]</i>";
-            } else if (is_bool($value['value'])) {
-                $value = ($value['value'] ? 'true' : 'false');
+            if ($options['tree'] ?? false) {
+                $indent = str_repeat('<div class="tree-indent"></div>', $value['level'] + 1);
+                $indent .= '<div class="tree-content">' . $value['key'] . '</div>';
             } else {
-                $value = $value['value'];
+                $indent = str_repeat("\t", $value['level']) . $value['key'];
             }
 
-            $out .= '<tr>';
-            $out .= '<th scope="row">' . $indent . '</th>';
-            $out .= '<td>' . $value . '</td>';
-            $out .= '</tr>';
+            if (isset($value['size'])) {
+                $label = " <i>[" . $value['size'] . "]</i>";
+            } else if (is_bool($value['value'])) {
+                $label = ($value['value'] ? 'true' : 'false');
+            } else {
+                $label = $value['value'];
+            }
+
+            $trAttributes = [
+                'data-list-itemof' => $listName,
+                'data-id' => $value['id'] ?? null,
+                'data-tree-parent' => $value['parent_id'] ?? null,
+                'class' => 'node item-collapsed'
+            ];
+
+            $out .= $this->Element->openHtmlElement('tr', $trAttributes);
+            $out .= '<th scope="row">' . "{$indent}" . '</th>';
+            $out .= '<td>' . $label . '</td>';
+            $out .= $this->Element->closeHtmlElement('tr');
         }
         $out .= '</tbody>';
 
-        $out .= '</table>';
+        $out .= $this->Element->closeHtmlElement('table');
 
         return $out;
     }
@@ -283,6 +323,7 @@ class TableHelper extends Helper
      * - fold: foldable|fixed. Fixed trees omit the first level's indentations
      * - drag: true|false Whether Items can be dragged and dropped
      * - sort: true|false Set to false to omit table header sort links. For example, cursored collections such as property trees can not be sorted.
+     * - flow: Where clicked rows are opened: frame (default) tab or popup
      *
      * @param string $model The model name with plugin notation, lower case, for example "epi.projects"
      * @param array|ResultSet $entities List of entities
@@ -322,7 +363,7 @@ class TableHelper extends Helper
 
         // Table
         // TODO: rename class recordlist to filter-table
-        $clickTarget = $options['click'] ?? 'frame';
+        $clickTarget = $options['flow'] ?? 'frame';
         $tableClasses = ['recordlist widget-table actions-to' . $clickTarget, $options['class'] ?? null];
         if ($options['tree'] ?? false) {
             $tableClasses[] = 'widget-tree';
@@ -544,8 +585,17 @@ class TableHelper extends Helper
             $itemAttributes['data-value'] = ($entity['table_name'] ?? '') . '-' . ($entity['id'] ?? '');
         }
 
-        // TODO: upgly condition, rethink
-        if ($entity->search) {
+        // TODO: upgly condition, refactor
+        if ($entity['search'] ?? false) {
+            if (!isset($options['content'])) {
+                $options['content'] = [];
+            }
+            if (!in_array('search', $options['content'])) {
+                $options['content'][] = 'search';
+            }
+        }
+
+        if (!empty($options['content'])) {
             $itemAttributes['class'][] = 'row-main';
         }
 
@@ -573,11 +623,20 @@ class TableHelper extends Helper
 
                 // - See: //TODO: use getValueFormatted()
                 if (($valuePath === 'lemma') && !empty($entity->lookup_to)) {
-                    $content = __('See {0}', $entity['lookup_to']['path']);
+
+                    $edgeLabelField = $typeMerged['edge']['displayfield'] ?? 'lemma';
+                    $edge = $entity->getValueNested($edgeLabelField);
+                    $edge = empty($edge) ? __('See') : $edge;
+
+                    $content = $edge . ' ' . $entity['lookup_to']['path'];
                 }
                 // - Reference from: //TODO: use getValueFormatted()
                 elseif (($valuePath === 'lemma') && !empty($entity->lookup_from)) {
-                    $content = __('Reference from {0}', $entity['lookup_from']['path']);
+
+                    //$edgeLabelField = $typeMerged['edge']['displayfield'] ?? 'lemma';
+                    //$edge = $entity->getValueNested($edgeLabelField);
+                    $edge = __('Reference from:');
+                    $content = $edge . ' ' .  $entity['lookup_from']['path'];
                 }
                 // Image: //TODO: use getValueFormatted instead special image handling
                 elseif (($valuePath === 'file_name') && $entity->file_exists) {
@@ -589,8 +648,6 @@ class TableHelper extends Helper
                 }
 
                 elseif ($entity instanceof BaseEntity) {
-                    // $value = $entity->getValueFormatted($valuePath, $fieldOptions);
-                    //$value = is_array($value) ? json_encode($value) : $value;
                     $fieldOptions['format'] = 'html';
                     $fieldOptions['aggregate'] = $fieldOptions['aggregate'] ?? 'collapse';
                     $content = $entity->getValueNested($valuePath, $fieldOptions);
@@ -602,7 +659,7 @@ class TableHelper extends Helper
 
                 // Link value
                 if (!empty($fieldOptions['link'])) {
-                    if ($fieldOptions['link'] === 'iri') {
+                    if (($fieldOptions['link'] === 'iri')  && ($type ?? false)) {
                         // Default namespace
                         $namespace = Hash::get(
                             $typeMerged,
@@ -684,7 +741,7 @@ class TableHelper extends Helper
 
         // Child nodes
         // TODO: Merge with getTableDetailRows()
-        if (!empty($entity->search)) {
+        if (!empty($options['content'])) {
             $out .= $this->getTableTextRows($model, $entity, $options);
         }
 
@@ -713,77 +770,93 @@ class TableHelper extends Helper
         $colExtra = $options['indent'] ?? false;
 
         // Child nodes
-        $childColumns = ['caption' => 'value', 'content' => 'content'];
-        foreach ($entity->search ?? [] as $childRow) {
-
-            $childRow->id = 'hit-' . $childRow->id;
-            $childRow->parent_id = $entity->id;
-            $childRow->level = 1;
-            $childRow->tree_level = 1;
-            $childRow->tree_parent = $entity;
-
-
-            $trAttributes = $this->Tree->getAttributes($childRow);
-            $trAttributes['data-list-itemof'] = $group;
-
-            $trAttributes['class'][] = 'row-supplement';
-            if (($options['tree'] ?? false) === 'collapsed') {
-                $trAttributes['class'][] = 'item-hidden';
+        $childColumns = ['caption' => 'caption', 'content' => 'content'];
+        $contentConfig = $options['content'] ?? [];
+        foreach ($contentConfig as $contentField) {
+            // TODO: Do we need this special condition? Refactor
+            if ($contentField === 'search') {
+                $entityContent = $entity->search;
+            } else {
+                $entityContent = $entity->getValueNested($contentField);
             }
 
-            $out .= $this->Element->openHtmlElement('tr', $trAttributes);
+            foreach ($entityContent as $childRow) {
 
-            if ($colExtra) {
-                $out .= '<td class="first cols-fixed"></td>';
-            }
-
-            // First column
-            $indent = ($options['tree'] ?? false) ? $this->Tree->getIndentation($childRow, $options['fold'] ?? 'foldable') : '';
-            $prefix = ($options['tree'] ?? false) ? '' : ' ▪ ';
-
-            $content = $prefix . I18n::getTranslator()->translate(
-                Inflector::humanize($childRow[$childColumns['caption']])
-            );
-
-            $out .= $this->Element->outputHtmlElement(
-                'td',
-                $indent
-                . '<div class="tree-content">'
-                . $content
-                . '</div>',
-                ['class' => 'tree-cell']
-            );
-
-            // Second column (spans all other columns)
-            $out .= $this->Element->outputHtmlElement(
-                'td',
-                '<p>' . $childRow[$childColumns['content']] . '</p>',
-                ['colspan' => count($columns) - 1]
-            );
-
-            if ($options['actions'] ?? true) {
-                $out .= '<td class="actions">';
-
-
-                foreach (['view', 'open', 'tab'] as $actionType) {
-                    if ($options['actions'][$actionType] ?? false) {
-                        $action = $options['actions'][$actionType];
-                        $action = $action === true ? ['action' => 'view', $entity['id'] ?? ''] : $action;
-                        $action = $this->Link->fillPlaceholders($action, $entity);
-                        $action['title'] = $action['title'] ?? __('View');
-
-                        if (($action['action'] === 'view') && !empty($childRow['highlight'])) {
-                            $action['?']['highlight'] = implode(',',$childRow['highlight']);
-                        }
-
-                        $out .= $this->Html->link($action['title'], $action, ['data-role' => $actionType]);
-                    }
+                if (empty($childRow)) {
+                    continue;
                 }
 
-                $out .= '</td>';
-            }
+                $childRow->id = 'hit-' . $childRow->id;
+                $childRow->parent_id = $entity->id;
+                $childRow->level = 1;
+                $childRow->tree_level = 1;
+                $childRow->tree_parent = $entity;
 
-            $out .= $this->Element->closeHtmlElement('tr');
+
+                $trAttributes = $this->Tree->getAttributes($childRow);
+                $trAttributes['data-list-itemof'] = $group;
+
+                $trAttributes['class'][] = 'row-supplement';
+                if (($options['tree'] ?? false) === 'collapsed') {
+                    $trAttributes['class'][] = 'item-hidden';
+                }
+
+                $out .= $this->Element->openHtmlElement('tr', $trAttributes);
+
+                if ($colExtra) {
+                    $out .= '<td class="first cols-fixed"></td>';
+                }
+
+                // First column
+                $indent = ($options['tree'] ?? false) ? $this->Tree->getIndentation($childRow,
+                    $options['fold'] ?? 'foldable') : '';
+                $prefix = ($options['tree'] ?? false) ? '' : ' ▪ ';
+
+                $content = $childRow[$childColumns['caption']] ?? '';
+                if (!empty($content)) {
+                    $content = $prefix . $content;
+                }
+
+                $out .= $this->Element->outputHtmlElement(
+                    'td',
+                    $indent
+                    . '<div class="tree-content">'
+                    . $content
+                    . '</div>',
+                    ['class' => 'tree-cell']
+                );
+
+                // Second column (spans all other columns)
+                $out .= $this->Element->outputHtmlElement(
+                    'td',
+                    '<p>' . $childRow[$childColumns['content']] . '</p>',
+                    ['colspan' => count($columns) - 1]
+                );
+
+                if ($options['actions'] ?? true) {
+                    $out .= '<td class="actions">';
+
+
+                    foreach (['view', 'open', 'tab'] as $actionType) {
+                        if ($options['actions'][$actionType] ?? false) {
+                            $action = $options['actions'][$actionType];
+                            $action = $action === true ? ['action' => 'view', $entity['id'] ?? ''] : $action;
+                            $action = $this->Link->fillPlaceholders($action, $entity);
+                            $action['title'] = $action['title'] ?? __('View');
+
+                            if (($action['action'] === 'view') && !empty($childRow['highlight'])) {
+                                $action['?']['highlight'] = implode(',', $childRow['highlight']);
+                            }
+
+                            $out .= $this->Html->link($action['title'], $action, ['data-role' => $actionType]);
+                        }
+                    }
+
+                    $out .= '</td>';
+                }
+
+                $out .= $this->Element->closeHtmlElement('tr');
+            }
         }
         return $out;
     }
@@ -1051,7 +1124,7 @@ class TableHelper extends Helper
      * Create a column selector button
      *
      * The named list of column definitions may contain the following keys:
-     * - name Internal name of the column, corresponds the the key in the column definitions
+     * - name Internal name of the column, corresponds the key in the column definitions
      * - key: Key to extract in Hash compatible syntax
      * - caption Column caption
      * - default Boolean value indicating if the column is visible by default
@@ -1089,14 +1162,25 @@ class TableHelper extends Helper
             title="' . __('Select columns') . '"
             aria-label="' . __('Select columns') . '">⚙</button>';
 
+        $out .= $this->Element->outputHtmlElement('div', __('Select Columns'), [
+            'class' => 'widget-dropdown-pane-header',
+        ]);
+
         $out .= '<div id="' . $group . '-settings-fields"
-            class="widget-dropdown-pane"
+            class="widget-dropdown-pane widget-scrollbox"
             data-widget-dropdown-position="right"
             data-snippet="' . $group . '-settings-fields">';
 
         $out .= $this->checkboxList($items, [
-            'class' => 'selector-columns selector-checkboxes',
-            'reset' => true
+            'class' => 'selector-columns selector-checkboxes widget-tree widget-dragitems widget-dragitems-enabled',
+            'data' => [
+                'list-name' => 'columns'
+            ],
+            'item-data' => [
+                'list-itemof' => 'columms'
+            ],
+            'reset' => true,
+            'grip-icon' => true
         ]);
         $out .= '</div>';
 
@@ -1107,21 +1191,23 @@ class TableHelper extends Helper
      * Create a filter bar based on column definition
      *
      * @param string $model The model name, with plugin notation, lowercase (knits together the different search inputs)
+     * @param boolean $options Whether to show select filters
      * @param array $columns Column definitions, see PermissionsTable::getColumns() as an example.
      *                       Set to null to get columns from the options
      *
      * @return string
      */
-    public function filterBar($model, $columns=null)
+    public function filterBar($model, $options = false, $columns=null)
     {
         $group = str_replace('.','_',$model);
 
         $request = $this->_View->getRequest();
         if ($columns === null) {
             $columns = $this->_View->getConfig('options')['columns'] ?? [];
+        }
+        if (empty($options)) {
             $columns = array_filter($columns, fn($x) => (($x['filter'] ?? '') === 'text'));
         }
-
         $out = $this->filterFormStart($group);
 
         foreach ($columns as $fieldName => $fieldOptions) {
@@ -1229,12 +1315,19 @@ class TableHelper extends Helper
     /**
      * Create a search box
      *
+     * ### Options
+     * - label
+     * - placeholder
+     * - class
+     * - form: If the form key contains a URL, a get form is created.
+     * - data: Additional data attributes for the search bar
+     *
      * @param string $group The filter group (see filter.js)
      * @param string $prefix Prefix added to the parameters (to field, sort, direction, term)
      * @param string $param The URL parameter that should be managed (usually 'term')
      * @param string $value Current search value
      * @param array $searchFields If not empty, a field selector is created. Set the selected field to the field key, provide all field options in the options key
-     * @param array $options An array containing the keys label, placeholder, class and form. If the form key contains a URL, a get form is created.
+     * @param array $options
      *
      * @return string
      */
@@ -1251,6 +1344,7 @@ class TableHelper extends Helper
             'data-filter-param' => $param,
             'data-filter-prefix' => $prefix
         ];
+        $data = array_merge($data, $options['data'] ?? []);
 
         $out .= '<div class="' . implode(' ',$classes) . '" ' . Attributes::toHtml($data) . '>';
 
@@ -1262,7 +1356,7 @@ class TableHelper extends Helper
 
         // Label
         if (!empty($options['label'])) {
-            $out .= '<div class="input-group-label">' . $options['label'] . '</div>';
+            $out .= '<div class="input-group-label hide-small">' . $options['label'] . '</div>';
         }
 
         // Input
@@ -1386,7 +1480,7 @@ class TableHelper extends Helper
      * @param array $options Options:
      *                       - label
      *                       - class
-     *                       - search
+     *                       - searchable
      *                       - checkboxlist
      *                       - clear Whether all other parameters should be cleared when this selector changes     *
      * @return string
@@ -1407,6 +1501,8 @@ class TableHelper extends Helper
             'data-filter-param' => $param,
             'data-filter-clear' => $options['clear'] ?? false
         ];
+        $data = array_merge($data, $options['data'] ?? []);
+
         $out .= '<div class="' . implode(' ',$classes) . '" ' . Attributes::toHtml($data) . '>';
 
         // Group wrapper
@@ -1426,26 +1522,21 @@ class TableHelper extends Helper
         $pane = $this->filterPane($paneId, $items, $selected, $options);
 
         // Inputs
-//        if ($dropdown) {
-            $inputName = 'select-input-' . str_replace('.','-', $param);
-            $inputText =  $this->filterSelectorDropdownCaption($selected, $items, $options['grouped'] ?? false,  __('selected'));
-            $inputValue = implode(',',$selected);
+        $inputName = 'select-input-' . str_replace('.','-', $param);
+        $inputText =  $this->filterSelectorDropdownCaption($selected, $items, $options['grouped'] ?? false,  __('selected'));
+        $inputValue = implode(',',$selected);
 
-
-            $options = [
-                'caption' => false,
-                'type' => 'reference',
-                'pane' => $pane,
-                'paneId' => $paneId,
-                'paneAlignTo' => '.input-group',
-                'value' => $inputValue,
-                'text' => $inputText,
-                'search' => $options['searchable'] ?? false
-            ];
-            $out .= $this->Form->input($inputName, $options);
-//        } else {
-//            $out .= $pane;
-//        }
+        $options = [
+            'caption' => false,
+            'type' => 'reference',
+            'pane' => $pane,
+            'paneId' => $paneId,
+            'paneAlignTo' => '.input-group',
+            'value' => $inputValue,
+            'text' => $inputText,
+            'search' => $options['searchable'] ?? false
+        ];
+        $out .= $this->Form->input($inputName, $options);
 
         // TODO: not working
 //        if ($options['autofocus'] ?? false) {
@@ -1587,6 +1678,11 @@ class TableHelper extends Helper
         foreach ($items as $groupName => $groupItems) {
             $groupId = Attributes::cleanIdentifier($paneId . '_' . $groupName);
             $groupName = !is_string($groupName) ? '' : $groupName;
+
+            if ($groupItems instanceof QueryInterface) {
+                $groupItems = $groupItems->toArray();
+            }
+
             $groupItems = array_map(
                 function ($id, $name) use ($selected, $groupId) {
                     return [
@@ -1638,12 +1734,14 @@ class TableHelper extends Helper
      */
     public function checkboxList(array $actions, array $options = []): string
     {
-        $out = '';
-
-        $out .=
-            '<ul class="' . ($options['class'] ?? '') . '"' .
-            (isset($options['id']) ? (' id="' . $options['id'] . '"') : '') .
-            '>';
+        $out = $this->Element->openHtmlElement(
+            'ul',
+            [
+                'class' => $options['class'] ?? '',
+                'id' => $options['id'] ?? null,
+                'data' => $options['data'] ?? []
+            ]
+        );
 
         // Reset selection button
         if ($options['reset'] ?? false) {
@@ -1657,11 +1755,24 @@ class TableHelper extends Helper
             $action['options']['id'] = mb_strtolower(Text::slug($action['name'], ['replacement'=>'-','preserve'=>'_']));
             $contents = $this->Form->control($action['name'], $action['options']);
 
-            $datavalue = isset($action['value']) ? ' data-value="' . $action['value'] . '"' : '';
-            $out .= '<li' . $datavalue. '>' . $contents . '</li>';
+            $liDataAttrs = [];
+            $liDataAttrs['value'] = $action['value'] ?? null;
+            $liDataAttrs = array_merge($liDataAttrs, $options['item-data'] ?? []);
+
+            $out .= $this->Element->openHtmlElement(
+                'li',
+                [
+                    'data' => $liDataAttrs,
+                ]
+            );
+            $out .= $contents;
+            if ($options['grip-icon'] ?? false) {
+                $out .= '<span class="grip-icon">⋮</span>';
+            }
+            $out .= $this->Element->closeHtmlElement('li');
         }
 
-        $out .= '</ul>';
+        $out .= $this->Element->closeHtmlElement('ul');
 
         return $out;
     }

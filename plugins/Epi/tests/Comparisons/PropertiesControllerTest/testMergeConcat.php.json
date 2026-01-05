@@ -2,7 +2,7 @@
     "31": {
         "related_id": [
             32,
-            647
+            650
         ]
     },
     "32": {
@@ -12,19 +12,19 @@
         ],
         "mergedto_id": [
             null,
-            647
+            650
         ]
     },
     "33": {
         "parent_id": [
             36,
-            647
+            650
         ]
     },
     "34": {
         "parent_id": [
             36,
-            647
+            650
         ]
     },
     "36": {
@@ -34,23 +34,24 @@
         ],
         "mergedto_id": [
             null,
-            647
+            650
         ]
     },
     "643": {
         "parent_id": [
             36,
-            647
+            650
         ]
     },
-    "647": [
+    "650": [
         null,
         {
-            "id": 647,
+            "id": 650,
             "deleted": 0,
             "version_id": null,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": null,
             "modified_by": null,
             "sortno": 1,
@@ -60,7 +61,7 @@
             "file_name": "",
             "properties_id": null,
             "lemma": "Tr\u00e4ger 1 \/ Tr\u00e4ger 2a",
-            "name": "Tr\u00e4ger 1  \/ Tr\u00e4ger 2a",
+            "name": "Tr\u00e4ger 1 \/ Tr\u00e4ger 2a",
             "unit": "Tr\u00e4ger 1 Einheit \/ Tr\u00e4ger 2a Einheit",
             "comment": "Tr\u00e4ger 1 Bemerk \/ Tr\u00e4ger 2a Bemerk",
             "content": "",
@@ -83,14 +84,15 @@
             "rght": 8
         }
     ],
-    "648": [
+    "651": [
         null,
         {
-            "id": 648,
+            "id": 651,
             "deleted": 2,
-            "version_id": 647,
+            "version_id": 650,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": null,
             "modified_by": null,
             "sortno": 1,
@@ -100,7 +102,7 @@
             "file_name": "",
             "properties_id": null,
             "lemma": "Tr\u00e4ger 1 \/ Tr\u00e4ger 2a",
-            "name": "Tr\u00e4ger 1  \/ Tr\u00e4ger 2a",
+            "name": "Tr\u00e4ger 1 \/ Tr\u00e4ger 2a",
             "unit": "Tr\u00e4ger 1 Einheit \/ Tr\u00e4ger 2a Einheit",
             "comment": "Tr\u00e4ger 1 Bemerk \/ Tr\u00e4ger 2a Bemerk",
             "content": "",
@@ -123,14 +125,15 @@
             "rght": 8
         }
     ],
-    "649": [
+    "652": [
         null,
         {
-            "id": 649,
+            "id": 652,
             "deleted": 2,
             "version_id": 33,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 4,
@@ -163,14 +166,15 @@
             "rght": 3
         }
     ],
-    "650": [
+    "653": [
         null,
         {
-            "id": 650,
+            "id": 653,
             "deleted": 2,
             "version_id": 34,
             "job_id": null,
             "published": 0,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 2,
@@ -203,14 +207,15 @@
             "rght": 5
         }
     ],
-    "651": [
+    "654": [
         null,
         {
-            "id": 651,
+            "id": 654,
             "deleted": 2,
             "version_id": 643,
             "job_id": null,
             "published": 0,
+            "status": null,
             "created_by": null,
             "modified_by": null,
             "sortno": null,
@@ -243,14 +248,15 @@
             "rght": 7
         }
     ],
-    "652": [
+    "655": [
         null,
         {
-            "id": 652,
+            "id": 655,
             "deleted": 2,
             "version_id": 31,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 10,
@@ -283,14 +289,15 @@
             "rght": 11
         }
     ],
-    "653": [
+    "656": [
         null,
         {
-            "id": 653,
+            "id": 656,
             "deleted": 2,
             "version_id": 32,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 8,
@@ -323,14 +330,15 @@
             "rght": 13
         }
     ],
-    "654": [
+    "657": [
         null,
         {
-            "id": 654,
+            "id": 657,
             "deleted": 2,
             "version_id": 36,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 1,

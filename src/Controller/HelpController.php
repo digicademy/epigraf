@@ -10,34 +10,23 @@
 
 namespace App\Controller;
 
-use App\Model\Table\PermissionsTable;
+use App\Model\Entity\Help;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
-use Cake\I18n\I18n;
-use Cake\Utility\Inflector;
-use Rest\Controller\Component\LockTrait;
 
 /**
- * Docs Controller
+ * Help Controller
  *
- * ### Administration of help pages
+ * Help pages are stored as markdown files in the help folder.
+ * The folder follows Jekyll conventions.
  *
- * Help pages are called Docs and are stored in the database.
  * When F1 is hit in EpigrafDesktop the show action of
  * docs controller is requested with the norm_iri in the query
  * parameter key. The corresponding help page is opened if it
- * exists, otherwise the request is redirected to the add action.
- *
- * @property \App\Model\Table\DocsTable $Docs
+ * exists.
  */
 class HelpController extends AppController
 {
-
-    /**
-     * The lock trait provides lock and unlock actions
-     */
-    use LockTrait;
-
     /**
      * Table, entity class and segment
      *
@@ -47,27 +36,26 @@ class HelpController extends AppController
      */
     public $defaultTable = 'Docs';
     public $modelClass = 'Docs';
-    public $segment = 'help';
+    public $segment = 'wiki';
+
 
     /**
      * Access permissions
      *
      * @var array[] $authorized
      */
-
     public $authorized = [
-        'api' => [
-            'editor' => ['lock', 'unlock']
-        ],
         'web' => [
-            'guest' => ['show', 'view', 'index'],
-            'reader' => ['show', 'view', 'index'],
-            'coder' => ['show', 'view', 'index'],
-            'desktop' => ['show', 'view', 'index'],
-            'author' => ['show', 'view', 'index'],
-            'editor' => ['show', 'view', 'index', 'add', 'edit', 'delete', 'lock', 'unlock']
+            'guest' => ['show'],
+            'reader' => ['show'],
+            'coder' => ['show'],
+            'desktop' => ['show'],
+            'author' => ['show'],
+            'editor' => ['show']
         ]
     ];
+
+    public $help = '/';
 
     /**
      * Initialization hook method
@@ -89,10 +77,7 @@ class HelpController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->loadComponent('Epi.Transfer', ['model' => 'Docs']);
-
-        $this->Docs->setScope($this->segment);
-        $this->set(['title' => I18n::getTranslator()->translate(Inflector::humanize($this->segment))]);
+        $this->set(['title' => __('Help')]);
 
         $this->_activateMainMenuItem(
             [
@@ -102,125 +87,42 @@ class HelpController extends AppController
                 'start'
             ]);
 
-
-        if ((PermissionsTable::getUserRole($this->Auth->user(), null,  $this->_getRequestScope()) !== 'guest') || ($this->segment === 'help')) {
-            $published = PermissionsTable::getUserRole($this->Auth->user(), null,  $this->_getRequestScope()) === 'guest';
-            $this->sidemenu = $this->Docs->getMenu($published);
-        }
+        $this->sidemenu = Help::getMenu();
     }
 
     /**
-     * Retrieve list of docs
+     * Show a help page
      *
-     * @return \Cake\Http\Response|null|void
-     */
-    public function index()
-    {
-        $this->Actions->index($this->Docs->scopeValue, ['sidemenu' => 'category']);
-        $this->render('/Docs/' . $this->request->getParam('action'));
-    }
-
-    /**
-     * Show a doc (help, wiki, page, note)
-     *
-     * @param string $id Doc id.
-     *
-     * @return \Cake\Http\Response|null|void
-     * @throws RecordNotFoundException If record not found
-     */
-    public function view($id = null)
-    {
-        $this->Actions->view($id, ['sidemenu' => 'category', 'speaking' => 'show']);
-
-        $action = $this->request->getParam('action');
-        $action = $action === 'show' ? 'view' : $action;
-        $this->render('/Docs/' . $action);
-    }
-
-    /**
-     * Show a doc by its IRI or category
-     *
-     * Redirects to the view action based on path or query parameter.
-     * If the entity does not exist, redirects authenticated users
-     * to the add action. Throws a NotFoundException for
-     * unauthenticated users.
-     *
-     * @param string|null $iri The document IRI
-     * @queryparam string|null key Alternative to provide the IRI
-     * @queryparam string|null category The category
+     * @param string|null $path The document IRI
      * @return void
      * @throws RecordNotFoundException If record not found and unauthenticated user
      */
-    public function show($iri = null)
+    public function show()
     {
-        $addRoles = ['admin', 'devel'];
-        $response = $this->Actions->show(
-            $iri,
-            ['static' => true, 'add' => $addRoles, 'sidemenu' => 'category', 'speaking' => 'show', 'fallback' => 'wiki']
-        );
-        if (!empty($response)) {
-            return $response;
+        // Get path without '/help/'
+        $path = $this->request->getPath();
+        $path = substr($path, 6);
+
+        // Deliver assets
+        if (str_starts_with($path, 'assets/')) {
+            $assetPath = Help::getHelpFolder() . $path;
+            if (file_exists($assetPath)) {
+                return $this->response->withFile($assetPath);
+            }
         }
-        else {
-            $action = $this->request->getParam('action');
-            $action = $action === 'show' ? 'view' : $action;
-            $this->render('/Docs/' . $action);
+
+        // Load help file
+        $help = new Help(['path' => $path]);
+
+        // Redirect to wiki
+        if (!$help->exists && !empty($path)) {
+            $path = str_replace('/', '-', $path);
+            $this->Answer->redirect(
+                ['controller' => 'Wiki', 'action' => 'show', $path]
+            );
         }
+
+        $this->Answer->addAnswer(compact('help'));
     }
 
-    /**
-     * Edit a doc
-     *
-     * @param string $id Entity ID
-     * @return void
-     * @throws RecordNotFoundException If record not found
-     */
-    public function edit($id)
-    {
-        $this->Actions->edit($id, ['sidemenu' => 'category']);
-        $this->render('/Docs/' . $this->request->getParam('action'));
-    }
-
-    /**
-     * Add a new doc
-     *
-     * //TODO: when created from a single page, show the new page afterwards
-     *
-     * @param string|null $iri The default IRI fragment
-     * @return void
-     */
-    public function add($iri = null)
-    {
-        $default = [
-            'format' => 'html',
-            'norm_iri' => $iri,
-            'name' => $this->request->getQuery('data-name', Inflector::humanize(str_replace('-', '_', $iri ?? '')))
-        ];
-        $this->Actions->add(null, $default, ['sidemenu' => 'category']);
-        $this->render('/Docs/' . $this->request->getParam('action'));
-    }
-
-    /**
-     * Delete a doc
-     *
-     * @param string $id Entity ID
-     * @return void
-     * @throws RecordNotFoundException If record not found
-     */
-    public function delete($id)
-    {
-        $this->Actions->delete($id, ['sidemenu' => 'category']);
-        $this->render('/Docs/' . $this->request->getParam('action'));
-    }
-
-    /**
-     * Import docs
-     *
-     * @param string|null $scope
-     * @return void
-     */
-    public function import($scope = null)
-    {
-        $this->Transfer->import($scope);
-    }
 }

@@ -16,8 +16,8 @@ use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Datasource\ConnectionManager;
+use Cake\Routing\Router;
 use Cake\Utility\Hash;
-use Cake\ORM\TableRegistry;
 
 /**
  * User Entity
@@ -35,9 +35,13 @@ use Cake\ORM\TableRegistry;
  * @property int $databank_id
  * @property int $pipeline_article_id
  * @property int $pipeline_book_id
+ * @property string $activation_token
+ * @property int $activation_state
+ * @property \Cake\I18n\Time $activation_expires
  *
  * # Virtual fields (without inherited fields)
  * @property string $sqlUsername
+ * @property bool $hasSqlAccess
  * @property string $problems
  *
  * # Relations
@@ -107,6 +111,15 @@ class User extends BaseEntity
         return 'epi_' . $this->username;
     }
 
+    /**
+     * Should the user get SQL access?
+     *
+     * @return bool
+     */
+    protected function _getHasSqlAccess()
+    {
+        return in_array($this->role, ['desktop', 'author', 'editor', 'admin', 'devel']);
+    }
 
     /**
      * Grant SQL database access
@@ -151,6 +164,41 @@ class User extends BaseEntity
         $permissionTable = $this->fetchTable('Permissions');
         $permission = ['user_id' => $this->id, 'entity_type' => 'databank'];
         return ($permissionTable->removePermission($permission));
+    }
+
+    /**
+     * Get an invitation text, including the activation link
+     *
+     * @return string
+     */
+    public function getInvitationMail()
+    {
+        $body = __('Dear {0}!', $this->name) . "\n\n";
+        $body .= __('Welcome to Epigraf. ');
+        $body .= __('Open the following link in your browser to set a password and activate your user account:') . "\n\n";
+        $body .= Router::url([
+            'database' => false,
+            'controller' => 'Users',
+            'action' => 'activate',
+            $this->activation_token
+        ], true) . "\n\n";
+
+        $body .= __("Your user name is: {0}", $this->username) . "\n\n";
+        $body .= __("You can then login with the username and your new password.") . " ";
+        $body .= __('As an EpiWeb user, you can access your database via the menu in the top left corner.') . " ";
+        $body .= __('If you use EpiDesktop, you will find the required settings in your user profile.') . "\n\n";
+        $body .= __('The link is valid until {0}.', $this->activation_expires) . "\n\n";
+
+        $body .= __("Sincerely yours") . "\n";
+        $body .= __("The Epigraf Team") . "\n";
+
+        $mail = [
+            'receiver' => $this->email,
+            'subject' => __('Your Epigraf account is ready'),
+            'body' => $body
+        ];
+
+        return $mail;
     }
 
     /**
@@ -284,23 +332,25 @@ class User extends BaseEntity
         }
         else {
             // TODO: implement hasPermission method
-            $dbPermissions = array_filter($this->permissions, function ($x) {
-                return ($x->entity_type === 'databank') &&
-                    ($x->entity_id === $this->databank_id) &&
-                    ($x->permission_type === 'access');
-            });
-            if (empty($dbPermissions)) {
-                $errors[] = __('No access to default database. Did you forget to grant access?');
-            }
+//            $dbPermissions = array_filter($this->permissions, function ($x) {
+//                return ($x->entity_type === 'databank') &&
+//                    ($x->entity_id === $this->databank_id) &&
+//                    ($x->permission_type === 'access');
+//            });
+//            if (empty($dbPermissions)) {
+//                $errors[] = __('No access to default database. Did you forget to grant access?');
+//            }
         }
 
         return $errors;
     }
 
     /**
-     * Returns fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -350,12 +400,19 @@ class User extends BaseEntity
                 'help' => __('Please provide additional information about how to contact the user, for example the affiliation.')
             ],
 
+            'activation_state' => [
+                'caption' => __('Activation'),
+                'options' => UsersTable::$states,
+                'action' => ['view']
+            ],
+
             'password' => [
                 'caption' => __('Password'),
                 'autocomplete' => "off",
                 'action' => ['edit', 'add'],
                 'display' => 'password',
                 'help' => __("Please enter a strong password and remember it well. The password can't be restored. If you loose it, you have to enter a new password.")
+                         . " " . __('It must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.')
             ],
 
             'accesstoken' => [
@@ -408,7 +465,12 @@ class User extends BaseEntity
             'norm_iri' => [
                 'caption' => __('IRI fragment'),
                 'action' => ['edit', 'add'],
-                'help' => __(' Usually the IRI equals the username. The IRI is used to match users in the main database to users in the project databases.')
+                'help' => __(' Usually the IRI equals the username. The IRI is used to match users in the main database to users in the project databases.'),
+                'autofill' => [
+                    'source' => 'username',
+                    'process' => ['irifragment']
+                ]
+
             ],
 
             'iri_path' => [
@@ -429,5 +491,27 @@ class User extends BaseEntity
         ];
 
         return $fields;
+    }
+
+    /**
+     * Get the default type for the entity, if no type configuration is available in the types table
+     *
+     * @return DefaultType
+     */
+    protected function _getDefaultType()
+    {
+        $type = new DefaultType([
+            'scope' => 'users',
+            'mode' => 'default',
+            'name' => 'default',
+            'norm_iri' => 'default',
+            'published' => PUBLICATION_BINARY_PUBLISHED,
+            'config' => [
+                'fields' => [
+
+                ]
+            ]
+        ]);
+        return $type;
     }
 }

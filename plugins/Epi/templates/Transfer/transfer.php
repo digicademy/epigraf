@@ -99,9 +99,11 @@ use App\Utilities\Converters\Arrays;
             <?= $this->Table->getOptionRows($job->options ?? [], $job->config) ?>
 
             <tr>
-                <th scope="row"><?= __('Parameters') ?></th>
-                <td>
-                    <?= $this->Table->nestedTable( Arrays::array_remove_keys($job->config['params'] ?? [], array_keys($job->options)), ['header' => false]); ?>
+                <td colspan="2">
+                    <?= $this->Table->nestedTable(
+                        Arrays::array_remove_keys($job->config['params'] ?? [], array_keys($job->options)),
+                        ['key' => __('Parameters'), 'value' => '', 'tree' => true]);
+                    ?>
                 </td>
             </tr>
 

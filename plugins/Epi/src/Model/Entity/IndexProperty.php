@@ -167,6 +167,11 @@ class IndexProperty extends Property
         $links = [];
         foreach ($property['links'] ?? [] as $link) {
             $link = new IndexLink($link);
+
+            // TODO: Once the hasRoot() check is used in prepareRoot(),
+            //       either set the second $this parameter to null or
+            //       call prepareRoot() after the source of the IndexProperty
+            //       has been set in parent:__construct() below.
             $link->prepareRoot($this, $this, false, true);
             $links[] = $link;
         }

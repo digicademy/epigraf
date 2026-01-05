@@ -9,13 +9,12 @@
  */
 ?>
 <?php
-    use Cake\Utility\Hash;
-?>
-<?php
 /**
  * @var App\View\AppView $this
  * @var string $scope
  * @var array $preview
+ * @var string $source
+ * @var int|null $pipelineId
  */
 ?>
 
@@ -31,18 +30,19 @@
         <tr>
             <th data-col="rownumber" data-width="40">#</th>
             <th data-col="table" data-width="100">table</th>
+            <th data-col="action" data-width="40">action</th>
             <?php foreach ($preview['cols'] as $item => $value): ?>
                 <th scope="col" data-col="<?= $value ?>" data-width=100><?= $value ?></th>
             <?php endforeach; ?>
         </tr>
         </thead>
-        <tbody data-list-name="import"
-               data-list-action-next="<?= $nextUrl ?>">
+        <tbody data-list-name="import" data-list-action-next="<?= $nextUrl ?>">
 
         <?php foreach ($preview['rows'] as $no => $row): ?>
             <tr data-list-itemof="import" data-id="<?= ($row->import_table ?? '') . '-' .  $this->request->getQuery('page',1) . '-' . (($row->row_number ?? '') . '-' . ($row->id ?? 'new')) ?>">
                 <td><?= $row->row_number ?? '' ?></td>
                 <td><?= $row->import_table ?? '' ?></td>
+                <td><?= $row->_import_action ?? '' ?></td>
                 <?php foreach ($preview['cols'] as $col): ?>
 
                     <?php
@@ -79,7 +79,8 @@
 <?= $this->Form->create(null, ['id' => 'form-import']) ?>
 
 <?php if (!empty($source)): ?>
-    <?= $this->Form->hidden('filename',['value'=>$source]) ?>
+    <?= $this->Form->hidden('filename',['value' => $source]) ?>
+    <?= $this->Form->hidden('pipeline_id',['value' => $pipelineId]) ?>
 <?php endif; ?>
 
 <?= $this->Form->end() ?>

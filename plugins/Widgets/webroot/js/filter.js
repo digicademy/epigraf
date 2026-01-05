@@ -63,28 +63,9 @@ export class FilterWidget extends BaseWidget {
     initWidget() {
         let hasSortWidget = false;
         this.getFilterWidgetElements().forEach(elm => {
-                if (elm.filterCoordinator) {
-                    return;
-                }
-                if (elm.classList.contains('widget-filter-item-searchbar')) {
-                    new FilterSearchBar(this, elm);
-                }
-
-                if (elm.classList.contains('widget-filter-item-selector')) {
-                    new FilterSelector(this, elm);
-                }
-
+                this.registerFilter(elm);
                 if (elm.classList.contains('widget-filter-item-sort')) {
-                    new FilterSort(this, elm);
                     hasSortWidget = true;
-                }
-
-                if (elm.classList.contains('widget-filter-item-template')) {
-                    new FilterTemplate(this, elm);
-                }
-
-                if (elm.classList.contains('widget-filter-item-map')) {
-                    new FilterMap(this, elm);
                 }
             }
         );
@@ -98,10 +79,35 @@ export class FilterWidget extends BaseWidget {
         this.listenEvent(document,'click', event => this.resetFilterClick(event));
     }
 
+    registerFilter(elm) {
+        if (elm.filterCoordinator) {
+            return;
+        }
+        // if (elm.classList.contains('widget-filter-item-searchbar')) {
+        //     new FilterSearchBar(this, elm);
+        // }
+
+        if (elm.classList.contains('widget-filter-item-selector')) {
+            new FilterSelector(this, elm);
+        }
+
+        if (elm.classList.contains('widget-filter-item-sort')) {
+            new FilterSort(this, elm);
+        }
+
+        if (elm.classList.contains('widget-filter-item-template')) {
+            new FilterTemplate(this, elm);
+        }
+
+        if (elm.classList.contains('widget-filter-item-map')) {
+            new FilterMap(this, elm);
+        }
+    }
+
     /**
-     * Add current filter to filter list.
+     * Add current filter to filter list
      *
-     * Each filter widget should call this.coordinator.addFilter() in its constructor
+     * Each filter widget should call this.coordinator.addFilter() in its constructor.
      *
      * @param filterObject Current filter object
      */
@@ -109,6 +115,23 @@ export class FilterWidget extends BaseWidget {
         this.filters.push(filterObject);
         filterObject.coordinator = this;
         filterObject.widgetElement.filterCoordinator = this;
+    }
+
+    /**
+     * Remove a filter from filter list
+     *
+     * Each filter widget should call this.coordinator.removeFilter() when it is removed
+     *
+     * @param filterObject Filter object
+     */
+    removeFilter(filterObject) {
+        const index = this.filters.indexOf(filterObject);
+        if (index > -1) {
+            this.filters.splice(index, 1);
+        }
+
+        filterObject.coordinator = null;
+        filterObject.widgetElement.filterCoordinator = null;
     }
 
     resetFilterClick(event) {
@@ -437,6 +460,11 @@ class FilterColumns extends FilterItemWidget {
     }
 
     initWidget() {
+        if (!this.coordinator) {
+            console.log('Missing coordinator.');
+            return;
+        }
+
         const resultWidget = this.coordinator.getResultTable();
         if (!resultWidget || !resultWidget.classList.contains('widget-table')) {
             return;
@@ -453,11 +481,17 @@ class FilterColumns extends FilterItemWidget {
             return;
         }
 
-        // Bind checkbox click events
-        this.listenEvent(this.pane,'click',  event => this.clickCheckbox(event))
+        // Bind move row events
+        this.listenEvent(this.pane, 'epi:move:row', event => this.moveRow(event));
 
         // Bind reset button event
         this.listenEvent(this.pane,'click', event => this.resetSelection(event));
+
+        // Bind checkbox click events
+        this.listenEvent(this.pane,'click',  event => this.clickCheckbox(event));
+
+        let dragItems = this.pane.querySelector('widget-dragitems');
+        App.initWidgets(dragItems);
 
         this.pane.classList.add('widget-initialized');
     }
@@ -473,6 +507,16 @@ class FilterColumns extends FilterItemWidget {
         }
         clearTimeout(this.inputTimeout);
         this.inputTimeout = setTimeout(() => this.updateResults(), App.settings.timeout * 2);
+    }
+
+    /**
+     * Called when a row was moved (e.g. in the column selector dropdown)
+     *
+     * @param event epi:move:row
+     */
+    moveRow(event) {
+        // The time delay ensures that the click event is processed if there has been no movement.
+        setTimeout(() => this.updateResults(), 100);
     }
 
     /**
@@ -514,29 +558,28 @@ class FilterColumns extends FilterItemWidget {
 /**
  * Search box widget
  *
- * //TODO: derive from FilterItemWidget
- *
  * @param coordinator
  * @param widgetElement
  * @constructor
  */
-class FilterSearchBar {
-    constructor(coordinator, widgetElement) {
+class FilterSearchBar extends FilterItemWidget {
+    constructor(element, name, parent) {
+
+        super(element, name, parent);
+
         // Init vars
-        this.coordinator = coordinator;
         this.inputTimeout = null;
-        this.widgetElement = widgetElement;
 
         // Init elements and bind events
         if (!this.widgetElement) {
             return false;
         }
 
-        this.coordinator.addFilter(this);
-
         // overwrite default
         this.prefix = this.widgetElement ? (this.widgetElement.dataset.filterPrefix || '') : '';
         this.paramTerm = this.widgetElement ? (this.widgetElement.dataset.filterParam || 'term') : '';
+
+        // TODO: Allow empty filterField
         this.paramField = this.widgetElement ? (this.widgetElement.dataset.filterField || 'field') : '';
 
         // Search box
@@ -553,6 +596,7 @@ class FilterSearchBar {
         this.searchField = this.widgetElement.querySelector('.search-field');
         if (this.searchField) {
             this.searchField.addEventListener('change', event => this.articlesTermChanged());
+            // TODO: use coordinator form
             this.searchField.closest('form').addEventListener('submit', event => {
                 this.selectorsChanged(event);
                 event.preventDefault();
@@ -578,7 +622,10 @@ class FilterSearchBar {
 
         const prefix = this.prefix;
         data[prefix + this.paramTerm] = this.getSearchTerm();
-        data[prefix + this.paramField] = this.getSearchField();
+        const fieldName = this.getSearchField();
+        if (fieldName) {
+            data[prefix + this.paramField] = fieldName;
+        }
 
         return data;
     }
@@ -670,6 +717,10 @@ class FilterSelector {
      * @returns {boolean} False if no dropdown or checkbox list exists
      */
     initWidgets() {
+        if (!this.coordinator) {
+            console.log('Missing coordinator.');
+            return;
+        }
         // For filters in the table header, find the old widget element after the table was updated
         // TODO: more elegant way?
         const tableElement = this.coordinator.getResultTable();
@@ -840,7 +891,7 @@ class FilterFacetsBase extends FilterItemWidget {
      * @param {Event} event
      */
     onFlagsChanged(event) {
-        const widgetFilterFacetsOptions = event.target.closest('.widget-filter-facets-options');
+        const widgetFilterFacetsOptions = this.widgetElement.querySelector('.widget-filter-facets-options');
         if (!widgetFilterFacetsOptions) {
             return;
         }
@@ -849,8 +900,69 @@ class FilterFacetsBase extends FilterItemWidget {
         const flags = [...widgetFilterFacetsOptions.querySelectorAll('input:checked')]
             .map((node) => node.value);
 
+        // Only one facet is allowed to have an active detail option
+        if (flags.includes('grp')) {
+            this.clearOtherFlag('grp');
+        }
+
         this.widgetElement.dataset.filterFlags = flags.join(',');
         this.coordinator.updateResults(this);
+        this.emitEvent('epi:load:facets');
+    }
+
+    /**
+     * Clear a flag in all other filters
+     *
+     * @param {string} flag
+     */
+    clearOtherFlag(flag) {
+        const filters = this.coordinator.getFilterWidgets();
+        filters.forEach(filter => {
+            if ((filter !== this) && (typeof filter.clearFlag === 'function')) {
+                filter.clearFlag(flag);
+            }
+        });
+    }
+
+    /**
+     * Clear a flag in this filter
+     *
+     * @param {string} flag
+     */
+    clearFlag(flag) {
+        if (!this.widgetElement.dataset.filterFlags) {
+            return;
+        }
+
+        const flagInput = this.widgetElement.querySelector('.widget-filter-facets-options input[value=' + flag + '] ');
+        if (flagInput) {
+            flagInput.checked = false;
+        }
+
+        const flags = this.widgetElement.dataset.filterFlags
+            .split(',')
+            .map(f => f.trim())
+            .filter(f => f && f !== flag)
+            .join(',');
+
+        this.widgetElement.dataset.filterFlags = flags;
+    }
+
+    /**
+     * Check whether a facet has the given flag activated
+     *
+     * @param {String} flag
+     * @return {boolean}
+     */
+    hasFlag(flag) {
+        if (!this.widgetElement.dataset.filterFlags) {
+            return false;
+        }
+
+        const flagInput = this.widgetElement.querySelector('.widget-filter-facets-options input[value=' + flag + '] ');
+        if (flagInput) {
+            return flagInput.checked;
+        }
     }
 
     /**
@@ -1087,7 +1199,7 @@ class FilterProperties extends FilterFacetsBase {
      *
      * Override in child classes.
      *
-     * @return {{}} An object with the label, color and id indexed by property id.
+     * @return {{}} An object with the property label, color and id indexed by property id.
      */
     getFacets() {
         let data = {};
@@ -1191,6 +1303,12 @@ class FilterSort {
      * @returns {boolean}
      */
     updateWidget(scope) {
+
+        if (!this.coordinator) {
+            console.log('Missing coordinator.');
+            return;
+        }
+
         if (this.sortSelector) {
             try {
                 const sortKey = this.coordinator.getResultTable().dataset.sortkey;
@@ -1243,6 +1361,10 @@ class FilterSort {
         if (this.sortSelector) {
             return this.sortSelector.value;
         } else {
+            if (!this.coordinator) {
+                console.log('Missing coordinator.');
+                return;
+            }
             const table = this.coordinator.getResultTable();
             return table ? table.dataset.sortkey : '';
         }
@@ -1257,6 +1379,10 @@ class FilterSort {
         if (this.sortSelector) {
             return 'asc';
         } else {
+            if (!this.coordinator) {
+                console.log('Missing coordinator.');
+                return;
+            }
             const table = this.coordinator.getResultTable();
             return table ? table.dataset.sortdir : 'asc';
         }
@@ -1264,7 +1390,7 @@ class FilterSort {
 }
 
 /**
- * Adds the template, mode, and lanes parameter to queries
+ * Adds the template and mode parameter to queries
  *
  * //TODO: derive from FilterItemWidget
  * @param coordinator
@@ -1278,7 +1404,6 @@ class FilterTemplate {
         this.widgetElement = widgetElement;
         this.template = 'table';
         this.mode = null;
-        this.lanes = null;
 
         if (!this.initWidgets()) {
             return false;
@@ -1299,7 +1424,6 @@ class FilterTemplate {
 
         this.mode = this.widgetElement.dataset.filterMode;
         this.template = this.widgetElement.dataset.filterTemplate;
-        this.lanes = this.widgetElement.dataset.filterLanes;
 
         return true;
     }
@@ -1321,25 +1445,8 @@ class FilterTemplate {
      */
     getUrlParams() {
         const params = {'template': this.template};
-
         if (this.mode) {
             params.mode = this.mode;
-        }
-
-        // Determine the lane from the active properties panel
-        let lane = this.lanes;
-        this.coordinator.filters.forEach(filter => {
-            if (filter.widgetElement && filter.getActivePanel) {
-                const activePanel = filter.getActivePanel();
-                if (activePanel) {
-                    lane = activePanel.dataset.segment || '';
-                }
-
-            }
-        });
-
-        if (lane) {
-            params.lanes = lane;
         }
 
         return params;
@@ -1357,7 +1464,9 @@ class FilterTemplate {
 
 /**
  * Map filter
- * //TODO: derive from FilterItemWidget
+ *
+ * Manages lat, lng and sort parameters
+ *
  */
 class FilterMap extends FilterItemWidget {
     constructor(coordinator, widgetElement) {
@@ -1373,8 +1482,6 @@ class FilterMap extends FilterItemWidget {
             return false;
         }
         this.coordinator.addFilter(this);
-        this.listenEvent(document,'epi:load:facets', event => this.onLoadFacets(event));
-        this.listenEvent(document,'epi:close:facets', event => this.onCloseFacets(event));
     }
 
     /**
@@ -1400,28 +1507,7 @@ class FilterMap extends FilterItemWidget {
         return true;
     }
 
-    onLoadFacets(event) {
-        if (!this.widgetMap || !this.widgetElement || !event.detail.sender) {
-            return;
-        }
-
-        const facetWidget = event.detail.sender;
-
-        if (facetWidget.widgetElement.classList.contains('widget-filter-item-properties')) {
-            const data = facetWidget.getFacets();
-            this.widgetMap.updateColors(data);
-        }
-    }
-
-    onCloseFacets(event) {
-        if (!this.widgetMap || !this.widgetElement || !event.detail.sender) {
-            return;
-        }
-        this.widgetMap.updateColors();
-    }
-
-
-        /**
+   /**
      * Called by App.filter.updateWidget.
      * After the data was reloaded (by snippet replacement), update the map
      *
@@ -1468,3 +1554,4 @@ window.App.widgetClasses['filter-item-columns'] = FilterColumns;
 window.App.widgetClasses['filter-item-properties'] = FilterProperties;
 window.App.widgetClasses['filter-item-projects'] = FilterProjects;
 window.App.widgetClasses['filter-item-fixed'] = FilterFixed;
+window.App.widgetClasses['filter-item-searchbar'] = FilterSearchBar;

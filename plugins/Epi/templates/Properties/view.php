@@ -100,7 +100,7 @@
                     'modified'=>['caption'=>__('Modified'), 'default'=>true]
                 ],
                 'actions' => ['view'=> ['controller' => 'Articles', 'action' => 'view', '{id}']],
-                'click' => 'tab',
+                'flow' => 'tab',
                 'more' => [
                     'controller' => 'Articles',
                     'action' => 'index',
@@ -141,6 +141,7 @@
     $this->Link->addEditButtons($entity);
 
     if (empty($entity->related_id)) {
+        $this->Link->addActionGroupLabel(__('Context Actions'));
         $this->Link->addAction(
             __('Merge'),
             [

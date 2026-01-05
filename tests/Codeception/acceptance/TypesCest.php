@@ -33,6 +33,9 @@ class TypesCest
         $I->amOnPage('/epi/projects/types');
 
         $I->testOpensInSidebar('epi_types',146);
+
+        // TODO: Strange layout changes in tree table, last column keeps growing?
+        $I->wait(3);
         $I->dontSeeVisualChanges('sidebar','.sidebar-right');
     }
 

@@ -11,21 +11,16 @@
 namespace App\Model\Table;
 
 use Cake\Database\Schema\TableSchemaInterface;
-use Files\Model\Behavior\FileSystemBehavior;
 use Files\Model\Table\FilesTableTrait;
 
 /**
  * Files table
  *
- * # Behaviors
- * @mixin FileSystemBehavior
  */
 class FilesTable extends BaseTable
 {
 
     use FilesTableTrait;
-
-    public $captionField = 'name';
 
     /**
      * Request parameter config
@@ -39,8 +34,12 @@ class FilesTable extends BaseTable
         'filename' => 'raw',
         'basepath' => 'raw',
         'folder_id' => 'raw',
-        'list' => 'raw'
+        'list' => 'raw',
+        'download' => 'boolean'
     ];
+
+
+    public $captionField = 'name';
 
     /**
      * The mounts used in this table

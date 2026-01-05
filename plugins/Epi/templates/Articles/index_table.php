@@ -13,7 +13,13 @@
 
     $params = $this->getConfig('options')['params'] ?? [];
     $selected = $params['selected'] ?? [];
+    $detailContent = $params['details'] ?? [];
+
+    // TODO: Do we need this? Refactor
     $searchResults = (($params['term'] ?? '') !== '') && (str_starts_with($params['field'] ?? '', 'text'));
+    if ($searchResults) {
+        $detailContent[] = 'search';
+    }
 
     // Choose articles and their children if the targets and template parameters are set accordingly
     // TODO: expand the tree beginning with the second level
@@ -61,6 +67,7 @@
             'tree' => $showTree,       // Tree rendering: true|false|collapsed
             'fold' => $treeFold,       // Foldable: fixed|foldable
             'details' => $treeDetails, // Tree child nodes: true|false|cursor
+            'content' => $detailContent, // Detail rows (content of tags, e.g. 'items.*.tags.*.content')
             'targets' => $params['targets'] ?? [],
             'label' => $selectTemplate, // Adds data-labels to the rows that can be used in selectors
 
@@ -70,7 +77,6 @@
                 // TODO: document
                 'data-filter-template' => $this->request->getQuery('template', 'table'),
                 'data-filter-mode' => $this->getConfig('options')['params']['mode'] ?? '',
-                'data-filter-lanes' => $this->getConfig('options')['params']['lanes'] ?? ''
             ],
             'actions' => $actions
         ]

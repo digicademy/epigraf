@@ -98,49 +98,26 @@ class AppController extends BaseController
         if (empty($selectedDatabase)) {
             return false;
         }
-        $selectedDatabase = Databank::addPrefix($selectedDatabase);
 
+        $selectedDatabase = Databank::addPrefix($selectedDatabase);
         $requestScope = $this->_getRequestScope();
         $requestAction = $this->request->getParam('action');
 
-        $permissions = array_merge($user['permissions'] ?? [], $user['rolepermissions'] ?? []);
+        // If a user has at least one permission allowing access to the database with the request scope,
+        // the user gains all wired permissions of the role associated with the permission.
+        $permissions = array_merge($user['permissions'] ?? [], $user['rolepermissions'] ?? [], $user['guestpermissions'] ?? []);
         foreach ($permissions as $permission) {
             if (
                 (($permission['permission_type'] ?? '') === 'access') &&
                 (($permission['entity_type'] ?? '') === 'databank') &&
-                (
-                    (($permission['entity_name'] ?? '') === $selectedDatabase) ||
-                    (($permission['entity_name'] ?? '') === '*')
-                ) &&
-                (
-                    (($permission['user_request'] ?? '') === $requestScope) ||
-                    (($permission['user_request'] ?? '') === '')
-                )
+                ((($permission['entity_name'] ?? '') === $selectedDatabase) || (($permission['entity_name'] ?? '') === '*')) &&
+                ((($permission['user_request'] ?? '') === $requestScope) || (($permission['user_request'] ?? '') === '')) &&
+                $this->inWiredPermissions($permission['user_role'] ?? $user['role'] ?? '', $requestScope, $requestAction)
             ) {
-                $userRole = $permission['user_role'] ?? $user['role'] ?? '';
-                $allowedActions = $this->authorized[$requestScope][$userRole] ?? [];
-
-                if (in_array($requestAction, $allowedActions)) {
-                    return true;
-                }
-                elseif (in_array('*', $allowedActions)) {
-                    return true;
-                }
-            }
-        }
-
-        // Admins and devels are gods on the web, if not hardwired otherwise
-        $userRole = $user['role'] ?? '';
-        if (($requestScope === 'web')  && in_array($userRole, ['admin','devel'])) {
-            if (!isset($this->authorized[$requestScope][$userRole])) {
-                return true;
-            }
-            $actions = $this->authorized[$requestScope][$userRole] ?? [];
-            if (in_array($requestAction, $actions) || in_array('*', $actions)) {
                 return true;
             }
         }
 
-        return false;
+        return $this->inWiredPermissions($user['role'] ?? '', $requestScope, $requestAction);
     }
 }

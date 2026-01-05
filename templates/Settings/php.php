@@ -12,7 +12,6 @@
 <?php $this->Breadcrumbs->add(__('PHP info')); ?>
 
 <?php
-
     ob_start();
     phpinfo();
     $content = ob_get_contents();

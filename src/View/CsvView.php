@@ -72,6 +72,11 @@ class CsvView extends ApiView
     static protected $_extension = 'csv';
 
     /**
+     * @var string Separator between blocks of serialized data.
+     */
+    static public $batchSeparator = '';
+
+    /**
      * Iconv extension.
      *
      * @var string
@@ -98,11 +103,6 @@ class CsvView extends ApiView
      * @var bool
      */
     protected $isFirstBom = true;
-
-    /**
-     * @var array collect header while generating rows
-     */
-    protected $_csvHeader = [];
 
     /**
      * Default config.
@@ -182,15 +182,15 @@ class CsvView extends ApiView
     protected function _prepareViewData($data, $options = [], $level = 0)
     {
         $isRows = $options['isRows'] ?? false;
-        $requestOptions = $this->getConfig('options');
+        //$requestOptions = $this->getConfig('options');
 
         // TODO: set option for all exports, rename resulting field from type to rowtype
         //       to avoid naming conflicts with a potential type entity
-        $requestOptions['types'] = 'merge';
+        $options['types'] = 'merge';
 
         // Entities with the getDataForExport method
         if (is_object($data) && ($data instanceof ExportEntityInterface)) {
-            return $data->getDataForExport($requestOptions, 'csv');
+            return $data->getDataForExport($options, 'csv');
         }
 
         // ResultSets
@@ -201,7 +201,7 @@ class CsvView extends ApiView
             $rows = [];
             foreach ($data as $row) {
                 if ((is_object($row) && ($row instanceof ExportEntityInterface))) {
-                    $row = $row->getDataForExport($requestOptions, 'csv');
+                    $row = $row->getDataForExport($options, 'csv');
                     $rows = array_merge($rows, $row);
                 }
                 else {
@@ -246,7 +246,7 @@ class CsvView extends ApiView
      */
     public function renderProlog($data, $options)
     {
-        $header = $this->getConfig('header', $this->_csvHeader);
+        $header = $this->getConfig('header', $this->_index['header'] ?? []);
         return $this->_renderRow($header, true);
     }
 
@@ -274,8 +274,6 @@ class CsvView extends ApiView
     public function renderContent($data, $options = [], $level = 0) : string
     {
 //        $data = $this->extractData($data, $options);
-
-        $this->_csvHeader = [];
         $out = '';
 
         // Single entities
@@ -302,7 +300,7 @@ class CsvView extends ApiView
                         throw new Exception("'" . $viewVar . "' is not an array or iteratable object.");
                     }
 
-                    $rows = $this->_prepareViewData($rows, ['isRows' => true], $level + 1);
+                    $rows = $this->_prepareViewData($rows, ['isRows' => true] + $options, $level + 1);
                     foreach ($rows as $row) {
                         if (is_object($row) && method_exists($row, 'toArray') && is_callable([$row, 'toArray'])) {
                             $row = $row->toArray();
@@ -331,8 +329,10 @@ class CsvView extends ApiView
         }
 
         if (!$header) {
-            $this->_csvHeader = array_unique(array_merge($this->_csvHeader, array_keys($row)));
-            $row = array_merge(array_fill_keys($this->_csvHeader, null), $row);
+            $headerIndex = $this->_index['header'] ?? [];
+            $headerIndex = array_unique(array_merge($headerIndex, array_keys($row)));
+            $this->_index['header'] = $headerIndex;
+            $row = array_merge(array_fill_keys($headerIndex, null), $row);
         }
 
         return (string)$this->_generateRow($row);

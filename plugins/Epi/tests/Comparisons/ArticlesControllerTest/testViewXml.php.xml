@@ -3,7 +3,7 @@
     <status>Status 1 in progress</status>
     <norm_data>normdata_1</norm_data>
     <created>2021-06-13T16:10:25+02:00</created>
-    <modified>2025-02-26T19:11:42+01:00</modified>
+    <modified>2025-02-26T18:11:42+01:00</modified>
     <signature>Signatur 1</signature>
     <name>Artikel 1 für das Testsystem</name>
     <project id="projects-1" projecttype="epi" database="projects" norm_iri="bookiri">
@@ -51,7 +51,7 @@ Interne Verweise
             <sectionpath>
               <section id="sections-5" articles_id="articles-1" sectiontype="text" name="Beschreibung" number="1" sortno="25" level="1" children="0" siblings="16" />
             </sectionpath>
-            <content>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.<app1 id="000004463586776180555555628924" /><nl /><nl /><h id="000004436160878777777777844048" data-link-target="properties-98" data-link-iri="properties/headers/projects~98" data-link-value="Überschrift 1">Text </h>Text Text<nl />Text Text Text<nl />Text <b id="000004436160887138888888933579" data-link-target="" data-link-iri="" data-link-value="Fett">Text </b><i id="000004436160890414351851976127" data-link-target="" data-link-iri="" data-link-value="Kursiv">Text</i><nl /><u id="000004436160892870370370431668" data-link-target="" data-link-iri="" data-link-value="Unterstrichen">Text </u><g id="000004436160895594907407469796" data-link-target="" data-link-iri="" data-link-value="Gesperrt">Text </g><k id="000004436160898130787037028136" data-link-target="" data-link-iri="" data-link-value="Kapitälchen">Text</k><nl /><a id="000004436160901166666666725447" value="LINK" href="https://www.snerpa.is/net/isl/laxdal.htm" data-link-target="" data-link-iri="" data-link-value="Link" /> <nl />Text Text Text<nl />Text Text Text<nl />Literaturverweis im Text: <rec_lit id="000004456302666872685185191153" data-link-target="properties-11" data-link-iri="properties/literature/projects~11" data-link-value="Unterautor " /><nl /><nl />Externe Verweise<nl />- auf einen Artikel: <rec_extern id="000004489202490501157407418218" data-link-target="articles-3" data-link-iri="articles/epi-article/normiri_2" data-link-value="Signatur 2" /><nl />- auf eine Inschrift: <rec_extern id="000004489202501042824074077622" data-link-target="sections-145" data-link-iri="sections/inscription/projects~145" data-link-value="Signatur 2[A]" /><nl />- auf einen Inschriftenteil: <rec_extern id="000004489202513028935185199996" data-link-target="sections-144" data-link-iri="sections/inscriptionpart/projects~144" data-link-value="Signatur 2[A.1]" /><nl />- auf eine Fußnote: <rec_extern id="000004489202522863425925931578" data-link-target="footnotes-4" data-link-iri="footnotes/app1/projects~4" data-link-value="Signatur 2[1]" /><nl /><nl />Interne Verweise<nl />- auf Inschrift B: <rec_intern id="000004489203414346064814810841" data-link-target="sections-22" data-link-iri="sections/inscription/projects~22" data-link-value="B" /><nl />- auf Inschriftenteil B2: <rec_intern id="000004489202534078703703725732" data-link-target="sections-19" data-link-iri="sections/inscriptionpart/projects~19" data-link-value="B.2" /><nl />- auf Fußnote a: <rec_intern id="000004489204161565972222228987" data-link-target="footnotes-6" data-link-iri="footnotes/app2/projects~6" data-link-value="a" /><nl />- auf Fußnote 2: <rec_intern id="000004489204172635416666673690" data-link-target="footnotes-5" data-link-iri="footnotes/app1/projects~5" data-link-value="2" /><nl />- auf Marke: <rec_ma id="000004489204491244212962960464" data-link-target="properties-186" data-link-iri="properties/brands/projects~186" data-link-value="hm001.1121" /></content>
+            <content>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.<app1 id="000004463586776180555555628924" /><nl /><nl /><h id="000004436160878777777777844048" data-link-target="properties-98" data-link-iri="properties/headers/projects~98" data-link-value="Überschrift 1">Text </h>Text Text<nl />Text Text Text<nl />Text <b id="000004436160887138888888933579" data-link-target="" data-link-iri="" data-link-value="Fett">Text </b><i id="000004436160890414351851976127" data-link-target="" data-link-iri="" data-link-value="Kursiv">Text</i><nl /><u id="000004436160892870370370431668" data-link-target="" data-link-iri="" data-link-value="Unterstrichen">Text </u><g id="000004436160895594907407469796" data-link-target="" data-link-iri="" data-link-value="Gesperrt">Text </g><k id="000004436160898130787037028136" data-link-target="" data-link-iri="" data-link-value="Kapitälchen">Text</k><nl /><a id="000004436160901166666666725447" value="LINK" href="https://www.snerpa.is/net/isl/laxdal.htm" data-link-target="" data-link-iri="" data-link-value="Link" /> <nl />Text Text Text<nl />Text Text Text<nl />Literaturverweis im Text: <rec_lit id="000004456302666872685185191153" data-link-target="properties-11" data-link-iri="properties/literature/unterautor-1-mit-" data-link-value="Unterautor 1 mit '" /><nl /><nl />Externe Verweise<nl />- auf einen Artikel: <rec_extern id="000004489202490501157407418218" data-link-target="articles-3" data-link-iri="articles/epi-article/normiri_2" data-link-value="Signatur 2" /><nl />- auf eine Inschrift: <rec_extern id="000004489202501042824074077622" data-link-target="sections-145" data-link-iri="sections/inscription/projects~145" data-link-value="Signatur 2[A]" /><nl />- auf einen Inschriftenteil: <rec_extern id="000004489202513028935185199996" data-link-target="sections-144" data-link-iri="sections/inscriptionpart/projects~144" data-link-value="Signatur 2[A.1]" /><nl />- auf eine Fußnote: <rec_extern id="000004489202522863425925931578" data-link-target="footnotes-4" data-link-iri="footnotes/app1/projects~4" data-link-value="Signatur 2[1]" /><nl /><nl />Interne Verweise<nl />- auf Inschrift B: <rec_intern id="000004489203414346064814810841" data-link-target="sections-22" data-link-iri="sections/inscription/projects~22" data-link-value="B" /><nl />- auf Inschriftenteil B2: <rec_intern id="000004489202534078703703725732" data-link-target="sections-19" data-link-iri="sections/inscriptionpart/projects~19" data-link-value="B.2" /><nl />- auf Fußnote a: <rec_intern id="000004489204161565972222228987" data-link-target="footnotes-6" data-link-iri="footnotes/app2/projects~6" data-link-value="a" /><nl />- auf Fußnote 2: <rec_intern id="000004489204172635416666673690" data-link-target="footnotes-5" data-link-iri="footnotes/app1/projects~5" data-link-value="2" /><nl />- auf Marke: <rec_ma id="000004489204491244212962960464" data-link-target="properties-186" data-link-iri="properties/brands/projects~186" data-link-value="hm001.1121" /></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -97,7 +97,7 @@ Interne Verweise
               <section id="sections-15" articles_id="articles-1" sectiontype="locations" name="Standorte" number="1" sortno="5" level="1" children="0" siblings="16" />
             </sectionpath>
             <value>0</value>
-            <content>Ergänzung 1, Verweis auf <rec_lit id="000004456302493517361111115062" data-link-target="properties-10" data-link-iri="properties/literature/projects~10" data-link-value="Quelle 1 " /></content>
+            <content>Ergänzung 1, Verweis auf <rec_lit id="000004456302493517361111115062" data-link-target="properties-10" data-link-iri="properties/literature/quelle-1-mit-" data-link-value="Quelle 1 mit &amp;" /></content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
@@ -163,7 +163,7 @@ Interne Verweise
               <section id="sections-13" articles_id="articles-1" sectiontype="conditions" name="Beschaffenheit" number="1" sortno="9" level="1" children="0" siblings="16" />
             </sectionpath>
             <value>1</value>
-            <date_sort>01234AAA00000000A4</date_sort>
+            <date_sort>11234-12-31T23:59:59/11234-01-01T00:00:00/11234-12-31T23:59:59/00/5</date_sort>
             <date_value>1234</date_value>
             <date_start>1234</date_start>
             <date_end>1234</date_end>
@@ -983,9 +983,9 @@ Numerische Fußnote:</content>
               <section id="sections-2" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="A teil 1 Alias" number="1" sortno="30" level="2" children="1" siblings="2" />
               <section id="sections-1" parent_id="sections-2" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="A teil 1 Alias Bearbeitung" number="1" sortno="31" level="3" children="0" siblings="1" />
             </sectionpath>
-            <content><bl id="000004474097580738425925958702" data-link-target="" data-link-iri="" data-link-value="Bereich"><nl />Zwischenraum von 1: <spatium_v id="000004436165070465277777844244" width="1" data-link-target="" data-link-iri="" data-link-value="Spatium" /><nl />Unbestimmter Verlust: <del id="000004436165076792824074163019" num_sign="0" data-link-target="" data-link-iri="" data-link-value="Verlust" /><nl />Erg<cpl id="000004436165097621527777892480" data-link-target="" data-link-iri="" data-link-value="Ergänzung">änzéng</cpl> <nl />Ausla <oms id="000004436165100978009259346871" data-link-target="" data-link-iri="" data-link-value="Auslassung">ssðung</oms> <nl />Verzeilenumbruh <vz id="000004436165037326388888946670" data-link-target="properties-86" data-link-iri="properties/indentations/projects~86" data-link-value="Verszeilenumbruch 1 " /> <nl /><add id="000004436165104023148148146540" data-link-target="" data-link-iri="" data-link-value="Nachtrag">Nachtrag</add><nl />Abk<abr id="000004436165108151620370436103" data-link-target="properties-171" data-link-iri="properties/abbreviations/projects~171" data-link-value="siehe">ürzung</abr><nl /><vsl id="000004436165110998842592605012" data-link-target="" data-link-iri="" data-link-value="Versalie">Ve</vsl>rsalie <nl />Zeilenumbruch <z id="000004436165006240740740742383" data-link-target="properties-79" data-link-iri="properties/linebindings/projects~79" data-link-value="Zeilenumbruch 1a" /><nl /> </bl><nl /><bl id="000004436164974262731481588902" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><nl />Hann bjó í Raums <wtr id="000004436165051586805555667815" data-link-target="properties-92" data-link-iri="properties/wordseparators/projects~92" data-link-value="Worttrenner 1" /> dal í Raumsd<all id="000004436165061471064814812687" data-link-target="properties-65" data-link-iri="properties/ligatures/projects~65" data-link-value="Buchstabenverbindung 2 ">æ</all>lafylk<nl /> </bl><nl /><bl id="000004515581058186342592608309" data-link-target="" data-link-iri="" data-link-value="Bereich">Alphabetische Fußnote: <app2 id="000004489202863265046296394325" /><nl />Numerische Fußnote: <app1 id="000004489202875583333333330386" /></bl></content>
+            <content><bl id="000004474097580738425925958702" data-link-target="" data-link-iri="" data-link-value="Bereich"><nl />Zwischenraum von 1: <spatium_v id="000004436165070465277777844244" width="1" data-link-target="" data-link-iri="" data-link-value="Spatium" /><nl />Unbestimmter Verlust: <del id="000004436165076792824074163019" num_sign="0" data-link-target="" data-link-iri="" data-link-value="Verlust" /><nl />Erg<cpl id="000004436165097621527777892480" data-link-target="" data-link-iri="" data-link-value="Ergänzung">änzéng</cpl> <nl />Ausla <oms id="000004436165100978009259346871" data-link-target="" data-link-iri="" data-link-value="Auslassung">ssðung</oms> <nl />Verzeilenumbruh <vz id="000004436165037326388888946670" data-link-target="properties-86" data-link-iri="properties/indentations/projects~86" data-link-value="Verszeilenumbruch 1" /> <nl /><add id="000004436165104023148148146540" data-link-target="" data-link-iri="" data-link-value="Nachtrag">Nachtrag</add><nl />Abk<abr id="000004436165108151620370436103" data-link-target="properties-171" data-link-iri="properties/abbreviations/projects~171" data-link-value="siehe">ürzung</abr><nl /><vsl id="000004436165110998842592605012" data-link-target="" data-link-iri="" data-link-value="Versalie">Ve</vsl>rsalie <nl />Zeilenumbruch <z id="000004436165006240740740742383" data-link-target="properties-79" data-link-iri="properties/linebindings/projects~79" data-link-value="Zeilenumbruch 1a" /><nl /> </bl><nl /><bl id="000004436164974262731481588902" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><nl />Hann bjó í Raums <wtr id="000004436165051586805555667815" data-link-target="properties-92" data-link-iri="properties/wordseparators/projects~92" data-link-value="Worttrenner 1" /> dal í Raumsd<all id="000004436165061471064814812687" data-link-target="properties-65" data-link-iri="properties/ligatures/projects~65" data-link-value="Buchstabenverbindung 2">æ</all>lafylk<nl /> </bl><nl /><bl id="000004515581058186342592608309" data-link-target="" data-link-iri="" data-link-value="Bereich">Alphabetische Fußnote: <app2 id="000004489202863265046296394325" /><nl />Numerische Fußnote: <app1 id="000004489202875583333333330386" /></bl></content>
             <translation>Übersetzung Inschrift A - Teil 1 - Bearbeitung 1</translation>
-            <date_sort>01234AAA00000000A4</date_sort>
+            <date_sort>11234-12-31T23:59:59/11234-01-01T00:00:00/11234-12-31T23:59:59/00/5</date_sort>
             <date_value>1234</date_value>
             <date_start>1234</date_start>
             <date_end>1234</date_end>
@@ -1092,9 +1092,9 @@ Hochgestellt</content>
               <section id="sections-24" parent_id="sections-3" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschriftenteil 2 A" number="2" sortno="34" level="2" children="1" siblings="2" />
               <section id="sections-23" parent_id="sections-24" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschriftenteil 2 A" number="1" sortno="35" level="3" children="0" siblings="1" />
             </sectionpath>
-            <content><bl id="000004436341948501157407446979" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><nl /><ini id="000004436342051736111111145522" data-link-target="" data-link-iri="" data-link-value="Initiale">í</ini>nitiale<nl />Ch<chr id="000004436342056334490740716638" data-link-target="" data-link-iri="" data-link-value="Chronogrammbuchstabe">r</chr>onogrammbuchstabe<nl />V<vsl id="000004436342047435185185246164" data-link-target="" data-link-iri="" data-link-value="Versalie">h</vsl>érsalie<nl />Ab<abr id="000004436342040472222222267856" data-link-target="" data-link-iri="" data-link-value="Abkürzung">m<kap id="000004436342060210648148155746" data-link-target="" data-link-iri="" data-link-value="Kapitalis">a</kap>ðr </abr> <z id="000004436341968184027777873155" data-link-target="properties-78" data-link-iri="properties/linebindings/projects~78" data-link-value="Zeile" /><nl /><add id="000004436342035339120370429044" data-link-target="" data-link-iri="" data-link-value="Nachtrag">Nachtrag</add><nl /><oms id="000004436342029998842592635716" data-link-target="" data-link-iri="" data-link-value="Auslassung">Auslassung</oms><nl /><all id="000004436342068519675925958209" data-link-target="properties-65" data-link-iri="properties/ligatures/projects~65" data-link-value="Buchstabenverbindung 2 ">Bu</all>chstabenverbindung<nl />Uns<insec id="000004436342083524305555650834" data-link-target="" data-link-iri="" data-link-value="Unsicher">ð</insec>cherer Text<nl />Zwischenraum von drei <spatium_v id="000004436341997248842592682649" width="3" data-link-target="" data-link-iri="" data-link-value="Spatium" /> Zeichen<nl />Unbestimmte Anzahl <del id="000004436342008081018518514387" num_sign="0" data-link-target="" data-link-iri="" data-link-value="Verlust" /> verlorener Zeichen<nl /><cpl id="000004436342019850694444462751" data-link-target="" data-link-iri="" data-link-value="Ergänzung">Erg</cpl>ðnzung<nl />Wort<wtr id="000004436341987521990740778661" data-link-target="properties-88" data-link-iri="properties/wordseparators/projects~88" data-link-value="Worttrenner 2 › Worttrenner 2a" />trenner<nl />Hochge<sup id="000004436342078564814814882651" data-link-target="properties-74" data-link-iri="properties/verticalalignments/projects~74" data-link-value="Hochgestellt 1 ">stellt</sup> <vz id="000004436341975421296296344091" data-link-target="properties-85" data-link-iri="properties/indentations/projects~85" data-link-value="Verszeilenumbruch 1a" /><nl /> </bl></content>
+            <content><bl id="000004436341948501157407446979" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><nl /><ini id="000004436342051736111111145522" data-link-target="" data-link-iri="" data-link-value="Initiale">í</ini>nitiale<nl />Ch<chr id="000004436342056334490740716638" data-link-target="" data-link-iri="" data-link-value="Chronogrammbuchstabe">r</chr>onogrammbuchstabe<nl />V<vsl id="000004436342047435185185246164" data-link-target="" data-link-iri="" data-link-value="Versalie">h</vsl>érsalie<nl />Ab<abr id="000004436342040472222222267856" data-link-target="" data-link-iri="" data-link-value="Abkürzung">m<kap id="000004436342060210648148155746" data-link-target="" data-link-iri="" data-link-value="Kapitalis">a</kap>ðr </abr> <z id="000004436341968184027777873155" data-link-target="properties-78" data-link-iri="properties/linebindings/projects~78" data-link-value="siehe" /><nl /><add id="000004436342035339120370429044" data-link-target="" data-link-iri="" data-link-value="Nachtrag">Nachtrag</add><nl /><oms id="000004436342029998842592635716" data-link-target="" data-link-iri="" data-link-value="Auslassung">Auslassung</oms><nl /><all id="000004436342068519675925958209" data-link-target="properties-65" data-link-iri="properties/ligatures/projects~65" data-link-value="Buchstabenverbindung 2">Bu</all>chstabenverbindung<nl />Uns<insec id="000004436342083524305555650834" data-link-target="" data-link-iri="" data-link-value="Unsicher">ð</insec>cherer Text<nl />Zwischenraum von drei <spatium_v id="000004436341997248842592682649" width="3" data-link-target="" data-link-iri="" data-link-value="Spatium" /> Zeichen<nl />Unbestimmte Anzahl <del id="000004436342008081018518514387" num_sign="0" data-link-target="" data-link-iri="" data-link-value="Verlust" /> verlorener Zeichen<nl /><cpl id="000004436342019850694444462751" data-link-target="" data-link-iri="" data-link-value="Ergänzung">Erg</cpl>ðnzung<nl />Wort<wtr id="000004436341987521990740778661" data-link-target="properties-88" data-link-iri="properties/wordseparators/projects~88" data-link-value="Worttrenner 2 › Worttrenner 2a" />trenner<nl />Hochge<sup id="000004436342078564814814882651" data-link-target="properties-74" data-link-iri="properties/verticalalignments/projects~74" data-link-value="Hochgestellt 1">stellt</sup> <vz id="000004436341975421296296344091" data-link-target="properties-85" data-link-iri="properties/indentations/projects~85" data-link-value="Verszeilenumbruch 1a" /><nl /> </bl></content>
             <translation>Übersetzung Örvar-Odds saga</translation>
-            <date_sort>01337AAA00000000A4</date_sort>
+            <date_sort>11337-12-31T23:59:59/11337-01-01T00:00:00/11337-12-31T23:59:59/00/5</date_sort>
             <date_value>1337</date_value>
             <date_start>1337</date_start>
             <date_end>1337</date_end>
@@ -1631,9 +1631,9 @@ fyrir því athann átti  þar miklar eignir.</content>
               <section id="sections-21" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="1" alias="Alias Inschrift 2 Teil 1" number="1" sortno="40" level="2" children="2" siblings="2" />
               <section id="sections-20" parent_id="sections-21" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Bearbeitung Inschrift 2 Bearbeitung 1 Teil 1" number="1" sortno="41" level="3" children="0" siblings="2" />
             </sectionpath>
-            <content><bl id="000004436342219936342592692857" data-link-target="properties-57" data-link-iri="properties/alignments/projects~57" data-link-value="siehe"><ini id="000004436342334950231481521590">Þ</ini>at <chr id="000004436342339388888888943282">v</chr>ar eitt <kap id="000004436342344737268518577048">s</kap>umar, <z id="000004436342244850694444419672" data-link-target="properties-78" data-link-iri="properties/linebindings/projects~78" data-link-value="Zeile" /><nl />at <vsl id="000004436342331244212963000975">G</vsl>rímr bjó för sína í V<all id="000004436342356430555555639778" data-link-target="properties-66" data-link-iri="properties/ligatures/projects~66" data-link-value="Buchstabenverbindung 1 ">í</all>k austr <vz id="000004436342252387731481570820" data-link-target="properties-82" data-link-iri="properties/indentations/projects~82" data-link-value="Verszeilenumbruch 2a" /><nl />eptir <sup id="000004436342367437500000062286" data-link-target="" data-link-iri="" data-link-value="Hochgestellt in der Transkription">Harald</sup> dau<wtr id="000004436342265232638888919263" data-link-target="properties-90" data-link-iri="properties/wordseparators/projects~90" data-link-value="Worttrenner 1 › siehe" />ðan, <insec id="000004436342370581018518576494">mág </insec>sinn, <spatium_v id="000004436342271391203703738522" width="1" /><nl />fyrir því <add id="000004436342304277777777828084">at</add><oms id="000004436342299424768518527263">hann</oms> <oms id="000004436342296030092592678988">átti </oms> <cpl id="000004436342291663194444404939">þar</cpl> m<del id="000004436342276410879629645922" num_sign="0" />iklar eignir.</bl><nl /></content>
+            <content><bl id="000004436342219936342592692857" data-link-target="properties-57" data-link-iri="properties/alignments/projects~57" data-link-value="siehe"><ini id="000004436342334950231481521590">Þ</ini>at <chr id="000004436342339388888888943282">v</chr>ar eitt <kap id="000004436342344737268518577048">s</kap>umar, <z id="000004436342244850694444419672" data-link-target="properties-78" data-link-iri="properties/linebindings/projects~78" data-link-value="siehe" /><nl />at <vsl id="000004436342331244212963000975">G</vsl>rímr bjó för sína í V<all id="000004436342356430555555639778" data-link-target="properties-66" data-link-iri="properties/ligatures/projects~66" data-link-value="Buchstabenverbindung 1">í</all>k austr <vz id="000004436342252387731481570820" data-link-target="properties-82" data-link-iri="properties/indentations/projects~82" data-link-value="Verszeilenumbruch 2a" /><nl />eptir <sup id="000004436342367437500000062286" data-link-target="" data-link-iri="" data-link-value="Hochgestellt in der Transkription">Harald</sup> dau<wtr id="000004436342265232638888919263" data-link-target="properties-90" data-link-iri="properties/wordseparators/projects~90" data-link-value="Worttrenner 1 › siehe" />ðan, <insec id="000004436342370581018518576494">mág </insec>sinn, <spatium_v id="000004436342271391203703738522" width="1" /><nl />fyrir því <add id="000004436342304277777777828084">at</add><oms id="000004436342299424768518527263">hann</oms> <oms id="000004436342296030092592678988">átti </oms> <cpl id="000004436342291663194444404939">þar</cpl> m<del id="000004436342276410879629645922" num_sign="0" />iklar eignir.</bl><nl /></content>
             <translation>Übersetzung Inschrift B Teil 1</translation>
-            <date_sort>01066AAA00000000A4</date_sort>
+            <date_sort>11066-12-31T23:59:59/11066-01-01T00:00:00/11066-12-31T23:59:59/00/5</date_sort>
             <date_value>1066</date_value>
             <date_start>1066</date_start>
             <date_end>1066</date_end>
@@ -1752,9 +1752,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
               <section id="sections-19" parent_id="sections-22" articles_id="articles-1" sectiontype="inscriptionpart" name="2" alias="Alias Inschrift B" number="2" sortno="46" level="2" children="2" siblings="2" />
               <section id="sections-18" parent_id="sections-19" articles_id="articles-1" sectiontype="inscriptiontext" name="1" alias="Alias Bearbeitung Teil 2 Inschrift B" number="1" sortno="47" level="3" children="0" siblings="2" />
             </sectionpath>
-            <content><bl id="000004436342493348379629644802" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><ini id="000004436342606019675925920222">G</ini>rímr <vsl id="000004436342597724537037066064">u</vsl>nni <chr id="000004436342610309027777859800">h</chr>enni <kap id="000004436342614041666666773306">m</kap>ikit, ok l<all id="000004436342619626157407418054" data-link-target="properties-64" data-link-iri="properties/ligatures/projects~64" data-link-value="Buchstabenverbindung 2a">æ</all>tr <oms id="000004436342575649305555631787">hann</oms> þat <sup id="000004436342629741898148160649" data-link-target="" data-link-iri="" data-link-value="Hochgestellt in der Transkription">eptir</sup> henni. <z id="000004436342516953703703748996" data-link-target="properties-80" data-link-iri="properties/linebindings/projects~80" data-link-value="Zeilenumbruch 1 " /><nl />Hún <add id="000004436342582651620370456862">var hverri </add>konu vænni<spatium_v id="000004436342550361111111153956" width="1" /> ok betr<del id="000004436342558008101851960179" num_sign="0" /> at sér <cpl id="000004436342570162037037096209">um</cpl> alla hluti,<vz id="000004436342523789351851958494" data-link-target="properties-84" data-link-iri="properties/indentations/projects~84" data-link-value="Verszeile" /><nl /> þeira<abr id="000004436342590993055555669897" data-link-target="" data-link-iri="" data-link-value="Abkürzung"> er</abr> í Nor<wtr id="000004436342540800925925924686" data-link-target="properties-88" data-link-iri="properties/wordseparators/projects~88" data-link-value="Worttrenner 2 › Worttrenner 2a" />egi váru. <nl />Þeira för var búin <insec id="000004436342633575231481531016">virðuliga</insec>.</bl></content>
+            <content><bl id="000004436342493348379629644802" data-link-target="properties-61" data-link-iri="properties/alignments/projects~61" data-link-value="Bereich 1a"><ini id="000004436342606019675925920222">G</ini>rímr <vsl id="000004436342597724537037066064">u</vsl>nni <chr id="000004436342610309027777859800">h</chr>enni <kap id="000004436342614041666666773306">m</kap>ikit, ok l<all id="000004436342619626157407418054" data-link-target="properties-64" data-link-iri="properties/ligatures/projects~64" data-link-value="Buchstabenverbindung 2a">æ</all>tr <oms id="000004436342575649305555631787">hann</oms> þat <sup id="000004436342629741898148160649" data-link-target="" data-link-iri="" data-link-value="Hochgestellt in der Transkription">eptir</sup> henni. <z id="000004436342516953703703748996" data-link-target="properties-80" data-link-iri="properties/linebindings/projects~80" data-link-value="Zeilenumbruch 1" /><nl />Hún <add id="000004436342582651620370456862">var hverri </add>konu vænni<spatium_v id="000004436342550361111111153956" width="1" /> ok betr<del id="000004436342558008101851960179" num_sign="0" /> at sér <cpl id="000004436342570162037037096209">um</cpl> alla hluti,<vz id="000004436342523789351851958494" data-link-target="properties-84" data-link-iri="properties/indentations/projects~84" data-link-value="siehe" /><nl /> þeira<abr id="000004436342590993055555669897" data-link-target="" data-link-iri="" data-link-value="Abkürzung"> er</abr> í Nor<wtr id="000004436342540800925925924686" data-link-target="properties-88" data-link-iri="properties/wordseparators/projects~88" data-link-value="Worttrenner 2 › Worttrenner 2a" />egi váru. <nl />Þeira för var búin <insec id="000004436342633575231481531016">virðuliga</insec>.</bl></content>
             <translation>Übersetzung Inschrift B Teil 2</translation>
-            <date_sort>00794AAA00000000A4</date_sort>
+            <date_sort>10794-12-31T23:59:59/10794-01-01T00:00:00/10794-12-31T23:59:59/00/5</date_sort>
             <date_value>794</date_value>
             <date_start>794</date_start>
             <date_end>794</date_end>
@@ -1926,19 +1926,20 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <property id="properties-43" sortno="2" sortkey="wappen 002" propertytype="heraldry" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
               <name>Wappen 2</name>
               <comment>Notizen Wappen 2</comment>
-              <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-iri="properties/literature/projects~10" data-link-value="Quelle 1 "></rec_lit></content>
+              <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-iri="properties/literature/quelle-1-mit-" data-link-value="Quelle 1 mit &amp;"></rec_lit></content>
               <elements>Oberwappen 2</elements>
               <file_name>15320_0_589.jpg</file_name>
               <source_from>Nachweis Wappen 2</source_from>
               <links>
-                <link id="links-65" to_id="properties-10" to_value="Quelle 1 " from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
+                <link id="links-65" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
                   <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
-                    <lemma>Quelle 1</lemma>
-                    <name>Quelle 1 </name>
+                    <lemma>Quelle 1 mit &amp;</lemma>
+                    <name>Quelle 1 mit &amp;</name>
                     <unit>Quelleneinheit 1</unit>
-                    <comment>Quelle bemerkung</comment>
-                    <keywords>Quelle,Karstadt,Ursprung</keywords>
-                    <norm_data>Quelle Norm 1</norm_data>
+                    <comment>Quelle 1 Bemerkung</comment>
+                    <keywords>Karstadt,Ursprung</keywords>
+                    <norm_data>Quelle 1 Normdaten</norm_data>
+                    <norm_iri>quelle-1-mit-</norm_iri>
                   </property>
                 </link>
               </links>
@@ -2039,7 +2040,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
               <creator />
               <source />
               <licence />
-              <rights />
+              <copyright />
               <usageterms />
               <credit />
               <marked />
@@ -2071,7 +2072,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
               <creator />
               <source />
               <licence />
-              <rights />
+              <copyright />
               <usageterms />
               <credit />
               <marked />
@@ -2225,12 +2226,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
             <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
-              <lemma>Quelle 1</lemma>
-              <name>Quelle 1 </name>
+              <lemma>Quelle 1 mit &amp;</lemma>
+              <name>Quelle 1 mit &amp;</name>
               <unit>Quelleneinheit 1</unit>
-              <comment>Quelle bemerkung</comment>
-              <keywords>Quelle,Karstadt,Ursprung</keywords>
-              <norm_data>Quelle Norm 1</norm_data>
+              <comment>Quelle 1 Bemerkung</comment>
+              <keywords>Karstadt,Ursprung</keywords>
+              <norm_data>Quelle 1 Normdaten</norm_data>
+              <norm_iri>quelle-1-mit-</norm_iri>
             </property>
           </item>
           <item id="items-10" itemtype="literature" sortno="2" sections_id="sections-14" articles_id="articles-1">
@@ -2242,12 +2244,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
             <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="2" lft="5" rght="6" iscategory="1" ishidden="1">
-              <lemma>Unterautor 2</lemma>
-              <name>Unterautor 2 </name>
+              <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
+              <name>Kurztitel Unterautor 2 mit &#039;</name>
               <unit>Unterautor2 Einheit</unit>
               <comment>Unterautor 2 Bemerkung</comment>
               <keywords>Autor,Karstadt,Ursprung</keywords>
               <norm_data>Unterautor 2 Normdaten</norm_data>
+              <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
               <ancestors>
                 <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="1" lft="2" rght="7" iscategory="1" ishidden="0">
                   <lemma>Autor 1</lemma>
@@ -2307,12 +2310,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
             <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="2" lft="5" rght="6" iscategory="1" ishidden="1">
-              <lemma>Unterautor 2</lemma>
-              <name>Unterautor 2 </name>
+              <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
+              <name>Kurztitel Unterautor 2 mit &#039;</name>
               <unit>Unterautor2 Einheit</unit>
               <comment>Unterautor 2 Bemerkung</comment>
               <keywords>Autor,Karstadt,Ursprung</keywords>
               <norm_data>Unterautor 2 Normdaten</norm_data>
+              <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
               <ancestors>
                 <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="1" lft="2" rght="7" iscategory="1" ishidden="0">
                   <lemma>Autor 1</lemma>
@@ -2440,7 +2444,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-22" to_id="properties-65" to_value="Buchstabenverbindung 2 " from_id="items-1" from_field="content" from_tagname="all" from_tagid="000004436165061471064814812687" root_id="articles-1">
+      <link id="links-22" to_id="properties-65" to_value="Buchstabenverbindung 2" from_id="items-1" from_field="content" from_tagname="all" from_tagid="000004436165061471064814812687" root_id="articles-1">
         <property id="properties-65" sortno="7" sortkey="Buchstabenverbindung 2" propertytype="ligatures" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
           <lemma>Buchstabenverbindung 2</lemma>
           <name>Buchstabenverbindung 2 </name>
@@ -2460,7 +2464,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <norm_data>Worttrenner 1 Norm</norm_data>
         </property>
       </link>
-      <link id="links-24" to_id="properties-86" to_value="Verszeilenumbruch 1 " from_id="items-1" from_field="content" from_tagname="vz" from_tagid="000004436165037326388888946670" root_id="articles-1">
+      <link id="links-24" to_id="properties-86" to_value="Verszeilenumbruch 1" from_id="items-1" from_field="content" from_tagname="vz" from_tagid="000004436165037326388888946670" root_id="articles-1">
         <property id="properties-86" sortno="1" sortkey="Verszeilenumbruch 1" propertytype="indentations" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
           <lemma>Verszeilenumbruch 1</lemma>
           <name>Verszeilenumbruch 1 </name>
@@ -2511,7 +2515,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
         </property>
       </link>
       <link id="links-29" to_value="Hochgestellt in der Transkription" from_id="items-41" from_field="content" from_tagname="sup" from_tagid="000004436342367437500000062286" root_id="articles-1" />
-      <link id="links-30" to_id="properties-66" to_value="Buchstabenverbindung 1 " from_id="items-41" from_field="content" from_tagname="all" from_tagid="000004436342356430555555639778" root_id="articles-1">
+      <link id="links-30" to_id="properties-66" to_value="Buchstabenverbindung 1" from_id="items-41" from_field="content" from_tagname="all" from_tagid="000004436342356430555555639778" root_id="articles-1">
         <property id="properties-66" sortno="1" sortkey="Buchstabenverbindung 1" propertytype="ligatures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
           <lemma>Buchstabenverbindung 1</lemma>
           <name>Buchstabenverbindung 1 </name>
@@ -2560,7 +2564,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-33" to_id="properties-78" to_value="Zeile" from_id="items-41" from_field="content" from_tagname="z" from_tagid="000004436342244850694444419672" root_id="articles-1">
+      <link id="links-33" to_id="properties-78" to_value="siehe" from_id="items-41" from_field="content" from_tagname="z" from_tagid="000004436342244850694444419672" root_id="articles-1">
         <property id="properties-78" parent_id="properties-80" sortno="5" related_id="properties-79" propertytype="linebindings" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
           <lemma>siehe</lemma>
           <unit>Zeilenumbruch 1b Einheit</unit>
@@ -2598,7 +2602,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-35" to_id="properties-74" to_value="Hochgestellt 1 " from_id="items-46" from_field="content" from_tagname="sup" from_tagid="000004436342078564814814882651" root_id="articles-1">
+      <link id="links-35" to_id="properties-74" to_value="Hochgestellt 1" from_id="items-46" from_field="content" from_tagname="sup" from_tagid="000004436342078564814814882651" root_id="articles-1">
         <property id="properties-74" sortno="1" sortkey="Hochgestellt 1" propertytype="verticalalignments" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
           <lemma>Hochgestellt 1</lemma>
           <name>Hochgestellt 1 </name>
@@ -2608,7 +2612,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <norm_data>Hochgestellt 1 Norm</norm_data>
         </property>
       </link>
-      <link id="links-36" to_id="properties-65" to_value="Buchstabenverbindung 2 " from_id="items-46" from_field="content" from_tagname="all" from_tagid="000004436342068519675925958209" root_id="articles-1">
+      <link id="links-36" to_id="properties-65" to_value="Buchstabenverbindung 2" from_id="items-46" from_field="content" from_tagname="all" from_tagid="000004436342068519675925958209" root_id="articles-1">
         <property id="properties-65" sortno="7" sortkey="Buchstabenverbindung 2" propertytype="ligatures" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
           <lemma>Buchstabenverbindung 2</lemma>
           <name>Buchstabenverbindung 2 </name>
@@ -2659,7 +2663,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-40" to_id="properties-78" to_value="Zeile" from_id="items-46" from_field="content" from_tagname="z" from_tagid="000004436341968184027777873155" root_id="articles-1">
+      <link id="links-40" to_id="properties-78" to_value="siehe" from_id="items-46" from_field="content" from_tagname="z" from_tagid="000004436341968184027777873155" root_id="articles-1">
         <property id="properties-78" parent_id="properties-80" sortno="5" related_id="properties-79" propertytype="linebindings" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
           <lemma>siehe</lemma>
           <unit>Zeilenumbruch 1b Einheit</unit>
@@ -2740,7 +2744,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-46" to_id="properties-84" to_value="Verszeile" from_id="items-37" from_field="content" from_tagname="vz" from_tagid="000004436342523789351851958494" root_id="articles-1">
+      <link id="links-46" to_id="properties-84" to_value="siehe" from_id="items-37" from_field="content" from_tagname="vz" from_tagid="000004436342523789351851958494" root_id="articles-1">
         <property id="properties-84" parent_id="properties-86" sortno="5" related_id="properties-85" propertytype="indentations" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
           <lemma>siehe</lemma>
           <unit>Verszeilenumbruch 1b Einheit</unit>
@@ -2759,7 +2763,7 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-47" to_id="properties-80" to_value="Zeilenumbruch 1 " from_id="items-37" from_field="content" from_tagname="z" from_tagid="000004436342516953703703748996" root_id="articles-1">
+      <link id="links-47" to_id="properties-80" to_value="Zeilenumbruch 1" from_id="items-37" from_field="content" from_tagname="z" from_tagid="000004436342516953703703748996" root_id="articles-1">
         <property id="properties-80" sortno="1" sortkey="Zeilenumbruch 1" propertytype="linebindings" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
           <lemma>Zeilenumbruch 1</lemma>
           <name>Zeilenumbruch 1 </name>
@@ -2790,14 +2794,15 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
         </property>
       </link>
       <link id="links-49" to_value="Zeile" from_id="items-37" from_field="content" from_tagname="z" from_tagid="000004436342484450231481550611" root_id="articles-1" />
-      <link id="links-50" to_id="properties-11" to_value="Unterautor " from_id="items-4" from_field="content" from_tagname="rec_lit" from_tagid="000004456302666872685185191153" root_id="articles-1">
+      <link id="links-50" to_id="properties-11" to_value="Unterautor 1 mit &#039;" from_id="items-4" from_field="content" from_tagname="rec_lit" from_tagid="000004456302666872685185191153" root_id="articles-1">
         <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" level="2" lft="3" rght="4" iscategory="1" ishidden="1">
-          <lemma>Unterautor 1</lemma>
-          <name>Unterautor </name>
+          <lemma>Unterautor 1 mit &#039;</lemma>
+          <name>Unterautor 1 mit &#039;</name>
           <unit>Unterauteinheit 1</unit>
           <comment>Unterautorbemerkung 1</comment>
           <keywords>Autor,Quelle</keywords>
           <norm_data>Unterautornorm 1</norm_data>
+          <norm_iri>unterautor-1-mit-</norm_iri>
           <ancestors>
             <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="1" lft="2" rght="7" iscategory="1" ishidden="0">
               <lemma>Autor 1</lemma>
@@ -2810,14 +2815,15 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </ancestors>
         </property>
       </link>
-      <link id="links-51" to_id="properties-10" to_value="Quelle 1 " from_id="items-14" from_field="content" from_tagname="rec_lit" from_tagid="000004456302493517361111115062" root_id="articles-1">
+      <link id="links-51" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="items-14" from_field="content" from_tagname="rec_lit" from_tagid="000004456302493517361111115062" root_id="articles-1">
         <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
-          <lemma>Quelle 1</lemma>
-          <name>Quelle 1 </name>
+          <lemma>Quelle 1 mit &amp;</lemma>
+          <name>Quelle 1 mit &amp;</name>
           <unit>Quelleneinheit 1</unit>
-          <comment>Quelle bemerkung</comment>
-          <keywords>Quelle,Karstadt,Ursprung</keywords>
-          <norm_data>Quelle Norm 1</norm_data>
+          <comment>Quelle 1 Bemerkung</comment>
+          <keywords>Karstadt,Ursprung</keywords>
+          <norm_data>Quelle 1 Normdaten</norm_data>
+          <norm_iri>quelle-1-mit-</norm_iri>
         </property>
       </link>
       <link id="links-52" to_id="articles-1" to_value="Signatur 1" from_id="items-14" from_field="content" from_tagname="rec_extern" from_tagid="000004456302482934027777780186" root_id="articles-1">
@@ -2959,35 +2965,38 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           </sections>
         </property>
         <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" level="2" lft="3" rght="4" iscategory="1" ishidden="1">
-          <lemma>Unterautor 1</lemma>
-          <name>Unterautor </name>
+          <lemma>Unterautor 1 mit &#039;</lemma>
+          <name>Unterautor 1 mit &#039;</name>
           <unit>Unterauteinheit 1</unit>
           <comment>Unterautorbemerkung 1</comment>
           <keywords>Autor,Quelle</keywords>
           <norm_data>Unterautornorm 1</norm_data>
+          <norm_iri>unterautor-1-mit-</norm_iri>
           <sections>
             <section id="sections-5" articles_id="articles-1" />
           </sections>
         </property>
         <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="2" lft="5" rght="6" iscategory="1" ishidden="1">
-          <lemma>Unterautor 2</lemma>
-          <name>Unterautor 2 </name>
+          <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
+          <name>Kurztitel Unterautor 2 mit &#039;</name>
           <unit>Unterautor2 Einheit</unit>
           <comment>Unterautor 2 Bemerkung</comment>
           <keywords>Autor,Karstadt,Ursprung</keywords>
           <norm_data>Unterautor 2 Normdaten</norm_data>
+          <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
           <sections>
             <section id="sections-16" articles_id="articles-1" />
             <section id="sections-14" articles_id="articles-1" />
           </sections>
         </property>
         <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
-          <lemma>Quelle 1</lemma>
-          <name>Quelle 1 </name>
+          <lemma>Quelle 1 mit &amp;</lemma>
+          <name>Quelle 1 mit &amp;</name>
           <unit>Quelleneinheit 1</unit>
-          <comment>Quelle bemerkung</comment>
-          <keywords>Quelle,Karstadt,Ursprung</keywords>
-          <norm_data>Quelle Norm 1</norm_data>
+          <comment>Quelle 1 Bemerkung</comment>
+          <keywords>Karstadt,Ursprung</keywords>
+          <norm_data>Quelle 1 Normdaten</norm_data>
+          <norm_iri>quelle-1-mit-</norm_iri>
           <sections>
             <section id="sections-15" articles_id="articles-1" />
             <section id="sections-14" articles_id="articles-1" />
@@ -3289,19 +3298,20 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
         <property id="properties-43" sortno="2" sortkey="wappen 002" propertytype="heraldry" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
           <name>Wappen 2</name>
           <comment>Notizen Wappen 2</comment>
-          <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-iri="properties/literature/projects~10" data-link-value="Quelle 1 "></rec_lit></content>
+          <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" data-link-target="properties-10" data-link-iri="properties/literature/quelle-1-mit-" data-link-value="Quelle 1 mit &amp;"></rec_lit></content>
           <elements>Oberwappen 2</elements>
           <file_name>15320_0_589.jpg</file_name>
           <source_from>Nachweis Wappen 2</source_from>
           <links>
-            <link id="links-65" to_id="properties-10" to_value="Quelle 1 " from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
+            <link id="links-65" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
               <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
-                <lemma>Quelle 1</lemma>
-                <name>Quelle 1 </name>
+                <lemma>Quelle 1 mit &amp;</lemma>
+                <name>Quelle 1 mit &amp;</name>
                 <unit>Quelleneinheit 1</unit>
-                <comment>Quelle bemerkung</comment>
-                <keywords>Quelle,Karstadt,Ursprung</keywords>
-                <norm_data>Quelle Norm 1</norm_data>
+                <comment>Quelle 1 Bemerkung</comment>
+                <keywords>Karstadt,Ursprung</keywords>
+                <norm_data>Quelle 1 Normdaten</norm_data>
+                <norm_iri>quelle-1-mit-</norm_iri>
               </property>
             </link>
           </links>

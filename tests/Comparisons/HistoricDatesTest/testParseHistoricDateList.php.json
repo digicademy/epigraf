@@ -1,0 +1,363 @@
+[
+    [
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": "1949",
+                "unit": "minute",
+                "day": {
+                    "month": "05",
+                    "day": "23"
+                },
+                "hour": {
+                    "hour": "15",
+                    "minute": "13",
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": true
+            },
+            "end": {
+                "number": "1952",
+                "unit": "minute",
+                "day": {
+                    "month": "07",
+                    "day": "03"
+                },
+                "hour": {
+                    "hour": "17",
+                    "minute": "18",
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": true
+            }
+        },
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": "1960",
+                "unit": "tag",
+                "day": {
+                    "month": "07",
+                    "day": "15"
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": true
+            },
+            "end": {
+                "number": false,
+                "unit": "",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": true,
+                "isiso": false
+            }
+        },
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": "1965",
+                "unit": "tag",
+                "day": {
+                    "month": "03",
+                    "day": "04"
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": true
+            },
+            "end": {
+                "number": false,
+                "unit": "",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": true,
+                "isiso": false
+            }
+        }
+    ],
+    [
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": 513,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": false
+            },
+            "end": {
+                "number": false,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": true,
+                "isiso": false
+            }
+        },
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": 514,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": false
+            },
+            "end": {
+                "number": 516,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": false
+            }
+        },
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": 712,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": false,
+                "isiso": false
+            },
+            "end": {
+                "number": false,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": true,
+                "isiso": false
+            }
+        },
+        {
+            "invalid": false,
+            "uncertain": false,
+            "or": false,
+            "begin": {
+                "number": 1613,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "vor",
+                "short": false,
+                "invalid": false,
+                "isiso": false
+            },
+            "end": {
+                "number": false,
+                "unit": "jahreszahl",
+                "day": {
+                    "month": false,
+                    "day": false
+                },
+                "hour": {
+                    "hour": false,
+                    "minute": false,
+                    "second": false
+                },
+                "fraction": {
+                    "numerator_from": false,
+                    "numerator_to": false,
+                    "denominator": false
+                },
+                "negative": false,
+                "modifier": "",
+                "short": false,
+                "invalid": true,
+                "isiso": false
+            }
+        }
+    ]
+]

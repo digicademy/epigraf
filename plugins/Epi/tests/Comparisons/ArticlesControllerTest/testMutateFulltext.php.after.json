@@ -310,7 +310,7 @@
         "deleted": 0,
         "job_id": null,
         "value": "text",
-        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\n\nText Text Text\nText Text Text\nText Text Text\nText Text Text\nLINK \nText Text Text\nText Text Text\nLiteraturverweis im Text: Unterautor \n\nExterne Verweise\n- auf einen Artikel: Signatur 2\n- auf eine Inschrift: Signatur 2[A]\n- auf einen Inschriftenteil: Signatur 2[A.1]\n- auf eine Fu\u00dfnote: Signatur 2[1]\n\nInterne Verweise\n- auf Inschrift B: B\n- auf Inschriftenteil B2: B.2\n- auf Fu\u00dfnote a: a\n- auf Fu\u00dfnote 2: 2\n- auf Marke: hm001.1121",
+        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\n\nText Text Text\nText Text Text\nText Text Text\nText Text Text\nLINK \nText Text Text\nText Text Text\nLiteraturverweis im Text: Unterautor 1 mit '\n\nExterne Verweise\n- auf einen Artikel: Signatur 2\n- auf eine Inschrift: Signatur 2[A]\n- auf einen Inschriftenteil: Signatur 2[A.1]\n- auf eine Fu\u00dfnote: Signatur 2[1]\n\nInterne Verweise\n- auf Inschrift B: B\n- auf Inschriftenteil B2: B.2\n- auf Fu\u00dfnote a: a\n- auf Fu\u00dfnote 2: 2\n- auf Marke: hm001.1121",
         "sections_id": 5,
         "articles_id": 1
     },
@@ -373,7 +373,7 @@
         "deleted": 0,
         "job_id": null,
         "value": "text",
-        "content": "Fu\u00dfnote mit Verweisen: \n\nInterner Verweis auf Inschrift: A\nInterner Verweis auf Fu\u00dfnote: 1\n\nLiteraturverweis: Unterautor",
+        "content": "Fu\u00dfnote mit Verweisen: \n\nInterner Verweis auf Inschrift: A\nInterner Verweis auf Fu\u00dfnote: 1\n\nLiteraturverweis: Unterautor 1 mit '",
         "sections_id": 147,
         "articles_id": 3
     },

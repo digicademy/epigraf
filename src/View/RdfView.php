@@ -88,6 +88,14 @@ class RdfView extends XmlView
                 '_xml_attributes' => ['rdf:resource'],
                 'rdf:resource' => $value
             ];
+        } elseif ($type !== 'prefixed name') {
+            if ($type !== 'literal') {
+                $value = [
+                    '_xml_attributes' => ['rdf:datatype'],
+                    'rdf:datatype' => $type,
+                    $value
+                ];
+            }
         }
 
         return $value;
@@ -244,7 +252,8 @@ class RdfView extends XmlView
                         }
                     }
                     else {
-                        $predicateList[$predKey] = self::renderValue($objects, $options);
+                        $object = self::renderValue($objects, $options);
+                        $predicateList[$predKey] = $object;
                     }
                 }
 

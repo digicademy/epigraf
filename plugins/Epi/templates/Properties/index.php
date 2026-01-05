@@ -40,10 +40,9 @@
             $this->getConfig('options')['params']['find'] ?? '',
             false,
             [
-                "class" => "content-searchbar-item-main",
+                "class" => "content-searchbar-item-main small-order-3",
                 "label" => __('Jump'),
-                'placeholder' => __('Jump to letter, e.g. type "Me > b" '),
-                'form' => Router::url(['controller' => 'Properties', 'action' => 'index',''])
+                'placeholder' => __('Jump to letter, e.g. type "me - b" ')
             ]
         ) ?>
 
@@ -57,7 +56,7 @@
                 'options' => $this->getConfig('options')['filter']['search'] ?? []
             ],
             [
-                "class" => "content-searchbar-item-main",
+                "class" => "content-searchbar-item-main small-order-4",
                 "label" => __('Search'),
                 'placeholder' => __('Search properties'),
                 'form' => Router::url(['controller' => 'Properties', 'action' => 'index',''])
@@ -72,11 +71,20 @@
             [
                 "label" => __('Projects'),
                 'reset' => true,
-                'checkboxlist' => true
+                'checkboxlist' => true,
+                'searchable' => true,
+                'class' => 'small-order-2'
             ]
         ) ?>
 
-        <?php // $this->Table->filterReset("epi_properties", [$scope]) ?>
+        <div class="content-searchbar-item content-searchbar-item-sub show-small small-order-1">
+            <div class="input-group">
+                <button  class="accordion-toggle" data-toggle-accordion="sidebar-left">
+                    <?=  __('Navigation') ?>
+                </button>
+            </div>
+        </div>
+
     </div>
 
 <?php endif; ?>
@@ -97,7 +105,7 @@
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup('bottom');
     $this->Link->addCounter();
-
+    $this->Link->addActionGroupLabel(__('Context Actions'));
     $this->Link->addCreateAction(
         __('Create property'),
         [
@@ -109,8 +117,11 @@
 
     $this->Link->addAction(
         __('Import'),
-        ['action' => 'import', $scope],
-        ['class'=>'actions-set-default']
+        ['controller' => 'Properties', 'action' => 'import', $scope],
+        [
+            'class' => 'popup actions-set-default',
+            'data-popup-modal' => true
+        ]
     );
 
     //TODO what else to filter out?
@@ -135,7 +146,7 @@
         ['action' => 'mutate', $scope],
         [
             'data-list-select' => 'epi_properties',
-            'data-list-param' => 'properties',
+            'data-list-param' => 'id',
             'class' => 'popup actions-set-default',
             'data-popup-modal' => true
         ]
@@ -145,10 +156,11 @@
         __('Move'), null,
         [
             'linktype' => 'button',
-            'class' => 'actions-set-default widget-switch',
+            'class' => 'actions-set-default widget-switch hide-small',
             'data-role' => 'move',
             'data-switch-class' => 'hide',
             'data-switch-element' => '.actions-set-default, .actions-set-move',
+            'data-target-model' => 'epi.properties',
             'roles' => ['admin','editor','author']
         ]
     );
@@ -182,6 +194,6 @@
 
 <?php
     $this->Link->beginActionGroup('bottom-right');
-    $this->Link->toggleModes($queryparams);
-    $this->Link->downloadButtons (null, 'properties', 'epi_properties');
+    $this->Link->toggleModes($queryparams, $queryparams['propertytype'] ?? '');
+    $this->Link->exportButtons($queryparams, 'epi_properties');
 ?>

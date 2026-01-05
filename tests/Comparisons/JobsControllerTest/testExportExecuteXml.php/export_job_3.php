@@ -15,7 +15,7 @@
   )),
   'created_by' => 1,
   'modified_by' => 1,
-  'typ' => 'export',
+  'jobtype' => 'export',
   'status' => 'work',
   'progress' => 1,
   'progressmax' => 10,
@@ -32,7 +32,7 @@
       'projects' => '1',
     ),
     'selection' => 'selected',
-    'tasks' => 
+    'options' => 
     array (
       'enabled' => 
       array (
@@ -52,20 +52,22 @@
           'enabled' => 1,
         ),
       ),
-      'index' => 1,
       'options' => 
       array (
       ),
+      'index' => 1,
     ),
     'pipeline_name' => 'Rohdaten',
     'user_role' => 'author',
     'user_id' => 1,
+    'pipeline_progress' => 0,
     'pipeline_tasks' => 
     array (
       0 => 
       array (
         'number' => '1',
         'type' => 'options',
+        'format' => 'xml',
         'outputfile' => '',
       ),
       1 => 
@@ -101,6 +103,7 @@
         'canskip' => '1',
         'caption' => 'Bandartikel',
         'articletypes' => 'epi-book',
+        'snippets' => 'indexes,paths,editors,comments',
         'matchprojects' => '1',
         'outputfile' => '',
       ),
@@ -111,6 +114,7 @@
         'canskip' => '1',
         'caption' => 'Katalogartikel',
         'articletypes' => '',
+        'snippets' => 'indexes,paths,editors,comments',
         'matchprojects' => '0',
         'outputfile' => '',
       ),
@@ -144,7 +148,7 @@
         'download' => '1',
       ),
     ),
-    'pipeline_progress' => 0,
   ),
+  'result' => NULL,
 ); 
 ?>

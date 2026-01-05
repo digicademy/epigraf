@@ -630,7 +630,6 @@ ALTER TABLE `locktable`
 ALTER TABLE `items`
 	ADD COLUMN `file_meta` TEXT NULL DEFAULT NULL COLLATE 'utf8_unicode_ci' AFTER `file_copyright`;
 
-
 ALTER TABLE `types`
 	ADD COLUMN `preset` VARCHAR(50) NOT NULL DEFAULT 'default' COLLATE 'utf8mb4_unicode_ci' AFTER `mode`,
 	DROP INDEX `mode`,
@@ -640,3 +639,10 @@ ALTER TABLE `notes` CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(50) NULL DEFAULT
 
 ALTER TABLE `items`
 	ADD COLUMN `itemgroup` VARCHAR(100) NULL DEFAULT NULL AFTER `itemtype`;
+
+ALTER TABLE `properties`
+	ADD COLUMN `status` VARCHAR(1500) NULL DEFAULT NULL AFTER `published`,
+	CHANGE COLUMN `norm_data` `norm_data` TEXT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `norm_type`;
+
+ALTER TABLE `items`
+	ADD COLUMN `status` VARCHAR(1500) NULL DEFAULT NULL AFTER `published`;

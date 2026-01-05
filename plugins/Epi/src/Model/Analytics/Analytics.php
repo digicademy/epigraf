@@ -954,8 +954,8 @@ class Analytics
         $databanksModel = TableRegistry::getTableLocator()->get('Databanks');
         $databank = $databanksModel->findByName($conn->config()['database'])->first();
 
-        $itemTypes = $databank->types['items'];
-        $linkTypes = $databank->types['links'];
+        $itemTypes = $databank->types['items'] ?? [];
+        $linkTypes = $databank->types['links'] ?? [];
 
         // Get item types with non-required properties
         $ignorePropertyIds = array_filter($itemTypes, fn($itemType) => ($itemType['config']['fields']['property']['required'] ?? true) === false);

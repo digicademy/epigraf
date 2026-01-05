@@ -179,18 +179,18 @@ class TextParser
     }
 
     /**
-     * Split $text, but keep together words that are enclosed in quotation marks
+     * Split text, but keep together words that are enclosed in quotation marks
      *
-     * @param $text
-     * @param $escapeChar
-     * @param $startGroupChar
-     * @param $endGroupChar
-     * @param $splitChar
+     * @param string $text
+     * @param string $escapeChar
+     * @param string $startGroupChar
+     * @param string $endGroupChar
+     * @param string $splitChar Defaults to a whitespace
      * @return array
      */
     static public function tokenize($text, $escapeChar = '\\', $startGroupChar = '"', $endGroupChar = '"', $splitChar = ' ') {
         $tokenList = array();
-        $currentList = array();
+        $currentToken = '';
         $groupMode = false;
         $escapeMode = false;
 
@@ -198,7 +198,7 @@ class TextParser
             $e = $text[$i];
 
             if ($escapeMode) {
-                $currentList[] = $e;
+                $currentToken .= $e;
                 $escapeMode = false;
                 continue;
             }
@@ -219,15 +219,17 @@ class TextParser
             }
 
             if ($e == $splitChar && !$groupMode) {
-                $tokenList[] = implode('', $currentList);
-                $currentList = array();
+                $tokenList[] = $currentToken;
+                $currentToken = '';
             } else {
-                $currentList[] = $e;
+                $currentToken .= $e;
             }
         }
 
-        $tokenList[] = implode('', $currentList);
+        $tokenList[] = $currentToken;
         return $tokenList;
     }
+
+
 }
 

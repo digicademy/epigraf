@@ -14,7 +14,6 @@ use App\Model\Entity\Databank;
 use App\Utilities\Converters\Attributes;
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
-use Cake\View\Helper\FormHelper;
 use Cake\View\View;
 use Epi\View\Helper\TypesHelper;
 
@@ -32,8 +31,9 @@ use Epi\View\Helper\TypesHelper;
  * @property \Widgets\View\Helper\TableHelper $Table
  * @property \Widgets\View\Helper\TreeHelper $Tree
  * @property \Widgets\View\Helper\EntityHtmlHelper $EntityHtml
- * * @property \Widgets\View\Helper\EntityInputHelper $EntityInput
+ * @property \Widgets\View\Helper\EntityInputHelper $EntityInput
  * @property \Widgets\View\Helper\MenuHelper $Menu
+ * @property \App\View\Helper\UserHelper $User
  * @property TypesHelper $Types
  */
 class AppView extends View
@@ -74,6 +74,7 @@ class AppView extends View
     {
         parent::initialize();
 
+        $this->addHelper('User');
         $this->addHelper('Widgets.Element');
         $this->addHelper('Widgets.Link');
         $this->addHelper('Widgets.Table');
@@ -122,15 +123,10 @@ class AppView extends View
     /**
      * Render the page footer
      *
-     * @param boolean $help Whether to add the help button
      * @return string
      */
-    public function renderFooter($help = true)
+    public function renderFooter()
     {
-        if ($help) {
-            $this->Link->addHelpAction();
-        }
-
         $footer = '';
         if ($this->Link->hasActions('bottom')) {
             $footer .= $this->Link->renderSandwichActions(
@@ -138,11 +134,6 @@ class AppView extends View
                 'bottom'
             );
         }
-
-        $footer .= $this->Link->renderSandwichButton(
-            'widget-sandwich-items-bottom',
-            ['dropdown' => 'topright', 'icon' => "\u{f152}", 'align-y' => 'footer']
-        );
 
         if ($this->Link->hasActions('bottom-right')) {
             $footer .= $this->Link->renderSandwichActions(
@@ -152,8 +143,8 @@ class AppView extends View
         }
 
         $footer .= $this->Link->renderSandwichButton(
-            'widget-sandwich-items-footer',
-            ['dropdown' => 'topright', 'icon' => "\u{f56d}", 'align-y' => 'footer']
+            'widget-sandwich-items-footer widget-sandwich-items-bottom',
+            ['dropdown' => 'topright', 'icon' => "\u{f0e7}", 'align-y' => 'footer', 'title' => __('Actions')]
         );
 
         $footer = '<footer>' . trim($footer) . '</footer>';
@@ -430,13 +421,16 @@ class AppView extends View
 
         // Assemble tab buttons
         $manageButtons = '';
+        $paneTitles = '';
         if (!empty($addButton)) {
             $manageButtons .= '<button class="btn-add widget-dropdown '
                 . ' widget-dropdown-toggle" '
                 . 'title="' . __('Add filter') . '" '
                 . 'aria-label="' . __('Add filter') . '" '
                 . 'data-toggle="select-propertytype-pane">'
-                . '+</button>';
+                . __('More <br> filters')
+                . '</button>';
+            $paneTitles .= '<div class="widget-dropdown-pane-header">' . __("Add filter") . '</div>';
         }
 
         $closeButton = $options['close'] ?? false;
@@ -457,7 +451,10 @@ class AppView extends View
 
         $selectors = '<div class="widget-tabsheets-selectors">'
             . '<div class="widget-tabsheets-selectors-tabs">' . $selectors . '</div>'
-            . '<div class="widget-tabsheets-selectors-manage">' . $manageButtons . '</div>'
+            . '<div class="widget-tabsheets-selectors-manage">'
+            . $manageButtons
+            . $paneTitles
+            . '</div>'
             . '</div>';
 
         // Assemble tabsheets
@@ -657,22 +654,6 @@ class AppView extends View
 
         $uiKey = $actionKey . $widgetKey;
         return $options['session']['ui'][$uiKey][$valueKey] ?? null;
-    }
-
-    /**
-     * Get the theme name from the query parameters
-     *
-     *  Currently supported themes are minimal and default.
-     *
-     * @return array|string|null
-     */
-    public function getThemeName()
-    {
-        //TODO: validate request parameters in a more smart way (prevent code injection)
-        $theme = $this->request->getQuery('theme');
-        $theme = in_array($theme, ['minimal']) && ($this->request->getQuery('show', '') !== '') ? $theme : 'default';
-        return $theme;
-
     }
 
     /**

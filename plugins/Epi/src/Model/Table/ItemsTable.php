@@ -12,7 +12,7 @@ namespace Epi\Model\Table;
 
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
-use App\Utilities\Files\Files;
+use App\Utilities\Converters\Objects;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
 use Cake\Datasource\EntityInterface;
@@ -24,6 +24,7 @@ use Cake\ORM\RulesChecker;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Cake\Database\Schema\TableSchemaInterface;
+use Epi\Model\Entity\Group;
 use Epi\Model\Entity\Item;
 
 /**
@@ -51,6 +52,32 @@ class ItemsTable extends BaseTable
      * @var bool
      */
     public $mergeJson = true;
+
+    /**
+     * Request parameter config
+     *
+     * @var string[]
+     */
+    public $parameters = [
+        'id' => 'list-integer',
+        'itemtypes' => 'list',
+        'propertytypes' => 'list',
+        'published' => 'list-integer',
+        'template' => 'raw',
+        'columns' => 'list-or-false',
+        'tile' => 'string',
+        'zoom' => 'integer',
+        'articles' => [
+            'projects' => 'list',
+            'articletypes' => 'list',
+            'field' => 'string',
+            'term' => 'string',
+            'properties' => 'merge',
+            'published' => 'list-integer'
+        ],
+        'properties' => 'nested-list',
+        'images' => 'list-or-false'
+    ];
 
     /**
      * Initialize hook
@@ -178,6 +205,15 @@ class ItemsTable extends BaseTable
             'dependent' => true,
             'cascadeCallbacks' => true
         ]);
+
+        $this->hasMany(
+            'ArticleItems',
+            [
+                'className' => 'Epi.Items',
+                'foreignKey' => 'articles_id',
+                'bindingKey' => 'articles_id'
+            ]
+        );
 
         $this->belongsTo(
             'Types',
@@ -322,30 +358,17 @@ class ItemsTable extends BaseTable
      * @param Item $entity
      * @param array $options
      */
-    public function beforeSave(EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, $entity, $options = [])
     {
         if ($entity->root) {
             $entity->articles_id = $entity->root->id;
         }
 
         // Split file name into path, name and extension.
-        if ($entity->file_name) {
-            $path = pathinfo($entity->file_name);
-            $path['dirname'] = $path['dirname'] === '.' ? '' : $path['dirname'];
-
-            $entity['file_path'] = Files::prependPath($entity['file_path'] ?? '', $path['dirname']);
-            $entity['file_name'] = $path['basename'];
-            $entity['file_type'] = $path['extension'];
-        }
-        // Clear path
-        else {
-            $entity['file_name'] = '';
-            $entity['file_path'] = '';
-            $entity['file_type'] = null;
-        }
+        $entity->updateFile(true);
 
         // Update date
-        $entity->updateDate();
+        $entity->updateDate(true);
 
         // Create new property
         if (!empty($entity->newproperty)) {
@@ -354,6 +377,20 @@ class ItemsTable extends BaseTable
             $entity->property = $property;
             $entity->properties_id = $property->id;
         }
+    }
+
+    /**
+     * Extract search parameters from query parameters
+     *
+     * @param array $requestParameters
+     * @param string $requestPath
+     * @param string $requestAction
+     * @return array
+     */
+    public function parseRequestParameters(array $requestParameters = [], $requestPath = '', $requestAction = ''): array
+    {
+        $params = Attributes::parseQueryParams($requestParameters, $this->parameters, 'items');
+        return $params;
     }
 
     /**
@@ -388,13 +425,17 @@ class ItemsTable extends BaseTable
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $default = [
             'id' => ['caption' => 'item.id', 'default' => true],
@@ -427,7 +468,7 @@ class ItemsTable extends BaseTable
             'section.iri_path'
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
 
@@ -440,15 +481,18 @@ class ItemsTable extends BaseTable
      */
     public function findPrepareRoot(Query $query, array $options)
     {
-        return $query->formatResults(
-            function (CollectionInterface $results) use (&$query) {
-                return $results->map(
-                    function ($row) {
-                        return $row->prepareRoot($row->article, $row->article, true);
-                    }
-                );
-            }
-        );
+        if ($query->isHydrationEnabled()) {
+            $query = $query->formatResults(
+                function (CollectionInterface $results) use (&$query) {
+                    return $results->map(
+                        function ($row) {
+                            return $row->prepareRoot($row->article, $row->article, true);
+                        }
+                    );
+                }
+            );
+        }
+        return $query;
     }
 
     /**
@@ -458,7 +502,7 @@ class ItemsTable extends BaseTable
      * @param $options
      * @return Query
      */
-    public function findHasArticleParams(Query $query, array $options): Query
+    public function findHasParams(Query $query, array $options): Query
     {
         // Merge empty default parameters
         $default = [
@@ -478,8 +522,7 @@ class ItemsTable extends BaseTable
         $query = $query->find('hasItemType', ['itemtypes' => $params['itemtypes'], 'quality' => $params['quality']]);
         $query = $query->find('hasPropertyType', ['propertytypes' => $params['propertytypes']]);
 
-        $articles_query = $this->Articles->find('hasParams', $params)->select('Articles.id');
-        $query = $query->where(['Items.articles_id IN' => $articles_query]);
+        $query = $query->find('hasArticleOptions', $params);
 
         return $query;
     }
@@ -500,6 +543,34 @@ class ItemsTable extends BaseTable
                 ]);
         }
 
+        return $query;
+    }
+
+    /**
+     * Find items that are contained in matching articles
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findHasArticleOptions(Query $query, array $options)
+    {
+        unset($options['articletypes']);
+        unset($options['sectiontypes']);
+        unset($options['itemtypes']);
+        unset($options['propertytypes']);
+
+        // TODO: Why here? Ist this solved by merging the options below?
+        if (empty($options['articles']['term'])) {
+            unset($options['articles']['field']);
+        }
+
+        if (!empty($options)) {
+            $options = array_merge($options, $options['articles'] ?? []);
+            unset($options['articles']);
+            $articles_query = $this->Articles->find('hasParams', $options)->select('Articles.id');
+            $query = $query->where(['Items.articles_id IN' => $articles_query]);
+        }
         return $query;
     }
 
@@ -568,6 +639,8 @@ class ItemsTable extends BaseTable
 
 
     /**
+     * Restrict results to a property type
+     *
      * @param Query $query
      * @param array $options
      * @return Query
@@ -577,6 +650,7 @@ class ItemsTable extends BaseTable
         $types = Attributes::commaListToStringArray($options['propertytypes'] ?? []);
         if (!empty($types)) {
             $query = $query
+                ->contain('Properties')
                 ->where([
                     'Properties.propertytype IN' => $types,
                 ]);
@@ -586,22 +660,17 @@ class ItemsTable extends BaseTable
     }
 
     /**
-     * Query data from sections and items for aggregated fields
-     *
-     *  // TODO: only contain necessary data, based on fields or snippets parameter
+     * Contain data necessary for table columns
      *
      * @param Query $query
      * @param array $options
      * @return Query
      */
-    public function findContainFields(Query $query, array $options)
+    public function findContainColumns(Query $query, array $options)
     {
-
-        $contain = [
-            'Properties'
-        ];
-
+        $contain = [];
         $snippets = $options['snippets'] ?? [];
+
         if (in_array('section', $snippets)) {
             $contain[] = 'Sections';
         }
@@ -616,12 +685,33 @@ class ItemsTable extends BaseTable
         }
 
         if (in_array('properties', $snippets)) {
+            $contain[] = 'Properties';
             $contain[] = 'Articles';
-            $contain[] = 'Articles.Items';
-            $contain[] = 'Articles.Links';
+
+            $contain['Articles.Items'] =  function ($q) use ($options) {
+                return $q
+                    ->select(['id', 'articles_id', 'properties_id'])
+                    ->where(['Items.properties_id IS NOT' => null]);
+            };
+
+            $contain['Articles.Links'] =  function ($q) use ($options) {
+                return $q
+                    ->select(['id', 'root_id', 'root_tab', 'to_id', 'to_tab'])
+                    ->where(['Links.to_id IS NOT' => null, 'Links.to_tab' => 'properties']);
+            };
+
+//            $contain[] = 'Articles.Items';
+//            $contain[] = 'Articles.Links';
         }
 
-        $query = $query->contain(array_unique($contain));
+        // Remove duplicates
+        $seen = [];
+        $contain = array_filter($contain, function ($item) use (&$seen) {
+            return !is_string($item) || !in_array($item, $seen, true) && $seen[] = $item;
+        });
+        //$contain = array_unique($contain);
+
+        $query = $query->contain($contain);
 
         return $query;
     }
@@ -635,7 +725,6 @@ class ItemsTable extends BaseTable
      */
     public function findSearchIndexes(Query $query, array $options)
     {
-
         return $query->find('list', ['keyField' => 'value', 'valueField' => 'value'])
             ->distinct()
             ->where(['itemtype' => 'search', 'value IS NOT' => null, 'value <>' => ''])
@@ -649,6 +738,263 @@ class ItemsTable extends BaseTable
                 );
                 return $results;
             });
+    }
+
+    /**
+     * Get a list of search indexes from the types configuration
+     *
+     * @return string[] Labels indexed by search keys
+     */
+    public function getSearchIndexes()
+    {
+        $types = $this->getDatabase()->types[$this->getTable()] ?? [];
+        $indexKeys = [];
+        foreach ($types as $typeName => $typeData) {
+            if (!empty($typeData['merged']['fulltext'])) {
+                $indexKeys = array_merge(
+                    $indexKeys,
+                    array_map(fn($x) => is_array($x) ? ($x['index'] ?? __('Content')) : $x ,Objects::extract($typeData, 'merged.fields.*.fulltext') ?? [])
+                );
+            }
+        }
+
+        $indexValues = [];
+        foreach ($indexKeys as $indexValue) {
+            $indexKey = 'text.' . $indexValue;
+            if (!isset($indexValues[$indexKey])) {
+                $indexValues[$indexKey] = '- ' . I18n::getTranslator()->translate(Inflector::humanize($indexValue));
+            }
+        }
+
+        return $indexValues;
+    }
+
+    /**
+     * Query for aggregated timeline data
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findTimeline(Query $query, array $options)
+    {
+        $z = isset($options['zoom']) ? (int)$options['zoom'] : 100;
+        $bucketExpr = sprintf("FLOOR(Items.date_start / %d) * %d", $z, $z);
+
+        // Get the selected properties for stacked timelines
+        $propertyGroups = array_filter($options['properties'] ?? [], fn($x) => in_array('grp', $x['flags'] ?? []));
+        $propertyGroups = array_values(array_map(fn($x) => $x['selected'] ?? [], $propertyGroups));
+        $propertyGroups = array_merge(...$propertyGroups);
+
+        if (empty($propertyGroups)) {
+
+            $query = $query
+                ->find('hasParams')
+                ->select([
+                    'x' => $query->newExpr($bucketExpr),
+                    'z' => $z,
+                    'totals' => $query->func()->count('Items.id'),
+                    'grouptype' => '"period"'
+                ])
+                ->group([$query->newExpr($bucketExpr)])
+                ->order(['x' => 'ASC']);
+
+        } else {
+
+            $query = $query
+                ->find('hasParams')
+                ->join([
+                    'ArticleItems' => [
+                        'table' => 'items',
+                        'type' => 'INNER',
+                        'conditions' => [
+                            'ArticleItems.articles_id = Items.articles_id',
+                            'ArticleItems.properties_id IN' => $propertyGroups
+                        ]
+                    ],
+                    'ArticleProperties' => [
+                        'table' => 'properties',
+                        'type' => 'INNER',
+                        'conditions' => [
+                            'ArticleProperties.id = ArticleItems.properties_id'
+                        ]
+                    ]
+                ])
+                ->select([
+                    'x' => $query->newExpr($bucketExpr),
+                    'y_id' => 'ArticleItems.properties_id',
+                    'y_label' => 'ArticleProperties.lemma',
+                    'y_type' => "'properties'",
+                    'z' => $z,
+
+                    'totals' => $query->func()->count('Items.id'),
+                    'grouptype' => 'ArticleProperties.propertytype',
+                ])
+                ->group(['ArticleItems.properties_id', $query->newExpr($bucketExpr)])
+                ->order(['x' => 'ASC']);
+        }
+
+        $query
+            ->disableHydration()
+            ->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+                return $results->map(function ($row) {
+                    if (!empty($row['y_id']) && !empty($row['y_type'])) {
+                        $row['y'] = $row['y_type'] . '-' . $row['y_id'];
+                    }
+                    return new Group($row);
+                });
+            });
+        return $query;
+    }
+
+    /**
+     * Query for aggregated map data
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findTiles(Query $query, array $options)
+    {
+        $zoom = 5;
+        if (isset($options['tile'])) {
+            $tile = explode('/', $options['tile']);
+            $zoom = ($tile[0] ?? $zoom) + 4;
+        }
+        else if (isset($options['zoom'])) {
+            $zoom = (int)$options['zoom'];
+        }
+
+
+        $geoAlias = 'Properties';
+        $valueField = 'content';
+        $n = pow(2, $zoom);
+
+        $tileXExpr = sprintf(
+            'FLOOR(( CAST(JSON_VALUE(%1$s.%2$s,\'$.lng\') AS DOUBLE) + 180) / 360 * %3$d)',
+            $geoAlias, $valueField, $n
+        );
+        $tileYExpr = sprintf(
+            'FLOOR((1 - LOG(TAN(RADIANS(CAST(JSON_VALUE(%1$s.%2$s,\'$.lat\') AS DOUBLE))) + 1 / COS(RADIANS(CAST(JSON_VALUE(%1$s.%2$s,\'$.lat\') AS DOUBLE)))) / PI()) / 2 * %3$d)',
+            $geoAlias, $valueField, $n
+        );
+
+// // Alternative for virtual fields in the database:
+//        $geoAlias = 'Properties';
+//        $valueField = 'geo';
+//        $n = pow(2, $zoom);
+//
+//        $tileXExpr = sprintf(
+//            'FLOOR((%1$s.%2$s_lng + 180) / 360 * %3$d)',
+//            $geoAlias, $valueField, $n
+//        );
+//        $tileYExpr = sprintf(
+//            'FLOOR((1 - LOG(TAN(RADIANS(%1$s.%2$s_lat)) + 1 / COS(RADIANS(%1$s.%2$s_lat))) / PI()) / 2 * %3$d)',
+//            $geoAlias, $valueField, $n
+//        );
+
+
+        $query = $query
+            ->find('hasParams', $options)
+            ->find('containColumns', $options)
+            ->contain('Properties')
+
+            ->select([
+                'x' => $query->newExpr($tileXExpr),
+                'y' => $query->newExpr($tileYExpr),
+                'z' => $zoom,
+                'totals' => $query->func()->count('Items.id'),
+                'grouptype' => '"tile"'
+            ])
+            ->group([$query->newExpr($tileXExpr), $query->newExpr($tileYExpr)]);
+
+        $query
+            ->disableHydration()
+            ->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+                return $results->map(function ($row) {
+                    return new Group($row);
+                });
+            });
+
+        return $query;
+    }
+
+    /**
+     * Query for relations between properties
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findGraph(Query $query, array $options)
+    {
+        $propertyGroups = array_filter($options['properties'] ?? [], fn($x) => in_array('grp', $x['flags'] ?? []));
+        if (!empty($propertyGroups)) {
+            $detailPropertytype = array_key_first($propertyGroups);
+            $options['propertytypes'] = $detailPropertytype;
+        }
+
+        if (empty($options['propertytypes'])) {
+            return $query->where(['1 = 0']);
+        }
+
+        // Step 1: Find article IDs that connect to more than one property and vice versa
+        $twoProp = $this->find()
+            ->find('hasParams', $options)
+            ->select(['Items.articles_id'])
+            ->group(['Items.articles_id'])
+            ->having(['COUNT(DISTINCT Items.properties_id) >' => 1]);
+
+        $twoArt = $this->find()
+            ->find('hasParams', $options)
+            ->select(['Items.properties_id'])
+            ->group(['Items.properties_id'])
+            ->having(['COUNT(DISTINCT Items.articles_id) >' => 1]);
+
+        $query = $query
+            ->find('hasParams', $options)
+            ->contain(['Properties', 'Articles']);
+
+        $columns = [
+            'x_id' => 'Items.articles_id',
+            'x_label' => 'Articles.name',
+            'x_type' => "'articles'",
+            'y_id' => 'Items.properties_id',
+            'y_label' => 'Properties.lemma',
+            'y_type' => "'properties'",
+            'z' => $query->func()->count('Items.id'),
+            'grouptype' => 'Properties.propertytype',
+        ];
+
+        if (!empty($options['images'])) {
+            $query = $query->join([
+                'ArticleItems' => [
+                    'table' => 'items',
+                    'type' => 'INNER',
+                    'conditions' => [
+                        'ArticleItems.articles_id = Items.articles_id',
+                        'ArticleItems.sortno = 1',
+                        'ArticleItems.itemtype IN' => $options['images']
+                    ]
+                ]
+            ]);
+            $columns['x_image'] = "CONCAT(ArticleItems.file_path, '/', ArticleItems.file_name)";
+        }
+        $query = $query->select($columns)
+        ->where(['Items.articles_id IN' => $twoProp])
+        ->where(['Items.properties_id IN' => $twoArt])
+        ->group(['Items.articles_id', 'Items.properties_id']);
+
+        $query
+            ->disableHydration()
+            ->formatResults(function (\Cake\Collection\CollectionInterface $results) {
+                return $results->map(function ($row) {
+                    $row['x'] = $row['x_type'] . '-' . $row['x_id'];
+                    $row['y'] = $row['y_type'] . '-' . $row['y_id'];
+                    return new Group($row);
+                });
+            });
+        return $query;
     }
 
     /**

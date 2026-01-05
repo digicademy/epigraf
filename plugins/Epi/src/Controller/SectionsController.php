@@ -32,9 +32,9 @@ class SectionsController extends AppController
             'guest' => ['view'],
             'reader' => ['view'],
             'desktop' => ['view'],
-            'author' => ['view', 'add'],
-            'editor' => ['view', 'add'],
-            'admin' => ['view', 'add']
+            'author' => ['view', 'add', 'move'],
+            'editor' => ['view', 'add', 'move'],
+            'admin' => ['view', 'add', 'move']
         ]
     ];
 
@@ -80,6 +80,33 @@ class SectionsController extends AppController
             '#' => 'sections-' . $id
         ]);
 
+    }
+
+    /**
+     * Move sections to a new position
+     *
+     * This endpoint supports only POST requests containing
+     * either a single move operation or a batch of move operations.
+     *
+     * ## Single move operation
+     * The payload contains the following keys:
+     * - reference_id The ID of a reference node
+     * - reference_pos The position of the reference node: 'parent' or 'preceding'
+     *
+     * ### Batch move operations
+     * The moves field contains an array of all moves.
+     * A single call supports only moving sections within the same article.
+     * Each move is an array with the following keys:
+     * - id The ID of the section to move
+     * - parent_id The ID of the new parent
+     * - preceding_id The ID of the preceding sibling
+     *
+     * @param string $id For single moves the section ID, for batch moves the article ID
+     * @return \Cake\Http\Response|null|void
+     */
+    public function move($id)
+    {
+        $this->Actions->move($id);
     }
 
 }

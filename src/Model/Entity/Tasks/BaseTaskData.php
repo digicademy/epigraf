@@ -13,17 +13,20 @@ namespace App\Model\Entity\Tasks;
 use App\Model\Entity\BaseTask;
 use App\Model\Entity\Databank;
 use App\Model\Interfaces\ExportTableInterface;
+use App\Model\Table\BaseTable;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
 use App\View\ApiView;
 use App\View\CsvView;
 use App\View\GeoJsonView;
+use App\View\HtmlView;
 use App\View\JsonldView;
 use App\View\JsonView;
 use App\View\MarkdownView;
 use App\View\RdfView;
 use App\View\TtlView;
 use App\View\XmlView;
+use App\View\XlsxView;
 use Cake\Datasource\ResultSetInterface;
 use Cake\ORM\TableRegistry;
 use Epi\Model\Entity\RootEntity;
@@ -57,8 +60,10 @@ class BaseTaskData extends BaseTask
         $viewClasses = [
             'json' => JsonView::class,
             'csv' => CsvView::class,
+            'xlsx' => XlsxView::class,
             'xml' => XmlView::class,
             'md' => MarkdownView::class,
+            'plain' => HtmlView::class,
             'ttl' => TtlView::class,
             'jsonld' => JsonldView::class,
             'rdf' => RdfView::class,
@@ -82,10 +87,10 @@ class BaseTaskData extends BaseTask
      *
      * @return array[]
      */
-    public function getRenderOptions()
+    public function getRenderOptions($table = null)
     {
         $options = [];
-        $options['level'] = 0; //(!$this->rowwise && empty($this->wrap)) ? 0 : 0;
+        $options['level'] = 0;
         $options['wrap'] = $this->config['wrap'] ?? false;
 
         if (!empty($this->config['iris'])) {
@@ -100,9 +105,15 @@ class BaseTaskData extends BaseTask
             $options['published'] = Attributes::commaListToIntegerArray($this->job->config['params']['published']);
         }
 
+        if (!empty($table) && isset($this->config['expand']) && Attributes::isFalse($this->config['expand'])) {
+            $columnParams = $table->parseRequestParameters(['columns' => $this->config['columns'] ?? '']);
+            $options['columns'] = $table->getColumns($columnParams['columns'] ?? []);
+        }
+
+        $options['params']['preset'] = $this->config['preset'] ?? 'default';
+
         return $options;
     }
-
 
     /**
      * Copy files
@@ -176,6 +187,17 @@ class BaseTaskData extends BaseTask
     }
 
     /**
+     * Reset the task progress
+     *
+     * @return true
+     */
+    public function init()
+    {
+        $this->config['offset'] = 0;
+        return true;
+    }
+
+    /**
      * Export data
      *
      * @return bool Return true if the task is finished
@@ -187,7 +209,7 @@ class BaseTaskData extends BaseTask
         $this->config['offset'] = $this->config['offset'] ?? 0;
 
         // TODO: add index option to each task configuration
-        $indexkey = empty($this->job->config['tasks']['index'] ?? true) ? false : ($this->job->index_key . '-export');
+        $indexkey = empty($this->job->config['options']['index'] ?? true) ? false : ($this->job->index_key . '-export');
         $dataParams = $this->getDataParams();
         $pagingParams = $this->getPagingParams();
 
@@ -197,26 +219,33 @@ class BaseTaskData extends BaseTask
 
         // Wrapper (getView() must be called before to update the wrap settings)
         $view = $this->getView();
-        $filenameTemplate = $this->job->getCurrentOutputFilePath();
+        $view->attachIndex($this->job->getIndex());
+        $filenameTemplate = $this->getCurrentOutputFilePath();
+        $wrap = $this->config['wrap'] ?? false;
 
         if (!$this->rowwise && !empty($this->wrap['prefix']) && ($this->config['offset'] === 0)) {
             Files::appendToFile($filenameTemplate, $this->wrap['prefix']);
         }
 
+        // Render content
+        $options = $this->getRenderOptions($table);
+        $options['wrap'] = false;
+
         $count = count($rows);
         if (!empty($rows)) {
             $this->config['offset'] += $count;
-            $this->job->updateCurrentTask($this->config);
+            $this->job->updateCurrentTaskConfig($this->config);
 
-            // Render content
-            $options = $this->getRenderOptions();
+            // Activate preset
+            $beforePreset = BaseTable::$requestPreset ?? 'default';
+            BaseTable::$requestPreset  = $this->config['preset'] ?? $beforePreset;
 
             // All rows at once
             if (!$this->rowwise) {
 
                 $rendered = $view->renderDocument($rows, $options);
                 $rendered = str_replace("\r", "", $rendered);
-                $rendered = "\n" . $rendered;
+                $rendered = $view::$batchSeparator . $rendered;
 
                 Files::appendToFile($filenameTemplate, $rendered, true);
                 $this->copyFiles($rows);
@@ -231,17 +260,29 @@ class BaseTaskData extends BaseTask
                         false
                     );
 
+                    // Make job accessible for triple generation
+                    $row->job = $this->job;
+                    $row->task = $this;
+
                     $rendered = $view->renderDocument($row, $options);
                     $rendered = str_replace("\r", "", $rendered);
 
                     $number++;
+
+                    // Separate the entities
                     if (($number !== $count) && ($filename === $filenameTemplate)) {
                         $rendered .= $view::$separator;
                     }
+
                     Files::appendToFile($filename, $rendered, true);
                     $this->copyFiles([$row]);
                 }
             }
+
+            // Reset preset
+            $beforePreset = BaseTable::$requestPreset ?? 'default';
+            BaseTable::$requestPreset  = $this->config['preset'] ?? $beforePreset;
+
         }
 
         // Wrapper
@@ -249,8 +290,22 @@ class BaseTaskData extends BaseTask
             Files::appendToFile($filenameTemplate, $this->wrap['postfix']);
         }
 
+        //Wrapper
+        if ($wrap) {
+            if ( (count($rows) < $this->job->limit)) {
+                Files::prependToFile($filenameTemplate, $view->renderProlog([], $options));
+                Files::appendToFile($filenameTemplate, $view->renderEpilog([], $options));
+            }
+        }
+
         //Finish pipeline element
-        return ($count < $this->job->limit);
+        $finished = ($count < $this->job->limit);
+
+        if ($finished) {
+            $view->postProcess($filenameTemplate);
+        }
+
+        return $finished;
     }
 
     /**

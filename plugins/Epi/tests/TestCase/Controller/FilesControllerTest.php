@@ -197,7 +197,7 @@ class FilesControllerTest extends EpiTestCase
         $uploadedfilename1 = ROOT . DS . 'tests/Files/databases/test_projects/notes' . DS . 'uploadtest.txt';
         $uploadedfilename2 = ROOT . DS . 'tests/Files/databases/test_projects/notes' . DS . 'uploadtest_1.txt';
 
-        // Check than non-ajax request is redirected
+        // Check that non-ajax request is redirected
         $data = ['FileData' => ['file' => $uploadedFile]];
         $this->post('/epi/projects/files/upload?root=root&path=notes', $data);
         $this->assertResponseCode(302);

@@ -49,6 +49,8 @@ class NotesController extends AppController
         ]
     ];
 
+    public $help = 'introduction/notes';
+
     /**
      * Pagination setup
      *

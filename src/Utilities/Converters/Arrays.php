@@ -13,6 +13,7 @@ namespace App\Utilities\Converters;
 use App\Utilities\Text\TextParser;
 use Cake\Collection\Collection;
 use Cake\Collection\CollectionInterface;
+use Cake\Utility\Hash;
 
 /**
  * Static array functions
@@ -428,6 +429,14 @@ class Arrays
         return $result;
     }
 
+    /**
+     * Add a prefix to each array value or key
+     *
+     * @param string[] $data
+     * @param string $prefix
+     * @param boolean $keys Whether to add the prefix to the keys instead of the values (default false)
+     * @return string[]
+     */
     public static function array_add_prefix($data, $prefix, $keys = false)
     {
         if ($keys) {
@@ -507,6 +516,77 @@ class Arrays
     }
 
     /**
+     * Make array unique if key is numeric; drop value if there is a corresponding string key
+     *
+     * @param $array
+     * @return array
+     */
+    public static function array_unique_mixed($array): array {
+        $result = [];
+        $current = null;
+        $value = null;
+        asort($array);
+        $keys = array_keys($array);
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $result[$key] = $value;
+                continue;
+            }
+            if ($value === $current) {
+                continue;
+            }
+            if (!in_array($value, $keys)) {
+                $result[$key] = $value;
+                $current = $value;
+            }
+        }
+        if ($value != $current) {
+            $result[$key] = $value;
+        }
+        return $result;
+    }
+
+    /**
+     * Transform a flat associative array into a nested structure grouped by category.
+     *
+     * Expected input format:
+     * [
+     *     10 => ['name' => 'Foo', 'category' => 'A'],
+     *     11 => ['name' => 'Bar', 'category' => 'A'],
+     *     12 => ['name' => 'Baz', 'category' => 'B'],
+     * ]
+     *
+     * Output format:
+     * [
+     *     'A' => [
+     *         10 => ['name' => 'Foo', 'category' => 'A'],
+     *         11 => ['name' => 'Bar', 'category' => 'A'],
+     *     ],
+     *     'B' => [
+     *         12 => ['name' => 'Baz', 'category' => 'B'],
+     *     ]
+     * ]
+     *
+     * @param array $data Input key/value array where each value contains 'category'
+     * @return array Nested array grouped by category
+     */
+    public static function array_nest($data, $categoryKey = 'category')
+    {
+        $nested = [];
+
+        foreach ($data as $no => $option) {
+            if (!isset($option[$categoryKey])) {
+                continue;
+            }
+
+            $category = $option[$categoryKey];
+            $nested[$category][$no] = $option;
+        }
+
+        return $nested;
+    }
+
+    /**
      * Convert a nested array to a flat list
      *
      * Each value in the result can contain the following keys:
@@ -514,22 +594,74 @@ class Arrays
      * - value The value itself, if it is not an array
      * - level The nesting level
      * - size In case of arrays, the number of elements
+     * - id Item ID, if missing in the source data, a UUID is generated
+     * - parent_id The parent ID or null
      *
      * @param array $array
      * @param int $level
+     * @param mixed $parentId The parent ID of list items or null
      * @return array
      */
-    public static function nestedToList($array, $level = 0)
+    public static function nestedToList($array, $level = 0, $parentId = null)
     {
         $out = [];
         foreach ($array as $key => $value) {
+
             if (is_array($value)) {
+                $id = $value['id'] ?? Attributes::uuid('item');
                 $size = count($value);
-                $out[] = ['key' => $key, 'size' => $size, 'level' => $level];
-                $out = array_merge($out, Arrays::nestedToList($value, $level + 1));
+                $out[] = ['key' => $key, 'size' => $size, 'level' => $level, 'id' => $id, 'parent_id'=>$parentId];
+                $out = array_merge($out, Arrays::nestedToList($value, $level + 1, $id));
             }
             else {
-                $out[] = ['key' => $key, 'value' => $value, 'level' => $level];
+                $id = Attributes::uuid('item');
+                $out[] = ['key' => $key, 'value' => $value, 'level' => $level, 'id' => $id, 'parent_id'=>$parentId];
+            }
+        }
+        return $out;
+    }
+
+    /**
+     * Render a nested array to HTML
+     *
+     * The key of each item in the array is used as the HTML tag name.
+     * Numeric keys can be used to combine elements with the same name.
+     * In this case, each item is an array with the tag name as key.
+     *
+     * Each tag item in the array can contain the following keys:
+     * - attrs An array of attributes for the tag
+     * - content An array of nested tags or plain text
+     * - close Whether to close the tag (default true)
+     *
+     * See the test cases for examples.
+     *
+     * @param array $content An array keyed by HTML tags.
+     */
+    public static function nestedToHtml($content) {
+        if (!is_array($content)) {
+            return $content;
+        }
+        $out = '';
+        foreach ($content as $key => $value) {
+            // this allows to combine elements with plain text or elements of the same type
+            // e.g [
+            //    0 => ['li' => ...],
+            //    1 => ['li' => ...],
+            //]
+            if (is_numeric($key)) {
+                $out .= self::nestedToHtml($value);
+                continue;
+            }
+            $out .= '<' . $key;
+            if ($value['attrs'] ?? false) {
+                $out .= ' ' . Attributes::toHtml($value['attrs']);
+            }
+            $out .= '>';
+            if ($value['content'] ?? false) {
+                $out .= self::nestedToHtml($value['content']);
+            }
+            if ($value['close'] ?? false) {
+                $out .= '</' . $key . '>';
             }
         }
         return $out;
@@ -793,15 +925,27 @@ class Arrays
     /**
      * Construct query conditions from a search term
      *
-     * @param string $term
-     * @param array $fields
-     * @param string $operator
-     * @param string $type
-     * @param array $filter
+     * Supports OR using the pipe |.
+     * Supports AND using whitespace as separator.
+     * Use quotes to include shitespace in the search term.
+     *
+     * @param array|string $term A search term or an array of search terms
+     * @param array $fields A list of fields already present in the query.
+     * @param string $operator One of 'like' or '='.
+     * @param string $type  One of 'string' or 'integer'. Makes sure to select the right operator on numbers.
+     * @param array $filter Conditions added to each token of the search term, used to select the appropriate full text index
      * @return array
      */
     public static function termConditions($term, $fields, $operator, $type, $filter = [])
     {
+        // Recurse array
+        if (is_array($term)) {
+            $conditions = [];
+            foreach ($term as $value) {
+                $conditions[] = Arrays::termConditions($value, $fields, $operator, $type, $filter);
+            }
+            return ['AND' => $conditions];
+        }
 
         $orTerms = array_filter(explode('|', $term));
 

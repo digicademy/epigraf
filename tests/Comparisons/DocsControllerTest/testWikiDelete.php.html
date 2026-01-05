@@ -5,35 +5,35 @@
 <head>
     <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-        Hilfsmittel    </title>
+    <title>Hilfsmittel</title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
     <!-- CSS frameworks -->
     <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">    
+            <link rel="stylesheet" href="/css/theme_default.css">
     <!-- JS -->
 
     <!-- JS frameworks -->
     <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>    
+            <script src="/js/app.min.js" type="module"></script>
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
     <!-- JS widgets -->
         <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
 
     <!-- Additional CSS -->
-    
+
     <!-- Additional JS -->
         </head>
 
 <body class="plugin_ controller_wiki action_delete template_default theme_default userrole_admin">
+
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -41,26 +41,26 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global active" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div class="widget-dropdown-pane-header">Databases</div><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/databanks"><i>Manage databases</i></a></li><li class="" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global" ><a href="/pipelines">Pipelines</a></li><li class="menu_global" ><a href="/users">Users</a></li><li class="menu_global" ><a href="/files?root=shared">Repository</a></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global active" ><a href="/wiki">Wiki</a></li><li class="menu_global" ><a href="/">Pages</a></li></ul>                </div>
 
-                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Menu</div><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-                
-                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn-profile" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn-settings" title="System settings"></a>                            </div>
+
+                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/2" class="btn btn-icon" title="admin"></a>                                                    <a href="/settings/show/vars" class="btn btn-icon" title="System settings"></a>                            </div>
 
         </nav>
-    
+
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-        
-                                                        
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Navigation</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
-                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-caption">Navigation</div>
                     <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
                 </div>
 
@@ -68,7 +68,7 @@
                     <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/wiki">List all</a></div><div class="tree-meta"></div></li><li class="category-meta node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/wiki?category=">Without category</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=A.+Inschriften+Online">A. Inschriften Online</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-nochildren" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=B.+Hilfsmittel">B. Hilfsmittel</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="4" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=C.+Repositorium">C. Repositorium</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="5" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=D.+Recherche">D. Recherche</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-id="6" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=E.+Organisation">E. Organisation</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-id="7" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/wiki?category=F.+Entwicklung">F. Entwicklung</a></div><div class="tree-meta"></div></li></ul></div>                </div>
                 <div class="frame-footer">
                                             <form method="get" accept-charset="utf-8" id="search" action="/docs/index/wiki"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
-                </div></div></div></div></div>        
+                </div></div></div></div></div>
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
@@ -77,8 +77,8 @@
 
                                                 <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/docs/index/wiki">Wiki</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Hilfsmittel</span></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Delete</span></li></ul></nav>                    </div>
 
-                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
-                    
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Navigation</button>
+
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -86,22 +86,22 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-                    
+
 
 <!-- Breadcrumbs -->
 
 <!-- Content area -->
-<div class="widget-entity" data-row-table="docs" data-row-id="96" data-row-type="wiki" data-row-model="docs" data-root-table="docs" data-root-id="96" data-file-basepath="wiki" data-file-defaultpath="b.hilfsmittel"><form method="post" accept-charset="utf-8" confirm="Are you sure you want to delete the page &quot;Hilfsmittel&quot;?" id="form-delete-docs-96" autocomplete="off" data-cancel-url="/docs/view/wiki/96" data-delete-url="/docs/delete/wiki/96" data-proceed-url="/docs/index/wiki" action="/docs/delete/wiki/96"><div style="display:none;"><input type="hidden" name="_method" value="DELETE"></div><fieldset><p class="delete">Are you sure you want to delete the page "Hilfsmittel"?</p><div class="confirm"><button type="submit" form="form-delete-docs-96" data-role="confirm" data-target="docs-96" class="">Yes</button>
+<div class="widget-entity" data-row-table="docs" data-row-id="96" data-row-type="wiki" data-row-model="docs" data-root-table="docs" data-root-id="96" data-file-basepath="wiki" data-file-defaultpath="b.hilfsmittel"><form method="post" accept-charset="utf-8" confirm="Are you sure you want to delete the page &quot;Hilfsmittel&quot;?" id="form-delete-docs-96" autocomplete="off" data-cancel-url="/docs/view/wiki/96" data-delete-url="/docs/delete/wiki/96" data-proceed-url="/docs/index/wiki" action="/docs/delete/wiki/96"><div style="display:none;"><input type="hidden" name="_method" value="DELETE"></div><button type="submit" disabled="disabled" style="display:none;" area-hidden="1"></button><fieldset><p class="confirm">Are you sure you want to delete the page "Hilfsmittel"?</p><div class="confirm"><button type="submit" form="form-delete-docs-96" data-role="confirm" data-target="docs-96" class="">Yes</button>
 <button data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="widget-shortcut" type="button" form="form-delete-docs-96" data-role="cancel" data-target="docs-96">Cancel</button></div></fieldset></form></div>
                                     </div>
 
                 <div class="content-footer"></div>
 
             </div>
-        
+
         <!-- Right sidebar -->
                     <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <footer><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-wiki-delete" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
+            <footer><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/introduction/notes" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
 </div>
 </body></html>

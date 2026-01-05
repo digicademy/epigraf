@@ -53,24 +53,26 @@
         </sections>
       </property>
       <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="2" lft="5" rght="6" iscategory="1" ishidden="1">
-        <lemma>Unterautor 2</lemma>
-        <name>Unterautor 2 </name>
+        <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
+        <name>Kurztitel Unterautor 2 mit &#039;</name>
         <unit>Unterautor2 Einheit</unit>
         <comment>Unterautor 2 Bemerkung</comment>
         <keywords>Autor,Karstadt,Ursprung</keywords>
         <norm_data>Unterautor 2 Normdaten</norm_data>
+        <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
         <sections>
           <section id="sections-16" articles_id="articles-1" />
           <section id="sections-14" articles_id="articles-1" />
         </sections>
       </property>
       <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
-        <lemma>Quelle 1</lemma>
-        <name>Quelle 1 </name>
+        <lemma>Quelle 1 mit &amp;</lemma>
+        <name>Quelle 1 mit &amp;</name>
         <unit>Quelleneinheit 1</unit>
-        <comment>Quelle bemerkung</comment>
-        <keywords>Quelle,Karstadt,Ursprung</keywords>
-        <norm_data>Quelle Norm 1</norm_data>
+        <comment>Quelle 1 Bemerkung</comment>
+        <keywords>Karstadt,Ursprung</keywords>
+        <norm_data>Quelle 1 Normdaten</norm_data>
+        <norm_iri>quelle-1-mit-</norm_iri>
         <sections>
           <section id="sections-14" articles_id="articles-1" />
         </sections>

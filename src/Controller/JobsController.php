@@ -11,6 +11,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\Job;
+use App\Utilities\Converters\Attributes;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Exception\ForbiddenException;
@@ -40,7 +41,6 @@ class JobsController extends AppController
      */
     public $authorized = [
         'api' => [
-            'reader' => ['execute', 'cancel'],
             'coder' => ['execute', 'cancel'],
             'desktop' => ['execute', 'cancel'],
             'author' => ['execute', 'cancel'],
@@ -49,13 +49,15 @@ class JobsController extends AppController
             'devel' => ['execute', 'cancel']
         ],
         'web' => [
-            'reader' => ['add', 'execute', 'cancel', 'download'],
             'coder' => ['add', 'execute', 'cancel', 'download'],
             'desktop' => ['add', 'execute', 'cancel', 'download'],
             'author' => ['add', 'execute', 'cancel', 'download'],
             'editor' => ['add', 'execute', 'cancel', 'download']
         ]
     ];
+
+
+    public $help = 'export/pipelines';
 
     /**
      * Pagination setup
@@ -81,24 +83,45 @@ class JobsController extends AppController
     /**
      * Show a job
      *
-     * @param string|null $id job id
+     * @param string|null $id Job ID
      *
      * @return \Cake\Http\Response|null|void
      * @throws RecordNotFoundException If record not found
      */
     public function view($id = null)
     {
-        $job = $this->Jobs->get($id, [
-            'contain' => []
-        ]);
-
-        $this->set('job', $job);
+        $this->Actions->view($id);
     }
+
+    /**
+     * Edit a job
+     *
+     * @param string|null $id Job ID
+     *
+     * @return \Cake\Http\Response|null|void
+     * @throws RecordNotFoundException If record not found
+     */
+    public function edit($id = null)
+    {
+        $this->Actions->edit($id);
+    }
+
+    /**
+     * Delete a job
+     *
+     * @param string $id Job ID
+     * @return void
+     */
+    public function delete($id)
+    {
+        $this->Actions->delete($id);
+    }
+
 
     /**
      * Add a new export job, based on query params and user defaults
      *
-     * TODO: move to TransferComponent (and rename it to JobComponent and implement export action in ArticlesController)
+     * @deprecated Use TransferComponent (and rename it to JobComponent)
      *
      * @return \Cake\Http\Response|void redirects on successful job creation, renders view otherwise
      * @throws \Cake\Http\Exception\NotFoundException if valid database or pipeline is provided in the request
@@ -109,16 +132,19 @@ class JobsController extends AppController
         $params = $this->request->getQueryParams();
         $params = $this->Jobs->parseRequestParameters($params, null, 'add');
 
-        // Get configured pipelines
         $pipelinesTable = $this->fetchTable('Pipelines');
-        $pipelines = $pipelinesTable->find('forArticles', $params)->order(['name' => 'asc'])->toArray();
-        if (empty($params['pipeline']) && !empty($pipelines)) {
-            $params['pipeline'] = array_keys($pipelines)[0];
-        }
 
         // Get all pipelines
         if (in_array($this->userRole, ['admin', 'devel'])) {
             $pipelines = $pipelinesTable->find('list')->order(['name' => 'asc'])->toArray();
+        }
+        // Get configured pipelines
+        else {
+            $pipelines = $pipelinesTable->find('forArticles', $params)->order(['name' => 'asc'])->toArray();
+        }
+
+        if (empty($params['pipeline']) && !empty($pipelines)) {
+            $params['pipeline'] = array_keys($pipelines)[0];
         }
 
         // Delayed jobs will be processed by a worker
@@ -126,7 +152,7 @@ class JobsController extends AppController
 
         //Create job
         /** @var Job $job */
-        $job = $this->Jobs->newEntity(['typ' => 'export', 'delay' => $delayedJob ? 1 : 0])->typedJob;
+        $job = $this->Jobs->newEntity(['jobtype' => 'export', 'delay' => $delayedJob ? 1 : 0])->typedJob;
         $job = $job->patchExportOptions($params);
 
         // Load pipeline
@@ -171,6 +197,8 @@ class JobsController extends AppController
     /**
      * Download method
      *
+     * @deprecated Use TransferComponent (and rename it to JobComponent)
+     *
      * Immediately executes export job, based on query params and user defaults.
      * Provide the following query parameters:
      * - pipeline_id (default value: user setting)
@@ -191,7 +219,7 @@ class JobsController extends AppController
         $delayedJob = !empty(Configure::read('Jobs.delay', false));
 
         //Create job
-        $job = $this->Jobs->newEntity(['typ' => 'export', 'delay' => $delayedJob ? 1 : 0]);
+        $job = $this->Jobs->newEntity(['jobtype' => 'export', 'delay' => $delayedJob ? 1 : 0])->typedJob;
         $job->patchExportOptions($params);
 
         //Check if user has database access
@@ -265,6 +293,11 @@ class JobsController extends AppController
             throw new ForbiddenException('You have no access to the selected job');
         }
 
+        // Reset
+        if (Attributes::isTrue($this->request->getQuery('reset', 0))) {
+            $job->reset();
+        }
+
         //Process job
         if ($job->status !== 'finish') {
 
@@ -295,17 +328,18 @@ class JobsController extends AppController
             $download = $this->request->getQuery('download');
             $forceDownload = $this->request->getQuery('force');
             if (!$this->request->is('ajax') && !empty($download)) {
-                $this->response = $this->response->withFile(
-                    $job->getCurrentOutputFilePath($download),
-                    ['download' => !empty($forceDownload)]
-                );
+                $this->response = $this->response
+                    ->withFile(
+                        $job->getJobOutputFilePath($download),
+                        ['download' => !empty($forceDownload)]
+                    );
                 return $this->response;
             }
 
             //...or send redirect URL
             $this->Answer->success(
                 __('The job has been finished.'),
-                $this->request->is('ajax') ? null : $job->redirect
+                $this->request->is('ajax') ? null : $job->responseUrl
             );
         }
 

@@ -766,7 +766,7 @@ class FilesControllerTest extends AppTestCase
         $uploadedfilename1 = ROOT . DS . 'tests' . DS . 'Files' . DS . 'shared' . DS . 'uploadtest.txt';
         $uploadedfilename2 = ROOT . DS . 'tests' . DS . 'Files' . DS . 'shared' . DS . 'uploadtest_1.txt';
 
-        // Check than non-ajax request is redirected
+        // Check that non-ajax request is redirected
         $data = ['FileData' => ['file' => $uploadedFile]];
         $this->post('/files/upload?root=root&path=shared', $data);
         $this->assertResponseCode(302);

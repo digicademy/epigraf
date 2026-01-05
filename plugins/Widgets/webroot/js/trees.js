@@ -17,8 +17,8 @@ import Utils from '/js/utils.js';
  * This widget works best in combination with ScrollPaginator and TableWidget
  *
  * Add the following markup (same as in ScrollPaginator):
- * - Name the list container: data-list-name="mylist"
- * - Name the list items: data-list-itemof="mylist"
+ * - Name the list container: data-list-name="mylist" (e.g. the table body or ul element)
+ * - Name the list items: data-list-itemof="mylist" (e.g. the table rows or the li elements)
  * - Add the IDs to the list items: data-id="2" data-tree-parent="1"
  *
  * Then add the class widget-tree to the list container (e.g. the ul element)

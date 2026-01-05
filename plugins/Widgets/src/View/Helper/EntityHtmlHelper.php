@@ -15,6 +15,7 @@ use App\Utilities\Converters\Attributes;
 use Cake\ORM\Entity;
 use Epi\Model\Entity\Footnote;
 use Epi\Model\Entity\Item;
+use Epi\Model\Entity\RootEntity;
 
 /**
  * Entity helper for HTML view generation
@@ -32,6 +33,24 @@ class EntityHtmlHelper extends BaseEntityHelper
      */
     protected $_defaultConfig = [];
 
+    /**
+     * Load helpers
+     *
+     * @var string[]
+     */
+    public $helpers = ['Files', 'Html', 'Url', 'Form', 'Paginator', 'User', 'Link', 'Widgets.Element', 'Widgets.Table', 'Epi.Types'];
+
+    /**
+     * Render section content as list
+     *
+     * @param array $options
+     * @return string
+     */
+    public function sectionContentLists($section, $options)
+    {
+        $options['view'] = 'list';
+        return $this->sectionContentStacks($section, $options);
+    }
 
     /**
      * Render section content as stack
@@ -39,7 +58,8 @@ class EntityHtmlHelper extends BaseEntityHelper
      * @param array $options
      * @return string
      */
-    public function sectionContentStacks($section, $options) {
+    public function sectionContentStacks($section, $options)
+    {
 
         list($groupedItems, $itemTypes) = $section->getGroupedItems($options);
 
@@ -55,7 +75,7 @@ class EntityHtmlHelper extends BaseEntityHelper
         $template_article = $options['template_article'] ?? [];
 
 
-        $groupClasses = ['doc-section-stack'];
+        $groupClasses = [$options['view'] ?? 'doc-section-stack'];
         $out = '<div class="' . implode(' ', $groupClasses) . '">';
 
         foreach ($itemTypes as $itemConfig) {
@@ -96,7 +116,8 @@ class EntityHtmlHelper extends BaseEntityHelper
         $out .= '</div>';
 
         $items = Arrays::ungroup($groupedItems);
-        $out .= $this->annoLists($article, $items, ['edit' => false, 'mode' => $mode]);
+        $out .= $this->annoLists($article, 'sections-' . $section->id, $items,
+            ['edit' => false, 'mode' => $mode, 'buttons' => $options['buttons'] ?? true]);
 
         return $out;
     }
@@ -107,7 +128,8 @@ class EntityHtmlHelper extends BaseEntityHelper
      * @param array $options
      * @return string
      */
-    public function sectionContentTables($section, $options) {
+    public function sectionContentTables($section, $options)
+    {
         $database = $section->table->getDatabase();
         $article = $section->container;
 
@@ -121,8 +143,9 @@ class EntityHtmlHelper extends BaseEntityHelper
             return '';
         }
 
-        $tables = ($template_section['view']['grouped'] ?? false) ? [$itemTypes] : array_map(fn($x) => [$x], $itemTypes);
-        $moreSection = $template_section['view']['more'] ?? false;
+        $tables = ($template_section['view']['grouped'] ?? false) ? [$itemTypes] : array_map(fn($x) => [$x],
+            $itemTypes);
+        $moreSection = ($template_section['view']['more'] ?? false) && ($options['buttons'] ?? true);
         $action = 'view';
 
         $out = '';
@@ -137,15 +160,16 @@ class EntityHtmlHelper extends BaseEntityHelper
                 $itemType = $itemConfig['type'] ?? 'undefined';
 
                 $mergedConfig = $this->Types->getTypes()['items'][$itemType]['merged'] ?? [];
-                $moreItem = $moreItem || (($mergedConfig['display'] ?? true) === 'more');
+                $moreItem = $moreItem || ((($mergedConfig['display'] ?? true) === 'more') && ($options['buttons'] ?? true));
 
 //                $itemCount = $itemConfig['count'] ?? '1';
-                $itemsFields = $this->Types->getFields('items', $itemType, ['unnest' => true, 'edit' => false] + $options);
+                $itemsFields = $this->Types->getFields('items', $itemType,
+                    ['unnest' => true, 'edit' => false] + $options);
 
                 $i = 0;
                 foreach ($itemsFields as $fieldName => $fieldConfig) {
                     // More fields are only displayed by using the more button
-                    $moreField = ($fieldConfig['display'] ?? true) === 'more';
+                    $moreField = (($fieldConfig['display'] ?? true) === 'more') && ($options['buttons'] ?? true);
 
                     $groupHeaders[$i]['fields'][$itemType] = [
                         'fieldname' => $fieldName,
@@ -183,10 +207,10 @@ class EntityHtmlHelper extends BaseEntityHelper
                 }
             }
             $out .= '<div class="doc-group-headers">';
-            $out .= '<div class="doc-field doc-field-itemtype"></div>';
+            $out .= '<div class="doc-field doc-field-itemtype">' . __('Type') . '</div>';
 
             foreach ($groupHeaders as $groupHeader) {
-                if (! ($groupHeader['display'] ?? true)) {
+                if (!($groupHeader['display'] ?? true)) {
                     continue;
                 }
 
@@ -229,15 +253,15 @@ class EntityHtmlHelper extends BaseEntityHelper
                     );
 
                     foreach ($groupHeaders as $groupHeader) {
-                        if (! ($groupHeader['display'] ?? true)) {
+                        if (!($groupHeader['display'] ?? true)) {
                             continue;
                         }
 
                         $fieldName = $groupHeader['fields'][$itemType]['fieldname'] ?? '';
                         $display = $groupHeader['fields'][$itemType]['fieldconfig']['display'] ?? true;
                         if (empty($fieldName) || empty($display)) {
-                          $out .= '<div></div>';
-                          continue;
+                            $out .= '<div></div>';
+                            continue;
                         }
                         $out .= $this->itemField(
                             $item,
@@ -266,7 +290,8 @@ class EntityHtmlHelper extends BaseEntityHelper
         }
 
         $items = Arrays::ungroup($groupedItems);
-        $out .= $this->annoLists($article, $items, ['edit' => $action === 'edit', 'mode' => $mode]);
+        $out .= $this->annoLists($article, 'sections-' . $section->id, $items,
+            ['edit' => $action === 'edit', 'mode' => $mode, 'buttons' => $options['buttons'] ?? true]);
 
         return $out;
     }
@@ -280,7 +305,7 @@ class EntityHtmlHelper extends BaseEntityHelper
      * @param array $options
      * @return string
      */
-    public function itemFieldDate($item, $fieldNameParts, $edit, $options=[])
+    public function itemFieldDate($item, $fieldNameParts, $edit, $options = [])
     {
         $content = parent::itemFieldDate($item, $fieldNameParts, $edit, $options);
         return "<div class=\"doc-field-content\">{$content}</div>";
@@ -295,7 +320,7 @@ class EntityHtmlHelper extends BaseEntityHelper
      * @param array $options
      * @return string
      */
-    public function itemFieldJson($item, $fieldNameParts, $edit, $options=[])
+    public function itemFieldJson($item, $fieldNameParts, $edit, $options = [])
     {
         if (($options['fieldConfig']['template'] ?? '') === 'list') {
             $value = $item->getValueFormatted($fieldNameParts);
@@ -318,7 +343,7 @@ class EntityHtmlHelper extends BaseEntityHelper
      * @param array $options
      * @return string
      */
-    public function itemFieldRecord($item, $fieldNameParts, $edit, $options=[])
+    public function itemFieldRecord($item, $fieldNameParts, $edit, $options = [])
     {
         $content = $item->getValueFormatted($fieldNameParts);
         return "<div class=\"doc-field-content\">{$content}</div>";
@@ -333,7 +358,7 @@ class EntityHtmlHelper extends BaseEntityHelper
      * @param array $typeConfig The footnote's type configuration
      * @return string
      */
-    public function footnoteContent($footnote, $root, $options=[], $typeConfig = [])
+    public function footnoteContent($footnote, $root, $options = [], $typeConfig = [])
     {
         $data = parent::footnoteContent($footnote, $root, $options, $typeConfig);
 
@@ -384,7 +409,7 @@ class EntityHtmlHelper extends BaseEntityHelper
                 $out .= "<span class=\"doc-field-caption\">{$caption}</span>";
             }
 
-            $fieldOptions =  ['edit' => $edit, 'form'=> $formId, 'fieldConfig' => $fieldConfig];
+            $fieldOptions = ['edit' => $edit, 'form' => $formId, 'fieldConfig' => $fieldConfig];
             $out .= $this->footnoteField($data, $fieldName, $fieldOptions);
         }
 
@@ -392,5 +417,55 @@ class EntityHtmlHelper extends BaseEntityHelper
         $out .= $this->Element->closeHtmlElement('div');
 
         return $out;
+    }
+
+    /**
+     * Render an entity
+     *
+     * @param RootEntity $entity
+     * @param array $options
+     * @return string
+     */
+    public function render($entity, $options = [])
+    {
+        $entity->prepareRoot();
+        $options = [
+            'format' => 'html',
+            'edit' => false,
+            'action' => 'view',
+            'mode' => $this->Link->getMode(),
+            'template_article' => $entity->type['merged'] ?? [],
+            'buttons' => false
+        ];
+
+        $out = $this->Types->getTagStyles();
+        $out .= $this->docHeader($entity, $options);
+        $out .= $this->docContent($entity, $options);
+
+        $options['levelOffset'] = 1;
+        $out .= $this->sectionList($entity, $options);
+        $out .= $this->footnoteList($entity, $options);
+
+
+        $out = $this->Element->outputHtmlElement('article', $out,
+            [
+                'data-row-table' => $entity->tableName,
+                'data-row-id' => $entity->id,
+                'data-row-type' => $entity->type->name ?? ''
+            ]
+        );
+
+        $title = $entity->name;
+        $html = "<!doctype html><html><head>";
+        $html .= "<meta charset=\"utf-8\"><title>" . $title . "</title>";
+
+        if (!empty($options['style'] ?? true)) {
+            $html .= "<style>" . file_get_contents(ROOT . '/plugins/Epi/templates/Articles/article.css') . "</style>";
+        }
+
+        $html .= "</head>";
+        $html .= "<body>" . $out . "</body>";
+        $html .= "</html>";
+        return $html;
     }
 }

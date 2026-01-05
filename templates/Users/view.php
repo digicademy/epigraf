@@ -28,8 +28,31 @@ use App\Utilities\Converters\Attributes;
     <h2 id="toc-overview" class="widget-scrollsync-section"><?= __('Profile') ?></h2>
 
     <?= $this->EntityHtml->entityForm($entity, 'view') ?>
+
+    <?= $this->Link->authLink(
+        __('Generate invitation'),
+        ['action' => 'invite', $entity->id],
+        [
+            'class' => 'doc-item-add button tiny frame',
+            // TODO: open post links in frame
+            //'linktype' => 'post',
+        ]
+    );
+    ?>
+
+    <?= $this->Link->authLink(
+        __('Regenerate access token'),
+        ['action' => 'token', $entity->id],
+        [
+            'class' => 'doc-item-add button tiny',
+            'linktype' => 'post',
+            'confirm' => __('This will regenerate the access token. Are you ready to proceed?')
+        ]
+    );
+    ?>
 </div>
 
+<?php if($entity->hasSqlAccess): ?>
 <div class="content-section">
 <h2 id="toc-epidesktop" class="widget-scrollsync-section"><?= __('Epigraf Desktop Settings') ?></h2>
 <table class="vertical-table">
@@ -74,7 +97,9 @@ use App\Utilities\Converters\Attributes;
     </tr>
 </table>
 </div>
+<?php endif; ?>
 
+<?php if (in_array($user_role, ['admin', 'devel'])) : ?>
 <div class="content-section">
     <h2 id="toc-access" class="widget-scrollsync-section"><?= __('Databases') ?></h2>
     <?=
@@ -121,30 +146,24 @@ use App\Utilities\Converters\Attributes;
     <?php if (empty($entity->settings)): ?>
         <i>No settings</i>
     <?php else: ?>
-        <?=	$this->Table->nestedTable($entity['settings']);?>
+        <?=	$this->Table->nestedTable($entity['settings'], ['tree' => true]);?>
     <?php endif;?>
+    <br><br>
+    <?= $this->Link->authLink(
+        __('Clear user settings'),
+        ['action' => 'clearsettings', $entity->id],
+        [
+            'class' => 'doc-item-remove button tiny',
+            'confirm' => __("This will clear the user's settings. Are you ready to proceed?")
+        ]
+    );
+    ?>
 </div>
+
+<?php endif; ?>
 
 <!-- Actions -->
 <?php
     $this->setShowBlock(['footer']);
     $this->Link->addEditButtons($entity);
-
-    $this->Link->addAction(
-        __('Clear user settings'),
-        ['action' => 'clearsettings', $entity->id]
-    );
-    $this->Link->addAction(
-        __('Regenerate access token'),
-        ['action' => 'token', $entity->id],
-        [
-            'linktype' => 'post',
-            'confirm' => __('This will regenerate the access token. Are you ready to proceed?')
-        ]
-    );
-    $this->Link->addAction(
-        __('Set SQL-Password'),
-        ['action' => 'password', $entity->id]
-    );
-
 ?>

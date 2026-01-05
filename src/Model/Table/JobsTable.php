@@ -10,6 +10,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Job;
 use App\Utilities\Converters\Attributes;
 use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
@@ -30,18 +31,27 @@ class JobsTable extends BaseTable
     public $captionField = 'id';
 
     /**
+     * Type field for scoped queries and IRI paths
+     *
+     * @var null|string
+     */
+    public $typeField = 'jobtype';
+
+    /**
      * Request parameter config
      *
      * @var string[]
      */
     public $parameters = [
         'id' => 'list',
+        'name' => 'string',
+        'norm_iri' => 'string',
         'pipeline' => 'raw',
         'scope' => 'string',
         'selection' => 'raw',
         'created_by' => 'list',
-        'columns' => 'list',
-        'typ' => 'list',
+        'columns' => 'list-or-false',
+        'jobtype' => 'list',
         'status' => 'list'
     ];
 
@@ -50,7 +60,7 @@ class JobsTable extends BaseTable
      *
      * @var string[]
      */
-    static $jobTypes = [
+    public static $jobTypes = [
         'export' => 'Export',
         'import' => 'Import',
         'transfer' => 'Transfer',
@@ -112,6 +122,7 @@ class JobsTable extends BaseTable
     {
         $schema = parent::getSchema();
         $schema->setColumnType('config', 'json');
+        $schema->setColumnType('result', 'json');
         return $schema;
     }
 
@@ -128,8 +139,8 @@ class JobsTable extends BaseTable
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->requirePresence('typ', 'create')
-            ->notEmptyString('typ');
+            ->requirePresence('jobtype', 'create')
+            ->notEmptyString('jobtype');
 
         $validator
             ->allowEmptyString('config');
@@ -156,10 +167,10 @@ class JobsTable extends BaseTable
      * Automatically fill name and sortkey
      *
      * @param EventInterface $event
-     * @param EntityInterface $entity
-     * @return void
+     * @param Job $entity
+     * @param array $options
      */
-    public function beforeSave(EventInterface $event, EntityInterface $entity)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
         if (empty($entity->config['user_role'])) {
             $entity->config['user_role'] = $this::$userRole;
@@ -203,6 +214,7 @@ class JobsTable extends BaseTable
     {
         unset($requestParameters['page']);
 
+        // @deprecated: use TransferComponent
         if (in_array($requestAction, ['add', 'download'])) {
             $params = $requestParameters;
 
@@ -242,20 +254,35 @@ class JobsTable extends BaseTable
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $default = [
             'id' => [
                 'caption' => __('ID'),
                 'default' => true
             ],
-            'typ' => [
+            'iri_path' => [
+                'key' => 'iri_path',
+                'field' => 'norm_iri',
+                'caption' => __('IRI'),
+                'default' => true
+            ],
+            'name' => [
+                'caption' => __('Name'),
+                'filter' => 'text',
+                'default' => true
+            ],
+            'jobtype' => [
                 'caption' => __('Type'),
                 'type' => 'select',
                 'empty' => true,
@@ -313,7 +340,7 @@ class JobsTable extends BaseTable
             ]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**
@@ -337,13 +364,13 @@ class JobsTable extends BaseTable
     }
 
     /**
-     * Contain table data
+     * Contain data necessary for table columns
      *
      * @param \Cake\ORM\Query $query
      * @param array $options
      * @return Query
      */
-    public function findContainFields(Query $query, array $options)
+    public function findContainColumns(Query $query, array $options)
     {
         $query = $query
             ->contain(['Creator'])

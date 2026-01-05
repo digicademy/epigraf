@@ -15,7 +15,7 @@
   )),
   'created_by' => 1,
   'modified_by' => 1,
-  'typ' => 'export',
+  'jobtype' => 'export',
   'status' => 'work',
   'progress' => 1,
   'progressmax' => 12,
@@ -29,10 +29,11 @@
     'params' => 
     array (
       'articles' => '1',
+      'sort' => 'location',
       'projects' => '1',
     ),
     'selection' => 'selected',
-    'tasks' => 
+    'options' => 
     array (
       'enabled' => 
       array (
@@ -42,7 +43,6 @@
           'enabled' => 1,
         ),
       ),
-      'index' => 1,
       'options' => 
       array (
         2 => 
@@ -52,9 +52,8 @@
           'category' => 'Allgemeines',
           'label' => 'Signatur anzeigen',
           'key' => 'signature',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         3 => 
         array (
@@ -63,9 +62,8 @@
           'category' => 'Allgemeines',
           'label' => 'Notizen',
           'key' => 'notes',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         4 => 
         array (
@@ -74,9 +72,8 @@
           'category' => 'Allgemeines',
           'label' => 'Letzte Änderung',
           'key' => 'modified',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         5 => 
         array (
@@ -85,9 +82,8 @@
           'category' => 'Register',
           'label' => 'Register',
           'key' => 'indices',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         6 => 
         array (
@@ -96,9 +92,8 @@
           'category' => 'Register',
           'label' => 'Literatur und Quellen',
           'key' => 'biblio',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         7 => 
         array (
@@ -107,9 +102,8 @@
           'category' => 'Standorte-Register',
           'label' => 'Basis-Standort anzeigen',
           'key' => 'base_location',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         8 => 
         array (
@@ -118,9 +112,8 @@
           'category' => 'Ligaturen',
           'label' => 'unterstreichen',
           'key' => 'ligature_arcs',
-          'radio' => '1',
-          'value' => '',
           'type' => 'radio',
+          'value' => '',
         ),
         9 => 
         array (
@@ -129,9 +122,8 @@
           'category' => 'Ligaturen',
           'label' => 'Ligaturbögen',
           'key' => 'ligature_arcs',
-          'radio' => '1',
-          'value' => '1',
           'type' => 'radio',
+          'value' => '1',
         ),
         10 => 
         array (
@@ -140,9 +132,8 @@
           'category' => 'Marken',
           'label' => 'zu einer Kategorie zusammenfassen',
           'key' => 'marks_together',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         11 => 
         array (
@@ -151,9 +142,8 @@
           'category' => 'Ausgabemodus',
           'label' => 'Münchener Reihe',
           'key' => 'modus',
-          'radio' => '1',
-          'value' => 'projects_bay',
           'type' => 'radio',
+          'value' => 'projects_bay',
         ),
         12 => 
         array (
@@ -162,21 +152,23 @@
           'category' => 'Ausgabemodus',
           'label' => 'alle anderen Reihen',
           'key' => 'modus',
-          'radio' => '1',
-          'value' => 'projects_all',
           'type' => 'radio',
+          'value' => 'projects_all',
         ),
       ),
+      'index' => 1,
     ),
     'pipeline_name' => 'DI: Artikel',
     'user_role' => 'author',
     'user_id' => 1,
+    'pipeline_progress' => 0,
     'pipeline_tasks' => 
     array (
       0 => 
       array (
         'number' => '1',
         'type' => 'options',
+        'format' => 'xml',
         'options' => 
         array (
           2 => 
@@ -186,7 +178,7 @@
             'category' => 'Allgemeines',
             'label' => 'Signatur anzeigen',
             'key' => 'signature',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           3 => 
@@ -196,7 +188,7 @@
             'category' => 'Allgemeines',
             'label' => 'Notizen',
             'key' => 'notes',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           4 => 
@@ -206,7 +198,7 @@
             'category' => 'Allgemeines',
             'label' => 'Letzte Änderung',
             'key' => 'modified',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           5 => 
@@ -216,7 +208,7 @@
             'category' => 'Register',
             'label' => 'Register',
             'key' => 'indices',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           6 => 
@@ -226,7 +218,7 @@
             'category' => 'Register',
             'label' => 'Literatur und Quellen',
             'key' => 'biblio',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           7 => 
@@ -236,7 +228,7 @@
             'category' => 'Standorte-Register',
             'label' => 'Basis-Standort anzeigen',
             'key' => 'base_location',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           8 => 
@@ -246,7 +238,7 @@
             'category' => 'Ligaturen',
             'label' => 'unterstreichen',
             'key' => 'ligature_arcs',
-            'radio' => '1',
+            'type' => 'radio',
             'value' => '',
           ),
           9 => 
@@ -256,7 +248,7 @@
             'category' => 'Ligaturen',
             'label' => 'Ligaturbögen',
             'key' => 'ligature_arcs',
-            'radio' => '1',
+            'type' => 'radio',
             'value' => '1',
           ),
           10 => 
@@ -266,7 +258,7 @@
             'category' => 'Marken',
             'label' => 'zu einer Kategorie zusammenfassen',
             'key' => 'marks_together',
-            'radio' => '0',
+            'type' => 'check',
             'value' => '',
           ),
           11 => 
@@ -276,7 +268,7 @@
             'category' => 'Ausgabemodus',
             'label' => 'Münchener Reihe',
             'key' => 'modus',
-            'radio' => '1',
+            'type' => 'radio',
             'value' => 'projects_bay',
           ),
           12 => 
@@ -286,7 +278,7 @@
             'category' => 'Ausgabemodus',
             'label' => 'alle anderen Reihen',
             'key' => 'modus',
-            'radio' => '1',
+            'type' => 'radio',
             'value' => 'projects_all',
           ),
         ),
@@ -307,6 +299,7 @@
         'canskip' => '0',
         'caption' => 'Article data',
         'articletypes' => '',
+        'snippets' => 'indexes,paths,editors,comments',
         'matchprojects' => '0',
         'outputfile' => '',
       ),
@@ -394,7 +387,7 @@
         'download' => '1',
       ),
     ),
-    'pipeline_progress' => 0,
   ),
+  'result' => NULL,
 ); 
 ?>

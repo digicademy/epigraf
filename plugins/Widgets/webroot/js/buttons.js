@@ -24,7 +24,7 @@ import {SelectWindow} from "./frames.js";
  *
  * The switch will toggle its own class 'widget-switch-active' and emit the event 'epi:toggle:switch'
  *
- * The switch widget is not attaced to all switch elements, but to the document.
+ * The switch widget is not attached to all switch elements, but to the document.
  * It handles all elements with the class widget-switch.
  */
 export class SwitchButtons extends BaseWidget {
@@ -170,6 +170,14 @@ export class ToggleButtons extends BaseWidget {
 }
 
 
+/**
+ * A sandwich button is attached to several buttons and collects them for small viewports.
+ *
+ * Add the following markup
+ * - data-sandwich-sources A css selector for all source elements. Source elements will be collected in the button.
+ * - data-toggle
+ *
+ */
 export class SandwichButton extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
@@ -178,6 +186,7 @@ export class SandwichButton extends BaseWidget {
         this.sandwichPane = document.getElementById(this.sandwichButton.dataset.toggle);
         this.sandwichSources = document.querySelectorAll(this.widgetElement.dataset.sandwichSources);
 
+        this.resizeTimeout = null;
         this.listenEvent(this.sandwichSources, 'epi:replace:content', event => this.onReplaced(event));
         this.listenEvent(window,'resize', event => this.onResize(event));
         this.onResize();
@@ -190,10 +199,13 @@ export class SandwichButton extends BaseWidget {
      * @param {Event} event The event that triggered the update
      */
     onResize(event) {
-
-        this.sandwichSources.forEach(
-            source => this.updateSandwichSource(source)
-        )
+        // debounce
+        clearTimeout(this.resizeTimeout);
+        this.resizeTimeout = setTimeout(() => {
+            this.sandwichSources.forEach(source => {
+                this.updateSandwichSource(source);
+            });
+        }, 40);
     }
 
     onReplaced(event) {
@@ -210,23 +222,28 @@ export class SandwichButton extends BaseWidget {
         this.onResize();
     }
 
+    /**
+     * Calculate whether and which elements need to be collected
+     *
+     * @param {HTMLElement} sourceElement
+     */
     updateSandwichSource(sourceElement) {
-        // Find or create dot ul element
-        let menuDot = this.sandwichPane.querySelector(
+        // Find or create sandwich ul element
+        let menuSandwich = this.sandwichPane.querySelector(
             'ul[data-sandwich-source="' + sourceElement.dataset.sandwichSource + '"]'
         );
 
-        if (!menuDot) {
-            menuDot = document.createElement('ul');
-            menuDot.dataset.sandwichSource = sourceElement.dataset.sandwichSource;
-            this.sandwichPane.appendChild(menuDot);
+        if (!menuSandwich) {
+            menuSandwich = document.createElement('ul');
+            menuSandwich.dataset.sandwichSource = sourceElement.dataset.sandwichSource;
+            this.sandwichPane.appendChild(menuSandwich);
         }
 
         // Get source container
         // TODO: handle margin and padding
-        const margins = 16;
+        const margins = 0;
         const menuList = sourceElement.querySelector('ul');
-        let menuSpace =  sourceElement.offsetWidth - margins;
+        let menuSpace = sourceElement.offsetWidth - margins;
 
         if (this.widgetElement.classList.contains('hidden')) {
             menuSpace -= 50;
@@ -237,15 +254,20 @@ export class SandwichButton extends BaseWidget {
 
         if (listLast && listFirst) {
             menuSpace = menuSpace - (listLast.offsetLeft + listLast.offsetWidth - listFirst.offsetLeft);
+            // see CSS margin-right attribute for action-group-last
+            if (listLast.classList.contains('action-group-last')) {
+                const fontSize = parseFloat(getComputedStyle(listLast).fontSize);
+                menuSpace -= fontSize * 1;
+            }
         }
 
-        //Move from dot/vertical to list/horizontal
-        while ((menuSpace > 0) && (menuDot.childElementCount > 0)) {
-            const nextItem = menuDot.firstElementChild;
+        //Move from sandwich/vertical to list/horizontal
+        while ((menuSpace > 0) && (menuSandwich.childElementCount > 0)) {
+            const nextItem = menuSandwich.firstElementChild;
             let items = [nextItem];
             if (nextItem.classList.contains('action-group')) {
                 const actionGroup = Utils.getClassValue(nextItem, 'action-group-');
-                items = [...menuDot.querySelectorAll(':scope > .action-group-' + actionGroup)];
+                items = [...menuSandwich.querySelectorAll(':scope > .action-group-' + actionGroup)];
             }
 
             items.forEach((item) => {
@@ -254,19 +276,28 @@ export class SandwichButton extends BaseWidget {
             });
         }
 
-        // Move from list/horizontal to dot/vertical
-        while ((menuSpace < 0) && (menuList.childElementCount > 0)) {
-            const nextItem = menuList.lastElementChild;
+        // Move from list/horizontal to sandwich/vertical
+        const entries = Array.from(menuList.children).reverse();
+        // - move the complete menu?
+        const inOneGo = getComputedStyle(sourceElement).getPropertyValue('--sandwich') == 'in-one-go';
+        if (menuSpace < 0) {
+            entries.forEach(entry => {
+                const exclude = (
+                    entry.querySelector('.sandwich-exclude') != null
+                    || entry.matches('.menu_database.first')
+                );
+                if ((menuSpace < 0 || inOneGo) && !exclude) {
+                    let items = [entry];
+                    if (entry.classList.contains('action-group')) {
+                        const actionGroup = Utils.getClassValue(entry, 'action-group-');
+                        items = [...menuList.querySelectorAll(':scope > .action-group-' + actionGroup)];
+                    }
 
-            let items = [nextItem];
-            if (nextItem.classList.contains('action-group')) {
-                const actionGroup = Utils.getClassValue(nextItem, 'action-group-');
-                items = [...menuList.querySelectorAll(':scope > .action-group-' + actionGroup)];
-            }
-
-            items.reverse().forEach((item) => {
-                menuSpace += (item.offsetWidth + margins);
-                menuDot.prepend(item);
+                    items.reverse().forEach((item) => {
+                        menuSpace += (item.offsetWidth + margins);
+                        menuSandwich.prepend(item);
+                    });
+                }
             });
         }
 
@@ -283,7 +314,7 @@ export class Shortcuts extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
 
-        let shortcuts = element.dataset.shortcuts.split(' ');
+        let shortcuts = element.dataset.shortcuts ? element.dataset.shortcuts.split(' ') : [];
 
         // Filter shortcuts that were already taken
         // TODO: But not for hidden buttons...e.g. in the property move function
@@ -311,13 +342,13 @@ export class Shortcuts extends BaseWidget {
     onKeydown(event) {
         let isShortcut = false;
         //Only check key events from F1 to F10 or in combination with Alt/Ctrl modifiers
-        if (event.ctrlKey || event.altKey || ((event.keyCode >= 112) && (event.keyCode <= 123) )) {
+        if (event.ctrlKey || event.metaKey || event.altKey || ((event.keyCode >= 112) && (event.keyCode <= 123) )) {
 
             const key = event.key.toUpperCase(); //String.fromCharCode(event.Code);
 
             this.shortcuts.forEach(
                 (shortcut) => {
-                    if (event.ctrlKey && !shortcut.includes('Ctrl')) {
+                    if ((event.ctrlKey || event.metaKey) && !shortcut.includes('Ctrl')) {
                         return;
                     }
 
@@ -350,6 +381,12 @@ export class Shortcuts extends BaseWidget {
 /**
  * File, folder and database choose buttons
  *
+ * Use  $this->Form->control() with type 'choose' to create a choose button.
+ *
+ * Options:
+ * - data-itemtype: A comma separated list of 'file', 'folder' or 'database'.
+ * - data-external: Set to a URL. If present, create a button that opens URL in a new tab.
+ *
  */
 export class ChooseButtons extends BaseWidget {
 
@@ -359,23 +396,25 @@ export class ChooseButtons extends BaseWidget {
         // Listen button clicks
         this.listenEvent(document, 'click', (event) => {
             if (event.target.matches('.widget-choose button')) {
-                const itemtype = event.target.dataset.itemtype;
+                const itemtypes = Utils.splitString(event.target.dataset.itemtype);
                 const inputElement = event.target.closest('.widget-choose').querySelector('input[type="text"]');
 
                 const options = {
-                    title: "Select " + itemtype,
+                    title: "Select " + itemtypes.join(" or "),
                     value: inputElement.value,
 
                     height: 600,
                     width: 600,
 
                     url: event.target.dataset.url,
-                    itemtype: itemtype,
-                    selectList: itemtype === 'folder',
+                    external: event.target.dataset.external || false,
+                    itemtype: itemtypes,
+                    selectList: itemtypes.includes('folder'),
+                    selectItem: !itemtypes.includes('folder') || (itemtypes.length > 1),
 
                     ajaxButtons: 'exclusive',
-                    buttonSelect: itemtype === 'folder',
-                    selectOnClick: itemtype !== 'folder',
+                    buttonSelect: itemtypes.includes('folder'),
+                    selectOnClick: !itemtypes.includes('folder'),
 
                     onSelect: (element) => {
                         // Set value
@@ -416,18 +455,15 @@ export class ChooseButtons extends BaseWidget {
     }
 }
 
-
 /**
  * Represents a widget for managing code blocks in Docs pages and adding copy-to-clipboard buttons to them.
- *
- * TODO: rename to CodeblockWidget
  *
  * This class provides functionality for creating copy buttons for each code block
  * within the specified container, allowing users to copy the code content to the clipboard.
  */
-export class Codeblocks extends BaseWidget {
+export class CodeblockWidget extends BaseWidget {
     /**
-     * Creates a new instance of the Codeblocks class.
+     * Creates a new instance of the CodeblockWidget class.
      *
      * @param {HTMLElement} element The HTML element representing the Codeblocks widget.
      * @param {string} name The name of the Codeblocks widget.
@@ -439,7 +475,7 @@ export class Codeblocks extends BaseWidget {
          * The collection of code block elements within the Codeblocks widget.
          * @type {NodeListOf<HTMLElement>}
          */
-        this.codeblocks = element.querySelectorAll('[data-row-table="docs"] pre code');
+        this.codeblocks = element.querySelectorAll('[data-row-table="docs"] pre code, [data-row-table="help"] pre code');
         this.codeblocks.forEach(codeblock => this.createCopyButton(codeblock))
     }
 
@@ -499,5 +535,5 @@ export class Tooltip extends BaseWidget {
 window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['shortcut'] = Shortcuts;
 window.App.widgetClasses['sandwich'] = SandwichButton;
-window.App.widgetClasses['codeblocks'] = Codeblocks;
+window.App.widgetClasses['codeblocks'] = CodeblockWidget;
 window.App.widgetClasses['tooltip'] = Tooltip;

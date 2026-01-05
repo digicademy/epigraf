@@ -18,6 +18,7 @@ use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Query;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Epi\Model\Entity\Section;
 
 /**
  * Sections table
@@ -57,6 +58,12 @@ class SectionsTable extends BaseTable implements ScopedTableInterface
      */
     public $_recoverQueue = [];
 
+    /**
+     * Store move operations for the VersionedTreeBehavior
+     *
+     * @var array
+     */
+    public $_moveQueue = [];
 
     /**
      * Initialize hook
@@ -144,6 +151,7 @@ class SectionsTable extends BaseTable implements ScopedTableInterface
         );
     }
 
+
     /**
      * Default validation rules
      *
@@ -175,10 +183,10 @@ class SectionsTable extends BaseTable implements ScopedTableInterface
      * TODO: normalize sortno field by itemtype (EpiDesktop produces gaps by ignoring itemtype)
      *
      * @param EventInterface $event
-     * @param $entity
-     * @param $options
-     */
-    public function beforeSave(EventInterface $event, $entity, $options)
+     * @param Section $entity
+     * @param array $options
+ */
+    public function beforeSave(EventInterface $event, $entity, $options = [])
     {
         if (!empty($entity->items)) {
             foreach ($entity->items as $item) {

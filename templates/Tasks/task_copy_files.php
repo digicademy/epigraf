@@ -15,7 +15,6 @@
  */
 ?>
 <?php $entityHelper =($options['edit'] ?? false) ? $this->EntityInput : $this->EntityHtml; ?>
-<?php $rootOptions =   ['shared'=>__('Shared folder'),'database'=>__('Current database folder'),'job' => __('Job folder')]; ?>
 <?=
     $entityHelper->taskTable(
         $task,
@@ -23,8 +22,8 @@
             'root' => [
                 'type' => 'radio',
                 'label' => __('Source root folder'),
-                'options' => $rootOptions,
-                'value' => empty($task['extension']) ? '' : $task['extension'],
+                'options' => ['shared'=>__('Shared folder'),'database'=>__('Current database folder'),'job' => __('Job folder')],
+                'value' => empty($task['root']) ? '' : $task['root'],
                 'default' => 'shared'
             ],
             'source' => [

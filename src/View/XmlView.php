@@ -34,6 +34,21 @@ class XmlView extends ApiView
         return 'application/xml';
     }
 
+    /**
+     * Render a tag with opening and closing tag, attributes and content
+     *
+     * ### Options
+     * - pretty
+     * - level
+     * - array
+     *
+     * @param string $tagname The tag name If empty, only the content will be rendered
+     * @param string $attributes The tag attributes
+     * @param mixed $content Content of the tag. If an empty string, an empty tag will be rendered.
+     *                       If the content is not a string, it will be converted to a string using json_encode.
+     * @param array $options
+     * @return string
+     */
     static public function renderTag($tagname, $attributes, $content, $options)
     {
 
@@ -83,17 +98,22 @@ class XmlView extends ApiView
      *
      * @param array $data Data containing fields to be rendered as attributes
      * @param array $attributes Data fields that should be rendered as attributes
+     * @param bool $escape Whether to escape special characters.
+     *                     If false, the values are directly passed to the attributes
+     *                     and special characters, if necessary, need to be escaped before.
      * @return string
      */
-    static public function renderAttributes($data, $attributes)
+    static public function renderAttributes($data, $attributes, $escape = false)
     {
         $out = '';
         if (!empty($attributes)) {
             $attributes_values = array_intersect_key($data, array_flip($attributes));
             $attributes_values = array_merge(array_fill_keys($attributes, null), $attributes_values);
 
-            $out = array_map(function ($key, $value) {
-                $value = htmlspecialchars($value ?? '', ENT_XML1 | ENT_COMPAT, 'UTF-8');
+            $out = array_map(function ($key, $value) use ($escape) {
+                if ($escape) {
+                    $value = htmlspecialchars($value ?? '', ENT_XML1 | ENT_COMPAT, 'UTF-8');
+                }
                 return ($key . '="' . $value . '"');
             }, $attributes, $attributes_values);
             $out = empty($out) ? '' : ' ' . implode(' ', $out);
@@ -146,17 +166,20 @@ class XmlView extends ApiView
      * @param array $options
      * @param int $level The level of indentation
      * @param bool $pretty Whether to pretty print the XML using indentation
-     * @return string
+     * @param bool $escape Whether to escape special characters
+     *                     If false, the values are directly passed to the attributes.
+     *                     and special characters, if necessary, need to be escaped before.
+ * @return string
      */
-    public function renderContent($data, $options = [], $level = 0)
+    public function renderContent($data, $options = [], $level = 0, $escape = false)
     {
         // Prepare
         $data = $this->extractData($data, $options);
 
         // Prepare array
-        $attributes = '';
         $content = '';
 
+        $attributes = $options['attributes'] ?? null;
         $tagname = $options['tagname'] ?? null;
         $tagname = $tagname !== null ? Attributes::cleanTag($tagname) : $tagname;
 
@@ -181,7 +204,7 @@ class XmlView extends ApiView
 
             // Transform fields to attributes
             if (!empty($attributeKeys)) {
-                $attributes = static::renderAttributes($data, $attributeKeys);
+                $attributes = static::renderAttributes($data, $attributeKeys, $escape);
                 $data = array_diff_key($data, array_flip($attributeKeys));
             }
 
@@ -192,7 +215,11 @@ class XmlView extends ApiView
                 }
                 $childtagname = $isSimpleArray ? $tagname : (is_numeric($key) ? null : $key);
                 $nextLevel = is_null($childtagname) ? $level : ($level + 1);
-                $content .= $this->renderContent($value, ['tagname' => $childtagname] + $options, $nextLevel);
+                $contentOptions = ['tagname' => $childtagname];
+                if ($isSimpleArray && !is_null($childtagname)) {
+                    $contentOptions['attributes'] = $attributes;
+                }
+                $content .= $this->renderContent($value, $contentOptions + $options, $nextLevel);
             }
 
             if ($isSimpleArray) {
@@ -202,7 +229,9 @@ class XmlView extends ApiView
         }
         else {
             $content = $data;
-            //$content = htmlspecialchars($data ?? '',  ENT_XML1 | ENT_COMPAT, 'UTF-8');
+            if ($escape) {
+                $content = htmlspecialchars($content ?? '',  ENT_XML1 | ENT_COMPAT, 'UTF-8');
+            }
         }
 
         // Output tag with content and attributes

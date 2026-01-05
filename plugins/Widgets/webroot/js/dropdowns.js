@@ -9,6 +9,7 @@
 
 import {BaseWidget} from '/js/base.js';
 import Utils from '/js/utils.js';
+import {Overlay} from './frames.js';
 
 /**
  * Base class for dropdown widgets
@@ -48,6 +49,11 @@ class DropdownWidgetBase extends BaseWidget {
      *  c) The toggle or the container has a data-pane-align-to attribute with a css selector:
      *     The pane will be aligned to the closest element matched by the selector.
      *
+     *  A desired position may be specified in the data-widget-dropdown-position attribute.
+     *  It designates the corner of the reference element to which the dropdown is aligned.
+     *  Possible values: bottomleft (default), bottomright, topleft, topright,
+     *  righttop, rightbottom, lefttop, leftbottom.
+     *
      * @param {boolean} first True if the function is called for the first time.
      *                        In this case, it is called a second time to adjust for potential scrollbar
      *                        changes due to positioning.
@@ -60,23 +66,18 @@ class DropdownWidgetBase extends BaseWidget {
         // The reference element to align the pane to.
         // - Usually the container
         // - Alternatively a parent element matched by the selector provided in data-pane-align-to.
-        // TODO: can this.input_label and this.input_toggle be removed? Do widgets without this.widgetElement exist?
         let alignTo = this.widgetElement.dataset.paneAlignTo;
-        alignTo= alignTo ? this.widgetElement.closest(alignTo) : undefined;
-        alignTo = alignTo || this.widgetElement || this.input_label || this.input_toggle;
+        alignTo = alignTo ? this.widgetElement.closest(alignTo) : undefined;
+        alignTo = alignTo || this.widgetElement;
         let alignRect = alignTo.getBoundingClientRect();
 
-        // Fix width for small devices
-        if (window.innerWidth < 500) {
-            alignRect = new DOMRect(0, alignRect.top, window.innerWidth, alignRect.height);
-        }
 
         // Shift vertically if requested
         let alignToY= this.widgetElement.dataset.paneAlignToY;
         alignToY = alignToY ? this.widgetElement.closest(alignToY) : undefined;
         if (alignToY) {
-            const alignRextY = alignToY.getBoundingClientRect();
-            alignRect = new DOMRect(alignRect.left, alignRextY.top, alignRect.width, alignRextY.height);
+            const alignRectY = alignToY.getBoundingClientRect();
+            alignRect = new DOMRect(alignRect.left, alignRectY.top, alignRect.width, alignRectY.height);
         }
 
         // Calculate the target width of the pane:
@@ -86,10 +87,11 @@ class DropdownWidgetBase extends BaseWidget {
             (width, element) => Math.max(width, element.scrollWidth - element.parentElement.clientWidth)
             , 0
         );
+
         targetWidth = Math.max(targetWidth, alignRect.width);
 
         // Width of the content container (window, main content, sidebar, popup)
-        // to prevents the dropdown pane growing bigger than the content container width.
+        // to prevent the dropdown pane growing bigger than the content container width.
         let referenceWidth;
         let referenceOffsetLeft;
         const contentPane = this.getFrame(false);
@@ -101,12 +103,11 @@ class DropdownWidgetBase extends BaseWidget {
             referenceOffsetLeft = alignRect.left;
         }
 
-        // Contrain the pane size
+        // Limit the pane size
         const maxWidth = Math.min(referenceWidth - referenceOffsetLeft, 600);
         const maxHeight = (window.innerHeight - alignRect.bottom - 50);
         const minHeight = 250;
 
-        // Constrain the pane size
         this.pane.style.maxHeight = maxHeight + 'px';
         if (this.pane.offsetHeight > maxHeight) {
             this.pane.style.height = maxHeight + 'px';
@@ -120,52 +121,99 @@ class DropdownWidgetBase extends BaseWidget {
 
         // Cases b) and c) The pane is moved to the body element and/or aligned to another element
         else {
-            // Flip position if the pane does not fit
-            const spaceLeft = window.innerWidth - alignRect.left;
-            const spaceRight = window.innerWidth - alignRect.right;
-            const spaceTop = alignRect.top;
-            const spaceBottom = window.innerHeight - alignRect.bottom;
-
             let position = this.pane.dataset.widgetDropdownPosition || 'bottomleft';
-
-            if ((spaceLeft < targetWidth) && (position.includes('left'))) {
-                const newPosition = (spaceRight < targetWidth) ? 'full' : 'right';
-                position = position.replace('left', newPosition);
+            // complete the value of 'position'
+            if (position === 'right' || position === 'left') {
+                position = position + 'top';
             }
-            else if ((spaceRight < targetWidth)  && (position.includes('right'))) {
-                const newPosition = (spaceLeft < targetWidth) ? 'full' : 'left';
-                position = position.replace('right', newPosition);
-            }
-            else if ((spaceLeft < targetWidth) && (!position.includes('right'))) {
-                const newPosition = (spaceLeft < targetWidth) ? 'full' : 'left';
-                position = position.replace('right', newPosition);
-            }
-            else if ((spaceRight < targetWidth) && (!position.includes('left'))) {
-                const newPosition = (spaceRight < targetWidth) ? 'full' : 'right';
-                position = position.replace('left', newPosition);
+            if (position === 'bottom' || position === 'top') {
+                position = position + 'left';
             }
 
-            if (spaceTop < minHeight) {
-                position = position.replace('top', 'bottom');
-            } else if (spaceBottom < minHeight) {
-                position = position.replace('bottom', 'top');
+            let drop = '';
+            if (position.startsWith('bottom') || position.endsWith('top')) {
+                drop = 'down';
+            }
+            else {
+                drop = 'up';
+            }
+
+            let spaceLeft = 0;
+            let spaceRight = 0;
+            let spaceTop = 0;
+            let spaceBottom = 0;
+            if (position.startsWith('right')) {
+                spaceRight = window.innerWidth - alignRect.right;
+            }
+            else {
+                spaceRight = window.innerWidth - alignRect.left;
+            }
+            if (position.startsWith('left')) {
+                spaceLeft = alignRect.left;
+            }
+            else {
+                spaceLeft = alignRect.right;
+            }
+            if (position.startsWith('top')) {
+                spaceTop = alignRect.top;
+            }
+            else {
+                spaceTop = alignRect.bottom;
+            }
+            if (position.startsWith('bottom')) {
+                spaceBottom = window.innerHeight - alignRect.bottom;
+            }
+            else {
+                spaceBottom = window.innerHeight - alignRect.top;
+            }
+
+            // Flip position if the pane does not fit
+            // Note: if position is set to 'bottomleft' the dropdown extends downward and to the right,
+            // if position is set to 'lefttop' the dropdown extends to the left and downward, etc..
+
+            let flipped = '';
+            if ((spaceRight < targetWidth)) {
+                flipped = 'left';
+                if (position.startsWith('bottom') || position.startsWith('top')) {
+                    position = position.replace('left', 'right');
+                } else if (position.startsWith('right')) {
+                    position = position.replace('right', 'left');
+                }
+            }
+            if ((spaceLeft < targetWidth)) {
+                if (flipped === 'left'){
+                    position = drop === "down" ? 'bottomfull' : 'topfull';
+                } else if (position.startsWith('bottom') || position.startsWith('top')) {
+                    position = position.replace('right', 'left');
+                } else if (position.startsWith('left')) {
+                    position = position.replace('left', 'right');
+                }
+            }
+            if ((spaceBottom < minHeight)) {
+                if (position.startsWith('right') || position.startsWith('left')) {
+                    position = position.replace('top', 'bottom');
+                } else if (position.startsWith('bottom')) {
+                    position = position.replace('bottom', 'top');
+                }
+            }
+            if ((spaceTop < minHeight)) {
+                if (position.startsWith('right') || position.startsWith('left')) {
+                    position = position.replace('bottom', 'top');
+                } else if (position.startsWith('top')) {
+                    position = position.replace('top', 'bottom');
+                }
             }
 
             // Position the pane
-            if (position === 'left') {
+            if (position === 'lefttop') {
                 // Left align
                 this.pane.style.left = (alignRect.left - targetWidth) + 'px';
                 this.pane.style.width = targetWidth + 'px';
                 this.pane.style.top = alignRect.top + 'px';
-            } else if (position === 'right') {
+            } else if (position === 'righttop') {
                 // Right align
                 this.pane.style.left = alignRect.right + 'px';
                 this.pane.style.width = targetWidth + 'px';
-                this.pane.style.top = alignRect.top + 'px';
-            } else if (position === 'full') {
-                // Full width align
-                this.pane.style.left = '0px';
-                this.pane.style.width = '100%';
                 this.pane.style.top = alignRect.top + 'px';
             } else if (position === 'bottomright') {
                 // Align to the bottom right corner of the toggle
@@ -178,7 +226,7 @@ class DropdownWidgetBase extends BaseWidget {
                 this.pane.style.width = targetWidth + 'px';
                 this.pane.style.top = (alignRect.top - 1 - this.pane.clientHeight) + 'px';
             } else if (position === 'topleft') {
-                // Align to the top right corner of the toggle
+                // Align to the top left corner of the toggle
                 this.pane.style.left = alignRect.left + 'px';
                 this.pane.style.width = targetWidth + 'px';
                 this.pane.style.top = (alignRect.top - 1 - this.pane.clientHeight) + 'px';
@@ -191,12 +239,19 @@ class DropdownWidgetBase extends BaseWidget {
                 // Align to the bottom of the toggle with full width
                 this.pane.style.left = '0px';
                 this.pane.style.width = '100%';
+                this.pane.style.maxWidth = '100%';
                 this.pane.style.top = (alignRect.bottom + 1) + 'px';
+            } else if (position === 'full') {
+                this.pane.style.left = '0px';
+                this.pane.style.width = '100%';
+                this.pane.style.maxWidth = '100%';
+                this.pane.style.top = '0px'
             } else {
-                // Align below the toggle and adjust width to the toggle or the minWidth
+                // Handle unknown values like bottomleft
+                // Align to the bottom left corner of the toggle
                 this.pane.style.left = alignRect.left + 'px';
+                this.pane.style.width = targetWidth + 'px';
                 this.pane.style.top = (alignRect.bottom + 1) + 'px';
-                this.pane.style.width = Math.max(targetWidth, alignRect.width) + 'px';
             }
         }
 
@@ -204,6 +259,7 @@ class DropdownWidgetBase extends BaseWidget {
             this.positionDropdown(false);
         }
     }
+
 }
 /**
  * Create a dropdown button with a pane
@@ -259,10 +315,15 @@ export class DropdownWidget extends DropdownWidgetBase {
         this.listenEvent(this.toggle,'click', event => this.toggleDropdown(event));
         this.listenEvent(document,'click', event => this.outsideDropdown(event));
         this.listenEvent(window,'resize', event => this.positionDropdown());
+
+        const scrollableParent = this.widgetElement.closest('.widget-scrollsync-content');
+        if (scrollableParent) {
+            this.listenEvent(scrollableParent, 'scroll', event => this.positionDropdown());
+        }
     }
 
     /**
-     * Move the pane element to the direct childlist of body.
+     * Move the pane element to the direct child list of body.
      * This makes it possible to position the pane.
      */
     detachPane() {
@@ -277,8 +338,24 @@ export class DropdownWidget extends DropdownWidgetBase {
         this.pane = document.querySelector(selector);
 
         if (this.pane) {
+            // Update document fields (so that getDocumentWidget() works)
+            const rootTable = this.widgetElement.closest('[data-root-table]');
+            const rootId = this.widgetElement.closest('[data-root-id]');
+            this.pane.dataset.rootTable = rootTable ? rootTable.dataset.rootTable : '';
+            this.pane.dataset.rootId = rootId ? rootId.dataset.rootId : '';
+
+            // Move
             document.querySelector('body').append(this.pane);
             this.pane.classList.add('widget-dropdown-pane-moved');
+
+            // Listen clear / close of container
+            const container = this.getFrame(false);
+            if (container) {
+                this.listenEvent(container, 'epi:clear:widgets', event => this.closeDropdown(event));
+            }
+
+            // Init
+            App.initWidgets(this.pane);
         }
         this.positionDropdown();
     }
@@ -337,7 +414,12 @@ export class DropdownWidget extends DropdownWidgetBase {
         this.pane.classList.add('active');
         this.toggle.classList.add('active');
 
-        this.positionDropdown();
+        if (window.matchMedia('screen and (max-width: 767.98px)').matches) {
+            this.openDropDownInOverlay()
+        }
+        else {
+            this.positionDropdown();
+        }
 
         const input = this.pane.querySelector('input[type="text"]');
 
@@ -346,6 +428,28 @@ export class DropdownWidget extends DropdownWidgetBase {
         }
 
     }
+
+    /**
+     * Open dropdown pane in overlay, e.g. for narrow devices
+     */
+    openDropDownInOverlay() {
+        const headerTitle = this.widgetElement.parentElement.querySelector('.widget-dropdown-pane-header');
+        let title = null;
+        if (headerTitle) {
+            title = headerTitle.textContent;
+        }
+        // remove position values set in this.positionDropdown
+        this.pane.style.cssText = '';
+        const overlay = new Overlay(this.pane);
+        overlay.build(title);
+        this.listenEvent(document, "epi:close:overlay", event => {
+            if (event.detail.data['paneId'] === this.pane.id) {
+                this.closeDropdown(event);
+            }
+        });
+        overlay.show()
+    }
+
 }
 
 /**
@@ -544,6 +648,12 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
             } else {
                 document.querySelector('body').append(this.pane);
                 this.pane.classList.add('widget-dropdown-pane-moved');
+                // Listen clear / close of container
+                const container = this.getFrame(false);
+                if (container) {
+                    this.listenEvent(container, 'epi:clear:widgets', event => this.closeDropdown(event));
+                }
+
             }
         }
 
@@ -1007,6 +1117,10 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
      * Reset the label to the original value and close the dropdown.
      */
     resetValue() {
+        if (!this.isOpen()) {
+            return;
+        }
+
         if (this.input_label) {
             this.input_label.value = this.input_label.dataset.oldvalue;
             this.input_label.classList.remove('dirty');
@@ -1059,7 +1173,7 @@ export class FormUpdateWidget extends BaseWidget {
         }
 
         let url = new URL(form.getAttribute('action'), App.baseUrl);
-        const input_val = event.target.value;
+        const input_val = Utils.getInputValue(event.target);
         url.searchParams.set(input_param, input_val);
         url = url.toString();
 

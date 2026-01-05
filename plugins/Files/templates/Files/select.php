@@ -25,9 +25,10 @@ use Cake\Routing\Router;
 <?php if (!empty($entity['name'])) $this->Breadcrumbs->add($entity['name']); ?>
 
 <?php $listName =  $this->getConfig('options')['params']['list'] ?? 'files'; ?>
+<?php $download = $this->getConfig('options')['params']['download'] ?? true; ?>
 
 <div class="content-main widget-scrollbox">
-	<table class="recordlist">
+	<table class="recordlist widget-table">
 		<thead>
 		<tr>
 			<th scope="col">Name</th>
@@ -41,7 +42,8 @@ use Cake\Routing\Router;
             '?' => [
                 'root' => $entity['root'],
                 'path' => $entity->relativeFolder,
-                'basepath' => $entity->basepath
+                'basepath' => $entity->basepath,
+                'download' => $download ? '1' : '0'
             ]
         ]);
         ?>
@@ -60,7 +62,8 @@ use Cake\Routing\Router;
                             '?' => [
                                 'root' => $entity['root'],
                                 'path' => Files::prependPath($entity->basepath, $file['fullname']),
-                                'basepath' => $entity->basepath
+                                'basepath' => $entity->basepath,
+                                'download' => $download ? '1' : '0'
                             ]
                         ]);
                     ?>
@@ -80,7 +83,7 @@ use Cake\Routing\Router;
                 <?php else: ?>
                     <?php
                         $data_url =  Router::url([
-                            'action' => 'download',
+                            'action' =>  $download ? 'download' : 'display',
                             '?' => [
                                 'root' => $entity['root'],
                                 'path' => $entity['relative_path'],

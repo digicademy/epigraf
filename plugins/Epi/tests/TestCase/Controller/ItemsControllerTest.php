@@ -90,6 +90,7 @@ class ItemsControllerTest extends EpiTestCase
      */
     public function testItemsJson(): void
     {
+        // TODO: nested json should not be quoted
         $this->loginUser('admin');
         $this->get('/epi/projects/articles/items.json?itemtypes=geolocations&page=1');
         $this->assertJsonResponseEqualsComparison('.plain');

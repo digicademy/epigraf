@@ -30,6 +30,8 @@ class PermissionsController extends AppController
     public $authorized = [
     ];
 
+    public $help = 'administration/users';
+
     /**
      * Pagination setup
      *

@@ -198,7 +198,7 @@ class PropertiesTableTest extends EpiTestCase
     public function testFindWithAncestors()
     {
         $properties = $this->Properties
-            ->find('withAncestors')
+            ->find('withAncestors', ['ancestors' => true])
             ->where(['Properties.id' => 166]) // Versmaß 2a
             ->all()->toArray();
 

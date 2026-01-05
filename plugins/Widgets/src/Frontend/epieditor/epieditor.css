@@ -113,7 +113,7 @@ br + br[data-cke-filler] {
 .widget-xmleditor.ck.ck-editor__editable_inline.ck-blurred {
     height: inherit;
     min-height: 1.5rem;
-    max-height: 30rem;
+    /*max-height: 30rem;*/
     overflow: auto;
 }
 

@@ -15,14 +15,15 @@
             36
         ]
     },
-    "647": [
+    "650": [
         null,
         {
-            "id": 647,
+            "id": 650,
             "deleted": 2,
             "version_id": 31,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 10,
@@ -55,14 +56,15 @@
             "rght": 11
         }
     ],
-    "648": [
+    "651": [
         null,
         {
-            "id": 648,
+            "id": 651,
             "deleted": 2,
             "version_id": 32,
             "job_id": null,
             "published": null,
+            "status": null,
             "created_by": 1,
             "modified_by": 1,
             "sortno": 8,

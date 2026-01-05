@@ -42,9 +42,13 @@ class TaskDataArticles extends BaseTaskData
         else {
             $dataparams = $this->job->dataParams;
         }
+
         $dataparams['articletypes'] = Attributes::commaListToStringArray($this->config['articletypes'] ?? '');
-        $dataparams['snippets'] = array_merge($dataparams['snippets'] ?? [],
-            ['indexes', 'paths', 'editors', 'comments']);
+        $dataparams['snippets'] = array_merge(
+            Attributes::commaListToStringArray($dataparams['snippets'] ?? ''),
+                Attributes::commaListToStringArray($this->config['snippets'] ?? '')
+            //['indexes', 'paths', 'editors', 'comments']
+        );
 
         return $dataparams;
     }
@@ -75,11 +79,13 @@ class TaskDataArticles extends BaseTaskData
      *
      * @return array[]
      */
-    public function getRenderOptions()
+    public function getRenderOptions($table = null)
     {
-        $options = parent::getRenderOptions();
+        $options = parent::getRenderOptions($table);
         $options['params']['snippets'] = array_merge($options['params']['snippets'] ?? [],
-            ['indexes', 'paths', 'editors', 'comments']);
+            Attributes::commaListToStringArray($this->config['snippets'] ?? '')
+        );
+            //['indexes', 'paths', 'editors', 'comments']);
         return $options;
     }
 

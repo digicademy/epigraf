@@ -26,6 +26,7 @@
                 'json' => __('JSON'),
                 'csv' => __('CSV'),
                 'md' => __('Markdown'),
+                'plain' => __('HTML'),
                 'ttl' => __('Turtle'),
                 'rdf' => __('RDF/XML'),
                 'jsonld' => __('JsonLd'),

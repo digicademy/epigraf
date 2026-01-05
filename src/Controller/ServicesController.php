@@ -11,6 +11,7 @@
 namespace App\Controller;
 
 use App\Datasource\Services\ServiceFactory;
+use App\Model\Table\PermissionsTable;
 
 /**
  * Services Controller
@@ -36,6 +37,8 @@ class ServicesController extends AppController
         ]
     ];
 
+    public $help = 'configuration';
+
     /**
      * Retrieve the result of a service
      *
@@ -48,32 +51,41 @@ class ServicesController extends AppController
     {
         $apiService = ServiceFactory::create($service);
 
-        $params = $apiService->sanitizeParameters($this->request->getQueryParams());
+        // Merge get and post data
+        $data = $apiService->sanitizeParameters(
+            array_merge(
+                $this->request->getQueryParams(),
+                $this->request->getData() ?? []
+            )
+        );
 
         if ($this->request->is('post')) {
-            $postData = $this->request->getData();
-            $params = array_merge($params, $postData);
-            $task = $apiService->query($path, $params);
+            $task = $apiService->query($path, $data);
 
             // Redirect to the status endpoint
+            // For the LLM service, parameters are added by the postProcess() method.
             if (!empty($task['task_id'])) {
                 $getUrl = [
                     'action' => 'get', $service, $task['task_id'],
-                    '?' => $params
+                    '?' => $task['params'] ?? []
                 ];
                 $this->Answer->redirect($getUrl);
             }
-//            else {
-//                $error = $task['message'] ?? 'Could not create task.';
-//                $this->Answer->error($error);
-//            }
         }
         else {
-            $task = $apiService->query($path, $params);
+            $task = $apiService->query($path, $data);
         }
 
         // In proxy mode, pass the response as is
-        if ($apiService->proxyMode === 'json') {
+        if ($apiService->proxyMode === 'file') {
+            $this->response = $this->response
+                ->withType($task['type'])
+                ->withStringBody($task['response'])
+                ->withStatus($task['status'] ?? 500);
+
+            $this->autoRender = false;
+        }
+        elseif ($apiService->proxyMode === 'json') {
             $this->response = $this->response
                 ->withType('application/json')
                 ->withStringBody(json_encode($task['response'] ?? []))
@@ -82,9 +94,41 @@ class ServicesController extends AppController
             $this->autoRender = false;
         } else {
             $this->Answer->addAnswer(['service' => $service, 'task' => $task]);
-            $this->Answer->addOptions(['params' => $params]);
+            $this->Answer->addOptions(['params' => $data]);
             $this->render('/Services/get_' . $service);
         }
     }
 
+
+    /**
+     * Check access to specific services
+     *
+     * To allow access to a service, add a permission with the entity name set to the service name.
+     *
+     * @param array|\ArrayAccess|null $user
+     * @return bool
+     */
+    public function isAuthorized($user)
+    {
+        $action = $this->request->getParam('action');
+        if (!in_array($user['role'] ?? '', ['admin', 'devel']) && ($action === 'get')) {
+            $passedParams = $this->request->getParam('pass', []);
+            $service = $passedParams[0] ?? null;
+
+            if (empty($service)) {
+                return false;
+            }
+
+            return PermissionsTable::hasGrantedPermission(
+                $user,
+                null,
+                $this->request->getParam('controller'),
+                $this->request->getParam('action'),
+                $this->_getRequestScope(),
+                ['entity_name' => $service]
+            );
+        }
+
+        return parent::isAuthorized($user);
+    }
 }

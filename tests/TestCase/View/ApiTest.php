@@ -60,28 +60,28 @@ class ApiTest extends AppTestCase
         \App\Model\Table\BaseTable::$userRole = 'author';
 
         $this->assertEquals(
-         'id;name;internalUrl;type;caption;config;geo;xml;prop' . "\n"
-        . 'articles-1;"Article with &quot;Quotes&quot;";/epi/projects/articles/view/1' . "\n"
-        . 'sections-1;"Section 1";;"types-ID epi-section"' . "\n"
-        . '"types-ID epi-section";epi-section;;sections;"ID epi-section";"{""triples"":{""templates"":[{""subject"":""epi:{iri}"",""predicate"":""schema:description"",""object"":""{items.*.xml}""},{""subject"":""epi:{iri}"",""predicate"":""schema:location"",""object"":""{items.*.prop.name}""}]}}"' . "\n"
-        . 'items-1;"Item 1";;"types-ID epi-item";;;"{""lat"":2.1,""lng"":1.2}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
-        . 'properties-0;"Property 0";;"types-ID epi-property";;;;;' . "\n"
-        . '"types-ID epi-property";epi-property;;properties;"ID epi-property";[];;;' . "\n"
-        . '"types-ID epi-item";epi-item;;items;"ID epi-item";[];;;' . "\n"
-        . 'items-2;"Item 2";;"types-ID epi-item";;;"{""lat"":4.2,""lng"":2.4}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
-        . 'properties-0;"Property 0";;"types-ID epi-property";;;;;' . "\n"
-        . '"types-ID epi-property";epi-property;;properties;"ID epi-property";[];;;' . "\n"
-        . '"types-ID epi-item";epi-item;;items;"ID epi-item";[];;;' . "\n"
-        . 'sections-2;"Section 2";;"types-ID epi-section";;;;;' . "\n"
-        . '"types-ID epi-section";epi-section;;sections;"ID epi-section";"{""triples"":{""templates"":[{""subject"":""epi:{iri}"",""predicate"":""schema:description"",""object"":""{items.*.xml}""},{""subject"":""epi:{iri}"",""predicate"":""schema:location"",""object"":""{items.*.prop.name}""}]}}";;;' . "\n"
-        . 'items-1;"Item 1";;"types-ID epi-item";;;"{""lat"":2.1,""lng"":1.2}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
-        . 'properties-0;"Property 0";;"types-ID epi-property";;;;;' . "\n"
-        . '"types-ID epi-property";epi-property;;properties;"ID epi-property";[];;;' . "\n"
-        . '"types-ID epi-item";epi-item;;items;"ID epi-item";[];;;' . "\n"
-        . 'items-2;"Item 2";;"types-ID epi-item";;;"{""lat"":4.2,""lng"":2.4}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
-        . 'properties-0;"Property 0";;"types-ID epi-property";;;;;' . "\n"
-        . '"types-ID epi-property";epi-property;;properties;"ID epi-property";[];;;' . "\n"
-        . '"types-ID epi-item";epi-item;;items;"ID epi-item";[];;;' . "\n",
+         'id;name;norm_data;internalUrl;type;caption;config;geo;xml;prop' . "\n"
+        . 'articles-1;"Article with ""Quotes""";"wd:XXX' ."\n" .'gnd:YYY";/epi/projects/articles/view/1' . "\n"
+        . 'sections-1;"Section 1";;;"types-ID epi-section"' . "\n"
+        . '"types-ID epi-section";epi-section;;;sections;"ID epi-section";"{""triples"":{""templates"":[{""subject"":""epi:{iri}"",""predicate"":""schema:description"",""object"":""{items.*.xml}""},{""subject"":""epi:{iri}"",""predicate"":""schema:location"",""object"":""{items.*.prop.name}""}]}}"' . "\n"
+        . 'items-1;"Item 1";;;"types-ID epi-item";;;"{""lat"":2.1,""lng"":1.2}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
+        . 'properties-0;"Property 0";"wd:WD1' . "\n" . 'gnd:GND1";;"types-ID epi-property";;;;;' . "\n"
+        . '"types-ID epi-property";epi-property;;;properties;"ID epi-property";[];;;' . "\n"
+        . '"types-ID epi-item";epi-item;;;items;"ID epi-item";[];;;' . "\n"
+        . 'items-2;"Item 2";;;"types-ID epi-item";;;"{""lat"":4.2,""lng"":2.4}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
+        . 'properties-0;"Property 0";"wd:WD1' . "\n" . 'gnd:GND1";;"types-ID epi-property";;;;;' . "\n"
+        . '"types-ID epi-property";epi-property;;;properties;"ID epi-property";[];;;' . "\n"
+        . '"types-ID epi-item";epi-item;;;items;"ID epi-item";[];;;' . "\n"
+        . 'sections-2;"Section 2";;;"types-ID epi-section";;;;;' . "\n"
+        . '"types-ID epi-section";epi-section;;;sections;"ID epi-section";"{""triples"":{""templates"":[{""subject"":""epi:{iri}"",""predicate"":""schema:description"",""object"":""{items.*.xml}""},{""subject"":""epi:{iri}"",""predicate"":""schema:location"",""object"":""{items.*.prop.name}""}]}}";;;' . "\n"
+        . 'items-1;"Item 1";;;"types-ID epi-item";;;"{""lat"":2.1,""lng"":1.2}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
+        . 'properties-0;"Property 0";"wd:WD1' . "\n" . 'gnd:GND1";;"types-ID epi-property";;;;;' . "\n"
+        . '"types-ID epi-property";epi-property;;;properties;"ID epi-property";[];;;' . "\n"
+        . '"types-ID epi-item";epi-item;;;items;"ID epi-item";[];;;' . "\n"
+        . 'items-2;"Item 2";;;"types-ID epi-item";;;"{""lat"":4.2,""lng"":2.4}";"This -&gt; is an <anno id=""a1"">annotated</anno> &lt;- text.";properties-0' . "\n"
+        . 'properties-0;"Property 0";"wd:WD1' . "\n" . 'gnd:GND1";;"types-ID epi-property";;;;;' . "\n"
+        . '"types-ID epi-property";epi-property;;;properties;"ID epi-property";[];;;' . "\n"
+        . '"types-ID epi-item";epi-item;;;items;"ID epi-item";[];;;' . "\n",
 
         $view->renderToString($this->testData)
         );
@@ -215,77 +215,11 @@ class ApiTest extends AppTestCase
     /**
      * Test JSON-LD serialization
      *
-     * // TODO: Should return something, refactor JsonLdView according to the structure of TtlView
-     *
      * @return void
      */
     public function testJsonld(): void {
         $view = new JsonLdView();
-        $this->assertEquals(
-         '{' . "\n"
-        . '    "@context": {' . "\n"
-        . '        "epi": "",' . "\n"
-        . '        "schema": "http:\\/\\/schema.org\\/"' . "\n"
-        . '    },' . "\n"
-        . '    "@set": [' . "\n"
-        . '        [' . "\n"
-        . '            {' . "\n"
-        . '                "@id": "articles\\/projects~1",' . "\n"
-        . '                "schema:title": {' . "\n"
-        . '                    "@value": "Article with \u0022Quotes\u0022"' . "\n"
-        . '                },' . "\n"
-        . '                "schema:about": [' . "\n"
-        . '                    {' . "\n"
-        . '                        "@id": "sections\\/geolocation\\/projects~1"' . "\n"
-        . '                    },' . "\n"
-        . '                    {' . "\n"
-        . '                        "@id": "sections\\/geolocation\\/projects~2"' . "\n"
-        . '                    }' . "\n"
-        . '                ]' . "\n"
-        . '            },' . "\n"
-        . '            {' . "\n"
-        . '                "@id": "sections\\/geolocation\\/projects~1",' . "\n"
-        . '                "schema:description": [' . "\n"
-        . '                    {' . "\n"
-        . '                        "@value": "This -\\u003E is an annotated \\u003C- text."' . "\n"
-        . '                    },' . "\n"
-        . '                    {' . "\n"
-        . '                        "@value": "This -\\u003E is an annotated \\u003C- text."' . "\n"
-        . '                    }' . "\n"
-        . '                ],' . "\n"
-         . '                "schema:location": [' . "\n"
-         . '                    {' . "\n"
-         . '                        "@value": "Property 0"' . "\n"
-         . '                    },' . "\n"
-         . '                    {' . "\n"
-         . '                        "@value": "Property 0"' . "\n"
-         . '                    }' . "\n"
-         . '                ]' . "\n"
-        . '            },' . "\n"
-        . '            {' . "\n"
-        . '                "@id": "sections\\/geolocation\\/projects~2",' . "\n"
-        . '                "schema:description": [' . "\n"
-        . '                    {' . "\n"
-        . '                        "@value": "This -\\u003E is an annotated \\u003C- text."' . "\n"
-        . '                    },' . "\n"
-        . '                    {' . "\n"
-        . '                        "@value": "This -\\u003E is an annotated \\u003C- text."' . "\n"
-        . '                    }' . "\n"
-        . '                ],' . "\n"
-         . '                "schema:location": [' . "\n"
-         . '                    {' . "\n"
-         . '                        "@value": "Property 0"' . "\n"
-         . '                    },' . "\n"
-         . '                    {' . "\n"
-         . '                        "@value": "Property 0"' . "\n"
-         . '                    }' . "\n"
-         . '                ]' . "\n"
-         . '            }' . "\n"
-        . '        ]' . "\n"
-        . '    ]' . "\n"
-        . '}',
-            $view->renderToString($this->testData)
-        );
+        $this->assertContentEqualsComparison($view->renderToString($this->testData));
     }
 
     /**

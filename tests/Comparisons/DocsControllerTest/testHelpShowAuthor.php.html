@@ -5,35 +5,35 @@
 <head>
     <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-        Startfenster    </title>
+    <title>Help</title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
     <!-- CSS frameworks -->
     <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">    
+            <link rel="stylesheet" href="/css/theme_default.css">
     <!-- JS -->
 
     <!-- JS frameworks -->
     <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>    
+            <script src="/js/app.min.js" type="module"></script>
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"author","scope":"web","session":{"ui":[]}});}</script>
     <!-- JS widgets -->
         <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
 
     <!-- Additional CSS -->
-    
+
     <!-- Additional JS -->
         </head>
 
 <body class="plugin_ controller_help action_show template_default theme_default userrole_author">
+
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -41,44 +41,44 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div class="widget-dropdown-pane-header">Databases</div><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global active" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
 
-                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Menu</div><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-                
-                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/1" class="btn-profile" title="author"></a>                                            </div>
+
+                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/1" class="btn btn-icon" title="author"></a>                                            </div>
 
         </nav>
-    
+
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-        
-                                                        
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Categories</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Help</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
                 <div class="frame-title">
-                    <div class="frame-title-caption">Categories</div>
+                    <div class="frame-title-caption">Help</div>
                     <div class="frame-title-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div>
                 </div>
 
                 <div class="frame-content">
-                    <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="category-meta first node item item-level-0 item-nochildren" ><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/index/help">List all</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Administration">Administration</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-nochildren" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Handbuch">Handbuch</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-id="3" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/docs/show/help?category=Kontext-Hilfe">Kontext-Hilfe</a></div><div class="tree-meta"></div></li></ul></div>                </div>
+                    <div class="widget-scrollbox"><ul class="side-nav widget-tree widget-tree-foldable" data-list-name="menu-left"><li class="first node item item-level-0 item-nochildren item-first" data-id="1" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help">Preface</a></div><div class="tree-meta"></div></li><li class="active node item item-level-0 item-haschildren item-collapsed" data-id="2" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction">Introduction</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-id="3" data-tree-parent="2" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction/gettingstarted">Get started</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="4" data-tree-parent="2" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction/articles">About articles</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="5" data-tree-parent="2" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction/properties">About categories</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="6" data-tree-parent="2" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction/projects">About projects</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="7" data-tree-parent="2" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction/files">About files</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-id="8" data-tree-parent="2" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/introduction/notes">About notes</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren item-collapsed" data-id="9" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/coreconcepts">Core concepts</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-id="10" data-tree-parent="9" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/coreconcepts/model">RAM</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="11" data-tree-parent="9" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/coreconcepts/iris">IRIs</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="12" data-tree-parent="9" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/coreconcepts/keys">Keys</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-id="13" data-tree-parent="9" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/coreconcepts/api">API</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren item-collapsed" data-id="14" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/import">Import</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-id="15" data-tree-parent="14" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/import/csv">CSV</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="16" data-tree-parent="14" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/import/xml">XML</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-id="17" data-tree-parent="14" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/import/api">API</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren item-collapsed" data-id="18" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/export">Export</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-id="19" data-tree-parent="18" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/export/pipelines?database=projects">Pipelines</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="20" data-tree-parent="18" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/export/transfer">Transfer</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-id="21" data-tree-parent="18" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/export/api">API</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren item-collapsed" data-id="22" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/administration">Administration</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-id="23" data-tree-parent="22" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/administration/databases">Databases</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="24" data-tree-parent="22" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/administration/users">Users</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="25" data-tree-parent="22" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/administration/files">Files</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="26" data-tree-parent="22" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/administration/pages">Pages</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-id="27" data-tree-parent="22" data-level="1"><div class="tree-indent tree-indent-line"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/administration/troubleshooting">Troubleshooting</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren item-last item-collapsed" data-id="28" data-level="0"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration">Configuration</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-id="29" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/articles">Articles</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="30" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/categories">Categories</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="31" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/annotations">Annotations</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="32" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/fields">Fields</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="33" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/columns">Columns</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-id="34" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/triples">Triples</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-id="35" data-tree-parent="28" data-level="1"><div class="tree-indent tree-indent-empty"></div><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="/help/configuration/services">Services</a></div><div class="tree-meta"></div></li></ul></div>                </div>
                 <div class="frame-footer">
-                                            <form method="get" accept-charset="utf-8" id="search" action="/docs/index/help"><input type="hidden" name="database"><div class="input text"><input type="text" name="term" placeholder="Search" id="term" aria-label="Search"></div></form>                                    </div>
-                </div></div></div></div></div>        
+                                    </div>
+                </div></div></div></div></div>
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
                 <div class="content-header">
                     <div class="content-header-title">
 
-                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><a href="/docs/index/help">Help</a></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Startfenster</span></li></ul></nav>                    </div>
+                                                <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><span>Help</span></li><li><span>&nbsp;&raquo;&nbsp;</span></li><li><span>Introduction</span></li></ul></nav>                    </div>
 
-                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Categories</button>
-                    
+                                            <button class="accordion-toggle" data-toggle-accordion="sidebar-left">Help</button>
+
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -86,306 +86,80 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-                    
+
 
 
 <!-- Breadcrumbs -->
-            
+
 <!-- TOC -->
-        
 
-<div class="widget-codeblocks widget-highlight" data-row-table="docs" data-row-id="47" data-root-table="docs" data-root-id="47" data-highlight=""><p><a href="/docs/view/73">zur Übersicht ...</a></p>
 
-<p><strong>Gliederung:</strong></p>
+<div class="widget-codeblocks widget-highlight" data-highlight="" data-row-table="help"><h1 id="introduction-to-the-user-interface">Introduction to the user interface</h1>
 
-<ul>
-<li><a href="#seitenaufbau">Aufbau des Startfensters</a></li>
-<li><a href="#menue">Menüleiste</a> (1)</li>
-<li><a href="#statusDb">Statusanzeige: Datenbank</a> (2)</li>
-<li><a href="#dropdown">Dropdown-Felder</a>
+<p>The main entry page when working with Epigraf is the articles table. It lists the collection of all articles, optionally filtered by project, categories and full text search. The article collection, depending on the configuration of your database, can be displayed in alternative layouts. Use the buttons in the footer to switch the layout:</p>
 
 <ul>
-<li><a href="#dropdown_ebene">"Ebene"</a> (3)</li>
-<li><a href="#dropdown_projekt">"Projekt"</a>(4)</li>
-</ul></li>
-<li><a href="#liste">Tabelle der Artikel oder Projekte</a>
-
-<ul>
-<li><a href="#artikel_projekte">Artikel und Projekte</a></li>
-<li><a href="#formatieren">Tabelle formatieren</a>
-
-<ul>
-<li><a href="#spalten_waehlen">Spalten wählen</a></li>
-<li><a href="#spaltenbreite">Spaltenbreite</a></li>
-<li><a href="#spalten_anordnen">Spalten anordnen</a></li>
-</ul></li>
-<li><a href="#sortieren">Tabelle sortieren</a></li>
-<li><a href="#aktualisieren">Tabelle aktualisieren</a></li>
-</ul></li>
-<li><a href="#werkzeug">Werkzeugleiste</a> (5)</li>
-<li><a href="#statusZ">Statuszeile</a> (6)
-
-<ul>
-<li><a href="#finden">Artikel durch Eintippen einer Zeichenfolge <code>Finden</code></a></li>
-</ul></li>
+<li>Table: Articles are listed in a table. The columns are configured in the database types. Click the settings icon in the top left corner of the table to change the column selection. You can change the column order by dragging and dropping them the drop-down menu.</li>
+<li>Map: All items containing geographic coordinates are displayed in the map view.</li>
+<li>Tiles: The tile view displays each article as a tile containing an image (if available) and selected content.</li>
+<li>Lanes: In the lanes view, tiles are displayed in rows. Each row corresponds to a category selected in the filter facets of the left sidebar. Thus, you need to add a facet using the plus button and select at least one category.</li>
 </ul>
 
-<h1 id="seitenaufbau" class=" widget-scrollsync-section">Aufbau des Startfensters</h1>
+<p>Table views are used throughout Epigraf for all kinds of entity collections such as projects or categories. A <strong>single mouse click</strong> on a row usually opens the entity in the right sidebar. <strong>Double-clicking</strong> opens the entity in the same window. <strong>Ctrl+click</strong> a row to open the entity in a new window. You will find buttons in the sidebar and in popups that also open entities in a new tabsheet.</p>
 
-<p><a href="/docs/view/47">zurück ...</a>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=startseite.png" alt="Startseite"></p>
-
-<p>Beim Programmstart erscheint das Startfenster von Epigraf.</p>
-
-<p>Die Hauptfläche nimmt eine Tabelle ein, die – entsprechend der Auswahl im <a href="#dropdown">Dropdown-Feld "Ebene"</a> – <a href="/docs/view/90">Artikel oder Projekte</a> einer Datenbank aufführt. Davon oben, links und unten sind eine Reihe von Anzeigen und Funktionen angeordnet.</p>
-
-<p>(1) Am oberen Rand erscheint die Menüleiste.</p>
-
-<p>(2) Darunter wird der Name der aktiven Datenbank angezeigt.</p>
-
-<p>Hiervon rechts sind zwei Dropdown-Fenster platziert:
-(3) Unter <code>Ebene</code> kann man wählen, ob in der Tabelle Artikel oder Projekte angezeigt werden.
-(4) Unter <code>Projekt</code> kann man die Auswahl der Artikel auf eines der aufgelisteten Projekte einschränken oder die Artikel aller Projekte anzeigen lassen.</p>
-
-<p>(5) Links neben der Tabelle befindet sich die Werkzeugleiste.</p>
-
-<p>(6) Unter der Tabelle sieht man eine Statusanzeige (Name der Datenbank, Bearbeiter, Anzahl der Datensätze/Artikel, zum <code>Finden</code> eingegebene Zeichenfolge)</p>
-
-<h1 id="menue" class=" widget-scrollsync-section">Menüleiste</h1>
-
-<p><a href="/docs/view/47">zurück ...</a>
-<br>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=Menleiste.PNG" alt="Menüleiste"></p>
-
-<p>Die Menüleiste am oberen Rand des Startfensters bietet in acht Dropout-Menüs den Zugriff auf zentrale Bereiche und Funktionen des Programms.</p>
-
-<h2 id="menue_datenbank" class=" widget-scrollsync-section"><strong>Menü "Datenbank"</strong></h2>
-
-<table>
- <colgroup> <col width="300"> <col> </colgroup>
-<tr>
-<td>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=Datenbank.png">
-</td>
-<td>
-<ol>
-<li>Im oberen Bereich werden (ensprechend den in der <a href="/docs/view/70">Konfiguration</a> vorgenommen Einträgen) die auf dem PC mit EpigrafDesktop verknüpften <b>Datenbanken</b> angezeigt. Die Anzeige bietet die Möglichkeit, durch Anklicken eine der aufgeführten Datenbanken aufzurufen bzw. zwischen den Datenbanken zu wechseln. Außer bei System-Administratoren wird in der Regel nur eine Datenbank, die der jeweiligen Arbeitsstelle, angezeigt. Wenn ein Bearbeiter über die nötigen Zugangsdaten verfügt, kann er auch auf mehrere Datenbanken zugreifen</li>
-<li><b>Aktualisieren</b> (F5): die Artikel-Tabelle wird neu aufgebaut.</li>
-<li><a href="/docs/view/48"><b>Bearbeiter wechseln</b></a></li>
-<li><a href="/docs/view/74"><b>Backup anlegen</b></a></li>
-<li><a href="/docs/view/75"><b>Sperren aufheben</b></a></li>
-<li><a href="/docs/view/70"><b>Konfiguration</b></a></li>
-</ol>
-</td>
-</tr>
-</table>
-
-<h2 id="globaledaten" class=" widget-scrollsync-section"><strong>Menü "Globale Daten"</strong></h2>
-
-<p>Dieses Menü bietet Zugriff auf zentrale Listen und Ansichten.</p>
-
-<table>
- <colgroup> <col width="300"> <col> </colgroup>
-<tr>
-<td>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=GlobaleDaten.png">
-</td>
-<td>
-<ol>
-<li><strong>Band</strong>. Beim Anklicken öffnet sich das <a href="/docs/view/81">Band-Fenster</a>, in dem (mit Ausnahme von Katalog und Registern) die Bestandteile eines Inschriftenbandes (Titelei, Vorwort, Einleitung usw.) angelegt werden.
-</li>
-<li><strong>Nachschlagelisten</strong>. Das Untermenü bietet Zugriff auf die dort angeführten <a href="/docs/view/85">Register und ähnliche Listen</a>.
-</li>
-<li><strong>Formate</strong>. Das Untermenü erlaubt den Zugriff auf sonstige, insbesondere mit dem Datenexport verknüpften <a href="/docs/view/85">Listen</a>.
-</li>
-<li><strong>Datenbanken</strong>. Über das Untermenü können die dort aufgeführten Datenbestände bearbeitet werden:
-<ul>
-<li><a href="/docs/view/82">Literatur</a></li>
-<li><a href="/docs/view/83">Marken</a></li>
-<li><a href="/docs/view/84">Wappen</a></li>
-</ul>
-</li>
-<li><strong>Dateien</strong>. Öffnet die in der <a href="/docs/view/70">Datenbank-Konfiguration</a> angegebenen und im Untermenü angezeigten Abbildungs-Verzeichnisse:
-<ul>
-<li>Bilderverzeichnis</li>
-<li>Wappenverzeichnis</li>
-<li>Markenverzeichnis</li>
-</ul>
-</li>
-</ol>
-</td>
-</tr>
-</table>
-
-<h2 id="bearbeiten" class=" widget-scrollsync-section"><strong>Menü "Bearbeiten"</strong></h2>
-
-<p>Dieses Menü korrespondiert mit den oberen drei Buttons der <a href="#werkzeug">Werkzeugleiste</a>. Entsprechend der im <a href="#dropdown">Dropdown-Feld "Ebene"</a> vorgenommen Auswahl können Projekte oder Artikel angelegt, bearbeitet oder gelöscht werden.</p>
-
-<table>
- <colgroup> <col width="300"> <col> </colgroup>
-<tr>
-<td>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=Bearbeiten.png">
-</td>
-<td>
-<ol>
-<li><strong>Neuer Artikel</strong> oder <strong>Neues Projekt</strong> (Strg + N)</li>
-<li><strong>Artikel bearbeiten</strong> oder <strong>Projekt bearbeiten</strong>. Der markierte Artikel oder das markierte Projekt wird geöffnet. Dasselbe bewirken die Betätigung der ENTER-Taste oder ein Doppelklick mit der Maus.</li>
-<li><strong>Artikel löschen</strong> oder <strong>Projekt löschen</strong></li>
-<li><strong>Datensatz nach ID öffnen</strong>. Diese Funktion dient Systementwicklern bei SQL-Abfragen.</li>
-</ol>
-</td>
-</tr>
-</table>
-
-<h2 id="menue_export" class=" widget-scrollsync-section"><strong>Menü "Export"</strong></h2>
-
-<p>Hier stehen zwei <a href="/docs/view/87">Exportpipelines</a> für die  Datenausgabe in Textdokumente zur Verfügung. Alternativ können die angegebenen Tastenkürzel (<a href="/docs/view/93">Shortcuts</a>) benutzt werden:</p>
+<p>Single articles can be opened in two modes. This applies to all other entities such as projects or categories as well:</p>
 
 <ul>
-<li><strong>Artikel exportieren</strong> (F6): Export einzelner oder mehrerer Artikel als Text-Dokument über <a href="/docs/view/87">EpigrafWeb</a>, optionsweise auch mit Ausgabe der Register.</li>
-<li><strong>Band exportieren</strong> (F7): Export ganzer Inschriftenbände als Text-Dokument über <a href="/docs/view/87">EpigrafWeb</a>, optionsweise beschränkbar auf einzelne Bandabschnitte.</li>
+<li>The <em>view mode</em> is read-only.  This is the default mode when an article is opened in the sidebar. It may deviate from the real data structure of an article since sections and fields may be rearranged or toggled for presentation purposes using a specific database configuration.</li>
+<li>The <em>edit mode</em> is used to change article data. An article goes into edit mode by double-clicking on a table row or using the open button in the sidebar. For quickly revising articles (or properties) from the table view, you can switch to the <code>Revise</code> mode using the respective footer button. This results in articles being opened in edit mode instead of view mode in the sidebar. The article layout may deviate from the usual edit mode, if a specific configuration for revising entities exists in the database. Further, not all publication status fields are always visible in an article. To show all publication status fields, from the table view, select at least one publication status in the filter options (left sidebar). This activates the so-called "stage" configuration.</li>
 </ul>
 
-<h2 id="menue_ansicht" class=" widget-scrollsync-section"><strong>Menü "Ansicht"</strong></h2>
+<p>Throughout the application, some standard functions are implemented:
+- Plus buttons (+) are used for adding sections or items to an article as well as filter facets in the table view.
+- Cross buttons (x) close sidebars or popups.
+- Minus buttons remove items within an article.</p>
 
-<table>
- <colgroup> <col width="300"> <col> </colgroup>
-<tr>
-<td>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=Ansicht.png">
-</td>
-<td>
-<ol>
-<li><a href="/docs/view/80"><strong>Register</strong></a> und</li>
-<li><a href="/docs/view/79"><strong>Filter</strong></a>: korrspondieren mit dem vierten und fünften Button der <a href="#werkzeug">Werkzeugleiste</a></li>
-<li><strong>Projekte</strong>: korrspondiert mit der Dropdown-Liste "Projekte" und erlaubt die Auswahl einzelner Projekt.</li>
-<li><strong>Letzte Änderung</strong>: schränkt die Artikel-Auswahl optionsweise auf die zuletzt bearbeiteten zehn, fünfzig oder hundert Artikel ein und erlaubt es, diese Einschränkung wieder rückgängig zu machen.</li>
-<li><strong>Bearbeiter</strong>: schränkt die Artikel-Auswahl auf diejenigen ein, die von einem bestimmten Bearbeiter angelegt oder zuletzt bearbeitet wurden.</li>
-<li><strong>Alles anzeigen</strong>: lässt die Artikel aller in der Datenbank vorhandenen Projekte auflisten.</li>
-<li><strong>Nächstes Finden</strong> (F3): Diese Funktion bewirkt, dass nach dem Eintippen einer bestimmten Zeichenfolge (die in der <a href="#statusZ">Statuszeile</a> am Fuß des Startfensters angezeigt wird) der Fokus zum jeweils nächsten Treffer in der Artikel-Tabelle springt.</li>
-<li><strong>Vorheriges Finden</strong> (Shift+F3) bewirkt dasselbe jedoch in umgekehrter Reihenfolge.</li>
-</ol>
-</td>
-</tr>
-</table>
+<p>Note that sidebars (and columns) can be resized or collapsed using the mouse.</p>
 
-<h2 id="menue_spalten" class=" widget-scrollsync-section"><strong>Menü "Spalten"</strong></h2>
+<p><img src="/help/introduction/../assets/img/articles_interface.png" alt="Epigraf Interface" /></p>
 
-<p>Zeigt alle für die <a href="#liste">Artikel-Tabelle</a> verfügbaren Spalten an und erlaubt, sie ein- oder auszublenden.</p>
+<h1 id="editing-in-a-team">Editing in a team</h1>
 
-<h2 id="menue_dateiablag" class=" widget-scrollsync-section"><strong>Menü "Dateiablage"</strong></h2>
+<p>Epigraf allows multiple users to work on the same database.
+To avoid conflicts, entities are locked for other users while they are being edited.
+You can see this if you open an entity in two different browser windows at the same time:
+Only one window can be in edit mode and the other remains locked.
+You will be notified that the entity is already being edited.
+Once it has been released by <strong>saving</strong> or <strong>cancelling</strong> you can edit it in another window.</p>
 
-<table> <colgroup> <col> </colgroup> <tbody> <tr> <td style="padding:0"> <p>Zeigt die auf <a href="/docs/view/86">EpigrafWeb</a> vorhandenen Verzeichnisse zur Ablage von Dateien (<a href="/docs/view/78">Hilfsmittel</a>) an und leitet dorthin weiter. </p></td> </tr> </tbody> </table>
+<p>Make sure that you explicitly close the editing mode when you finish or pause working on an entity.
+This is done with the corresponding button or shortcut.
+If you try to exit the window while an entity is still in edit mode, the browser will notify you.
+You should never just close the browser window as long as you are in editing mode because
+it leaves the entity in a locked state. Instead, explicitly close the entity by saving or canceling.</p>
 
-<h2 id="menue_notizen" class=" widget-scrollsync-section"><strong>Menü "Notizen"</strong></h2>
-
-<table> <colgroup> <col> </colgroup> <tbody> <tr> <p> Zeigt die auf <a href="/docs/view/86">EpigrafWeb</a> abgelegten <a href="/docs/view/77">Notizen</a> an und leitet dorthin weiter. </p> </tr> </tbody> </table>
-
-<h1 id="statusDb" class=" widget-scrollsync-section">Statusanzeige</h1>
-
-<p><a href="/docs/view/47">zurück ...</a>
-Hier wird die Bezeichnung der aktuell aufgerufenen Datenbank angezeigt.</p>
-
-<h1 id="dropdown" class=" widget-scrollsync-section">Dropdown-Felder</h1>
-
-<p><a href="/docs/view/47">zurück ...</a></p>
-
-<p><img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=Ebene.png" alt="Dropdown"></p>
-
-<p>Mit den beiden Dropdown-Feldern rechts oberhalb der Tabelle erfolgt die Auswahl der Datenbestände, die in der Tabelle angezeigt werden soll.</p>
+<p>In general, you do not need to think about locks any further. Epigraf will manage locking for you.
+Nevertheless, it can be helpful to be aware of the following special situations:</p>
 
 <ul>
-<li><strong>Ebene</strong>: <a id="dropdown_ebene"></a> Hier kann gewählt weden, ob in der Tabelle Artikel, Projekte oder Inschriften angezeigt werden. Wählt man bspw. "Inschriften" aus, erscheint dann in der Tabelle ein Auflistung sämtlicher Inschriften des gewählten Projekts.</li>
-<li><strong>Projekt</strong>: <a id="dropdwon_projekt"></a> Wenn in der Tabelle Artikel angezeigt werden, kann die Auswahl auf die Artikel eines einzelnen Projekts eingeschränkt werden oder es können die Artikel aller Projekte angezeigt werden.</li>
+<li>Each entity lock is maintained as long as the window is active. If the computer is switched off or the window is closed without saving or canceling, the lock expires after one minute at the latest. If someone else has opened the entity for editing in the meantime, it cannot be saved again until the other person has closed the entity. This may result in a race condition: Changes made by the other person in the meantime are overwritten with the changes of the open entity. Therefore, entities should be deliberately closed if you take a break.</li>
+<li>If an entity is open for editing in the sidebar, you can use the top right button to open it in a new tab sheet.
+The entity is automatically closed without saving and reopened in the new tab sheet. Changes should be saved beforehand.</li>
+<li>If an entity is open for editing in the sidebar, it is automatically closed without saving once another entity is selected in the table.
+You should save changes beforehand.</li>
+<li>Locks are synchronized between EpiWeb and EpiDesktop. This allows you to work on the data in parallel with both applications. However, locks do not expire automatically when working with EpiDesktop. If the computer is put into standby mode during editing or Epigraf is closed without leaving edit mode, entities may remain locked. Such non-expiring locks can be removed by administrators using EpiDesktop.</li>
 </ul>
-
-<h1 id="liste" class=" widget-scrollsync-section">Tabelle der Artikel oder Projekte</h1>
-
-<p><a href="/docs/view/47">zurück ...</a></p>
-
-<h2 id="artikel_projekte" class=" widget-scrollsync-section">Artikel und Projekte</h2>
-
-<p>Die Grundeinheiten einer Inschriften-Datenbank sind der "Artikel" und das "Projekt". Der Artikel bildet einen Inschriftenträger ab, das Projekt entspricht der übergeordneten Editionseinheit, in der Regel dem geografischen Raum eines Inschriftenbandes oder einer Online-Edition. Dem gemäß wird das Arbeitsgebiet und der sich aufbauende Datenbestand einer Inschriften-Forschungsstelle in Projekte unterteilt, denen Artikel zugeordnet werden. Artikel außerhalb von Projekten sollten nicht vorkommen. Um in der Datenbank ein Projekt anzulegen oder zu bearbeiten, wählt man im <a href="#dropdown">Dropdown-Fenster "Ebene"</a> oberhalb der Tabelle den Eintrag <code>Projekte</code>. Anschließend kann man über die <a href="#werkzeug">Werkzeugleiste</a> oder das Menü <a href="#bearbeiten">"Bearbeiten"</a> Projekte <a href="/docs/view/90">anlegen, bearbeiten oder löschen</a>.</p>
-
-<h2 id="formatieren" class=" widget-scrollsync-section">Tabelle formatieren</h2>
-
-<ul>
-<li><a id="spalten_waehlen"></a> <strong>Spalten wählen</strong>: Die in der Tabelle anzuzeigenden Spalten können im Menü "Spalten" ausgewählt oder wieder abgewählt werden. Da die Anzahl der gewählten Spalten sich auf die Dauer des Aufbaus der Tabelle auswirkt, sollten vor allem bei umfangreichen Projekten oder wenn die Artikel aller Projekte ausgewählt wurden, nur die tatsächlich erforderlichen Spalten aufgerufen werden.
-
-<ul>
-<li><strong>Spalte "Nr"</strong>: Am linke Rand der Tabelle sollte die Spalte "Nr" plaziert werden. Sie dient der Orientierung in der aktuellen Tabelle. Die angezeigten Nummern sind nicht mit den Artikelnummern identisch. Sie zeigen lediglich die der gewählten Sortierung entsprechende Reihenfolge an.</li>
-<li><strong>Spalte "Datensatzstatus"</strong>: Diese Spalte sollte an zweiter Stelle plaziert werden. Sie zeigt durch eine Lampe an, ob der ebtsprechende Artikel geöfffnet bzw. <a href="/docs/view/75">gesperrt</a> ist.</li>
-</ul></li>
-<li><a id="spaltenbreite"></a> <strong>Spaltenbreite</strong>: Die Breite jeder Spalte kann im Spaltenkopf angepasst werden. Dazu richtet man im Spaltenkopf den Mausfokus auf die Trennlinie zur rechts folgenden Spalte. Wenn sich der Mauszeiger in ein Kreuz verwandelt, kann man mit einem Rechtsklick die Linie ergreifen und die Spalte auf- oder zuziehen.</li>
-<li><a id="spalten_anordnen"></a> <strong>Spalten anordnen</strong>: Um die Anordnung der Spalten zu ändern, klickt man mit der rechten Maustaste auf einen Spaltenkopf, hält die Taste und zieht den Spaltenkopf nach rechts oder links.</li>
-</ul>
-
-<h2 id="sortieren" class=" widget-scrollsync-section">Tabelle sortieren</h2>
-
-<ul>
-<li>Die Tabelle lässt sich nach jeder Spalte auf oder absteigend sortieren. Dazu klickt man mit der rechten Maustaste auf den entsprechenden Spaltenkopf. Um die Sortierfolge umzukehren, muss man erneut klicken. Im Spaltenkopf zeigt ein nach oben gerichtetes Dreieck aufsteigende Sortierfolge an, ein nach unten gerichtetes Dreieck absteigende.</li>
-<li>Die Datierungsspalten sind mit einer speziellen Funktion ausgestattet, die eine nach den DI-Richtlinien korrekte chronolgisch Reihenfolge erzeugt. Durch die Sortierung nach der Spalte "Objektdatierung" kann in der Tabelle eine chronologisch aufsteigende Reihenfolge der Artikel bewirkt werden.</li>
-</ul>
-
-<h2 id="aktualisieren" class=" widget-scrollsync-section">Tabelle aktualisieren</h2>
-
-<ul>
-<li>Mittels der Funktionstaste F5, über das <a href="#menue_datenbank">Menü "Datenbank"</a>, oder mit dem entsprechenden Button der <a href="#werkzeug">Werkzeugleiste</a> kann man die Tabelle der Artikel oder Projekte aktualisieren.</li>
-<li>Nach  erfolgtem Befehl wird die Tabelle aus den aktuellen Daten neu aufgebaut. Solange die Tabelle im Aufbau ist, erscheint in der <a href="#statusZ">Statuszeile</a> unterhalb der Tabelle am rechten Rand die Anzeige "Vorladen ...". Erst wenn diese Anzeige verschwunden ist, kann die Tabelle korrekt sortiert und mit der Funktion <a href="#finden"><code>Finden</code></a> durchsucht werden.</li>
-</ul>
-
-<h1 id="werkzeug" class=" widget-scrollsync-section">Werkzeugleiste</h1>
-
-<p><a href="/docs/view/47">zurück ...</a>
-<img src="/files/download?root=shared&amp;path=help%2Fscreenshots&amp;filename=werkzeugleiste.png" align="left" style="padding-right:100px"></p>
-
-<ol>
-<li><code>Neuer Artikel</code>  (Strg + N): ein neuer Artikel wird angelegt</li>
-<li><code>Artikel öffnen</code>: der in der Tabelle markierte Artikel wird geöffnet</li>
-<li><code>Artikel löschen</code>: die in der Tabelle markierten Artikel werden gelöscht</li>
-<li><code>Aktualisiseren</code>  (F5): die Tabelle der Artikel wird mit den aktuellen Daten neu aufgebaut</li>
-<li><code>Filter</code>: Tabelle der Artikel nach Inhalten spaltengemäß <a href="/docs/view/79">filtern</a></li>
-<li><code>Register</code>: ermöglicht eine kombinierte Recherche in den <a href="/docs/view/80">Registern</a></li>
-<li><code>Notizen</code>: leitet weiter zu den <a href="/docs/view/77">Notizen</a> auf EpigrafWeb</li>
-<li><code>Hilfsmittel</code>: leitet weiter zu den <a href="/docs/view/78">Hilfsmitteln</a> auf EpigrafWeb</li>
-</ol>
-
-<p><br><br><br></p>
-
-<h1 id="statusZ" class=" widget-scrollsync-section">Statuszeile</h1>
-
-<p><a href="/docs/view/47">zurück ...</a></p>
-
-<p>In der Statuszeile unterhalb der Tabelle erscheinen verschiedene Anzeigen:</p>
-
-<ul>
-<li><strong>Datenbank</strong>: Name der gewählten <a href="#menue_datenbank">Datenbank</a>.</li>
-<li><strong>Bearbeiter</strong>: Name des aktuellen <a href="/docs/view/48">Bearbeiters</a>.</li>
-<li><strong>Datensätze</strong>: Anzahl der in der Tabelle angezeigten Artikel oder Projekte.</li>
-<li><strong>Finden</strong>: <a id="finden"></a>Wenn man auf der Startseite mit der Tastatur eine Zeichenfolge eintippt, springt der Fokus innerhalb der Tabelle auf die nächste Artikel-Zeile, die in der Spalte "Signatur" oder "Titel" die entsprechende Zeichenfolge aufweist.
-
-<ul>
-<li>Die Zeichenfolge wird in der Statuszeile unterhalb der Tabelle hinter "Finden" angezeigt.</li>
-<li>Mit der Funktionstaste F3 springt der Fokus auf den jeweils nächsten Treffer, mit Shift+F3 zum jeweils vorhergehenden.</li>
-</ul></li>
-<li><strong>Vorladen</strong>: Solange die Liste aus der Datenbank geladen wird, erscheint am rechten Rand der Statuszeile "Vorladen ...". Erst wenn diese Anzeige verschwunden ist, sind alle Artikel geladen und die Tabelle kann <a href="#sortieren">sortiert</a> und mit der Funktion <code>Finden</code> durchsucht werden.</li>
-</ul>
-
-<p><a href="/docs/view/47">zurück ...</a></p>
-
 </div>
-    <!-- Actions -->
-    
+
                                     </div>
 
                 <div class="content-footer"></div>
 
             </div>
-        
-        <!-- Right sidebar -->
-                    <div class="sidebar sidebar-right sidebar-size-3 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="content"><button class="caption">Content</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="content">    <div class="widget-scrollbox"><ul class="widget-scrollsync side-nav widget-tree widget-tree-fixed" ><li class="first node item item-level-0 item-nochildren item-first" data-level="1" data-section-id="seitenaufbau"><div class="tree-content"><a href="#seitenaufbau">Aufbau des Startfensters</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren" data-level="1" data-section-id="menue"><div class="tree-content"><a href="#menue">Menüleiste</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-level="2" data-section-id="menue_datenbank"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#menue_datenbank">Menü &quot;Datenbank&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="globaledaten"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#globaledaten">Menü &quot;Globale Daten&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="bearbeiten"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#bearbeiten">Menü &quot;Bearbeiten&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="menue_export"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#menue_export">Menü &quot;Export&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="menue_ansicht"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#menue_ansicht">Menü &quot;Ansicht&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="menue_spalten"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#menue_spalten">Menü &quot;Spalten&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="menue_dateiablag"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#menue_dateiablag">Menü &quot;Dateiablage&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-level="2" data-section-id="menue_notizen"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#menue_notizen">Menü &quot;Notizen&quot;</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-level="1" data-section-id="statusDb"><div class="tree-content"><a href="#statusDb">Statusanzeige</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-level="1" data-section-id="dropdown"><div class="tree-content"><a href="#dropdown">Dropdown-Felder</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-haschildren" data-level="1" data-section-id="liste"><div class="tree-content"><a href="#liste">Tabelle der Artikel oder Projekte</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-first" data-level="2" data-section-id="artikel_projekte"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#artikel_projekte">Artikel und Projekte</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="formatieren"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#formatieren">Tabelle formatieren</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren" data-level="2" data-section-id="sortieren"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#sortieren">Tabelle sortieren</a></div><div class="tree-meta"></div></li><li class="node item item-level-1 item-nochildren item-last" data-level="2" data-section-id="aktualisieren"><div class="tree-indent tree-indent-leaf"></div><div class="tree-content"><a href="#aktualisieren">Tabelle aktualisieren</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren" data-level="1" data-section-id="werkzeug"><div class="tree-content"><a href="#werkzeug">Werkzeugleiste</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-level="1" data-section-id="statusZ"><div class="tree-content"><a href="#statusZ">Statuszeile</a></div><div class="tree-meta"></div></li></ul></div>    </div></div></div></div></div>            </div>
 
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-help-show" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
+        <!-- Right sidebar -->
+                    <div class="sidebar sidebar-right sidebar-size-3 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="content"><button class="caption">Content</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="content">    <div class="widget-scrollbox"><ul class="widget-scrollsync side-nav widget-tree widget-tree-fixed" ><li class="first node item item-level-0 item-nochildren item-first" data-level="1" data-section-id="introduction-to-the-user-interface"><div class="tree-content"><a href="#introduction-to-the-user-interface">Introduction to the user interface</a></div><div class="tree-meta"></div></li><li class="node item item-level-0 item-nochildren item-last" data-level="1" data-section-id="editing-in-a-team"><div class="tree-content"><a href="#editing-in-a-team">Editing in a team</a></div><div class="tree-meta"></div></li></ul></div>    </div></div></div></div></div>            </div>
+
+                    <footer><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
 </div>
 </body></html>

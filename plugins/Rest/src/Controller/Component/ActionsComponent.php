@@ -56,7 +56,7 @@ class ActionsComponent extends Component
      *
      * @return array An array of four elements: params, columns, paging and filter
      */
-    public function prepareParameters()
+    public function prepareParameters($joined = false)
     {
         $model = $this->getController()->fetchTable();
 
@@ -64,7 +64,7 @@ class ActionsComponent extends Component
         $requestPath = $this->getController()->getRequest()->getParam('pass')[0] ?? '';
         $requestParams = $this->getController()->getRequest()->getQueryParams();
 
-        [$params, $columns, $paging, $filter] = $model->prepareParameters($requestParams, $requestPath, $requestAction);
+        [$params, $columns, $paging, $filter] = $model->prepareParameters($requestParams, $requestPath, $requestAction, $joined);
         $params = $this->applyUserSettings($params);
 
         return [$params, $columns, $paging, $filter];
@@ -349,15 +349,8 @@ class ActionsComponent extends Component
             unset($userParams['path']);
 
             $userParams = Attributes::paramsToQueryString($userParams);
+            $params = Attributes::paramsToQueryString($params);
             $params = array_replace_recursive($userParams, $params);
-
-            // Update columns
-//            if (empty($params['columns']) && !empty($userParams['columns'])) {
-//                $params['columns'] = $userParams['columns'];
-//            }
-//
-//            // Conditions
-//            //TODO
 
             $redirectParams = array_diff_key($params, array_flip($this->getController()->paramsForNavigation));
             $redirectParams['save'] = true;
@@ -395,9 +388,15 @@ class ActionsComponent extends Component
 
             // Assemble query
             $scopefield = $model->scopeField;
-            $query = $model
-                ->find('hasParams', $params)
-                ->find('containFields', $params);
+            $query = $model->find('hasParams', $params);
+
+            // If the columns parameter is set to false, full entity data is requested
+            // and serialized in Epi\BaseEntity::getExportFields().
+            if (($params['columns'] ?? []) === false) {
+                $query = $query->find('containAll', $params);
+            } else {
+                $query = $query->find('containColumns', $params);
+            }
 
             // Get data
             $this->getController()->paginate = $paging;
@@ -408,7 +407,7 @@ class ActionsComponent extends Component
                 $redirect = [
                     'action' => 'mutate',
                     $params[$model->scopeField ?? ''] ?? $scope,
-                    '?' => ['task' => 'sort']
+                    '?' => ['task' => 'batch_sort','sortby'=>'lft']
                 ];
             }
             $this->Answer->error($e->getMessage(), $redirect);
@@ -425,28 +424,25 @@ class ActionsComponent extends Component
             $this->getController()->sidemenu = $sideMenu;
             $this->getController()->activateSideMenuItem(['action' => 'index', $scope, '?' => ['load' => true]]);
         }
+        elseif (isset($sidemenuField)) {
+            // - If one hit only, redirect to the view action
+            if (!empty($params[$sidemenuField]) and (count($entities) === 1) and (empty($params['id']))) {
+                $this->Answer->redirect(['action' => 'view', $entities->first()->id]);
+            }
 
-        else {
-            if (isset($sidemenuField)) {
-                // - If one hit only, redirect to the view action
-                if (!empty($params[$sidemenuField]) and (count($entities) === 1) and (empty($params['id']))) {
-                    $this->Answer->redirect(['action' => 'view', $entities->first()->id]);
-                }
-
-                // - Activate menu item
-                if (($params[$sidemenuField] ?? null) === '') {
-                    $this->getController()->activateSideMenuItem(['action' => 'index', '?' => [$sidemenuField => '']]);
+            // - Activate menu item
+            if (($params[$sidemenuField] ?? null) === '') {
+                $this->getController()->activateSideMenuItem(['action' => 'index', '?' => [$sidemenuField => '']]);
+            }
+            else {
+                if (($params[$sidemenuField] ?? null) === null) {
+                    $this->getController()->activateSideMenuItem(['action' => 'index']);
                 }
                 else {
-                    if (($params[$sidemenuField] ?? null) === null) {
-                        $this->getController()->activateSideMenuItem(['action' => 'index']);
-                    }
-                    else {
-                        $this->getController()->activateSideMenuItem([
-                            'action' => 'show',
-                            '?' => [$sidemenuField => $params[$sidemenuField]]
-                        ]);
-                    }
+                    $this->getController()->activateSideMenuItem([
+                        'action' => 'show',
+                        '?' => [$sidemenuField => $params[$sidemenuField]]
+                    ]);
                 }
             }
         }
@@ -455,6 +451,12 @@ class ActionsComponent extends Component
         // TODO: set model in a way that can be used by filterTable()
         $this->Answer->addOptions(compact('params', 'scopefield', 'scope', 'columns', 'filter', 'problems'));
         $this->Answer->addAnswer(compact('entities'));
+
+        // Summary
+        if ($options['summary'] ?? false) {
+            $summary = $model->getSummary($params);
+            $this->Answer->addAnswer(compact('summary'));
+        }
     }
 
     /**
@@ -475,9 +477,7 @@ class ActionsComponent extends Component
         $entity = $this->getController()->fetchTable()->get($id, ['finder' => 'containAll']);
 
         // Check if the entity is published
-        $selectedDatabase = $this->getController()->getRequest()->getParam('database');
-        $requestScope = $this->getController()->_getRequestScope();
-        if ((PermissionsTable::getUserRole($this->getController()->Auth->user(), $selectedDatabase, $requestScope) === 'guest') && !$entity->published) {
+        if (!$entity->getEntityIsVisible()) {
             $this->Answer->redirectToLogin();
         }
 
@@ -867,7 +867,22 @@ class ActionsComponent extends Component
 
         if ($this->getController()->getRequest()->is(['delete'])) {
             $this->Lock->createLock($entity, true);
-            $result = $model->delete($entity);
+
+            if ($entity->hasChildren) {
+                if (!method_exists($model, 'resolve')) {
+                    $this->Answer->error(
+                        __('The {0} has children. Please remove the children first.', $entityCaption),
+                        [
+                            'action' => 'view',
+                            $entity->id
+                        ]
+                    );
+                }
+                $result = $model->resolve($entity);
+            } else {
+                $result = $model->delete($entity);
+            }
+
             $this->Lock->releaseLock($entity);
 
             if ($result) {
@@ -894,4 +909,96 @@ class ActionsComponent extends Component
         $this->Answer->addAnswer(compact('entity'));
     }
 
+    /**
+     * Move nodes to a new position
+     *
+     * This endpoint supports only POST requests containing
+     * either a single move operation or a batch of move operations.
+     *
+     * ## Single move operation
+     * The payload contains the following keys:
+     * * - reference_id The ID of a reference node
+     * * - reference_pos The position of the reference node: 'parent' or 'preceding'
+     *
+     * ### Batch move operations
+     * The moves field contains an array of all moves.
+     * Each move is an array with the following keys:
+     * - id The ID of the node
+     * - parent_id The ID of the new parent node
+     * - preceding_id The ID of the preceding sibling node
+     *
+     * @param string $scope For single moves the node ID, for batch moves the scope (e.g. property type)
+     * @return \Cake\Http\Response|null|void
+     */
+    public function move($scope)
+    {
+        $model = $this->getController()->fetchTable();
+        $request = $this->getController()->getRequest();
+
+        $batchMove = false;
+        if ($request->is(['post', 'put'])) {
+            $moves =$request->getData('moves', null);
+            $batchMove = !is_null($moves) && is_array($moves);
+        }
+
+        // Move a single entity
+        if (!$batchMove) {
+            $entity = $model->get($scope, ['finder' => 'containAll']);
+
+            if ($request->is(['post', 'put'])) {
+
+                $entity = $model->patchEntity(
+                    $entity, $request->getData(),
+                    ['fields' => ['reference_id', 'reference_pos']]
+                );
+
+                $this->Lock->createLock($entity, true);
+                $success = $model->moveToReference($entity);
+                $this->Lock->releaseLock($entity);
+
+                if ($success) {
+                    $entity['moved'] = '1';
+                    $this->Answer->success(
+                        __('The property has been moved.')
+                    );
+                }
+                else {
+                    $this->Answer->error(
+                        __('The node could not be moved. Please try again.')
+                    );
+                }
+            }
+            $this->Answer->addAnswer(compact('entity'));
+        }
+
+        // Process move operations
+        else {
+            $errors = [];
+            foreach ($moves as $move) {
+
+                // TODO: lock the items for other move operations
+                $success = $model->moveTo(
+                    $move['id'] ?? null,
+                    $move['parent_id'] ?? null,
+                    $move['preceding_id'] ?? null
+                );
+
+                if (!$success) {
+                    $errors[] = __('Could not move node #{0} to the new target.', $move['id'] ?? null);
+                }
+            }
+
+            if (!empty($errors)) {
+                $this->Answer->addAnswer(['errors' => $errors]);
+                $this->Answer->error(
+                    __('{0} of {1} nodes could not be moved to their new target.', count($errors), count($moves))
+                );
+            }
+            else {
+                $this->Answer->success(
+                    __('Moved {0} nodes to new targets.', count($moves))
+                );
+            }
+        }
+    }
 }

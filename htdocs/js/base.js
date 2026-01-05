@@ -49,7 +49,6 @@ export class BaseModel {
 
         else {
             Utils.listenEvent(element, event, handler, selector);
-            //element.addEventListener(event, handler);
             const item = {
                 element: element,
                 event: event,
@@ -83,7 +82,6 @@ export class BaseModel {
                 ((item.selector === selector) || !selector)
             ) {
                 Utils.unlistenEvent(element, item.event, item.handler, item.selector);
-                //item.element.removeEventListener(item.event,item.handler);
                 this.eventListeners.splice(i, 1);
             }
         }
@@ -367,6 +365,10 @@ export class BaseWidget extends BaseModel {
     }
 
     getSetting(key, defaultValue) {
+        if (typeof App === 'undefined'  || !App.user.session) {
+            return;
+        }
+
         if (this.widgetElement && this.widgetElement.dataset.uiKey) {
             const value = App.user.session.get('ui', this.widgetElement.dataset.uiKey);
             if ((value !== undefined) && (key in value)) {
@@ -377,12 +379,17 @@ export class BaseWidget extends BaseModel {
     }
 
     setSetting(key, value) {
+        if (typeof App === 'undefined'  || !App.user.session) {
+            return;
+        }
+
         if (this.widgetElement && this.widgetElement.dataset && this.widgetElement.dataset.uiKey) {
             let valueObject = {};
             valueObject[key] = value;
             App.user.session.save('ui', this.widgetElement.dataset.uiKey, valueObject);
         }
     }
+
 
     /**
      * Get the current URL controller name
@@ -446,8 +453,11 @@ export class BaseWidget extends BaseModel {
             && (!this.widgetElement.closest('.widget-content-pane-main'));
     }
 }
+
 /**
  * Base class for widgets interacting with a document and its models
+ *
+ * // TODO: Rename to BaseDocumentWidget?
  *
  */
 export class BaseDocument extends BaseWidget {
@@ -461,6 +471,7 @@ export class BaseDocument extends BaseWidget {
      */
     constructor(element, name, parent) {
         super(element, name, parent);
+        this.documentWidget = null;
     }
 
     /**
@@ -473,21 +484,24 @@ export class BaseDocument extends BaseWidget {
      * @return {BaseWidget} The document widget
      */
     getDocumentWidget() {
-        const rootTable = this.widgetElement.closest('[data-root-table]');
-        const rootId = this.widgetElement.closest('[data-root-id]');
+        if (!this.documentWidget) {
+            const rootTable = this.widgetElement.closest('[data-root-table]');
+            const rootId = this.widgetElement.closest('[data-root-id]');
 
-        if (!rootTable || !rootTable.dataset.rootTable ||
-            !rootId || !rootId.dataset.rootId) {
-            return;
+            if (!rootTable || !rootTable.dataset.rootTable ||
+                !rootId || !rootId.dataset.rootId) {
+                return;
+            }
+
+            const documentElement = document.querySelector(
+                '.widget-document' +
+                '[data-root-table="' + rootTable.dataset.rootTable + '"]' +
+                '[data-root-id="' + rootId.dataset.rootId + '"]'
+            );
+
+            this.documentWidget = this.getWidget(documentElement, 'document', false);
         }
-
-        const documentElement = document.querySelector(
-            '.widget-document' +
-            '[data-root-table="' + rootTable.dataset.rootTable + '"]' +
-            '[data-root-id="' + rootId.dataset.rootId + '"]'
-        );
-
-        return this.getWidget(documentElement, 'document', false);
+        return this.documentWidget;
     }
 }
 
@@ -576,10 +590,6 @@ export class BaseForm extends BaseWidget {
 
             // Listen to form submit event
             this.listenEvent(this.formElement, 'submit', event => this.submitForm(event));
-
-            // Prevent implicit submit
-            this.listenEvent(this.formElement, 'keydown', event => this.onKeyDown(event));
-
 
             // Leave page listener
             this.listenEvent(window, 'beforeunload', (event) => {
@@ -832,17 +842,6 @@ export class BaseForm extends BaseWidget {
     }
 
     /**
-     * Prevent form submit on enter
-     *
-     * @param {Event} event
-     */
-    onKeyDown(event) {
-        if ((event.keyCode === 13) && (event.target.tagName === 'INPUT')) {
-            event.preventDefault();
-        }
-    }
-
-    /**
      * Get the entity ID of the form
      *
      * @return {string}
@@ -999,7 +998,7 @@ export class BaseForm extends BaseWidget {
      */
     onSaveStart() {
         this.emitEvent('app:show:loader');
-        const msg = this.formElement && "message" in this.formElement.dataset ? this.formElement.dataset.message : 'Saving document';
+        const msg = this.formElement && "message" in this.formElement.dataset ? this.formElement.dataset.message : 'Processing data';
         if (msg) {
             this.emitEvent('app:open:dialog', {'message': msg, 'loader': true, 'id': 'save-dialog', 'delay': 150});
         }

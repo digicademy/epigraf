@@ -36,6 +36,11 @@ class ImportBehavior extends Behavior
     protected $_defaultConfig = [
     ];
 
+    /**
+     * Keep track of errors
+     *
+     * @var array
+     */
     protected $_errors = [];
 
     /**
@@ -80,6 +85,7 @@ class ImportBehavior extends Behavior
         $this->_config['implementedMethods']['saveEntities'] = 'saveEntities';
         $this->_config['implementedMethods']['collectIris'] = 'collectIris';
         $this->_config['implementedMethods']['saveManyFast'] = 'saveManyFast';
+        $this->_config['implementedMethods']['solveLinks'] = 'solveLinks';
 
         parent::initialize($config);
     }
@@ -161,11 +167,11 @@ class ImportBehavior extends Behavior
             try {
                 $this->solveIris($tableName, $rows, $options);
             } catch (Exception $e) {
-                $this->addError(
+                $msg = __(
                     'Could not find IRIs for records linked in table {table}: {error}.',
-                    ['table' => $tableName],
-                    $e
+                    ['table' => $tableName, 'error' => $e->getMessage()]
                 );
+                $this->addError($msg, ['table' => $tableName], $e);
             }
 
             // Map job type to Entity
@@ -197,6 +203,10 @@ class ImportBehavior extends Behavior
                     $entity = new $entityClass($row, $importOptions);
 
                     if (!$entity->isNew() && (in_array($tableName, $options['skipUpdates'] ?? []))) {
+                        continue;
+                    }
+
+                    if (!$entity->isNew() && ($entity->_import_action === 'link')) {
                         continue;
                     }
 
@@ -233,9 +243,10 @@ class ImportBehavior extends Behavior
      * ### Options
      * - skipUpdates Array of table names. Records from those tables will not be revived if deleted.
      *
-     * @param array $iris Array of scoped IRIs. If the table has a type-field (e.g. articletype),
+     * @param array $scopedIris Array of scoped IRIs. If the table has a type-field (e.g. articletype),
      *                    a scoped IRI matches the following schema <type>/<norm_iri>. Otherwise
      *                    the scoped IRI matches <norm_iri>.
+     * @param array $options
      * @return array  Array of table IDs indexed by scoped IRIs
      */
     public function collectIris($scopedIris, $options = [])
@@ -319,7 +330,6 @@ class ImportBehavior extends Behavior
         $entityClass = $model ? $model->getEntityClass() : null;
 
         if ($entityClass) {
-            //$emptyEntity = new $entityClass();
             $idFields = $entityClass::getIdFields();
             $typeField = $model->typeField ?? null;
         }
@@ -385,20 +395,20 @@ class ImportBehavior extends Behavior
         }
     }
 
-
     /**
      * Link records
      *
      * Updates foreign key fields with the respective IDs as soon as
      * a matching record occurs in the index.
      *
+     * @param array $index
+     * @param bool $fast Use saveManyFast() instead of saveMany()
      * @return bool
      */
-    protected function solveLinks()
+    public function solveLinks(&$index, $fast = true)
     {
         $result = true;
-        while ($links = $this->getSolvedIds()) {
-
+        while ($links = $this->getSolvedIds($index)) {
             $jobId = $this->getConfig('job_id', null);
             $sourceModels = collection($links)->groupBy('source.model');
             foreach ($sourceModels as $modelName => $sourceLinks) {
@@ -417,13 +427,19 @@ class ImportBehavior extends Behavior
                                 return $row;
                             });
                         });
-                    $result = $result && $sourceModel->saveManyFast($rows);
+                    if ($fast) {
+                        $result = $result && $sourceModel->saveManyFast($rows);
+                    }
+                    else {
+                        // TODO: add errors to the entity
+                        $result = $result && $sourceModel->saveMany($rows);
+                    }
                 } catch (Exception $e) {
-                    $this->addError(
+                    $msg = __(
                         'Error linking records in model {model}: {error}.',
-                        ['model' => $modelName],
-                        $e
+                        ['model' => $modelName, 'error' => $e->getMessage()]
                     );
+                    $this->addError($msg, ['model' => $modelName], $e);
                     $result = false;
                 }
             }
@@ -432,16 +448,15 @@ class ImportBehavior extends Behavior
         return $result;
     }
 
-
     /**
      * Check dependencies: only can solve the parent_id if the scope fields have been solved
      *
-     * @param $sourceLink
-     * @param $targetLink
-     *
+     * @param array $index
+     * @param array $sourceLink
+     * @param array $targetLink
      * @return bool
      */
-    protected function canSolve($sourceLink, $targetLink)
+    public static function canSolve($index, $sourceLink, $targetLink)
     {
 
         if (empty($sourceLink['scope_field'])) {
@@ -455,7 +470,7 @@ class ImportBehavior extends Behavior
         // Parent rows must be processed first
         $unsolvedRows = [];
         $unsolvedFields = [];
-        foreach ($this->_index['sources'] as $source) {
+        foreach ($index['sources'] as $source) {
             foreach ($source as $record) {
                 $unsolvedRows[] = $record['model'] . '-' . $record['id'];
                 $unsolvedFields[] = $record['model'] . '-' . $record['id'] . '-' . $record['field'];
@@ -467,7 +482,6 @@ class ImportBehavior extends Behavior
             return false;
         }
 
-        // Scope of child records must be filled first
         $sourceField = $sourceLink['model'] . '-' . $sourceLink['id'] . '-' . $sourceLink['scope_field'];
         if (in_array($sourceField, $unsolvedFields)) {
             return false;
@@ -477,44 +491,53 @@ class ImportBehavior extends Behavior
     }
 
     /**
-     * Get an array of sources and their respective targets that are solved
-     *
+     * Get an array of sources and their respective targets that are solved.
      * Solved sources are removed from the index.
      *
-     * @return array Each item in the result array has a source and a target key containing the item from the index.
+     * @return array Each item in the array has a source and a target key
+     *               containing the item from the index
      */
-    protected function getSolvedIds()
+    protected function getSolvedIds(&$index)
     {
         $links = [];
 
-        $solvedTargets = array_intersect_key($this->_index['targets'] ?? [], $this->_index['sources'] ?? []);
+        $solvedTargets = array_intersect_key($index['targets'] ?? [], $index['sources'] ?? []);
 
         foreach ($solvedTargets as $targetId => $targetLink) {
-            $solvedSources = $this->_index['sources'][$targetId];
+
+            $solvedSources = $index['sources'][$targetId];
             foreach ($solvedSources as $sourceNo => $sourceLink) {
 
-                if ($this->canSolve($sourceLink, $targetLink)) {
+                if (self::canSolve($index, $sourceLink, $targetLink)) {
                     $links[] = [
                         'source' => $sourceLink,
                         'target' => $targetLink
                     ];
 
-                    unset($this->_index['sources'][$targetId][$sourceNo]);
+                    unset($index['sources'][$targetId][$sourceNo]);
                 }
             }
-            if (empty($this->_index['sources'][$targetId])) {
-                unset($this->_index['sources'][$targetId]);
+            if (empty($index['sources'][$targetId])) {
+                unset($index['sources'][$targetId]);
             }
         }
         return $links;
     }
 
+
     /**
-     * Save the entities to the database.
+     * Save the entities to the database
      *
      * 1. Clears entities if the action-field equals "clear".
      * 2. Saves table by table
      * 3. Resolves links
+     *
+     * ### Import options
+     * - tree (default true): Whether to recover trees after finishing the save operation.
+     * - versions (default false): Whether to create versions of the entities.
+     * - timestamps (default true): Whether to set the created and modified timestamps.
+     * - job_id (options): The job ID added to the entities.
+     * - skipUpdates: Array of table names to skip (create new records, skip updating existing ones)
      *
      * @param array $entities
      * @param array $config Import options
@@ -556,14 +579,17 @@ class ImportBehavior extends Behavior
 
                 // Update links between entities
                 $this->collectIds($entities);
-                $result = $result && $this->solveLinks();
+                $result = $result && $this->solveLinks($this->_index);
 
                 try {
                     $connection->commit();
                 } catch (NestedTransactionRollbackException $e) {
-                    $this->addError(
+                    $msg = __(
                         'Error in commit for table {table}: {error}.',
-                        [
+                        ['table' => $tableName, 'error' => $e->getMessage()]
+                    );
+                    $this->addError(
+                        $msg, [
                             'table' => $tableName,
                             'ids' => implode(' ', array_column($entities, 'id'))
                         ],
@@ -572,8 +598,14 @@ class ImportBehavior extends Behavior
                 }
             } catch (Exception $e) {
                 $connection->rollback();
-                $this->addError(
+
+                $msg = __(
                     'Error importing records into table {table}: {error}.',
+                    ['table' => $tableName, 'error' => $e->getMessage()]
+                );
+
+                $this->addError(
+                    $msg,
                     [
                         'table' => $tableName,
                         'ids' => implode(' ', array_column($entities, 'id'))
@@ -647,9 +679,31 @@ class ImportBehavior extends Behavior
         return $result;
     }
 
+    /**
+     * Get solved IDs
+     *
+     * @return array An array of table prefixed IDs indexed by source IDs (IRIs, temporary IDs etc.)
+     */
+    public function getSolved()
+    {
+       $result = [];
+       $modelClasses = array_flip($this->tableClasses);
+       foreach ($this->_index['targets'] ?? [] as $key => $value) {
+           $valueModel = $modelClasses[$value['model'] ?? ''] ?? $value['model'];
+           $value = $valueModel . '-' . ($value['id'] ?? '');
+           $result[$key] = $value;
+       }
+       return $result;
+    }
+
+    /** Add an import error
+     *
+     * @param string $msg
+     * @param mixed $data
+     * @param Exception $exception
+     */
     protected function addError($msg, $data, $exception)
     {
-        // TODO: format msg with data and exception message
         $this->_errors[] = [
             'message' => $msg,
             'data' => $data,
@@ -657,6 +711,11 @@ class ImportBehavior extends Behavior
         ];
     }
 
+    /**
+     * Get errors
+     *
+     * @return array
+     */
     public function getErrors()
     {
         return $this->_errors;

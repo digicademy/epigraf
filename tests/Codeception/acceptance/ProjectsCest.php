@@ -87,8 +87,7 @@ class ProjectsCest
         // Show articles
         $I->click('Show articles', '.sidebar-right');
         $I->waitForElement('body.controller_articles.action_index');
-        // TODO: Why %5B0%5D ?
-        $I->seeCurrentUrlMatches('~/epi/projects/articles/index\?projects%5B0%5D=1&save=1$~');
+        $I->seeCurrentUrlMatches('~/epi/projects/articles/index\?projects=1&save=1$~');
     }
 
 

@@ -49,7 +49,7 @@ class TaskDataJob extends BaseTaskData
         $view = $this->getView();
         $content = $view->renderContent($data, ['tagname' => 'job'], 1);
 
-        $outputfile = $this->job->getCurrentOutputFilePath();
+        $outputfile = $this->getCurrentOutputFilePath();
         Files::appendToFile($outputfile, $content);
 
         return true;

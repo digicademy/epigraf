@@ -30,7 +30,7 @@ class TaskBundle extends BaseTask
     public function execute()
     {
 
-        $outputfile = $this->job->getCurrentOutputFilePath();
+        $outputfile = $this->getCurrentOutputFilePath();
         $sourcePath = rtrim($this->job->jobPath, DS);
 
         // Find all files in the source folder
@@ -48,9 +48,16 @@ class TaskBundle extends BaseTask
             }
         }
 
+        // TODO: Implement indentation (see indent parameter in the task config)
+
         // Wrap
-        Files::prependToFile($outputfile, str_replace("\r", "", $this->config['prefix'] ?? ''));
-        Files::appendToFile($outputfile, str_replace("\r", "", $this->config['postfix'] ?? ''));
+        // TODO: make format configurable?
+        $prolog = $this->job->getValuePlaceholder($this->config['prefix'] ?? '', ['format' => 'json']);
+        Files::prependToFile($outputfile, str_replace("\r", "", $prolog ?? ''));
+
+        // TODO: make format configurable?
+        $epilog = $this->job->getValuePlaceholder($this->config['postfix'] ?? '', ['format' => 'json']);
+        Files::appendToFile($outputfile, str_replace("\r", "", $epilog ?? ''));
 
         return true;
     }

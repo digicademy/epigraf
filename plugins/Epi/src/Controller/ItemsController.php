@@ -10,6 +10,7 @@
 
 namespace Epi\Controller;
 
+use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
 use Epi\Model\Entity\Article;
 
@@ -38,7 +39,6 @@ class ItemsController extends AppController
         ]
     ];
 
-
     /**
      * Redirect to the article
      *
@@ -61,4 +61,55 @@ class ItemsController extends AppController
 
     }
 
+    /**
+     * Get aggregated item statistics
+     *
+     * ## Scopes
+     * - tiles: Geodata for maps
+     * - timeline: Timeline data
+     * - graph Network data
+     *
+     * @param string $scope The scope of the statistic.
+     * @return void
+     */
+    public function groups($scope = 'timeline')
+    {
+        // Get search parameters from request
+        [$params, $columns, $paging, $filter] = $this->Actions->prepareParameters();
+
+        // Timeline
+        if ($scope === 'timeline') {
+            $groups = $this->Items->find('timeline', $params);
+            $columns = $this->Items->augmentColumnSetup(
+                ['x', 'y', 'z', 'y_id', 'y_label', 'y_type','grouptype', 'totals'],
+                true, ['selected' => true, 'aggregate' => 'min']
+            );
+        }
+
+        // Geodata tiles
+        elseif ($scope === 'tiles') {
+            $groups = $this->Items->find('tiles', $params)->all();
+            $columns = $this->Items->augmentColumnSetup(
+                ['x', 'y', 'z','totals','type'], true,
+                ['selected' => true, 'aggregate' => 'min']
+            );
+        }
+
+        // Property-article-graph
+        elseif ($scope === 'graph') {
+            $linksModel = $this->Items;
+            $groups = $linksModel->find('graph', $params)->all();
+            $columns = $linksModel->augmentColumnSetup(
+                ['x', 'y', 'z', 'x_label', 'y_label','x_type','y_type', 'x_id','y_id', 'x_image', 'y_image', 'grouptype'], true,
+                ['selected' => true, 'aggregate' => 'min']
+            );
+        }
+        else {
+            throw new BadRequestException(__('Invalid scope'));
+        }
+
+        $this->Answer->addOptions(compact('params', 'columns', 'filter', 'scope'));
+        $this->Answer->addAnswer(compact('groups'));
+
+    }
 }

@@ -12,6 +12,7 @@ namespace Epi\Model\Entity;
 
 use App\Model\Entity\DefaultType;
 use App\Utilities\Converters\HistoricDates;
+use App\Utilities\Files\Files;
 
 /**
  * Item Entity
@@ -164,7 +165,8 @@ class Item extends BaseEntity
         'pos_x',
         'pos_y',
         'pos_z',
-        'property'
+        'property',
+        'published'
     ];
 
     /**
@@ -237,8 +239,10 @@ class Item extends BaseEntity
         'pos_x',
         'pos_y',
         'pos_z',
-        'sections_id', // TODO: alias with section?
-        'articles_id' // TODO: alias with article?
+        'sections_id', // TODO: alias with section? -> Changed, does it work? Necessary for copy, the later value has the prefixed ID and overwrited the former?
+        'section' => 'sections_id',
+        'articles_id', // TODO: alias with article? > Changed, does it work? Necessary for copy, the later value has the prefixed ID and overwrited the former?
+        'article' => 'articles_id',
     ];
 
     protected $_fields_formats = [
@@ -269,6 +273,19 @@ class Item extends BaseEntity
         'to_id' => ['links_tab', 'links_id']
     ];
 
+    /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($entity instanceof Article) && ($entity->id === $this->articles_id)) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * Get the default type for the entity, if no type configuration is available in the types table
@@ -382,12 +399,46 @@ class Item extends BaseEntity
      *
      * @return void
      */
-    public function updateDate()
+    public function updateDate($onlyDirty = false)
     {
+        if ($onlyDirty && !$this->isDirty('date_value')) {
+            return;
+        }
         $this->date_start = $this->_getDateStart();
         $this->date_end = $this->_getDateEnd();
         $this->date_sort = $this->_getDateSort();
 //        $this->date_value = $this->_getDateNorm();
+    }
+
+
+    public function updateFile($onlyDirty = false)
+    {
+        if ($onlyDirty && !$this->isDirty('file_name')) {
+            return;
+        }
+
+        if ($this->file_name) {
+            // TODO: Do we really need to split URLs ?
+//            $fieldFormat = $entity->type->merged['fields']['file']['format'] ?? '';
+//            if ($fieldFormat !== 'imageurl') {
+            $path = pathinfo($this->file_name);
+            $path['dirname'] = $path['dirname'] === '.' ? '' : $path['dirname'];
+
+            $this['file_path'] = Files::prependPath($this['file_path'] ?? '', $path['dirname']);
+            $this['file_name'] = $path['basename'] ?? '';
+            $this['file_type'] = $path['extension'] ?? '';
+//            } else {
+//                $entity['file_name'] = '';
+//                $entity['file_path'] = '';
+//                $entity['file_type'] = null;
+//            }
+        }
+        // Clear path
+        else {
+            $this['file_name'] = '';
+            $this['file_path'] = '';
+            $this['file_type'] = null;
+        }
     }
 
     /**
@@ -397,6 +448,10 @@ class Item extends BaseEntity
      */
     protected function _getCaption()
     {
+        // Full text search sets a caption in findHasText()
+        if (isset($this->_fields['caption'])) {
+            return $this->_fields['caption'];
+        }
         return ($this->type['caption'] ?? $this->itemtype) . ' #' . $this->sortno;
     }
 
@@ -465,7 +520,7 @@ class Item extends BaseEntity
 
         // XML tags
         if (empty($targets) || isset($targets['tags'])) {
-            $tags = $this->extractXmlTags(null, true);
+            $tags = $this->extractXmlTags(null, ['content' => true]);
             foreach ($tags as $tagId => $tag) {
                 $nodes[] = [
                     'id' => 'tag-' . $tag['tagid'] ?? '',
@@ -635,7 +690,7 @@ class Item extends BaseEntity
      */
     protected function _getDateNorm()
     {
-        if (!empty($this->date_value) || ($this->date_value === '0')) {
+        if (!empty($this->date_value)) {
             return HistoricDates::normalize($this->date_value);
         }
         else {
@@ -650,7 +705,7 @@ class Item extends BaseEntity
      */
     protected function _getDateSort()
     {
-        if (!empty($this->date_value) || ($this->date_value === '0')) {
+        if (!empty($this->date_value)) {
             return HistoricDates::encode($this->date_value);
         }
         else {
@@ -665,7 +720,7 @@ class Item extends BaseEntity
      */
     protected function _getDateStart()
     {
-        if (!empty($this->date_value) || ($this->date_value === '0')) {
+        if (!empty($this->date_value)) {
             return HistoricDates::minyear($this->date_value);
         }
         else {
@@ -680,7 +735,7 @@ class Item extends BaseEntity
      */
     protected function _getDateEnd()
     {
-        if (!empty($this->date_value) || ($this->date_value === '0')) {
+        if (!empty($this->date_value)) {
             return HistoricDates::maxyear($this->date_value);
         }
         else {

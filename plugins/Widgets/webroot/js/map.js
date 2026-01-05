@@ -21,7 +21,6 @@ import Utils from '/js/utils.js';
 export class MapWidget extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
-        this.mapElement = element;
 
         this.rowTable = element.dataset.rowTable || 'items';
         this.rowTypes = element.dataset.rowTypes ? element.dataset.rowTypes.split(',') : [];
@@ -30,7 +29,16 @@ export class MapWidget extends BaseWidget {
         this.searchText = element.dataset.searchText || '';
         this.segments = Utils.splitString(element.dataset.segments);
 
+        // Configuration options
+        // TODO: Move all options used below into the config object
+        this.config = {
+            markerPopup: false,
+            groupMode: false
+        }
+
         this.apiUrl = null;
+        this.apiGroupUrl = null;
+
         this.requestMode = null;
         this.maxZoom = 19;
         this.oldZoomLevel = undefined;
@@ -42,7 +50,7 @@ export class MapWidget extends BaseWidget {
         this.moveTimeout = null;
 
         let mode = element.dataset.mode;
-        if (this.mapElement.closest('.widget-document-edit')) {
+        if (this.widgetElement.closest('.widget-document-edit')) {
             mode = 'edit';
         }
 
@@ -95,7 +103,7 @@ export class MapWidget extends BaseWidget {
      * Create the map and its layers.
      */
     initMap() {
-        this.map = L.map(this.mapElement, {
+        this.map = L.map(this.widgetElement, {
             gestureHandling: true
         });
 
@@ -146,10 +154,10 @@ export class MapWidget extends BaseWidget {
         this.initControls();
 
         // Listen to legend and filter clicks
-        this.mapElement.addEventListener('click',(event) => this.onLegendClicked(event));
+        this.widgetElement.addEventListener('click',(event) => this.onLegendClicked(event));
 
         // Listen to map events
-        this.listenResize(this.mapElement, () => this.map.invalidateSize());
+        this.listenResize(this.widgetElement, () => this.map.invalidateSize());
     }
 
     /**
@@ -241,51 +249,33 @@ export class MapWidget extends BaseWidget {
             // Click single markers
             this.clusterLayer
                 .on('click', (marker) => {
-                    App.openDetails(marker.sourceTarget.customData.url, {'external':true});
+                    this.showMarkerContent(marker);
                 });
 
             // Click clusters
             this.clusterLayer
-                .on('clusterclick', (c) => {
+                .on('clusterclick', (cluster) => {
                     this.clusterLayer.options.zoomToBoundsOnClick = true;
-
-                    const markers = c.layer.getAllChildMarkers();
-                    let popupContent;
+                    const markers = cluster.layer.getAllChildMarkers();
 
                     // If items in cluster are NOT in the same place, exit function
-                    if (this.map.getZoom() < this.maxZoom) {
-                        const coordsToCompare = markers[0]._latlng;
-                        const tolerance = 0.0001;
-                        for (let marker of markers) {
-                            if ((Math.abs(marker._latlng.lat - coordsToCompare.lat) + Math.abs(marker._latlng.lng - coordsToCompare.lng)) > tolerance) {
-                                return;
-                            }
-                        }
+                    if ((this.map.getZoom() < this.maxZoom) && !this.markersInSamePlace(markers)) {
+                        return;
                     }
 
-                    // else, disable default zoom behaviour and create popup
+                    // Disable default zoom behaviour and create popup
                     this.clusterLayer.options.zoomToBoundsOnClick = false;
 
-                    popupContent = '<ol class="popup-article-list">';
-                    for (let marker of markers) {
-                        popupContent +=
-                            `<li class="data-quality-${marker.customData.quality || 0}" data-quality-content="${this.customStyles.quality[marker.customData.quality || 0].content}">
-                                <a href="${marker.customData.url}" class="frame" target="_blank">
-                                ${marker.customData.caption || 'No title'}
-                                </a>
-                             </li>`;
+                    if (this.config.markerPopup) {
+                        this.showMarkerPopup(markers, cluster.layer.getLatLng());
+                    } else {
+                        this.showMarkerList(markers);
                     }
-                    popupContent += '</ol>';
-
-                    L.popup({maxHeight: 250})
-                        .setLatLng(c.layer.getLatLng())
-                        .setContent(popupContent)
-                        .openOn(this.map);
                 });
         }
 
         // Item events
-        const section = this.mapElement.closest('.doc-section');
+        const section = this.widgetElement.closest('.doc-section');
         if (section) {
             section.addEventListener('epi:add:item', event => this.onItemAdded(event));
             section.addEventListener('epi:remove:item', event => this.onItemRemoved(event));
@@ -293,10 +283,14 @@ export class MapWidget extends BaseWidget {
 
         }
 
-        const entity = this.mapElement.closest('.widget-entity');
+        const entity = this.widgetElement.closest('.widget-entity');
         if (entity) {
             entity.addEventListener('epi:change:entity', event => this.onItemChanged(event));
         }
+
+        // Facet events
+        this.listenEvent(document,'epi:load:facets', event => this.onLoadFacets(event));
+        this.listenEvent(document,'epi:close:facets', event => this.onCloseFacets(event));
 
     }
 
@@ -307,6 +301,7 @@ export class MapWidget extends BaseWidget {
         this.removeAllLoaders();
 
         this.apiUrl = null;
+        this.apiGroupUrl = null;
         this.mapReady = false;
 
         // List of tiles in z/y/x format and whether they wer completely loaded
@@ -382,6 +377,7 @@ export class MapWidget extends BaseWidget {
         elm.dataset.consumed = 'false';
 
         // Reset URL
+        this.apiGroupUrl = elm.dataset.groupUrl;
         this.apiUrl = elm.dataset.url;
 
         const parsedUrl = new URL(this.apiUrl, App.baseUrl);
@@ -408,38 +404,60 @@ export class MapWidget extends BaseWidget {
      * @returns {HTMLElement} Stores geoJSON data
      */
     getDataElement() {
-        return this.mapElement.nextElementSibling;
+        return this.widgetElement.nextElementSibling;
     }
 
     /**
-     * Get the URL for fetching the next page or tile.
+     * Get the URL for fetching the next markers in a tile
      *
      * @param tile The tile array
      * @return {string|boolean} URL of map tile
      */
     getTileUrl(tile) {
-        // No API URL
-        if (!this.apiUrl || !tile || !this.rowTypes.length) {
+
+        if (!tile || !this.rowTypes.length) {
             return false;
         }
 
-        tile.page += 1;
-        let url = new URL(this.apiUrl, App.baseUrl);
+        let url;
+
+        if (this.config.groupMode) {
+
+            if (!this.apiGroupUrl) {
+                return false;
+            }
+
+            url = new URL(this.apiGroupUrl, App.baseUrl);
+            url.searchParams.delete('page');
+            url.searchParams.delete('snippets');
+            url.pathname = url.pathname + '.geojson';
+
+        } else {
+
+            if (!this.apiUrl) {
+                return false;
+            }
+
+            tile.page += 1;
+
+            url = new URL(this.apiUrl, App.baseUrl);
+            url.searchParams.set('page', tile.page);
+            url.searchParams.set('snippets', 'article,properties');
+            url.pathname = url.pathname + '/items.geojson';
+        }
+
         url.searchParams.set('tile', tile.id);
-        url.searchParams.set('page', tile.page);
         url.searchParams.set('itemtypes', this.rowTypes.join(','));
-        // url.searchParams.set('template', 'raw');
-        url.searchParams.set('snippets', 'article,properties');
+
         url.searchParams.delete('sort');
         url.searchParams.delete('direction');
         url.searchParams.delete('lat');
         url.searchParams.delete('lng');
         url.searchParams.delete('zoom');
-        url.pathname = url.pathname + '/items.geojson';
-        url = url.toString();
 
-        return url;
+        return url.toString();
     }
+
 
     /**
      * Create a list of tiles where markers have to be loaded.
@@ -527,7 +545,7 @@ export class MapWidget extends BaseWidget {
             this.fitMarkers();
         }
 
-        if (this.apiUrl) {
+        if (this.apiUrl || this.apiGroupUrl) {
             this.initUserPosition(() => this.loadMarkersFromAjax());
         }
 
@@ -609,7 +627,7 @@ export class MapWidget extends BaseWidget {
     /**
      * Extract JSON from the HTML data element.
      *
-     * At the end the data-consumed attribute will be set to "false" to
+     * At the end the data-consumed attribute will be set to "true" to
      * prevent double consumption of the same data.
      *
      * @returns {JSON | Array}
@@ -644,12 +662,11 @@ export class MapWidget extends BaseWidget {
      *
      * @param {*} marker The marker or false for non-existing markers.
      * @param {{
-     *     number: number,
-     *     id: number,
-     *     caption: string,
+     *     number: number, // A sort number
+     *     id: number,     // Item ID
+     *     rootId: number  // Root ID of the item (article ID)
      *     quality: number,
      *     radius: number,
-     *     url: string,
      *     lat: string,
      *     lng: string
      * }} data New marker data (coordinates and metadata) or false the use the existing data
@@ -681,6 +698,7 @@ export class MapWidget extends BaseWidget {
                 data = {};
             }
             const edit = this.editMarkers && ((data.edit === undefined) || (data.edit));
+
             marker = L.marker([data.lat, data.lng], {draggable: edit});
             this.makeMarkerDraggable(marker);
         }
@@ -695,6 +713,10 @@ export class MapWidget extends BaseWidget {
         if (hasRadius && this.displayMarkerRadius && zoomLevel > 13) {
             iconRadius = Math.min(Math.max(this.meterToPixel(data.lat, data.radius, zoomLevel), 20), 500);
         }
+        else if (data.totals) {
+            iconRadius = Math.min(Math.max(this.meterToPixel(data.lat, data.radius, zoomLevel), 20), 500);
+        }
+
         const iconDiameter = iconRadius * 2;
 
         const classNames = [
@@ -730,7 +752,12 @@ export class MapWidget extends BaseWidget {
             }
 
             markerContent = '1';
-        } else {
+        }
+        else if (data.totals) {
+            markerContent = data.totals;
+            classNames.push(`data-quality-${data.quality}`);
+        }
+        else {
             markerContent = this.showNumber ? data.number : (this.customStyles.quality[data.quality].content || '');
             classNames.push(`data-quality-${data.quality}`);
         }
@@ -746,9 +773,7 @@ export class MapWidget extends BaseWidget {
     }
 
     renderCluster(cluster) {
-        const childCount = cluster.getChildCount();
-        const scale = d3.scaleLinear([10, 500], [30, 80]).clamp(true);
-        const size = scale(childCount);
+        let childCount = cluster.getChildCount();
 
         const markers = cluster.getAllChildMarkers();
         let counts = {};
@@ -766,7 +791,14 @@ export class MapWidget extends BaseWidget {
                     }
                 }
             }
+
+            if (marker.customData.totals) {
+                childCount = childCount + (marker.customData.totals -1);
+            }
         });
+
+        const scale = d3.scaleLinear([10, 500], [30, 80]).clamp(true);
+        const size = scale(childCount);
 
         const childQuality = markers.reduce((carry, marker) => Math.min(carry, marker.customData.quality),2);
         const qualityClass = ' data-quality-' + childQuality;
@@ -817,6 +849,30 @@ export class MapWidget extends BaseWidget {
     }
 
     /**
+     * Update marker properties and rerender marker on dragend.
+     *
+     * @param marker Dragged marker.
+     */
+    makeMarkerDraggable(marker) {
+        //marker.options.autoPan = true;
+        //marker.options.autoPanPadding = [20, 20];
+
+        // Prevent weird map pan/jumping when marker is clicked
+        marker.on('mousedown', (event) => {
+            event.originalEvent.preventDefault();
+        });
+
+        marker.on('dragend', () => {
+            const rowId = marker.customData.id;
+            const coords = marker.getLatLng();
+            marker.customData.lat = coords.lat;
+            marker.customData.lng = coords.lng;
+            this.updateRow(rowId, coords);
+            this.map.panTo([coords.lat, coords.lng]);
+        });
+    }
+
+    /**
      * Add markers for multiple geoJSON objects.
      *
      * @param data Array of geoJSON objects
@@ -830,8 +886,38 @@ export class MapWidget extends BaseWidget {
                     const coord = Utils.getValue(geoJson, 'geometry.coordinates', [0, 0]);
                     data.lat = coord[1];
                     data.lng = coord[0];
+                    data.type = "single";
 
                     if (!this.markersLoaded[data.id]) {
+                        const marker = this.renderMarker(null, data);
+                        this.markersLoaded[data.id] = marker;
+
+                        let layer = this.subGroups[data.quality] || this.markerLayer;
+                        layer.addLayer(marker);
+                    }
+                }
+                else if (geoJson.geometry.type === "Polygon") {
+                    // Careful: geojson uses lnglat, leaflet latlng -> reverse()
+                    const data = geoJson.data;
+                    data.id = 'group-' +  (data.id || data.tile);
+                    let coords = Utils.getValue(geoJson, 'geometry.coordinates');
+
+                    if (coords && !this.markersLoaded[data.id]) {
+                        coords = coords[0];
+                        coords = coords.map(([lat, lng]) => [lng, lat]);
+                        data.coords = coords;
+
+                        let polygon = L.polygon(coords);
+                        let center = polygon.getBounds().getCenter();
+                        let radius = center.distanceTo(coords[0]);
+
+                        data.lat = center.lat;
+                        data.lng = center.lng;
+                        data.radius = radius;
+                        data.quality = data.quality || 0;
+                        data.number = data.totals || 0;
+                        data.type = "group";
+
                         const marker = this.renderMarker(null, data);
                         this.markersLoaded[data.id] = marker;
 
@@ -1052,7 +1138,7 @@ export class MapWidget extends BaseWidget {
     }
 
     showMap() {
-        const container = this.mapElement.closest('.widget-map-container');
+        const container = this.widgetElement.closest('.widget-map-container');
         if (container) {
             container.style.display = "block";
         }
@@ -1060,10 +1146,64 @@ export class MapWidget extends BaseWidget {
     }
 
     hideMap() {
-        const container = this.mapElement.closest('.widget-map-container');
+        const container = this.widgetElement.closest('.widget-map-container');
         if (container) {
             container.style.display = "none";
         }
+    }
+
+
+    /**
+     * Open the marker content in the sidebar.
+     *
+     * @param marker
+     */
+    showMarkerContent(marker) {
+        let url = this.widgetElement.dataset.viewUrl;
+        if (!url) {
+            return;
+        }
+        url = decodeURI(url).formatUnicorn(marker.sourceTarget.customData);
+        App.openDetails(url, {'external':false});
+    }
+
+    /**
+     * Show all objects in the list in the sidebar
+     *
+     * @param {array} markers
+     */
+    showMarkerList(markers) {
+        let url = this.widgetElement.dataset.indexUrl;
+        if (!url) {
+            return;
+        }
+        const markerIds = markers.map(marker => marker.customData.rootId).join(',');
+        url = decodeURI(url).formatUnicorn({'rootId': markerIds});
+        App.openDetails(url, {'external':false});
+    }
+
+    /**
+     * Show a popup with all markers in the list
+     *
+     * @param {array} markers A list of markers
+     * @param {object} position Lat and lng values of the popup position
+     */
+    showMarkerPopup(markers, position) {
+        let popupContent = '<ol class="popup-article-list">';
+        for (let marker of markers) {
+            popupContent +=
+                `<li class="data-quality-${marker.customData.quality || 0}" data-quality-content="${this.customStyles.quality[marker.customData.quality || 0].content}">
+                                <a href="${marker.customData.url}" class="frame" target="_blank">
+                                ${marker.customData.caption || 'No title'}
+                                </a>
+                             </li>`;
+        }
+        popupContent += '</ol>';
+
+        L.popup({maxHeight: 250, minWidth:200})
+            .setLatLng(position)
+            .setContent(popupContent)
+            .openOn(this.map);
     }
 
     onLegendClicked(event) {
@@ -1123,10 +1263,9 @@ export class MapWidget extends BaseWidget {
                 'data': {
                     'number': Utils.getInputValue(event.target.querySelector(`[data-row-field='sortno'] input`), 0),
                     'id': markerId,
-                    'caption': null,
+                    'rootId': null,
                     'quality': quality,
-                    'radius': Utils.getInputValue(event.target.querySelector(`[data-row-field='${this.fieldName}.radius'] input`), 0),
-                    'url': null
+                    'radius': Utils.getInputValue(event.target.querySelector(`[data-row-field='${this.fieldName}.radius'] input`), 0)
                 },
                 'geometry': {'type': 'Point', 'coordinates': [mapCenter.lng, mapCenter.lat]}
             }];
@@ -1219,27 +1358,20 @@ export class MapWidget extends BaseWidget {
     }
 
     /**
-     * Update marker properties and rerender marker on dragend.
+     * Checks whether any marker is not in the same place as the first one.
      *
-     * @param marker Dragged marker.
+     * @param {Array} markers Markers to compare
+     * @param {float} tolerance Maximum distance from first marker
+     * @return {boolean}
      */
-    makeMarkerDraggable(marker) {
-        //marker.options.autoPan = true;
-        //marker.options.autoPanPadding = [20, 20];
-
-        // Prevent weird map pan/jumping when marker is clicked
-        marker.on('mousedown', (event) => {
-            event.originalEvent.preventDefault();
-        });
-
-        marker.on('dragend', () => {
-            const rowId = marker.customData.id;
-            const coords = marker.getLatLng();
-            marker.customData.lat = coords.lat;
-            marker.customData.lng = coords.lng;
-            this.updateRow(rowId, coords);
-            this.map.panTo([coords.lat, coords.lng]);
-        });
+    markersInSamePlace(markers, tolerance = 0.0001) {
+        const coordsToCompare = markers[0]._latlng;
+        for (let marker of markers) {
+            if ((Math.abs(marker._latlng.lat - coordsToCompare.lat) + Math.abs(marker._latlng.lng - coordsToCompare.lng)) > tolerance) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -1312,10 +1444,9 @@ export class MapWidget extends BaseWidget {
                 'data': {
                     'number': 0,
                     'id': -1,
-                    'caption': null,
+                    'rootId': null,
                     'quality': 0,
-                    'radius': 0,
-                    'url': null
+                    'radius': 0
                 },
                 'geometry': {'type': 'Point', 'coordinates': [0, 0]}
             }];
@@ -1329,6 +1460,8 @@ export class MapWidget extends BaseWidget {
         }
 
         const currentData = Object.assign({}, currentMarker.customData);
+
+        // Calculate center and radius
         const bounds = this.geocodeBox.box.getBounds();
         const center = bounds.getCenter();
         const southEast = bounds.getSouthEast();
@@ -1344,6 +1477,45 @@ export class MapWidget extends BaseWidget {
         this.updateRow(markerId, center, distance);
     }
 
+    /**
+     * Use facet colors for the markers
+     *
+     * @param {CustomEvent} event
+     */
+    onLoadFacets(event) {
+        if (!event.detail.sender) {
+            return;
+        }
+
+        const facetWidget = event.detail.sender;
+        if (!facetWidget.hasFlag('grp')) {
+            return;
+        }
+
+        //if (facetWidget.widgetElement.classList.contains('widget-filter-item-properties')) {
+        const data = facetWidget.getFacets();
+        this.updateColors(data);
+        //}
+    }
+
+    /**
+     * Clear facet colors for the markers
+     *
+     * @param {CustomEvent} event
+     */
+    onCloseFacets(event) {
+        if (!event.detail.sender) {
+            return;
+        }
+        this.updateColors();
+    }
+
+    /**
+     * Set colors for the markers
+     *
+     * @param {Object} data An object with property ids as keys and legend items as values.
+     *                      Each legend item must contain a 'color' and 'title' property.
+     */
     updateColors(data) {
         this.facets = data;
 

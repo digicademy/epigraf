@@ -109,7 +109,8 @@ class DatabanksControllerTest extends AppTestCase
         $backupfile = Configure::read('Data.databases') .
             $databank->name . DS .
             'backup' . DS .
-            'backup_'.$databank->name.'_2020-10-29_01_00_58_1603972858';
+            'backup_'.$databank->name.'_2020-10-29t13_00_58p01_001603972858';
+
 
         $this->assertFileDoesNotExist($backupfile. '.sql.gz');
         $this->assertFileDoesNotExist($backupfile. '.sql');
@@ -431,7 +432,8 @@ class DatabanksControllerTest extends AppTestCase
 		$this->loginUser('admin');
 
 		// Precheck
-        $outputfile = Configure::read('Data.databases') . 'test_projects' . DS . 'backup' . DS . 'backup_test_projects_2020-10-29_01_00_58_1603972858';
+        $outputfile = Configure::read('Data.databases') . 'test_projects' . DS
+            . 'backup' . DS . 'backup_test_projects_2020-10-29t13_00_58p01_001603972858';
         $this->assertFileDoesNotExist($outputfile).'.sql.gz';
         $this->assertFileDoesNotExist($outputfile).'.sql';
 
@@ -484,7 +486,7 @@ class DatabanksControllerTest extends AppTestCase
 		$this->assertHtmlEqualsComparison();
 
 		// Import script
-        $data = ['filename' => 'databases/test_projects/backup/import.sql'];
+        $data = ['filename' => 'backup/import.sql'];
         $this->post('databanks/import/1', $data);
         $this->assertRedirect(['controller' => 'Databanks', 'action' => 'view',1]);
 

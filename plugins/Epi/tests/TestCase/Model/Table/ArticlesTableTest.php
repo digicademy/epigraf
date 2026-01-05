@@ -148,6 +148,7 @@ class ArticlesTableTest extends EpiTestCase
 	 */
 	public function testFindHasProperties()
 	{
+        // Variation 1
 		$options = [
 			'properties' => [92,128]
 		];
@@ -157,6 +158,28 @@ class ArticlesTableTest extends EpiTestCase
 
 		$compare = $this->saveComparisonJson($articles);
 		$this->assertJsonStringEqualsComparison($compare);
+
+        // Variation 2
+        $options = [
+            'properties' => ['xxx' => [92,128]]
+        ];
+
+        $articles = $this->Articles
+            ->find('hasProperties', $options);
+
+        $compare = $this->saveComparisonJson($articles);
+        $this->assertJsonStringEqualsComparison($compare);
+
+        // Variation 3
+        $options = [
+            'properties' => ['xxx' => ['selected' => [92,128]]]
+        ];
+
+        $articles = $this->Articles
+            ->find('hasProperties', $options);
+
+        $compare = $this->saveComparisonJson($articles);
+        $this->assertJsonStringEqualsComparison($compare);
 	}
 
 
@@ -169,6 +192,7 @@ class ArticlesTableTest extends EpiTestCase
 	{
 		$options = [
 			'term' => 'maðr',
+            'snippets' => ['search']
 		];
 
 		$articles = $this->Articles
@@ -565,8 +589,7 @@ class ArticlesTableTest extends EpiTestCase
         $columns = $this->Articles->getColumns(['id','signature','inscriptions_count']);
         $this->assertJsonStringEqualsComparison($columns, '.countcol');
 
-        // Todo: New syntax is * not {*}
-        $columns = $this->Articles->getColumns(['locations_count=items.{*}[itemtype=locations]|count']);
+        $columns = $this->Articles->getColumns(['locations_count=items.*[itemtype=locations]|count']);
         $this->assertJsonStringEqualsComparison($columns, '.customcol');
     }
 
@@ -631,7 +654,7 @@ class ArticlesTableTest extends EpiTestCase
         ]);
 
         // Check columns
-        $columns = $table->getColumns(array_keys($columns),$columns);
+        $columns = $table->getColumns(array_keys($columns), $columns);
         $this->assertJsonStringEqualsComparison($columns, 'columns');
 
         // Check SQL query

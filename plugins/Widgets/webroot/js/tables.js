@@ -471,7 +471,7 @@ export class TableWidget extends BaseWidget {
      * @param event dblclick
      */
     onDoubleClickRow(event) {
-        if (!event.target.closest('tr') || event.target.closest('.tree-indent')) {
+        if (event.target.closest('thead') || !event.target.closest('tr') || event.target.closest('.tree-indent')) {
             return;
         }
 
@@ -530,7 +530,7 @@ export class TableWidget extends BaseWidget {
         }
 
         // Ctrl key is reserved for move operations, see DragItemsWidget
-        if (event.ctrlKey) {
+        if (event.ctrlKey || event.metaKey) {
             return;
         }
 
@@ -686,7 +686,7 @@ export class TableWidget extends BaseWidget {
                 }
 
                 // Remove or add row from/to selection
-                if (event.ctrlKey) {
+                if (event.ctrlKey || event.metaKey) {
                     this.selectAdd(currentRow);
                 }
 
@@ -696,7 +696,7 @@ export class TableWidget extends BaseWidget {
                 }
 
                 // Remove selection
-                if (!event.ctrlKey && !event.shiftKey) {
+                if (!(event.ctrlKey  || event.metaKey) && !event.shiftKey) {
                     this.selectSingleRow(currentRow);
                 }
 
@@ -777,7 +777,7 @@ export class TableWidget extends BaseWidget {
      * @param event click
      */
     onClickRow(event) {
-        if (!event.target.closest('tbody tr') || event.target.closest('.tree-indent')) {
+        if (event.target.closest('thead') || !event.target.closest('tbody tr') || event.target.closest('.tree-indent')) {
             return;
         }
         //App.setFocus(event);
@@ -790,7 +790,7 @@ export class TableWidget extends BaseWidget {
 
         this.handleSelectRow(event);
 
-        if ((this.mode === 'select') && event.ctrlKey) {
+        if ((this.mode === 'select') && (event.ctrlKey || event.metaKey)) {
             event.stopPropagation();
             event.preventDefault();
         }
@@ -1113,7 +1113,7 @@ export class TableWidget extends BaseWidget {
     /**
      * Transfer the selected IDs to link parameters
      *
-     * To pass the IDs of selected table rows to an URL, add the data-list-name attribute to the table (see the method addToList in app.js).
+     * To pass the IDs of selected table rows to a URL, add the data-list-name attribute to the table (see the method addToList in app.js).
      * Set the data-list-select attribute of the link/button to the same name of the data list.
      * Set the  data-list-parameter to the name of the query parameters that handles the IDs.
      * data-list-select
@@ -1304,11 +1304,12 @@ export class DragItemsWidget extends BaseWidget {
             return;
         }
 
-        const currentRow = this.getSelectedRow();
         const direction = role.split('-')[1];
-        if (currentRow) {
-            this.moveRow(currentRow, direction);
-        }
+        const reverse = (direction === 'left') || (direction === 'down')
+        const currentRows = this.getSelectedRows(reverse);
+        currentRows.forEach(
+            (currentRow) => this.moveRow(currentRow, direction)
+        );
     }
 
     /**
@@ -1319,7 +1320,7 @@ export class DragItemsWidget extends BaseWidget {
      */
     onKeyDown(event) {
         // Ctrl key is reserved for move operations
-        if (!event.ctrlKey || !this.enabled) {
+        if (!(event.ctrlKey  || event.metaKey) || !this.enabled) {
             return;
         }
 
@@ -1343,10 +1344,11 @@ export class DragItemsWidget extends BaseWidget {
         }
 
         if (direction) {
-            const currentRow = this.getSelectedRow();
-            if (currentRow) {
-                this.moveRow(currentRow, direction);
-            }
+            const reverse = (direction === 'left') || (direction === 'down')
+            const currentRows = this.getSelectedRows(reverse);
+            currentRows.forEach(
+                (currentRow) => this.moveRow(currentRow, direction)
+            );
         }
 
     }
@@ -1375,7 +1377,9 @@ export class DragItemsWidget extends BaseWidget {
      * @param {Event} event Click event
      */
     onSwitched(event) {
-        if (event.target.dataset.role === 'move') {
+        // make sure that the move button is intended for this widget
+        if (event.target.dataset.role === 'move'
+            && event.target.dataset.targetModel === this.widgetElement.dataset.model) {
             this.switchButton = event.target;
             const enabled = this.switchButton.classList.contains('widget-switch-active');
             this.enableWidget(enabled);
@@ -1457,6 +1461,10 @@ export class DragItemsWidget extends BaseWidget {
         if (!this.enabled) {
             return;
         }
+        if (event.target.type === 'checkbox') {
+            return;
+        }
+
 
         const currentRow = event.target.closest('[data-list-itemof]:not(.item-virtual)');
         if (!currentRow || currentRow.classList.contains('fixed')) {
@@ -1475,15 +1483,14 @@ export class DragItemsWidget extends BaseWidget {
      * @return {{}}
      */
     createDragObject(row) {
-        let dragObject = {};
+        let dragObject = {
+            'moved': false
+        };
         if (row) {
             dragObject.draggedRow = row;
             dragObject.oldParentRow = row.treeParent;
             dragObject.newParentRow = null;
-            dragObject.draggedRow.classList.add('is-dragging');
             dragObject.draggedDescendants = this.treeWidget ? this.treeWidget.treeGetDescendants(row) : [];
-            dragObject.draggedDescendants.forEach(node => node.classList.add('is-dragging'));
-
             if (dragObject.draggedDescendants.length > 0) {
                 dragObject.lastRow = dragObject.draggedDescendants[dragObject.draggedDescendants.length - 1];
             } else {
@@ -1493,6 +1500,11 @@ export class DragItemsWidget extends BaseWidget {
             dragObject.isMouseMoving = false;
         }
         return dragObject;
+    }
+
+    activateDragObject(dragObject) {
+        dragObject.draggedRow.classList.add('is-dragging');
+        dragObject.draggedDescendants.forEach(node => node.classList.add('is-dragging'));
     }
 
     /**
@@ -1505,6 +1517,10 @@ export class DragItemsWidget extends BaseWidget {
         dragObject.draggedRow.classList.remove('is-dragging');
         dragObject.draggedDescendants.forEach(node => node.classList.remove('is-dragging'));
         dragObject.draggedRow.dataset.dirty = true;
+
+        if (dragObject.moved) {
+            this.emitEvent('epi:move:row', {row: dragObject.draggedRow});
+        }
     }
 
     /**
@@ -1518,10 +1534,8 @@ export class DragItemsWidget extends BaseWidget {
         }
 
         this.widgetElement.classList.remove('is-dragging');
-        const draggedRow = this.dragObject.draggedRow;
         this.releaseDragObject(this.dragObject);
         this.dragObject = null;
-        this.emitEvent('epi:move:row',{row: draggedRow});
     }
 
     /**
@@ -1535,13 +1549,14 @@ export class DragItemsWidget extends BaseWidget {
         }
 
         this.currentMouseCoords = this.getMouseCoords(event);
+        this.activateDragObject(this.dragObject);
 
         if (this.dragObject.isMouseMoving) {
             return;
         }
 
         let keepMoving = true;
-        while (keepMoving) {
+        while (keepMoving && this.dragObject) {
 
             const targetRow = this.getDropTarget(this.currentMouseCoords.x, this.currentMouseCoords.y);
 
@@ -1570,7 +1585,7 @@ export class DragItemsWidget extends BaseWidget {
         }
 
         this.oldMouseCoords = this.currentMouseCoords;
-        this.dragObject.isMouseMoving = false;
+        this.dragObject && (this.dragObject.isMouseMoving = false);
     }
 
     /**
@@ -1578,15 +1593,21 @@ export class DragItemsWidget extends BaseWidget {
      *
      * // TODO: Harmonize classes between tableWidget und treeWidget
      *
+     * @param {boolean} reverse Whether to reverse the selection
      * @return {*}
      */
-    getSelectedRow() {
+    getSelectedRows(reverse = false) {
+        let rows;
         if (this.widgetElementWidget) {
-            return this.datalist.querySelector('.row-selected');
+            rows = this.datalist.querySelectorAll('.row-selected');
         } else {
-            return this.datalist.querySelector('.node.active, .node.selected');
+            rows = this.datalist.querySelectorAll('.node.active, .node.selected');
         }
 
+        if (rows && reverse) {
+            return [...rows].reverse();
+        }
+        return rows;
     }
 
     /**
@@ -1645,6 +1666,7 @@ export class DragItemsWidget extends BaseWidget {
         }
 
         const dragObject = this.createDragObject(row);
+        this.activateDragObject(dragObject);
         const widget = this.widgetElementWidget || this.treeWidget;
 
         if ((direction === 'left') || (direction === 'right')) {
@@ -1678,10 +1700,11 @@ export class DragItemsWidget extends BaseWidget {
      *
      * @param {object} dragObject
      * @param {String} direction Drag direction 'left' or 'right
+     * @return {boolean} Whether the dragObject was moved
      */
     moveHorizontally(dragObject, direction) {
         if (!dragObject || !dragObject.draggedRow || !dragObject.draggedRow.querySelector('.tree-indent')) {
-            return;
+            return false;
         }
 
         const isLastChild = dragObject.draggedRow.treePosition === dragObject.draggedRow.treeParent.treeChildren;
@@ -1698,6 +1721,8 @@ export class DragItemsWidget extends BaseWidget {
 
         dragObject.oldParentRow = dragObject.newParentRow;
         this.updateHierarchy(dragObject);
+        dragObject.moved = true;
+        return true;
     }
 
     /**
@@ -1737,6 +1762,7 @@ export class DragItemsWidget extends BaseWidget {
      * @param {object} dragObject
      * @param {String} direction Drag direction: 'up' or 'down'
      * @param {HTMLElement} targetRow Row that is dragged over
+     * @return {boolean} Whether the dragObject was moved
      */
     moveVertically(dragObject, direction, targetRow) {
          if ((targetRow === dragObject.draggedRow) || [...dragObject.draggedDescendants].includes(targetRow)) {
@@ -1766,6 +1792,7 @@ export class DragItemsWidget extends BaseWidget {
         dragObject.draggedRow.after(...dragObject.draggedDescendants);
 
         this.updateHierarchy(dragObject);
+        dragObject.moved = true;
         return true;
     }
 

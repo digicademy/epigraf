@@ -75,6 +75,8 @@ class FilesController extends AppController
         ]
     ];
 
+    public $help = 'introduction/files';
+
     /**
      * beforeFilter callback
      *

@@ -19,22 +19,23 @@ use App\Utilities\Converters\Attributes;
  * @var Epi\Model\Entity\Article $entity
  * @var boolean $edit
  * @var string $mode
- * @var array $templateArticle
+ * @var array $template_article
  */
 ?>
 <?php
-    $options = ['edit' => $edit, 'mode' => $mode, 'template_article' => $templateArticle];
+    $options = ['edit' => $edit, 'mode' => $mode, 'template_article' => $template_article, 'buttons' => true];
     $params = $this->getConfig('options')['params']; // Attributes::paramsToQueryString($this->getConfig('options')['params']);
-    $docContentToTop = Attributes::isOption('position', 'top', $templateArticle, $edit);
+    $docContentToTop = Attributes::isOption('position', 'top', $template_article, $edit);
     $this->append('css', $this->Types->getTagStyles());
     $entityHelper = $edit ? $this->EntityInput : $this->EntityHtml;
 ?>
 
-<!-- Breadcrumbs -->
+<!-- Headline -->
 <?php $this->start('header'); ?>
     <?= $entityHelper->docHeader($entity, $options) ?>
 <?php $this->end(); ?>
 
+<!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add($entity->project->name ?? '<i>No project</i>', [
     'controller' => 'Articles',
     'action' => 'index',
@@ -94,6 +95,10 @@ use App\Utilities\Converters\Attributes;
             ?>
         <?php endif; ?>
         <?= $this->Form->hidden('id') ?>
+
+        <!-- Prevent implicit submission of the form -->
+        <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+
     <?php endif; ?>
 
     <!-- Article header-->
@@ -154,7 +159,7 @@ use App\Utilities\Converters\Attributes;
     <?php endif; ?>
 
     <!-- Article metrics -->
-    <?php if ($entity->currentUserRole !== 'guest'): ?>
+    <?php if (!in_array($entity->currentUserRole, ['guest','reader'])): ?>
         <?= $entityHelper->docProblems($entity) ?>
         <?php // $this->element('../Sections/view_metrics'); TODO: move to BaseEntityHelper ?>
     <?php endif; ?>
@@ -178,10 +183,9 @@ use App\Utilities\Converters\Attributes;
 <?php if (!$options['edit']): ?>
 
     <?php
-
         // TODO: generate link in App.openDetails()
         if ($this->request->is('ajax') && !in_array($mode, [MODE_REVISE])) {
-            $action = $this->Link->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
+            $action = $this->User->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
             $url = ['action' => $action, $entity->id];
             if (!empty($params['published'])) {
                 $url['?'] = ['mode' => MODE_STAGE];
@@ -193,23 +197,40 @@ use App\Utilities\Converters\Attributes;
             );
         }
 
-        $this->Link->addEditButtons($entity);
+        // Norm data buttons
+        foreach (($entity->normDataParsed ?? []) as $norm_data) {
+            if (!empty($norm_data['button'])) {
+                $this->Link->addAction(
+                    $norm_data['button'],
+                    $norm_data['url'],
+                    ['data-target'=>'external','data-role' => 'open']
+                );
+            }
+        }
+
+    $this->Link->addEditButtons($entity);
     ?>
 
 <?php else: ?>
-    <?php $this->Link->addSaveCancelDeleteButton($entity, ['delete' => $templateArticle['edit'] ?? true, 'close' => true]); ?>
+    <?php $this->Link->addSaveCancelDeleteButton($entity, ['delete' => $template_article['edit'] ?? true, 'close' => true]); ?>
 <?php endif; ?>
 
 <?php
     $this->Link->beginActionGroup('bottom-right');
     // @deprecated: Remove with EpiDesktop
     if ($entity->type->merged['epidesktop'] ?? false) {
+        $this->Link->addActionGroupLabel(__('Open'), ['group' => 'open']);
         $this->Link->addAction(
             __('EpiDesktop'),
             'epigraf://' . $this->request->host() . '/database/' .
             $entity->databaseName . '/article/' .
             $entity->id,
-            ['roles' => ['author', 'editor', 'admin'], 'target' => '_blank']
+            [
+                'class' => 'action-group action-group-open',
+                'roles' => ['author', 'editor', 'admin'],
+                'target' => '_blank'
+            ],
+
         );
     }
     $queryParams = array_filter([
@@ -217,6 +238,6 @@ use App\Utilities\Converters\Attributes;
         'articles' => $entity->id,
         'published' => empty($params['published']) ? null : implode(',', $params['published'])
     ]);
-    $this->Link->exportButtons($queryParams, $entity);
+    $this->Link->exportButtons($queryParams, 'epi_articles', $entity);
     $this->Link->downloadButtons();
 ?>

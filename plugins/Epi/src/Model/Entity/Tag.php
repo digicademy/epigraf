@@ -48,6 +48,7 @@ class Tag extends BaseEntity
         'field',
         'tagid',
         'tagname',
+        'caption',
         'content'
     ];
 

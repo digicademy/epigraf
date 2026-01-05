@@ -74,6 +74,7 @@
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup ('bottom');
     $this->Link->addCounter();
+    $this->Link->addActionGroupLabel(__('Context Actions'));
     $this->Link->addCreateAction(__('Create project'));
 
     $this->Link->addAction(__('Import'),['action' => 'import']);
@@ -89,7 +90,7 @@
             ['action'=>'transfer','?' => $queryparams],
             [
                 'data-list-select'=>'epi_projects',
-                'data-list-param'=>'projects', // Use id?
+                'data-list-param'=>'id',
                 'class' => 'popup',
                 'data-popup-modal' => true
             ]

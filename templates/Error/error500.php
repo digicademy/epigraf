@@ -16,6 +16,7 @@
 ?>
 <?php
 use Cake\Core\Configure;
+use Cake\Database\Exception\MissingConnectionException;
 use Cake\Error\Debugger;
 
 if (Configure::read('debug')):
@@ -55,7 +56,10 @@ endif;
     <h2>Errare machinarum est</h2>
 
     <p class="error">
-        Error <?= $code ?>.
-        <?= h($message) ?>
+        Error <?= $code ?>. <?= $message ?>
+        <?php if ($error instanceof MissingConnectionException) : ?>
+            <br>
+            <?= h($error->getMessage()) ?>
+        <?php endif; ?>
     </p>
 </div>

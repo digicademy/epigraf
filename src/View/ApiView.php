@@ -59,9 +59,16 @@ class ApiView extends SerializedView
     static public $separator = '';
 
     /**
+     * @var string Separator between blocks of serialized data.
+     */
+    static public $batchSeparator = "\n";
+
+    /**
      * @var array Data for wrapping the content .
      */
     static protected $_header = [];
+
+    protected $_index = [];
 
     /**
      * Init the header variables (resets static variables)
@@ -72,6 +79,40 @@ class ApiView extends SerializedView
     {
         parent::initialize();
         $this->resetDocument();
+    }
+
+    /**
+     * Attach an index to the view
+     *
+     * The index is used to collect data about the entities in jobs.
+     * It is loaded in saved in the job model.
+     *
+     * @param array $index
+     * @return void
+     */
+    public function attachIndex(&$index)
+    {
+        $this->_index = &$index;
+    }
+
+    /**
+     * Reset the index attached to the view
+     *
+     * @return void
+     */
+    public function resetIndex()
+    {
+        $this->_index = [];
+    }
+
+    /**
+     * Get the index attached to the view
+     *
+     * @return array|mixed
+     */
+    public function getIndex()
+    {
+        return $this->_index;
     }
 
     /**
@@ -314,6 +355,17 @@ class ApiView extends SerializedView
         }
 
         return $content;
+    }
+
+    /**
+     * Post process the file after rendering
+     *
+     * @param string $filename
+     * @return boolean Return true if post-processing was successful
+     */
+    public function postProcess($filename)
+    {
+        return true;
     }
 
 }

@@ -78,7 +78,12 @@
             <?php foreach($answer['candidates'] as $candidate): ?>
                 <div class="service-answer-candidate">
                     <div class="service-answer-candidate-header">
-                        <?= $this->Html->link($candidate['name'] . ' (' . $candidate['value'] . ')', $candidate['url'] ?? '#',['target'=>'_blank']) ?>
+                        <?php $label = empty($candidate['name']) ? $candidate['value'] : ($candidate['name'] . ' (' . $candidate['value'] . ')'); ?>
+                        <?php if (!empty($candidate['url'] )): ?>
+                            <?= $this->Html->link($label, $candidate['url'],['target'=>'_blank']) ?>
+                        <?php else: ?>
+                            <?= $label ?>
+                        <?php endif; ?>
                         <button class="service-answer-select tiny" data-value="<?= $candidate['value'] ?? $candidate['id'] ?>" data-list-itemof="service-answers"><?= __('Apply') ?></button>
                     </div>
                     <?php if (!empty($candidate['preview'])): ?>

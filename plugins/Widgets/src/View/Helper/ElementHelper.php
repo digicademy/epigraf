@@ -66,7 +66,7 @@ class ElementHelper extends Helper
     }
 
     /**
-     * Open a HTML element
+     * Open an HTML element
      *
      * @param string $tagName
      * @param array $attributes

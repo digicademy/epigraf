@@ -29,19 +29,23 @@ class TaskSave extends BaseTask
     {
 
         if ($this->job->status !== 'finish') {
-            $inputfile = $this->job->getCurrentInputFilePath();
-            $outputfile = $this->job->getCurrentOutputFilePath();
+            $inputfile = $this->getCurrentInputFilePath();
+            $outputfile = $this->getCurrentOutputFilePath();
 
             if ($inputfile != $outputfile) {
                 copy($inputfile, $outputfile);
             }
+
+            if (!empty($this->config['bom'] ?? false)) {
+                Files::addBom($outputfile);
+            }
         }
 
         // Get filename
-        $filename = $this->job->getCurrentOutputFileName();
-        $current = $this->job->getCurrentTask();
+        $filename = $this->getCurrentOutputFileName();
+        $current = $this->config;
         $current['files'] = $filename;
-        $this->job->updateCurrentTask($current);
+        $this->job->updateCurrentTaskConfig($current);
 
         // Set filename and Force download option
         $this->job->config['download'] = $filename;

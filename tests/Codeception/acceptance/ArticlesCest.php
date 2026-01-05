@@ -370,27 +370,30 @@ class ArticlesCest
 
         // Check that only one row is selected
         $I->seeNumberOfElements('.row-selected', 1);
-
-        $I->click('footer button[data-toggle=actions-widget-sandwich-items-footer-sandwich-pane]');
-        $I->wait(1);
-        $I->seeLink('JSON', '/epi/projects/articles.json?articles=1');
         $articleSignature = $I->grabTextFrom('tr.row-selected td:nth-child(2)');
         $articleTitle = $I->grabTextFrom('tr.row-selected td:nth-child(3)');
-//        $articleLocations = $I->grabTextFrom('tr.row-selected td:nth-child(4)');
 
-        // Click the link and lookup if the JSON in the new tab contains the title
+        // Do export and lookup if the JSON in the new tab contains the title
+        $I->seeLink('Export', '/epi/projects/articles/export?id=1');
+        $I->click('Export', '.page-wrapper > footer');
 
-        $I->click('JSON', '#actions-widget-sandwich-items-footer-sandwich-pane');
-//        $I->click('JSON', '.page-wrapper > footer');
+        $I->waitForElement('#form-export-jobs');
+        $I->selectOption('#form-export-jobs [name="config[pipeline_id]"]', 'Data');
+        $I->waitForElement('#form-export-jobs select[name="format"]');
+        $I->selectOption('#form-export-jobs select[name="format"]', 'JSON');
 
+        $I->click('Start');
+        $I->waitForElementNotVisible('.popup-window');
+        $I->wait(1);
+
+        // Check result
         $I->switchToNextTab();
         $I->waitForElement("#rawdata-tab");
-        $I->seeCurrentUrlMatches('~/epi/projects/articles.json\?articles=1$~');
+//        $I->seeCurrentUrlMatches('~/epi/projects/articles.json\?articles=1$~');
         $I->click("#rawdata-tab");
 
         $I->see('"signature": ' . json_encode($articleSignature));
         $I->see('"name": ' . json_encode($articleTitle));
-//        $I->see('"items_locations":' . json_encode($articleLocations));
     }
 
     /**
@@ -411,21 +414,28 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
         $I->seeNumberOfElements('.row-selected', 3);
 
-        $I->click('footer button[data-toggle=actions-widget-sandwich-items-footer-sandwich-pane]');
-        $I->wait(1);
-        $I->seeLink('JSON', '/epi/projects/articles.json?articles=1%2C3%2C4');
-
         $selectedTitles = $I->grabMultiple('tr.row-selected td:nth-child(3)');
         $unSelectedTitles = $I->grabMultiple('tr:not(.row-selected) td:nth-child(3)');
         $I->assertCount(3, $selectedTitles);
         $I->assertCount(1, $unSelectedTitles);
 
-        // Click the link and lookup if the JSON in the new tab contains the title
-//        $I->click('JSON', '.page-wrapper > footer');
-        $I->click('JSON', '#actions-widget-sandwich-items-footer-sandwich-pane');
+        // Do export and lookup if the JSON in the new tab contains the title
+        $I->seeLink('Export', '/epi/projects/articles/export?id=1%2C3%2C4');
+        $I->click('Export', '.page-wrapper > footer');
+
+        $I->waitForElement('#form-export-jobs');
+        $I->selectOption('#form-export-jobs [name="config[pipeline_id]"]', 'Data');
+        $I->waitForElement('#form-export-jobs select[name="format"]');
+        $I->selectOption('#form-export-jobs select[name="format"]', 'JSON');
+
+        $I->click('Start');
+        $I->waitForElementNotVisible('.popup-window');
+        $I->wait(5);
+
+        // Check result
         $I->switchToNextTab();
         $I->waitForElement("#rawdata-tab");
-        $I->seeCurrentUrlMatches('~/epi/projects/articles.json\?articles=1%2C3%2C4$~');
+        $I->seeCurrentUrlMatches('~/jobs/execute/46315\.json\?download=job_46315\.json&database=projects$~');
         $I->click("#rawdata-tab");
 
         foreach ($selectedTitles as $title) {
@@ -646,10 +656,13 @@ class ArticlesCest
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
-            WebDriverKeys::DELETE,
-            'Fancynewtext'
+            WebDriverKeys::DELETE
         );
         $I->wait(0.5);
+        $I->pressKey(
+            $contentSelector,
+            'Fancynewtext'
+        );
 
         // Edit the title
         $contentSelector = '.doc-content input[name="name"]';
@@ -669,6 +682,7 @@ class ArticlesCest
         $I->waitForText('The article has been saved', 20);
         $I->waitForTheAjaxResponse();
 
+        $I->waitForElement('footer');
         $I->click('Close', 'footer');
         $I->waitForElement('.controller_articles.action_view');
 
@@ -718,7 +732,11 @@ class ArticlesCest
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
-            WebDriverKeys::DELETE,
+            WebDriverKeys::DELETE
+        );
+        $I->wait(0.5);
+        $I->pressKey(
+            $contentSelector,
             'Fancynewtext'
         );
 
@@ -946,9 +964,9 @@ class ArticlesCest
 
         // Add "Verlust"-Tag
         $I->click('[data-cke-tooltip-text="Verlust [alt+D\]"]', '.content-toolbar');
-        $I->waitForElementVisible('.ui-dialog input[name="num_sign"]');
+        $I->waitForElementVisible('.ui-dialog input[name="attr-num_sign"]');
         $I->pressKey(
-            'input[name="num_sign"]',
+            'input[name="attr-num_sign"]',
             '5'
         );
         $I->click('Apply','.ui-dialog');
@@ -960,9 +978,9 @@ class ArticlesCest
 
         // Change number of signs
         $I->click('.xml_text.xml_tag_del', $contentSelector);
-        $I->waitForElementVisible('.ui-dialog input[name="num_sign"]');
+        $I->waitForElementVisible('.ui-dialog input[name="attr-num_sign"]');
         $I->pressKey(
-            'input[name="num_sign"]',
+            'input[name="attr-num_sign"]',
             '0'
         );
 
@@ -1003,6 +1021,8 @@ class ArticlesCest
         $I->useToolbutton('Bereich [alt+B]', '62');
         $I->click('#doc-section-content-147 .button-links-toggle');
         $I->see('Bereich 1', '.doc-section-links');
+        $I->click('#doc-section-content-147 .button-links-toggle');
+        $I->dontSee('Bereich 1', '.doc-section-links');
 
         // Save and compare output
         $I->click('Save' );
@@ -1019,6 +1039,9 @@ class ArticlesCest
         // Only the old error should be present, no new errors
         $I->seeNumberOfElements('.art-problems .art-problems-value', 1);
         $I->see("Missing tag rec_lit#000004473044154935185185215539 in field items-369.content.");
+
+        $I->click('#doc-section-content-147 .button-links-toggle');
+        $I->dontSee('Bereich 1', '.doc-section-links');
 
         $I->dontSeeVisualChanges('body');
     }
@@ -1072,6 +1095,9 @@ class ArticlesCest
         $I->waitForText('The article has been saved', 15);
         $I->waitForTheAjaxResponse();
 
+        $I->click('#doc-section-content-1 .button-links-toggle');
+        $I->wait(1);
+
         $I->dontSeeVisualChanges('body');
     }
 
@@ -1101,7 +1127,7 @@ class ArticlesCest
 
         $I->seeInField(
             'input[name="sections[159][items][items-int1][newproperty][name]"]',
-            'Lemma A  (Lemma-Einheit)'
+            'Lemma A (Lemma-Einheit)'
         );
 
         // Remove item
@@ -1156,7 +1182,7 @@ class ArticlesCest
         $I->see('Worttrenner 1 (Worttrenner 1 Einheit)', '.doc-section-links');
 
         // Remove word seperator from doc section
-        $I->click('.doc-section-link[data-row-type="wtr"]');
+        $I->click('.doc-section-link[data-from-tagname="wtr"]');
         // $I->click('.xml_tag_wtr', '.doc-fieldname-content .widget-xmleditor');
         $I->waitForElementVisible('.ui-dialog');
         $I->waitForTheAjaxResponse();
@@ -1165,6 +1191,13 @@ class ArticlesCest
 
         $I->dontSee('#doc-section-content-147 .button-links-toggle');
         $I->dontSee('Worttrenner 1', '.doc-section-links');
+
+        // Undo
+        $I->focusXmlInput($contentSelector);
+        $I->pressKey($contentSelector, ['ctrl','z']);
+        $I->see('Worttrenner 1', '.doc-section-links');
+        $I->click('#doc-section-content-147 .button-links-toggle');
+        $I->wait(1);
     }
 
     /**
@@ -1231,13 +1264,13 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
 
         // Link settings
-        $I->waitForElementVisible('.ui-dialog input[name="value"]');
+        $I->waitForElementVisible('.ui-dialog input[name="attr-value"]');
 
         $linkText = 'Example link';
         $linkUrl = 'https://example.org?with=param&ampersands';
 
-        $I->pressKey('.ui-dialog input[name="value"]', $linkText);
-        $I->pressKey('.ui-dialog input[name="href"]',$linkUrl);
+        $I->pressKey('.ui-dialog input[name="attr-value"]', $linkText);
+        $I->pressKey('.ui-dialog input[name="attr-href"]',$linkUrl);
 
         $I->dontSeeVisualChanges('dialog', '.ui-dialog');
 
@@ -1511,7 +1544,7 @@ class ArticlesCest
         $I->dontSee('Inschrift B', '.sidebar-left');
 
         // Let the transition finish
-        $I->wait(0.5);
+        $I->wait(1);
         $I->dontSeeVisualChanges('sections','.sidebar-left');
     }
 
@@ -1689,6 +1722,7 @@ class ArticlesCest
         $I->click('Save');
         $I->waitForText('The article has been saved', 20);
         $I->waitForTheAjaxResponse();
+        $I->waitForElementVisible('#doc-section-content-9');
 
         $I->dontSeeVisualChanges('heraldry_after', '.doc-section-content#doc-section-content-9');
 

@@ -5,35 +5,35 @@
 <head>
     <meta charset="utf-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-        Databases    </title>
+    <title>Databases</title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
     <!-- CSS frameworks -->
     <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">    
+            <link rel="stylesheet" href="/css/theme_default.css">
     <!-- JS -->
 
     <!-- JS frameworks -->
     <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>    
+            <script src="/js/app.min.js" type="module"></script>
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "";window.App.debug = false;window.App.user.load({"role":"author","scope":"web"});}</script>
     <!-- JS widgets -->
         <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
 
     <!-- Additional CSS -->
-    
+
     <!-- Additional JS -->
         </head>
 
 <body class="plugin_ controller_jobs action_execute template_default theme_default userrole_author">
+
 <div class="page-wrapper accordion">
 
             <nav class="actions-main">
@@ -41,24 +41,24 @@
             <div class="topmenu-left">
                 <div class="widget-sandwich-source widget-sandwich-items-topmenu"
                      data-sandwich-source="topmenu-left">
-                    <ul class="horizontal" ><li class="menu_database first active dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
+                    <ul class="horizontal" ><li class="menu_database first active dropdown" ><button class="widget-dropdown widget-dropdown-toggle" data-toggle="databasemenu-dropdown" >Databases &raquo;</button><div class="widget-dropdown-pane-header">Databases</div><div id="databasemenu-dropdown" class="widget-dropdown-pane dropdown-menu"><ul class="vertical" ><li class="first" ><a href="/epi/projects/articles?load=1">projects</a></li></ul></div></li><li class="menu_global" ><a href="/help">Help</a></li><li class="menu_global" ><a href="/wiki">Wiki</a></li></ul>                </div>
 
-                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
+                <nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-topmenu"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-topmenu-sandwich-pane" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Menu</div><div id="actions-widget-sandwich-items-topmenu-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="bottomright"></div></nav>            </div>
 
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-                
-                    <a href="/users/logout" class="btn-logout" title="Logout">Logout</a>                    <a href="/users/view/1" class="btn-profile" title="author"></a>                                            </div>
+
+                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/1" class="btn btn-icon" title="author"></a>                                            </div>
 
         </nav>
-    
+
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-        
-            
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>        
+
+
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
@@ -67,7 +67,7 @@
 
                                                 <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><span>Export</span></li></ul></nav>                    </div>
 
-                    
+
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -75,17 +75,17 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-                    
+
 
 
 
 <div class="content-tight widget-job" data-job-nexturl="/jobs/execute/3?timeout=-1" data-job-cancel="/jobs/cancel/3">
 
             <div class="widget-job-message"></div>
-    
+
 
             <div class="widget-job-bar"></div>
-    
+
         <table class="widget-job-results vertical-table empty">
         <tr>
             <th scope="row">Results</th>
@@ -95,7 +95,7 @@
     </table>
 
     <table class="vertical-table">
-        
+
         <tr>
             <th scope="row">Pipeline</th>
             <td>DI: Artikel</td>
@@ -110,30 +110,29 @@
                 <th scope="row">Model</th>
                 <td>articles</td>
             </tr>
-        
-        
+
+
         <tr>
-            <th scope="row">Parameters</th>
-            <td>
-                <table class="nested-table"><tbody><tr><th scope="row">articles</th><td>1</td></tr><tr><th scope="row">projects</th><td>1</td></tr></tbody></table>            </td>
+            <td colspan="2">
+                <table class="widget-table widget-tree nested-table"><thead><tr><th>Parameters</th><th></th></tr></thead><tbody data-list-name="list-cfcd208495d565ef66e7dff9f98764da" data-list-tree="collapsed"><tr data-list-itemof="list-cfcd208495d565ef66e7dff9f98764da" data-id="itemc4ca4238a0b923820dcc509a6f75849b" class="node item-collapsed"><th scope="row"><div class="tree-indent"></div><div class="tree-content">articles</div></th><td>1</td></tr><tr data-list-itemof="list-cfcd208495d565ef66e7dff9f98764da" data-id="itemc81e728d9d4c2f636f067f89cc14862c" class="node item-collapsed"><th scope="row"><div class="tree-indent"></div><div class="tree-content">sort</div></th><td>location</td></tr><tr data-list-itemof="list-cfcd208495d565ef66e7dff9f98764da" data-id="itemeccbc87e4b5ce2fe28308fd9f2a7baf3" class="node item-collapsed"><th scope="row"><div class="tree-indent"></div><div class="tree-content">projects</div></th><td>1</td></tr></tbody></table>            </td>
         </tr>
 
     </table>
 
-        
-    
+
+
 </div>
                                             <nav class="actions-content" data-snippet="actions-content">
-                            <ul class="action-menu"><li><a href="#" class="widget-job-cancel button" data-role="cancel" data-target="main">Cancel</a></li><li><a href="/jobs/execute/3?timeout=-1" class="widget-job-proceed button" data-role="proceed" data-target="main">Proceed</a></li></ul>                        </nav>
+                            <ul class="action-menu"><li><a href="#" class="widget-job-cancel button" data-role="cancel" data-target="main">Cancel</a></li><li><a href="/jobs/execute/3?timeout=-1" class="widget-job-proceed button" data-role="proceed" data-target="">Proceed</a></li></ul>                        </nav>
                                     </div>
 
                 <div class="content-footer"></div>
 
             </div>
-        
+
         <!-- Right sidebar -->
                     <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <footer><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/epiweb-jobs-execute" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-sandwich-pane" data-pane-align-to-y="footer" title="More functions" aria-label="More functions"></button><div id="actions-widget-sandwich-items-footer-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
+            <footer><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/export/pipelines?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
 </div>
 </body></html>

@@ -83,7 +83,6 @@ class IrisController extends AppController
             303);
         }
 
-
         $id = null;
 
         // When table prefixed IDs are passed as IRI
@@ -96,6 +95,12 @@ class IrisController extends AppController
         // TODO: Derive from tables / entities which have properties
         //       such as $_field_iri. Make them static.
         $tableMap = [
+            'jobs' => [
+                'plugin' => false,
+                'controller' => 'Jobs',
+                'scopeField' => 'jobtype',
+                'iriField' => 'norm_iri'
+            ],
             'types' => [
                 'controller' => 'Types',
                 'scopeField' => 'scope',
@@ -126,13 +131,32 @@ class IrisController extends AppController
 
         $controller = $tableMap[$table]['controller'] ?? null;
         $scopeField = $tableMap[$table]['scopeField'] ?? null;
+        $plugin = $tableMap[$table]['plugin'] ?? 'Epi';
 
         // Quick fix. TODO: handle renamed types / IRIs
         if (($table === 'articles') && ($type=='object')) {
             $type = 'epi-article';
         }
 
-        if (empty($id) && !empty($controller) && !empty($scopeField)) {
+        // For Job IRIS
+        if (empty($plugin) && !empty($controller) && !empty($scopeField)) {
+
+            $modelTable = $this->fetchTable($controller);
+            $item = $modelTable
+                ->find('all')
+                ->where([$scopeField => $type, 'norm_iri' => $irifragment])
+                ->first();
+
+            // Use IDs as fallback
+            if (!$item) {
+                $id = $irifragment;
+            } else {
+                $id = $item->id;
+            }
+
+            $dbDefault = false;
+        }
+        elseif (empty($id) && !empty($controller) && !empty($scopeField)) {
             $modelTable = $this->fetchTable('Epi.'. $controller);
             $item = $modelTable
                 ->find('all')
@@ -170,13 +194,13 @@ class IrisController extends AppController
             $id = $item ? $item->id : null;
         }
 
-        if (empty($controller) || empty($id) || empty($dbDefault))
+        if (empty($controller) || empty($id))
         {
             throw new NotFoundException('The IRI was not found.');
         }
 
         return $this->redirect([
-            'plugin' => 'Epi',
+            'plugin' => $plugin,
             'database' => $dbDefault,
             'controller' => $controller,
             'action' => 'view',

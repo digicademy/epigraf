@@ -7,6 +7,7 @@
     'version_id' => NULL,
     'job_id' => NULL,
     'published' => NULL,
+    'status' => NULL,
     'created' => 
     \Cake\I18n\FrozenTime::__set_state(array(
        'date' => '2008-05-05 18:51:24.000000',
@@ -57,6 +58,7 @@
     'version_id' => NULL,
     'job_id' => NULL,
     'published' => NULL,
+    'status' => NULL,
     'created' => 
     \Cake\I18n\FrozenTime::__set_state(array(
        'date' => '2008-05-05 18:51:24.000000',
@@ -107,6 +109,7 @@
     'version_id' => NULL,
     'job_id' => NULL,
     'published' => NULL,
+    'status' => NULL,
     'created' => 
     \Cake\I18n\FrozenTime::__set_state(array(
        'date' => '2008-05-05 18:51:24.000000',

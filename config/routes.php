@@ -81,11 +81,8 @@ return function (RouteBuilder $routes): void {
             ->setPatterns(['iri' => '[a-z0-9_-]+']);
 
         /* Help */
-        $builder->connect('/docs/{action}/help/*', ['controller' => 'Help']);
         $builder->connect('/help/', ['controller' => 'Help', 'action' => 'show', 'start']);
-        $builder->connect('/help/{iri}', ['controller' => 'Help', 'action' => 'show'])
-            ->setPass(['iri'])
-            ->setPatterns(['iri' => '[a-z0-9_-]+']);
+        $builder->connect('/help/**', ['controller' => 'Help', 'action' => 'show']);
 
         /* Wiki */
         $builder->connect('/docs/{action}/wiki/*', ['controller' => 'Wiki']);

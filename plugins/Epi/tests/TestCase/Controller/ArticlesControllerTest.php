@@ -151,7 +151,7 @@ class ArticlesControllerTest extends EpiTestCase
 
         $count = $this->Items
             ->find('deleted', ['deleted' => true])->where(['articles_id' => $id])->count();
-        $this->assertEquals($records['items'] + 7, $count); // Obviously, 7 deleted items existed before. Improve test data.
+        $this->assertEquals($records['items'], $count);
 
         $count = $this->Footnotes
             ->find('deleted', ['deleted' => true])->where(['root_id' => $id, 'root_tab' => 'articles'])->count();
@@ -199,7 +199,6 @@ class ArticlesControllerTest extends EpiTestCase
         $this->assertJsonResponseEqualsComparison();
     }
 
-
     /**
      * Test edit method (HTML file)
      *
@@ -211,7 +210,6 @@ class ArticlesControllerTest extends EpiTestCase
         $this->get('/epi/projects/articles/edit/1');
         $this->assertHtmlEqualsComparison();
     }
-
 
     /**
      * Test edit method
@@ -263,6 +261,30 @@ class ArticlesControllerTest extends EpiTestCase
     }
 
     /**
+     * Test index method (JSON file)
+     *
+     * @return void
+     */
+    public function testIndexJson()
+    {
+        $this->loginUser('admin');
+        $this->get('/epi/projects/articles.json?limit=3');
+        $this->assertJsonResponseEqualsComparison();
+    }
+
+    /**
+     * Test index method (JSON file with full entity data)
+     *
+     * @return void
+     */
+    public function testIndexJsonEntities()
+    {
+        $this->loginUser('admin');
+        $this->get('/epi/projects/articles.json?limit=3&columns=0');
+        $this->assertJsonResponseEqualsComparison();
+    }
+
+    /**
      * Test map template (HTML file)
      *
      * @return void
@@ -296,7 +318,25 @@ class ArticlesControllerTest extends EpiTestCase
     public function testIndexLanes()
     {
         $this->loginUser('admin');
-        $this->get('/epi/projects/articles/?properties.objecttypes.selected=32&template=lanes&lanes=objecttypes');
+//        $this->get('/epi/projects/articles/?properties.objecttypes.selected=32&template=lanes&lanes=objecttypes');
+//        $this->assertHtmlEqualsComparison();
+
+//        $this->get('/epi/projects/articles/?properties.objecttypes.selected=32&template=tiles&lanes=objecttypes');
+//        $this->assertHtmlEqualsComparison();
+
+        $this->get('/epi/projects/articles/?properties.objecttypes.selected=32&properties.objecttypes.flags=grp&template=tiles');
+        $this->assertHtmlEqualsComparison();
+    }
+
+    /**
+     * Test lanes template
+     *
+     * @return void
+     */
+    public function testIndexOneLane()
+    {
+        $this->loginUser('admin');
+        $this->get('/epi/projects/articles/?properties.objecttypes.selected=32&properties.objecttypes.flags=grp&template=tiles&lane=32');
         $this->assertHtmlEqualsComparison();
     }
 
@@ -318,14 +358,14 @@ class ArticlesControllerTest extends EpiTestCase
 
         // From a total of 4 articles, 2 are shown on the first page...
         $this->get('/epi/projects/articles/?limit=2&page=1&total=3');
-        $this->assertResponseContains('<span class="label actions-set-default">4 records</span>');
+        $this->assertResponseContains('<span class="label actions-set-default sandwich-exclude">4 records</span>');
         $this->assertResponseContains('data-list-action-next="/epi/projects/articles?limit=2&amp;total=3&amp;page=2"');
 
         $this->assertResponseEqualsComparison('.page1', '.content-main' );
 
         //...and one is shown on the second page
         $this->get('/epi/projects/articles/?limit=2&page=2&total=3');
-        $this->assertResponseContains('<span class="label actions-set-default">4 records</span>');
+        $this->assertResponseContains('<span class="label actions-set-default sandwich-exclude">4 records</span>');
         $this->assertResponseContains('data-list-action-next=""');
         $this->assertResponseEqualsComparison('.page2', '.content-main' );
 
@@ -366,7 +406,6 @@ class ArticlesControllerTest extends EpiTestCase
      */
     public function testMutateFails()
     {
-
         $userRole = 'admin';
         $this->loginUser($userRole);
 
@@ -374,7 +413,7 @@ class ArticlesControllerTest extends EpiTestCase
         $this->assertRedirect(['action'=>'mutate']);
     }
 
-        /**
+    /**
      * Test fulltext method
      *
      * @return void

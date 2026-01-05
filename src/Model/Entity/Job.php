@@ -18,6 +18,7 @@ use App\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Error\ErrorLogger;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\InternalErrorException;
 use Cake\Log\Engine\FileLog;
 use Cake\Log\Log;
@@ -31,12 +32,15 @@ use Predis\Client;
  * Job Entity
  *
  * # Database fields (without inherited fields)
- * @property string $typ
+ * @property string name A job name for persistent jobs
+ * @property string $jobtype
  * @property int $delay If this is a delayed job, a number greater than 0.
  * @property string $status
  * @property array $config
+ * @property array $result
  * @property int $progress
  * @property int $progressmax
+ * @property string $norm_iri
  *
  * # Virtual fields (without inherited fields)
  * @property mixed $typedJob
@@ -60,6 +64,7 @@ use Predis\Client;
  *
  * @property array $selectionOptions
  * @property array $dataParams
+ *
  *
  * # Relations
  * @property JobsTable $table
@@ -124,7 +129,6 @@ class Job extends BaseEntity
      */
     protected $catchWarnings = false;
 
-
     /**
      * Cache (used in JobImport to link imported rows)
      *
@@ -142,16 +146,25 @@ class Job extends BaseEntity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'name' => true,
+        'jobtype' => true,
+        'delay' => true,
+        'status' => true,
+        'config' => true,
+        'result' => true,
+        'progress' => true,
+        'progressmax' => true,
+        'norm_iri' => true
     ];
 
     /**
      * Expose virtual fields
      *
+     * TODO: Rename nexturl to nextUrl
+     *
      * @var string[]
      */
-    protected $_virtual = ['nexturl', 'redirect'];
+    protected $_virtual = ['nexturl', 'redirectUrl','downloadUrl','etc'];
 
     /**
      * Constructor
@@ -193,7 +206,7 @@ class Job extends BaseEntity
     public function toQueue() {
         $data = [
             'job_id' => $this->id,
-            'job_type' => $this->typ
+            'job_type' => $this->jobtype
         ];
 
         $queueName = Configure::read('Jobs.queue_name');
@@ -248,6 +261,15 @@ class Job extends BaseEntity
     }
 
     /**
+     * Check whether the job is finished
+     *
+     * @return bool
+     */
+    protected function _getIsFinished(): bool {
+        return !in_array($this->status, ['init', 'work']);
+    }
+
+    /**
      * Initialize classes
      *
      * @return void
@@ -297,7 +319,7 @@ class Job extends BaseEntity
     protected function _getTypedJob()
     {
         if (get_class($this) === 'App\Model\Entity\Job') {
-            $jobClass = $this->jobClasses[$this->typ ?? 'export'];
+            $jobClass = $this->jobClasses[$this->jobtype ?? 'export'];
 
             if (empty($jobClass)) {
                 throw new \Cake\Core\Exception\CakeException("Invalid job type.");
@@ -305,6 +327,8 @@ class Job extends BaseEntity
 
             if (empty($this->_typedJob)) {
                 $this->_typedJob = new $jobClass($this->toArray());
+                $this->_typedJob->setDirty('modified', false);
+                $this->_typedJob->setIndex($this->getIndex());
             }
             return $this->_typedJob;
         }
@@ -511,6 +535,47 @@ class Job extends BaseEntity
     }
 
     /**
+     * Add result data to the job
+     *
+     * @param array $data
+     * @return void
+     */
+    public function addResultData($data)
+    {
+        $this['result'] = array_merge($this['result'] ?? [], $data);
+    }
+
+    /**
+     * Check whether the job is finished
+     *
+     * @return bool
+     */
+    protected function _isFinished()
+    {
+        return $this->status === 'finish';
+    }
+
+    /**
+     * @return int|void
+     */
+    protected function _getEtc()
+    {
+        if ($this->finished) {
+            return 0;
+        }
+
+        if (empty($this->progressmax) || empty($this->progress)) {
+            return INF;
+        }
+
+        $diffSeconds = $this->modified->getTimestamp() - $this->created->getTimestamp();
+        if ($diffSeconds < 3) {
+            return INF;
+        }
+        return max(0, ($diffSeconds / $this->progressmax) * ($this->progressmax - $this->progress));
+    }
+
+    /**
      * Get the entity class name from a table name
      *
      * @param $tablename
@@ -568,7 +633,7 @@ class Job extends BaseEntity
             ]);
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -594,6 +659,10 @@ class Job extends BaseEntity
      */
     protected function _getRedirectUrl()
     {
+        if (($this->status !== 'finish') || empty($this->config['redirect'])) {
+            return null;
+        }
+
         $url = $this->config['redirect'] ?? [];
         if (!is_array($url)) {
             return $url;
@@ -610,14 +679,26 @@ class Job extends BaseEntity
      */
     protected function _getDownloadUrl()
     {
-        $params =  ['download' => $this->config['download'] ?? ''];
+        if (($this->status !== 'finish') || empty($this->config['download'])) {
+            return null;
+        }
+
+        $fileName = $this->config['download'];
+
+        // We can't just add the extension because unknown extensions behind an ID will
+        // not be recognized by the controller (e.g. jobs/execute/1234.doc will not work).
+        $fileExt = $this->config['format'] ?? ''; //pathinfo($fileName, PATHINFO_EXTENSION);
+
+        $params =  ['download' => $fileName];
         if (!empty($this->config['force'])) {
             $params['force'] = '1';
         }
+
         return Router::url([
             'controller' => 'Jobs',
             'action' => 'execute',
             $this->id,
+            '_ext' => $fileExt,
             '?' => $params
         ]);
     }
@@ -625,11 +706,9 @@ class Job extends BaseEntity
     /**
      * Get response URL depending on the status
      *
-     * //TODO: rename to _getResponseUrl / response_url
-     *
      * @return null|string
      */
-    protected function _getRedirect()
+    protected function _getResponseUrl()
     {
         if ($this->status === 'finish') {
             if (!empty($this->config['download'])) {
@@ -667,7 +746,7 @@ class Job extends BaseEntity
      *
      * @return void
      */
-    protected function _clearIndex()
+    protected function initIndex()
     {
         Cache::delete($this->index_key, 'index');
         $this->_index = [];
@@ -689,7 +768,20 @@ class Job extends BaseEntity
     }
 
     /**
-     * Get current task
+     * Attach index by reference, when factoring typed jobs
+     *
+     * * //TODO: implement Index class
+     *
+     * @return array
+     */
+    public function setIndex(&$index)
+    {
+        $this->_index = &$index;
+        return $this->_index;
+    }
+
+    /**
+     * Get current task config
      *
      * Returns the last element if the pipeline is finished.
      *
@@ -698,7 +790,7 @@ class Job extends BaseEntity
      *                   or the finish task (false)
      * @return mixed|string[]
      */
-    public function getCurrentTask($last = false)
+    public function getCurrentTaskConfig($last = false)
     {
         if (!isset($this->config['pipeline_progress'])) {
             return ['type' => 'init'];
@@ -724,7 +816,7 @@ class Job extends BaseEntity
      * @param array $current Task array
      * @return void
      */
-    public function updateCurrentTask($current)
+    public function updateCurrentTaskConfig($current)
     {
         $config = $this->config;
         $config['pipeline_tasks'][$config['pipeline_progress']] = $current;
@@ -744,17 +836,14 @@ class Job extends BaseEntity
     }
 
     /**
-     * Prepare output path
+     * Create a job folder and prune old job folders
      *
      * @return void
      */
     public function _prepareOutputPath()
     {
-        // Create output folder
-        $path = $this->jobPath;
-
         Files::pruneFiles(Configure::read('Data.databases') . Databank::addPrefix($this->config['database']) . DS . 'jobs');
-        Files::createFolder($path, true);
+        Files::createFolder($this->jobPath, true);
     }
 
     /**
@@ -798,19 +887,6 @@ class Job extends BaseEntity
     }
 
     /**
-     * Get current input file (XML)
-     *
-     * @return string
-     */
-    public function getCurrentInputFilePath()
-    {
-        $current = $this->getCurrentTask();
-        $filename = empty($current['inputfile']) ? 'job_' . $this->id . '.xml' : $current['inputfile'];
-
-        return $this->jobPath . $filename;
-    }
-
-    /**
      * Get list of previous output files
      *
      * TODO: bundle files in a subfolder or specific files, not all tasks' files
@@ -834,31 +910,16 @@ class Job extends BaseEntity
     }
 
     /**
-     * Get the current output file name
-     *
-     * @return string
-     */
-    public function getCurrentOutputFileName()
-    {
-        $current = $this->getCurrentTask(true);
-        $filename =  $current['outputfile'] ?? '';
-        if (empty($filename)) {
-            $ext = empty($current['extension']) ? 'xml' : trim($current['extension'], " \n\r\t\v\x00/.");
-            $filename = 'job_' . $this->id . '.' . $ext;
-        }
-        return $filename;
-    }
-
-    /**
      * Get the path of the current output file
      *
      * @param string|null $filename If the job results in multiple output files, set the filename
      * @return string
      */
-    public function getCurrentOutputFilePath($filename = null)
+    public function getJobOutputFilePath($filename = null)
     {
-        $current = $this->getCurrentTask(true);
+        $current = $this->getCurrentTaskConfig(true);
 
+        // Check if file name is valid
         if (!empty($filename) ) {
             $downloads = str_replace("\r\n", "\n", $current['files'] ?? '');
             $downloads = explode("\n", $downloads);
@@ -868,16 +929,34 @@ class Job extends BaseEntity
         }
 
         else {
-            $filename = $this->getCurrentOutputFileName();
-            $current['outputfile'] = $filename;
-            $this->updateCurrentTask($current);
+            $task = $this->_getTypedTask($current);
+            $filename = $task->getCurrentOutputFilePath();
         }
 
         if (empty($filename)) {
             throw new RecordNotFoundException(__('The file {0} is not available for download.', $filename));
         }
 
-        return $this->jobPath . $filename;
+        if (strpos($filename, '/') !== false && strpos($filename, '\\') !== false) {
+            throw new BadRequestException(__('The file name {0} contains invalid characters.', $filename));
+        }
+
+        // Make absolute path
+        $root = $current['root'] ?? null;
+        if ($root === 'database') {
+            $rootPath = $this->databasePath;
+        }
+        elseif ($root === 'shared') {
+            $rootPath = $this->sharedPath;
+        }
+        else {
+            $rootPath = $this->jobPath;
+        }
+
+        $target = $current['target'] ?? '';
+        $targetPath = Files::addSlash((Files::addSlash($rootPath) . $target)) . $filename;
+
+        return $targetPath;
     }
 
     /**
@@ -904,7 +983,14 @@ class Job extends BaseEntity
     }
 
     /**
-     * Setup the tasks from the selected pipeline
+     * Setup the tasks
+     *
+     * By default, jobs contain one task defined in the task options.
+     *
+     * In case a pipeline_id option is provided, the tasks are taken from the respective pipeline.
+     * In case a pipeline_tasks option is provided, those tasks are used.
+     *
+     * Don't mix the task option, pipeline_id option and pipeline_tasks option.
      *
      * @return void
      */
@@ -912,9 +998,46 @@ class Job extends BaseEntity
     {
         $options = $this->config;
 
-        $options['pipeline_name'] = $this->jobName;
-        $options['pipeline_tasks'] = [['number' => 1, 'type' => $options['task'] ?? '']];
+        $options['pipeline_name'] = $this->jobName ?? '';
         $options['pipeline_progress'] = 0;
+
+        // Add default task
+        if (isset($options['task'])) {
+            $options['pipeline_tasks'] = [];
+            $options['pipeline_tasks'][] = ['number' => 1, 'type' => $options['task'] ?? ''];
+        }
+
+        // Add pipeline tasks and name
+        else if (!empty($options['pipeline_id'])) {
+
+            //TableRegistry::getTableLocator()->clear();
+            $pipelines = $this->fetchTable('Pipelines');
+
+            /** @var Pipeline $pipeline */
+            $pipeline = $pipelines->get($options['pipeline_id']);
+
+            $options['pipeline_name'] = $pipeline['name'] ?? $options['pipeline_name'];
+
+            $options['pipeline_tasks'] = [];
+            foreach (($pipeline['tasks'] ?? []) as $taskNo => $taskConfig) {
+
+                // Skip disabled tasks
+                if (!empty($taskConfig['canskip']) && empty($this->config['options']['enabled'][$taskNo]['enabled'])) {
+                    continue;
+                }
+
+                // Set input file name
+                if (($taskNo === 0) && !empty($this->config['inputpath'])) {
+                    $taskConfig['inputpath'] = $this->config['inputpath'];
+                }
+
+                $options['pipeline_tasks'][] = $taskConfig;
+            }
+        }
+
+        else {
+            $options['pipeline_tasks'] = $options['pipeline_tasks'] ?? [];
+        }
 
         $this->config = $options;
     }
@@ -935,18 +1058,30 @@ class Job extends BaseEntity
     }
 
     /**
-     * Return a job preview (or the job itself).
+     * Preview the first task or the job itself
      *
-     * @param $options
+     * @param array $options
      *
-     * @return Job
+     * @return array|Job
      */
-    public function preview($options)
+    public function preview($options = [])
     {
-        $typedJob = $this->typedJob;
-        $preview = method_exists($typedJob, 'task_preview') ? $typedJob->task_preview($options) : $this;
-        $this->_taskErrors = $typedJob->_taskErrors;
-        return $preview;
+        // Get the preview from the last task
+        // Intermediate preview data is passed to the next task as options
+        $previewData = $options;
+        $this->initPipeline();
+        foreach (($this->config['pipeline_tasks'] ?? []) as $taskConfig) {
+            try {
+                /** @var BaseTask $task */
+                $task = $this->_getTypedTask($taskConfig);
+                $task->config = array_merge($task->config, $previewData);
+                $previewData = $task->preview($task->config);
+            } // Fallback
+            catch (InvalidTaskException $e) {
+                return $this;
+            }
+        }
+        return $previewData;
     }
 
     /**
@@ -972,8 +1107,21 @@ class Job extends BaseEntity
     {
         $this->initPipeline();
         $this->initProgress();
+        $this->initIndex();
 
         return true;
+    }
+
+    /**
+     * Reset a job, for running it another time
+     *
+     * @return void
+     */
+    public function reset()
+    {
+        $this->status = 'init';
+        unset($this->config['pipeline_progress']);
+        Files::removeFolder($this->jobPath, true);
     }
 
     /**
@@ -1012,8 +1160,7 @@ class Job extends BaseEntity
         ) {
 
             $round += 1;
-            $current = $this->getCurrentTask();
-            $errors = '';
+            $current = $this->getCurrentTaskConfig();
 
             try {
 
@@ -1059,11 +1206,10 @@ class Job extends BaseEntity
                         'type' => $current['type'] ?? '',
                         'error' => h($e->getMessage())
                     ]);
+
+                $this->addResultData(['error' => $this->error]);
                 $this->status = 'error';
 
-                if (!empty($errors)) {
-                    Log::write('error', $errors, ['scope' => 'jobs']);
-                }
                 Log::write('error', $this->error, ['scope' => 'jobs']);
                 //stackTrace();
             }
@@ -1092,156 +1238,6 @@ class Job extends BaseEntity
     }
 
     /**
-     * Parse query parameters to options field
-     *
-     * TODO: move to JobExport class
-     *
-     * @param $queryparams
-     * @return Job
-     */
-    public function patchExportOptions($queryparams = [])
-    {
-        $config = [];
-
-        // Pipeline
-        $config['pipeline_id'] = $queryparams['pipeline'] ?? null;
-
-        // Database
-        $config['database'] = $queryparams['database'] ?? null;
-
-        // Server
-        $config['server'] = Router::url('/', true);
-
-        // Search conditions
-        $config['model'] = 'articles';
-        $config['table'] = 'articles';
-
-        $params = $queryparams;
-        unset($params['database']);
-        unset($params['pipeline']);
-        unset($params['columns']);
-        unset($params['template']);
-        unset($params['save']);
-        if (empty($params['term'])) {
-            unset($params['field']);
-        }
-
-        // Rename project to projects
-        // @deprecated Used for export from epidesktop. Change in EpiDesktop and then remove.
-        if (isset($params['project'])) {
-            $params['projects'] = $params['project'];
-            unset($params['project']);
-        }
-
-        $params = array_filter($params);
-        $config['params'] = $params;
-
-        // Selection
-        $config['selection'] = $queryparams['selection'] ?? 'selected';
-        $this['selection'] = $config['selection'];
-
-        // Update field
-        $this->config = $config;
-        return $this;
-    }
-
-    /**
-     * Transfer options from the pipeline and from post request data to the job
-     *
-     * // TODO: move to JobExport class
-     *
-     * @param $pipeline
-     * @param $requestData
-     *
-     * @return $this
-     */
-    public function patchOptions($pipeline = null, $requestData = [])
-    {
-
-        // Get options of the job
-        // TODO: rename "tasks" to "options" and "options" to "custom"
-        $options_job = $this->config['tasks'] ?? [];
-
-        //
-        // 1. Enable / disable tasks
-        //
-        $options_job['enabled'] = [];
-        foreach ($pipeline['tasks'] as $taskNo => $taskConfig) {
-            if (!empty($taskConfig['canskip'])) {
-                $options_job['enabled'][$taskNo]['caption'] = $taskConfig['caption'] ?? $taskNo;
-                $options_job['enabled'][$taskNo]['enabled'] = intval($requestData['config']['tasks']['enabled'][$taskNo]['enabled'] ?? true);
-            }
-
-            if (($taskConfig['type'] ?? '') === 'data_index') {
-                $options_job['index'] = $options_job['enabled'][$taskNo]['enabled'] ?? 1;
-            }
-        }
-
-        //$options_job['data'] = array_map('intval', $options_job['data']);
-
-        //
-        // 2. Merge options of the pipeline
-        //
-
-        // Get options of the option task (expected in the first task)
-        if (($pipeline['tasks'][0]['type'] ?? '') === 'options') {
-            $options_job['options'] = $pipeline['tasks'][0]['options'] ?? [];
-        }
-        else {
-            $options_job['options'] = [];
-        }
-
-        // Merge options of the post request values
-        $selectedCheckboxes = array_keys(array_filter($requestData['config']['tasks']['check'] ?? [],
-            fn($x) => !empty($x)));
-        $selectedRadios = array_values($requestData['config']['tasks']['radio'] ?? []);
-        $selected = array_merge($selectedCheckboxes, $selectedRadios);
-        $selected = array_map(fn($value) => (string)$value, $selected);
-
-        foreach ($options_job['options'] as $key => $option) {
-            // @deprecated, legacy code that maps the radio option to the type option
-            if (($option['radio'] ?? '') === '1') {
-                $option['type'] = 'radio';
-            }
-            elseif (($option['radio'] ?? '') === '0') {
-                $option['type'] = 'check';
-            }
-            elseif (empty($option['type'])) {
-                $option['type'] = 'check';
-            }
-
-            if (($option['type'] ?? '') === 'check') {
-                $option['output'] = intval($option['output']);
-                if (!empty($requestData['config']['tasks']['check'])) {
-                    $option['output'] = in_array((string)$option['number'], $selected) ? 1 : 0;
-                }
-            }
-            elseif (($option['type'] ?? '') === 'radio') {
-                $option['output'] = intval($option['output']);
-                if (!empty($requestData['config']['tasks']['radio'])) {
-                    $option['output'] = in_array((string)$option['number'], $selected) ? 1 : 0;
-                }
-            }
-            elseif (($option['type'] ?? '') === 'text') {
-                $option['output'] = $option['value'] ?? '';
-                if (!empty($requestData['config']['tasks']['text'])) {
-                    $option['output'] = $requestData['config']['tasks']['text'][$option['number']];
-                }
-            }
-            $options_job['options'][$key] = $option;
-        }
-
-        //
-        // 3. Transfer to job config
-        //
-        $this->config['tasks'] = $options_job;
-        $this->config['pipeline_name'] = $pipeline->name;
-//        $this->config['pipeline_progress'] = 0;
-
-        return $this;
-    }
-
-    /**
      * Get the selection options for the job configuration form
      *
      * TODO: implement common base class for JobExport and JobMutate, move function there?
@@ -1265,7 +1261,7 @@ class Job extends BaseEntity
         }
 
         $filteredParams = $this->_getDataParams('filtered');
-        if (!empty(array_diff($selectedParams, $filteredParams))) {
+        if (!empty(array_diff($selectedParams, $filteredParams)) ||empty($filteredParams)) {
             $countAll = $model->mutateGetCount($filteredParams, $this);
             $options['filtered'] = __('All records ({0})', $countAll);
         }
@@ -1286,7 +1282,7 @@ class Job extends BaseEntity
         $params = $this->config['params'] ?? [];
         $selection = $selection ?? $this['config']['selection'] ?? '';
         $table = $this->config['table'] ?? '';
-        $ids = $params[$table] ?? '';
+        $ids = $params['id'] ?? '';
 
         // Remove non data params and empty values
         $params = array_diff_key(
@@ -1294,16 +1290,20 @@ class Job extends BaseEntity
             [
                 'task' => false,
                 'selection' => false,
-//                'sort' => false,
                 'sortby' => false,
                 'columns' => false,
                 'template' => false,
                 'mode' => false,
                 'save' => false,
                 'load' => false,
-                $table => false
+                'id' => false,
+                'seek' => false
             ]
         );
+
+        if (empty($this->config['expand'] ?? true)) {
+            $params['columns'] = $this->config['params']['columns'] ?? '';
+        }
 
         $params = array_filter($params, fn($param) => $param !== '');
 
@@ -1320,18 +1320,39 @@ class Job extends BaseEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
         $fields = [
-            'typ' => ['caption' => __('Job type')],
+            'name' => ['caption' => __('Job name')],
+            'jobtype' => ['caption' => __('Job type')],
+            'iri_path' => ['caption' => __('IRI path'), 'action' => 'view'],
+            'norm_iri' => ['caption' => __('IRI fragment'), 'action' => 'edit'],
             'status' => ['caption' => __('Status')],
             'delay' => ['caption' => __('Delayed')],
-            'queueStatus' => ['caption' => __('Queue status')],
-            'progressLabel' => ['caption' => __('Progress')],
+            'queueStatus' => ['caption' => __('Queue status'), 'action' => 'view'],
+            'progressLabel' => ['caption' => __('Progress'), 'action' => 'view'],
+            'progress' => ['caption' => __('Progress'), 'action' => 'edit'],
+            'progressmax' => ['caption' => __('Max progress'), 'action' => 'edit'],
+            'config' => [
+                'caption' => __('Config'),
+                'rows' => 15,
+                'format' => 'json',
+                'type' => 'jsoneditor',
+                'action' => 'edit'
+            ],
+            'result' => [
+                'caption' => __('Result'),
+                'rows' => 15,
+                'format' => 'json',
+                'type' => 'jsoneditor',
+                'action' => 'edit'
+            ],
             'created' => [
                 'caption' => __('Created'),
                 'action' => 'view'
@@ -1340,7 +1361,8 @@ class Job extends BaseEntity
             'modified' => [
                 'caption' => __('Modified'),
                 'action' => 'view'
-            ]
+            ],
+            'etc' => ['caption' => __('ETC'), 'action' => 'view']
         ];
 
         return $fields;

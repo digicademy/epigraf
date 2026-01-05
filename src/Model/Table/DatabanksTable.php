@@ -11,11 +11,10 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\Databank;
-use App\Utilities\Converters\Arrays;
-use App\Utilities\Converters\Attributes;
 use Cake\Core\Plugin;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use Cake\Datasource\ConnectionManager;
 
@@ -27,6 +26,24 @@ use Cake\Datasource\ConnectionManager;
  */
 class DatabanksTable extends BaseTable
 {
+
+    /**
+     * Request parameter config
+     *
+     * @var string[]
+     */
+    public $parameters = [
+        'id' => 'list',
+        'columns' => 'list-or-false',
+        'name' => 'string',
+        'term' => 'string',
+        'selected' => 'list',
+        'idents' => 'string',
+        'category' => 'list',
+        'load' => 'list',
+        'save' => 'list'
+    ];
+
 
     /**
      * Save last database for activate/deactivateDatabase method
@@ -90,6 +107,19 @@ class DatabanksTable extends BaseTable
     }
 
     /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['name'], 'This database name is already in use.'));
+        return $rules;
+    }
+
+    /**
      * Get database connections
      *
      * @return array
@@ -137,6 +167,21 @@ class DatabanksTable extends BaseTable
         return $presets;
     }
 
+
+    /**
+     * Contain view data
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findContainAll(Query $query, array $options): Query
+    {
+        $contain =  ['Users', 'Permissions', 'Permissions.Users'];
+        $query = $query->contain($contain);
+        return $query;
+    }
+
     /**
      * Get permissions of a user
      *
@@ -171,7 +216,11 @@ class DatabanksTable extends BaseTable
                         ],
                         [
                             'Permissions.user_id IS' => null,
-                            'Permissions.user_role' => $user['role'] ?? 'guest'
+                            'Permissions.user_role' => $user['role'] ?? '*'
+                        ],
+                        [
+                            'Permissions.user_id IS' => null,
+                            'Permissions.user_role' => 'guest'
                         ]
                     ]
                 ];
@@ -235,27 +284,6 @@ class DatabanksTable extends BaseTable
         return $this->activateDatabase($this->previousdatabase);
     }
 
-
-    /**
-     * Extract search parameters from request parameters
-     *
-     * @param array $requestParameters
-     * @param string $requestPath
-     * @param string $requestAction
-     * @return array
-     */
-    public function parseRequestParameters(array $requestParameters = [], $requestPath = '', $requestAction = ''): array
-    {
-        $params = ['action' => $requestAction];
-
-        $params['id'] = $requestParameters['id'] ?? null;
-
-        //@deprecated: Remove fields parameter
-        $params['columns'] = Attributes::commaListToStringArray($requestParameters['columns'] ?? $requestParameters['fields'] ?? '');
-
-        return Arrays::array_remove_empty($params);
-    }
-
     /**
      * Get pagination parameters
      *
@@ -277,14 +305,21 @@ class DatabanksTable extends BaseTable
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
+
+        $categoryOptions = $this->find('list', ['keyField' => 'category', 'valueField' => 'category'])
+            ->where(['category IS NOT' => null]);
 
         $default = [
             'name' => [
@@ -294,13 +329,16 @@ class DatabanksTable extends BaseTable
                 'default' => true,
                 'name' => 'name',
                 'key' => 'caption',
-                'selected' => true
+                'selected' => true,
+                'filter' => 'text'
             ],
             'category' => [
                 'caption' => __('Category'),
                 'width' => 150,
                 'default' => true,
-                'selected' => true
+                'selected' => true,
+                'options' => $categoryOptions,
+                'filter' => 'select'
             ],
             'projects' => [
                 'caption' => __('Projects'),
@@ -459,32 +497,7 @@ class DatabanksTable extends BaseTable
             ],
         ];
 
-        return parent::getColumns($selected, $default, $type);
-    }
-
-    /**
-     * Constructs a database query from request parameters
-     *
-     * @param \Cake\ORM\Query $query
-     * @param array $params Request parameters
-     * @return \Cake\Database\Query
-     */
-    public function findHasParams(Query $query, array $params): Query
-    {
-
-        $default = [
-            'id' => false
-        ];
-
-        $params = array_merge($default, $params);
-
-        // ID
-        $id = $params['id'] ?? false;
-        if ($id) {
-            $query = $query->where(['Databanks.id' => $id]);
-        }
-
-        return $query;
+        return parent::getColumns($selected, $default, $options);
     }
 
 }

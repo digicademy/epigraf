@@ -11,9 +11,8 @@
 namespace App\Model\Entity;
 
 use App\Model\Table\DocsTable;
+use App\Utilities\Converters\Strings;
 use App\Utilities\Files\Files;
-use App\Utilities\XmlParser\HtmlHeader;
-use Epi\Model\Behavior\PositionBehavior;
 use Exception;
 use Masterminds\HTML5;
 use Masterminds\HTML5\Parser\Scanner;
@@ -133,43 +132,8 @@ class Doc extends BaseEntity implements LockInterface
      */
     protected function _getToc()
     {
-
-        if (!is_null($this->_toc)) {
-            return $this->_toc;
-        }
-
-        try {
-            $events = new HtmlHeader(false);
-            $scanner = new Scanner($this->html, !empty($options['encoding']) ? $options['encoding'] : 'UTF-8');
-            $parser = new Tokenizer(
-                $scanner,
-                $events,
-                !empty($options['xmlNamespaces']) ? Tokenizer::CONFORMANT_XML : Tokenizer::CONFORMANT_HTML
-            );
-
-            $parser->parse();
-
-            $html5 = new HTML5();
-            $this->format = 'html';
-            $value = $html5->saveHTML($events->document());
-            $value = preg_replace('/^<!DOCTYPE html>\n/', '', $value);
-            $value = preg_replace('/^<html>/', '', $value);
-            $value = preg_replace('/<\/html>$/', '', $value);
-            $this->content = $value;
-
-            $this->_toc = $events->toc;
-
-            // Add tree structure
-            if (!empty($this->_toc)) {
-                $this->_toc = PositionBehavior::addTreePositions($this->_toc);
-            }
-
-
-        } catch (Exception $e) {
-            $this->_toc = [];
-        }
-
-        return $this->_toc;
+        $this->prepareHtml();
+        return $this->_toc ?? [];
     }
 
     /**
@@ -179,14 +143,16 @@ class Doc extends BaseEntity implements LockInterface
      */
     protected function _getHtml()
     {
-        $this->transformToHtml();
+        $this->prepareHtml();
         return $this->content;
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -249,17 +215,23 @@ class Doc extends BaseEntity implements LockInterface
 
 
     /**
-     * Transform markdown doc to HTML format
+     * Transform markdown doc to HTML format, add ids to headers
      * //TODO: make protected, call in afterFind instead of the Controllers
      *
      * @return string
      */
-    public function transformToHtml()
+    public function prepareHtml()
     {
         if ($this->format == 'markdown') {
             $parser = new \Michelf\MarkdownExtra;
             $this->content = $parser->transform($this->content);
             $this->format = 'html';
+        } else {
+            if (is_null($this->_toc)) {
+                $toc = Strings::getToc($this->content);
+                $this->_toc = $toc['toc'];
+                $this->content = $toc['html'];
+            }
         }
         return $this;
     }

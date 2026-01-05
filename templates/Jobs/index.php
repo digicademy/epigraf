@@ -20,7 +20,9 @@
 <?php $this->Breadcrumbs->add(__('Jobs')); ?>
 
 <!-- Search bar -->
+<div class="content-searchbar">
     <?= $this->Table->filterBar('jobs') ?>
+</div>
 
 <!-- Content area -->
 <div class="content-main widget-scrollbox">

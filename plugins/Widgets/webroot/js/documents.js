@@ -21,7 +21,7 @@ import {
     LinksModel,
     FilesModel,
     PropertiesModel,
-    AttributesModel,
+    TagsModel,
     TypesModel
 } from '/epi/js/models.js';
 
@@ -147,7 +147,7 @@ export class DocumentWidget extends BaseDocumentPart {
      *         annotations: AnnotationsModel,
      *         links: LinksModel,
      *         footnotes: FootnotesSatellite,
-     *         attributes: AttributesModel
+     *         tags: TagsModel
      *       }}
      * @public
      */
@@ -209,7 +209,7 @@ export class DocumentWidget extends BaseDocumentPart {
         // TODO: implement links, footnotes and attributes as submodels of the AnnotationsModel
         this.models.links = new LinksModel(this);
         this.models.footnotes = new FootnotesModel(this);
-        this.models.attributes = new AttributesModel(this);
+        this.models.tags = new TagsModel(this);
 
         // Listen input updates
         this.listenBindings();
@@ -369,7 +369,7 @@ export class DocumentWidget extends BaseDocumentPart {
         const sectionElement = event.target.closest('.doc-section');
         if (sectionElement && (event.type === 'focusout')) {
             sectionElement.dataset.dirty = 'true';
-            Utils.emitEvent(sectionElement,'epi:save:form');
+            // Utils.emitEvent(sectionElement,'epi:save:form');
         }
 
         if (sectionElement && (event.type === 'focusin')) {
@@ -547,10 +547,10 @@ export class DocumentWidget extends BaseDocumentPart {
                 }
                 else if (step === 'sortkey') {
                     value = value.toLowerCase().trim();
-                    value = Utils.replaceUmlauts(value);
-                    value = Utils.removeSpecialCharacters(value);
-                    value = Utils.collapseWhitespace(value);
                     value = Utils.prefixNumbersWithZero(value, stepConfig?.width ?? 5);
+                    //value = Utils.replaceUmlauts(value);
+                    //value = Utils.removeSpecialCharacters(value);
+                    value = Utils.collapseWhitespace(value);
                 }
                 else if (step === 'irifragment') {
                     value = value.toLowerCase().trim();
@@ -1005,6 +1005,213 @@ export class ItemWidget extends BaseDocument {
     }
 }
 
+
+/**
+ * JavaScript based annotation filter
+ *
+ * Usage:
+ *
+ * - Create a pane with class widget-anno-selector.
+ * - Add attribute data-target with the ID of an element that contains the target annotations.
+ */
+export class AnnoSelectorWidget extends BaseDocument {
+    constructor(element, name, parent) {
+        super(element, name, parent);
+
+        // Init vars
+        this.widgetElement = element;
+        this.target = document.getElementById(this.widgetElement.dataset.target);
+        this.listenEvent(this.widgetElement, 'click', event => this.clickLabel(event));
+        this.pane = null;
+
+        // Make sure the pane closes when the container is toggled
+        const container = this.getSection();
+        if (container) {
+            this.listenEvent(container, 'epi:toggle:switch', (event) => this.containerToggled(event));
+        }
+    }
+
+    initWidget() {
+        if (this.pane) {
+            return;
+        }
+        const doc = this.getDocumentWidget();
+        if (doc) {
+            doc.models.types.loadAnnoConfig().then(
+                (typeGroups) => {
+                    // Get annotation settings
+                    const checkboxStates = this.getSetting('annos', {});
+                    const values = Object.values(checkboxStates);
+                    const all = values.length === 0 || values.every(state => Utils.isTrue(state));
+
+                    // Construct the pane
+                    this.pane = this.buildPane(typeGroups, all ? true : checkboxStates, this.widgetElement.id);
+                    this.widgetElement.appendChild(this.pane);
+
+                    // Enable/disable from settings
+                    this.updateAnnos(checkboxStates, all);
+                    this.updateButton(!all);
+                }
+            );
+        }
+    }
+
+    /**
+     * Build the pane with checkboxes for each type group.
+     *
+     * @param {Object} typeGroups
+     * @param {Object|boolean} checkboxStates Either an object with checkbox states or a boolean indicating if all checkboxes should be checked.
+     * @param {string} paneId
+     * @return {HTMLUListElement}
+     */
+    buildPane(typeGroups, checkboxStates, paneId) {
+        const ul = document.createElement('ul');
+
+        for (const group in typeGroups) {
+            if (!group) continue;
+            const groupConfig = typeGroups[group];
+
+            // List item for each group
+            const li = document.createElement('li');
+            const checked = (checkboxStates === true) || Utils.isTrue(checkboxStates[group], false);
+
+            // Icon span
+            const span = document.createElement('span');
+            span.className = `anno-selector-group anno-selector-group-${Utils.cleanId(group)}`;
+
+            // Checkbox
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.name = group;
+            input.value = '1';
+            input.id = `${paneId}_${Utils.cleanId(group)}`;
+            if (checked) input.checked = true;
+
+            // Label
+            const label = document.createElement('label');
+            label.setAttribute('for', input.id);
+
+            // Add to label: input, span, text
+            label.appendChild(input);
+            label.appendChild(span);
+
+            // Caption text (groupConfig.caption or fallback to group name)
+            const caption = groupConfig.caption || group;
+            label.appendChild(document.createTextNode(caption));
+
+            // Nest elements
+            li.appendChild(label);
+            ul.appendChild(li);
+        }
+
+        return ul;
+    }
+
+    getSection() {
+        const dropDownToggle = document.querySelector('[data-toggle="' + this.widgetElement.id + '"]');
+        if (dropDownToggle) {
+            return dropDownToggle.closest('.doc-section, .doc-section-note');
+        }
+    }
+
+    containerToggled(event) {
+        if (!event) {
+            return;
+        }
+
+        const dropDownToggle = document.querySelector('[data-toggle="' + this.widgetElement.id + '"]');
+        if (!dropDownToggle) {
+            return;
+        }
+
+        const sectionIsHidden = dropDownToggle.closest('.doc-section-content.toggle-hide, .doc-section-links-hidden');
+        if (!sectionIsHidden) {
+            return;
+        }
+
+        const dropdownWidget = this.getWidget(dropDownToggle, 'dropdown', false);
+        if (dropdownWidget) {
+            dropdownWidget.closeDropdown(event);
+        }
+    }
+
+    /**
+     * Called after click on label.
+     *
+     * @param event Click
+     */
+    clickLabel(event) {
+        if (!event.currentTarget.classList.contains('active')) {
+            return;
+        }
+
+        if (!event.target.closest('li')) {
+            return;
+        }
+
+        this.switchGroups();
+    }
+
+    /**
+     * Read checkbox states, set display states in this.target accordingly
+     */
+    switchGroups() {
+        const [checkboxStates, all] = Utils.evalCheckboxes(this.widgetElement);
+        this.setSetting('annos', checkboxStates);
+        this.updateAnnos(checkboxStates, all);
+        this.updateButton(!all);
+    }
+
+    /**
+     * Set or remove unadorned classes in the closest section based on checkbox states.
+     *
+     * @param {Object} checkboxStates Object with checkbox names as keys and their checked state as values.
+     * @param {boolean} removeAll If true, removes all unadorned classes.
+     */
+    async updateAnnos(checkboxStates, removeAll) {
+        const section = this.target.closest('.doc-section');
+        if (!section) {
+            return;
+        }
+
+        // Toggle classes based on checkbox states
+        for (const [group, state] of Object.entries(checkboxStates)) {
+            section.classList.toggle(
+                'xml_group_' + group +  '_unadorned',
+                ! (Utils.isTrue(state) || removeAll)
+            )
+        }
+
+        // Rearrange annotations
+        const doc = this.getDocumentWidget();
+        if (doc) {
+            doc.models.annotations.updatePositions(this.target);
+        }
+    }
+
+    /**
+     * Add or remove the 'used' class to the dropdown button
+     *
+     * @param {boolean} used If true, the 'used' class is set, otherwise it is removed
+     */
+    updateButton(used) {
+        if (!this.widgetElement.classList.contains('widget-dropdown-pane')) {
+            return;
+        }
+        const selector = '[data-toggle=' + this.widgetElement.id + ']';
+        let button = document.querySelector(selector);
+        if (!button) {
+            return;
+        }
+
+        if (used) {
+            button.classList.add('used');
+        } else {
+            button.classList.remove('used');
+        }
+    }
+}
+
 export class FieldGroupWidget extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
@@ -1168,4 +1375,4 @@ window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['document'] = DocumentWidget;
 window.App.widgetClasses['entity'] = EntityWidget;
 window.App.widgetClasses['fieldgroup'] = FieldGroupWidget;
-
+window.App.widgetClasses['anno-selector'] = AnnoSelectorWidget;

@@ -16,7 +16,7 @@
 //   window.App.widgetClasses = window.App.widgetClasses || {};
 //   window.App.widgetClasses['table'] = TableWidget;
 
-import {DocumentWidget} from './documents.js';
+import {DocumentWidget, AnnoSelectorWidget} from './documents.js';
 import {DropdownWidget, DropdownSelectorWidget} from './dropdowns.js';
 import {FilterWidget} from './filter.js';
 import {TableWidget, DragItemsWidget} from './tables.js';
@@ -34,6 +34,7 @@ import {UploadWidget} from './uploads.js';
 import {SandwichButton, ChooseButtons, SwitchButtons, ToggleButtons} from './buttons.js';
 import {JobWidget} from './jobs.js';
 import {ServiceButtonWidget, ServiceWidget, ReconcileButtonWidget} from './services.js';
+import {PlotWidget} from './plots.js';
 
 import './dropzone/dropzone.js';
 Dropzone.autoDiscover = false;

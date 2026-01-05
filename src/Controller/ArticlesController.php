@@ -35,6 +35,8 @@ class ArticlesController extends AppController
         ]
     ];
 
+    public $help = 'introduction/articles';
+
     /**
      * Search method
      *

@@ -10,6 +10,8 @@
 
 namespace Epi\Model\Traits;
 
+use Cake\Datasource\EntityInterface;
+
 /**
  * Adds the to magic fields path and parent_path to tree entitites.
  * You need to declare the properties $_path_field (e.g. lemma) and
@@ -17,6 +19,12 @@ namespace Epi\Model\Traits;
  */
 trait TreeTrait
 {
+
+    protected function _getHasChildren()
+    {
+        return ($this->rght - $this->lft) > 1;
+    }
+
     /**
      * Get the path of the current nodes parent
      *
@@ -24,7 +32,8 @@ trait TreeTrait
      */
     protected function _getParentPath()
     {
-        $path = array_reverse($this->getValueNested('ancestors.{*}.' . $this->_path_field, ['aggregate' => false]));
+        $path = $this->getValueNested('ancestors.{*}.' . $this->_path_field, ['aggregate' => false]) ?? [];
+        $path = array_reverse($path);
         return implode($this->_path_separator, $path);
     }
 
@@ -63,5 +72,69 @@ trait TreeTrait
         return $this->_fields['parent'];
     }
 
+    /**
+     * Get the reference ID
+     *
+     * @return null|int
+     */
+    protected function _getReferenceId()
+    {
+        if (!isset($this->_fields['reference_id'])) {
+            $preceding = $this->preceding;
+            if (empty($preceding)) {
+                $this['reference_id'] = $this->parent_id;
+                $this['reference_pos'] = 'parent';
+            }
+            else {
+                $this['reference_id'] = $preceding->id;
+                $this['reference_pos'] = 'preceding';
+            }
+        }
+        return $this->_fields['reference_id'] ?? null;
+    }
+
+    /**
+     * Get the reference position
+     *
+     * @return null|string 'parent' or 'preceding'
+     */
+    protected function _getReferencePos()
+    {
+        if (!isset($this->_fields['reference_pos'])) {
+            $preceding = $this->preceding;
+            if (empty($preceding)) {
+                $this['reference_id'] = $this->parent_id;
+                $this['reference_pos'] = 'parent';
+            }
+            else {
+                $this['reference_id'] = $preceding->id;
+                $this['reference_pos'] = 'preceding';
+            }
+        }
+        return $this->_fields['reference_pos'] ?? null;
+    }
+
+    /**
+     * Get the reference entity
+     *
+     * @return null|EntityInterface
+     */
+    protected function _getReference()
+    {
+        $referenceId = $this->referenceId;
+        if (!empty($referenceId) && (($this->_fields['reference']['id'] ?? null) !== intval($referenceId))) {
+            $referenceNode = $this->table
+                ->find('containAncestors')
+                ->find('all')
+                ->where(['id' => intval($referenceId)])
+                ->first();
+
+            $this->_fields['reference'] = $referenceNode;
+
+            //$property->ancestors = $referenceNode->ancestors;
+        }
+
+        return $this->_fields['reference'] ?? null;
+    }
 
 }

@@ -10,6 +10,13 @@
 
 namespace App\Utilities\Converters;
 
+use App\Utilities\XmlParser\HtmlHeader;
+use Epi\Model\Behavior\PositionBehavior;
+use Exception;
+use Masterminds\HTML5;
+use Masterminds\HTML5\Parser\Scanner;
+use Masterminds\HTML5\Parser\Tokenizer;
+
 /**
  * Static string functions
  *
@@ -69,5 +76,141 @@ class Strings
         return preg_replace_callback('/\d+/', function ($matches) use ($width) {
             return str_pad($matches[0], $width, '0', STR_PAD_LEFT);
         }, $value);
+    }
+
+    /**
+     * Remove forward slashes
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function removeSlashes($value)
+    {
+        $value = str_replace('/', '', $value);
+        return $value;
+    }
+
+    /**
+     * Remove square and round brackets from a string, keep the content inside.
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function removeBrackets($value)
+    {
+        // Remove square brackets and keep the content inside
+        $value = preg_replace('/\[(.*?)\]/', '$1', $value);
+        // Remove round brackets and keep the content inside
+        $value = preg_replace('/\((.*?)\)/', '$1', $value);
+        return $value;
+    }
+
+    public static function processStrings($value, $process = [])
+    {
+        foreach ($process as $step) {
+            if ($step === 'stripBrackets') {
+                $value = self::removeBrackets($value);
+            }
+            elseif ($step === 'stripSlashes') {
+                $value = self::removeSlashes($value);
+            }
+            elseif ($step === 'collapseWhitespace') {
+                $value = self::collapseWhitespace($value);
+            }
+            elseif ($step === 'replaceUmlauts') {
+                $value = self::replaceUmlauts($value);
+            }
+            elseif ($step === 'removeSpecialCharacters') {
+                $value = self::removeSpecialCharacters($value);
+            }
+            elseif ($step === 'prefixNumbersWithZero') {
+                $value = self::prefixNumbersWithZero($value);
+            }
+        }
+
+        return $value;
+    }
+
+    /**
+     * Tokenize string with escaping mechanism
+     *
+     * @param string $value
+     * @param string $separator The separator used to split the string into tokens (default: `|`).
+     * @param string $escaper The character used to escape reserved characters (default: `\`).
+     * @return string[] An array of tokens
+     */
+    public static function tokenize($value, $separator = '|', $escaper = '\\')
+    {
+        $resultTokens = [];
+        $token = '';
+        $escaped = false;
+        $reserved = $separator . $escaper;
+
+        for ($i = 0; $i < strlen($value); $i++) {
+            $char = $value[$i];
+
+            // If the current char is escaped, add it to the current token
+            if ($escaped) {
+                $token .= $char;
+                $escaped = false;
+            }
+            // Set escaped flag (look ahead, only if reserved characters are escaped)
+            elseif (($char === $escaper) && (strpbrk($value[$i+1] ?? '', $reserved))) {
+                $escaped = true;
+            }
+            elseif ($char === $separator) {
+                $resultTokens[] = $token;
+                $token = '';
+            }
+            else {
+                $token .= $char;
+            }
+        }
+
+        $resultTokens[] = $token;
+
+        return $resultTokens;
+    }
+
+    /**
+     * Get TOC from HTML header tags
+     *
+     * @param string $content
+     * @param array $options
+     * @return array
+     */
+    public static function getToc($content, $options = []) {
+
+        try {
+            $events = new HtmlHeader(false);
+            $scanner = new Scanner($content, !empty($options['encoding']) ? $options['encoding'] : 'UTF-8');
+            $parser = new Tokenizer(
+                $scanner,
+                $events,
+                !empty($options['xmlNamespaces']) ? Tokenizer::CONFORMANT_XML : Tokenizer::CONFORMANT_HTML
+            );
+
+            $parser->parse();
+
+            $html5 = new HTML5();
+            $value = $html5->saveHTML($events->document());
+            $value = preg_replace('/^<!DOCTYPE html>\n/', '', $value);
+            $value = preg_replace('/^<html>/', '', $value);
+            $value = preg_replace('/<\/html>$/', '', $value);
+
+            $toc = $events->toc;
+
+            // Add tree structure
+            if (!empty($toc)) {
+                $toc = PositionBehavior::addTreePositions($toc);
+            }
+
+
+        } catch (Exception $e) {
+            $toc = [];
+            $value = $content;
+        }
+
+        return ['toc' => $toc, 'html' => $value];
     }
 }

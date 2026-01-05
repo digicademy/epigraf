@@ -7,6 +7,10 @@
  *
  */
 
+/**
+ * For the toolbar, filenames and icon names must match the IRI fragment of link types.
+ */
+
 import button_abbreviation from './button_abbreviation.svg';
 import button_paragraph from './button_paragraph.svg';
 import button_alligation from './button_alligation.svg';
@@ -29,6 +33,7 @@ import button_newline from './button_newline.svg';
 import button_spalte from './button_spalte.svg';
 import button_spatium from './button_spatium.svg';
 import button_sup from './button_sup.svg';
+import button_superscript from './button_superscript.svg';
 import button_heading from './button_heading.svg';
 import button_underlined from './button_underlined.svg';
 import button_loss from './button_loss.svg';
@@ -66,6 +71,7 @@ const icons = {
     'button_spalte': button_spalte,
     'spatium': button_spatium,
     'sup': button_sup,
+    'superscript': button_superscript,
     'heading': button_heading,
     'underlined': button_underlined,
     'loss': button_loss,

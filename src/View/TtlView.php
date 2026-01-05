@@ -370,7 +370,7 @@ class TtlView extends ApiView
         }
 
         // Literals
-        elseif ($type === 'literal') {
+        elseif ($type !== 'prefixed name') {
 
             // Escape backslashes and double quotes
             $value = str_replace(
@@ -386,6 +386,11 @@ class TtlView extends ApiView
             }
             else {
                 $value = '"' . $value . '"';
+            }
+
+            // Typing
+            if ($type !== 'literal') {
+                $value .= "^^" . $type;
             }
         }
 

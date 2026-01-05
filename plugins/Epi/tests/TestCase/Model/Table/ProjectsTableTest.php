@@ -153,7 +153,7 @@ class ProjectsTableTest extends EpiTestCase
         $params = [];
         $projects = $this->Projects
             ->find('hasParams', $params)
-            ->find('containFields', $params);
+            ->find('containColumns', $params);
 
         $this->assertJsonStringEqualsComparison($projects);
     }

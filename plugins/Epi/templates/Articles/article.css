@@ -1,0 +1,216 @@
+/* Article-specific styles (articles.css)
+   Moved from app.css: styles for doc-section, tables, stacks, annotations, footnotes, xml tags.
+   Assumes variables from app.css are available.
+*/
+
+/* Entity header box*/
+/* Entity content box*/
+.doc-header, .doc-content {
+    border: 1px solid black;
+    padding: .6rem .75rem;
+    margin-bottom: .75rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: .5rem .75rem;
+    align-items: start;
+    font-size: .95rem;
+}
+
+
+/* Sections */
+.doc-section {
+    border: 1px solid black;
+    margin: 0.75rem 0;
+    padding: 0.55rem 0.75rem;
+}
+
+.doc-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    font-weight: 600;
+}
+
+.doc-section-name {
+    text-align: left;
+    margin-right: auto
+}
+
+.doc-section-content {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+/* Main area inside a section */
+.doc-section-content > .doc-section-groups,
+.doc-section-content > .doc-section-stack,
+.doc-section-content > .doc-section-items,
+.doc-section-content > .doc-section-main {
+    display: block;
+    width: 100%;
+    flex: none;
+    min-width: 0;
+}
+
+/* Annotation chips */
+.doc-section-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .25rem;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+.doc-section-links .doc-section-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .12rem .36rem;
+    margin: 0;
+    font-size: .75rem;
+    flex: 0 0 auto
+}
+
+/* Footnotes */
+.doc-footnotes .doc-footnote {
+    display: flex;
+    gap: .5rem;
+    align-items: flex-start;
+    margin: .25rem 0
+}
+
+.doc-footnotes .doc-footnote-number {
+    flex: 0 0 2.2rem;
+    text-align: right;
+    font-size: .85rem;
+    padding-right: .5rem
+}
+
+
+/* Table-like grouped view */
+.doc-group-headers {
+    display: inline-flex;
+    gap: .75rem;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    padding: .45rem 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: max-content;
+    white-space: nowrap
+}
+
+.doc-section-item {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: .5rem 0
+}
+
+.doc-group-headers > div {
+    font-weight: 700;
+    flex: 0 0 220px;
+    max-width: 220px;
+    min-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+    hyphens: auto
+}
+
+.doc-group-headers > div * {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.doc-section-item > div {
+    flex: 1 1 200px;
+    min-width: 140px
+}
+
+/* Table view scrolling and sticky header */
+.doc-section-view-table .doc-section-content {
+    padding: 0.5rem;
+    display: flex;
+    gap: 1rem
+}
+
+.doc-section-view-table .doc-section-content > .doc-section-groups {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: auto
+}
+
+.doc-section-view-table .doc-group-headers {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    margin: 0;
+    padding-top: .45rem;
+    padding-bottom: .45rem
+}
+
+.doc-section-view-table .doc-section-item {
+    display: flex;
+    gap: .75rem;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    padding: .45rem 0
+}
+
+.doc-section-view-table .doc-section-item > div,
+.doc-section-view-table .doc-group-headers > div {
+    flex: 0 0 220px;
+    min-width: 160px
+}
+
+/* Stack view */
+.doc-section-view-stack .doc-section-content {
+    padding: 0.6rem
+}
+
+.doc-section-view-stack .doc-section-item {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: stretch;
+    padding: .6rem 0;
+    border-bottom: 1px solid #f2f2f2
+}
+
+.doc-section-view-stack .doc-section-item > .doc-field {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+
+}
+
+.doc-section-view-stack .doc-section-item .doc-field-caption {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.6rem;
+}
+
+.doc-section-view-stack .doc-section-item,
+.doc-section-stack .doc-section-item {
+    display: block !important;
+    padding: .6rem 0 !important
+}
+
+.doc-section-view-stack .doc-section-item > *,
+.doc-section-stack .doc-section-item > * {
+    display: block;
+    width: 100%;
+    min-width: 0;
+}

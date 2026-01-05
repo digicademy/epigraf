@@ -10,9 +10,8 @@
 
 namespace Epi\View\Helper;
 
-use App\Model\Entity\Databank;
 use App\Utilities\Converters\Objects;
-use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use Cake\View\Helper;
 
 /**
@@ -20,7 +19,6 @@ use Cake\View\Helper;
  */
 class TypesHelper extends Helper
 {
-
      /**
      * Get types in current database
      *
@@ -114,25 +112,70 @@ class TypesHelper extends Helper
         return $result;
     }
 
+
     /**
-     * Output a css style element containing the styles in the links' config field
+     * Output a css style element containing the styles in the tags' (links and footnotes) config field
+     *
+     * The css_style field in the config of a type contains an object with the following structure:
+     *
+     * "css_style": {
+     *    "default": ".xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }",
+     *    "unadorned": ".xml_group_text_unadorned .xml_tag_k { color: inherit; font-size: inherit; font-variant: inherit; }"
+     * }
+     *
+     * The field may contain a single string instead of an object,
+     * in which case it is interpreted as equivalent to the default style.
      *
      * @return string
      */
     public function getTagStyles()
     {
-        $out = '<style data-snippet="article-css">';
-
         $types = $this->getTypes();
-        $css = Objects::extract($types, "links.*.config.css_style");
+        $css = [];
+        $groups = [];
+
+        foreach (['links', 'footnotes'] as $scope) {
+            foreach ($types[$scope] ?? [] as $typeName => $typeEntity) {
+                $group = $typeEntity['merged']['group'] ?? null;
+                if (!empty($group)) {
+                    $groups[$group] = [];
+                    $tagType = $typeEntity['merged']['tag_type'] ?? null;
+                    $tagType = empty($tagType) ? 'group' : $tagType;
+
+                    if ($tagType === 'group') {
+                        $groups[$group]['caption'] = $typeEntity['caption'] ?? $typeName;
+                        $groups[$group]['color'] = $typeEntity['merged']['color'] ?? null;
+                    };
+                }
+
+                $cssStyle = Objects::extract($typeEntity, "merged.css_style");
+                if (!empty($cssStyle)) {
+                    if (is_array($cssStyle)) {
+                        $css = array_merge($css, array_values($cssStyle));
+                    }
+                    else {
+                        $css[] = $cssStyle;
+                    }
+                }
+            }
+        }
+
+        // Group colors and display states
+        foreach ($groups as $groupName => $groupConfig) {
+            $group = Text::slug($groupName);
+            $css[] = ".xml_group_{$group}_unadorned .doc-section-link[data-group='{$group}'] {display: none;}";
+
+            $color = $groupConfig['color'] ?? '';
+            if (!empty($color)) {
+                $css[] = ".doc-section-link[data-group='{$group}'] { background-color: {$color};}";
+                $css[] = "span.anno-selector-group-{$group} {background-color: {$color};}";
+            }
+        }
+
+        $out = '<style data-snippet="article-css">';
         $out .= implode("\n", $css) . "\n";
-
-        $css = Objects::extract($types, "footnotes.*.config.css_style");
-        $out .= implode("\n", $css);
-
         $out .= '</style>';
         return $out;
-
     }
 
 }

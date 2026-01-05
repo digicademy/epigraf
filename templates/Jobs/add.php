@@ -14,10 +14,9 @@
  * @var App\View\AppView $this
  * @var App\Model\Entity\Job $job
  * @var array $pipelines
- * @var array $datenbanken
- * @var array $projekte
  */
 
+use App\Utilities\Converters\Arrays;
 use Cake\Utility\Hash;
 
 ?>
@@ -31,7 +30,7 @@ use Cake\Utility\Hash;
     <div class="content-tight">
         <?= $this->Form->create($job, ['id' => 'form-export-jobs', 'data-message'=>__('Creating job')]) ?>
         <fieldset>
-            <?= $this->Form->hidden('typ', ['value' => 'export']) ?>
+            <?= $this->Form->hidden('jobtype', ['value' => 'export']) ?>
 
             <table class="vertical-table">
                 <tr>
@@ -55,14 +54,14 @@ use Cake\Utility\Hash;
                             ['data-form-update' => 'pipeline', 'empty' => true]) ?></td>
                 </tr>
 
-                <?php if (!empty($job->config['tasks']['enabled'])) : ?>
+                <?php if (!empty($job->config['options']['enabled'])) : ?>
                     <tr>
                         <th scope="row"><?= __('Tasks') ?></th>
                         <td>
-                            <?php foreach ($job->config['tasks']['enabled'] as $taskNo => $taskConfig) : ?>
-                                <?= $this->Form->control('config.tasks.enabled.' . $taskNo . '.enabled', [
+                            <?php foreach ($job->config['options']['enabled'] as $taskNo => $taskConfig) : ?>
+                                <?= $this->Form->control('config.options.enabled.' . $taskNo . '.enabled', [
                                     'type' => 'checkbox',
-                                    'checked' => !empty($job->config['tasks']['enabled'][$taskNo]['enabled'] ?? true),
+                                    'checked' => !empty($job->config['options']['enabled'][$taskNo]['enabled'] ?? true),
                                     'label' => $taskConfig['caption'] ?? $taskNo,
                                     'templateVars' => ['wrapperClass' =>' checkbox-horizontal']
                                 ]); ?>
@@ -71,95 +70,57 @@ use Cake\Utility\Hash;
                     </tr>
                 <?php endif; ?>
 
-                <?php if (!empty($job->config['tasks']['options'])) : ?>
-                    <?php
-                        // TODO: implement Helper functions to prepare the options
-                        // Nest categories
-                        $categories = $job->config['tasks']['options'];
-                        $categories = array_map(
-                            function ($no, $val) { return ['option' => $val, 'no' => $no]; },
-                            array_keys($categories), $categories
-                        );
-                        $categories = Hash::combine(
-                            $categories,
-                            '{n}.no', '{n}.option',
-                            '{n}.option.category'
-                        );
-                    ?>
-                    <?php foreach ($categories as $group => $options): ?>
-                        <tr>
-                            <th scope="row"><?= empty($group) ? __('Tasks') : $group ?></th>
-                            <td>
-                                <?php
-                                    // Get type
-                                // @deprecated, legacy code that maps the radio option to the type option
-                                    $options = array_map(
-                                        function ($option) {
-                                            if (($option['radio'] ?? '') === '1') {
-                                                $option['type'] = 'radio';
-                                            }
-                                            elseif (($option['radio'] ?? '') === '0') {
-                                                $option['type'] = 'check';
-                                            }
-                                            elseif (empty($option['type'])) {
-                                                $option['type'] = 'check';
-                                            }
-
-                                            return $option;
-                                        },
-                                        $options
-                                    );
-                                    // Nest radio options
-                                    $radiooptions = array_filter($options, function ($x) {
-                                        return $x['type'] === 'radio';
-                                    });
-                                    $radiooptions = Hash::combine(
+                <?php $categories = Arrays::array_nest($job->config['options']['options'] ?? []); ?>
+                <?php foreach ($categories as $group => $options): ?>
+                    <tr>
+                        <th scope="row"><?= empty($group) ? __('Tasks') : $group ?></th>
+                        <td>
+                            <?php
+                            // Get radio options
+                            $radiooptions = array_values(array_filter($options, function ($x) {
+                                return ($x['type'] ?? 'check') === 'radio';
+                            }));
+                            $radioSelected = array_values(array_filter($radiooptions, function ($x) {
+                                return !empty($x['output']);
+                            }));
+                            ?>
+                            <?php if (!empty($radiooptions)): ?>
+                                <?= $this->Form->radio(
+                                    'config.options.' . $radiooptions[0]['key'],
+                                    Hash::combine(
                                         $radiooptions,
-                                        '{n}.number',
+                                        '{n}.value',
                                         '{n}.label'
-                                    );
-                                ?>
-                                <?php if (!empty($radiooptions)): ?>
-                                    <?php
-                                        $key = array_keys($radiooptions)[0];
-                                        $radiochecked = array_values(array_filter($options, function ($x) {
-                                            return !empty($x['output']);
-                                        }));
-                                        $radiochecked = empty($radiochecked) ? null : $radiochecked[0]['number'];
-                                    ?>
-                                    <?= $this->Form->radio(
-                                        'config.tasks.radio.' . $key,
-                                        $radiooptions,
-                                        ['value' => $radiochecked]
-                                    ); ?>
-                                <?php else: ?>
-                                    <?php foreach ($options as $key => $option): ?>
-                                        <?php if ($option['type'] === 'text'): ?>
-                                            <?= $this->Form->control(
-                                                'config.tasks.text.' . $option['number'],
-                                                [
-                                                    'type' => 'text',
-                                                    'value' => $option['value'] ?? '',
-                                                    'label' => empty($option['label']) ? false : $option['label']
-                                                ]
-                                            ); ?>
-                                        <?php else: ?>
-                                            <?= $this->Form->control(
-                                                'config.tasks.check.' . $option['number'],
-                                                [
-                                                    'type' => 'checkbox',
-                                                    'checked' => !empty($option['output']),
-                                                    'label' => $option['label'],
-                                                    'templateVars' => ['wrapperClass' =>' checkbox-horizontal']
-                                                ]
-                                            ); ?>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php endif; ?>
+                                    ),
+                                    ['value' => $radioSelected[0]['value'] ?? null, 'hiddenField' => false]
+                                ); ?>
+                            <?php else: ?>
+                                <?php foreach ($options as $key => $option): ?>
+                                    <?php if (($option['type'] ?? 'check') === 'text'): ?>
+                                        <?= $this->Form->control(
+                                            'config.options.' . $option['key'],
+                                            [
+                                                'type' => 'text',
+                                                'value' => $option['value'] ?? '',
+                                                'label' => empty($option['label']) ? false : $option['label']
+                                            ]
+                                        ); ?>
+                                    <?php else: ?>
+                                        <?= $this->Form->control(
+                                            'config.options.' . $option['key'],
+                                            [
+                                                'type' => 'checkbox',
+                                                'checked' => !empty($option['output']),
+                                                'label' => $option['label'],
+                                                'templateVars' => ['wrapperClass' =>' checkbox-horizontal']
+                                            ]
+                                        ); ?>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </table>
 
         </fieldset>

@@ -1,4 +1,5 @@
--- MariaDB dump 10.19  Distrib 10.11.6-MariaDB, for debian-linux-gnu (x86_64)
+/*M!999999\- enable the sandbox mode */ 
+-- MariaDB dump 10.19-11.8.2-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: test_sql    Database: test_newprojects
 -- ------------------------------------------------------
@@ -13,7 +14,7 @@
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
 -- Table structure for table `articles`
@@ -21,7 +22,7 @@
 
 DROP TABLE IF EXISTS `articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `articles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `projects_id` int(11) DEFAULT NULL,
@@ -65,8 +66,10 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `files`
@@ -74,7 +77,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `files`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -107,8 +110,10 @@ CREATE TABLE `files` (
 
 LOCK TABLES `files` WRITE;
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `footnotes`
@@ -116,7 +121,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `footnotes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `footnotes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -163,8 +168,10 @@ CREATE TABLE `footnotes` (
 
 LOCK TABLES `footnotes` WRITE;
 /*!40000 ALTER TABLE `footnotes` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `footnotes` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `grains`
@@ -172,7 +179,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `grains`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grains` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -209,8 +216,10 @@ CREATE TABLE `grains` (
 
 LOCK TABLES `grains` WRITE;
 /*!40000 ALTER TABLE `grains` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `grains` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `items`
@@ -218,13 +227,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `items`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
   `version_id` int(11) DEFAULT NULL,
   `job_id` int(11) DEFAULT NULL,
   `published` int(11) DEFAULT NULL,
+  `status` varchar(1500) DEFAULT NULL,
   `created` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_by` int(11) DEFAULT NULL,
@@ -285,8 +295,10 @@ CREATE TABLE `items` (
 
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `links`
@@ -294,7 +306,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `links`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `links` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -342,8 +354,10 @@ CREATE TABLE `links` (
 
 LOCK TABLES `links` WRITE;
 /*!40000 ALTER TABLE `links` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `links` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `locktable`
@@ -351,7 +365,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `locktable`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `locktable` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `lock_token` int(11) DEFAULT NULL,
@@ -374,8 +388,10 @@ CREATE TABLE `locktable` (
 
 LOCK TABLES `locktable` WRITE;
 /*!40000 ALTER TABLE `locktable` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `locktable` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `meta`
@@ -383,7 +399,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `meta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -406,11 +422,13 @@ CREATE TABLE `meta` (
 
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
+set autocommit=0;
 INSERT INTO `meta` VALUES
-(1,0,'0000-00-00 00:00:00','2025-03-27 12:59:33',NULL,NULL,'db_version','4.5'),
-(2,0,'0000-00-00 00:00:00','2025-03-27 12:59:33',NULL,NULL,'db_name','Epigraf');
+(1,0,'0000-00-00 00:00:00','2025-09-02 06:39:54',NULL,NULL,'db_version','4.5'),
+(2,0,'0000-00-00 00:00:00','2025-09-02 06:39:54',NULL,NULL,'db_name','Epigraf');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `notes`
@@ -418,7 +436,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `notes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `notes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -448,8 +466,10 @@ CREATE TABLE `notes` (
 
 LOCK TABLES `notes` WRITE;
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `notes` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `projects`
@@ -457,7 +477,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `projects`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -489,8 +509,10 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `properties`
@@ -498,13 +520,14 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `properties`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `properties` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
   `version_id` int(11) DEFAULT NULL,
   `job_id` int(11) DEFAULT NULL,
   `published` int(11) DEFAULT NULL,
+  `status` varchar(1500) DEFAULT NULL,
   `created` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_by` int(11) DEFAULT NULL,
@@ -526,7 +549,7 @@ CREATE TABLE `properties` (
   `ishidden` tinyint(4) DEFAULT NULL,
   `iscategory` tinyint(4) DEFAULT NULL,
   `norm_type` varchar(150) DEFAULT NULL,
-  `norm_data` varchar(1500) DEFAULT NULL,
+  `norm_data` text DEFAULT NULL,
   `norm_iri` varchar(1500) DEFAULT NULL,
   `import_db` varchar(1500) DEFAULT NULL,
   `import_id` varchar(1500) DEFAULT NULL,
@@ -557,8 +580,10 @@ CREATE TABLE `properties` (
 
 LOCK TABLES `properties` WRITE;
 /*!40000 ALTER TABLE `properties` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `properties` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `sections`
@@ -566,7 +591,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `sections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `sections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -609,8 +634,10 @@ CREATE TABLE `sections` (
 
 LOCK TABLES `sections` WRITE;
 /*!40000 ALTER TABLE `sections` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `sections` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `token`
@@ -618,7 +645,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `token`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `token` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -642,8 +669,10 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `types`
@@ -651,7 +680,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `types`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -686,8 +715,10 @@ CREATE TABLE `types` (
 
 LOCK TABLES `types` WRITE;
 /*!40000 ALTER TABLE `types` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `types` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 
 --
 -- Table structure for table `users`
@@ -695,7 +726,7 @@ UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+/*!40101 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `deleted` int(11) NOT NULL DEFAULT 0,
@@ -724,8 +755,10 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
+set autocommit=0;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+commit;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -734,6 +767,6 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-03-27 13:59:33
+-- Dump completed on 2025-09-02  8:39:55

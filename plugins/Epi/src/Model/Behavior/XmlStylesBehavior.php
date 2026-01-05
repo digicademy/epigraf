@@ -216,12 +216,12 @@ class XmlStylesBehavior extends Behavior
 
                 // Property or external record target value
                 elseif (($fieldConfig['format'] ?? '') === 'record') {
-                    $tagContent[$fieldConfig['render']] = $element['attributes']['data-link-value'] ?? '';
+                    $tagContent[$fieldConfig['render']] = html_entity_decode($element['attributes']['data-link-value'] ?? '');
                 }
 
                 // Internal target value
                 elseif (($fieldConfig['format'] ?? '') === 'relation') {
-                    $tagContent[$fieldConfig['render']] = $element['attributes']['data-link-value'] ?? '';
+                    $tagContent[$fieldConfig['render']] = html_entity_decode($element['attributes']['data-link-value'] ?? '');
                 }
             }
         }
@@ -234,7 +234,9 @@ class XmlStylesBehavior extends Behavior
         foreach (($style['merged']['attributes'] ?? []) as $attrName => $attrConfig) {
 
             // Set data attributes
-            $content['attributes']['data-attr-' . $attrName] = $element['attributes'][$attrName] ?? '';
+            if (($attrConfig['input'] ?? '') !== 'link') {
+                $content['attributes']['data-attr-' . $attrName] = $element['attributes'][$attrName] ?? '';
+            }
 
             // Repeat renderer
             if (isset($attrConfig['render'])) {
@@ -298,6 +300,7 @@ class XmlStylesBehavior extends Behavior
             $element['attributes']['data-tagid'] = $tagid;
             // TODO: more elegant class handling (use array)
             $element['attributes']['class'] = 'xml_tag xml_tag_' . $tagname;
+            $escape = $style['merged'][$format]['escape'] ?? $style['merged']['escape'] ?? true;
 
             // Count tag order
             if ($element['position'] == 'open') {
@@ -372,7 +375,8 @@ class XmlStylesBehavior extends Behavior
                     $element['attributes']['class'] = $element['attributes']['class'] .= ' xml_text';
                     $element['customoutput'] = $parser->_openElement($element, true);
 
-                    $element['customoutput'] .= htmlentities($content['prefix'] . $content['text'] . $content['postfix']);
+                    $value = $content['prefix'] . $content['text'] . $content['postfix'];
+                    $element['customoutput'] .= $escape ? htmlentities($value) : $value;
 
                     $element['customoutput'] .= $parser->_closeElement($element);
                     //TODO: hack for CKEditor whitespace after tag (inline widget) problem, add zws

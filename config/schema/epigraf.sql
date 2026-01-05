@@ -61,11 +61,12 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
-  `typ` varchar(100) NOT NULL,
+  `jobtype` varchar(100) NOT NULL,
   `status` varchar(50) NOT NULL,
   `progress` int(11) NOT NULL DEFAULT 0,
   `progressmax` int(11) NOT NULL DEFAULT 0,
   `config` text DEFAULT NULL,
+  `result` text DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -99,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `pipelines` (
   `modified` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_by` int(11) DEFAULT NULL,
   `modified_by` int(11) DEFAULT NULL,
+  `type` varchar(100) DEFAULT NULL,
   `name` varchar(200) NOT NULL,
   `norm_iri` varchar(1500) NOT NULL,
   `description` text DEFAULT NULL,
@@ -136,4 +138,12 @@ ALTER TABLE `pipelines`
 	ADD COLUMN `type` VARCHAR(100) NULL DEFAULT NULL AFTER `tasks`;
 
 ALTER TABLE `jobs`
-	ADD COLUMN `delay` TINYINT NOT NULL DEFAULT 0 AFTER `typ`;
+	ADD COLUMN `delay` TINYINT NOT NULL DEFAULT 0 AFTER `jobtype`;
+
+ALTER TABLE `users`
+	ADD COLUMN `activation_state` TINYINT NULL DEFAULT NULL AFTER `modified_by`,
+	ADD COLUMN `activation_token` VARCHAR(100) NULL DEFAULT NULL AFTER `activation_state`,
+	ADD COLUMN `activation_expires` DATETIME NULL DEFAULT NULL AFTER `activation_token`;
+
+ALTER TABLE `jobs`
+	ADD COLUMN `name` VARCHAR(100) NULL DEFAULT NULL AFTER `modified_by`;

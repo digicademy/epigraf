@@ -1,0 +1,79 @@
+main:
+  - title: "Epigraf User Documentation"
+    url: /
+
+docs:
+  - title: "Introduction"
+    url: /introduction/
+    children:
+      - title: "Get started"
+        url: /gettingstarted/
+      - title: "About articles"
+        url: /articles/
+      - title: "About categories"
+        url: /properties/
+      - title: "About projects"
+        url: /projects/
+      - title: "About files"
+        url: /files/
+      - title: "About notes"
+        url: /notes/
+  - title: "Core concepts"
+    url: /coreconcepts/
+    children:
+      - title: "RAM"
+        url: /model/
+      - title: "IRIs"
+        url: /iris/
+      - title: "Keys"
+        url: /keys/
+      - title: "API"
+        url: /api/
+  - title: "Import"
+    url: /import/
+    children:
+      - title: "CSV"
+        url: /csv/
+      - title: "XML"
+        url: /xml/
+      - title: "API"
+        url: /api/
+  - title: "Export"
+    url: /export/
+    children:
+      - title: "Pipelines"
+        url: /pipelines/
+      - title: "Transfer"
+        url: /transfer/
+      - title: "API"
+        url: /api/
+  - title: "Administration"
+    url: /administration/
+    children:
+      - title: "Databases"
+        url: /databases/
+      - title: "Users"
+        url: /users/
+      - title: "Files"
+        url: /files/
+      - title: "Pages"
+        url: /pages/
+      - title: "Troubleshooting"
+        url: /troubleshooting/
+  - title: "Configuration"
+    url: /configuration/
+    children:
+      - title: "Articles"
+        url: /articles/
+      - title: "Categories"
+        url: /categories/
+      - title: "Annotations"
+        url: /annotations/
+      - title: "Fields"
+        url: /fields/
+      - title: "Columns"
+        url: /columns/
+      - title: "Triples"
+        url: /triples/
+      - title: "Services"
+        url: /services/

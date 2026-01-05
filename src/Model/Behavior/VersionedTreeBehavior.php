@@ -25,7 +25,17 @@ use Exception;
  * Overrides the callbacks of the Tree behavior to disable tree modifications
  * for versioned and soft deleted records.
  *
- * To use the behavior, add the property _recoverQueue to the table.
+ * Supports positioning of rows based on a reference and a position.
+ * For new entities, set the following fields:
+ * - reference_id: ID of a reference row
+ * - reference_pos: The role of the reference row with regard to the new row: 'parent' or 'preceding'.
+ *
+ * Alternatively, set the parent_id and the preceding_id fields:
+ * - preceding_id: ID of the preceding row or null
+ * - parent_id: ID of the parent or null
+ *
+ *
+ * To use the behavior, add the properties _recoverQueue and _moveQueue to the table.
  */
 class VersionedTreeBehavior extends TreeBehavior
 {
@@ -107,8 +117,6 @@ class VersionedTreeBehavior extends TreeBehavior
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
-     *
-     * @return void
      */
     public function beforeSave(EventInterface $event, EntityInterface $entity)
     {
@@ -168,9 +176,10 @@ class VersionedTreeBehavior extends TreeBehavior
     }
 
     /**
-     * Disable tree behavior
+     * Disable the callbacks
      *
-     * Add the property _recoverQueue to the table.
+     * To recover trees and perform move operations,
+     * store then in the _recoverQueue and _moveQueue properties of the table.
      *
      * @return void
      */
@@ -179,12 +188,15 @@ class VersionedTreeBehavior extends TreeBehavior
         $this->_enableTree = false;
         $table = $this->table();
         $table->_recoverQueue = [];
+        $table->_moveQueue = [];
     }
 
     /**
      * Activates the callbacks
      *
-     * Add the property _recoverQueue to the table.
+     * If recover is set to true, recovers all scopes stored
+     * in the _recoverQueue property of the table and
+     * performs all move operations stored in the _moveQueue property of the table.
      *
      * @param boolean $recover Recover all trees that were changed in between.
      * @return void
@@ -198,8 +210,12 @@ class VersionedTreeBehavior extends TreeBehavior
                 $table->setScope($scope);
                 $table->recover();
             }
+            foreach ($table->_moveQueue as $move) {
+                $this->moveTo($move['id'], $move['parent_id'], $move['preceding_id']);
+            }
         }
         $table->_recoverQueue = [];
+        $table->_moveQueue = [];
     }
 
     /**
@@ -325,7 +341,11 @@ class VersionedTreeBehavior extends TreeBehavior
     public function findContainAncestors(Query $query, array $options)
     {
         $withancestors = $query->formatResults(
-            function (CollectionInterface $results) use (&$query) {
+            function ($results) use (&$query) {
+                if (is_array($results)) {
+                    $results = collection($results);
+                }
+
                 $hydrate = $query->isHydrationEnabled();
 
                 $table = $this->table();

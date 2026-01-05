@@ -19,7 +19,7 @@ class Cache extends \Cake\Cache\Cache
     /**
      * Derives a cache configuration from a default cache configuration.
      *
-     * @param string $name
+     * @param string $name The shard within the base cache configuration.
      * @param string $scope Name of the cache configuration to use as a base.
      * @return void
      */
@@ -48,6 +48,20 @@ class Cache extends \Cake\Cache\Cache
             Cache::clear($name);
         }
 
+    }
+
+    /**
+     * Get the list of configured caches.
+     *
+     * All generic caches are returned, including those for views, models, and other components.
+     * Set the $database parameter to get caches for a specific database.
+     *
+     * @param string|null $database
+     * @return array
+     */
+    static public function getCacheList($database = null)
+    {
+        return Cache::configured();
     }
 
 }

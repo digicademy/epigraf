@@ -121,7 +121,7 @@ class UsersTable extends BaseTable
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        // TODO: not possible because version duplicate the IRIs
+        // TODO: not possible because versioning duplicates the IRIs
         // $rules->add($rules->isUnique(['norm_iri']));
         return $rules;
     }
@@ -131,13 +131,17 @@ class UsersTable extends BaseTable
      *
      * TODO: keep all definitions, indexed by: articletype, default, query parameter
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $default = [
             'name' => ['caption' => __('Name'), 'width' => 200, 'default' => true],
@@ -147,6 +151,6 @@ class UsersTable extends BaseTable
             'id' => ['caption' => 'ID', 'width' => 100, 'default' => true]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 }

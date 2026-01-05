@@ -9,10 +9,10 @@
  */
 
 return [
-    'typ' => 'export',
+    'jobtype' => 'export',
     'config' => [
         'pipeline_id' => '16',
-        'tasks' => [
+        'options' => [
             'index' => '1'
         ]
     ],

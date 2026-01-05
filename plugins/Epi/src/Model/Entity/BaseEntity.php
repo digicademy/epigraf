@@ -12,6 +12,7 @@ namespace Epi\Model\Entity;
 use App\Model\Entity\Databank;
 use App\Model\Interfaces\ExportEntityInterface;
 use App\Utilities\Converters\Arrays;
+use App\Utilities\Converters\Strings;
 use App\Utilities\Files\Files;
 use App\Utilities\XmlParser\XmlMunge;
 use Cake\Core\Configure;
@@ -300,16 +301,32 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         $userRole = $this->currentUserRole ?? $this->root->currentUserRole ?? 'guest';
-        $requestAction = \App\Model\Table\BaseTable::$requestAction;
-        $published = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
+        $minPublished = PUBLICATION_DRAFTED;
 
-        if (($userRole !== 'guest') && ($requestAction !== 'edit') && !empty($published) && $this->hasDatabaseField('published')) {
-            return in_array($this->publishedState ?? PUBLICATION_PUBLISHED, $published);
+        // For guests, hide unpublished content or content with nonpublic types
+        if ($userRole === 'guest') {
+            if (empty($this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED)) {
+                return false;
+            }
+            $minPublished = PUBLICATION_PUBLISHED;
+        }
+        // For readers, hide non-finished content
+        else if ($userRole === 'reader') {
+//            if (empty($this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED)) {
+//                return false;
+//            }
+            $minPublished = PUBLICATION_COMPLETE;
         }
 
-        if ($userRole === 'guest') {
-            $public = $this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED;
-            return ($public && ($this->publishedState >= PUBLICATION_PUBLISHED));
+        if (!empty($minPublished)) {
+            return $this->publishedState >= $minPublished;
+        }
+
+        // Simulate the published state for the current user
+        $requestAction = \App\Model\Table\BaseTable::$requestAction;
+        $published = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
+        if (($requestAction !== 'edit') && !empty($published) && $this->hasDatabaseField('published')) {
+            return in_array($this->publishedState ?? PUBLICATION_PUBLISHED, $published);
         }
 
         return true;
@@ -328,16 +345,20 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
         $namespaces = $this->type['merged']['namespaces'] ?? [];
         $namespaces = $namespaces + [
-                'http' => ['button' => 'Web', 'baseurl' => 'http:'],
-                'https' => ['button' => 'Web', 'baseurl' => 'https:']
+                'http' => ['baseurl' => 'http:'],
+                'https' => ['baseurl' => 'https:']
             ];
 
         foreach ($items as $key => $value) {
             $value = explode(':', trim($value), 2);
             if ((count($value) > 1) && (isset($namespaces[$value[0]]))) {
 
-                $url = ($namespaces[$value[0]]['baseurl'] ?? '') . trim($value[1]);
-                $button = ($namespaces[$value[0]]['button'] ?? $value[0]);
+                $namespaceConfig = $namespaces[$value[0]] ?? [];
+                if (is_string($namespaceConfig)) {
+                    $namespaceConfig = ['baseurl' => $namespaceConfig];
+                }
+                $url = ($namespaceConfig['baseurl'] ?? '') . trim($value[1]);
+                $button = $namespaceConfig['button'] ?? false;
 
                 $items[$key] = [
                     'button' => $button,
@@ -367,7 +388,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * Overwrite in entity classes for type conversions.
      *
      * Remove ids from $content and populate import properties
-     * (_import_table, _import_row, _import_id, _import_ids)
+     * (_import_table, _import_row, _import_id, _import_ids, _import_action)
      *
      * @param $content
      * @param $options
@@ -387,7 +408,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         if (!empty($options['fields'])) {
             $content = array_intersect_key($content, array_flip($options['fields']));
         }
-
 
         foreach ($this->_fields_import as $old => $new) {
 
@@ -417,7 +437,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 $content[$new] = $content[$old];
                 unset($content[$old]);
             }
-
         }
 
         // Separate ID and content fields
@@ -576,89 +595,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         return $options['index'];
     }
 
-    /**
-     * Check dependencies: only can solve the parent_id if the scope fields have been solved
-     *
-     * // TODO: merge JobImport::_canSolve and _canSolve (create Index class?)
-     *
-     * @param $sourceLink
-     * @param $targetLink
-     * @return bool
-     */
-    protected function _canSolve(&$index, $sourceLink, $targetLink)
-    {
-
-        if (empty($sourceLink['scope_field'])) {
-            return true;
-        }
-
-        if ($sourceLink['field'] != 'parent_id') {
-            return true;
-        }
-
-        // Parent rows must be processed first
-        $unsolvedRows = array_map(
-            function ($x) {
-                return $x['model'] . '-' . $x['id'];
-            },
-            Hash::extract($index['sources'], '{*}.{n}')
-        );
-
-        $targetRow = $targetLink['model'] . '-' . $targetLink['id'];
-        if (in_array($targetRow, $unsolvedRows)) {
-            return false;
-        }
-
-        // Scope of child records mus be filled first
-        $unsolvedFields = array_map(
-            function ($x) {
-                return $x['model'] . '-' . $x['id'] . '-' . $x['field'];
-            },
-            Hash::extract($index['sources'], '{*}.{n}')
-        );
-
-        $sourceField = $sourceLink['model'] . '-' . $sourceLink['id'] . '-' . $sourceLink['scope_field'];
-        if (in_array($sourceField, $unsolvedFields)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * Get an array of sources and their respective targets that are solved.
-     * Solved sources are removed from the index.
-     *
-     * // TODO: merge ImportBehavior::getSolvedIds and _getSolvedIds (create Index class?)
-     *
-     * @return array Each item in the array has a source and a target key
-     *               containing the item from the index
-     */
-    protected function _getSolvedIds(&$index)
-    {
-        $links = [];
-
-        $solvedTargets = array_intersect_key($index['targets'] ?? [], $index['sources'] ?? []);
-
-        foreach ($solvedTargets as $targetId => $targetLink) {
-            $solvedSources = $index['sources'][$targetId];
-            foreach ($solvedSources as $sourceNo => $sourceLink) {
-
-                if ($this->_canSolve($index, $sourceLink, $targetLink)) {
-                    $links[] = [
-                        'source' => $sourceLink,
-                        'target' => $targetLink
-                    ];
-
-                    unset($index['sources'][$targetId][$sourceNo]);
-                }
-            }
-            if (empty($index['sources'][$targetId])) {
-                unset($index['sources'][$targetId]);
-            }
-        }
-        return $links;
-    }
 
     /**
      * Get the lookup index for solving links
@@ -681,54 +617,31 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * Updates foreign key fields with the respective IDs as soon as
      * a matching record occurs in the index.
      *
-     * // TODO: merge JobImport::_solveLinks and saveLinks (create Index class? Trait? Interface?)
-     *
      * @return bool
      */
     public function saveLinks()
     {
         $index = &$this->_getIndex();
         $this->collectIds(['index' => &$index]);
-
-        $result = true;
-        while ($links = $this->_getSolvedIds($index)) {
-
-            $sourceModels = collection($links)->groupBy('source.model');
-            foreach ($sourceModels as $modelName => $sourceLinks) {
-
-                $sourceModel = $this->fetchTable($modelName);
-                $sourceIds = collection($sourceLinks)->groupBy('source.id')->toArray();
-
-                $rows = $sourceModel->find('all')
-                    ->where(['id IN' => array_keys($sourceIds)])
-                    ->formatResults(function ($results) use ($sourceIds) {
-                        return $results->map(function ($row) use ($sourceIds) {
-                            foreach ($sourceIds[$row->id] as $sourceLink) {
-                                $row[$sourceLink['source']['field']] = $sourceLink['target']['id'];
-                            }
-                            return $row;
-                        });
-                    });
-                $result = $result && $sourceModel->saveMany($rows);
-                // TODO: add errors to the entity
-            }
-        }
-
+        $result = $this->table->solveLinks($index, false);
         return $result;
     }
 
     /**
      * Get all tags in xml fields
      *
+     * ### Options
+     * - recurse (bool) Whether to recurse into child entities
+     * - content (bool) Whether to extract the text content of the tags
+     * - to (bool) Whether to add to fields (to_tab, to_id) to the tag result
+     *
      * @param string|array $fieldName The fieldname, e.g. "value".
      *                                JSON keys can be provided using dot notation, e.g. "value.longitude".
      *                                If the fieldname is null, then all fields and child entities will be visited.
-     * @param bool $content Whether to extract the text content of the tags
-     * @param bool $recurse Whether to recurse into child entities
-     *
+     * @param array $options Extraction options
      * @return array An array containing tag IDs as keys and an array with from-keys.
      */
-    public function extractXmlTags($fieldName = null, $content = false, $recurse = false)
+    public function extractXmlTags($fieldName = null, $options =  ['content' => false, 'recurse' =>  false, 'to' => false])
     {
         $tags = [];
 
@@ -747,21 +660,21 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
                     // Entity
                     if (($value instanceof BaseEntity) && ($this->root === $value->root)) {
-                        $tags += $value->extractXmlTags(null, $content, $recurse);
+                        $tags += $value->extractXmlTags(null, $options);
                     }
 
                     // Array
-                    elseif (is_array($value) && $recurse) {
+                    elseif (is_array($value) && !empty($options['recurse'])) {
                         foreach ($value as $row) {
                             if ($row instanceof BaseEntity && ($this->root === $row->root)) {
-                                $tags += $row->extractXmlTags(null, $content, $recurse);
+                                $tags += $row->extractXmlTags(null, $options);
                             }
                         }
                     }
 
                     // Single value
                     else {
-                        $tags += $this->extractXmlTags($fieldKey, $content, $recurse);
+                        $tags += $this->extractXmlTags($fieldKey, $options);
                     }
                 }
             }
@@ -776,7 +689,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             if ($format === 'xml') {
                 $value = $this->getValueRaw($fieldName);
                 try {
-                    $fieldTags = XmlMunge::getXmlElements($value, $content);
+                    $fieldTags = XmlMunge::getXmlElements($value, !empty($options['content']));
                 } catch (Exception $e) {
                     $this->setError($fieldName[0], $e->getMessage());
                     $fieldTags = [];
@@ -786,12 +699,18 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 $fieldTags = array_combine(
                     array_keys($fieldTags),
                     array_map(
-                        function ($tagid, $tag) use ($entity, $fieldName, $content) {
+                        function ($tagid, $tag) use ($entity, $fieldName, $options) {
+                            $content = !empty($options['content']);
+                            $to = !empty($options['to']) ? $this->root->linksByTagid[$tagid][0] ?? [] : [];
                             $tag = [
                                 'tab' => $this->tableName,
                                 'id' => $entity->id,
                                 'field' => $fieldName[0],
                                 'tagid' => $tagid,
+                                'to_id' => $to['to_id'] ?? null,
+                                'to_tab' => $to['to_tab'] ?? null,
+                                'to_type' => $to['to_propertytype'] ?? null,
+                                'caption' => $to['to_caption'] ?? null,
                                 'tagname' => ($content && is_array($tag)) ? $tag['name'] : $tag,
                                 'content' => ($content && is_array($tag)) ? $tag['content'] : null
                             ];
@@ -839,25 +758,39 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $entity = $this;
         $callback_ids = static function (&$element, &$parser) use ($links, $footnotes, $options, $entity, $fieldName) {
             if ($element['position'] == 'open') {
-                if (!empty($element['attributes']['id']) && !empty($links[$element['attributes']['id']])) {
-                    //TODO: unnest duplicate tag IDs
-                    $link = $links[$element['attributes']['id']][0];
 
-                    $element['attributes']['data-link-target'] = $link->getValueFormatted('to_id', $options);
-                    $element['attributes']['data-link-iri'] = $link->getValueFormatted('to_iri_path', $options);
-                    $element['attributes']['data-link-value'] = $link->getValueFormatted('to_caption', $options);
+                if (!empty($element['attributes']['id'])) {
 
-                    if (!isset($link->type->config['attributes']['value'])) {
-                        unset($element['attributes']['value']);
+                    $matchingLinks = $links[$element['attributes']['id']] ?? [];
+                    $matchingFootnotes = $footnotes[$element['attributes']['id']] ?? [];
+
+                    if (empty($matchingLinks) && empty($matchingFootnotes)) {
+                        $entity->setLinkError(
+                            is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
+                            __('Missing link record for element ID {0}. ', $element['attributes']['id'])
+                        );
+                    }
+
+                    // Atomic annotations have exactly one link record
+                    // pointing to exactly one target.
+                    elseif (count($matchingLinks) === 1) {
+                        $link = $matchingLinks[0];
+
+                        $element['attributes']['data-link-target'] = $link->getValueFormatted(
+                            'to_id',['format' => 'raw'] + $options
+                        );
+                        $element['attributes']['data-link-iri'] = $link->getValueFormatted(
+                            'to_iri_path',['format' => 'raw'] + $options
+                        );
+                        $element['attributes']['data-link-value'] = $link->getValueFormatted(
+                            'to_caption',['format' => 'raw'] + $options
+                        );
+
+                        if (!isset($link->type->config['attributes']['value'])) {
+                            unset($element['attributes']['value']);
+                        }
                     }
                 }
-                elseif (!empty($element['attributes']['id']) && empty($footnotes[$element['attributes']['id']])) {
-                    $entity->setLinkError(
-                        is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
-                        __('Missing link record for element ID {0}. ', $element['attributes']['id'])
-                    );
-                }
-
             }
             return true;
         };
@@ -956,11 +889,11 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
         // Only show the published field in edit actions or when explicitly requested
         if (in_array($fieldName, ['published'])) {
-            return ($userRole !== 'guest') && (empty($requestPublished) || ($requestAction !== 'view'));
+            return !in_array($userRole, ['guest', 'reader']) && (empty($requestPublished) || ($requestAction !== 'view'));
         }
 
-        // Logged in users can see all fields
-        if ($userRole !== 'guest') {
+        // Users other than guests and readers can see all fields
+        if (!in_array($userRole, ['guest', 'reader'])) {
             return true;
         }
 
@@ -1145,6 +1078,10 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             $content = $this->get($fieldName[0] . '_name');
             return ($content === '') || ($content === null);
         }
+        elseif ($format === 'image') {
+            $content = $this->get($fieldName[0] . '_name');
+            return ($content === '') || ($content === null);
+        }
         elseif ($format === 'record') {
             return empty($this->get($fieldName[0] . '_id'));
         }
@@ -1271,6 +1208,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         $baseUrl = $this->type->config['fields']['file']['baseurl'] ?? '';
+        $externalUrl = ($this->type->config['fields']['file']['format'] ?? 'image') == 'imageurl';
 
         // No file
         if (!$this->hasDatabaseField('file_name') || empty($this->file_name)) {
@@ -1278,7 +1216,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         // Images by URL
-        elseif (!empty($baseUrl)) {
+        elseif (!empty($baseUrl) || $externalUrl) {
             if ($this->hasDatabaseField('file_path')) {
                 $downloadpath = rtrim($this['file_path'] ?? '', '/');
                 $fullfilename = $downloadpath . '/' . $this['file_name'];
@@ -1445,7 +1383,8 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         $baseUrl = $this->type->config['fields']['file']['baseurl'] ?? '';
-        if (!empty($baseUrl)) {
+        $externalUrl = ($this->type->config['fields']['file']['format'] ?? 'image') == 'imageurl';
+        if (!empty($baseUrl) || $externalUrl) {
             return [
                 'thumburl' => ($baseUrl . $this->file_path . '/' . $this->file_name),
                 'exists' => true,
@@ -1492,27 +1431,48 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         $filename = $this->file_name;
+        $filetype = $this->file_properties['extension'];
         $sourceFolder = Files::joinPath([$this->file_properties['root'], $this->file_properties['path']]);
+
+        // Copy
         $result = Files::copyFile($filename, $sourceFolder, $targetFolder);
 
-        // Inject metadata (exif) into the file
-        if ($result && in_array($this->file_properties['extension'], ['jpg', 'jpeg'])) {
+        // Convert tif to jpg
+        if ($result && in_array($this->file_properties['extension'], ['tif'])) {
+            $result = Files::convertImage(Files::joinPath([$targetFolder, $filename]), 'jpg', true);
+
+            if ($result !== false) {
+                $filename = pathinfo($result, PATHINFO_BASENAME);
+                $filetype = 'jpg';
+                $result = true;
+
+                //  For processing in getValuePlaceholder
+                // TODO: better solution than changing the entity fields?
+                $this->file_type = $filetype;
+                $this->file_name = $filename;
+            }
+        }
+
+        // Resize if necessary
+        Files::resizeImage(Files::joinPath([$targetFolder, $filename]), 10, 5);
+
+        // Inject metadata (xmp, iptc, exif) into the file
+        if ($result && in_array($filetype, ['jpg', 'jpeg'])) {
             $metadataConfig = array_merge($this->file_properties['metadata'] ?? [], $metadataConfig);
             $metadata = [];
             foreach ($metadataConfig as $field => $placeholderArray) {
                 $placeholderArray = !is_array($placeholderArray) ? [$placeholderArray] : $placeholderArray;
                 $value = null;
                 foreach ($placeholderArray as $placeholderString) {
-                    $value = $this->getValuePlaceholder($placeholderString, ['format' => false]);
-                    $value = is_array($value) ? array_map(fn($x) => strval($x), $value) : $value;
-                    $value = is_array($value) ? implode(', ', $value) : $value;
+                    $value = $this->getValuePlaceholder($placeholderString, ['format' => false, 'collapse' => ', ']);
                     if (!is_null($value) && ($value !== '')) {
                         break;
                     }
                 }
                 $metadata[$field] = $value;
             }
-            $metadata = array_filter($metadata);
+
+            // $metadata = array_filter($metadata);
             $newFilename = $metadata['filename'] ?? $filename;
             unset($metadata['filename']);
 
@@ -1680,7 +1640,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      */
     protected function _getTags()
     {
-        return $this->extractXmlTags(null, true);
+        return $this->extractXmlTags(null, ['content' => true, 'to' => true]);
     }
 
     /**
@@ -1798,8 +1758,13 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      *
      * "geodata": "value"
      *
-     * TODO: Do we need the distinction between getDateGeoData() and getExportGeoData(),
+     * TODO: Do we need the distinction between getDataGeoData() and getExportGeoData(),
      *       analog to the triples generator?
+     *
+     * ### Options
+     * - properties (array) An array of property IDs grouped by the property type
+     *              that will be added to the geodata.
+     *  result
      *
      * @param array $options In the options, provide a format key (html, ttl...)
      * @return array
@@ -1873,15 +1838,14 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $template = $options['template'] ?? 'view';
         $columns = $options['columns'] ?? [];
 
-        // Get fields from the 'columns' option
+        // Selected columns: Get fields from the 'columns' option
         if (!empty ($columns)) {
-            $selected = array_filter($columns, fn($x) => ($x['selected'] ?? false));
-            $selected = empty($selected) ? array_filter($columns, fn($x) => ($x['default'] ?? false)) : $selected;
-
-            return $selected;
+            $fields = array_filter($columns, fn($x) => ($x['selected'] ?? false));
+            $fields = empty($fields) ? array_filter($columns, fn($x) => ($x['default'] ?? false)) : $fields;
+            return $fields;
         }
 
-        // Get fields from the types config
+        // Selected columns: Get fields from the types config
         if ($template === 'table') {
             // Column config
             $columns = $this->type['merged']['columns'] ?? [];
@@ -1896,13 +1860,13 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
             $fields = $options['fields'] ?? [];
             $fields = empty($fields ?? []) ? Hash::extract($columns, '{*}[default=1].name') : $fields;
-            $columns = array_filter($columns, fn($x) => in_array($x['name'], $fields) | !count($fields));
-            $columns = array_merge($fields, $columns);
 
-            return $columns;
+            $columns = array_filter($columns, fn($x) => in_array($x['name'], $fields) | !count($fields));
+            $fields = array_merge($fields, $columns);
+            return $fields;
         }
 
-        // Get fields from the serialize properties
+        // Full entity data: Get fields from the serialize properties
         else {
             $fields = $this->_serialize_fields;
 
@@ -1931,10 +1895,14 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * - clearIri (boolean) Will skip IRIs for non-root entities. Defaults to false.
      * - prefixIds (string|boolean) The prefix added to ID fields. Defaults to false.
      * - prepareTree (boolean) Prepare tree properties before getting export values.
+     * - format
      * - removeEmpty (boolean) Defaults to true.
      * - parseField (boolean) Defaults to true.
      * - seed (boolean) Whether this is the seed node, the entry point in getDataForExport() or getDataForTransfer().
      * - copy (boolean) Whether the goal is to copy an entity with all dependencies. Defaults to false.
+     * - files (boolean) Whether to copy the file referenced in the file field of an entity.
+     * - snippets (array) A list of snippets to be added to the export values:
+     *                    tags, search, comments (TODO: what about footnotes, notes, published, iris, indexes, backlinks ?)
      *
      * Options passed to getValueFormatted:
      * - format (string) Defaults to 'xml'
@@ -1968,7 +1936,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $values = [];
 
         // Clear IRIs
-        if (($options['clearIri'] ?? false) && ((!$this instanceof RootEntity))) {
+        if (($options['clearIri'] ?? false)) {
             unset($fields['norm_iri']);
             $fields = array_filter($fields, fn($v) => $v !== 'norm_iri');
         }
@@ -1990,7 +1958,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 $fieldName = $fieldConfig['name'] ?? $oldName;
                 $fieldKey = $fieldConfig['key'] ?? $oldName;
 
-                //$value = is_object($entity) ? $entity->getValueNested($x) : Objects::extract($entity, $x);
                 $fieldConfig = array_merge($options, $fieldConfig);
                 $fieldConfig['format'] = ($options['formatFields'] ?? false) ? ($options['format'] ?? 'xml') : false;
                 $fieldConfig['aggregate'] = $fieldConfig['aggregate'] ?? 'collapse';
@@ -2020,10 +1987,10 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 }
 
                 // Prefix copies
-                if (($options['copy'] ?? false) && ($options['seed'] ?? false)) {
+                if (($options['copy'] ?? false) && (($options['root'] ?? false) === $this)) {
                     $displayField = $this->table->getDisplayField();
                     if ($fieldName === $displayField) {
-                        $value = 'Copy: ' . $value;
+                        $value = 'Copy of: ' . $value;
                     }
                 }
             }
@@ -2185,6 +2152,14 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      *
      * All other nested entities are returned in long format.
      *
+     * ### Options
+     * - params.shape (string) 'long' (default) or 'wide'.
+     * - clear (boolean) If set, the first level entity is cleared.
+     * - copy (boolean) Whether the goal is to copy an entity with all dependencies. Defaults to false.
+     * - root (BaseEntity) The root entity, required if copy is true.
+     *
+     * Those and further options are passed to getExportValues(), getDataUnnested(), and getEntityIsVisible().
+     *
      * @param array $options Options passed to getExportValues.
      * @param boolean|string $keyCol If set, the path to the current entity is inserted into this field.
      * @param array $keyValues The path to the current entity.
@@ -2207,11 +2182,8 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             $data['_action'] = 'clear';
         }
 
-        //$data['table'] = $data['table_name'] ?? '';
-
         $data = array_merge($data, $this->getExportValues($options));
         unset($options['columns']);
-        unset($options['seed']);
 
         // Recurse
         foreach ($data as $key => $value) {
@@ -2224,7 +2196,15 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             elseif ($value instanceof BaseEntity) {
                 $nestedKey = array_merge($keyValues, [$key]);
                 $data[$key] = $value->getValueFormatted('id', $options) ?? null;
-                $newrows = $value->getDataUnnested($options, $keyCol, $nestedKey);
+
+                if (($options['copy'] ?? false) && (!$value->hasRoot($options['root']))) {
+                    $newrows = [];
+                    if (isset($this->_fields_import[$key])) {
+                        $data[$this->_fields_import[$key]] = $data[$key];
+                    }
+                } else {
+                    $newrows = $value->getDataUnnested($options, $keyCol, $nestedKey);
+                }
 
                 // Wide format
                 if (!empty($newrows) && ($shape === 'wide')) {
@@ -2309,6 +2289,17 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * and articles are the container of sections, sections are the
      * container of items.
      *
+     * Be aware: When linking to external entities that are not root entities,
+     *           the root of those entities will be the root of the link.
+     *           For example, if an article links to a section in another article,
+     *           the root of the linked section will be the article containing the link,
+     *           not the article containing the section.
+     *           Likewise, IndexLink entities will have the IndexProperty as root,
+     *           although this does not reflect the database structure, it rather creates
+     *           a logical structure for index generation.
+     *           If you want to test whether such entities depend on the root entity,
+     *           use the hasRoot() method.
+     *
      * @param \App\Model\Entity\BaseEntity $container The container entity
      * @param \App\Model\Entity\BaseEntity $root The root entity
      * @param bool $recurse Whether to recursively prepare the root and container property
@@ -2332,7 +2323,8 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         // Set root
-        if (($root === null) || $this instanceof RootEntity) {
+        // TODO: Add $this->hasRoot($root) check? See the TODO in IndexProperty.
+        if (($root === null) || ($this instanceof RootEntity)) {
             $root = $this;
         }
 
@@ -2462,24 +2454,22 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * Prepare entity for import into another database
      * (analog to API preparation, but with IRIs)
      *
-     * TODO: support clearing IRIs of projects, articles, section, items, links, footnotes
-     *       (e.g. by $options['setIri'] = 'clear')
      * @param array $options
      * @return array
      */
     public function getDataForTransfer($options = [])
     {
         $options['format'] = 'transfer';
-        $options['snippets'] = $options['snippets'] ?? [];
+        $options['snippets'] = $options['snippets'] ?? ['deprecated'];
         $options['removeEmpty'] = false;
         $options['prefixIds'] = 'tmp';
         $options['setRoot'] = true;
         $options['files'] = true;
+        $options['root'] = $this;
 
         if ($options['copy'] ?? false) {
             $options['setIri'] = false;
             $options['clearIri'] = true;
-            $options['seed'] = true;
         }
         else {
             $options['setIri'] = true;
@@ -2499,9 +2489,12 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $fields = [];
         if ($this->type['merged']['fulltext'] ?? false) {
             foreach (($this->type['merged']['fields'] ?? []) as $fieldName => $fieldConfig) {
-                $indexKey = $fieldConfig['fulltext'] ?? false;
-                if ($indexKey !== false) {
-                    $fields[$fieldName] = $indexKey;
+                $indexConfig = $fieldConfig['fulltext'] ?? false;
+                if ($indexConfig !== false) {
+                    if (!is_array($indexConfig)) {
+                        $indexConfig = ['index' => $indexConfig];
+                    }
+                    $fields[$fieldName] = $indexConfig;
                 }
             }
 
@@ -2513,12 +2506,38 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     /**
      * Get items for fulltext index
      *
+     * In the field config, set the 'fulltext' key to the index name
+     * or an array with the index name and an array of
+     * additional processing options in the process key.
+     *
+     * The process options are passed to the Strings::processStrings().
+     *
+     * Example:
+     *
+     * "content": {
+     *     "caption": "Translation",
+     *     "fulltext": {
+     *         "index": "Translation",
+     *        "process": ["stripbrackets"]
+     *     }
+     * }
+     *
      * @return \Generator
      */
     public function getSearchText()
     {
-        foreach ($this->getFulltextFields() as $fieldName => $fieldIndex) {
+        foreach ($this->getFulltextFields() as $fieldName => $indexConfig) {
+            $fieldIndex = $indexConfig['index'] ?? $fieldName;
             $text = trim($this->getValueFormatted($fieldName, ['format' => 'txt']) ?? '');
+
+            if (!empty($indexConfig['footnotes'] ?? false)) {
+                foreach ($this->footnotes as $footnote) {
+                    $text .= '\n' . trim($footnote->getValueFormatted('content', ['format' => 'txt']) ?? '');
+                }
+            }
+
+            $text = Strings::processStrings($text, $indexConfig['process'] ?? []);
+
             if ($text !== '') {
                 yield [
                     'index' => $fieldIndex,

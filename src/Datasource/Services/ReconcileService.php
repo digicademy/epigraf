@@ -4,24 +4,51 @@ namespace App\Datasource\Services;
 
 use App\Cache\Cache;
 use App\Utilities\Converters\Attributes;
-use Cake\Core\Configure;
 use Cake\Http\Client;
 
+/**
+ * Reconcilation Service
+ *
+ * Supports services following the Reconciliation Service API v0.2 format.
+ *
+ * See https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/
+ * See https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/
+ *
+ * To add a service configuration, see https://reconciliation-api.github.io/testbench/#/.
+ *
+ * Configute the service URL as base_url.
+ * Find out the view URL and the preview URL.
+ * They should be documented on the page that opens when you access the base_url.
+ * Configure the view_url and preview_url using {{id}} as placeholder for the id.
+ *
+ */
 class ReconcileService extends BaseService
 {
 
     public string $serviceKey = 'reconcile';
 
-    // See https://reconciliation-api.github.io/testbench/#/
-    // See https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/
-
+    /**
+     * Each service configuration supports the following keys:
+     * - base_url: The base URL of the reconciliation service, receiving requests with the queries parameter
+     * - type: The type send to the reconciliation service.
+     * - view_url: The URL to view the item, using {{id}} as placeholder for the id.
+     *             Will be used to generate the link to the provider in the result.
+     *             If no specific view_url is available, you should use the namespace as view URL.
+     *            Example: https://www.wikidata.org/wiki/{{id}}
+     * - preview_url: The endpoint that returns an HTML preview, using {{id}} as placeholder for the id.
+     * - strip: If the endpoint returns IDs including the namespace
+     *          (e.g. aat/1234 for relative IDs or https://iconclass.org/1234 for absolute IDs),
+     *          provide the namespace in the strip parameter to remove it from the ID.
+     *
+     * @var array
+     */
     public array $config = [
 
         // Example: https://services.getty.edu/vocab/reconcile?queries={"q1":{"query":"Glocke","type":"/aat"}}
         'aat' => [
             'base_url' => 'https://services.getty.edu/vocab/reconcile/',
-            'view_url' => 'http://vocab.getty.edu/page/{{id}}',
-            'preview_url' => 'https://services.getty.edu/vocab/reconcile/preview?id={{id}}',
+            'view_url' => 'http://vocab.getty.edu/page/aat/{{id}}',
+            'preview_url' => 'https://services.getty.edu/vocab/reconcile/preview?id=aat/{{id}}',
             'strip' => 'aat/',
             'type' => '/aat'
         ],
@@ -33,7 +60,23 @@ class ReconcileService extends BaseService
             'preview_url' => 'https://wikidata.reconci.link/en/preview?id={{id}}',
             'type' => 'Q18783400'
         ],
-        'useragent' => 'Epigraf/5.0 (github.com/digicademy/epigraf)'
+
+        'gnd' => [
+            'base_url' => 'https://lobid.org/gnd/reconcile/',
+            'view_url' => 'https://lobid.org/gnd/{{id}}',
+            'preview_url' => 'https://lobid.org/gnd/{{id}}.preview',
+            'type' => 'Q5'
+        ],
+
+        'ic' => [
+            'base_url' => 'https://termennetwerk-api.netwerkdigitaalerfgoed.nl/reconcile/https://iconclass.org',
+            'view_url' => 'https://iconclass.org/{{id}}',
+            'preview_url' => 'https://termennetwerk-api.netwerkdigitaalerfgoed.nl/preview/https://iconclass.org/{{id}}',
+            'strip' => 'https://iconclass.org/'
+        ],
+
+        'useragent' => 'Epigraf/5.0 (github.com/digicademy/epigraf)',
+        'accept' => 'application/json'
     ];
 
     public array $queryOptions = ['provider','q', 'limit', 'preview','cache','type'];
@@ -53,6 +96,7 @@ class ReconcileService extends BaseService
 
         $this->previewClient = new Client([
             'headers' => [
+                'Accept' => 'application/json',
                 'User-Agent' => ($this->config['useragent'])
             ]
         ]);
@@ -62,7 +106,6 @@ class ReconcileService extends BaseService
      * Post process data from the reconciliation endpoint to make
      * it compatible with the Reconciliation Service API v0.2 format
      *
-     * See https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.2-20230410/
      * The optional preview key is an Epigraf extension.
      * Usually, the preview is fetched from the preview endpoint.
      *
@@ -82,7 +125,7 @@ class ReconcileService extends BaseService
      *   ]
      * ]
      *
-     * The first level key is an arbitrary query identifier.
+     * The first level key (q1) is an arbitrary query identifier.
      *
      * @param array $data
      * @param array $options
@@ -188,6 +231,7 @@ class ReconcileService extends BaseService
         $data = 'queries=' . urlencode($data);
         $preview = Attributes::isTrue($options['preview'] ?? false);
         $cacheKey = $baseUrl . '?' . $data . '&preview=' . $preview;
+        $cacheKey = md5($cacheKey);
 
         if (Attributes::isTrue($options['cache'] ?? true)) {
             $task = Cache::read($this->serviceKey .':' . $cacheKey,'services');
@@ -217,15 +261,15 @@ class ReconcileService extends BaseService
                 }
 
                 // Get value
-                $value = $item['id'];
+                $id = $item['id'];
                 $strip = $this->config[$provider]['strip'] ?? '';
                 if ($strip !== '') {
-                    $value = str_replace($strip, '', $value);
+                    $id = str_replace($strip, '', $id);
                 }
-                $value = $provider . ':' .  $value;
+                $value = $provider . ':' .  $id;
 
                 $answer = [
-                    'id' => $item['id'],
+                    'id' => $id,
                     'value' => $value,
                     'name' => $item['name'] ?? null,
                     'description' => $item['description'] ?? null,
@@ -234,12 +278,12 @@ class ReconcileService extends BaseService
                 ];
 
                 if (!empty($viewUrl)) {
-                    $answer['url'] = str_replace('{{id}}', $item['id'], $viewUrl);
+                    $answer['url'] = str_replace('{{id}}', $id, $viewUrl);
                 }
 
                 if ($preview && !empty($previewUrl)) {
                     $previewResponse = $this->previewClient->get(
-                        str_replace('{{id}}', $item['id'], $previewUrl)
+                        str_replace('{{id}}', $id, $previewUrl)
                     );
                     $previewHtml = $this->postProcessPreview($previewResponse->getStringBody(), $options);
                     if ($previewResponse->getStatusCode() === 200) {

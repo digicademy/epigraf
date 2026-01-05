@@ -53,8 +53,6 @@ export class GridWidget extends BaseWidget {
 
     /**
      * Bind events
-     *
-     * @param event
      */
     initWidget() {
         this.sectionElement = this.widgetElement.closest('.doc-section');
@@ -70,7 +68,6 @@ export class GridWidget extends BaseWidget {
 
     /**
      *  Initialize the grid layout inputs and the grid size
-     *
      */
     initLayout() {
         if (!this.gridSizeElement) {

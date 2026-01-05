@@ -116,12 +116,16 @@ class RootEntity extends BaseEntity
         $footnotes = $this->footnotes_by_type[$typeName] ?? [];
         $along = $this->getCounter($typeName);
         $along = empty($along) ? $this->getCounter('tags') : $along;
-        $along = empty($along) ? Hash::combine($footnotes, "{*}.from_tagid", "{*}.sortno") : $along;
-        $footnotes = Arrays::orderAlong($footnotes, 'from_tagid', $along);
 
-        // Filter out unpublished footnotes for guests
-        if (($this->currentUserRole === 'guest') || !empty(\App\Model\Table\BaseTable::$requestPublished)) {
+        // Filter out unpublished footnotes for guests and readers
+        if (in_array($this->currentUserRole, ['guest', 'reader']) || !empty(\App\Model\Table\BaseTable::$requestPublished)) {
+            $footnotes = Arrays::orderAlong($footnotes, 'from_tagid', $along);
             $footnotes = array_filter($footnotes, fn($footnote) => $footnote->number !== -INF);
+        }
+        // Force order by sortno
+        else {
+            $along = empty($along) ? Hash::combine($footnotes, "{*}.from_tagid", "{*}.sortno") : $along;
+            $footnotes = Arrays::orderAlong($footnotes, 'from_tagid', $along);
         }
 
         if ($this->_filterAnnos) {
@@ -168,7 +172,7 @@ class RootEntity extends BaseEntity
     {
         // Extract all tags that should link somewhere
         // TODO: don't recurse, call in each _getProblems()
-        $tags = $this->extractXmlTags(null, null, true);
+        $tags = $this->extractXmlTags(null, ['recurse' =>  true]);
         $tags = array_map(fn($x) => [
             'type' => 'tag',
             'from_tagname' => $x['tagname'],
@@ -243,6 +247,7 @@ class RootEntity extends BaseEntity
         // Index links by from_tab and id for performance reasons
         if (!isset($this->_lookup['links']['from_tab'])) {
             $this->_lookup['links']['from_tab'] = collection($this->links ?? [])
+                ->filter(fn($link) => !is_null($link['from_tab'] ?? null))
                 ->groupBy('from_tab')
                 ->map(fn($table) => collection($table)
                     ->groupBy(fn($link) => $link['from_id'] ?? '')
@@ -251,6 +256,7 @@ class RootEntity extends BaseEntity
                 ->toArray();
         }
 
+        // array of Link objects
         return $this->_lookup['links']['from_tab'][$table][$id] ?? [];
     }
 
@@ -305,11 +311,12 @@ class RootEntity extends BaseEntity
      * TODO: implement filter directly in BaseTable::getColumns()
      *
      * @param array $selected List of selected columns to filter
+     * @param boolean $joined Whether to join the columns
      * @return array
      */
-    public function getColumns($selected)
+    public function getColumns($selected, $joined = false)
     {
-        $columns = $this->table->getColumns($selected, [], $this->type['name'] ?? null);
+        $columns = $this->table->getColumns($selected, [], ['type' => $this->type['name'] ?? null, 'joined' => $joined]);
         $selectedColumns = array_filter($columns, fn($x) => ($x['selected'] ?? false));
         if (empty($selectedColumns)) {
             $selectedColumns = array_filter($columns, fn($x) => ($x['default'] ?? false));

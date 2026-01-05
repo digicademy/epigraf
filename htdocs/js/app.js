@@ -80,6 +80,8 @@ class EpiApp {
         Utils.listenEvent(document,'app:open:dialog', (ev) => this.showDialog(ev));
         Utils.listenEvent(document,'app:close:dialog', (ev) => this.hideDialog(ev));
 
+        Utils.listenEvent(document,'epi:open:details', (ev) => this.onOpenDetailsEvent(ev));
+
 
         // Focus first input
         // TODO: think about focus control
@@ -540,7 +542,7 @@ class EpiApp {
 
         const a = event.target.closest('a');
         let url = a.href;
-        if (url && !event.ctrlKey) {
+        if (url && !(event.ctrlKey || event.metaKey)) {
 
             const size = a.dataset.popupSize;
             let modal = a.dataset.popupModal;
@@ -567,7 +569,7 @@ class EpiApp {
 
         const a = event.target.closest('a');
         let url = a.href;
-        if (url && !event.ctrlKey) {
+        if (url && !(event.ctrlKey  || event.metaKey)) {
             App.openTab(url);
             event.preventDefault();
             return false;
@@ -586,16 +588,17 @@ class EpiApp {
      */
     openDetailLink(event) {
         // Single clicks only
-        if ((event.detail > 1) || event.ctrlKey ) {
+        if ((event.detail > 1) || event.ctrlKey || event.metaKey) {
             return;
         }
 
         // Perform default action on ctrl click
-        if (event.ctrlKey) {
+        if (event.ctrlKey || event.metaKey) {
             return;
         }
 
         const container = event.target.closest('.ui-dialog, .sidebar');
+        const popup = event.target.closest('.ui-dialog');
         const a = event.target.closest('a');
 
         // Prevent popups in select list (e.g. when selecting an external article in an annotation)
@@ -604,8 +607,8 @@ class EpiApp {
             return false;
         }
 
-        // Redirect clicks in sidebars or popups to popups
-        if (container) {
+        // Redirect clicks in popups to popups
+        if (popup) {
             App.openPopupLink(event);
             event.preventDefault();
             return false;
@@ -627,6 +630,27 @@ class EpiApp {
                 external: a.dataset.frameExternal || true,
                 frameTarget: a.dataset.frameTarget || 'details',
                 frameCaption: a.dataset.frameCaption || 'Details',
+                force: false
+            };
+
+            App.openDetails(url, linkOptions);
+            event.preventDefault();
+            return false;
+        }
+    }
+
+    onOpenDetailsEvent(event) {
+
+        let url;
+        if (event.detail && event.detail.data) {
+            url = event.detail.data.url;
+        }
+
+        if (url) {
+            const linkOptions = {
+                external: true,
+                frameTarget: 'details',
+                frameCaption: 'Details',
                 force: false
             };
 

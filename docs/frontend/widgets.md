@@ -254,6 +254,10 @@ The markup is generated in the backend using CakePHP form helpers.
   To interactively reload forms after selecting a dropdown item, Epigraf implements the `FormUpdateWidget` which comes into existence
   by the data-form-update attribute.
 
+- **Service Buttons** are handled by the `ServiceButtonWidget`.
+  They are used to trigger actions on the server side, for example to reconcile data.
+  The `ServiceWidget` class handles the client-server interaction.
+
 ## Content and Editor Widgets
 
 Some widgets implement interactivity for specific content types:

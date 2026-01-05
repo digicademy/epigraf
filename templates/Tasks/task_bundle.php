@@ -27,15 +27,21 @@
             'type' => 'textarea',
             'escape' => true,
             'label' => __('Prefix'),
-            'placeholder'=>__('The start of the output file.'),
+            'placeholder'=>__('The start of the output file. You can use placeholder strings to access the job data.'),
             'value' => $task['prefix'] ?? ''
         ],
         'postfix' => [
             'type' => 'textarea',
             'escape' => true,
             'label' => __('Postfix'),
-            'placeholder'=>__('The end of the output file.'),
+            'placeholder'=>__('The end of the output file. You can use placeholder strings to access the job data.'),
             'value' => $task['postfix'] ?? ''
-        ]
+        ],
+        'indent' => [
+            'type' => 'text',
+            'label' => __('Add indentation'),
+            'placeholder' => '0',
+            'value' => empty($task['indent']) ? '' : $task['indent']
+        ],
     ], $options)
 ?>

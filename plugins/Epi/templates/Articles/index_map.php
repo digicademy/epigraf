@@ -8,6 +8,8 @@
  *
  */
 
+use Epi\Model\Table\BaseTable;
+
 ?>
 <?php
 /**
@@ -22,6 +24,12 @@
     $properties = $this->getConfig('options')['params']['properties'] ?? [];
     $propertyTypes = array_keys($properties);
 
+    if ((BaseTable::$requestMode ?? MODE_DEFAULT) !== MODE_DEFAULT) {
+        $url = ['?' => ['mode' => BaseTable::$requestMode]];
+    } else {
+        $url = [];
+    }
+
 ?>
 
 <div class="content-main">
@@ -29,10 +37,11 @@
          data-filter-group="epi_articles"
          data-filter-template="map"
          data-filter-mode="<?= $this->getConfig('options')['params']['mode'] ?? '' ?>"
-         data-filter-lanes="<?= $this->getConfig('options')['params']['lanes'] ?? '' ?>"
          data-filter-properties="<?= implode(',', $propertyTypes) ?>"
          data-row-types = "<?= implode(',', array_keys($itemTypes)) ?>"
          data-mode="search"
+         data-index-url="<?= $this->Url->build(array_replace_recursive(['action'=>'index', '?'=>['template' => 'tiles','show'=>'content','flow'=>'frame','id' => '{rootId}']], $url)) ?>"
+         data-view-url="<?= $this->Url->build(array_replace_recursive(['action'=>'view', '{rootId}'], $url)) ?>"
     ></div>
 
     <script class="widget-map-data"
@@ -40,6 +49,7 @@
             data-snippet="map-data"
             data-hasmore="<?=  $this->Paginator->hasNext() ? 'true' : 'false' ?>"
             data-url="<?= $this->Link->nextPageUrl(null, true) ?>"
+            data-group-url="<?= $this->Url->build(array_replace_recursive(['controller'=>'items','action'=>'groups','tiles'], $url)) ?>"
             data-location-lat="<?= $this->getConfig('options')['params']['lat'] ?? '' ?>"
             data-location-lng="<?= $this->getConfig('options')['params']['lng'] ?? '' ?>"
             data-location-zoom="<?= $this->getConfig('options')['params']['zoom'] ?? '' ?>"

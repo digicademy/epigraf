@@ -21,7 +21,7 @@ use Cake\Utility\Inflector;
 ?>
 
 
-<?php $this->Breadcrumbs->add(I18n::getTranslator()->translate(Inflector::humanize($job->typ))) ?>
+<?php $this->Breadcrumbs->add(I18n::getTranslator()->translate(Inflector::humanize($job->jobtype))) ?>
 
 <?= $this->Element->openHtmlElement(
     'div',
@@ -29,7 +29,8 @@ use Cake\Utility\Inflector;
         'class' => 'content-tight widget-job',
         'data-job-nexturl' => $job->nexturl,
         'data-job-cancel' => $job->cancelUrl,
-        'data-job-redirect' => $job->redirect
+        'data-job-download' => $job->downloadUrl,
+        'data-job-redirect' => $job->redirectUrl
     ]
 ) ?>
 
@@ -55,13 +56,13 @@ use Cake\Utility\Inflector;
         <div class="widget-job-bar"></div>
     <?php endif; ?>
 
-    <?php $downloads = $job->config['downloads'] ?? []; ?>
+    <?php $downloads = $job->result['downloads'] ?? []; ?>
     <table class="widget-job-results vertical-table<?= empty($downloads) ? ' empty' : '' ?>">
         <tr>
             <th scope="row"><?= __('Results') ?></th>
             <td>
                 <?php foreach ($downloads as $download): ?>
-                    <?= $this->Html->link($download['caption'], [$job->id, '?' => ['download' => $download['name']]],['target' => '_blank']) ?>
+                    <?= $this->Html->link($download['caption'], [$job->id, '?' => ['download' => $download['name'], 'force' => '1']],['target' => '_blank']) ?>
                     <br>
                 <?php endforeach; ?>
             </td>
@@ -101,9 +102,8 @@ use Cake\Utility\Inflector;
         <?php endif; ?>
 
         <tr>
-            <th scope="row"><?= __('Parameters') ?></th>
-            <td>
-                <?=	$this->Table->nestedTable($job->config['params'] ?? [], ['header'=>false]);?>
+            <td colspan="2">
+                <?=	$this->Table->nestedTable($job->config['params'] ?? [], ['key'=>__('Parameters'), 'value' =>'', 'tree' => true]);?>
             </td>
         </tr>
 
@@ -119,13 +119,33 @@ use Cake\Utility\Inflector;
     ?>
 
     <?php
-        $url = $job->redirect ?? $job->nexturl ?? '#';
+        $url = $job->responseUrl ?? $job->nexturl ?? '#';
         if (empty($job->error) && !empty($url)) {
-            $this->Link->addAction(
-                !empty($job->config['download']) ? __('Download') : __('Proceed'),
-                $url,
-                ['class' => 'widget-job-proceed button', 'data-role' => 'proceed', 'data-target'=>'main']
-            );
+
+            // Download
+            if (!empty($job->config['download'])) {
+                $this->Link->addAction(
+                    __('Download') ,
+                    $url,
+                    ['class' => 'widget-job-proceed button', 'data-role' => 'download', 'data-target' => 'main']
+                );
+            }
+
+            // Proceed in frame or in main
+            else {
+                $this->Link->addAction(
+                     __('Proceed'),
+                    $url,
+                    [
+                        'class' => 'widget-job-proceed button',
+                        'data-role' => 'proceed',
+                        'data-target' =>  empty($job->nexturl) ? 'main' : ''
+                    ]
+                );
+
+            }
+
+
         }
     ?>
 

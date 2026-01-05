@@ -59,19 +59,6 @@ class Files
         return $temp_filename;
     }
 
-    static function prependToFile($filename, $content)
-    {
-        $context = stream_context_create();
-        $orig_file = fopen($filename, 'r', 1, $context);
-
-        $temp_filename = tempnam(sys_get_temp_dir(), 'php_prepend_');
-        file_put_contents($temp_filename, $content);
-        file_put_contents($temp_filename, $orig_file, FILE_APPEND);
-
-        fclose($orig_file);
-        unlink($filename);
-        rename($temp_filename, $filename);
-    }
 
     /**
      * Append the content of one file to another
@@ -87,6 +74,27 @@ class Files
         Files::appendToFile($filename, $content);
     }
 
+
+    /**
+     * Prepend content to a file
+     *
+     * @param string $filename The file name
+     * @param string $content The content to prepend
+     * @return void
+     */
+    static function prependToFile($filename, $content)
+    {
+        $context = stream_context_create();
+        $orig_file = fopen($filename, 'r', 1, $context);
+
+        $temp_filename = tempnam(sys_get_temp_dir(), 'php_prepend_');
+        file_put_contents($temp_filename, $content);
+        file_put_contents($temp_filename, $orig_file, FILE_APPEND);
+
+        fclose($orig_file);
+        unlink($filename);
+        rename($temp_filename, $filename);
+    }
 
     /**
      * Add content to an existing file or create a new file
@@ -113,6 +121,17 @@ class Files
         fclose($file);
     }
 
+    /**
+     * Add a UTF-8 BOM (Byte Order Mark) to a file
+     *
+     * @param string $filename
+     * @return void
+     */
+    static function addBom($filename)
+    {
+        Files::prependToFile($filename, "\xEF\xBB\xBF");
+    }
+
     static function replaceFile($filename, $content)
     {
         $file = fopen($filename, "w");
@@ -120,6 +139,13 @@ class Files
         fclose($file);
     }
 
+    /**
+     * Remove files older than one day from the folder
+     *
+     * @param string $path
+     * @return void
+     * @throws Exception
+     */
     static function pruneFiles($path)
     {
         $files = glob($path . "*");
@@ -198,14 +224,17 @@ class Files
      *
      * See https://stackoverflow.com/questions/1653771/how-do-i-remove-a-directory-that-is-not-empty
      * @param $dirname
+     * @param boolean $silent If false, an exception will be thrown if the directory does not exist
      */
-    static function removeFolder($dirname)
+    static function removeFolder($dirname, $silent = false)
     {
-        if (!is_dir($dirname)) {
+        if (is_dir($dirname)) {
+            Files::delete($dirname);
+        }
+        else if (!$silent) {
             throw new Exception('This is not a directory');
         }
 
-        Files::delete($dirname);
     }
 
     /**
@@ -521,8 +550,9 @@ class Files
         }
 
         // Zip archive will be created only after closing object
+        $fileCount = $zip->numFiles;
         $zip->close();
-        return $zip->numFiles ? $zipname : false;
+        return $fileCount ? $zipname : false;
     }
 
     /**
@@ -579,9 +609,13 @@ class Files
      *
      * @param string $path Folder where to file will be stored
      * @param UploadedFileInterface $data Data from a post request
-     * @param bool $replace
+     * @param bool $replace If false and the file exists, a new filename suffixed with a number up to 99 is generated. Default false.
      * @param string $targetfile Filename used instead of the client filename.
-     * @return array
+     * @return array Array with 'filename', 'clientname', 'error', and 'path' entries.
+     *               - 'filename' contains the name of the stored file.
+     *               - 'clientname' contains the original client filename.
+     *               - 'error' contains any error message encountered during the upload process.
+     *               - 'path' contains the folder where the file was stored.
      */
     static public function saveUploadedFile($path, $data, $replace = false, $targetfile = false)
     {
@@ -624,16 +658,26 @@ class Files
         return ['filename' => $targetfile, 'clientname' => $clientname, 'error' => $error, 'path' => $path];
     }
 
-    static public function saveUploadedFiles($path, $multidata)
+    /**
+     * Save multiple uploaded files
+     *
+     * @param string $path Folder where to file will be stored
+     * @param array $multidata Array of UploadedFileInterface data from a post request
+     * @param bool $overwrite Whether to overwrite existing files (true) or rename the new file (false). Default false.
+     * @return array Array with 'filenames' and 'error' entries.
+     *              - 'filenames' contains the result of saveUploadedFile() for each file.
+     *              - 'error' contains any error messages encountered during the upload process.
+     */
+    static public function saveUploadedFiles($path, $multidata, $overwrite = false)
     {
-        $files = ['uploaded' => [], 'renamed' => [], 'error' => []];
+        $files = ['filenames' => [], 'error' => []];
 
         foreach ($multidata as $data) {
             if (!Files::isUploadedFile($data)) {
                 continue;
             }
 
-            $file = Files::saveUploadedFile($path, $data);
+            $file = Files::saveUploadedFile($path, $data, $overwrite);
 
             $files['filenames'][] = $file['filename'];
             if (!empty($file['error'])) {
@@ -712,6 +756,7 @@ class Files
         if (is_file($sourceFolder)) {
             $sourceFiles = [basename($sourcePath)];
             $sourcePath = dirname($sourcePath);
+            $sourcePath = $sourcePath === '.' ? '' : $sourcePath;
             $sourceFolder = $rootSource . $sourcePath;
         }
 
@@ -787,22 +832,44 @@ class Files
      * @param string $root Common root of the file or folder
      * @param string $oldname Relative path of the file or folder
      * @param string $newname New relative path of the file or folder
+     * @param boolean $overwrite Whether to overwrite the target item if it exists
      *
-     * @return bool
+     * @return bool Whether the move operation was successful
      */
-    static public function moveFileOrFolder($rootfolder, $oldname, $newname)
+    static public function moveFileOrFolder($rootfolder, $oldname, $newname, $overwrite = false)
     {
+        // Prevent path traversal
         if (strpos($oldname . $newname, '..') !== false) {
             return false;
         }
-        else {
-            if (file_exists($rootfolder . DS . $newname)) {
+
+        $src = rtrim($rootfolder, DS) . DS . ltrim($oldname, DS);
+        $dst = rtrim($rootfolder, DS) . DS . ltrim($newname, DS);
+
+        if (!file_exists($src)) {
+            return false;
+        }
+
+        if (file_exists($dst)) {
+            if (!$overwrite) {
                 return false;
             }
-            else {
-                return rename($rootfolder . DS . $oldname, $rootfolder . DS . $newname);
+
+            // Remove existing destination first
+            if (!self::delete($dst)) {
+                return false;
             }
         }
+
+        // Create parent directory if needed
+        $parent = dirname($dst);
+        if (!is_dir($parent)) {
+            if (!mkdir($parent, 0777, true)) {
+                return false;
+            }
+        }
+
+        return rename($src, $dst);
     }
 
     /**
@@ -1110,10 +1177,16 @@ class Files
             SplFileObject::DROP_NEW_LINE
         );
 
-        $file->seek(PHP_INT_MAX);
+        //$file->seek(PHP_INT_MAX);
 
-        return $file->key() + (int)$includeHeader;
+        //return $file->key() + (int)$includeHeader;
 
+        $count = 0;
+        foreach ($file as $row) {
+            $count++;
+        }
+
+        return $count + (int)$includeHeader;
     }
 
     /**
@@ -1432,7 +1505,7 @@ class Files
      */
     static public function loadXml($filename, $options = [])
     {
-        $recordNames = ['project', 'article', 'section', 'item', 'footnote', 'property'];
+        $recordNames = ['project', 'article', 'section', 'item', 'footnote', 'link', 'property', 'type'];
 
         $rows = [];
         $elements = [];
@@ -1446,7 +1519,7 @@ class Files
 
             // Open records
             if (($element['position'] === 'open') &&
-                (in_array($element['name'], $recordNames))) {
+                (in_array($element['name'], $recordNames)) && empty($currentField)) {
 
                 // IDs
                 $currentElement = $element['name'];
@@ -1458,13 +1531,15 @@ class Files
                     if ($name !== $currentElement) {
                         $idField = $name === 'property' ? 'properties_id' : ($name . 's_id');
                         $elements[$currentElement][$idField] = $value['id'] ?? '';
+                        $idField = $currentElement === 'property' ? 'properties_id' : ($currentElement . 's_id');
+                        $elements[$name][$idField] = $elements[$currentElement]['id'] ?? '';
                     }
                 }
 
                 // Link project
-                if (($currentElement === 'project') && !empty($elements['article'])) {
-                    $elements['article']['projects_id'] = $value['id'];
-                }
+//                if (($currentElement === 'project') && !empty($elements['article'])) {
+//                    $elements['article']['projects_id'] = $value['id'];
+//                }
 
                 // Link footnote
                 if ($currentElement === 'footnote') {
@@ -1476,15 +1551,22 @@ class Files
             }
 
             // Close records
-            elseif (($element['position'] === 'close') && (in_array($element['name'], $recordNames))) {
-                $rows[] = $elements[$element['name']] ?? [];
-                unset($elements[$element['name']]);
+            elseif (($element['position'] === 'close') && (in_array($element['name'], $recordNames)) && empty($currentField)) {
+                if (isset($elements[$element['name']] )) {
+                    $newRow = $elements[$element['name']];
+                    // Filter example
+                    //if (str_starts_with($newRow['id'] ?? '', 'items/images-url/')) {
+                        $rows[] = $newRow;
+                    //}
+                    unset($elements[$element['name']]);
+                }
                 $currentElement = null;
+                $currentField = null;
                 $currentFieldLevel = 0;
             }
 
             // Skip containers
-            elseif ((in_array($element['name'], ['sections', 'items', 'footnotes']))) {
+            elseif ((in_array($element['name'], ['sections', 'items', 'footnotes', 'links'])) && empty($currentField)) {
                 $currentElement = null;
                 $currentField = null;
                 $currentFieldLevel = 0;
@@ -1497,9 +1579,14 @@ class Files
 
                 if ($currentFieldLevel === 1) {
                     $currentField = $element['name'];
-                    $elements[$currentElement][$currentField] = $parser->parseCurrentElement();
+                    $fieldValue = $parser->parseCurrentElement();
+                    $format = $element['attributes']['format'] ?? 'xml';
+                    if ($format === 'json') {
+                        $fieldValue = html_entity_decode($fieldValue);
+                    }
+                    $elements[$currentElement][$currentField] = $fieldValue;
                     $currentField = null;
-                    $currentFieldLevel -= 1;
+                    $currentFieldLevel = 0;
                 }
 
                 // Collect annotations
@@ -1519,6 +1606,9 @@ class Files
                     ];
                 }
             }
+            elseif (($element['position'] === 'close') && ($currentField !== null)) {
+                $currentFieldLevel -= 1;
+            }
             else {
                 return false;
             }
@@ -1534,10 +1624,45 @@ class Files
     }
 
     /**
+     * Get number of XML files matching the pagination criteria
+     *
+     * ### Options
+     * - offset: Skip files by setting an offset.
+     * - page: Skip files by setting a page larger than 0. (overrides offset).
+     * - limit: Limit number of files.
+     *
+     * @param string $path filename
+     * @param array $options
+     *
+     * @return int The number of XML files that would be loaded by loadXmlFolder().
+     */
+    static public function getXmlFolderCount($path, $options = [])
+    {
+        $default = [
+            'rownumbers' => '#',
+            'limit' => 100,
+            'offset' => 0,
+            'page' => 1
+        ];
+
+        $options = $options + $default;
+
+        if (isset($options['page'])) {
+            $options['offset'] = $options['limit'] * ((int)$options['page'] - 1);
+        }
+
+        $files = Files::getFiles($path, '.xml');
+        $files = array_splice($files, $options['offset'], $options['limit']);
+
+        return count($files);
+    }
+
+    /**
      * Load XML files in a folder
      *
-     * In the options array, the keys offset and limit can be used
-     * to limit the files.
+     * - offset: Skip files by setting an offset.
+     * * - page: Skip files by setting a page larger than 0. (overrides offset).
+     * * - limit: Limit number of files.
      *
      * @param string $path filename
      * @param array $options
@@ -1583,15 +1708,17 @@ class Files
     /**
      * Get thumb name
      *
-     * @param $imagefile
-     * @param $size
-     * @param $placeholder
+     * @param string $imagefile The full file path of the image
+     * @param integer $size The thumb size in pixels
+     * @param boolean $placeholder Whether a placeholder image should be created if the image file does not exist.
      *
      * @return mixed|string
      * @throws \GmagickException
      */
     static public function getThumb($imagefile, $size = 100, $placeholder = false)
     {
+        //$imagefile = Files::cleanFilename($imagefile);
+
         if (!is_file($imagefile) && $placeholder) {
             $thumbname = TMP . 'thumbs' . DS . $imagefile . '_' . $size . '_notfound.png';
             if (!is_dir(dirname($thumbname))) {
@@ -1668,6 +1795,136 @@ class Files
     }
 
     /**
+     * Convert image formats (tif to jpg)
+     *
+     * Converts the image and return a file name with the new extension.
+     *
+     * @param string $imagefile The full file path of the image
+     * @param string $targetFormat Output format ('jpg', 'png', etc.)*
+     * @params boolean $removeOriginal Whether to delete the original file after conversion
+     * @return string|false New file path or false on failure
+     * @throws \GmagickException
+     */
+    static public function convertImage($imagefile, $targetFormat = 'jpg', $removeOriginal = false)
+    {
+        if (!is_file($imagefile)) {
+            return false;
+        }
+
+        try {
+
+            // Build output name
+            $pathInfo = pathinfo($imagefile);
+            $newFile = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['filename'] . '.' . $targetFormat;
+
+//            if ($pathInfo['extension'] == 'svg') {
+//                exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . $imagefile . ' > ' . $thumbname);
+//                return $newFile;
+//            }
+
+            if (extension_loaded('imagick')) {
+                $gm = new IMagick($imagefile);
+            }
+            else {
+                $gm = new GMagick($imagefile);
+            }
+
+            // Read TIFF frames — only use first page unless multi-page processing is needed
+            if ($gm->getnumberimages() > 1) {
+                $gm->setimageindex(0);
+            }
+
+            // Set output format
+            $gm->setimageformat($targetFormat);
+
+            // Optional: Set compression quality
+            if ($targetFormat === 'jpg' || $targetFormat === 'jpeg') {
+                $gm->setcompressionquality(90);
+            }
+
+            // Write new file
+            $gm->writeimage($newFile);
+
+            // Clean up
+            $gm->clear();
+            $gm->destroy();
+
+            if ($removeOriginal) {
+                Files::delete($imagefile);
+            }
+
+            return $newFile;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Resize image file if it is both larger than the maximum megapixels and larger than the maximum megabytes
+     *
+     * @param string $imagefile The full file path of the image
+     * @param string $megapixels Megapixel maximum (e.g. 10)
+     * @param int $megabytes Maximum file size in megabytes (e.g. 5)
+     * @return boolean Whether the image was resized.
+     * @throws \GmagickException
+     */
+    static public function resizeImage($imagefile, $megapixels = 10, $megabytes = 5)
+    {
+        if (!is_file($imagefile)) {
+            return false;
+        }
+
+        try {
+
+            // Check file size in megabytes
+            $filesizeMB = filesize($imagefile) / (1024 * 1024);
+            if ($filesizeMB <= $megabytes) {
+                return false;
+            }
+
+            // Load image
+            if (extension_loaded('imagick')) {
+                $gm = new \Imagick($imagefile);
+                $width = $gm->getImageWidth();
+                $height = $gm->getImageHeight();
+            } elseif (extension_loaded('gmagick')) {
+                $gm = new \Gmagick($imagefile);
+                $geometry = $gm->getimagegeometry();
+                $width = $geometry['width'];
+                $height = $geometry['height'];
+            } else {
+                return false;
+            }
+
+            // Resize if necessary
+            $currentMP = ($width * $height) / 1e6;
+            if ($currentMP > $megapixels) {
+                $scale = sqrt($megapixels / $currentMP);
+                $newWidth = (int) round($width * $scale);
+                $newHeight = (int) round($height * $scale);
+
+                if (extension_loaded('imagick')) {
+                    $gm->resizeImage($newWidth, $newHeight, \Imagick::FILTER_LANCZOS, 1);
+                } else {
+                    $gm->resizeImage($newWidth, $newHeight);
+                }
+
+                $gm->writeimage($imagefile);
+            }
+
+
+            // Clean up
+            $gm->clear();
+            $gm->destroy();
+
+
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    /**
      * Check whether a shell command is available on the current platform
      *
      * Example: Files::commandAvailable('exiftool')
@@ -1704,7 +1961,7 @@ class Files
             $command .= ' -overwrite_original';
         }
         foreach ($metadata as $key => $value) {
-            $command .= ' -' . $key . '=' . escapeshellarg($value);
+            $command .= ' -' . $key . '=' . escapeshellarg($value ?? '');
         }
         $command .= ' ' . $filename;
         exec($command, $output, $return);

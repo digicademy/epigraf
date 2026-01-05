@@ -11,130 +11,90 @@
 namespace App\Utilities\Converters;
 
 /**
- * Klasse zum Parsen von Datumsangaben.
+ *  Class for parsing date information.
  *
- * Wesentlich sind zwei statische Funktionen:
+ *  Two static functions are essential:
  *
- * - normalize prüft eine Datumsangabe und vereinheitlicht sie,
- * sodass sie in der Datenbank gespeichert werden kann.
- * Sie nimmt eine Textangabe entgegen (z.B. 1.H. 15.Jh.),
- * parsed sie und erzeugt dann wieder eine normalisierte Textangabe.
+ *  - normalize: check a date and standardize it
+ *    so that it can be stored in the database.
+ *    It accepts a text entry (e.g., 1.H. 15.Jh.),
+ *    parses it, and then generates a normalized text entry.
  *
- * - encode nimmt eine Textangabe entgegen und erzeugt einen Sortierschlüssel,
- * der in der Datenbank gespeichert werden kann.
+ *  - encode: accept a text entry and generate a sort key
+ *    that can be stored in the database.
  *
- * Start- und Endjahre von Zeiträumen können über die folgenden Funktionen extrahiert werden:
- * - years()
- * - minyear()
- * - maxyear()
+ *  The start and end years of time periods can be extracted using the following functions:
+ *  - years()
+ *  - minyear()
+ *  - maxyear()
  *
- * Die Textangaben sind wie folgt strukturiert und durchlaufen beim Parsen
- * die entsprechenden Funktionen:
  *
- * - Mehrere Datierungen sind mit " und " (alternativ durch "/" oder ",") getrennt (parseHistoricDateList)
- * - Eine einzelne Datierung kann mit "?" als unsicher gekennzeichnet sein (parseHistoricDateRange).
- * - Eine einzelne Datierung besteht aus einer oder zwei Teildatierungen (parseHistoricDateRange).
- * - Teildatierungen innerhalb einer einzelnen Datierung sind mit "-" (alternativ durch " bis ") oder " oder " getrennt (parseHistoricDateRange).
+ *  The text entries are structured as follows and run through
+ *  the corresponding functions during parsing:
  *
- * Die Komponenten einer Teildatierung umfassen (parseHistoricDate):
- * - 'number' => false,   // Eine Zahl für das Jahr oder Jahrhundert [oder false]
- * - 'day' => false,      // Ein Datum in ISO-Schreibweise [oder false]
- * - 'fraction' => ['numerator_from' => false, 'numerator_to', 'denominator' => false] // Zahlen für die Anteile von Jahrhunderten [oder false]
- * - 'unit' => '',        // Werte: jahrhundert, jahreszahl, tag [oder ein leerer String]
- * - 'negative' => false, // true = before christ, false = after christ
- * - 'modifier' => '',    // Werte: um, vor, nach, oder früher, oder später, ende, anfang, mitte, teil [oder ein leerer String]
- * - 'short' => false,    // true = Kurzform beim Ende eines Zeitraums, z.B. 1922-23 [oder false]
- * - 'invalid' => false   // true = Eine ungültige Zeitangabe [oder false]
+ *  - Multiple dates are separated by "und" (alternatively by "/" or ",") (parseHistoricDateList)
+ *    The slash "/" can only be used if ISO 8601 date ranges are not involved (see single date).
+ *  - A single date can be marked as uncertain with “?” (parseHistoricDateRange).
+ *  - A single date consists of one or two partial dates (parseHistoricDateRange).
+ *  - Partial dates within a single date are separated by "-", alternatively by "–" (n-dash),
+ *    "bis" or "oder" (parseHistoricDateRange).
+ *    In ISO 8601 date ranges the slash "/" separates the beginning and end of a time span.
  *
- * Beim Parsen werden verschiedene Schreibweisen vereinheitlicht.
+ *  The components of a partial date include (parseHistoricDate):
  *
- * # Datierungsschlüssel
+ *  - 'number' => false,   // A number for the year or century [or false]
+ *  - 'day' => ['month' => false, 'day' => false],
+ *                         // Month and day in ISO notation [or false for each element]
+ *  - 'hour' => ['hour' => false, 'minute' => false, 'second' => false]
+ *                         // Hour, minute and second in ISO notation [or false for each element]
+ *  - 'fraction' => [‘numerator_from’ => false, ‘numerator_to’, ‘denominator’ => false]
+ *                         // Numbers for the fractions of centuries [or false for each element]
+ *  - 'unit' => '',        // Values: 'jahrhundert', 'jahreszahl', 'tag', 'stunde', 'minute', 'sekunde', or an empty string
+ *  - 'negative' => false, // true = before Christ, false = after Christ
+ *  - 'modifier' => '',    // Values: 'um', 'vor', 'nach', 'oder früher', 'oder später', 'ende', 'anfang', 'mitte', 'teil', [or an empty string]
+ *  - 'short' => false,    // true = short form at the end of a period, e.g. 1922-23 [or false]
+ *  - 'invalid' => false   // true = An invalid time specification [or false]
  *
- * Mit dem Datierungsschlüssel soll eine Reihenfolge hergestellt werden, die folgende Kriterien abbildet:
- * - Genauere Datierungen vor ungenaueren Datierungen
- * - Ältere Datierungen vor jüngeren Datierungen
+ *  During parsing, different spellings are standardized.
  *
- * Wenn beide Kriterien in Konflikt geraten, gilt das erste Kriterium. Beispiel:
- * - 3 v. Chr.
- * - 1200 v. Chr. - 1. Jh. v.Chr.
- * - 3 n. Chr.
- * - 800 v. Chr. - 1. Jh.
+ *  # Date key
  *
- * Obwohl die mit einem Jahr ab 1200 v. Chr. bzw. ab 800 v. Chr. datierten Objekte potenziell älter
- * als die auf 3 v. Chr. bzw. 3 n. Chr. datierten Objekte sein können,
- * werden sie aufgrund der ungenaueren Datierung nachgeordnet.
+ *  The date key is used to establish an order that reflects the following criteria:
+ *  - Every date represents a period of time. A date consisting of a year covers the entire year.
+ *  - Each date is sorted based on its reference point and how far it extends into the past and future.
+ *    Dates extending farther back in time appear before dates extending less far back.
+ *    Dates extending further into the future appear after dates that do not extend as far into the future.
+ *    Therefore, a potentially older date is sorted before a potentially younger date,
+ *    and a potentially younger date is sorted after a potentially older date.
  *
- * Beispiele für Datierungsschlüssel:
+ *  The sort key is a concatenation of three reference points written in ISO 8601 notation.
+ *  The second and third reference points indicate the start and end of the specified date range.
+ *  The first reference point depends on the type of date. Modifiers such as "um", "nach", "Anfang" and "Ende"
+ *  play a role here. In most cases, the first and third reference points correspond to each other.
+ *  A lexicographical sorting of keys structured in this way implements the above sorting criteria.
  *
- * 01433BBA08650BABA4 (M.14.–1.D.15.Jh)
- * 01525BAA08480ADBA4 (um 1520–1525)
- * 01600BAD08400BDBA4 (2.H.16.Jh.–um 1600)
- * 01671AAA00000000A4 (1671)
- * 01800ABE00000000A4 (18. Jh.)
- * -1700ABE00000000A4 (17. Jh. v. Chr.)
- *
- * Aufbau des Schlüssels:
- *
- * - Mehrere Datierungen ("1433 und 1440") führen zu Teilschlüsseln,
- * die mit "X" verbunden sind (in den Beispielen nicht der Fall)
- * - Ein Teilschlüssel ist 18 Zeichen lang und setzt sich aus zwei jeweils achtstellingen
- * Jahresschlüsseln, einer einstelligen Unsicherheitskennung und einer einstelligen Versionsnummer zusammen.
- * - Enthält die Datierung einen Bereich, dann erfasst der erste Jahresschlüssel den jüngeren Teil des Bereichs,
- * das heißt die bis-Angabe. Auf diese weise werden potenziell ältere vor potenziell jüngeren
- * Objekten einsortiert (z. B. "1420-1425" vor "1420-1428").
- * Der zweite Jahresschlüssel erfasst dann den älteren Teil des Bereichs, das heißt die von-Angabe.
- * - Enthält die Datierung dagegen keinen Bereich, dann werden die Komponenten des
- * zweiten Jahresschlüssels alle auf 0 gesetzt.
- * - Nach beiden Jahresschlüsseln folgt eine Unsicherheitskennung:
- * A=Nicht unsicher, B=unsicher ("?").
- * - Am Ende wird die Versionsnummer des Datierungsschlüssels angehängt (aktuell 4).
- *
- * Der 18-stellige Schlüssel entspricht folgendem Muster (regex):
- * [0-][0-9]{4}[AB][AB][A-F][0-][0-9]{4}[AB][A-F][0AB][AB]4
- *
- * Aufbau der Jahresschlüssel:
- *
- * - Der erste Jahresschlüssel ist acht Zeichen lang und setzt sich aus der Jahreszahl,
- * einer Strukturziffer und einem Modifikator zusammen:
- * - Jahreszahl: fünfstellige Zahl (Ende des Datumsbereichs).
- * Angaben vor Christus beginnen in der ersten Stelle mit "-", Angaben nach Christus mit "0"
- * - Strukturziffer: A=einfache Datierung, B=zusammengesetzte Datierung bzw. Bereich.
- * Ist die Strukturziffer auf "A" gesetzt, dann sind alle Stellen des zweiten Jahresschlüssels auf "0" gesetzt.
- * - Modifikator: Erste Stelle A oder B, zweite Stelle A-F.
- * Kennzeichnet, ob es eine Zahl, ein Jahrhundert etc. ist.
- *
- * - Der zweite Jahresschlüssel ist acht Zeichen lang, setzt sich aus der umgepolten Jahresangabe,
- * einem Modifikator und einer Strukturziffer zusammen:
- * - Jahreszahl: Fünfstelliges Ende des Datumsbereichs. Die Zahl wird dabei immer umgepolt.
- * So wird zum Beispiel in der Angabe "1415-1420" im ersten Jahresschlüssel
- * das Jahr 1420 über die Zahl 1420 abgebildet.
- * Dagegen wird im zweiten Jahresschlüssel das Jahr 1415 über 10000 - 1415 = 8585 abgebildet.
- * Auf diese Weise werden potenziell genauere vor potenziell ungenaueren Datierungen einsortiert
- * (z.B. "1418-1420" vor "1415-1420").
- * Angaben vor Christus beginnen in der ersten Stelle mit "-", Angaben nach Christus mit "0".
- * - Modifikator: Erste Stelle A oder B, zweite Stelle A-F.
- * Kennzeichnet, ob es eine Zahl, ein Jahrhundert etc. ist
- * - Strukturziffer:
- * A = die beiden Datierungen sind Alternativen ("oder"),
- * B = die beiden Datierungen kennzeichnen einen Bereich ("bis", "-")
+ *  The content of DELTA_DATE determines how date specifications are interpreted, i.e.,
+ *  how far they extend into the past or future relative to a base year of the time specification.
  */
 class HistoricDates
 {
 
     /**
-     * The years that are added to fuzzy borders
+     * Patterns
      *
-     * @const int FUZZY_LONG Begin and end of centuries, after or before a specific date
-     * @const int FUZZY_SHORT Circa values
+     * @const string ISO_PATTERN Pattern for ISO 8601 date strings (e.g. 2023-10-05T14:30:00)
      */
-    const FUZZY_LONG = 25;
-    const FUZZY_SHORT = 10;
-
+    public const ISO_PATTERN = "(?<sign>-|\+)?(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])"
+        . "(T(?<hour>[0-1][0-9]|2[0-4]):(?<minute>[0-5][0-9])(:(?<second>[0-5][0-9](\.[0-9]+)?))?)?";
     /**
      * Date constants
      */
     const UNIT_CENTURY = 'jahrhundert';
     const UNIT_YEAR = 'jahreszahl';
+    const UNIT_DAY = 'tag';
+    const UNIT_HOUR = 'stunde';
+    const UNIT_MINUTE = 'minute';
+    const UNIT_SECOND = 'sekunde';
 
     const MODIFIER_EARLIER = 'frueher';
     const MODIFIER_LATER = 'spaeter';
@@ -145,6 +105,11 @@ class HistoricDates
     const MODIFIER_AROUND = 'um';
     const MODIFIER_AFTER = 'nach';
     const MODIFIER_BEFORE = 'vor';
+    const DATE_TIME_FORMAT = 'Y-m-d\TH:i:s';
+    const PRIORITY_END = 0x001;
+    const PRIORITY_AROUND = 0x002;
+    const PRIORITY_EARLIER = 0x002;
+    const PRIORITY_UNCERTAIN = 0x004;
 
     // TODO: replace all tokens by constants
     const TOKEN_MODIFIER = [
@@ -172,10 +137,91 @@ class HistoricDates
         'dez' => 12
     ];
 
+    const EMPTY_DAT = [
+        'number' => false,    // {Zahl}
+        'unit' => '', // {nn, jahrhundert, jahreszahl, tag}
+        'day' => ['month' => false, 'day' => false], // {Zahl}
+        'hour' => ['hour' => false, 'minute' => false, 'second' => false],
+        'fraction' => ['numerator_from' => false, 'numerator_to' => false, 'denominator' => false], // {Zahlen}
+        'negative' => false, // Before or after christ
+        'modifier' => '', //{nn, um, vor, nach, teil, ende, anfang, mitte, oder früher, oder später}
+        'short' => false,
+        'invalid' => false,
+        'isiso' => false
+    ];
+
+    const EMPTY_DATE_ARRAY = [
+        'invalid' => false,
+        'uncertain' => false,
+        'or' => false,
+        'begin' => self::EMPTY_DAT,
+        'end' => self::EMPTY_DAT
+    ];
+
+    // A date sort key consists of three reference points.
+    // DELTA_DATE holds the offsets with respect to 1 Jan of the anchor year
+    const DELTA_DATE = [
+        'plain_day' => [
+            'r1' => '+1 day -1 second',
+            'r2' => '',
+            'r3' => '+1 day -1 second'
+        ],
+        'plain_year' => [
+            'r1' => '+1 year -1 second',
+            'r2' => '',
+            'r3' => '+1 year -1 second'
+        ],
+        self::MODIFIER_BEFORE => [
+            'r1' => '',
+            'r2' => '-9 years',
+            'r3' => ''
+        ],
+        self::MODIFIER_AROUND  => [
+            'r1' => '+1 year -1 second',
+            'r2' => '-8 years',
+            'r3' => '+10 years -1 second'
+        ],
+        self::MODIFIER_AFTER => [
+            'r1' => '+1 year -1 second',
+            'r2' => '+1 year -1 second',
+            'r3' => '+10 years -1 second'
+        ],
+        self::MODIFIER_EARLIER => [
+            'r1' => '+1 year -1 second',
+            'r2' => '-8 years',
+            'r3' => '+1 years -1 second'
+        ],
+        self::MODIFIER_LATER => [
+            'r1' => '+1 year -1 second',
+            'r2' => '',
+            'r3' => '+10 years -1 second'
+        ],
+        'plain_century' => [
+            'r1' => '+101 years -1 second',
+            'r2' => '+1 year',
+            'r3' => '+101 years -1 second'
+        ],
+        self::MODIFIER_BEGIN => [
+            'r1' => '+1 year',
+            'r2' => '+1 year',
+            'r3' => '+10 years -1 second'
+        ],
+        self::MODIFIER_MID => [
+            'r1' => '+51 years -1 second',
+            'r2' => '+42 years',
+            'r3' => '+60 years -1 second'
+        ],
+        self::MODIFIER_END => [
+            'r1' => '+101 year -1 second',
+            'r2' => '+92 years',
+            'r3' => '+101 years -1 second'
+        ]
+    ];
+
     /**
      * @const int DATE_VERSION Version number of the date key
      */
-    const DATE_VERSION = 4;
+    const DATE_VERSION = 5;
 
     /**
      *  Normalizes a natural language date
@@ -184,9 +230,9 @@ class HistoricDates
      * from the parsed date
      *
      * @param string $date Natural language date, e.g. "15. Jh."
-     * @return string Normalized natural language date
+     * @return string|null Normalized natural language date. Null if the date is invalid.
      */
-    static function normalize(string $date): string
+    static function normalize(string $date): string|null
     {
         $hd = HistoricDates::parseHistoricDateList($date);
         return HistoricDates::listToString($hd);
@@ -197,9 +243,9 @@ class HistoricDates
      *  Derives a sort key from a natural language date
      *
      * @param string $date A natural language date, e.g. "15. Jh."
-     * @return string A key that can be used to sort multiple dates
+     * @return string|null A key that can be used to sort multiple dates. Null if the date is invalid.
      */
-    static function encode(string $date): string
+    static function encode(string $date): string|null
     {
         $hd = HistoricDates::parseHistoricDateList($date);
         return HistoricDates::listToKey($hd);
@@ -209,17 +255,92 @@ class HistoricDates
      * Parse a natural language date
      *
      * Multiple dates can be combined with "und", "," or "/".
+     * The dash "/" can only be used if no ISO date ranges are involved.
      *
      * @param string $date A natural language date
      * @return array An array of date arrays. A date array contains the components of the parsed dates.
      */
     static function parseHistoricDateList(string $date): array
     {
+        // First, determine if the dates are in ISO notation.
+        // Processing mixed lists requires somewhat complicated recursive parsing.
+        $iso_found = preg_match("~" . self::ISO_PATTERN . "~", $date);
         $date = str_replace('und', ',', $date);
-        $date = str_replace('/', ',', $date);
-        $dates = explode(',', $date);
-        $dates = array_map([__CLASS__, 'parseHistoricDateRange'], $dates);
-        return $dates;
+        if ($iso_found === 1) {
+            $dates = explode(',', $date);
+            return array_map([__CLASS__, 'parseHistoricISODateRange'], $dates);
+        }
+        else {
+            $date = str_replace('/', ',', $date);
+            $dates = explode(',', $date);
+            return array_map([__CLASS__, 'parseHistoricDateRange'], $dates);
+        }
+    }
+
+    static function parseHistoricISODate(string $date): array
+    {
+        $dat = HistoricDates::EMPTY_DAT;
+
+        $matches = [];
+        $iso_found = preg_match("~" . self::ISO_PATTERN . "~", $date, $matches);
+        if ($iso_found === 1) {
+            $dat['isiso'] = true;
+            $dat['unit'] = self::UNIT_DAY;
+            $dat['negative'] = $matches['sign'] == '-';
+            $dat['number'] = $matches['year'];
+            $dat['day'] = ['month' => $matches['month'], 'day' => $matches['day']];
+            if (array_key_exists('hour', $matches)) {
+                $dat['hour']['hour'] = $matches['hour'];
+                $dat['unit'] = self::UNIT_HOUR;
+                if (array_key_exists('minute', $matches)) {
+                    $dat['hour']['minute'] = $matches['minute'];
+                    $dat['unit'] = self::UNIT_MINUTE;
+                }
+                if (array_key_exists('second', $matches)) {
+                    $dat['hour']['second'] = $matches['second'];
+                    $dat['unit'] = self::UNIT_SECOND;
+                }
+            }
+            $dat['invalid'] = false;
+        }
+        else {
+            $dat['invalid'] = true;
+        }
+        return $dat;
+    }
+
+    static function parseHistoricISODateRange(string $date): array
+    {
+        $date_parsed = self::EMPTY_DATE_ARRAY;
+
+        if (trim($date) === '') {
+            return $date_parsed;
+        }
+
+        //Unsicher
+        $date_parsed['uncertain'] = strpos($date, '?') !== false;
+        $date = str_replace('?', '', $date);
+
+        // Oder oder Von-bis-Angabe
+        $date_parsed['or'] = strpos($date, 'oder') !== false;
+
+        //Mehrere Angaben trennen
+        $date = str_replace('oder', '/', $date);
+        $date = str_replace('bis', '/', $date);
+        $parts = explode('/', $date);
+        $von = (count($parts) > 0) ? $parts[0] : '';
+        $bis = (count($parts) > 1) ? $parts[1] : '';
+
+        //Berechnen
+        $date_parsed['begin'] = HistoricDates::parseHistoricISODate($von);
+        $date_parsed['end'] = HistoricDates::parseHistoricISODate($bis);
+
+        if ($date_parsed['begin']['invalid']) {
+            $date_parsed['invalid'] = true;
+        }
+
+        return $date_parsed;
+
     }
 
     /**
@@ -239,13 +360,7 @@ class HistoricDates
     {
         $date = HistoricDates::normalizeDateString($date);
 
-        $date_parsed = [
-            'invalid' => false,
-            'uncertain' => false,
-            'or' => false,
-            'begin' => false,
-            'end' => false
-        ];
+        $date_parsed = self::EMPTY_DATE_ARRAY;
 
         //Unsicher
         $date_parsed['uncertain'] = strpos($date, '?') !== false;
@@ -283,16 +398,7 @@ class HistoricDates
      */
     static function parseHistoricDate(string $date): array
     {
-        $dat = [
-            'number' => false,    // {Zahl}
-            'unit' => '', // {nn, jahrhundert, jahreszahl}
-            'day' => ['month' => false, 'day' => false], // {Zahl}
-            'fraction' => ['numerator_from' => false, 'numerator_to' => false, 'denominator' => false], //{Zahlen}
-            'negative' => false, // Before or after christ
-            'modifier' => '', //{nn, um, vor, nach, teil, ende, anfang, mitte, oder früher, oder später}
-            'short' => false,
-            'invalid' => false
-        ];
+        $dat = HistoricDates::EMPTY_DAT;
 
         //Zeittyp: früher, später
         if (strpos($date, 'früher') !== false) {
@@ -345,6 +451,10 @@ class HistoricDates
             $dat['modifier'] = self::MODIFIER_PART;
             $dat['fraction']['denominator'] = 4;
         }
+        elseif (strpos($date, 'jahrzehnt') !== false) {
+            $dat['modifier'] = self::MODIFIER_PART;
+            $dat['fraction']['denominator'] = 10;
+        }
 
         // Bei Jahrhundertteilen: Zähler extrahieren
         if ($dat['modifier'] == self::MODIFIER_PART) {
@@ -376,7 +486,7 @@ class HistoricDates
         }
 
         //Plausibilitätsprüfung
-        if ($dat['number'] == 0) {
+        if ($dat['number'] === false) {
             $dat['invalid'] = true;
         }
 
@@ -405,7 +515,7 @@ class HistoricDates
             (($dat['fraction']['numerator_from'] > $dat['fraction']['denominator']) ||
                 ($dat['fraction']['numerator_from'] == 0) ||
                 ($dat['fraction']['denominator'] == 0) ||
-                ($dat['fraction']['denominator'] > 4)
+                (!in_array($dat['fraction']['denominator'], [2, 3, 4, 10]))
             )) {
             $dat['invalid'] = true;
         }
@@ -421,6 +531,7 @@ class HistoricDates
      */
     static function normalizeDateString(string $date): string
     {
+        $nDash = "\u{2013}"; // Halbgeviertstrich
         // Normalise
         $date = mb_strtolower($date);
         $date = str_replace(' ', '', $date);
@@ -435,10 +546,11 @@ class HistoricDates
         $date = str_replace('oders.', 'später', $date);
         $date = str_replace('o.später', 'später', $date);
         $date = str_replace('oderspäter', 'später', $date);
-        $date = str_replace('bis', '–', $date);
-        $date = str_replace('-', '–', $date);#151
-        $date = str_replace('-', '–', $date);#150
-        $date = str_replace('—', '–', $date);
+        $date = str_replace('bis', $nDash, $date);
+        $date = str_replace('-', $nDash, $date); #151
+        $date = str_replace('-', $nDash, $date); #150
+        $date = str_replace('—', $nDash, $date);
+        $date = str_replace('‒', $nDash, $date);
         $date = str_replace('o.', 'oder', $date);
         $date = str_replace('a.', 'anfang', $date);
         $date = str_replace('e.', 'ende', $date);
@@ -446,6 +558,7 @@ class HistoricDates
         $date = str_replace('.h.', '.hälfte', $date);
         $date = str_replace('.d.', '.drittel', $date);
         $date = str_replace('.v.', '.viertel', $date);
+        $date = str_replace('.jz.', '.jahrzehnt', $date);
 
         return $date;
     }
@@ -571,16 +684,29 @@ class HistoricDates
             return $out;
         }
 
+        if ($date['isiso']) {
+            if ($date['negative']) {
+                $out .= "-";
+            }
+            $out .= sprintf('%04d-%02d-%02d', $date['number'], $date['day']['month'], $date['day']['day']);
+            $out .= $date['hour']['hour'] ?  'T' . str_pad($date['hour']['hour'], '0', STR_PAD_LEFT)  : '';
+            $out .= $date['hour']['minute'] ?  ':' . str_pad($date['hour']['minute'], '0', STR_PAD_LEFT)  : '';
+            $out .= $date['hour']['second'] ?  ':' . str_pad($date['hour']['second'], '0', STR_PAD_LEFT)  : '';
+            return $out;
+        }
+
+        $space = ' '; // add space after abbreviation point?
+
         //Präfix
         switch ($date['modifier']) {
             case self::MODIFIER_BEGIN:
-                $out .= 'A.';
+                $out .= 'A.' . $space;
                 break;
             case self::MODIFIER_MID:
-                $out .= 'M.';
+                $out .= 'M.' . $space;
                 break;
             case self::MODIFIER_END:
-                $out .= 'E.';
+                $out .= 'E.' . $space;
                 break;
             case self::MODIFIER_AROUND:
                 $out .= 'um ';
@@ -596,33 +722,36 @@ class HistoricDates
                     $out .= $date['fraction']['numerator_from'] . '.';
 
                     if ($date['fraction']['numerator_to'] !== false) {
-                        $out .= '-' . $date['fraction']['numerator_to'] . '.';
+                        $out .= '–' . $date['fraction']['numerator_to'] . '.';
                     }
 
                     if ($date['fraction']['denominator'] == 2) {
-                        $out .= 'H.';
+                        $out .= ' H.' . $space;
                     }
                     elseif ($date['fraction']['denominator'] == 3) {
-                        $out .= 'D.';
+                        $out .= ' D.' . $space;
                     }
                     elseif ($date['fraction']['denominator'] == 4) {
-                        $out .= 'V.';
+                        $out .= ' V.' . $space;
+                    }
+                    elseif ($date['fraction']['denominator'] == 10) {
+                        $out .= ' Jz.' . $space;
                     }
                 }
         }
 
         //Zahl
         if ($date['day']['month'] !== false) {
-            $out .= $date['day']['month'] . '.';
+            $out .= str_pad($date['day']['month'], 2, '0', STR_PAD_LEFT) . '-';
             if ($date['day']['day'] !== false) {
-                $out = $date['day']['day'] . '.' . $out;
+                $out = str_pad($date['day']['day'], 2, '0', STR_PAD_LEFT) . '-' . $out;
             }
         }
         $out .= $date['number'];
 
         //Jahrhundert
         if (($date['unit'] === self::UNIT_CENTURY) and (!$short)) {
-            $out .= '.Jh.';
+            $out .= '. Jh.';
         }
         elseif ($date['unit'] === self::UNIT_CENTURY) {
             $out .= '.';
@@ -630,7 +759,7 @@ class HistoricDates
 
         // Before or after christ
         if ($date['negative']) {
-            $out .= ' v.Chr.';
+            $out .= ' v. Chr.';
         }
 
         //Früher oder später
@@ -646,18 +775,18 @@ class HistoricDates
     }
 
     /**
-     * TODO: Add description
+     * Serialize a date range to a normalized string
      *
      * @param array $date
-     * @return string
+     * @return string|null
      */
-    static function rangeToString(array $date): string
+    static function rangeToString(array $date): string|null
     {
         $out = '';
 
         //Invalid
         if ($date['invalid']) {
-            return '';
+            return null;
         }
 
         //Von
@@ -670,7 +799,8 @@ class HistoricDates
                 $out .= ' oder ';
             }
             else {
-                $out .= '–';
+                $separator = $date['begin']['isiso'] ? '/' : '–'; //U+2013
+                $out .= $separator;
             }
         }
 
@@ -687,242 +817,173 @@ class HistoricDates
     }
 
     /**
-     * TODO: Add description
+     * Serialize a date list to normalized string
      *
      * @param array $datelist
-     * @return string
+     * @return string|null
      */
-    static function listToString(array $datelist): string
+    static function listToString(array $datelist): string|null
     {
-        $datelist = array_map([__CLASS__, 'rangeToString'], $datelist);
-        return implode(' und ', $datelist);
+        $datelist = array_filter(array_map([__CLASS__, 'rangeToString'], $datelist), fn($x) => $x !== null);
+        if (empty($datelist)) {
+            return null;
+        } else if (count($datelist) < 3) {
+            return implode(' und ', $datelist);
+        } else {
+            return implode(', ', $datelist);
+        }
     }
 
     /**
-     * Create a sort key for a single historic date
+     * Compute a list of reference points for a single historic date
      *
      * @param array $date A parsed date term
-     * @param bool $secondary Is this the end of a date range?
-     * @return array
+     * @return array of DateTime objects
      */
-    static function dateToKey(array $date, bool $secondary = false): array
+    static function dateToRefPoints(array $date):array
     {
-        //Jahreszahlen
-        if ($date['unit'] == self::UNIT_YEAR) {
-            $zahl = $date['number'];
-            if ($date['modifier'] == self::MODIFIER_BEFORE) {
-                $zeittyp = 'AB';
+        $deltaDate = []; // deltas of the reference points with respect to the base year
+        $sign = $date['negative'] ? -1 : +1;
+
+        // compute reference points relative to $dateObj
+        $keyElements = [];
+        // === ISO date format
+        if (in_array($date['unit'], [self::UNIT_DAY, self::UNIT_MINUTE, self::UNIT_SECOND])) {
+            $deltaDate = self::DELTA_DATE['plain_day'];
+            $baseYear = $sign * intval($date['number']);
+        }
+        elseif ($date['unit'] == self::UNIT_YEAR) {
+            $type = $date['modifier'] == "" ? 'plain_year' : $date['modifier'];
+            $deltaDate = self::DELTA_DATE[$type];
+            $baseYear = $sign * intval($date['number']);
+            // ISO has a year 0
+            if ($baseYear < 0) {
+                $baseYear += 1;
             }
-            elseif ($date['modifier'] === self::MODIFIER_EARLIER) {
-                $zeittyp = 'AC';
+        }
+        elseif ($date['unit'] == self::UNIT_CENTURY) {
+            // shift by -100 if date is positive
+            $baseYear = $sign * intval($date['number']) * 100 - ($sign + 1) * 50;
+
+            if ($date['modifier'] === self::MODIFIER_PART) {
+                $frac = intdiv(100, intval($date['fraction']['denominator']));
+                $numerator = intval($date['fraction']['numerator_from']);
+                $adjustThird = 0;
+                if ($date['fraction']['denominator'] == '3') {
+                    $frac += 1;
+                    // avoid accumulation because of extended interval
+                    $adjustThird = 1 - $numerator;
+                }
+                $r2 = 1 + ($numerator - 1) * $frac + $adjustThird;
+                $r3 = 1 + $numerator * $frac + $adjustThird;
+                if ($date['fraction']['numerator_to']) {
+                    $numerator = $date['fraction']['numerator_to'];
+                    $adjustThird = $date['fraction']['denominator'] == '3' ? 1 - $numerator : 0;
+                    $r3 = 1 + $numerator * $frac + $adjustThird;
+                }
+                $deltaDate = [
+                    "r1" => '+' . strval($r3) . ' years -1 second',
+                    "r2" => '+' . strval($r2) . ' years',
+                    "r3" => '+' . strval($r3) . ' years -1 second'
+                ];
             }
-            elseif ($date['modifier'] == self::MODIFIER_AROUND) {
-                $zeittyp = 'AD';
-            }
-            elseif ($date['modifier'] === self::MODIFIER_LATER) {
-                $zeittyp = 'AE';
-            }
-            elseif ($date['modifier'] == self::MODIFIER_AFTER) {
-                $zeittyp = 'AF';
+            elseif ($date['modifier'] != "") {
+                $deltaDate = self::DELTA_DATE[$date['modifier']];
             }
             else {
-                $zeittyp = 'AA';
+                $deltaDate = self::DELTA_DATE['plain_century'];
             }
         }
 
-        //Jahrhundert(teil)e
-        elseif ($date['unit'] === self::UNIT_CENTURY) {
-
-            $zahl = (($date['number'] - 1) * 100) + 100;
-            $zeittyp = 'BE';
-
-            if ($date['modifier'] == self::MODIFIER_BEGIN) {
-                $zahl = (($date['number'] - 1) * 100);
-                $zahl = $secondary ? $zahl : $zahl + 1;
-                $zeittyp = $secondary ? 'BA' : 'BF';
-
+        $refPoints = [];
+        $dateObjMonth = $date['day']['month'] ? intval($date['day']['month']) : 1;
+        $dateObjDay = $date['day']['day'] ? intval($date['day']['day']) : 1;
+        foreach ($deltaDate as $delta) {
+            $dateObj = new \DateTime();
+            $dateObj->setDate($baseYear, $dateObjMonth, $dateObjDay);
+            $dateObj->setTime(0, 0, 0);
+            if ($delta != "") {
+                $dateObj->modify($delta);
             }
-            elseif ($date['modifier'] == self::MODIFIER_MID) {
-                $zahl = (($date['number'] - 1) * 100) + 50;
-                $zeittyp = $secondary ? 'BA' : 'BC';
-
-            }
-            elseif ($date['modifier'] == self::MODIFIER_END) {
-                $zahl = (($date['number'] - 1) * 100) + 100;
-                $zeittyp = $secondary ? 'BA' : 'BA';
-
-            }
-            elseif ($date['modifier'] == self::MODIFIER_PART) {
-
-                // Viertel
-                if ($date['fraction']['denominator'] === 4) {
-                    if ($date['fraction']['numerator_from'] === 1) {
-                        $zahl = (($date['number'] - 1) * 100) + 25;
-                        $zeittyp = 'BA';
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 2) {
-                        $zahl = (($date['number'] - 1) * 100) + 50;
-                        $zeittyp = $secondary ? 'BB' : 'BA';
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 3) {
-                        $zahl = (($date['number'] - 1) * 100) + 75;
-                        $zeittyp = 'BA';
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 4) {
-                        $zahl = (($date['number'] - 1) * 100) + 100;
-                        $zeittyp = 'BB';
-                    }
-
-                    // TODO: proof read, does this work?
-                    if (!$secondary) {
-                        if ($date['fraction']['numerator_to'] === 2) {
-                            $zahl = (($date['number'] - 1) * 100) + 50;
-                            $zeittyp = 'BA';
-                        }
-                        elseif ($date['fraction']['numerator_to'] === 3) {
-                            $zahl = (($date['number'] - 1) * 100) + 75;
-                            $zeittyp = 'BA';
-                        }
-                        elseif ($date['fraction']['numerator_from'] === 4) {
-                            $zahl = (($date['number'] - 1) * 100) + 100;
-                            $zeittyp = 'BB';
-                        }
-                    }
-                }
-
-                // Drittel
-                elseif ($date['fraction']['denominator'] === 3) {
-                    if ($date['fraction']['numerator_from'] === 1) {
-                        $zahl = (($date['number'] - 1) * 100) + 33;
-                        $zeittyp = 'BA';
-                    }
-
-                    elseif ($date['fraction']['numerator_from'] === 2) {
-                        $zahl = (($date['number'] - 1) * 100) + 66;
-                        $zeittyp = 'BA';
-                    }
-
-                    elseif ($date['fraction']['numerator_from'] === 3) {
-                        $zahl = (($date['number'] - 1) * 100) + 100;
-                        $zeittyp = 'BC';
-                    }
-
-                    if (!$secondary) {
-                        if ($date['fraction']['numerator_to'] === 2) {
-                            $zahl = (($date['number'] - 1) * 100) + 66;
-                            $zeittyp = 'BA';
-                        }
-                        elseif ($date['fraction']['numerator_to'] === 3) {
-                            $zahl = (($date['number'] - 1) * 100) + 100;
-                            $zeittyp = 'BD';
-                        }
-                    }
-
-                }
-
-                // Hälften
-                elseif ($date['fraction']['denominator'] === 2) {
-                    if ($date['fraction']['numerator_from'] === 1) {
-                        $zahl = (($date['number'] - 1) * 100) + 50;
-                        $zeittyp = $secondary ? 'BC' : 'BB';
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 2) {
-                        $zahl = (($date['number'] - 1) * 100) + 100;
-                        $zeittyp = 'BD';
-                    }
-
-                    if (!$secondary) {
-                        if ($date['fraction']['numerator_to'] === 2) {
-                            $zahl = (($date['number'] - 1) * 100) + 100;
-                            $zeittyp = 'BD';
-                        }
-                    }
-                }
-            }
-
+            $refPoints[] = $dateObj;
         }
 
-        if ($secondary) {
-            $zahl = 10000 - $zahl;
-        }
-
-        if (!$date['negative']) {
-            $zahl = "0" . sprintf('%04d', $zahl);
-        }
-        else {
-            $zahl = "-" . sprintf('%04d', $zahl);
-        }
-
-        return ['number' => $zahl, 'modifier' => $zeittyp];
+        return $refPoints;
     }
 
     /**
-     * Create a sort key for a single parsed date
+     * Create sort key components for a single historic date
+     *
+     * @param array $dateRefPoints date key reference points
+     * @param string $modifier
+     * @param bool $secondary Is this the end of a date range?
+     * @return array of strings
+     */
+    static function dateToKey(array $dateRefPoints, string $modifier, bool $uncertain, bool $secondary = false): array
+    {
+
+        $keyElements = array_map(function ($r) {
+            // shift date values for negative dates to ensure correct sorting
+            $r->modify("+1 10000 years");
+            return str_pad($r->format(self::DATE_TIME_FORMAT), 20, '0', STR_PAD_LEFT);
+        },
+            $dateRefPoints
+        );
+
+        $priority = 0x0000; // resolve the ambiguity for otherwise identical keys
+        if ($modifier === self::MODIFIER_END) {
+            $priority = $priority | self::PRIORITY_END;
+        }
+        if ($modifier === self::MODIFIER_EARLIER) {
+            $priority = $priority | self::PRIORITY_EARLIER;
+        }
+        if ($modifier === self::MODIFIER_AROUND) {
+            $priority = $priority | self::PRIORITY_AROUND;
+        }
+        if ($uncertain) {
+            $priority = $priority | self::PRIORITY_UNCERTAIN;
+        }
+
+        $keyElements[] = str_pad($priority, 2, "0", STR_PAD_LEFT);
+        $keyElements[] = self::DATE_VERSION;
+        return $keyElements;
+    }
+
+    /**
+     * Create sort key elements for a date
      *
      * @param array $date
-     * @return string
+     * @return array|null
      */
-    static function rangeToKey(array $date): string
+    static function rangeToKey(array $date): array|null
     {
-        //Erstkriterium: Ende des Zeitraums bzw. einfache Datierung
-        //Zweitkriterium: Anfang des Zeitraums oder leer
-        if ($date['end']['invalid']) {
-            $key1 = HistoricDates::dateToKey($date['begin']);
-            $key2 = ['number' => '00000', 'modifier' => '00'];
-
-            // Century fraction ranges (e.g. 2.-3. V. 15. Jh.)
-            if (($date['begin']['unit'] === self::UNIT_CENTURY) && ($date['begin']['fraction']['numerator_to'] !== false)) {
-                $key2 = HistoricDates::dateToKey($date['begin'], true);
-            }
-
+        if ($date['invalid']) {
+            return null;
         }
-        else {
-            $key1 = HistoricDates::dateToKey($date['end']);
-            $key2 = HistoricDates::dateToKey($date['begin']);
 
-            // Swap if necessary
-            if ($key1 < $key2) {
-                $key1 = HistoricDates::dateToKey($date['begin']);
-                $key2 = HistoricDates::dateToKey($date['end'], true);
+        $beginRefPoints = self::dateToRefPoints($date['begin']);
+        $beginKeyElements = self::dateToKey($beginRefPoints, $date['begin']['modifier'], $date['uncertain']);
+        $keyElements = $beginKeyElements;
+        if (!$date['end']['invalid']) {
+            $endRefPoints = self::dateToRefPoints($date['end']);
+            $endKeyElements = self::dateToKey($endRefPoints, $date['end']['modifier'], $date['uncertain']);
+            $keyElements[2] = $endKeyElements[2];
+            if (!$date['or']) {
+                $keyElements[0] = $endKeyElements[0]; // first reference point
+                $keyElements[3] = $endKeyElements[3]; // priority
             }
-            else {
-                $key2 = HistoricDates::dateToKey($date['begin'], true);
+            // use the earlier date for the key
+            elseif ($endRefPoints[0] < $beginRefPoints[0]) {
+                $keyElements[0] = $endKeyElements[0];
+                $keyElements[1] = $endKeyElements[1];
+                $keyElements[2] = $beginKeyElements[2];
+                $keyElements[3] = $endKeyElements[3];
             }
         }
-
-        //Modifikator: unsicher
-        if ($date['uncertain']) {
-            $unsicher = 'B';
-        }
         else {
-            $unsicher = 'A';
+            $keyElements = $beginKeyElements;
         }
-
-        //Modifikator: einfach
-        if ($date['end']['invalid'] || $date['or']) {
-            $einfach = 'A';
-        }
-        else {
-            $einfach = 'B';
-        }
-
-        //Modifikator: von-bis, oder
-        if ($date['end']['invalid']) {
-            $oder = '0';
-        }
-        elseif ($date['or']) {
-            $oder = 'A';
-        }
-        else {
-            $oder = 'B';
-        }
-
-        //Zusammensetzen
-        $key = $key1['number'] . $einfach . $key1['modifier']
-            . $key2['number'] . $key2['modifier']
-            . $oder . $unsicher . self::DATE_VERSION;
-
-        return $key;
+        return $keyElements;
     }
 
     /**
@@ -933,146 +994,36 @@ class HistoricDates
      */
     static function dateToSpan(array $date): array
     {
-        $start = null;
-        $end = null;
 
-        //Jahreszahlen
-        if ($date['unit'] === self::UNIT_YEAR) {
-            $start = $end = $date['number'];
-            if ($date['modifier'] == self::MODIFIER_BEFORE) {
-                $start -= HistoricDates::FUZZY_LONG;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_EARLIER) {
-                $start -= self::FUZZY_LONG;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_AROUND) {
-                $start -= self::FUZZY_SHORT;
-                $end += self::FUZZY_SHORT;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_EARLIER) {
-                $end += self::FUZZY_LONG;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_AFTER) {
-                $end += self::FUZZY_LONG;
-            }
-        }
+        $refPoints = self::dateToRefPoints($date);
+        return array_filter([
+                $refPoints[1]->format('Y'),
+                $refPoints[2]->format('Y')
+            ],
+            fn($year) => $year !== null
+        );
 
-        //Jahrhundert(teil)e
-        elseif ($date['unit'] === self::UNIT_CENTURY) {
-
-            $start = (($date['number'] - 1) * 100) + 1;
-            $end = (($date['number'] - 1) * 100) + 100;
-
-            if ($date['modifier'] == self::MODIFIER_BEGIN) {
-                $start = (($date['number'] - 1) * 100) + 1;
-                $end = (($date['number'] - 1) * 100) + self::FUZZY_LONG;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_MID) {
-                $start = (($date['number'] - 1) * 100) + 50 - self::FUZZY_LONG;
-                $end = (($date['number'] - 1) * 100) + 50 + self::FUZZY_LONG;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_END) {
-                $start = (($date['number'] - 1) * 100) + 100 - self::FUZZY_LONG;
-                $end = (($date['number'] - 1) * 100) + 100;
-            }
-            elseif ($date['modifier'] == self::MODIFIER_PART) {
-
-                // Handle numerator_from
-                // - Viertel
-                if ($date['fraction']['denominator'] == 4) {
-
-                    if ($date['fraction']['numerator_from'] === 1) {
-                        $start = (($date['number'] - 1) * 100) + 1;
-                        $end = (($date['number'] - 1) * 100) + 25;
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 2) {
-                        $start = (($date['number'] - 1) * 100) + 25;
-                        $end = (($date['number'] - 1) * 100) + 50;
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 3) {
-                        $start = (($date['number'] - 1) * 100) + 50;
-                        $end = (($date['number'] - 1) * 100) + 75;
-                    }
-                    elseif ($date['fraction']['numerator_from'] === 4) {
-                        $start = (($date['number'] - 1) * 100) + 75;
-                        $end = (($date['number'] - 1) * 100) + 100;
-                    }
-
-                    if ($date['fraction']['numerator_to'] === 2) {
-                        $end = (($date['number'] - 1) * 100) + 50;
-                    }
-                    elseif ($date['fraction']['numerator_to'] === 3) {
-                        $end = (($date['number'] - 1) * 100) + 75;
-                    }
-                    elseif ($date['fraction']['numerator_to'] === 4) {
-                        $end = (($date['number'] - 1) * 100) + 100;
-                    }
-
-                }
-                // -Drittel
-                elseif ($date['fraction']['denominator'] == 3) {
-                    if ($date['fraction']['numerator_from'] === 1) {
-                        $start = (($date['number'] - 1) * 100) + 1;
-                        $end = (($date['number'] - 1) * 100) + 33;
-                    }
-                    elseif
-                    ($date['fraction']['numerator_from'] === 2) {
-                        $start = (($date['number'] - 1) * 100) + 33;
-                        $end = (($date['number'] - 1) * 100) + 66;
-                    }
-                    elseif
-                    ($date['fraction']['numerator_from'] === 3) {
-                        $start = (($date['number'] - 1) * 100) + 66;
-                        $end = (($date['number'] - 1) * 100) + 100;
-                    }
-
-                    if ($date['fraction']['numerator_to'] === 2) {
-                        $end = (($date['number'] - 1) * 100) + 66;
-                    }
-                    elseif ($date['fraction']['numerator_to'] === 3) {
-                        $end = (($date['number'] - 1) * 100) + 100;
-                    }
-
-                }
-
-                // - Hälften
-                elseif ($date['fraction']['denominator'] === 2) {
-                    if ($date['fraction']['numerator_from'] === 1) {
-                        $start = (($date['number'] - 1) * 100) + 1;
-                        $end = (($date['number'] - 1) * 100) + 50;
-                    }
-
-                    elseif ($date['fraction']['numerator_from'] === 2) {
-                        $start = (($date['number'] - 1) * 100) + 50;
-                        $end = (($date['number'] - 1) * 100) + 100;
-                    }
-
-                    if ($date['fraction']['numerator_to'] === 2) {
-                        $end = (($date['number'] - 1) * 100) + 100;
-                    }
-
-                }
-            }
-        }
-
-        if ($date['negative']) {
-            $start = is_null($start) ? null : -$start;
-            $end = is_null($end) ? null : -$end;
-        }
-
-        return array_filter([$start, $end], fn($year) => $year !== null);
     }
 
     /**
      * Create a sort key from a list of parsed dates
      *
      * @param array $datelist The list of parsed dates
-     * @return string
+     * @return string|null
      */
-    static function listToKey(array $datelist): string
+    static function listToKey(array $datelist): string|null
     {
-        $datelist = array_map([__CLASS__, 'rangeToKey'], $datelist);
-        $out = implode('X', $datelist);
+        $keys = array_values(array_filter(array_map([__CLASS__, 'rangeToKey'], $datelist), fn($x) => $x !== null));
+        if (empty($keys)) {
+            return null;
+        }
+        // the first date provides the first reference point
+        $outKeys = $keys[0];
+        if (count($keys) > 1) {
+            $outKeys[1] = min(array_column($keys, 1));
+            $outKeys[2] = max(array_column($keys, 2));
+        }
+        $out = implode('/', $outKeys);
         return $out;
     }
 
@@ -1087,7 +1038,9 @@ class HistoricDates
     {
         $years = [];
 
-        $years = array_merge($years, HistoricDates::dateToSpan($date['begin']));
+        if (!$date['begin']['invalid']) {
+            $years = array_merge($years, HistoricDates::dateToSpan($date['begin']));
+        }
         if (!$date['end']['invalid']) {
             $years = array_merge($years, HistoricDates::dateToSpan($date['end']));
         }
@@ -1096,7 +1049,7 @@ class HistoricDates
     }
 
     /**
-     * TODO: add description
+     * Return a list of years from a list of historic dates
      *
      * @param array $datelist
      * @return array
@@ -1126,24 +1079,24 @@ class HistoricDates
      * Start of the date range
      *
      * @param string $date The date string
-     * @return int
-     */
-    static function minyear(string $date): int
+     * @return int|null
+ */
+    static function minyear(string $date): int|null
     {
         $years = HistoricDates::years($date);
-        return min($years);
+        return empty($years) ? null : min($years);
     }
 
     /**
      * End of the date range
      *
      * @param string $date The date string
-     * @return int
+     * @return int|null
      */
-    static function maxyear(string $date): int
+    static function maxyear(string $date): int|null
     {
         $years = HistoricDates::years($date);
-        return max($years);
+        return empty($years) ? null : max($years);
     }
 }
 

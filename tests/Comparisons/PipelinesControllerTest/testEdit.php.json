@@ -8,6 +8,7 @@
     "created_by": null,
     "modified_by": 2,
     "name": "new name",
+    "type": "export",
     "description": "do something else",
     "tasks": [],
     "norm_iri": "di-book-doc"

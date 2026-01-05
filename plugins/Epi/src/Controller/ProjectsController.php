@@ -49,6 +49,8 @@ class ProjectsController extends AppController
         ]
     ];
 
+    public $help = 'introduction/projects';
+
     /**
      * Pagination setup
      *
@@ -148,7 +150,6 @@ class ProjectsController extends AppController
     /**
      * Transfer entity to another database
      *
-     * @param string|null $propertytype property type
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException When record not found.
      */
@@ -161,8 +162,7 @@ class ProjectsController extends AppController
             );
         }
 
-        // Get search parameters from request
-        [$params, $columns, $paging, $filter] = $this->Actions->prepareParameters();
-        $this->Transfer->transfer(null, $params);
+        $requestParams = $this->request->getQueryParams();
+        $this->Transfer->transfer(null, $requestParams);
     }
 }

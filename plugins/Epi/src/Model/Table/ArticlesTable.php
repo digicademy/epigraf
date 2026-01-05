@@ -17,6 +17,8 @@ use App\Model\Table\BaseTable as AppBaseTable;
 use App\Model\Table\SaveManyException;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
+use App\Utilities\Converters\Geo;
+use App\Utilities\Converters\HistoricDates;
 use App\Utilities\Converters\Objects;
 use App\Utilities\Text\TextParser;
 use App\View\MarkdownView;
@@ -25,9 +27,11 @@ use Cake\Collection\CollectionInterface;
 use Cake\Database\Expression\AggregateExpression;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
+use Cake\I18n\I18n;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Epi\Model\Behavior\IndexBehavior;
 use Epi\Model\Entity\Article;
@@ -58,7 +62,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
     public $parameters = [
         'id' => 'list-integer', // For updating stale rows in paginator.js
-        'articles' => 'list-integer', // Replace by id?
+        'articles' => 'list-integer', // Replace by id? Used in transfers
 
         'deleted' => 'string',
         'published' => 'list-integer',
@@ -77,9 +81,11 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         'field' => 'string',
         'term' => 'string',
+        'date' => 'string',
         'highlight' => 'string',
         'projects' => 'list-integer',
         'properties' => 'nested-list', // Example: properties.objecttypes.selected=1,2,3.
+        'lane' => 'list-integer',      // In the lanes template, specific lanes must be selected one by one
 
         'references' => 'list-integer',
 
@@ -87,8 +93,12 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         'lng' => 'float',
         'zoom' => 'raw',
 
+        'details' => 'list',
+
+        'selection' => 'raw',
         'selected' => 'list',
-        'columns' => 'list',
+        'columns' => 'list-or-false',
+        'search' => 'nested-list',
         'sort' => 'list',
         'direction' => 'list',
 
@@ -97,8 +107,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         'shape' => 'string',
         'idents' => 'string',
 
-        'lanes' => 'string',
-        'lane' => 'list-integer',
+        'flow' => 'string',
 
         'tile' => 'string',
         'children' => 'string',
@@ -136,14 +145,15 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 'Articles.id' => ['type' => 'integer', 'operator' => '='],
                 'Articles.name',
                 'Articles.norm_iri',
-                'Articles.norm_data'
+                'Articles.norm_data',
+                'Articles.status'
             ]
         ],
         FIELD_ARTICLES_SIGNATURE => [
             'caption' => '- Signatur',
             'scopes' => ['Articles.signature']
         ],
-        'ID' => [
+        'id' => [
             'caption' => '- ID',
             'scopes' => ['Articles.id'],
             'type' => 'integer',
@@ -162,12 +172,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'scopes' => ['Articles.norm_data']
         ],
         'status' => [
-            'caption' => 'Status',
+            'caption' => '- Status',
             'scopes' => ['Articles.status']
-        ],
-        'text' => [
-            'caption' => 'Text',
-            'scopes' => []
         ]
     ];
 
@@ -239,6 +245,16 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'propertyName' => ITEMTYPE_FULLTEXT,
             'conditions' => ['ItemsSearch.itemtype' => ITEMTYPE_FULLTEXT, 'ItemsSearch.deleted' => 0]
         ]);
+
+        $this->hasMany('ItemsDates', [
+            'className' => 'Epi.Items',
+            'foreignKey' => 'articles_id',
+            'joinType' => Query::JOIN_TYPE_LEFT,
+            'sort' => ['ItemsDates.articles_id', 'ItemsDates.sortno'],
+            'propertyName' => 'dates',
+            'conditions' => ['ItemsDates.date_value IS NOT NULL', 'ItemsDates.date_value <>' => '', 'ItemsDates.deleted' => 0]
+        ]);
+
 
         $this->hasMany('Links', [
             'className' => 'Epi.Links',
@@ -359,10 +375,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * Set root and container property of the items
      *
      * @param EventInterface $event
-     * @param EntityInterface $entity
+     * @param Article $entity
      * @param array $options
-     *
-     * @return void
      */
     public function beforeSave(EventInterface $event, $entity, $options = []): void
     {
@@ -396,7 +410,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         }
 
         parent::afterSave($event, $entity, $options);
-        $this->clearViewCache('epi_views_Epi_Articles');
+        $this->clearCache();
     }
 
     /**
@@ -412,9 +426,14 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $term = $options['term'] ?? false;
         $field = $options['field'] ?? false;
 
-        //Fulltext
+        // Fulltext
         if (!empty($term) && (str_starts_with($field, 'text'))) {
             $query = $query->find('hasText', $options);
+        }
+
+        // Columns
+        if (!empty($term) && (str_starts_with($field, 'columns.'))) {
+            // Handled in BaseTable::findColumnFields
         }
 
         // Other fields
@@ -427,6 +446,43 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 'operator' => $searchConfig['operator'] ?? 'LIKE',
                 'type' => $searchConfig['type'] ?? 'string'
             ]);
+        }
+
+        return $query;
+    }
+
+    /**
+     * Find articles by date range
+     *
+     * The date range is provided as natural date string, e.g. "16. Jh." or "1430-1450".
+     * From the date string, a date range is extracted using the HistoricDates class.
+     *
+     * @param Query $query
+     * @param array $options
+     *
+     * @return Query
+     */
+    public function findHasDate(Query $query, array $options)
+    {
+        if (!empty($options['date'])) {
+
+            $itemtypes = $this->getDateItemTypes();
+
+            if (!empty($itemtypes)) {
+                $parsedDate = HistoricDates::years($options['date']);
+                if (!empty($parsedDate)) {
+                    $conditions = [
+                        'ItemsDates.date_start <=' => max($parsedDate),
+                        'ItemsDates.date_end >=' => min($parsedDate),
+                        'ItemsDates.itemtype IN' => $itemtypes
+                    ];
+
+                    $query = $query->innerJoinWith('ItemsDates',
+                        function ($q) use ($conditions) {
+                            return $q->where(['AND' => $conditions]);
+                        });
+                }
+            }
         }
 
         return $query;
@@ -448,7 +504,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         if (!empty($options['tile'])) {
 
-            $filter = $this->getFilter([]);
+            $filter = $this->getFilter(['tile' => $options['tile']]);
             $geoConditions = [];
             foreach ($filter['geodata'] ?? [] as $itemType => $itemField) {
 
@@ -722,7 +778,18 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         // Selected IDs
         foreach ($properties as $propertyType => $propertyParams) {
-            $propertyIds = $propertyParams['selected'] ?? $propertyParams;
+
+            if (!empty($propertyParams['selected'])) {
+                $propertyIds = $propertyParams['selected'];
+            }
+            else if (!empty($propertyParams)) {
+                // Keep only numeric values
+                $propertyIds = is_array($propertyParams) ? $propertyParams : [$propertyParams];
+                $propertyIds = array_filter($propertyIds, 'is_int', ARRAY_FILTER_USE_KEY);
+                $propertyIds = array_filter($propertyIds, 'is_int');
+            } else {
+                $propertyIds = [];
+            }
 
             if (in_array('all', $propertyParams['flags'] ?? [])) {
                 $hasItemsQuery = $this
@@ -837,6 +904,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $operator = 'LIKE';
         $type = 'string';
 
+        // Search index condition
         $field = explode('.', $options['field'] ?? 'text');
         if (!empty($field[1])) {
             $filter = ['ItemsSearch.value IN' => $field[1]];
@@ -848,24 +916,28 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $terms =  preg_split('/[ |]/', $term, -1, PREG_SPLIT_NO_EMPTY);
 
         $query = $query
-            ->distinct()
+            ->distinct();
+
+        if (in_array('search', $options['snippets'] ?? [])) {
 
             //Highlight
-            ->contain('ItemsSearch',
+            $query = $query->contain('ItemsSearch',
                 function ($q) use ($conditions, $terms) {
                     return $q
                         ->where(['AND' => $conditions])
                         ->formatResults(function (CollectionInterface $results) use ($terms) {
                             return $results->map(function ($item) use ($terms) {
+                                $item['caption'] = I18n::getTranslator()->translate(Inflector::humanize($item['value']));
                                 $item['content'] = TextParser::highlightTerms($item['content'], $terms);
                                 $item['highlight'] = $terms;
                                 return $item;
                             });
                         });
-                })
+                });
+        }
 
-            //Search
-            ->innerJoinWith('ItemsSearch',
+        //Search
+        $query = $query->innerJoinWith('ItemsSearch',
                 function ($q) use ($conditions) {
                     return $q->where(['AND' => $conditions]);
                 });
@@ -890,6 +962,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'id' => null,
             'term' => '',
             'field' => '',
+            'date' => null,
             'projects' => '',
             'articletypes' => '',
             'published' => null,
@@ -901,6 +974,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         // Generate query
         $query = $query->find('hasIds', $params);
         $query = $query->find('hasTerm', ['field' => $params['field'], 'term' => $params['term']]);
+        $query = $query->find('hasDate', ['date' => $params['date']]);
         $query = $query->find('hasProject', ['projects' => $params['projects']]);
         $query = $query->find('hasReferences', $params);
 
@@ -919,86 +993,114 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Find items and sections by type
+     * Contain data necessary for table columns
      *
-     *  // TODO: only contain necessary data, based on fields parameter
+     * TODO: derive necessary snippets from the column configuration
+     *
+     * ### Options
+     * - snippets (array) A list of snippets to be contained.
+     *                    The default is: users, projects, sections, items, links, footnotes.
      *
      * @param Query $query
      * @param array $options
      *
      * @return Query
      */
-    public function findContainFields(Query $query, array $options)
+    public function findContainColumns(Query $query, array $options)
     {
-        // Contain sections and items
-        $containSections = function ($q) use ($options) {
-            $q = $q
-                ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name']);
+        $snippets = $options['snippets'] ?? [];
+        if (empty($snippets)) {
+          $snippets =  ['users', 'projects', 'sections', 'items', 'links', 'footnotes'];
+        }
+        elseif ($snippets === ['search']) {
+            $snippets =  ['users', 'projects', 'sections', 'items', 'links', 'footnotes', 'search'];
+        }
 
-            $types = $options['sectiontypes'] ?? [];
-            if (!empty($types)) {
-                $q = $q->where(['Sections.sectiontype IN' => $types]);
-            }
-            return $q;
-        };
+        // Add default sort: This makes sure that findColumnFields runs through the join code which simplifies the query
+        if (empty($options['sort'])) {
+            $options['sort'] = [FIELD_ARTICLES_SIGNATURE]; // Todo: Implement $this->defaultOrder
+        }
 
-        $containItems = function ($q) use ($options, $query) {
+        $contain = [];
+        if (in_array('users', $snippets)) {
+            $contain[] = 'Creator';
+            $contain[] = 'Modifier';
+            $query = $query
+                ->select($this->Creator)
+                ->select($this->Modifier);
+        }
 
-            $itemConditions = [];
-            $itemTypes = $options['itemtypes'] ?? [];
-            if (!empty($itemTypes)) {
-                $itemConditions['Items.itemtype IN'] = $itemTypes;
-            }
+        if (in_array('projects', $snippets)) {
+            $contain[] = 'Projects';
+            $query = $query->select($this->Projects);
+        }
 
-            $sectionTypes = $options['sectiontypes'] ?? [];
-            if (!empty($sectionTypes)) {
-                $itemConditions['Items.sections_id IN'] = $query
-                    ->cleanCopy()
-                    ->select('id', true)
-                    ->innerJoinWith('Sections', function (Query $sectionsQuery) use ($options) {
-                        return $sectionsQuery->where(['Sections.sectiontype IN' =>  $options['sectiontypes']]);
-                    });
-            }
+        if (in_array('sections', $snippets)) {
+            $containSections = function ($q) use ($options) {
+                $q = $q
+                    ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name']);
 
-            if (!empty($itemConditions)) {
-                $q = $q->where($itemConditions);
-            }
-            return $q;
-        };
+                $types = $options['sectiontypes'] ?? [];
+                if (!empty($types)) {
+                    $q = $q->where(['Sections.sectiontype IN' => $types]);
+                }
+                return $q;
+            };
+            $contain['Sections'] = $containSections;
+        }
 
-        $contain = [
-            'Creator',
-            'Modifier',
+        if (in_array('items', $snippets)) {
+            $containItems = function ($q) use ($options, $query) {
 
-            'Projects',
+                $itemConditions = [];
+                $itemTypes = $options['itemtypes'] ?? [];
+                if (!empty($itemTypes)) {
+                    $itemConditions['Items.itemtype IN'] = $itemTypes;
+                }
 
-            'Sections' => $containSections,
+                $sectionTypes = $options['sectiontypes'] ?? [];
+                if (!empty($sectionTypes)) {
+                    $itemConditions['Items.sections_id IN'] = $query
+                        ->cleanCopy()
+                        ->select('id', true)
+                        ->innerJoinWith('Sections', function (Query $sectionsQuery) use ($options) {
+                            return $sectionsQuery->where(['Sections.sectiontype IN' =>  $options['sectiontypes']]);
+                        });
+                }
 
-            'Items' => $containItems,
-            'Items.Properties',
-            'Items.Types',
+                if (!empty($itemConditions)) {
+                    $q = $q->where($itemConditions);
+                }
+                return $q;
+            };
+            $contain['Items'] = $containItems;
+            $contain[] = 'Items.Properties';
+            $contain[] = 'Items.Types';
+        }
 
-            'Links',
-            'Footnotes'
-        ];
+        if (in_array('links', $snippets)) {
+            $contain[] = 'Links';
+            $contain[] = 'Links.PropertiesWithAncestors';
+            $contain[] = 'Links.PropertiesWithAncestors.Types';
+
+        }
+
+        if (in_array('footnotes', $snippets)) {
+            $contain[] = 'Footnotes';
+        }
 
         $query = $query->contain($contain);
 
         // Distance field for geolocated data
-        if (in_array('distance', $options['columns'] ?? [])) {
+        // TODO: remove this special condition.
+        if (is_array($options['columns'] ?? []) && in_array('distance', $options['columns'] ?? [])) {
             $query = $query->find('containDistance', $options);
         }
-        // Items for item filters
-        else {
-            // TODO: remove Creator and Modifier from select, use joins only?
-            // TODO: automatically select contained associations
-            $query = $query
-                ->select($this)
-                ->select($this->Projects)
-                ->select($this->Creator)
-                ->select($this->Modifier);
 
-            $query = $query->find('sortFields', $options);
+        // Join all columns necessary for sorting or other requested columns ($options['join'] parameter)
+        else {
+            $query = $query->select($this);
+            $query = $query->find('columnFields', $options);
         }
 
         return $query;
@@ -1026,8 +1128,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         // Default position Mainz
         if ((($options['lat'] ?? null) === null) || (($options['lng'] ?? null) === null)) {
-            $options['lat'] = 52.147040492349;
-            $options['lng'] = 13.612060546875;
+            $options['lat'] = GEO_MAINZ_LAT;
+            $options['lng'] = GEO_MAINZ_LNG;
         }
 
         return $query->func()->min(
@@ -1165,26 +1267,21 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $propertyAlias = $itemAlias . '_property';
         $geoAlias = $propertyJoin ? $propertyAlias : $itemAlias;
 
-        // Tile conditions
-        $tile = explode('/', $tile);
-
-        // See https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
-        $zoom = (int)$tile[0] ?? 0;
-        $ytile = (int)$tile[1] ?? 0;
-        $xtile = (int)$tile[2] ?? 0;
-
-        $n = pow(2, $zoom);
-        $lon_deg_west = $xtile / $n * 360.0 - 180.0;
-        $lon_deg_east = ($xtile + 1) / $n * 360.0 - 180.0;
-        $lat_deg_north = rad2deg(atan(sinh(pi() * (1 - 2 * $ytile / $n))));
-        $lat_deg_south = rad2deg(atan(sinh(pi() * (1 - 2 * ($ytile + 1) / $n))));
-
+        $coords = Geo::tileToCoords($tile);
         $geoConditions = [
-            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lat\') AS DOUBLE) > ' . $lat_deg_south,
-            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lat\') AS DOUBLE) <= ' . $lat_deg_north,
-            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lng\') AS DOUBLE) > ' . $lon_deg_west,
-            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lng\') AS DOUBLE) <= ' . $lon_deg_east
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lat\') AS DOUBLE) > ' . $coords['south'],
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lat\') AS DOUBLE) <= ' . $coords['north'],
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lng\') AS DOUBLE) > ' . $coords['west'],
+            'CAST(JSON_VALUE(' . $geoAlias . '.`' . $valueField . '`,\'$.lng\') AS DOUBLE) <= ' . $coords['east']
         ];
+
+// Alternative for virtual fields in the database:
+//        $geoConditions = [
+//            $geoAlias . '.geo_lat > ' . $lat_deg_south,
+//            $geoAlias . '.geo_lat <= ' . $lat_deg_north,
+//            $geoAlias . '.geo_lng > ' . $lon_deg_west,
+//            $geoAlias . '.geo_lng <= ' . $lon_deg_east
+//        ];
 
         if (!empty($published)) {
             $geoConditions[] = $geoAlias . '.published IN (' . implode(',', $published) . ')';
@@ -1209,10 +1306,10 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 'conditions' => $itemConditions
             ];
 
-            $geoConditions = [
+            $geoConditions = array_merge([
                 $itemAlias . '.properties_id = ' . $propertyAlias . '.id',
                 $propertyAlias . ".deleted = 0"
-            ] + $geoConditions;
+            ], $geoConditions);
 
             $propertyJoin = [
                 'table' => 'properties',
@@ -1226,11 +1323,11 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         // Item join
         else {
-            $geoConditions = [
+            $geoConditions = array_merge([
                 $itemAlias . ".articles_id = Articles.id",
                 $itemAlias . ".itemtype = \"{$itemType}\"",
                 $itemAlias . ".deleted = 0"
-            ] + $geoConditions;
+            ], $geoConditions);
 
             $itemJoin = [
                 'table' => 'items',
@@ -1279,7 +1376,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * Restructure the data with the following option keys:
      * - regroup
      *
-     * TODO: merge findContainAll and findContainFields
+     * TODO: merge findContainAll and findContainColumns
      * TODO: find links within properties and footnotes?
      *
      * @param Query $query
@@ -1376,7 +1473,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         }
 
         // Bind Items
-        $query = $query->contain($contain);
+        $query = $query->contain($contain)->enableAutoFields();
 
         $query = $this->findCollectItems($query, $options);
         $query = $this->findRegroupSections($query, $options);
@@ -1575,6 +1672,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     /**
      * Called from JobExport
      *
+     * TODO: merge into TransferTrait?
+     *
      * @implements ExportTableInterface
      * @param array $params
      * @param array $paging
@@ -1606,8 +1705,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $paginatorParams = $paginator->validateSort($this, $paginatorParams);
             if (!empty($paginatorParams['order'])) {
                 $query = $query
-//                    ->select($this)
-                    ->find('sortFields', $params)
+                    ->find('columnFields', $params)
                     ->order($paginatorParams['order']);
             }
         }
@@ -1616,10 +1714,14 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $query = $query->order($pagingFields);
         }
 
+        if (isset($params['expand']) && Attributes::isFalse($params['expand'])) {
+            $query = $query->find('containColumns', $params);
+        } else {
+            $query = $query->find('containAll', $params);
+        }
 
         // TODO: remove toArray()
         $entities = $query
-            ->find('containAll', $params)
             ->limit($limit)
             ->offset($offset)
             ->all()
@@ -1637,13 +1739,17 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      *
      * TODO: keep all definitions, indexed by: articletype, default, query parameter
      *
+     * ### Options
+     * * - type (string) Filter by type
+     * * - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $default = [
             'name' => ['caption' => __('Title'), 'default' => true, 'public' => true],
@@ -1654,7 +1760,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         ];
 
         // Merge with columns from the types configuration
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**
@@ -1669,9 +1775,32 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     {
         $params = Attributes::parseQueryParams($requestParameters, $this->parameters, 'articles');
 
+        // Selected detail property type
+        $detailProperty = array_filter($params['properties'] ?? [], function ($property) {
+            return in_array('grp', $property['flags'] ?? []);
+        });
+        $detailPropertytype = array_key_first($detailProperty);
+        $detailProperty = reset($detailProperty);
+
+        // Show tag content
+        if (!empty($detailProperty)) {
+            $params['details'][] = 'items.*.tags.*[to_id=/^' . implode('|', $detailProperty['selected'] ?? []) . '$/]';
+            $params['lanes'] = $detailPropertytype;
+        }
+        if ((($params['template'] ?? '') !== 'table')) {
+            unset($params['details']);
+        }
+        if ((($params['template'] ?? '') !== 'tiles')) {
+            unset($params['lanes']);
+        }
+
         // Remove conditional parameters
         if (!isset($params['term'])) {
             unset($params['field']);
+        }
+
+        if (!empty($params['term']) && (str_starts_with($params['field'] ?? '', 'text'))) {
+            $params['snippets'][]  = 'search';
         }
 
         // Geodata
@@ -1681,9 +1810,6 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             unset($params['lng']);
         }
 
-        if ((($params['template'] ?? '') !== 'lanes')) {
-            unset($params['lanes']);
-        }
 
         // Default modes
         if ($this::$userRole === 'coder') {
@@ -1723,6 +1849,25 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             ] + $pagination;
     }
 
+
+    /**
+     * Get configured itemtypes for dates
+     *
+     * The item types are defined in the article type configuration.
+     *
+     * @return array
+     */
+    public function getDateItemTypes(): array
+    {
+        $types = $this->getDatabase()->types[$this->getTable()] ?? [];
+        $itemtypes = [];
+        foreach ($types as $typeData) {
+            $typeConfig = Objects::extract($typeData, 'merged.dates') ?? [];
+            $itemtypes = array_merge($itemtypes, $typeConfig);
+        }
+        return $itemtypes;
+    }
+
     /**
      * Get filter options including lanes and geodata configuration
      *
@@ -1742,8 +1887,25 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $filter = parent::getFilter($params);
 
         // Add full text search indexes
-        $searchIndexes = $this->Items->find('searchIndexes')->toArray();
+        $searchIndexes = $this->Items->getSearchIndexes();
+        if (!empty($searchIndexes)) {
+            $indexAll = ['text' => 'Text'];
+            $searchIndexes = array_merge($indexAll, $searchIndexes);
+        }
         $filter['search'] = array_merge($filter['search'], $searchIndexes);
+
+        // Add column filters
+        $columnFilters = $this->getColumnFilters();
+        $filter['search'] = array_merge($filter['search'], $columnFilters);
+
+        // Parse date
+        $dateItemTypes = $this->getDateItemTypes();
+        if (!empty($dateItemTypes)) {
+            $filter['date'] = ['itemtypes' => $this->getDateItemTypes()];
+            if (isset($params['date'])) {
+                $filter['date']['normalized'] = HistoricDates::normalize($params['date']);
+            }
+        }
 
         // Add lanes
         // TODO: only when requested by snippets?
@@ -1753,7 +1915,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         // Get geodata configuration
         // TODO: What if different article types have different geodata configurations
         //       for the same itemtype?
-        if (($params['template'] ?? '') == 'map') {
+        $geoFilter = (($params['template'] ?? '') == 'map') || (isset($params['tile']));
+        if ($geoFilter) {
             $filter['geodata'] = [];
 
             // Get config from database
@@ -1763,18 +1926,17 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 $filter['geodata'] = array_merge($filter['geodata'], $typeConfig);
             }
         }
-
         return $filter;
     }
 
     /**
      * Get a summary of the result set
      *
+     * // TODO: implement lazy loading (generator in combination with iteratoraggregate?)
+     *
      * Displays information about missing geo data.
      *
-     * @param $params
-     * @param $template
-     * @param $paging
+     * @param array $params
      * @return array
      */
     public function getSummary($params)
@@ -1783,9 +1945,9 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         if (($params['template'] ?? '') == 'map') {
             $missing = $this
                 ->find('hasParams', $params)
-                ->find('containFields', $params)
+                ->find('containColumns', $params)
                 ->find('hasNoGeolocation', $params)
-                ->all()->count();
+                ->count();
 
             if ($missing) {
                 $summary[] = __('Skipped {0} not geocoded records.', $missing);
@@ -2221,7 +2383,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         $articles = $this
             ->find('hasParams', $dataParams)
-            ->find('containFields', $dataParams)
+            ->find('containColumns', $dataParams)
             ->limit($limit)
             ->offset($offset)
             ->toArray();

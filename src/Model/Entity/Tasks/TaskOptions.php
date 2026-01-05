@@ -10,14 +10,13 @@
 
 namespace App\Model\Entity\Tasks;
 
-use App\Model\Entity\BaseTask;
-use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
+use App\View\XmlView;
 
 /**
  * Output options in the export pipeline
  */
-class TaskOptions extends BaseTask
+class TaskOptions extends BaseTaskData
 {
 
     /**
@@ -27,8 +26,13 @@ class TaskOptions extends BaseTask
      */
     public function execute()
     {
+        // Skip if no output format is defined
+        if (empty($this->config['format'])) {
+            return true;
+        }
+
         // User defined options
-        $userOptions = array_filter($this->job->config['tasks']['options'], function ($x) {
+        $userOptions = array_filter($this->job->config['options']['options'], function ($x) {
             return ($x['type'] !== 'radio') || !empty($x['output']);
         });
 
@@ -54,7 +58,7 @@ class TaskOptions extends BaseTask
             // See TaskDataArticle::execute()
             if (
                 !empty($taskConfig['matchprojects']) &&
-                !empty($this->job->config['tasks']['enabled'][$taskNo]['enabled'] ?? true)
+                !empty($this->job->config['options']['enabled'][$taskNo]['enabled'] ?? true)
             ) {
                 $textOption = 1;
                 break;
@@ -62,15 +66,21 @@ class TaskOptions extends BaseTask
         }
         $dataOptions = [
             'objects' => 1,
-            'index' => intval(!empty($this->job->config['tasks']['index'])),
+            'index' => intval(!empty($this->job->config['options']['index'])),
             'text' => $textOption,
         ];
 
         // Output options element
         $options = array_merge($userOptions, $dataOptions);
-        $content = "\n  <options " . Attributes::toHtml($options) . "></options>";
 
-        $outputfile = $this->job->getCurrentOutputFilePath();
+        $view = $this->getView();
+        if ($view instanceof XmlView) {
+            $options['_xml_attributes'] = array_keys($options);
+        }
+        $content = $view->renderContent($options, ['tagname' => 'options'], 1);
+        //$content = "\n  <options " . Attributes::toHtml($options) . "></options>";
+
+        $outputfile = $this->getCurrentOutputFilePath();
         Files::appendToFile($outputfile, $content);
 
         return true;

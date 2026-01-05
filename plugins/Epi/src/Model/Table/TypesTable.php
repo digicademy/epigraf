@@ -25,6 +25,7 @@ use Cake\ORM\Table;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
+use Epi\Model\Entity\Type;
 use Epi\Model\Traits\TransferTrait;
 
 /**
@@ -87,7 +88,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         'scopes' => 'list',
         'modes' => 'list',
         'categories' => 'list',
-        'columns' => 'list',
+        'columns' => 'list-or-false',
         'name' => 'list',
         'iri' => 'list',
 
@@ -233,12 +234,10 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
      * Before save method
      *
      * @param EventInterface $event
-     * @param EntityInterface $entity
-     * @param ArrayObject $options
-     *
-     * @return void
+     * @param Type $entity
+     * @param array $options
      */
-    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
         // TODO: make suggestions in the frontend using JS
         if (empty($entity->norm_iri)) {
@@ -261,9 +260,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
         parent::afterSave($event, $entity, $options);
-
-        $this->Articles->clearResultCache();
-        $this->clearViewCache('epi_views_Epi_Articles');
+        $this->Articles->clearCache();
     }
 
     /**
@@ -294,7 +291,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
             ->scalar('name')
             ->maxLength('name', 100)
             ->add('name', 'validFormat', [
-                'rule' => ['custom', '/^[a-z0-9_-]+$/'],
+                'rule' => ['custom', '/^[A-Za-z0-9_-]+$/'],
                 'message' => 'Only lowercase alphanumeric characters, underscore and hyphen are allowed.'
             ]);
 
@@ -621,13 +618,17 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
 
         $default = [
@@ -737,7 +738,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
             ]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**

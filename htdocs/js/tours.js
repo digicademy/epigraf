@@ -7,6 +7,7 @@
  *
  */
 
+import Utils from '/js/utils.js';
 import {BaseWidget} from '/js/base.js';
 
 /**
@@ -34,13 +35,82 @@ export class Tours extends BaseWidget {
         }
     }
 
+    addClickHandler(element, driverObj) {
+        if (element && element.tourListener) {
+            element.removeEventListener('click', element.tourListener);
+        }
+
+        if (element) {
+            element.tourListener = () => driverObj.moveNext();
+            element.addEventListener('click', element.tourListener);
+        }
+    }
+
+    removeClickHandler(element) {
+        if (element && element.tourListener) {
+            element.removeEventListener('click', element.tourListener);
+        }
+        element.tourListener = null;
+    }
+
     startArticlesTour() {
 
-        // TODO: load tour data asynchronously
-
+        const self = this;
         const driverObj = this.driver({
+            // TODO: Fix z index
+            // onDestroyStarted: async () => {
+            //     if (!driverObj.hasNextStep() || await App.confirmAction("Are you sure to exit the tour?")) {
+            //         driverObj.destroy();
+            //     }
+            // },
             showProgress: true,
             steps: [
+                {
+                    element: '.sidebar-left',
+                    popover: {
+                        title: 'Left sidebar',
+                        side: "right",
+                        description: 'Use filters in the left sidebar to select a specific project.',
+                        align: 'start'
+                    }
+                },
+                {
+                    element: '[data-toggle=select-propertytype-pane]',
+                    popover: {
+                        title: 'Filters',
+                        side: "left",
+                        description: 'Klick the plus button to see more filter options.',
+                        align: 'start'
+                    },
+                    onHighlightStarted: function(element, step, options) {
+                        self.addClickHandler(element, driverObj);
+                    },
+                    onDeselected: function(element, step, options) {
+                        self.removeClickHandler(element);
+                    }
+                },
+                {
+                    element: '#select-propertytype-pane',
+                    popover: {
+                        title: 'Filters',
+                        side: "right",
+                        description: 'Select one of the category systems to show all properties in the sidebar.Then, you can filter articles that use one of the properties.',
+                        align: 'start'
+                    },
+                    onHighlightStarted: function(element, step, options) {
+                        if (!Utils.isElementVisible(element)) {
+                            document.querySelector('[data-toggle=select-propertytype-pane]').click();
+                        }
+                        self.addClickHandler(element, driverObj);
+                    },
+                    onDeselected: function(element, step, options) {
+                        self.removeClickHandler(element);
+                        if (Utils.isElementVisible(element)) {
+                            document.querySelector('[data-toggle=select-propertytype-pane]').click();
+                        }
+                    }
+                },
+
                 {
                     element: '[data-list-itemof=epi_articles]',
                     popover: {
@@ -48,6 +118,11 @@ export class Tours extends BaseWidget {
                         description: 'Click on an article to view the content in the sidebar.',
                         side: "bottom",
                         align: 'start'
+                    },onHighlightStarted: function(element, step, options) {
+                        self.addClickHandler(element, driverObj);
+                    },
+                    onDeselected: function(element, step, options) {
+                        self.removeClickHandler(element);
                     }
                 },
                 {
@@ -58,8 +133,15 @@ export class Tours extends BaseWidget {
                         side: "left",
                         align: 'center'
                     },
-                    onHighlightStarted: function(element, step, options) {
-                        document.querySelector('[data-list-itemof=epi_articles]').click();
+                    onHighlightStarted: async function(element, step, options) {
+                        if (!Utils.isElementVisible(element)) {
+                            document.querySelector('[data-list-itemof=epi_articles]').click();
+                        }
+                        try {
+                            await Utils.waitFor('.sidebar-right', 3000);
+                        } catch (e) {
+                            // Handle sidebar not appearing, maybe skip or report error
+                        }
                     }
                 },
                 {

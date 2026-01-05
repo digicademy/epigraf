@@ -5,32 +5,28 @@
             "articles_count": 1
         },
         {
-            "lemma": "siehe"
-        },
-        {
             "lemma": "Schriftart 1a",
             "articles_count": 1
         },
         {
-            "lemma": "siehe"
+            "lemma": "siehe",
+            "articles_count": 0
         },
         {
             "lemma": "Schriftart 2",
             "articles_count": 1
         },
         {
-            "lemma": "siehe"
-        },
-        {
             "lemma": "Schriftart 2a",
             "articles_count": 1
         },
         {
-            "lemma": "siehe"
+            "lemma": "siehe",
+            "articles_count": 0
         }
     ],
     "pagination": {
-        "count": 4,
+        "count": 6,
         "page": 1,
         "page_prev": false,
         "page_next": false,

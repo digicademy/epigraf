@@ -152,6 +152,16 @@ and to the frontend (JavaScript) in `AppController::_initUser()`.
 - Frontend: User data is passed to the frontend in the `AppController->getAppJs()` method.
   A JavaSCript user model class is instantiated in the property `App.user` (see `src/htdocs/js/models.js`).
 
+## Rate limiting
+
+Rate limiting is implemented in the RateLimitMiddleware.
+It is configured in the `config/app.php` file
+which reads the following environment variables:
+
+- APP_RATE_LIMIT_REQUESTS
+- APP_RATE_LIMIT_INTERVAL
+
+
 ## User Settings
 User settings in Epigraf are either stored in the user record or in the session. They include:
 

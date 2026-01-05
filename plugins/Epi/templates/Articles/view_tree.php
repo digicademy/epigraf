@@ -17,7 +17,7 @@
  * @var Epi\Model\Entity\Article $entity
  * @var boolean $edit
  * @var string $mode
- * @var array $templateArticle
+ * @var array $template_article
  */
 ?>
 

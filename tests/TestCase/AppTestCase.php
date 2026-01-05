@@ -174,11 +174,12 @@ class AppTestCase extends TestCase
                 'id' => 1,
                 'name' => 'Article with "Quotes"',
                 'published' => PUBLICATION_PUBLISHED,
+                'norm_data' => "wd:XXX\ngnd:YYY",
                 'sections' => []
             ]
         );
 
-        $article->_serialize_fields = ['id', 'name', 'url' => 'internalUrl', 'sections'];
+        $article->_serialize_fields = ['id', 'name', 'norm_data', 'url' => 'internalUrl', 'sections'];
         $article->_children = 'sections';
         $article->setSource('Epi.Articles');
 
@@ -320,13 +321,14 @@ class AppTestCase extends TestCase
                 'id' => $id,
                 'published' => PUBLICATION_PUBLISHED,
                 'name' => 'Property ' . $id,
-                'propertytype' => 'location'
+                'propertytype' => 'location',
+                'norm_data' => "wd:WD1\ngnd:GND1",
             ]
         );
         $property->setSource('Epi.Properties');
         $property->root = $property;
         $property->container = $item;
-        $property->_serialize_fields = ['id', 'name', 'propertytype' => 'type'];
+        $property->_serialize_fields = ['id', 'name', 'propertytype' => 'type','norm_data'];
         $property['type'] = $this->_generatePropertyType();
 
         return $property;
@@ -522,20 +524,20 @@ class AppTestCase extends TestCase
         }
     }
 
-    public function executeJob($url, $userRole)
+    public function executeJob($url, $userRole, $timeOut = -1)
     {
         $this->loginUser($userRole);
         $this->post($url);
         $jobId = $this->extractParamFromRedirect('#jobs/execute/([0-9]+)#');
 
-        $this->get('/jobs/execute/' . $jobId . '?timeout=-1');
+        $this->get('/jobs/execute/' . $jobId . '?timeout=' . $timeOut);
 
         $job = $this->fetchTable("Jobs")->get($jobId);
         //TODO: use AJAX requests, otherwise download is immediately triggered in JobsController
         for($i = (int)$job['progress']; $i < (int)$job['progressmax']; $i ++) {
             $this->configRequest(['headers' => ['Accept' => 'application/json']]);
             $this->loginUser($userRole);
-            $this->post('/jobs/execute/' . $jobId . '?timeout=-1');
+            $this->post('/jobs/execute/' . $jobId . '?timeout=' . $timeOut);
 
             $response = $this->_getBodyAsString();
             $response = json_decode($response, true);
@@ -855,6 +857,14 @@ class AppTestCase extends TestCase
     public function assertContentEqualsComparison(string $actual, string $suffix = ''): void
     {
         $expectedFile = $this->comparisonFile . $suffix;
+        if ($this->overwriteComparison) {
+            file_put_contents($expectedFile, $actual);
+        }
+
+        if ($this->saveComparison) {
+            file_put_contents($expectedFile.'.status', $actual);
+        }
+
         $this->assertStringEqualsFile($expectedFile, $actual);
     }
 

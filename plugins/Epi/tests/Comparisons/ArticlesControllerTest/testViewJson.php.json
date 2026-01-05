@@ -6,7 +6,7 @@
         "norm_iri": "normiri_1",
         "norm_data": "normdata_1",
         "created": "2021-06-13T16:10:25+02:00",
-        "modified": "2025-02-26T19:11:42+01:00",
+        "modified": "2025-02-26T18:11:42+01:00",
         "articletype": "epi-article",
         "signature": "Signatur 1",
         "name": "Artikel 1 f\u00fcr das Testsystem",
@@ -87,7 +87,7 @@
                         "sortno": 0,
                         "sections_id": "sections-5",
                         "articles_id": "articles-1",
-                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\u003Capp1 id=\u0022000004463586776180555555628924\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003E\u003Ch id=\u0022000004436160878777777777844048\u0022 data-link-target=\u0022properties-98\u0022 data-link-iri=\u0022properties\/headers\/projects~98\u0022 data-link-value=\u0022\u00dcberschrift 1\u0022\u003EText \u003C\/h\u003EText Text\u003Cnl \/\u003EText Text Text\u003Cnl \/\u003EText \u003Cb id=\u0022000004436160887138888888933579\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Fett\u0022\u003EText \u003C\/b\u003E\u003Ci id=\u0022000004436160890414351851976127\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kursiv\u0022\u003EText\u003C\/i\u003E\u003Cnl \/\u003E\u003Cu id=\u0022000004436160892870370370431668\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unterstrichen\u0022\u003EText \u003C\/u\u003E\u003Cg id=\u0022000004436160895594907407469796\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Gesperrt\u0022\u003EText \u003C\/g\u003E\u003Ck id=\u0022000004436160898130787037028136\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapit\u00e4lchen\u0022\u003EText\u003C\/k\u003E\u003Cnl \/\u003E\u003Ca id=\u0022000004436160901166666666725447\u0022 value=\u0022LINK\u0022 href=\u0022https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Link\u0022 \/\u003E \u003Cnl \/\u003EText Text Text\u003Cnl \/\u003EText Text Text\u003Cnl \/\u003ELiteraturverweis im Text: \u003Crec_lit id=\u0022000004456302666872685185191153\u0022 data-link-target=\u0022properties-11\u0022 data-link-iri=\u0022properties\/literature\/projects~11\u0022 data-link-value=\u0022Unterautor \u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003EExterne Verweise\u003Cnl \/\u003E- auf einen Artikel: \u003Crec_extern id=\u0022000004489202490501157407418218\u0022 data-link-target=\u0022articles-3\u0022 data-link-iri=\u0022articles\/epi-article\/normiri_2\u0022 data-link-value=\u0022Signatur 2\u0022 \/\u003E\u003Cnl \/\u003E- auf eine Inschrift: \u003Crec_extern id=\u0022000004489202501042824074077622\u0022 data-link-target=\u0022sections-145\u0022 data-link-iri=\u0022sections\/inscription\/projects~145\u0022 data-link-value=\u0022Signatur 2[A]\u0022 \/\u003E\u003Cnl \/\u003E- auf einen Inschriftenteil: \u003Crec_extern id=\u0022000004489202513028935185199996\u0022 data-link-target=\u0022sections-144\u0022 data-link-iri=\u0022sections\/inscriptionpart\/projects~144\u0022 data-link-value=\u0022Signatur 2[A.1]\u0022 \/\u003E\u003Cnl \/\u003E- auf eine Fu\u00dfnote: \u003Crec_extern id=\u0022000004489202522863425925931578\u0022 data-link-target=\u0022footnotes-4\u0022 data-link-iri=\u0022footnotes\/app1\/projects~4\u0022 data-link-value=\u0022Signatur 2[1]\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003EInterne Verweise\u003Cnl \/\u003E- auf Inschrift B: \u003Crec_intern id=\u0022000004489203414346064814810841\u0022 data-link-target=\u0022sections-22\u0022 data-link-iri=\u0022sections\/inscription\/projects~22\u0022 data-link-value=\u0022B\u0022 \/\u003E\u003Cnl \/\u003E- auf Inschriftenteil B2: \u003Crec_intern id=\u0022000004489202534078703703725732\u0022 data-link-target=\u0022sections-19\u0022 data-link-iri=\u0022sections\/inscriptionpart\/projects~19\u0022 data-link-value=\u0022B.2\u0022 \/\u003E\u003Cnl \/\u003E- auf Fu\u00dfnote a: \u003Crec_intern id=\u0022000004489204161565972222228987\u0022 data-link-target=\u0022footnotes-6\u0022 data-link-iri=\u0022footnotes\/app2\/projects~6\u0022 data-link-value=\u0022a\u0022 \/\u003E\u003Cnl \/\u003E- auf Fu\u00dfnote 2: \u003Crec_intern id=\u0022000004489204172635416666673690\u0022 data-link-target=\u0022footnotes-5\u0022 data-link-iri=\u0022footnotes\/app1\/projects~5\u0022 data-link-value=\u00222\u0022 \/\u003E\u003Cnl \/\u003E- auf Marke: \u003Crec_ma id=\u0022000004489204491244212962960464\u0022 data-link-target=\u0022properties-186\u0022 data-link-iri=\u0022properties\/brands\/projects~186\u0022 data-link-value=\u0022hm001.1121\u0022 \/\u003E",
+                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.\u003Capp1 id=\u0022000004463586776180555555628924\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003E\u003Ch id=\u0022000004436160878777777777844048\u0022 data-link-target=\u0022properties-98\u0022 data-link-iri=\u0022properties\/headers\/projects~98\u0022 data-link-value=\u0022\u00dcberschrift 1\u0022\u003EText \u003C\/h\u003EText Text\u003Cnl \/\u003EText Text Text\u003Cnl \/\u003EText \u003Cb id=\u0022000004436160887138888888933579\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Fett\u0022\u003EText \u003C\/b\u003E\u003Ci id=\u0022000004436160890414351851976127\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kursiv\u0022\u003EText\u003C\/i\u003E\u003Cnl \/\u003E\u003Cu id=\u0022000004436160892870370370431668\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unterstrichen\u0022\u003EText \u003C\/u\u003E\u003Cg id=\u0022000004436160895594907407469796\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Gesperrt\u0022\u003EText \u003C\/g\u003E\u003Ck id=\u0022000004436160898130787037028136\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapit\u00e4lchen\u0022\u003EText\u003C\/k\u003E\u003Cnl \/\u003E\u003Ca id=\u0022000004436160901166666666725447\u0022 value=\u0022LINK\u0022 href=\u0022https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Link\u0022 \/\u003E \u003Cnl \/\u003EText Text Text\u003Cnl \/\u003EText Text Text\u003Cnl \/\u003ELiteraturverweis im Text: \u003Crec_lit id=\u0022000004456302666872685185191153\u0022 data-link-target=\u0022properties-11\u0022 data-link-iri=\u0022properties\/literature\/unterautor-1-mit-\u0022 data-link-value=\u0022Unterautor 1 mit \u0027\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003EExterne Verweise\u003Cnl \/\u003E- auf einen Artikel: \u003Crec_extern id=\u0022000004489202490501157407418218\u0022 data-link-target=\u0022articles-3\u0022 data-link-iri=\u0022articles\/epi-article\/normiri_2\u0022 data-link-value=\u0022Signatur 2\u0022 \/\u003E\u003Cnl \/\u003E- auf eine Inschrift: \u003Crec_extern id=\u0022000004489202501042824074077622\u0022 data-link-target=\u0022sections-145\u0022 data-link-iri=\u0022sections\/inscription\/projects~145\u0022 data-link-value=\u0022Signatur 2[A]\u0022 \/\u003E\u003Cnl \/\u003E- auf einen Inschriftenteil: \u003Crec_extern id=\u0022000004489202513028935185199996\u0022 data-link-target=\u0022sections-144\u0022 data-link-iri=\u0022sections\/inscriptionpart\/projects~144\u0022 data-link-value=\u0022Signatur 2[A.1]\u0022 \/\u003E\u003Cnl \/\u003E- auf eine Fu\u00dfnote: \u003Crec_extern id=\u0022000004489202522863425925931578\u0022 data-link-target=\u0022footnotes-4\u0022 data-link-iri=\u0022footnotes\/app1\/projects~4\u0022 data-link-value=\u0022Signatur 2[1]\u0022 \/\u003E\u003Cnl \/\u003E\u003Cnl \/\u003EInterne Verweise\u003Cnl \/\u003E- auf Inschrift B: \u003Crec_intern id=\u0022000004489203414346064814810841\u0022 data-link-target=\u0022sections-22\u0022 data-link-iri=\u0022sections\/inscription\/projects~22\u0022 data-link-value=\u0022B\u0022 \/\u003E\u003Cnl \/\u003E- auf Inschriftenteil B2: \u003Crec_intern id=\u0022000004489202534078703703725732\u0022 data-link-target=\u0022sections-19\u0022 data-link-iri=\u0022sections\/inscriptionpart\/projects~19\u0022 data-link-value=\u0022B.2\u0022 \/\u003E\u003Cnl \/\u003E- auf Fu\u00dfnote a: \u003Crec_intern id=\u0022000004489204161565972222228987\u0022 data-link-target=\u0022footnotes-6\u0022 data-link-iri=\u0022footnotes\/app2\/projects~6\u0022 data-link-value=\u0022a\u0022 \/\u003E\u003Cnl \/\u003E- auf Fu\u00dfnote 2: \u003Crec_intern id=\u0022000004489204172635416666673690\u0022 data-link-target=\u0022footnotes-5\u0022 data-link-iri=\u0022footnotes\/app1\/projects~5\u0022 data-link-value=\u00222\u0022 \/\u003E\u003Cnl \/\u003E- auf Marke: \u003Crec_ma id=\u0022000004489204491244212962960464\u0022 data-link-target=\u0022properties-186\u0022 data-link-iri=\u0022properties\/brands\/projects~186\u0022 data-link-value=\u0022hm001.1121\u0022 \/\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -205,7 +205,7 @@
                         "sections_id": "sections-15",
                         "articles_id": "articles-1",
                         "value": "0",
-                        "content": "Erg\u00e4nzung 1, Verweis auf \u003Crec_lit id=\u0022000004456302493517361111115062\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/projects~10\u0022 data-link-value=\u0022Quelle 1 \u0022 \/\u003E",
+                        "content": "Erg\u00e4nzung 1, Verweis auf \u003Crec_lit id=\u0022000004456302493517361111115062\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/quelle-1-mit-\u0022 data-link-value=\u0022Quelle 1 mit \u0026amp;\u0022 \/\u003E",
                         "pos_x": 0,
                         "pos_y": 0,
                         "pos_z": 0,
@@ -365,7 +365,7 @@
                         "sections_id": "sections-13",
                         "articles_id": "articles-1",
                         "value": "1",
-                        "date_sort": "01234AAA00000000A4",
+                        "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
                         "date_value": "1234",
                         "date_start": 1234,
                         "date_end": 1234,
@@ -2422,9 +2422,9 @@
                         "sortno": 0,
                         "sections_id": "sections-1",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004474097580738425925958702\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl \/\u003EZwischenraum von 1: \u003Cspatium_v id=\u0022000004436165070465277777844244\u0022 width=\u00221\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Spatium\u0022 \/\u003E\u003Cnl \/\u003EUnbestimmter Verlust: \u003Cdel id=\u0022000004436165076792824074163019\u0022 num_sign=\u00220\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Verlust\u0022 \/\u003E\u003Cnl \/\u003EErg\u003Ccpl id=\u0022000004436165097621527777892480\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Erg\u00e4nzung\u0022\u003E\u00e4nz\u00e9ng\u003C\/cpl\u003E \u003Cnl \/\u003EAusla \u003Coms id=\u0022000004436165100978009259346871\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Auslassung\u0022\u003Ess\u00f0ung\u003C\/oms\u003E \u003Cnl \/\u003EVerzeilenumbruh \u003Cvz id=\u0022000004436165037326388888946670\u0022 data-link-target=\u0022properties-86\u0022 data-link-iri=\u0022properties\/indentations\/projects~86\u0022 data-link-value=\u0022Verszeilenumbruch 1 \u0022 \/\u003E \u003Cnl \/\u003E\u003Cadd id=\u0022000004436165104023148148146540\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Nachtrag\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl \/\u003EAbk\u003Cabr id=\u0022000004436165108151620370436103\u0022 data-link-target=\u0022properties-171\u0022 data-link-iri=\u0022properties\/abbreviations\/projects~171\u0022 data-link-value=\u0022siehe\u0022\u003E\u00fcrzung\u003C\/abr\u003E\u003Cnl \/\u003E\u003Cvsl id=\u0022000004436165110998842592605012\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Versalie\u0022\u003EVe\u003C\/vsl\u003Ersalie \u003Cnl \/\u003EZeilenumbruch \u003Cz id=\u0022000004436165006240740740742383\u0022 data-link-target=\u0022properties-79\u0022 data-link-iri=\u0022properties\/linebindings\/projects~79\u0022 data-link-value=\u0022Zeilenumbruch 1a\u0022 \/\u003E\u003Cnl \/\u003E \u003C\/bl\u003E\u003Cnl \/\u003E\u003Cbl id=\u0022000004436164974262731481588902\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl \/\u003EHann bj\u00f3 \u00ed Raums \u003Cwtr id=\u0022000004436165051586805555667815\u0022 data-link-target=\u0022properties-92\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~92\u0022 data-link-value=\u0022Worttrenner 1\u0022 \/\u003E dal \u00ed Raumsd\u003Call id=\u0022000004436165061471064814812687\u0022 data-link-target=\u0022properties-65\u0022 data-link-iri=\u0022properties\/ligatures\/projects~65\u0022 data-link-value=\u0022Buchstabenverbindung 2 \u0022\u003E\u00e6\u003C\/all\u003Elafylk\u003Cnl \/\u003E \u003C\/bl\u003E\u003Cnl \/\u003E\u003Cbl id=\u0022000004515581058186342592608309\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003EAlphabetische Fu\u00dfnote: \u003Capp2 id=\u0022000004489202863265046296394325\u0022 \/\u003E\u003Cnl \/\u003ENumerische Fu\u00dfnote: \u003Capp1 id=\u0022000004489202875583333333330386\u0022 \/\u003E\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004474097580738425925958702\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003E\u003Cnl \/\u003EZwischenraum von 1: \u003Cspatium_v id=\u0022000004436165070465277777844244\u0022 width=\u00221\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Spatium\u0022 \/\u003E\u003Cnl \/\u003EUnbestimmter Verlust: \u003Cdel id=\u0022000004436165076792824074163019\u0022 num_sign=\u00220\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Verlust\u0022 \/\u003E\u003Cnl \/\u003EErg\u003Ccpl id=\u0022000004436165097621527777892480\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Erg\u00e4nzung\u0022\u003E\u00e4nz\u00e9ng\u003C\/cpl\u003E \u003Cnl \/\u003EAusla \u003Coms id=\u0022000004436165100978009259346871\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Auslassung\u0022\u003Ess\u00f0ung\u003C\/oms\u003E \u003Cnl \/\u003EVerzeilenumbruh \u003Cvz id=\u0022000004436165037326388888946670\u0022 data-link-target=\u0022properties-86\u0022 data-link-iri=\u0022properties\/indentations\/projects~86\u0022 data-link-value=\u0022Verszeilenumbruch 1\u0022 \/\u003E \u003Cnl \/\u003E\u003Cadd id=\u0022000004436165104023148148146540\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Nachtrag\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl \/\u003EAbk\u003Cabr id=\u0022000004436165108151620370436103\u0022 data-link-target=\u0022properties-171\u0022 data-link-iri=\u0022properties\/abbreviations\/projects~171\u0022 data-link-value=\u0022siehe\u0022\u003E\u00fcrzung\u003C\/abr\u003E\u003Cnl \/\u003E\u003Cvsl id=\u0022000004436165110998842592605012\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Versalie\u0022\u003EVe\u003C\/vsl\u003Ersalie \u003Cnl \/\u003EZeilenumbruch \u003Cz id=\u0022000004436165006240740740742383\u0022 data-link-target=\u0022properties-79\u0022 data-link-iri=\u0022properties\/linebindings\/projects~79\u0022 data-link-value=\u0022Zeilenumbruch 1a\u0022 \/\u003E\u003Cnl \/\u003E \u003C\/bl\u003E\u003Cnl \/\u003E\u003Cbl id=\u0022000004436164974262731481588902\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl \/\u003EHann bj\u00f3 \u00ed Raums \u003Cwtr id=\u0022000004436165051586805555667815\u0022 data-link-target=\u0022properties-92\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~92\u0022 data-link-value=\u0022Worttrenner 1\u0022 \/\u003E dal \u00ed Raumsd\u003Call id=\u0022000004436165061471064814812687\u0022 data-link-target=\u0022properties-65\u0022 data-link-iri=\u0022properties\/ligatures\/projects~65\u0022 data-link-value=\u0022Buchstabenverbindung 2\u0022\u003E\u00e6\u003C\/all\u003Elafylk\u003Cnl \/\u003E \u003C\/bl\u003E\u003Cnl \/\u003E\u003Cbl id=\u0022000004515581058186342592608309\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Bereich\u0022\u003EAlphabetische Fu\u00dfnote: \u003Capp2 id=\u0022000004489202863265046296394325\u0022 \/\u003E\u003Cnl \/\u003ENumerische Fu\u00dfnote: \u003Capp1 id=\u0022000004489202875583333333330386\u0022 \/\u003E\u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung Inschrift A - Teil 1 - Bearbeitung 1",
-                        "date_sort": "01234AAA00000000A4",
+                        "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
                         "date_value": "1234",
                         "date_start": 1234,
                         "date_end": 1234,
@@ -2818,9 +2818,9 @@
                         "sortno": 0,
                         "sections_id": "sections-23",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004436341948501157407446979\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl \/\u003E\u003Cini id=\u0022000004436342051736111111145522\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Initiale\u0022\u003E\u00ed\u003C\/ini\u003Enitiale\u003Cnl \/\u003ECh\u003Cchr id=\u0022000004436342056334490740716638\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Chronogrammbuchstabe\u0022\u003Er\u003C\/chr\u003Eonogrammbuchstabe\u003Cnl \/\u003EV\u003Cvsl id=\u0022000004436342047435185185246164\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Versalie\u0022\u003Eh\u003C\/vsl\u003E\u00e9rsalie\u003Cnl \/\u003EAb\u003Cabr id=\u0022000004436342040472222222267856\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003Em\u003Ckap id=\u0022000004436342060210648148155746\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapitalis\u0022\u003Ea\u003C\/kap\u003E\u00f0r \u003C\/abr\u003E \u003Cz id=\u0022000004436341968184027777873155\u0022 data-link-target=\u0022properties-78\u0022 data-link-iri=\u0022properties\/linebindings\/projects~78\u0022 data-link-value=\u0022Zeile\u0022 \/\u003E\u003Cnl \/\u003E\u003Cadd id=\u0022000004436342035339120370429044\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Nachtrag\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl \/\u003E\u003Coms id=\u0022000004436342029998842592635716\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Auslassung\u0022\u003EAuslassung\u003C\/oms\u003E\u003Cnl \/\u003E\u003Call id=\u0022000004436342068519675925958209\u0022 data-link-target=\u0022properties-65\u0022 data-link-iri=\u0022properties\/ligatures\/projects~65\u0022 data-link-value=\u0022Buchstabenverbindung 2 \u0022\u003EBu\u003C\/all\u003Echstabenverbindung\u003Cnl \/\u003EUns\u003Cinsec id=\u0022000004436342083524305555650834\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unsicher\u0022\u003E\u00f0\u003C\/insec\u003Echerer Text\u003Cnl \/\u003EZwischenraum von drei \u003Cspatium_v id=\u0022000004436341997248842592682649\u0022 width=\u00223\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Spatium\u0022 \/\u003E Zeichen\u003Cnl \/\u003EUnbestimmte Anzahl \u003Cdel id=\u0022000004436342008081018518514387\u0022 num_sign=\u00220\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Verlust\u0022 \/\u003E verlorener Zeichen\u003Cnl \/\u003E\u003Ccpl id=\u0022000004436342019850694444462751\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Erg\u00e4nzung\u0022\u003EErg\u003C\/cpl\u003E\u00f0nzung\u003Cnl \/\u003EWort\u003Cwtr id=\u0022000004436341987521990740778661\u0022 data-link-target=\u0022properties-88\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022 \/\u003Etrenner\u003Cnl \/\u003EHochge\u003Csup id=\u0022000004436342078564814814882651\u0022 data-link-target=\u0022properties-74\u0022 data-link-iri=\u0022properties\/verticalalignments\/projects~74\u0022 data-link-value=\u0022Hochgestellt 1 \u0022\u003Estellt\u003C\/sup\u003E \u003Cvz id=\u0022000004436341975421296296344091\u0022 data-link-target=\u0022properties-85\u0022 data-link-iri=\u0022properties\/indentations\/projects~85\u0022 data-link-value=\u0022Verszeilenumbruch 1a\u0022 \/\u003E\u003Cnl \/\u003E \u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004436341948501157407446979\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cnl \/\u003E\u003Cini id=\u0022000004436342051736111111145522\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Initiale\u0022\u003E\u00ed\u003C\/ini\u003Enitiale\u003Cnl \/\u003ECh\u003Cchr id=\u0022000004436342056334490740716638\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Chronogrammbuchstabe\u0022\u003Er\u003C\/chr\u003Eonogrammbuchstabe\u003Cnl \/\u003EV\u003Cvsl id=\u0022000004436342047435185185246164\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Versalie\u0022\u003Eh\u003C\/vsl\u003E\u00e9rsalie\u003Cnl \/\u003EAb\u003Cabr id=\u0022000004436342040472222222267856\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003Em\u003Ckap id=\u0022000004436342060210648148155746\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Kapitalis\u0022\u003Ea\u003C\/kap\u003E\u00f0r \u003C\/abr\u003E \u003Cz id=\u0022000004436341968184027777873155\u0022 data-link-target=\u0022properties-78\u0022 data-link-iri=\u0022properties\/linebindings\/projects~78\u0022 data-link-value=\u0022siehe\u0022 \/\u003E\u003Cnl \/\u003E\u003Cadd id=\u0022000004436342035339120370429044\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Nachtrag\u0022\u003ENachtrag\u003C\/add\u003E\u003Cnl \/\u003E\u003Coms id=\u0022000004436342029998842592635716\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Auslassung\u0022\u003EAuslassung\u003C\/oms\u003E\u003Cnl \/\u003E\u003Call id=\u0022000004436342068519675925958209\u0022 data-link-target=\u0022properties-65\u0022 data-link-iri=\u0022properties\/ligatures\/projects~65\u0022 data-link-value=\u0022Buchstabenverbindung 2\u0022\u003EBu\u003C\/all\u003Echstabenverbindung\u003Cnl \/\u003EUns\u003Cinsec id=\u0022000004436342083524305555650834\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Unsicher\u0022\u003E\u00f0\u003C\/insec\u003Echerer Text\u003Cnl \/\u003EZwischenraum von drei \u003Cspatium_v id=\u0022000004436341997248842592682649\u0022 width=\u00223\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Spatium\u0022 \/\u003E Zeichen\u003Cnl \/\u003EUnbestimmte Anzahl \u003Cdel id=\u0022000004436342008081018518514387\u0022 num_sign=\u00220\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Verlust\u0022 \/\u003E verlorener Zeichen\u003Cnl \/\u003E\u003Ccpl id=\u0022000004436342019850694444462751\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Erg\u00e4nzung\u0022\u003EErg\u003C\/cpl\u003E\u00f0nzung\u003Cnl \/\u003EWort\u003Cwtr id=\u0022000004436341987521990740778661\u0022 data-link-target=\u0022properties-88\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022 \/\u003Etrenner\u003Cnl \/\u003EHochge\u003Csup id=\u0022000004436342078564814814882651\u0022 data-link-target=\u0022properties-74\u0022 data-link-iri=\u0022properties\/verticalalignments\/projects~74\u0022 data-link-value=\u0022Hochgestellt 1\u0022\u003Estellt\u003C\/sup\u003E \u003Cvz id=\u0022000004436341975421296296344091\u0022 data-link-target=\u0022properties-85\u0022 data-link-iri=\u0022properties\/indentations\/projects~85\u0022 data-link-value=\u0022Verszeilenumbruch 1a\u0022 \/\u003E\u003Cnl \/\u003E \u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung \u00d6rvar-Odds saga",
-                        "date_sort": "01337AAA00000000A4",
+                        "date_sort": "11337-12-31T23:59:59\/11337-01-01T00:00:00\/11337-12-31T23:59:59\/00\/5",
                         "date_value": "1337",
                         "date_start": 1337,
                         "date_end": 1337,
@@ -4284,9 +4284,9 @@
                         "sortno": 0,
                         "sections_id": "sections-20",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004436342219936342592692857\u0022 data-link-target=\u0022properties-57\u0022 data-link-iri=\u0022properties\/alignments\/projects~57\u0022 data-link-value=\u0022siehe\u0022\u003E\u003Cini id=\u0022000004436342334950231481521590\u0022\u003E\u00de\u003C\/ini\u003Eat \u003Cchr id=\u0022000004436342339388888888943282\u0022\u003Ev\u003C\/chr\u003Ear eitt \u003Ckap id=\u0022000004436342344737268518577048\u0022\u003Es\u003C\/kap\u003Eumar, \u003Cz id=\u0022000004436342244850694444419672\u0022 data-link-target=\u0022properties-78\u0022 data-link-iri=\u0022properties\/linebindings\/projects~78\u0022 data-link-value=\u0022Zeile\u0022 \/\u003E\u003Cnl \/\u003Eat \u003Cvsl id=\u0022000004436342331244212963000975\u0022\u003EG\u003C\/vsl\u003Er\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V\u003Call id=\u0022000004436342356430555555639778\u0022 data-link-target=\u0022properties-66\u0022 data-link-iri=\u0022properties\/ligatures\/projects~66\u0022 data-link-value=\u0022Buchstabenverbindung 1 \u0022\u003E\u00ed\u003C\/all\u003Ek austr \u003Cvz id=\u0022000004436342252387731481570820\u0022 data-link-target=\u0022properties-82\u0022 data-link-iri=\u0022properties\/indentations\/projects~82\u0022 data-link-value=\u0022Verszeilenumbruch 2a\u0022 \/\u003E\u003Cnl \/\u003Eeptir \u003Csup id=\u0022000004436342367437500000062286\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Hochgestellt in der Transkription\u0022\u003EHarald\u003C\/sup\u003E dau\u003Cwtr id=\u0022000004436342265232638888919263\u0022 data-link-target=\u0022properties-90\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~90\u0022 data-link-value=\u0022Worttrenner 1 \u203a siehe\u0022 \/\u003E\u00f0an, \u003Cinsec id=\u0022000004436342370581018518576494\u0022\u003Em\u00e1g \u003C\/insec\u003Esinn, \u003Cspatium_v id=\u0022000004436342271391203703738522\u0022 width=\u00221\u0022 \/\u003E\u003Cnl \/\u003Efyrir \u00fev\u00ed \u003Cadd id=\u0022000004436342304277777777828084\u0022\u003Eat\u003C\/add\u003E\u003Coms id=\u0022000004436342299424768518527263\u0022\u003Ehann\u003C\/oms\u003E \u003Coms id=\u0022000004436342296030092592678988\u0022\u003E\u00e1tti \u003C\/oms\u003E \u003Ccpl id=\u0022000004436342291663194444404939\u0022\u003E\u00fear\u003C\/cpl\u003E m\u003Cdel id=\u0022000004436342276410879629645922\u0022 num_sign=\u00220\u0022 \/\u003Eiklar eignir.\u003C\/bl\u003E\u003Cnl \/\u003E",
+                        "content": "\u003Cbl id=\u0022000004436342219936342592692857\u0022 data-link-target=\u0022properties-57\u0022 data-link-iri=\u0022properties\/alignments\/projects~57\u0022 data-link-value=\u0022siehe\u0022\u003E\u003Cini id=\u0022000004436342334950231481521590\u0022\u003E\u00de\u003C\/ini\u003Eat \u003Cchr id=\u0022000004436342339388888888943282\u0022\u003Ev\u003C\/chr\u003Ear eitt \u003Ckap id=\u0022000004436342344737268518577048\u0022\u003Es\u003C\/kap\u003Eumar, \u003Cz id=\u0022000004436342244850694444419672\u0022 data-link-target=\u0022properties-78\u0022 data-link-iri=\u0022properties\/linebindings\/projects~78\u0022 data-link-value=\u0022siehe\u0022 \/\u003E\u003Cnl \/\u003Eat \u003Cvsl id=\u0022000004436342331244212963000975\u0022\u003EG\u003C\/vsl\u003Er\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V\u003Call id=\u0022000004436342356430555555639778\u0022 data-link-target=\u0022properties-66\u0022 data-link-iri=\u0022properties\/ligatures\/projects~66\u0022 data-link-value=\u0022Buchstabenverbindung 1\u0022\u003E\u00ed\u003C\/all\u003Ek austr \u003Cvz id=\u0022000004436342252387731481570820\u0022 data-link-target=\u0022properties-82\u0022 data-link-iri=\u0022properties\/indentations\/projects~82\u0022 data-link-value=\u0022Verszeilenumbruch 2a\u0022 \/\u003E\u003Cnl \/\u003Eeptir \u003Csup id=\u0022000004436342367437500000062286\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Hochgestellt in der Transkription\u0022\u003EHarald\u003C\/sup\u003E dau\u003Cwtr id=\u0022000004436342265232638888919263\u0022 data-link-target=\u0022properties-90\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~90\u0022 data-link-value=\u0022Worttrenner 1 \u203a siehe\u0022 \/\u003E\u00f0an, \u003Cinsec id=\u0022000004436342370581018518576494\u0022\u003Em\u00e1g \u003C\/insec\u003Esinn, \u003Cspatium_v id=\u0022000004436342271391203703738522\u0022 width=\u00221\u0022 \/\u003E\u003Cnl \/\u003Efyrir \u00fev\u00ed \u003Cadd id=\u0022000004436342304277777777828084\u0022\u003Eat\u003C\/add\u003E\u003Coms id=\u0022000004436342299424768518527263\u0022\u003Ehann\u003C\/oms\u003E \u003Coms id=\u0022000004436342296030092592678988\u0022\u003E\u00e1tti \u003C\/oms\u003E \u003Ccpl id=\u0022000004436342291663194444404939\u0022\u003E\u00fear\u003C\/cpl\u003E m\u003Cdel id=\u0022000004436342276410879629645922\u0022 num_sign=\u00220\u0022 \/\u003Eiklar eignir.\u003C\/bl\u003E\u003Cnl \/\u003E",
                         "translation": "\u00dcbersetzung Inschrift B Teil 1",
-                        "date_sort": "01066AAA00000000A4",
+                        "date_sort": "11066-12-31T23:59:59\/11066-01-01T00:00:00\/11066-12-31T23:59:59\/00\/5",
                         "date_value": "1066",
                         "date_start": 1066,
                         "date_end": 1066,
@@ -4786,9 +4786,9 @@
                         "sortno": 0,
                         "sections_id": "sections-18",
                         "articles_id": "articles-1",
-                        "content": "\u003Cbl id=\u0022000004436342493348379629644802\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cini id=\u0022000004436342606019675925920222\u0022\u003EG\u003C\/ini\u003Er\u00edmr \u003Cvsl id=\u0022000004436342597724537037066064\u0022\u003Eu\u003C\/vsl\u003Enni \u003Cchr id=\u0022000004436342610309027777859800\u0022\u003Eh\u003C\/chr\u003Eenni \u003Ckap id=\u0022000004436342614041666666773306\u0022\u003Em\u003C\/kap\u003Eikit, ok l\u003Call id=\u0022000004436342619626157407418054\u0022 data-link-target=\u0022properties-64\u0022 data-link-iri=\u0022properties\/ligatures\/projects~64\u0022 data-link-value=\u0022Buchstabenverbindung 2a\u0022\u003E\u00e6\u003C\/all\u003Etr \u003Coms id=\u0022000004436342575649305555631787\u0022\u003Ehann\u003C\/oms\u003E \u00feat \u003Csup id=\u0022000004436342629741898148160649\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Hochgestellt in der Transkription\u0022\u003Eeptir\u003C\/sup\u003E henni. \u003Cz id=\u0022000004436342516953703703748996\u0022 data-link-target=\u0022properties-80\u0022 data-link-iri=\u0022properties\/linebindings\/projects~80\u0022 data-link-value=\u0022Zeilenumbruch 1 \u0022 \/\u003E\u003Cnl \/\u003EH\u00fan \u003Cadd id=\u0022000004436342582651620370456862\u0022\u003Evar hverri \u003C\/add\u003Ekonu v\u00e6nni\u003Cspatium_v id=\u0022000004436342550361111111153956\u0022 width=\u00221\u0022 \/\u003E ok betr\u003Cdel id=\u0022000004436342558008101851960179\u0022 num_sign=\u00220\u0022 \/\u003E at s\u00e9r \u003Ccpl id=\u0022000004436342570162037037096209\u0022\u003Eum\u003C\/cpl\u003E alla hluti,\u003Cvz id=\u0022000004436342523789351851958494\u0022 data-link-target=\u0022properties-84\u0022 data-link-iri=\u0022properties\/indentations\/projects~84\u0022 data-link-value=\u0022Verszeile\u0022 \/\u003E\u003Cnl \/\u003E \u00feeira\u003Cabr id=\u0022000004436342590993055555669897\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003E er\u003C\/abr\u003E \u00ed Nor\u003Cwtr id=\u0022000004436342540800925925924686\u0022 data-link-target=\u0022properties-88\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022 \/\u003Eegi v\u00e1ru. \u003Cnl \/\u003E\u00deeira f\u00f6r var b\u00fain \u003Cinsec id=\u0022000004436342633575231481531016\u0022\u003Evir\u00f0uliga\u003C\/insec\u003E.\u003C\/bl\u003E",
+                        "content": "\u003Cbl id=\u0022000004436342493348379629644802\u0022 data-link-target=\u0022properties-61\u0022 data-link-iri=\u0022properties\/alignments\/projects~61\u0022 data-link-value=\u0022Bereich 1a\u0022\u003E\u003Cini id=\u0022000004436342606019675925920222\u0022\u003EG\u003C\/ini\u003Er\u00edmr \u003Cvsl id=\u0022000004436342597724537037066064\u0022\u003Eu\u003C\/vsl\u003Enni \u003Cchr id=\u0022000004436342610309027777859800\u0022\u003Eh\u003C\/chr\u003Eenni \u003Ckap id=\u0022000004436342614041666666773306\u0022\u003Em\u003C\/kap\u003Eikit, ok l\u003Call id=\u0022000004436342619626157407418054\u0022 data-link-target=\u0022properties-64\u0022 data-link-iri=\u0022properties\/ligatures\/projects~64\u0022 data-link-value=\u0022Buchstabenverbindung 2a\u0022\u003E\u00e6\u003C\/all\u003Etr \u003Coms id=\u0022000004436342575649305555631787\u0022\u003Ehann\u003C\/oms\u003E \u00feat \u003Csup id=\u0022000004436342629741898148160649\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Hochgestellt in der Transkription\u0022\u003Eeptir\u003C\/sup\u003E henni. \u003Cz id=\u0022000004436342516953703703748996\u0022 data-link-target=\u0022properties-80\u0022 data-link-iri=\u0022properties\/linebindings\/projects~80\u0022 data-link-value=\u0022Zeilenumbruch 1\u0022 \/\u003E\u003Cnl \/\u003EH\u00fan \u003Cadd id=\u0022000004436342582651620370456862\u0022\u003Evar hverri \u003C\/add\u003Ekonu v\u00e6nni\u003Cspatium_v id=\u0022000004436342550361111111153956\u0022 width=\u00221\u0022 \/\u003E ok betr\u003Cdel id=\u0022000004436342558008101851960179\u0022 num_sign=\u00220\u0022 \/\u003E at s\u00e9r \u003Ccpl id=\u0022000004436342570162037037096209\u0022\u003Eum\u003C\/cpl\u003E alla hluti,\u003Cvz id=\u0022000004436342523789351851958494\u0022 data-link-target=\u0022properties-84\u0022 data-link-iri=\u0022properties\/indentations\/projects~84\u0022 data-link-value=\u0022siehe\u0022 \/\u003E\u003Cnl \/\u003E \u00feeira\u003Cabr id=\u0022000004436342590993055555669897\u0022 data-link-target=\u0022\u0022 data-link-iri=\u0022\u0022 data-link-value=\u0022Abk\u00fcrzung\u0022\u003E er\u003C\/abr\u003E \u00ed Nor\u003Cwtr id=\u0022000004436342540800925925924686\u0022 data-link-target=\u0022properties-88\u0022 data-link-iri=\u0022properties\/wordseparators\/projects~88\u0022 data-link-value=\u0022Worttrenner 2 \u203a Worttrenner 2a\u0022 \/\u003Eegi v\u00e1ru. \u003Cnl \/\u003E\u00deeira f\u00f6r var b\u00fain \u003Cinsec id=\u0022000004436342633575231481531016\u0022\u003Evir\u00f0uliga\u003C\/insec\u003E.\u003C\/bl\u003E",
                         "translation": "\u00dcbersetzung Inschrift B Teil 2",
-                        "date_sort": "00794AAA00000000A4",
+                        "date_sort": "10794-12-31T23:59:59\/10794-01-01T00:00:00\/10794-12-31T23:59:59\/00\/5",
                         "date_value": "794",
                         "date_start": 794,
                         "date_end": 794,
@@ -5360,7 +5360,7 @@
                             "sortkey": "wappen 002",
                             "name": "Wappen 2",
                             "comment": "Notizen Wappen 2",
-                            "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/projects~10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
+                            "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/quelle-1-mit-\u0022 data-link-value=\u0022Quelle 1 mit \u0026amp;\u0022\u003E\u003C\/rec_lit\u003E",
                             "elements": "Oberwappen 2",
                             "iscategory": 0,
                             "ishidden": 0,
@@ -5382,16 +5382,17 @@
                                         "rght": 13,
                                         "sortno": 8,
                                         "sortkey": "Quelle 1",
-                                        "lemma": "Quelle 1",
-                                        "name": "Quelle 1 ",
+                                        "lemma": "Quelle 1 mit \u0026",
+                                        "name": "Quelle 1 mit \u0026",
                                         "unit": "Quelleneinheit 1",
-                                        "comment": "Quelle bemerkung",
+                                        "comment": "Quelle 1 Bemerkung",
                                         "iscategory": 1,
                                         "ishidden": 0,
-                                        "keywords": "Quelle,Karstadt,Ursprung",
-                                        "norm_data": "Quelle Norm 1"
+                                        "keywords": "Karstadt,Ursprung",
+                                        "norm_data": "Quelle 1 Normdaten",
+                                        "norm_iri": "quelle-1-mit-"
                                     },
-                                    "to_value": "Quelle 1 ",
+                                    "to_value": "Quelle 1 mit \u0026",
                                     "root_id": "properties-43"
                                 }
                             ]
@@ -5645,7 +5646,7 @@
                             "creator": "",
                             "source": "",
                             "licence": "",
-                            "rights": "",
+                            "copyright": "",
                             "usageterms": "",
                             "credit": "",
                             "marked": ""
@@ -5702,7 +5703,7 @@
                             "creator": "",
                             "source": "",
                             "licence": "",
-                            "rights": "",
+                            "copyright": "",
                             "usageterms": "",
                             "credit": "",
                             "marked": ""
@@ -6127,14 +6128,15 @@
                             "rght": 13,
                             "sortno": 8,
                             "sortkey": "Quelle 1",
-                            "lemma": "Quelle 1",
-                            "name": "Quelle 1 ",
+                            "lemma": "Quelle 1 mit \u0026",
+                            "name": "Quelle 1 mit \u0026",
                             "unit": "Quelleneinheit 1",
-                            "comment": "Quelle bemerkung",
+                            "comment": "Quelle 1 Bemerkung",
                             "iscategory": 1,
                             "ishidden": 0,
-                            "keywords": "Quelle,Karstadt,Ursprung",
-                            "norm_data": "Quelle Norm 1"
+                            "keywords": "Karstadt,Ursprung",
+                            "norm_data": "Quelle 1 Normdaten",
+                            "norm_iri": "quelle-1-mit-"
                         }
                     },
                     {
@@ -6169,14 +6171,15 @@
                             "rght": 6,
                             "sortno": 5,
                             "sortkey": "Unterautor 2",
-                            "lemma": "Unterautor 2",
-                            "name": "Unterautor 2 ",
+                            "lemma": "Langtitel Unterautor 2 mit \u0027",
+                            "name": "Kurztitel Unterautor 2 mit \u0027",
                             "unit": "Unterautor2 Einheit",
                             "comment": "Unterautor 2 Bemerkung",
                             "iscategory": 1,
                             "ishidden": 1,
                             "keywords": "Autor,Karstadt,Ursprung",
                             "norm_data": "Unterautor 2 Normdaten",
+                            "norm_iri": "kurztitel-unterautor-2-mit-",
                             "ancestors": [
                                 {
                                     "id": "properties-12",
@@ -6328,14 +6331,15 @@
                             "rght": 6,
                             "sortno": 5,
                             "sortkey": "Unterautor 2",
-                            "lemma": "Unterautor 2",
-                            "name": "Unterautor 2 ",
+                            "lemma": "Langtitel Unterautor 2 mit \u0027",
+                            "name": "Kurztitel Unterautor 2 mit \u0027",
                             "unit": "Unterautor2 Einheit",
                             "comment": "Unterautor 2 Bemerkung",
                             "iscategory": 1,
                             "ishidden": 1,
                             "keywords": "Autor,Karstadt,Ursprung",
                             "norm_data": "Unterautor 2 Normdaten",
+                            "norm_iri": "kurztitel-unterautor-2-mit-",
                             "ancestors": [
                                 {
                                     "id": "properties-12",
@@ -6672,7 +6676,7 @@
                     "keywords": "Buchstabenverbindung,Ligatur",
                     "norm_data": "Buchstabenverbindung 2 Norm"
                 },
-                "to_value": "Buchstabenverbindung 2 ",
+                "to_value": "Buchstabenverbindung 2",
                 "root_id": "articles-1"
             },
             {
@@ -6726,7 +6730,7 @@
                     "keywords": "Verszeilenumbruch, verse line break",
                     "norm_data": "Verszeilenumbruch 1 Norm"
                 },
-                "to_value": "Verszeilenumbruch 1 ",
+                "to_value": "Verszeilenumbruch 1",
                 "root_id": "articles-1"
             },
             {
@@ -6856,7 +6860,7 @@
                     "keywords": "Buchstabenverbindung,Diphtong,Ligatur",
                     "norm_data": "Buchstabenverbindung 1 Norm"
                 },
-                "to_value": "Buchstabenverbindung 1 ",
+                "to_value": "Buchstabenverbindung 1",
                 "root_id": "articles-1"
             },
             {
@@ -6995,7 +6999,7 @@
                         }
                     ]
                 },
-                "to_value": "Zeile",
+                "to_value": "siehe",
                 "root_id": "articles-1"
             },
             {
@@ -7068,7 +7072,7 @@
                     "keywords": "Hochgestellt,Superskript",
                     "norm_data": "Hochgestellt 1 Norm"
                 },
-                "to_value": "Hochgestellt 1 ",
+                "to_value": "Hochgestellt 1",
                 "root_id": "articles-1"
             },
             {
@@ -7095,7 +7099,7 @@
                     "keywords": "Buchstabenverbindung,Ligatur",
                     "norm_data": "Buchstabenverbindung 2 Norm"
                 },
-                "to_value": "Buchstabenverbindung 2 ",
+                "to_value": "Buchstabenverbindung 2",
                 "root_id": "articles-1"
             },
             {
@@ -7244,7 +7248,7 @@
                         }
                     ]
                 },
-                "to_value": "Zeile",
+                "to_value": "siehe",
                 "root_id": "articles-1"
             },
             {
@@ -7449,7 +7453,7 @@
                         }
                     ]
                 },
-                "to_value": "Verszeile",
+                "to_value": "siehe",
                 "root_id": "articles-1"
             },
             {
@@ -7476,7 +7480,7 @@
                     "keywords": "Zeilenumbruch,line break",
                     "norm_data": "Zeilenumbruch 1 Norm"
                 },
-                "to_value": "Zeilenumbruch 1 ",
+                "to_value": "Zeilenumbruch 1",
                 "root_id": "articles-1"
             },
             {
@@ -7551,14 +7555,15 @@
                     "rght": 4,
                     "sortno": 3,
                     "sortkey": "Unterautor 1",
-                    "lemma": "Unterautor 1",
-                    "name": "Unterautor ",
+                    "lemma": "Unterautor 1 mit \u0027",
+                    "name": "Unterautor 1 mit \u0027",
                     "unit": "Unterauteinheit 1",
                     "comment": "Unterautorbemerkung 1",
                     "iscategory": 1,
                     "ishidden": 1,
                     "keywords": "Autor,Quelle",
                     "norm_data": "Unterautornorm 1",
+                    "norm_iri": "unterautor-1-mit-",
                     "ancestors": [
                         {
                             "id": "properties-12",
@@ -7579,7 +7584,7 @@
                         }
                     ]
                 },
-                "to_value": "Unterautor ",
+                "to_value": "Unterautor 1 mit \u0027",
                 "root_id": "articles-1"
             },
             {
@@ -7597,16 +7602,17 @@
                     "rght": 13,
                     "sortno": 8,
                     "sortkey": "Quelle 1",
-                    "lemma": "Quelle 1",
-                    "name": "Quelle 1 ",
+                    "lemma": "Quelle 1 mit \u0026",
+                    "name": "Quelle 1 mit \u0026",
                     "unit": "Quelleneinheit 1",
-                    "comment": "Quelle bemerkung",
+                    "comment": "Quelle 1 Bemerkung",
                     "iscategory": 1,
                     "ishidden": 0,
-                    "keywords": "Quelle,Karstadt,Ursprung",
-                    "norm_data": "Quelle Norm 1"
+                    "keywords": "Karstadt,Ursprung",
+                    "norm_data": "Quelle 1 Normdaten",
+                    "norm_iri": "quelle-1-mit-"
                 },
-                "to_value": "Quelle 1 ",
+                "to_value": "Quelle 1 mit \u0026",
                 "root_id": "articles-1"
             },
             {
@@ -8267,14 +8273,15 @@
                     "rght": 4,
                     "sortno": 3,
                     "sortkey": "Unterautor 1",
-                    "lemma": "Unterautor 1",
-                    "name": "Unterautor ",
+                    "lemma": "Unterautor 1 mit \u0027",
+                    "name": "Unterautor 1 mit \u0027",
                     "unit": "Unterauteinheit 1",
                     "comment": "Unterautorbemerkung 1",
                     "iscategory": 1,
                     "ishidden": 1,
                     "keywords": "Autor,Quelle",
                     "norm_data": "Unterautornorm 1",
+                    "norm_iri": "unterautor-1-mit-",
                     "sections": [
                         {
                             "id": "sections-5",
@@ -8291,14 +8298,15 @@
                     "rght": 6,
                     "sortno": 5,
                     "sortkey": "Unterautor 2",
-                    "lemma": "Unterautor 2",
-                    "name": "Unterautor 2 ",
+                    "lemma": "Langtitel Unterautor 2 mit \u0027",
+                    "name": "Kurztitel Unterautor 2 mit \u0027",
                     "unit": "Unterautor2 Einheit",
                     "comment": "Unterautor 2 Bemerkung",
                     "iscategory": 1,
                     "ishidden": 1,
                     "keywords": "Autor,Karstadt,Ursprung",
                     "norm_data": "Unterautor 2 Normdaten",
+                    "norm_iri": "kurztitel-unterautor-2-mit-",
                     "sections": [
                         {
                             "id": "sections-16",
@@ -8318,14 +8326,15 @@
                     "rght": 13,
                     "sortno": 8,
                     "sortkey": "Quelle 1",
-                    "lemma": "Quelle 1",
-                    "name": "Quelle 1 ",
+                    "lemma": "Quelle 1 mit \u0026",
+                    "name": "Quelle 1 mit \u0026",
                     "unit": "Quelleneinheit 1",
-                    "comment": "Quelle bemerkung",
+                    "comment": "Quelle 1 Bemerkung",
                     "iscategory": 1,
                     "ishidden": 0,
-                    "keywords": "Quelle,Karstadt,Ursprung",
-                    "norm_data": "Quelle Norm 1",
+                    "keywords": "Karstadt,Ursprung",
+                    "norm_data": "Quelle 1 Normdaten",
+                    "norm_iri": "quelle-1-mit-",
                     "sections": [
                         {
                             "id": "sections-15",
@@ -8984,7 +8993,7 @@
                     "sortkey": "wappen 002",
                     "name": "Wappen 2",
                     "comment": "Notizen Wappen 2",
-                    "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/projects~10\u0022 data-link-value=\u0022Quelle 1 \u0022\u003E\u003C\/rec_lit\u003E",
+                    "content": "Schild 2\u003Cnl\u003E\u003C\/nl\u003ELiteraturverweis: \u003Cnl\u003E\u003C\/nl\u003E\u003Crec_lit id=\u0022000004472261132811342592685794\u0022 data-link-target=\u0022properties-10\u0022 data-link-iri=\u0022properties\/literature\/quelle-1-mit-\u0022 data-link-value=\u0022Quelle 1 mit \u0026amp;\u0022\u003E\u003C\/rec_lit\u003E",
                     "elements": "Oberwappen 2",
                     "iscategory": 0,
                     "ishidden": 0,
@@ -9006,16 +9015,17 @@
                                 "rght": 13,
                                 "sortno": 8,
                                 "sortkey": "Quelle 1",
-                                "lemma": "Quelle 1",
-                                "name": "Quelle 1 ",
+                                "lemma": "Quelle 1 mit \u0026",
+                                "name": "Quelle 1 mit \u0026",
                                 "unit": "Quelleneinheit 1",
-                                "comment": "Quelle bemerkung",
+                                "comment": "Quelle 1 Bemerkung",
                                 "iscategory": 1,
                                 "ishidden": 0,
-                                "keywords": "Quelle,Karstadt,Ursprung",
-                                "norm_data": "Quelle Norm 1"
+                                "keywords": "Karstadt,Ursprung",
+                                "norm_data": "Quelle 1 Normdaten",
+                                "norm_iri": "quelle-1-mit-"
                             },
-                            "to_value": "Quelle 1 ",
+                            "to_value": "Quelle 1 mit \u0026",
                             "root_id": "properties-43"
                         }
                     ],

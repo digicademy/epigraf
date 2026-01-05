@@ -10,8 +10,6 @@
 
 namespace Epi\Model\Entity;
 
-use App\Datasource\Services\ServiceFactory;
-use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Strings;
 use Cake\ORM\Query;
 use Epi\Model\Traits\TreeTrait;
@@ -322,11 +320,6 @@ class Property extends RootEntity
         return $baseProperties->count() > 0;
     }
 
-    protected function _getHasChildren()
-    {
-        return ($this->rght - $this->lft) > 1;
-    }
-
     protected function _getHasArticles()
     {
         return $this->table->find('articles', ['reference' => $this->id])->count() > 0;
@@ -335,11 +328,13 @@ class Property extends RootEntity
     /**
      * Check whether other entities depend on this entity
      *
+     * Ignores children, check them with $this->hasChildren
+     *
      * @return bool
      */
     protected function _getHasDependencies(): bool
     {
-        return $this->hasChildren || $this->hasArticles || $this->hasBaseProperties || $this->hasFromReferences;
+        return $this->hasArticles || $this->hasBaseProperties || $this->hasFromReferences;
     }
 
     /**
@@ -353,7 +348,7 @@ class Property extends RootEntity
     }
 
     /**
-     * Get articles that use the property
+     * Get properties that use the property as meta property
      *
      * @return Query
      */
@@ -471,70 +466,6 @@ class Property extends RootEntity
         return $this->table_name . DS . $this->propertytype . DS;
     }
 
-    /**
-     * Get the reference ID
-     *
-     * @return null|int
-     */
-    protected function _getReferenceId()
-    {
-        if (!isset($this->_fields['reference_id'])) {
-            $preceding = $this->preceding;
-            if (empty($preceding)) {
-                $this['reference_id'] = $this->parent_id;
-                $this['reference_pos'] = 'parent';
-            }
-            else {
-                $this['reference_id'] = $preceding->id;
-                $this['reference_pos'] = 'preceding';
-            }
-        }
-        return $this->_fields['reference_id'] ?? null;
-    }
-
-    /**
-     * Get the reference position
-     *
-     * @return null|string 'parent' or 'preceding'
-     */
-    protected function _getReferencePos()
-    {
-        if (!isset($this->_fields['reference_pos'])) {
-            $preceding = $this->preceding;
-            if (empty($preceding)) {
-                $this['reference_id'] = $this->parent_id;
-                $this['reference_pos'] = 'parent';
-            }
-            else {
-                $this['reference_id'] = $preceding->id;
-                $this['reference_pos'] = 'preceding';
-            }
-        }
-        return $this->_fields['reference_pos'] ?? null;
-    }
-
-    /**
-     * Get the reference entity
-     *
-     * @return null|Property
-     */
-    protected function _getReference()
-    {
-        $referenceId = $this->referenceId;
-        if (!empty($referenceId) && (($this->_fields['reference']['id'] ?? null) !== intval($referenceId))) {
-            $referenceNode = $this->table
-                ->find('containAncestors')
-                ->find('all')
-                ->where(['id' => $referenceId])
-                ->first();
-
-            $this->_fields['reference'] = $referenceNode;
-
-            //$property->ancestors = $referenceNode->ancestors;
-        }
-
-        return $this->_fields['reference'] ?? null;
-    }
 
 
     /**
@@ -580,14 +511,16 @@ class Property extends RootEntity
     {
         return [
             'preceding' => __('After node ...'),
-            'parent' => __('First child of ...')
+            'parent' => __('Subnode of ...')
         ];
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -667,6 +600,25 @@ class Property extends RootEntity
             'lemma' => [
                 'caption' => __('Lemma'),
                 'format' => 'typed',
+                'autofocus' => true,
+                'action' => ['add', 'edit', 'view', 'merge']
+            ],
+
+            'properties_id' => [
+                'caption' => __('Meta property'),
+                'type' => 'reference',
+                'url' => [
+                    'controller' => 'Properties',
+                    'action' => 'index',
+                    $this->type['merged']['fields']['properties_id']['types'] ?? null,
+                    '?' => ['template' => 'choose', 'show' => 'content', 'references' => false]
+                ],
+                'param' => 'find',
+                'paneSnippet' => 'rows',
+                'listValue' => 'id',
+                //<- which attribute do the items carry? data-id (for trees) or data-value (everything else)
+                'text' => $this->property['path'] ?? '',
+                'extract' => 'property.path',
                 'action' => ['add', 'edit', 'view', 'merge']
             ],
 
@@ -693,23 +645,6 @@ class Property extends RootEntity
                 'action' => ['add', 'edit', 'view', 'merge']
             ],
 
-            'properties_id' => [
-                'caption' => __('Meta property'),
-                'type' => 'reference',
-                'url' => [
-                    'controller' => 'Properties',
-                    'action' => 'index',
-                    $this->type['merged']['fields']['properties_id']['types'] ?? null,
-                    '?' => ['template' => 'choose', 'show' => 'content', 'references' => false]
-                ],
-                'param' => 'find',
-                'paneSnippet' => 'rows',
-                'listValue' => 'id',
-                //<- which attribute do the items carry? data-id (for trees) or data-value (everything else)
-                'text' => $this->property['path'] ?? '',
-                'extract' => 'property.path',
-                'action' => ['add', 'edit', 'view', 'merge']
-            ],
 
             'sortkey' => [
                 'caption' => __('Sort Key'),
@@ -823,17 +758,18 @@ class Property extends RootEntity
         ];
 
         // Default fields
-        $fields = $this->type->getHtmlFields($fields, ['lemma'], ['caption', 'reference_pos', 'reference_id']);
+        if (!empty($this->type)) {
+            $fields = $this->type->getHtmlFields($fields, ['lemma'], ['caption', 'reference_pos', 'reference_id']);
+        }
 
         // Remove conditional fields
         if (empty($fields['parent_id']) || empty($this->ancestors)) {
             unset($fields['ancestors']);
         }
 
-        // TODO: the related ID field vanished?
         if (!empty($this->related_id)) {
             foreach ($fields as $key => $config) {
-                if (!in_array($key, ['ancestors', 'lemma', 'related_id'])) {
+                if (!in_array($key, ['ancestors', 'lemma', 'related_id', 'properties_id'])) {
                     $fields[$key]['action'] = array_diff($config['action'] ?? ['edit'], ['view']);
                 }
             }
@@ -850,60 +786,11 @@ class Property extends RootEntity
         return $fields;
     }
 
-    public function reconcile() {
-
-        $services = $this->type['merged']['fields']['norm_data']['services'] ?? [];
-        if (!empty($services)) {
-            $apiService = ServiceFactory::create('reconcile');
-            foreach ($services as $serviceKey => $serviceConfig) {
-                if ((($serviceConfig['service'] ?? '') !== 'reconcile') || empty($serviceConfig['provider'])) {
-                    continue;
-                }
-
-                $term = $this[$serviceConfig['input']] ?? '';
-                if ($term === '') {
-                    continue;
-                }
-
-                $data = [
-                    'q' => $term,
-                    'provider' => $serviceConfig['provider']
-                ];
-
-                if (!empty($serviceConfig['type'])) {
-                    $data['type'] = $serviceConfig['type'];
-                }
-
-                $minScore = $serviceConfig['score'] ?? 20;
-
-                $task = $apiService->query(null, $data);
-                if ($task['state'] === 'SUCCESS') {
-                    foreach ($task['result']['answers'] ?? [] as $answer) {
-                        foreach ($answer['candidates'] ?? [] as $candidate) {
-                            if (!empty($candidate['match']) || ($candidate['score'] ?? 0) > $minScore) {
-                                $value = $candidate['value'] ?? $candidate['id'];
-                                $prefix = Attributes::getPrefix($value);
-
-                                $normData = array_filter(
-                                    explode("\n", $this->norm_data ?? ''),
-                                    function ($line) use ($prefix) {
-                                        return ($line !== '') && (strpos($line, $prefix . ':') !== 0);
-                                    }
-                                );
-
-                                $normData[] = $value;
-                                $this->norm_data = implode("\n", $normData);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return $this;
-    }
-
+    /**
+     * Update the sort key by using the autofill configuration
+     *
+     * @return $this
+     */
     public function updateSortKey() {
 
         $sortKeyConfig = $this->type['config']['fields']['sortkey']['autofill'] ?? [];
@@ -912,10 +799,10 @@ class Property extends RootEntity
 
             // TODO: use config
             $value = mb_strtolower(trim($value));
-            $value = Strings::replaceUmlauts($value);
-            $value = Strings::removeSpecialCharacters($value);
-            $value = Strings::collapseWhitespace($value);
             $value = Strings::prefixNumbersWithZero($value,5);
+//            $value = Strings::replaceUmlauts($value);
+//            $value = Strings::removeSpecialCharacters($value);
+            $value = Strings::collapseWhitespace($value);
 
             $this['sortkey'] = $value;
         }
@@ -946,5 +833,20 @@ class Property extends RootEntity
             }
         }
         return parent::getIdFormatted($fieldName, $options);
+    }
+
+    /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($entity instanceof Property) && ($entity->id === $this->id)) {
+            return true;
+        }
+
+        return false;
     }
 }

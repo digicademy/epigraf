@@ -48,6 +48,8 @@ class TypesController extends AppController
         ]
     ];
 
+    public $help = 'configuration';
+
     /**
      * Pagination setup
      *
@@ -168,15 +170,22 @@ class TypesController extends AppController
     /**
      * Transfer types between databases
      *
-     * @param $scope
-     *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
      */
-    public function transfer($scope = null)
+    public function transfer()
     {
         $requestParams = $this->request->getQueryParams();
-        $this->Transfer->transfer($scope, $requestParams);
+        $this->Transfer->transfer(null, $requestParams);
     }
 
+    /**
+     * Import types
+     *
+     * @return \Cake\Http\Response|null|void
+     */
+    public function export()
+    {
+        $this->Transfer->export();
+    }
 }

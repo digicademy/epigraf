@@ -14,9 +14,7 @@ namespace Epi\Model\Entity;
 
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
-use App\Utilities\Files\Files;
-use Cake\Core\Configure;
-use Cake\ORM\ResultSet;
+use Cake\Datasource\EntityInterface;
 use Cake\Utility\Hash;
 
 /**
@@ -197,10 +195,10 @@ class Section extends BaseEntity
         'layout_cols',
         'layout_rows',
 
-        'article' => 'articles_id', // TODO: Why not alias with article? -> Changed, does it work? Both necessary?
         'articles_id',
-        'parent' => 'parent_id',    // TODO: Why not alias with parent? -> Changed, does it work? Both necessary?
-        'parent_id'
+        'article' => 'articles_id', // TODO: Why not alias with article? -> Changed, does it work? Both necessary? Yes, for copy. The later value has unprefixed IDs and overwrites the former ID.
+        'parent_id',
+        'parent' => 'parent_id'    // TODO: Why not alias with parent? -> Changed, does it work? Both necessary? Yes, for copy. The later value has unprefixed IDs and overwrites the former ID.
     ];
 
     /**
@@ -235,6 +233,20 @@ class Section extends BaseEntity
     public $_children = 'items';
 
     /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($entity instanceof Article) && ($entity->id === $this->articles_id)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Find all item fields with invalid targets
      *
      * @return array
@@ -242,6 +254,10 @@ class Section extends BaseEntity
     protected function _getProblems()
     {
         $problems = [];
+
+        if (empty($this->lft) || empty($this->rght)) {
+            $problems[] = __('Section {0} has no left or right value.', $this->id);
+        }
         foreach ($this->items as $item) {
             $problems = array_merge($problems, $item->problems);
         }
@@ -257,6 +273,23 @@ class Section extends BaseEntity
      */
     protected function _getEmpty()
     {
+        $userRole = $this->currentUserRole ?? $this->root->currentUserRole ?? 'guest';
+
+        if (in_array($userRole, ['guest', 'reader'])) {
+
+            if (!empty($this['tree_children'])) {
+                return false;
+            }
+
+            foreach ($this['items'] aS $item) {
+                if ($item->getEntityIsVisible()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         return empty($this['status']) &&
             empty($this['comment']) &&
             empty($this['items']) &&
@@ -344,8 +377,13 @@ class Section extends BaseEntity
                 'number',
                 'sectiontype',
                 'name',
-                'alias',
+                'alias'
             ];
+
+            if (($options['format'] ?? '') ===  'transfer') {
+                $fields[] = 'norm_iri';
+                $fields[] = 'article';
+            }
         }
         else {
             $fields = parent::getExportFields($options);
@@ -434,8 +472,7 @@ class Section extends BaseEntity
      */
     public function getGroupedItems($options = [])
     {
-        $items = array_filter($this->items,
-            fn($x) => $x->getEntityIsVisible($options) && ($x['itemtype'] !== ITEMTYPE_FULLTEXT));
+        $items = array_filter($this->items, fn($x) => $x->getEntityIsVisible($options));
         $groupedItems = Arrays::array_group($items, 'itemtype');
 
         $itemTypes = $this->type['merged']['items'] ?? array_keys($groupedItems);
@@ -585,6 +622,77 @@ class Section extends BaseEntity
     }
 
     /**
+     * Get the reference ID
+     *
+     *  TODO: Use TreeTrait
+     *
+     * @return null|int
+     */
+    protected function _getReferenceId()
+    {
+        if (!isset($this->_fields['reference_id'])) {
+            $preceding = $this->preceding;
+            if (empty($preceding)) {
+                $this['reference_id'] = $this->parent_id;
+                $this['reference_pos'] = 'parent';
+            }
+            else {
+                $this['reference_id'] = $preceding->id;
+                $this['reference_pos'] = 'preceding';
+            }
+        }
+        return $this->_fields['reference_id'] ?? null;
+    }
+
+    /**
+     * Get the reference position
+     *
+     *  TODO: Use TreeTrait
+     *
+     * @return null|string 'parent' or 'preceding'
+     */
+    protected function _getReferencePos()
+    {
+        if (!isset($this->_fields['reference_pos'])) {
+            $preceding = $this->preceding;
+            if (empty($preceding)) {
+                $this['reference_id'] = $this->parent_id;
+                $this['reference_pos'] = 'parent';
+            }
+            else {
+                $this['reference_id'] = $preceding->id;
+                $this['reference_pos'] = 'preceding';
+            }
+        }
+        return $this->_fields['reference_pos'] ?? null;
+    }
+
+    /**
+     * Get the reference entity
+     *
+     * TODO: Use TreeTrait
+     *
+     * @return null|EntityInterface
+     */
+    protected function _getReference()
+    {
+        $referenceId = $this->referenceId;
+        if (!empty($referenceId) && (($this->_fields['reference']['id'] ?? null) !== intval($referenceId))) {
+            $referenceNode = $this->table
+                ->find('containAncestors')
+                ->find('all')
+                ->where(['id' => intval($referenceId)])
+                ->first();
+
+            $this->_fields['reference'] = $referenceNode;
+
+            //$property->ancestors = $referenceNode->ancestors;
+        }
+
+        return $this->_fields['reference'] ?? null;
+    }
+
+    /**
      * Get the section node including its items, footnotes and annotations
      *
      * @param array $targets Optionally, filter the tree by providing a list of types for each level,
@@ -649,7 +757,7 @@ class Section extends BaseEntity
 
         // XML tags
         if (empty($targets) || isset($targets['tags'])) {
-            $tags = $this->extractXmlTags(null, true);
+            $tags = $this->extractXmlTags(null, ['content' => true]);
             foreach ($tags as $tagId => $tag) {
                 $nodes[] = [
                     'id' => 'tag-' . $tag['tagid'] ?? '',
@@ -701,6 +809,19 @@ class Section extends BaseEntity
     {
         return $this->getTree();
     }
+
+    /**
+     * Check whether the section has children
+     *
+     * TODO: use the tree trait
+     *
+     * @return bool
+     */
+    protected function _getHasChildren()
+    {
+        return ($this->rght - $this->lft) > 1;
+    }
+
 
     /**
      * Convert imported data
@@ -931,9 +1052,11 @@ class Section extends BaseEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {

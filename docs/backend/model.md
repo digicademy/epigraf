@@ -146,7 +146,7 @@ which in turn calls `BaseEntity::getValueFormatted()` to format the field value.
 ### Placeholder Strings
 
 Placeholder strings are the most versatile extraction method as they combine literal
-strings and placholders. They are used for triple generation.
+strings and placeholders. They are used for triple generation.
 
 For example, if you want to generate a list of IRIs prefixed with a namespace, you
 can use the following placeholder string on an article entity:
@@ -165,7 +165,7 @@ See `BaseEntity::getValuePlaceholder()` and `Objects::processValues()` for more 
 
 Extraction paths consist of dot separated path elements.
 For example, if you want to extract the lemmata of all properties used in article items
-of type personnames, you can dive into the article structure by an extraction path:
+of type 'personnames', you can dive into the article structure by an extraction path:
 
 ```
 $article->getValueNested('sections.*.items.*[itemtype=personnames].property.lemma')
@@ -199,3 +199,6 @@ $item->getValueFormatted('value.lat', ['format' => 'txt'])
 ```
 
 See `BaseEntity::getValueFormatted()` for more information.
+
+In case the extraction key is prefixed with a format key, separated by a colon,
+this overrides the format option of `getValueFormatted()`.

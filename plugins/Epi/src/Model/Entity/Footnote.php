@@ -111,6 +111,7 @@ class Footnote extends BaseEntity
     protected $_serialize_snippets = [
         'deleted' => ['deleted', 'version_id', 'created', 'modified'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
+        'deprecated' => ['sortno', 'fntype', 'name'],
         'problems' => ['problems']
     ];
 
@@ -141,9 +142,9 @@ class Footnote extends BaseEntity
         'from_tagid',
         'from_sort',
         'iri' => 'norm_iri', //TODO: rename in database
-        //'type' => 'fntype', //@deprecated, use from_tagname
-        //'fntype',           //@deprecated, use from_tagname
         'sortno',
+        'fntype', //'type' => 'fntype', //@deprecated, use from_tagname
+        'name',
         'content',
         'segment'
     ];
@@ -158,6 +159,21 @@ class Footnote extends BaseEntity
         'content' => 'xml',
         'segment' => 'xml'
     ];
+
+    /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($this->root_tab === $entity->tableName) && ($entity->id === $this->root_id)) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Get the label injected into xml attributes, see Link->_getToValue()

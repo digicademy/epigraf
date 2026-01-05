@@ -153,13 +153,9 @@ button.button-settings.active {
 }
 
 .content-searchbar-item-sub {
-	flex:0.5;
-	min-width: 5em;
-}
-
-.content-searchbar-item-sub {
     flex:0.5;
-    min-width: 5em;
+    /* see .content-searchbar-item */
+    min-width: 9rem;
 }
 
 

@@ -70,7 +70,7 @@ export class HighlightText extends BaseWidget {
         // trim and remove empty terms
         let terms = this.terms
             .split(',')
-            .map(term => term.trim())
+            .map(term => term.trim().replace(/^['" ]+|['" ]+$/g, ''))
             .filter(term => term.length > 0);
 
         // Escape special characters in the terms to prevent issues in the regex

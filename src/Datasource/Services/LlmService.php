@@ -252,7 +252,7 @@ class LlmService extends BaseService
         }
 
         if (!empty($options['multinomial'])) {
-            $taskOptions['multinomial'] = true;
+            $taskOptions['mode'] = 'multi';
         }
 
         $data = [
@@ -263,9 +263,31 @@ class LlmService extends BaseService
         return $data;
     }
 
-    public function postProcess($response, $options)
+    /**
+     * Post process response from the databoard service
+     *
+     * For coding tasks, translates results to properties.
+     * For annotation tasks, replaces anno tags with span tags,
+     * maps results to properties, and adds the attributes
+     * data-link-id, data-link-value, data-target-tab, data-target-id.
+     *
+     * @param array $response
+     * @param array $options
+     * @return array
+     */
+    public function postProcess($response, $options = [])
     {
-        if ($response['state'] !== 'SUCCESS') {
+        // Add params necessary for postprocessing,
+        // so that they are added as query params to the
+        // redirect URL in ServicesController::get().
+        // TODO: Implement custom data parameter in databoard service
+        //       and transport the parameters with the response.
+        $response['params'] = array_intersect_key(
+            $options,
+            ['task' => 1, 'database' => 1, 'tagname' => 1, 'multinomial' => 1, 'itemtype' => 1]
+        );
+
+        if (($response['state'] ?? 'FAILURE') !== 'SUCCESS') {
             return $response;
         }
 
@@ -293,6 +315,7 @@ class LlmService extends BaseService
             $response['result']['answers'][0]['llm_result'] = $xmlText;
         }
 
+        // Map LLM answer to properties
         if (($task === 'coding') && !empty($options['itemtype']) ) {
             $typeName = $options['itemtype'];
             $multinomial = $options['multinomial'] ?? false;

@@ -28,18 +28,15 @@ use App\Utilities\Converters\Attributes;
 <?= $this->element('../Articles/index_facets') ?>
 
 <!-- Search -->
+<?php $this->setShowBlock(['searchbar']); ?>
 <?= $this->element('../Articles/index_search') ?>
 
 <!-- Content area -->
-<?php if ($this->request->getQuery('template') === 'lanes'): ?>
-    <?= $this->element('../Articles/index_lanes') ?>
-<?php elseif ($this->request->getQuery('template') === 'map'): ?>
-    <?= $this->element('../Articles/index_map') ?>
-<?php elseif ($this->request->getQuery('template') === 'tiles'): ?>
-    <?= $this->element('../Articles/index_tiles') ?>
-<?php else: ?>
-    <?= $this->element('../Articles/index_table') ?>
-<?php endif; ?>
+<?php $template = Attributes::cleanOption(
+    $this->getConfig('options')['params']['template'] ?? '',
+    ['map', 'tiles', 'table', 'graph','timeline'], 'table'
+); ?>
+<?= $this->element('../Articles/index_' . $template) ?>
 
 <?php if (!empty($summary)): ?>
     <?php $this->start('footer'); ?>
@@ -57,6 +54,8 @@ use App\Utilities\Converters\Attributes;
     $this->Link->beginActionGroup('bottom');
     $this->Link->addCounter();
 
+
+    $this->Link->addActionGroupLabel(__('Context Actions'));
     // TODO: article type selection does not work yet
     $this->Link->addCreateAction(
         __('Create article'),
@@ -66,14 +65,21 @@ use App\Utilities\Converters\Attributes;
                 $this->getConfig('options')['params']['articles.articletypes'][0] ?? '',
         ]]
     );
-    $this->Link->addAction(__('Import'), ['controller' => 'Articles', 'action' => 'import']);
+    $this->Link->addAction(
+        __('Import'),
+        ['controller' => 'Articles', 'action' => 'import'],
+        [
+            'class' => 'popup',
+            'data-popup-modal' => true
+        ]
+    );
 
     $this->Link->addAction(
         __('Transfer'),
         ['controller' => 'Articles', 'action' => 'transfer', '?' => $queryparams],
         [
             'data-list-select' => 'epi_articles',
-            'data-list-param' => 'articles', //id?
+            'data-list-param' => 'id',
             'class' => 'popup',
             'data-popup-modal' => true
         ]
@@ -83,7 +89,7 @@ use App\Utilities\Converters\Attributes;
         ['controller' => 'Articles', 'action' => 'mutate', '?' => $queryparams],
         [
             'data-list-select' => 'epi_articles',
-            'data-list-param' => 'articles', //id?
+            'data-list-param' => 'id',
             'class' => 'popup',
             'data-popup-modal' => true
         ]
@@ -95,6 +101,5 @@ use App\Utilities\Converters\Attributes;
 
     $this->Link->toggleTemplates($queryparams, 'articles');
     $this->Link->toggleModes($queryparams);
-    $this->Link->exportButtons($queryparams);
-    $this->Link->downloadButtons(null,'articles', 'epi_articles', ['triples'=>true]);
+    $this->Link->exportButtons($queryparams, 'epi_articles');
 ?>

@@ -15,7 +15,7 @@
   )),
   'created_by' => 1,
   'modified_by' => 1,
-  'typ' => 'export',
+  'jobtype' => 'export',
   'status' => 'init',
   'progress' => 0,
   'progressmax' => 0,
@@ -32,12 +32,11 @@
       'projects' => '1',
     ),
     'selection' => 'selected',
-    'tasks' => 
+    'options' => 
     array (
       'enabled' => 
       array (
       ),
-      'index' => 1,
       'options' => 
       array (
         5 => 
@@ -47,9 +46,8 @@
           'category' => 'Allgemeines',
           'label' => 'Signatur',
           'key' => 'signature',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         6 => 
         array (
@@ -58,9 +56,8 @@
           'category' => 'Allgemeines',
           'label' => 'Notizen',
           'key' => 'notes',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         7 => 
         array (
@@ -69,9 +66,8 @@
           'category' => 'Allgemeines',
           'label' => 'Letzte Änderung',
           'key' => 'modified',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         8 => 
         array (
@@ -80,9 +76,8 @@
           'category' => 'Band',
           'label' => 'Titelei',
           'key' => 'preliminaries',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         9 => 
         array (
@@ -91,9 +86,8 @@
           'category' => 'Band',
           'label' => 'Inhaltsverzeichnis',
           'key' => 'table_of_content',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         10 => 
         array (
@@ -102,9 +96,8 @@
           'category' => 'Band',
           'label' => 'Vorwort',
           'key' => 'prefaces',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         11 => 
         array (
@@ -113,9 +106,8 @@
           'category' => 'Band',
           'label' => 'Einleitung',
           'key' => 'introduction',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         12 => 
         array (
@@ -124,9 +116,8 @@
           'category' => 'Band',
           'label' => 'Katalog der Inschriften',
           'key' => 'articles',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         13 => 
         array (
@@ -135,9 +126,8 @@
           'category' => 'Band',
           'label' => 'Chronologische Liste der Inschriften',
           'key' => 'table_of_inscriptions',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         14 => 
         array (
@@ -146,9 +136,8 @@
           'category' => 'Band',
           'label' => 'Register',
           'key' => 'indices',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         15 => 
         array (
@@ -157,9 +146,8 @@
           'category' => 'Band',
           'label' => 'Abkürzungen',
           'key' => 'abbreviations',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         16 => 
         array (
@@ -168,9 +156,8 @@
           'category' => 'Band',
           'label' => 'Quellen und Literatur',
           'key' => 'biblio',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         17 => 
         array (
@@ -179,9 +166,8 @@
           'category' => 'Band',
           'label' => 'Liste der bisher erschienenen DI-Bände',
           'key' => 'di-volumes',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         18 => 
         array (
@@ -190,9 +176,8 @@
           'category' => 'Band',
           'label' => 'Zeichnungen',
           'key' => 'drawings',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         19 => 
         array (
@@ -201,9 +186,8 @@
           'category' => 'Band',
           'label' => 'Marken',
           'key' => 'marks',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         20 => 
         array (
@@ -212,9 +196,8 @@
           'category' => 'Band',
           'label' => 'Bildtafeln',
           'key' => 'plates',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         21 => 
         array (
@@ -223,9 +206,8 @@
           'category' => 'Standorte-Register',
           'label' => 'Basis-Standort anzeigen',
           'key' => 'base_location',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         22 => 
         array (
@@ -234,9 +216,8 @@
           'category' => 'Fußnoten',
           'label' => 'Nummern rechtsbündig',
           'key' => 'footnotes',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         23 => 
         array (
@@ -245,9 +226,8 @@
           'category' => 'Ligaturen',
           'label' => 'unterstreichen',
           'key' => 'ligature_arcs',
-          'radio' => '1',
-          'value' => '',
           'type' => 'radio',
+          'value' => '',
         ),
         24 => 
         array (
@@ -256,9 +236,8 @@
           'category' => 'Ligaturen',
           'label' => 'Ligaturbögen',
           'key' => 'ligature_arcs',
-          'radio' => '1',
-          'value' => '1',
           'type' => 'radio',
+          'value' => '1',
         ),
         25 => 
         array (
@@ -267,9 +246,8 @@
           'category' => 'Marken',
           'label' => 'zu einer Kategorie zusammenfassen ',
           'key' => 'marks_together ',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         26 => 
         array (
@@ -278,9 +256,8 @@
           'category' => 'Sonstiges',
           'label' => 'Sortierung nach Signatur',
           'key' => 'sort_signatures',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
         27 => 
         array (
@@ -289,15 +266,16 @@
           'category' => 'Quellen und Literatur',
           'label' => 'DI-Bände ausblenden',
           'key' => 'di_volumes_hide',
-          'radio' => '0',
-          'value' => '',
           'type' => 'check',
+          'value' => '',
         ),
       ),
+      'index' => 1,
     ),
     'pipeline_name' => 'DI: Band',
     'user_role' => 'author',
     'user_id' => 1,
   ),
+  'result' => NULL,
 ); 
 ?>

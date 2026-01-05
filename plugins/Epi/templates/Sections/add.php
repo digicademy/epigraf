@@ -49,7 +49,8 @@
             'edit'=>$edit,
             'mode'=>$mode,
             'template_article'=> $entity->type['merged'] ?? [],
-            'note' => true
+            'note' => true,
+            'buttons' => true
         ];
     ?>
 

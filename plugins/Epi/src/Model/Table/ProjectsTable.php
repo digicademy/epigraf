@@ -62,7 +62,7 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
         'term' => 'string',
         'published' => 'list-integer',
         'template' => 'raw',
-        'columns' => 'list',
+        'columns' => 'list-or-false',
         'selected' => 'list',
         'articles' => [
             'projects' => 'list',
@@ -159,21 +159,23 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
         parent::afterSave($event, $entity, $options);
-
-        $this->Articles->clearResultCache();
-        $this->clearViewCache('epi_views_Epi_Articles');
+        $this->Articles->clearCache();
     }
 
     /**
      * Get columns to be rendered in table views
      *
+     * ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
 
         $default = [
@@ -233,7 +235,7 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
             ]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**
@@ -305,14 +307,14 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Contain data
+     * Contain data necessary for table columns
      *
      * @param \Cake\ORM\Query $query
      * @param array $options
      *
      * @return Query
      */
-    public function findContainFields(Query $query, array $options)
+    public function findContainColumns(Query $query, array $options)
     {
         if (
             empty($options['columns']) ||

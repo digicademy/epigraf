@@ -37,13 +37,19 @@ class PipelinesTable extends BaseTable
     public $parameters = [
         'id' => 'list',
         'published' => 'list-integer',
+        'columns' => 'list-or-false',
         'name' => 'string',
         'term' => 'string',
+        'type' => 'list',
         'selected' => 'list',
         'load' => 'list',
         'save' => 'list'
     ];
 
+    public static $pipelineTypes = [
+        'export' => 'Export',
+        'import' => 'Import'
+    ];
 
     /**
      * Initialize hook
@@ -93,13 +99,17 @@ class PipelinesTable extends BaseTable
     /**
      * Get columns to be rendered in table views
      *
+     * ### Options
+     * - type (string) Filter by type
+     * - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
 
         $default = [
@@ -108,6 +118,14 @@ class PipelinesTable extends BaseTable
                 'sort' => true,
                 'default' => $this::$requestFormat !== 'html',
                 'width' => 50
+            ],
+            'type' => [
+                'caption' => __('Type'),
+                'sort' => true,
+                'default' =>  true,
+                'width' => 50,
+                'options' => PipelinesTable::$pipelineTypes, // TODO: map labels in table view
+                'filter' => 'select'
             ],
 
             'name' => [
@@ -147,7 +165,7 @@ class PipelinesTable extends BaseTable
 
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**

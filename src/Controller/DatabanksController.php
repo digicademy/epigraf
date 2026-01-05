@@ -14,6 +14,7 @@ use App\Model\Entity\Databank;
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Response;
+use Rest\Controller\Component\LockTrait;
 
 /**
  * Databanks Controller
@@ -25,6 +26,14 @@ use Cake\Http\Response;
  */
 class DatabanksController extends AppController
 {
+
+    /**
+     * The lock trait provides lock and unlock actions
+     */
+    use LockTrait;
+
+    public $help = 'administration/databases';
+
     /**
      * beforeFilter callback
      *
@@ -44,23 +53,7 @@ class DatabanksController extends AppController
      */
     public function index()
     {
-        // Get search parameters from request
-        $requestParams = $this->request->getQueryParams();
-        $params = $this->Databanks->parseRequestParameters($requestParams);
-        $columns = $this->Databanks->getColumns($params['columns'] ?? []);
-        $paging = $this->Databanks->getPaginationParams($requestParams, $columns);
-
-        // Assemble query
-        $query = $this->Databanks
-            ->find('hasParams', $params);
-
-        // Get data
-        $this->paginate = $paging;
-        $entities = $this->paginate($query);
-
-        // Output
-        $this->Answer->addOptions(compact('params', 'columns'));
-        $this->Answer->addAnswer(compact('entities'));
+        $this->Actions->index();
     }
 
     /**
@@ -92,11 +85,7 @@ class DatabanksController extends AppController
      */
     public function view(string $id = null)
     {
-        $databank = $this->Databanks->get($id, [
-            'contain' => ['Users', 'Permissions', 'Permissions.Users']
-        ]);
-
-        $this->set(compact('databank'));
+        $this->Actions->view($id);
     }
 
     /**
@@ -108,21 +97,7 @@ class DatabanksController extends AppController
      */
     public function edit($id = null)
     {
-        $entity = $this->Databanks->get($id, ['contain' => ['Users']]);
-
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $entity = $this->Databanks->patchEntity($entity, $this->request->getData());
-            if ($this->Databanks->save($entity)) {
-                $this->Flash->success(__('The database has been saved.'));
-
-                return $this->redirect(['action' => 'view', $entity->id]);
-            }
-            else {
-                $this->Flash->error(__('The database could not be saved. Please, try again.'));
-            }
-        }
-
-        $this->Answer->addAnswer(compact('entity'));
+        $this->Actions->edit($id);
     }
 
     /**
@@ -142,7 +117,7 @@ class DatabanksController extends AppController
             $entity = $this->Databanks->patchEntity($entity, $data);
 
             if (empty(Databank::removePrefix($data['name'] ?? ''))) {
-                $this->Flash->error(__('The database name is invalid.'));
+                $this->Answer->error(__('The database name is invalid.'));
             }
             else {
                 if ($this->Databanks->save($entity)) {
@@ -181,19 +156,19 @@ class DatabanksController extends AppController
                     }
 
                     // Flash messages
-                    if (!empty($flash['success'])) {
-                        $this->Flash->success(implode(' ', $flash['success']));
-                    }
-
                     if (!empty($flash['error'])) {
-                        $this->Flash->error(implode(' ', $flash['error']));
+                        $this->Answer->error(implode(' ', $flash['error']), ['action' => 'view', $entity->id]);
                     }
-
-
-                    return $this->redirect(['action' => 'view', $entity->id]);
+                    if (!empty($flash['success'])) {
+                        $this->Answer->success(implode(' ', $flash['success']), ['action' => 'view', $entity->id]);
+                    }
                 }
                 else {
-                    $this->Flash->error(__('The database connection could not be saved. Please, try again.'));
+                    $this->Answer->error(
+                        __('The database connection could not be saved. Please, try again.'),
+                        [],
+                        $entity->getErrors()
+                    );
                 }
             }
         }
@@ -218,15 +193,14 @@ class DatabanksController extends AppController
         ]);
         if ($this->request->is(['post', 'put'])) {
             if ($entity->backupDatabase()) {
-                $this->Flash->success(__('The database has been backed up.'));
-                return $this->redirect(['action' => 'view', $id]);
+                $this->Answer->success(__('The database has been backed up.'), ['action' => 'view', $id]);
             }
             else {
-                $this->Flash->error(__('The database could not be backed up. Please, try again.'));
+                $this->Answer->error(__('The database could not be backed up. Please, try again.'));
             }
         }
 
-        $this->set(compact('entity'));
+        $this->Answer->addAnswer(compact('entity'));
     }
 
     /**
@@ -242,9 +216,9 @@ class DatabanksController extends AppController
         $entity = $this->Databanks->get($id, [
             'contain' => []
         ]);
-        $rootpath = Configure::read('Data.root');
+
         if ($this->request->is(['post', 'put'])) {
-            if ($entity->import($rootpath . $this->request->getData('filename'))) {
+            if ($entity->import($this->request->getData('filename'))) {
                 $this->Answer->success(
                     __('The file has been imported.'),
                     ['action' => 'view', $id]
@@ -255,7 +229,7 @@ class DatabanksController extends AppController
             }
         }
 
-        $this->set(compact('entity'));
+        $this->Answer->addAnswer(compact('entity'));
     }
 
     /**
@@ -272,15 +246,14 @@ class DatabanksController extends AppController
 
         if ($this->request->is(['post', 'put'])) {
             if ($entity->initDatabase()) {
-                $this->Flash->success(__('The database has been initialized.'));
-                return $this->redirect(['action' => 'view', $id]);
+                $this->Answer->success(__('The database has been initialized.', ['action' => 'view', $id]));
             }
             else {
-                $this->Flash->error(__('The database could not be initialized. Please, try again.'));
+                $this->Answer->error(__('The database could not be initialized. Please, try again.'));
             }
         }
 
-        $this->set(compact('entity'));
+        $this->Answer->addAnswer(compact('entity'));
     }
 
     /**
@@ -291,7 +264,7 @@ class DatabanksController extends AppController
     public function select()
     {
         $connections = $this->Databanks->getConnections();
-        $this->set(compact('connections'));
+        $this->Answer->addAnswer(compact('connections'));
     }
 
     /**
@@ -309,20 +282,19 @@ class DatabanksController extends AppController
 
         if ($this->request->is(['post', 'put'])) {
             if (!$entity->createDatabase()) {
-                $this->Flash->error(__('The database could not be created. Please, check your permissions and check the database name.'));
+                $this->Answer->error(__('The database could not be created. Please, check your permissions and check the database name.'));
             }
             else {
                 if (!$entity->initDatabase()) {
-                    $this->Flash->error(__('The database could not be initialized. Please, try again.'));
+                    $this->Answer->error(__('The database could not be initialized. Please, try again.'));
                 }
                 else {
-                    $this->Flash->success(__('The database has been created and initialized.'));
-                    return $this->redirect(['action' => 'view', $id]);
+                    $this->Answer->success(__('The database has been created and initialized.'), ['action' => 'view', $id]);
                 }
             }
         }
 
-        $this->set(compact('entity'));
+        $this->Answer->addAnswer(compact('entity'));
     }
 
     /**
@@ -338,15 +310,14 @@ class DatabanksController extends AppController
         $entity = $this->Databanks->get($id, ['contain' => []]);
         if ($this->request->is(['post', 'put'])) {
             if ($entity->dropDatabase()) {
-                $this->Flash->success(__('The database has been dropped.'));
-                return $this->redirect(['action' => 'view', $id, 'database' => false]);
+                $this->Answer->success(__('The database has been dropped.', ['action' => 'view', $id, 'database' => false]));
             }
             else {
-                $this->Flash->error(__('The database could not be dropped. Please, try again.'));
+                $this->Answer->error(__('The database could not be dropped. Please, try again.'));
             }
         }
 
-        $this->set(compact('entity'));
+        $this->Answer->addAnswer(compact('entity'));
     }
 
     /**

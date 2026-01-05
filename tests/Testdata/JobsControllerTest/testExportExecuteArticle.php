@@ -9,24 +9,13 @@
  */
 
 return [
-    'typ' => 'export',
+    'jobtype' => 'export',
     'config' => [
         'pipeline_id' => '19',
-        'tasks' => [
+        'options' => [
             'index' => '1',
-            'check' => [
-                '2' => '1',
-                '3' => '1',
-                '4' => '0',
-                '5' => '0',
-                '6' => '0',
-                '7' => '0',
-                '10' => '0'
-            ],
-            'radio' => [
-                '8' => '9',
-                '11' => '11'
-            ]
+            "ligature_arcs" => "1",
+            "modus" => "projects_bay"
         ]
     ],
 ];

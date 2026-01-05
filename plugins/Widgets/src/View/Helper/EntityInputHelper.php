@@ -14,9 +14,9 @@ use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
 use Cake\ORM\Entity;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Cake\View\Helper\FormHelper;
-use Epi\Model\Entity\Article;
 use Epi\Model\Entity\Footnote;
 use Epi\Model\Entity\Item;
 use Epi\Model\Entity\Section;
@@ -41,7 +41,17 @@ class EntityInputHelper extends BaseEntityHelper
      *
      * @var string[]
      */
-    public $helpers = ['EntityHtml', 'Html', 'Url', 'Types', 'Element', 'Form', 'Table', 'Link', 'Files'];
+    public $helpers = ['EntityHtml', 'Html', 'Form', 'Url', 'Link', 'Files', 'Paginator','User', 'Epi.Types', 'Widgets.Element', 'Widgets.Table'];
+    /**
+     * Render section content as list
+     *
+     * @param array $options
+     * @return string
+     */
+    public function sectionContentLists($section, $options) {
+        $options['view'] = 'list';
+        return $this->sectionContentStacks($section, $options);
+    }
 
     /**
      * Render section content as stack
@@ -53,10 +63,6 @@ class EntityInputHelper extends BaseEntityHelper
 
         list($groupedItems, $itemTypes) = $section->getGroupedItems($options);
 
-        if (empty($groupedItems)) {
-            return '';
-        }
-
         $database = $section->table->getDatabase();
         $article = $section->container;
 
@@ -64,7 +70,7 @@ class EntityInputHelper extends BaseEntityHelper
         $template_section = $options['template_section'] ?? [];
         $template_article = $options['template_article'] ?? [];
 
-        $groupClasses = ['doc-section-stack'];
+        $groupClasses = [$options['view'] ?? 'doc-section-stack'];
         $out = '<div class="' . implode(' ', $groupClasses) . '">';
 
         foreach ($itemTypes as $itemConfig) {
@@ -77,8 +83,15 @@ class EntityInputHelper extends BaseEntityHelper
             //       it hides empty fields for unconfigured types.
             // TODO: show headings between multiple items (for unconfigured types)
 
+            // May items be edited, added or deleted?
+            $itemCount = $itemConfig['count'] ?? '1';
+            $itemEdit = $itemTemplate['edit'] ?? $template_section['edit'] ?? $template_article['edit'] ?? true;
+            $itemCreate = $itemEdit && ($itemCount === '1') && (count($items) === 0);
+            $itemAdd = $itemDelete = $itemEdit && ($itemCount === '*');
+
             $itemOptions = [
                 'edit' => true,
+                'delete' => $itemDelete,
                 'mode' => $mode,
                 'defaultFields' => [
                     'content' => [
@@ -101,16 +114,14 @@ class EntityInputHelper extends BaseEntityHelper
                 $out .= $this->itemContent($item, $itemOptions);
             }
 
-            // May items be edited, added or deleted?
-            $itemCount = $itemConfig['count'] ?? '1';
-            $itemEdit = $itemTemplate['edit'] ?? $template_section['edit'] ?? $template_article['edit'] ?? true;
-            $itemCreate = $itemEdit && ($itemCount === '1') && (count($items) === 0);
-            $itemAdd = $itemDelete = $itemEdit && ($itemCount === '*');
+            if ($itemCreate || $itemAdd) {
 
-            if ($itemCreate) {
+                $out .= '<div class="doc-section-item ' . (!count($items) ? 'doc-section-item-first' : '') . '">';
+                $out .= $this->itemAddButton($itemCount, $itemType);
+
                 $item = new Item([
                     'itemtype' => $itemType,
-                    'id' => Attributes::uuid('new'),
+                    'id' => '{id}',
                     'sections_id' => $section->id,
                     'articles_id' => $section->articles_id,
                     'pos_x' => '1',
@@ -126,14 +137,18 @@ class EntityInputHelper extends BaseEntityHelper
                 $item->container = $section;
                 $item->root = $section->root;
 
+                $out .= '<script type="text/template" class="template template-doc-section-item">';
                 $out .= $this->itemContent($item, $itemOptions);
+                $out .= '</script>';
+
+                $out .= '</div>';
             }
         }
 
         $out .= '</div>';
 
         $items = Arrays::ungroup($groupedItems);
-        $out .= $this->annoLists($article, $items, ['edit' => true, 'mode' => $mode]);
+        $out .= $this->annoLists($article, 'sections-' . $section->id, $items, ['edit' => true, 'mode' => $mode, 'buttons' => $options['buttons'] ?? true]);
 
         return $out;
     }
@@ -155,8 +170,8 @@ class EntityInputHelper extends BaseEntityHelper
         list($groupedItems, $itemTypes) = $section->getGroupedItems($options);
 
         $tables = ($template_section['view']['grouped'] ?? false) ? [$itemTypes] : array_map(fn($x) => [$x], $itemTypes);
-        $moreSection = $template_section['view']['more'] ?? false;
-        $fileUpload = $template_section['view']['widgets']['upload'] ?? false;
+        $moreSection = ($template_section['view']['more'] ?? false) && ($options['buttons'] ?? true);
+        $fileUpload = ($template_section['view']['widgets']['upload'] ?? false) && ($options['buttons'] ?? true);
 
         $out = '';
 
@@ -204,7 +219,7 @@ class EntityInputHelper extends BaseEntityHelper
 
             $out .= '<div class="' . implode(' ', array_filter($groupClasses)) . '">';
             $out .= '<div class="doc-group-headers">';
-            $out .= '<div class="doc-field doc-field-itemtype"></div>';
+            $out .= '<div class="doc-field doc-field-itemtype">'. __('Type') . '</div>';
 
             foreach ($groupHeaders as $groupHeader) {
                 $out .= $this->Element->outputHtmlElement(
@@ -273,7 +288,7 @@ class EntityInputHelper extends BaseEntityHelper
                     $templateItem = new Item([
                         'itemtype' => $itemType,
                         'id' => '{id}',
-                        'sections_id' => $section->id, //'{sections-id}',
+                        'sections_id' => $section->id,
                         'articles_id' => $section->articles_id,
                         'pos_x' => '1',
                         'pos_y' => '1',
@@ -310,7 +325,7 @@ class EntityInputHelper extends BaseEntityHelper
 
         // Annotations
         $items = Arrays::ungroup($groupedItems);
-        $out .= $this->annoLists($article, $items, ['edit' => true, 'mode' => $mode]);
+        $out .= $this->annoLists($article, 'sections-' . $section->id, $items, ['edit' => true, 'mode' => $mode, 'buttons' => $options['buttons'] ?? true]);
 
         return $out;
     }
@@ -324,7 +339,7 @@ class EntityInputHelper extends BaseEntityHelper
      * @param $section
      * @param array $itemOptions
      * @param array $fieldOptions
-     * @param array $buttons
+     * @param array $buttons Set 'more' or 'delete' to true to add the respective buttons.
      * @return string
      */
     public function sectionContentTableRow(
@@ -396,7 +411,8 @@ class EntityInputHelper extends BaseEntityHelper
 
         $fieldAttributes = [
             'value' => $value,
-            'data-row-field' => 'date_value'
+            'data-row-field' => 'date_value',
+            'class' => 'widget-dateseditor'
         ];
 
         if (!empty($options['fieldConfig']['width'])) {
@@ -432,6 +448,94 @@ class EntityInputHelper extends BaseEntityHelper
     }
 
     /**
+     * Output a file or image field
+     *
+     * @param Item $item
+     * @param array $fieldNameParts
+     * @param boolean $edit
+     * @param array $options
+     * @return string
+     */
+    public function itemFieldFile($item, $fieldNameParts, $edit, $options=[])
+    {
+        $out = '';
+        $fieldName = implode('.', $fieldNameParts);
+        $inputPath = $options['inputPath'];
+        $format = $options['format'];
+
+        $valueFilename = $item[$fieldName . '_name'] ?? '';
+        $valueFilepath = $item[$fieldName . '_path'] ?? '';
+        $valueFullname = empty($valueFilepath) ? $valueFilename : ($valueFilepath . '/' . $valueFilename);
+
+        // Assemble path from base folder and file_path
+        $fullpath = trim($item->file_basepath . $valueFilepath, '/');
+        $selectPath = empty($valueFilename) ? trim($item->file_basepath . $item->file_defaultpath, '/') : $fullpath;
+
+        // Output the image
+        if ($format === 'image') {
+            if (!empty($item->file_name)) {
+                $url = Router::url(['action' => 'view', $item->articles_id, '#' => 'items-' . $item->id]);
+                $image = $this->Files->outputImage($item, true, $url);
+            } else {
+                $image = '';
+            }
+            $out .= "<div class=\"doc-field-image\">{$image}</div>";
+        }
+
+        // Input for file name
+        if ($edit) {
+            //TODO: alternative for non-online files
+            //TODO: open image viewer in edit mode and view mode, provide inputs in image viewer
+
+            $inputField = $inputPath . '[' . $fieldName . '_name]';
+            $pathField = $inputPath . '[' . $fieldName . '_path]';
+
+            $content = $item->getValueFormatted($fieldNameParts);
+            $content .= $this->Form->control(
+                $inputField,
+                [
+                    'type' => 'choose',
+                    'options' => [
+                        'controller' => 'Files',
+                        'action' => 'select',
+                        '?' => [
+                            'path' => $selectPath,
+                            'basepath' => trim($item->file_basepath, '/')
+                        ]
+                    ],
+                    'label' => false,
+                    'value' => $valueFullname,
+                    'path' => $valueFilepath,
+                    'pathField' => $pathField,
+                    'itemtype' => 'file'
+                ]);
+
+            // Fix IDs in template string
+            //TODO: obsolete?
+            if ($options['item_id'] === '{id}') {
+                $content = str_replace('items-items-id', 'items-{id}', $content);
+            }
+            if ($options['section_id'] === '{sections-id}') {
+                $content = str_replace('sections-sections-id', 'sections-{sections-id}', $content);
+            }
+
+            $out .= "<div class=\"doc-field-content\">{$content}</div>";
+        }
+
+        // View path
+        elseif ($format !== 'image') {
+            if ($item->file_properties['exists']) {
+                $out .= "<div class=\"doc-field-content\" data-path=\"{$fullpath}\" data-file-name=\"{$valueFilename}\">{$valueFullname}</div>";
+            }
+            else {
+                $out .= "<div class=\"doc-field-content\">{$valueFullname}</div>";
+            }
+        }
+
+        return $out;
+    }
+
+    /**
      * Output a URL field
      *
      * @param Item $item
@@ -450,10 +554,23 @@ class EntityInputHelper extends BaseEntityHelper
 
         $value = $item[$fieldName . '_name'] ?? '';
         $path = $item[$fieldName . '_path'] ?? '';
+        $fullPath =  $path . '/' . $value;
 
-        $content = $this->Form->input($options['inputField'], ['value' => $value, 'data-row-field' => $fieldName]);
+        $inputPath = $options['inputPath'];
+        $inputField = $inputPath . '[' . $fieldName . '_name]';
+        $pathField = $inputPath . '[' . $fieldName . '_path]';
 
-        return "<div class=\"doc-field-content\">{$content}</div>";
+        $content = $this->Form->input($pathField, ['value' => '','type'=>'hidden']);
+        $content .= $this->Form->input($inputField, ['value' => $fullPath]);
+
+        return  $this->Element->outputHtmlElement(
+            'div',
+            $content,
+            [
+                'class' => 'doc-field-content',
+                'data-row-field' => $fieldName,
+            ]
+        );
     }
 
     /**

@@ -207,17 +207,21 @@ class JsonldView extends JsonView
                     if (is_array($objects)) {
                         foreach ($objects as $object) {
                             $object = static::renderValue($object, $options);
-                            $subject[$predicate][] = ($predicate === '@type') ? ($object['@id'] ?? '') : $object;
+                            $object = ($predicate === '@type') ? ($object['@id'] ?? '') : $object;
+                            $subject[$predicate][] = $object;
                         }
                     }
                     else {
                         $object = static::renderValue($objects, $options);
-                        $subject[$predicate] = ($predicate === '@type') ? ($object['@id'] ?? '') : $object;
+                        $object = ($predicate === '@type') ? ($object['@id'] ?? '') : $object;
+                        $subject[$predicate] = $object;
                     }
                 }
 
                 $data[] = $subject;
             }
+
+            $data = static::expandSubjects($data);
         }
 
         return $data;
@@ -272,22 +276,140 @@ class JsonldView extends JsonView
 
         // Full IRIs
         if ($type === 'iri') {
-            $value = [
-                '@id' => $value . ($options['extension'] ?? '')
-            ];
+            $value = ['@id' => $value . ($options['extension'] ?? '')];
         }
         elseif ($type === 'prefixed name') {
-            $value = [
-                '@id' => $value . ($options['extension'] ?? '')
-            ];
+            $value = ['@id' => $value . ($options['extension'] ?? '')];
         }
         else {
-            $value = [
-                '@value' => $value
-            ];
+            $value = ['@value' => $value];
+
+            if ($type !== 'literal') {
+                $value["@type"]  = $type;
+            }
         }
 
         return $value;
+    }
+
+    /**
+     * Expand subjects by replacing references with the actual objects
+     *
+     * @param array $data
+     * @return array
+     */
+    static function expandSubjects(array $data): array
+    {
+        // Index subjects by ID
+        $subjectsById = [];
+        foreach ($data as  $subject) {
+            if (isset($subject['@id'])) {
+                $subjectsById[$subject['@id']] = $subject;
+            }
+        }
+
+        $consumedIds = [];
+
+        // Funktion um eine node (Objekt in dritter Ebene) zu expandieren
+        $expandNode = function ($node) use (&$expandNode, $subjectsById, &$consumedIds) {
+            if (is_array($node)) {
+                if (isset($node['@id']) && isset($subjectsById[$node['@id']])) {
+                    $consumedIds[] = $node['@id'];
+                    $expanded = $subjectsById[$node['@id']];
+
+                    foreach ($expanded as $predicate => $object) {
+                        if (is_array($object)) {
+                            if (($predicate === '@id') || ($predicate === '@type')) {
+                                continue;
+                            }
+                            $expanded[$predicate] = $expandNode($object);
+                        }
+                    }
+                    return $expanded;
+                }
+                else {
+                    foreach ($node as $k => $v) {
+                        $node[$k] = $expandNode($v);
+                    }
+                    return $node;
+                }
+            }
+            return $node;
+        };
+
+        // Expand all objects
+        foreach ($data as &$subject) {
+            foreach ($subject as $predicate => &$object) {
+                if (($predicate === '@id') || ($predicate === '@type')) {
+                    continue;
+                }
+                $object = $expandNode($object);
+            }
+        }
+        unset($subject, $object);
+
+        // Remove consumed subjects
+        foreach ($data as $idx => $subject) {
+            if (isset($subject['@id']) && in_array($subject['@id'], $consumedIds)) {
+                unset($data[$idx]);
+            }
+        }
+        unset($consumedIds);
+
+        return array_values($data);
+    }
+
+    /**
+     * Render the JSON-LD prolog
+     *
+     * Outputs @context and @set prolog.
+     *
+     * This is the first part of the wrapper, that's why the closing brackets are removed,
+     * and added in renderEpilog().
+     *
+     *
+     * @param array $data
+     * @param array $options
+     * @return string
+     */
+    public function renderProlog($data, $options)
+    {
+        // Header (keep it open)
+        $jsonld['@context'] = [];
+        if (!empty(static::$_header['base'])) {
+            $jsonld['@context']['@base'] = static::$_header['base'];
+        }
+        $jsonld['@context'] = array_merge($jsonld['@context'], static::$_header['namespaces']);
+        $content = $this->renderArray($jsonld, $options);
+        $content = preg_replace('/\s*}\s*$/', ",\n    ", $content);
+
+        if (empty(static::$_header['member'])) {
+            $content .= "\"@set\": [";
+        }
+
+        return $content;
+
+    }
+
+    /**
+     * Render the epilog of the document: Close the list and object.
+     *
+     * @param array $data
+     * @param array $options
+     * @return string
+     */
+    function renderEpilog($data, $options)
+    {
+        $content = '';
+
+        // Entity view: Close list
+        if (empty(static::$_header['member'])) {
+            $content .= "    ]\n";
+        }
+
+        // Close object
+        $content .= '}';
+        return $content;
     }
 
     /**
@@ -303,30 +425,35 @@ class JsonldView extends JsonView
         $isDocument = (is_object($data) && ($data instanceof ExportEntityInterface));
         $data = $this->extractData($data, $options);
 
-        // Header
-        $jsonld['@context'] = [];
-        if (!empty(static::$_header['base'])) {
-            $jsonld['@context']['@base'] = static::$_header['base'];
-        }
-        $jsonld['@context'] = array_merge($jsonld['@context'], static::$_header['namespaces']);
-
+        // Collection view
         if (!empty(static::$_header['member'])) {
-            $jsonld = array_merge($jsonld, $this->_getCollection());
+            $jsonld = $this->_getCollection();
+            $content = $this->renderArray($jsonld, $options);
+
+            // Remove brackets (they are rendered in the prolog and epilog)
+            $content = preg_replace('/^\s*{\s*/', "", $content);
+            $content = preg_replace('/}\s*$/', "", $content);
         }
+        // Entity view
         else {
             // Remove first nesting level
+            $jsonld = [];
             if (!$isDocument) {
-                $jsonld['@set'] = [];
                 foreach ($data as $dataPart) {
-                    $jsonld['@set'] = array_merge($jsonld['@set'], $dataPart);
+                    $jsonld = array_merge($jsonld, $dataPart);
                 }
             }
             else {
-                $jsonld['@set'] = $data;
+                $jsonld = $data;
             }
+            $content = $this->renderArray($jsonld, $options);
+
+            // Remove brackets (they are rendered in the prolog and epilog)
+            $content = preg_replace('/^\s*\[/', "", $content);
+            $content = preg_replace('/]\s*$/', "", $content);
         }
 
-        return $this->renderArray($jsonld, $options);
+        $content = preg_replace('/^/m', '    ', $content);
+        return $content;
     }
-
 }

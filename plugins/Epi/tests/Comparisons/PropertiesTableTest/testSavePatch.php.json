@@ -4,6 +4,7 @@
     "version_id": null,
     "job_id": null,
     "published": null,
+    "status": null,
     "created": "2021-06-14T15:28:48+02:00",
     "modified": "2020-10-29T13:00:58+01:00",
     "created_by": 1,

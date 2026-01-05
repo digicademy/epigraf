@@ -39,8 +39,8 @@
                 }
             },
             "norm_iri": "epi",
-            "created": "2022-12-03T10:01:24+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2022-12-03T09:01:24+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-161",
@@ -283,6 +283,7 @@
                     },
                     "source": {
                         "key": "project.name",
+                        "value": "{project.name} {signature}",
                         "icon": "\ud83d\udd6e",
                         "selectable": false,
                         "public": true
@@ -366,10 +367,6 @@
                     "signatures": {
                         "type": "signatures"
                     },
-                    "cluster": {
-                        "type": "cluster",
-                        "default": false
-                    },
                     "geolocation": {
                         "type": "geolocation",
                         "default": false
@@ -397,7 +394,8 @@
                     "summary": {
                         "type": "summary",
                         "caption": "Zusammenfassung",
-                        "count": "1"
+                        "count": "1",
+                        "default": false
                     }
                 },
                 "namespaces": {
@@ -411,20 +409,11 @@
                         "caption": "Word",
                         "scope": "article"
                     },
-                    "di-articles-doc-bak": {
-                        "caption": "Backup: Word",
-                        "button": false
-                    },
                     "di-epidoc": {
                         "caption": "EpiDoc"
                     },
                     "di-book-doc": {
                         "caption": "Band",
-                        "scope": "book",
-                        "button": false
-                    },
-                    "di-book-doc-bak": {
-                        "caption": "Backup: Band",
                         "scope": "book",
                         "button": false
                     },
@@ -435,12 +424,6 @@
                         "button": false
                     },
                     "dio-export-book": {
-                        "button": false
-                    },
-                    "dio-export-img-wismar": {
-                        "button": false
-                    },
-                    "dio-export-img-magdeburg": {
                         "button": false
                     }
                 },
@@ -540,7 +523,7 @@
                 }
             },
             "norm_iri": "epi-article",
-            "modified": "2025-02-22T20:05:55+01:00"
+            "modified": "2025-04-26T12:36:09+02:00"
         },
         {
             "id": "types-2613",
@@ -656,7 +639,7 @@
             },
             "norm_iri": "epi-article-preview",
             "created": "2023-08-28T00:20:38+02:00",
-            "modified": "2025-01-17T11:14:15+01:00"
+            "modified": "2025-01-17T10:14:15+01:00"
         },
         {
             "id": "types-162",
@@ -812,7 +795,7 @@
                 ]
             },
             "norm_iri": "epi-book",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-2616",
@@ -826,7 +809,7 @@
             "description": "Bandartikel, zum Erstellen des Bandes inklusive Einleitung und Anh\u00e4ngen",
             "norm_iri": "epi-book-preview",
             "created": "2023-08-28T00:20:38+02:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-1438",
@@ -873,7 +856,7 @@
             },
             "norm_iri": "chapter",
             "created": "2023-04-25T10:12:25+02:00",
-            "modified": "2025-02-06T14:49:49+01:00"
+            "modified": "2025-02-06T13:49:49+01:00"
         },
         {
             "id": "types-3074",
@@ -899,8 +882,8 @@
                 "showcaption": false
             },
             "norm_iri": "corrigenda",
-            "created": "2024-12-18T01:31:46+01:00",
-            "modified": "2024-12-18T01:50:52+01:00"
+            "created": "2024-12-18T00:31:46+01:00",
+            "modified": "2024-12-18T00:50:52+01:00"
         },
         {
             "id": "types-3077",
@@ -933,8 +916,8 @@
                 "view": "stack"
             },
             "norm_iri": "summary",
-            "created": "2025-01-17T11:15:04+01:00",
-            "modified": "2025-01-17T11:15:04+01:00"
+            "created": "2025-01-17T10:15:04+01:00",
+            "modified": "2025-01-17T10:15:04+01:00"
         },
         {
             "id": "types-146",
@@ -982,7 +965,7 @@
                 "view": "stack"
             },
             "norm_iri": "text",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-138",
@@ -1038,7 +1021,7 @@
                 }
             },
             "norm_iri": "locations",
-            "modified": "2025-01-28T20:32:23+01:00"
+            "modified": "2025-01-28T19:32:23+01:00"
         },
         {
             "id": "types-131",
@@ -1069,7 +1052,7 @@
                 "view": "table"
             },
             "norm_iri": "conditions",
-            "modified": "2024-12-03T00:16:24+01:00"
+            "modified": "2024-12-02T23:16:24+01:00"
         },
         {
             "id": "types-140",
@@ -1102,7 +1085,7 @@
                 "view": "table"
             },
             "norm_iri": "measures",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-139",
@@ -1135,7 +1118,7 @@
                 "view": "table"
             },
             "norm_iri": "materials",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-141",
@@ -1168,7 +1151,7 @@
                 "view": "table"
             },
             "norm_iri": "objecttypes",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-135",
@@ -1210,10 +1193,6 @@
                         "count": "*"
                     },
                     {
-                        "type": "scriptfeatures",
-                        "count": "*"
-                    },
-                    {
                         "type": "formulas",
                         "count": "*"
                     },
@@ -1226,14 +1205,6 @@
                         "count": "*"
                     },
                     {
-                        "type": "languages",
-                        "count": "*"
-                    },
-                    {
-                        "type": "metres",
-                        "count": "*"
-                    },
-                    {
                         "type": "sources",
                         "count": "*"
                     },
@@ -1243,6 +1214,14 @@
                     },
                     {
                         "type": "texttypes",
+                        "count": "*"
+                    },
+                    {
+                        "type": "languages",
+                        "count": "*"
+                    },
+                    {
+                        "type": "metres",
                         "count": "*"
                     },
                     {
@@ -1294,7 +1273,7 @@
                 }
             },
             "norm_iri": "inscription",
-            "modified": "2024-11-30T11:11:41+01:00"
+            "modified": "2025-05-05T18:51:06+02:00"
         },
         {
             "id": "types-136",
@@ -1334,7 +1313,7 @@
                 "view": "stack"
             },
             "norm_iri": "inscriptionpart",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-137",
@@ -1388,7 +1367,7 @@
                 }
             },
             "norm_iri": "inscriptiontext",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-132",
@@ -1433,7 +1412,7 @@
                 }
             },
             "norm_iri": "heraldry",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-130",
@@ -1480,7 +1459,7 @@
                 }
             },
             "norm_iri": "brands",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-133",
@@ -1526,7 +1505,7 @@
                 }
             },
             "norm_iri": "images",
-            "modified": "2025-02-02T20:20:54+01:00"
+            "modified": "2025-02-02T19:20:54+01:00"
         },
         {
             "id": "types-134",
@@ -1572,6 +1551,10 @@
                         "count": "*"
                     },
                     {
+                        "type": "scriptfeatures",
+                        "count": "*"
+                    },
+                    {
                         "type": "temporals",
                         "count": "*"
                     },
@@ -1590,7 +1573,7 @@
                 }
             },
             "norm_iri": "index",
-            "modified": "2024-12-03T00:23:04+01:00"
+            "modified": "2025-05-05T19:53:47+02:00"
         },
         {
             "id": "types-143",
@@ -1623,7 +1606,7 @@
                 "view": "table"
             },
             "norm_iri": "references",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-144",
@@ -1664,7 +1647,7 @@
                 }
             },
             "norm_iri": "signatures",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-142",
@@ -1697,7 +1680,7 @@
                 "view": "table"
             },
             "norm_iri": "outputoptions",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-1322",
@@ -1748,8 +1731,8 @@
                 "view": "table"
             },
             "norm_iri": "table",
-            "created": "2023-02-17T17:55:57+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2023-02-17T16:55:57+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-1567",
@@ -1782,8 +1765,8 @@
                 }
             },
             "norm_iri": "collections",
-            "created": "2023-02-17T17:55:52+01:00",
-            "modified": "2024-03-17T20:05:05+01:00"
+            "created": "2023-02-17T16:55:52+01:00",
+            "modified": "2024-03-17T19:05:05+01:00"
         },
         {
             "id": "types-3075",
@@ -1816,8 +1799,8 @@
                 }
             },
             "norm_iri": "corrigenda",
-            "created": "2024-12-18T01:35:15+01:00",
-            "modified": "2024-12-18T01:50:24+01:00"
+            "created": "2024-12-18T00:35:15+01:00",
+            "modified": "2024-12-18T00:50:24+01:00"
         },
         {
             "id": "types-3070",
@@ -1839,8 +1822,8 @@
                 }
             },
             "norm_iri": "dates",
-            "created": "2024-12-03T00:15:45+01:00",
-            "modified": "2024-12-03T00:18:11+01:00"
+            "created": "2024-12-02T23:15:45+01:00",
+            "modified": "2024-12-02T23:18:11+01:00"
         },
         {
             "id": "types-3056",
@@ -1889,8 +1872,8 @@
                 }
             },
             "norm_iri": "figures",
-            "created": "2024-11-27T15:35:23+01:00",
-            "modified": "2024-12-02T22:37:00+01:00"
+            "created": "2024-11-27T14:35:23+01:00",
+            "modified": "2024-12-02T21:37:00+01:00"
         },
         {
             "id": "types-3059",
@@ -1928,8 +1911,8 @@
                 }
             },
             "norm_iri": "roles",
-            "created": "2024-11-27T15:33:35+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2024-11-27T14:33:35+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-3069",
@@ -1949,7 +1932,7 @@
                     "property": {
                         "caption": "Wert",
                         "format": "property",
-                        "types": "textfeatures",
+                        "types": "scriptfeatures",
                         "manage": true
                     },
                     "content": {
@@ -1963,12 +1946,23 @@
                             "h",
                             "character"
                         ]
+                    },
+                    "links": {
+                        "caption": "Zuordnung",
+                        "format": "record",
+                        "targets": {
+                            "articles": "intern",
+                            "sections": [
+                                "inscription",
+                                "inscriptionpart"
+                            ]
+                        }
                     }
                 }
             },
             "norm_iri": "scriptfeatures",
-            "created": "2024-11-27T15:57:26+01:00",
-            "modified": "2024-12-01T17:35:10+01:00"
+            "created": "2024-11-27T14:57:26+01:00",
+            "modified": "2025-05-05T18:52:07+02:00"
         },
         {
             "id": "types-3078",
@@ -2019,8 +2013,8 @@
                 }
             },
             "norm_iri": "summary",
-            "created": "2025-01-17T11:15:36+01:00",
-            "modified": "2025-02-28T17:24:59+01:00"
+            "created": "2025-01-17T10:15:36+01:00",
+            "modified": "2025-02-28T16:24:59+01:00"
         },
         {
             "id": "types-3060",
@@ -2030,7 +2024,7 @@
             "preset": "default",
             "sortno": 0,
             "category": "Artikel (epi)",
-            "caption": "Datierungsmerkmale",
+            "caption": "Zeitangaben",
             "description": "Besonderheiten der Datierung",
             "config": {
                 "fields": {
@@ -2069,8 +2063,8 @@
                 }
             },
             "norm_iri": "temporals",
-            "created": "2024-11-27T15:59:07+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2024-11-27T14:59:07+01:00",
+            "modified": "2025-05-05T19:51:27+02:00"
         },
         {
             "id": "types-204",
@@ -2110,8 +2104,8 @@
                 }
             },
             "norm_iri": "text",
-            "created": "2022-01-15T23:40:26+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2022-01-15T22:40:26+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-196",
@@ -2150,7 +2144,7 @@
                 }
             },
             "norm_iri": "chapter",
-            "modified": "2025-02-06T14:45:48+01:00"
+            "modified": "2025-02-06T13:45:48+01:00"
         },
         {
             "id": "types-205",
@@ -2177,8 +2171,8 @@
                 }
             },
             "norm_iri": "search",
-            "created": "2022-01-15T23:42:00+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2022-01-15T22:42:00+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-1080",
@@ -2250,8 +2244,8 @@
                 }
             },
             "norm_iri": "geolocations",
-            "created": "2022-12-03T10:01:25+01:00",
-            "modified": "2025-02-22T19:52:57+01:00"
+            "created": "2022-12-03T09:01:25+01:00",
+            "modified": "2025-02-22T18:52:57+01:00"
         },
         {
             "id": "types-187",
@@ -2291,7 +2285,7 @@
                 }
             },
             "norm_iri": "locations",
-            "modified": "2025-02-22T19:53:09+01:00"
+            "modified": "2025-02-22T18:53:09+01:00"
         },
         {
             "id": "types-169",
@@ -2321,7 +2315,7 @@
                 }
             },
             "norm_iri": "conditions",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-164",
@@ -2366,7 +2360,7 @@
                 }
             },
             "norm_iri": "measures",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-188",
@@ -2391,7 +2385,7 @@
                 }
             },
             "norm_iri": "materials",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-186",
@@ -2416,7 +2410,7 @@
                 }
             },
             "norm_iri": "objecttypes",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-178",
@@ -2453,7 +2447,7 @@
                 }
             },
             "norm_iri": "epithets",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-200",
@@ -2488,8 +2482,8 @@
                 }
             },
             "norm_iri": "fontheights",
-            "created": "2022-01-15T23:15:53+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2022-01-15T22:15:53+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-177",
@@ -2526,7 +2520,7 @@
                 }
             },
             "norm_iri": "fonttypes",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-180",
@@ -2563,7 +2557,7 @@
                 }
             },
             "norm_iri": "formulas",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-191",
@@ -2600,7 +2594,7 @@
                 }
             },
             "norm_iri": "incipits",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-179",
@@ -2637,7 +2631,7 @@
                 }
             },
             "norm_iri": "initials",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-189",
@@ -2670,11 +2664,14 @@
                             "h",
                             "character"
                         ]
+                    },
+                    "itemgroup": {
+                        "caption": "Gruppe"
                     }
                 }
             },
             "norm_iri": "languages",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2025-02-19T08:59:38+01:00"
         },
         {
             "id": "types-175",
@@ -2707,11 +2704,14 @@
                             "h",
                             "character"
                         ]
+                    },
+                    "itemgroup": {
+                        "caption": "Gruppe"
                     }
                 }
             },
             "norm_iri": "metres",
-            "modified": "2024-12-03T02:20:39+01:00"
+            "modified": "2025-02-19T08:59:17+01:00"
         },
         {
             "id": "types-181",
@@ -2748,7 +2748,7 @@
                 }
             },
             "norm_iri": "sources",
-            "modified": "2024-12-03T02:21:51+01:00"
+            "modified": "2024-12-03T01:21:51+01:00"
         },
         {
             "id": "types-190",
@@ -2785,7 +2785,7 @@
                 }
             },
             "norm_iri": "techniques",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-176",
@@ -2818,11 +2818,14 @@
                             "h",
                             "character"
                         ]
+                    },
+                    "itemgroup": {
+                        "caption": "Gruppe"
                     }
                 }
             },
             "norm_iri": "texttypes",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2025-02-19T08:59:26+01:00"
         },
         {
             "id": "types-202",
@@ -2842,8 +2845,8 @@
                 }
             },
             "norm_iri": "lost",
-            "created": "2022-01-15T23:36:06+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2022-01-15T22:36:06+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-201",
@@ -2930,8 +2933,8 @@
                 }
             },
             "norm_iri": "transcriptions",
-            "created": "2022-01-15T23:34:54+01:00",
-            "modified": "2024-12-03T00:20:23+01:00"
+            "created": "2022-01-15T22:34:54+01:00",
+            "modified": "2024-12-02T23:20:23+01:00"
         },
         {
             "id": "types-198",
@@ -2986,7 +2989,7 @@
                 "display": "more"
             },
             "norm_iri": "heraldry",
-            "modified": "2024-12-27T01:22:22+01:00"
+            "modified": "2024-12-27T00:22:22+01:00"
         },
         {
             "id": "types-197",
@@ -3031,7 +3034,7 @@
                 }
             },
             "norm_iri": "brands",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-163",
@@ -3106,17 +3109,17 @@
                                 "display": "more",
                                 "format": "select",
                                 "options": {
-                                    "": "Unklar",
-                                    "ccby40": "CC BY 4.0",
-                                    "other": "Andere"
+                                    "": "Andere",
+                                    "CC BY 4.0": "CC BY 4.0",
+                                    "CC BY-NC-ND 4.0": "CC BY-NC-ND 4.0"
                                 }
-                            },
-                            "rights": {
-                                "caption": "Copyright",
-                                "display": "more"
                             },
                             "usageterms": {
                                 "caption": "Nutzungsbedingungen",
+                                "display": "more"
+                            },
+                            "copyright": {
+                                "caption": "Copyright",
                                 "display": "more"
                             },
                             "credit": {
@@ -3147,7 +3150,7 @@
                 }
             },
             "norm_iri": "images",
-            "modified": "2025-01-03T19:00:43+01:00"
+            "modified": "2025-04-29T09:48:45+02:00"
         },
         {
             "id": "types-182",
@@ -3195,7 +3198,7 @@
                 }
             },
             "norm_iri": "icons",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-185",
@@ -3243,7 +3246,7 @@
                 }
             },
             "norm_iri": "manufacturers",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-192",
@@ -3291,7 +3294,7 @@
                 }
             },
             "norm_iri": "personnames",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-183",
@@ -3339,7 +3342,7 @@
                 }
             },
             "norm_iri": "placenames",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-184",
@@ -3387,7 +3390,7 @@
                 }
             },
             "norm_iri": "subjects",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-3071",
@@ -3436,8 +3439,8 @@
                 }
             },
             "norm_iri": "terms",
-            "created": "2024-12-03T00:24:07+01:00",
-            "modified": "2024-12-03T00:24:07+01:00"
+            "created": "2024-12-02T23:24:07+01:00",
+            "modified": "2024-12-02T23:24:07+01:00"
         },
         {
             "id": "types-194",
@@ -3475,7 +3478,7 @@
                 }
             },
             "norm_iri": "literature",
-            "modified": "2025-01-02T11:26:04+01:00"
+            "modified": "2025-01-02T10:26:04+01:00"
         },
         {
             "id": "types-203",
@@ -3505,8 +3508,8 @@
                 }
             },
             "norm_iri": "signatures",
-            "created": "2022-01-15T23:38:18+01:00",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "created": "2022-01-15T22:38:18+01:00",
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-168",
@@ -3531,7 +3534,7 @@
                 }
             },
             "norm_iri": "outputoptions",
-            "modified": "2024-11-29T08:15:34+01:00"
+            "modified": "2024-11-29T07:15:34+01:00"
         },
         {
             "id": "types-1565",
@@ -3558,8 +3561,8 @@
                 }
             },
             "norm_iri": "topics",
-            "created": "2023-02-17T17:55:52+01:00",
-            "modified": "2024-10-30T22:47:45+01:00"
+            "created": "2023-02-17T16:55:52+01:00",
+            "modified": "2024-10-30T21:47:45+01:00"
         },
         {
             "id": "types-3001",
@@ -3587,8 +3590,8 @@
                 }
             },
             "norm_iri": "collections",
-            "created": "2024-03-17T20:06:28+01:00",
-            "modified": "2024-03-19T00:51:06+01:00"
+            "created": "2024-03-17T19:06:28+01:00",
+            "modified": "2024-03-18T23:51:06+01:00"
         },
         {
             "id": "types-1292",
@@ -3601,8 +3604,8 @@
             "caption": "\u00c4hnliche Artikel",
             "description": "Ergebnis der Clusteranalyse",
             "norm_iri": "related",
-            "created": "2023-02-17T17:55:56+01:00",
-            "modified": "2024-10-30T22:47:45+01:00"
+            "created": "2023-02-17T16:55:56+01:00",
+            "modified": "2024-10-30T21:47:45+01:00"
         },
         {
             "id": "types-3079",
@@ -3631,8 +3634,8 @@
                 }
             },
             "norm_iri": "ent",
-            "created": "2025-01-20T02:24:25+01:00",
-            "modified": "2025-01-20T02:26:31+01:00"
+            "created": "2025-01-20T01:24:25+01:00",
+            "modified": "2025-01-20T01:26:31+01:00"
         },
         {
             "id": "types-95",
@@ -3669,7 +3672,7 @@
                 }
             },
             "norm_iri": "paragraph",
-            "modified": "2025-02-18T16:57:00+01:00"
+            "modified": "2025-02-18T15:57:00+01:00"
         },
         {
             "id": "types-96",
@@ -3705,7 +3708,7 @@
                 }
             },
             "norm_iri": "heading",
-            "modified": "2025-01-05T21:08:12+01:00"
+            "modified": "2025-01-05T20:08:12+01:00"
         },
         {
             "id": "types-97",
@@ -3722,7 +3725,7 @@
                 "css_style": ".xml_tag_b { font-weight: bold }"
             },
             "norm_iri": "bold",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-98",
@@ -3739,7 +3742,7 @@
                 "css_style": ".xml_tag_i { font-style: italic }"
             },
             "norm_iri": "italic",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-99",
@@ -3756,7 +3759,7 @@
                 "css_style": ".xml_tag_u { text-decoration: underline }"
             },
             "norm_iri": "underlined",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-100",
@@ -3773,7 +3776,7 @@
                 "css_style": ".xml_tag_g { color: #adadad; font-family: \u0022Courier New\u0022, serif; font-weight: bold; }"
             },
             "norm_iri": "letterspaced",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-101",
@@ -3790,7 +3793,7 @@
                 "css_style": ".xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }"
             },
             "norm_iri": "caps",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-3076",
@@ -3807,8 +3810,8 @@
                 "css_style": ".xml_tag_sups {vertical-align: super; font-size: 0.75em }"
             },
             "norm_iri": "superscript",
-            "created": "2024-12-27T01:24:36+01:00",
-            "modified": "2024-12-27T11:52:19+01:00"
+            "created": "2024-12-27T00:24:36+01:00",
+            "modified": "2024-12-27T10:52:19+01:00"
         },
         {
             "id": "types-103",
@@ -3838,7 +3841,7 @@
                 }
             },
             "norm_iri": "link",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-102",
@@ -3864,7 +3867,7 @@
                 }
             },
             "norm_iri": "wish",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-67",
@@ -3881,7 +3884,7 @@
                 "toolbutton": false
             },
             "norm_iri": "newline",
-            "modified": "2024-11-29T08:11:33+01:00"
+            "modified": "2024-11-29T07:11:33+01:00"
         },
         {
             "id": "types-3066",
@@ -3916,8 +3919,8 @@
                 }
             },
             "norm_iri": "term",
-            "created": "2024-11-28T10:04:21+01:00",
-            "modified": "2024-12-03T00:19:45+01:00"
+            "created": "2024-11-28T09:04:21+01:00",
+            "modified": "2024-12-02T23:19:45+01:00"
         },
         {
             "id": "types-86",
@@ -3952,7 +3955,7 @@
                 }
             },
             "norm_iri": "block",
-            "modified": "2025-02-02T19:29:54+01:00"
+            "modified": "2025-02-02T18:29:54+01:00"
         },
         {
             "id": "types-84",
@@ -3984,7 +3987,7 @@
                 }
             },
             "norm_iri": "line",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-85",
@@ -4016,7 +4019,7 @@
                 }
             },
             "norm_iri": "verseline",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-87",
@@ -4048,7 +4051,7 @@
                 }
             },
             "norm_iri": "wordseparator",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-74",
@@ -4078,7 +4081,7 @@
                 "postfix": "\u2524"
             },
             "norm_iri": "spatium",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-80",
@@ -4109,7 +4112,7 @@
                 "postfix": "]"
             },
             "norm_iri": "loss",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-79",
@@ -4133,7 +4136,7 @@
                 }
             },
             "norm_iri": "addition",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-83",
@@ -4157,7 +4160,7 @@
                 }
             },
             "norm_iri": "ellipsis",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-81",
@@ -4181,7 +4184,7 @@
                 }
             },
             "norm_iri": "addendum",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-77",
@@ -4205,7 +4208,7 @@
                 }
             },
             "norm_iri": "abbreviation",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-90",
@@ -4223,7 +4226,7 @@
                 "css_style": ".xml_tag_vsl { color: #66bb66; font-size: 1.5em }"
             },
             "norm_iri": "versal",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-88",
@@ -4241,7 +4244,7 @@
                 "css_style": ".xml_tag_ini { color: #8f503d; font-size: 1.5em }"
             },
             "norm_iri": "initial",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-91",
@@ -4259,7 +4262,7 @@
                 "css_style": ".xml_tag_chr { color: #0066ff; font-size: 1.3em }"
             },
             "norm_iri": "chronogram",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-89",
@@ -4277,7 +4280,7 @@
                 "css_style": ".xml_tag_kap { color: #1ccaaa; font-size: 1em; font-variant: small-caps }"
             },
             "norm_iri": "capitalis",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-82",
@@ -4312,7 +4315,7 @@
                 }
             },
             "norm_iri": "alligation",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         },
         {
             "id": "types-76",
@@ -4340,7 +4343,7 @@
                 }
             },
             "norm_iri": "sup",
-            "modified": "2024-12-27T01:25:15+01:00"
+            "modified": "2024-12-27T00:25:15+01:00"
         },
         {
             "id": "types-75",
@@ -4358,11 +4361,11 @@
                 "css_style": ".xml_tag_insec { text-decoration: underline; text-decoration-color: #33cc33; text-decoration-style: dotted }"
             },
             "norm_iri": "insec",
-            "modified": "2024-11-29T08:12:16+01:00"
+            "modified": "2024-11-29T07:12:16+01:00"
         }
     ],
     "pagination": {
-        "count": 168,
+        "count": 169,
         "page": 1,
         "page_prev": false,
         "page_next": true,

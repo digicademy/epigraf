@@ -176,8 +176,6 @@ export class XmleditorXmltagEditing extends Plugin {
             } else {
                 return false;
             }
-
-
         };
     }
 
@@ -219,7 +217,7 @@ export class XmleditorXmltagEditing extends Plugin {
 
         insertChanges.forEach(change => {
             const node = change.position.nodeAfter;
-            if (node.parent && (node.parent.rootName === '$graveyard')) {
+            if (node && node.parent && (node.parent.rootName === '$graveyard')) {
                 this.onElementRemoved(editor, node);
             } else {
                 this.onElementInserted(editor, node);
@@ -665,7 +663,9 @@ export class XmleditorXmltagEditing extends Plugin {
         const tagAttributes = Utils.getValue(typeData, 'config.attributes');
         if (tagAttributes) {
             for (const [attrKey, attrConfig] of Object.entries(typeData.config.attributes)) {
-                elementAttributes['data-attr-' + attrKey] = modelElement.getAttribute('data-attr-' + attrKey);
+                if (!attrConfig || (attrConfig.input !== 'link')) {
+                    elementAttributes['data-attr-' + attrKey] = modelElement.getAttribute('data-attr-' + attrKey);
+                }
             }
         }
 
@@ -785,7 +785,6 @@ export class XmleditorXmltagEditing extends Plugin {
         }
 
         const tagConfig = Utils.getValue(typeData, 'config', {});
-        const tagType = tagConfig.tag_type || 'bracket';
 
         // Begin with the static content
         let content = {};
@@ -1108,7 +1107,8 @@ export class XmleditorXmltagEditing extends Plugin {
      * @param attributes The new value, an object with the keys
      *              - label: text content of the tag or annotation
      *              - further attributes will be added as data-attr-values
-     *              The target "tab" and "id" of annotations should be removed from the value
+     *              Other attributes such as the target tab and target id
+     *              of annotations should be removed from the value.
      */
     updateTag(editor, tag, attributes) {
 
@@ -1127,7 +1127,7 @@ export class XmleditorXmltagEditing extends Plugin {
             return false;
         }
 
-         // Update tag attributes
+        // Update tag attributes
         // This will trigger the downcasters
         editor.model.change(writer => {
             for (const [key, value] of Object.entries(attributes)) {
@@ -1199,10 +1199,13 @@ export class XmleditorXmltagEditing extends Plugin {
 
 
         // Additional attributes
+        // TODO: Make dry, see tagCreateElement
         const tagAttributes = Utils.getValue(typeData, 'config.attributes');
         if (tagAttributes) {
-            for (const [key, value] of Object.entries(tagAttributes)) {
-                tagData['data-attr-' + key] = viewElement.getAttribute('data-attr-' + key) || '';
+            for (const [attrKey, attrConfig] of Object.entries(tagAttributes)) {
+                if (!attrConfig || (attrConfig.input !== 'link')) {
+                    tagData['data-attr-' + attrKey] = viewElement.getAttribute('data-attr-' + attrKey) || '';
+                }
             }
         }
 

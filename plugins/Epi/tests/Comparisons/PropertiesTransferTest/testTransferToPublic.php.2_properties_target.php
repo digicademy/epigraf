@@ -41,8 +41,8 @@
     'splitfrom_id' => NULL,
     'parent_id' => NULL,
     'level' => 0,
-    'lft' => 7,
-    'rght' => 8,
+    'lft' => 3,
+    'rght' => 4,
   ),
   1 => 
   array (
@@ -85,8 +85,8 @@
     'splitfrom_id' => NULL,
     'parent_id' => NULL,
     'level' => 0,
-    'lft' => 1,
-    'rght' => 2,
+    'lft' => 5,
+    'rght' => 6,
   ),
   2 => 
   array (
@@ -129,8 +129,8 @@
     'splitfrom_id' => NULL,
     'parent_id' => NULL,
     'level' => 0,
-    'lft' => 5,
-    'rght' => 6,
+    'lft' => 7,
+    'rght' => 8,
   ),
   3 => 
   array (
@@ -173,8 +173,8 @@
     'splitfrom_id' => NULL,
     'parent_id' => NULL,
     'level' => 0,
-    'lft' => 3,
-    'rght' => 4,
+    'lft' => 1,
+    'rght' => 2,
   ),
 ); 
 ?>

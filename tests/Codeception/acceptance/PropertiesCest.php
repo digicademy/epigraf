@@ -145,7 +145,7 @@ class PropertiesCest
         $I->useToolbutton('Verweis auf Literatur [Alt+Shift+L]', '7');
 
         $I->click('.button-links-toggle');
-        $I->see('Autor 1  (Einheit Autor 1) › Unterautor 2  (Unterautor2 Einheit)', '.doc-fieldname-content');
+        $I->see('Autor 1  (Einheit Autor 1) › Kurztitel Unterautor 2 mit \' (Unterautor2 Einheit)', '.doc-fieldname-content');
         $I->see('Autor 1', '.doc-section-links [data-from-field=content]');
 
         // Save
@@ -195,7 +195,7 @@ class PropertiesCest
         $I->waitForElementVisible('.recordlist [data-list-name="epi_properties"]');
 
         // Check if the new property exists
-        $I->see('Testträger', '.recordlist [data-id="647"][data-tree-parent=""]');
+        $I->see('Testträger', '.recordlist [data-id="650"][data-tree-parent=""]');
         $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 3);
 
         // Ensure visual appearance
@@ -279,7 +279,7 @@ class PropertiesCest
         $I->waitForElementVisible('.recordlist [data-list-name="epi_properties"]');
 
         // Check if the new property exists and has content in the XML field
-        $I->testOpensInSidebar('epi_properties', 647);
+        $I->testOpensInSidebar('epi_properties', 650);
         $I->see('Mein Wappen', '.sidebar-right');
         $I->see('Mein Schild', '.sidebar-right');
 
@@ -310,7 +310,7 @@ class PropertiesCest
         $I->click("Create property");
         $I->waitForElement('.widget-entity form');
         $I->wait(2);
-        $I->selectOption('.widget-entity form select[name=reference_pos]', 'First child of ...');
+        $I->selectOption('.widget-entity form select[name=reference_pos]', 'Subnode of ...');
         $I->fillField('.widget-entity form input[name=lemma]', 'Testträger');
 
         // Save new property
@@ -319,7 +319,7 @@ class PropertiesCest
         $I->waitForElementVisible('.recordlist [data-list-name="epi_properties"]');
 
         // Check if the new property exists
-        $I->see('Testträger', '.recordlist [data-id="647"][data-tree-parent="36"]');
+        $I->see('Testträger', '.recordlist [data-id="650"][data-tree-parent="36"]');
         $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 2);
 
         // Ensure visual appearance

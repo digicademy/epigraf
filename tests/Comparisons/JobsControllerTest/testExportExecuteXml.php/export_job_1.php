@@ -15,7 +15,7 @@
   )),
   'created_by' => 1,
   'modified_by' => 1,
-  'typ' => 'export',
+  'jobtype' => 'export',
   'status' => 'init',
   'progress' => 0,
   'progressmax' => 0,
@@ -32,7 +32,7 @@
       'projects' => '1',
     ),
     'selection' => 'selected',
-    'tasks' => 
+    'options' => 
     array (
       'enabled' => 
       array (
@@ -52,14 +52,15 @@
           'enabled' => 1,
         ),
       ),
-      'index' => 1,
       'options' => 
       array (
       ),
+      'index' => 1,
     ),
     'pipeline_name' => 'Rohdaten',
     'user_role' => 'author',
     'user_id' => 1,
   ),
+  'result' => NULL,
 ); 
 ?>

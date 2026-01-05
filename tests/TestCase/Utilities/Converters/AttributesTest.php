@@ -11,8 +11,8 @@
 namespace App\Test\TestCase\Utilities\Converters;
 
 use App\Utilities\Converters\Attributes;
-use App\Utilities\Converters\Numbers;
 use Cake\TestSuite\TestCase;
+use function PHPUnit\Framework\assertEquals;
 
 /**
  * Attributes Test Case
@@ -92,4 +92,36 @@ class AttributesTest extends TestCase
 
         $this->assertSame($testResult, Attributes::parseQueryParams($testQuery, $testConfig));
     }
+
+    public function testToHtml(): void {
+
+        $comparison = 'id="127" class="widget-golf" qList="12 9" data-charge="2" data-sign="positive"';
+
+        $attrs = [
+            'id' => 127,
+            'class' => 'widget-golf',
+            'qList' => [
+                'high' => 12,
+                'low' => 9
+            ],
+            'data' => [
+                'charge' => 2,
+                'sign' => 'positive',
+                'spin' => null
+            ]
+        ];
+
+        assertEquals($comparison, Attributes::toHtml($attrs));
+
+        $comparison = 'id="127" class="widget-golf"';
+        $attrs = [
+            'id' => 127,
+            'class' => 'widget-golf',
+            'data' => []
+        ];
+
+        assertEquals($comparison, Attributes::toHtml($attrs));
+
+    }
+
 }

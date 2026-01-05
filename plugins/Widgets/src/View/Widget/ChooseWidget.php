@@ -72,6 +72,11 @@ class ChooseWidget implements WidgetInterface
         $data['data-itemtype'] = $data['itemtype'] ?? '';
         unset($data['itemtype']);
 
+        if (!empty($data['external'])) {
+            $data['data-external'] = $data['external'] ?? '';
+        }
+        unset($data['external']);
+
         $out = '<div class="widget-choose">';
 
         // Hidden empty file path. Needed to replace the file_path field, see ItemTable::beforeSave().
@@ -100,8 +105,10 @@ class ChooseWidget implements WidgetInterface
             'class' => '',
             'data-input' => $data['id'],
             'data-itemtype' => $data['data-itemtype'],
+            'data-external' => $data['data-external'] ?? '',
             'data-url' => Router::url($data['options']),
         ];
+        $button_attrs = array_filter($button_attrs);
 
         $out .= $this->_templates->format('button', [
             'text' => '...',

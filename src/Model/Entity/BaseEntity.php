@@ -10,6 +10,7 @@
 
 namespace App\Model\Entity;
 
+use App\Datasource\Services\ServiceFactory;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
 use App\Utilities\Files\Files;
@@ -20,9 +21,7 @@ use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\Table;
-use Cake\Routing\Router;
 use Cake\Utility\Inflector;
-use Epi\Model\Table\BaseTable;
 use Exception;
 use Rest\Entity\LockTrait;
 
@@ -91,6 +90,13 @@ class BaseEntity extends Entity
     protected $fixedType = true;
 
     /**
+     * The field used to create an IRI
+     * @var string
+     */
+    protected $_field_iri = 'id';
+    protected $_prefix_iri = false;
+
+    /**
      * Fields containing IDs that will be prefixed with the table name in getDataForExport.
      * Items with numerical keys (default) will use the current table name.
      * Items with alphabetical keys will use the given value (not the key) as prefix.
@@ -134,15 +140,20 @@ class BaseEntity extends Entity
     protected $_newId = null;
 
     /**
-     * By default, entities outside the Epi plugin are visible,
-     * visibility is controlled by access to controllers and actions.
+     * By default, entities outside the Epi plugin are visible to authenticated users.
+     * For non-authenticated users, the visibility is controlled by the published field.
      *
      * @param array $options
      * @return bool
      */
     public function getEntityIsVisible($options = [])
     {
-        return true;
+        $userRole = $this->currentUserRole ?? $this->root->currentUserRole ?? 'guest';
+        if ($userRole !== 'guest') {
+            return true;
+        }
+
+        return !$this->hasDatabaseField('published') || $this->published;
     }
 
     /**
@@ -212,13 +223,34 @@ class BaseEntity extends Entity
     }
 
     /**
-     * Return fields to be rendered in view/add/edit actions
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
         return $this->type->config['fields'] ?? [];
+    }
+
+    /**
+     * Check whether another entity depends on the entity
+     *
+     * @param BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (empty($entity)) {
+            return false;
+        }
+        elseif ($this->root === $entity) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
@@ -336,6 +368,22 @@ class BaseEntity extends Entity
     }
 
     /**
+     * Get default published status options
+     *
+     * @return array
+     */
+    /**
+     * @param string|array $fieldName
+     * @return bool
+     */
+    public function getValueIsEmpty($fieldName)
+    {
+        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+        $content = empty($fieldName[0]) ? '' : $this->get($fieldName[0]);
+        return ($content === '') || ($content === null);
+    }
+
+    /**
      * Get the default type for the entity, if no type configuration is available in the types table
      *
      * @return array|null
@@ -396,22 +444,71 @@ class BaseEntity extends Entity
     }
 
     /**
+     * Render a value according to a column configuration
+     *
+     * If the column configuration contains a placeholder ('value' key), getValuePlaceholder() is called.
+     * Otherwise, getValueNested() is called with the column key ('key' key).
+     *
+     * @param array $column The column configuration as returned by $this->getColumns().
+     * @return string | null
+     */
+    public function getValueRendered($column = []) {
+        $column['format'] = 'html';
+        $column['aggregate'] = $column['aggregate'] ?? 'collapse';
+        $placeholder = $column['value'] ?? '';
+        if ($placeholder !== '') {
+            $value = $this->getValuePlaceholder($placeholder, $column + ['collapse' => ', ']);
+        } else {
+            $value = $this->getValueNested($column['key'], $column);
+        }
+
+        if (isset($column['prefix'])) {
+            $value = $column['prefix'] . ' ' . $value;
+        }
+
+        return $value;
+    }
+    /**
      * Replace a placeholder string with entity values
      *
      * See Objects::parsePlaceholder() for examples.
+     *
+     * ### Options
+     * - collapse By default, an array is returned. Provide a separator if you want to collapse the value to a single string.
+     *
+     * All other options are passed to getValueNested()
+     * with aggregate set to false if not otherwise defined in a placeholder.
      *
      * @param string|array $key
      * @param array $options Options passed to getValueNested(),
      *                       with aggregate set to false if not otherwise defined in a placeholder.
      * @return array
      */
-    public function getValuePlaceholder($key, $options)
+    public function getValuePlaceholder($key, $options= [])
     {
-        $value = Objects::parsePlaceholder($key, function ($path) use ($options) {
-            $path = Objects::parseFieldKey($path, [], ['aggregate' => false]);
-            $options['aggregate'] = $path['aggregate'];
-            return $this->getValueNested($path['key'], $options);
+        if (!str_contains($key, '{')) {
+            return $key;
+        }
+
+        $value = Objects::parsePlaceholder($key, function ($pathList) use ($options) {
+            $pathList = Objects::parsePathList($pathList);
+            $result = null;
+            foreach ($pathList as $path) {
+                $path = Objects::parseFieldKey($path, [], ['aggregate' => false]);
+                $options['aggregate'] = $path['aggregate']; // TODO: do we need to unset collapse here?
+                $options['format'] = $path['format'] ?? $options['format'] ?? false;
+                $result = $this->getValueNested($path['key'], $options);
+                if (!is_null($result) && ($result !== []) && ($result !== '')) {
+                    break;
+                }
+            }
+            return $result;
         });
+
+        if (isset($options['collapse'])) {
+            $value = is_array($value) ? array_map(fn($x) => strval($x), $value) : $value;
+            $value = is_array($value) ? implode($options['collapse'], $value) : $value;
+        }
 
         return $value;
     }
@@ -429,6 +526,8 @@ class BaseEntity extends Entity
      *           If the format is set and the extracted value is a BaseEntity,,
      *           the value is formatted using getValueFormatted().
      *           Otherwise the function falls back to Objects::extract().
+     *           The extracton key in a field path may be prefixed with a format key, seperated by colon.
+     *           This overrides the format in the options.
      * - aggregate: Aggregation procedure, defaults to false, i.e. no aggregation.
      *              Can be a pipe separated string list or an array of processing steps.
      *              See processValues() for available steps.
@@ -498,8 +597,8 @@ class BaseEntity extends Entity
         // Post-processing
         $steps = $options['aggregate'] ?? false;
         if (!empty($steps)) {
-            $steps = !is_array($steps) ? explode('|', $steps) : $steps;
-            $value = Objects::processValues($value, $steps, false, $this);
+            $steps = Objects::parseProcessing($steps);
+            $value = Objects::processValues($value, $steps, true, $this);
         }
 
         return $value;
@@ -610,7 +709,10 @@ class BaseEntity extends Entity
      *
      * ### Options
      * - prefixIds: A prefix that should be added to the ID, e.g. 'tmp'.
-     * - iriIds: Whether to output an IRI path as ID instead of prefixed IDs.
+     * - iriIds: Whether to output an IRI path as ID instead of prefixed IDs. In this case, prefixIds must be empty.
+     * - copy (boolean): Whether the entity is to be copied. In this case, the prefix is only added for entities depending on the root.
+     *                   For example, when articles are copied, item IDs are prefixed and, thus, copied, but property IDs are not.
+     * - root (Entity): The root entity, necessary for copy operations to detect whether an entity depends on the root or not.
      *
      * @param array $fieldName The field name as an array of one or two components
      * @param array $options
@@ -622,8 +724,9 @@ class BaseEntity extends Entity
         if ($prefix !== false) {
             $table = static::$_fields_ids[$fieldName[0]] ?? $this->_tablename ?? $this->table->getTable();
 
-            if (($options['copy'] ?? false)) {
-
+            // Only copy entities that belong to the root
+            if (($options['copy'] ?? false) && !$this->hasRoot($options['root'])) {
+              $prefix = '';
             }
 
             if (is_array($table) && isset($this->{$table[1]})) {
@@ -635,14 +738,6 @@ class BaseEntity extends Entity
             else {
                 return null;
             }
-
-            // Alternative using _fields
-//                if (is_array($table) && isset($this->_fields[$table[1]])) {
-//                    return "{$this->_fields[$table[0]]}-{$prefix}{$this->_fields[$table[1]]}";
-//                }
-//                elseif (isset($this->_fields[$fieldName[0]])) {
-//                    return "{$table}-{$prefix}{$this->_fields[$fieldName[0]]}";
-//                }
         }
         elseif ($options['iriIds'] ?? false) {
             if ($fieldName[0] === 'id') {
@@ -716,15 +811,15 @@ class BaseEntity extends Entity
             // Root: The article or the property
             $root = empty($this->container) ?  $this->root : ($this->container->root ?? $this->container);
 
-            $url = $root->internalUrl;
-            if ((BaseTable::$requestMode ?? MODE_DEFAULT) !== MODE_DEFAULT) {
-                if (is_array($url)) {
-                    $url['?'] = ['mode' => BaseTable::$requestMode];
-                }
-                elseif (is_string($url)) {
-                    $url .= '?mode=' . BaseTable::$requestMode;
-                }
-            }
+//            $url = $root->internalUrl;
+//            if ((BaseTable::$requestMode ?? MODE_DEFAULT) !== MODE_DEFAULT) {
+//                if (is_array($url)) {
+//                    $url['?'] = ['mode' => BaseTable::$requestMode];
+//                }
+//                elseif (is_string($url)) {
+//                    $url .= '?mode=' . BaseTable::$requestMode;
+//                }
+//            }
 
             $geometry = [
                 "type" => "Point",
@@ -735,10 +830,10 @@ class BaseEntity extends Entity
             $data = [
                 "id" =>  $options['geodata']['id'] ??  $this->id,
                 "number" => $options['geodata']['sortno'] ?? $this->sortno ?? 0,
-                "caption" => $root->captionPath ?? '',
+                //"caption" => $root->captionPath ?? '',
                 "quality" => (int)($this->published ?? 0),
                 "radius" => (int)($value["radius"] ?? 0),
-                "url" => Router::url($url)
+                "rootId" => $root->id
             ] + ($options['geodata'] ?? []);
 
             $feature = [
@@ -804,6 +899,10 @@ class BaseEntity extends Entity
             return empty($raw) ? '' : $raw->timeAgoInWords();
         }
 
+        elseif (in_array($outputFormat, TRIPLE_FORMATS) && ($raw instanceof FrozenTime)) {
+            return $raw->jsonSerialize();
+        }
+
         else {
             // TODO: By now works. Should escaping better be moved to the view?
             //       Or should all values from all fieldFormats be escaped for HTML rendering?
@@ -850,7 +949,7 @@ class BaseEntity extends Entity
      * @param mixed $value The value that should be formatted
      * @param array $fieldName
      * @param string $outputFormat The output format
-     * @param string $fieldFormat : The inputl format
+     * @param string $fieldFormat : The input format
      * @param array $options
      * @return array|bool|float|int|mixed|string|null
      */
@@ -866,7 +965,9 @@ class BaseEntity extends Entity
         }
         elseif ($fieldFormat === 'json') {
             try {
-                $value = (sizeof($fieldName) > 1) ? $value : json_decode($value ?? '', true);
+                if (!is_array($value)) {
+                    $value = json_decode($value ?? '', true);
+                }
             } catch (Exception $e) {
                 $value = ['error' => __('Error parsing JSON: {0}', [$e->getMessage()])];
             }
@@ -899,7 +1000,9 @@ class BaseEntity extends Entity
         elseif (!is_array($value) && is_string($value)) {
             // Remove non-printing characters except tab and line feed
             $value = preg_replace('/[\x00-\x08\x0B-\x0C\x0E-\x1f\x7F]/', '', $value);
-            $value = h($value);
+            if (($outputFormat === 'xml') && ($fieldFormat !== 'xml')) {
+                $value = h($value);
+            }
         }
 
         return $value;
@@ -907,6 +1010,9 @@ class BaseEntity extends Entity
 
     /**
      * Merge date into JSON fields
+     *
+     * Adds new JSON data to the existing JSON data.
+     * Keeps the field format (encoded string or array).
      *
      * @param string $fieldName
      * @param array $data
@@ -949,11 +1055,135 @@ class BaseEntity extends Entity
         }
     }
 
+    /**
+     * Merge data into an entity field
+     *
+     * - Adds new norm data entries to the existing norm data.
+     *   Entries with the same prefix are replaced, other entries are appended.
+     *
+     * @param string $field
+     * @param mixed $value
+     * @return void
+     */
+    public function mergeData($field, $value)
+    {
+        if ($field === 'norm_data') {
+            $prefix = Attributes::getPrefix($value);
+            $normData = array_filter(
+                explode("\n", $this->norm_data ?? ''),
+                function ($line) use ($prefix) {
+                    return ($line !== '') && (strpos($line, $prefix . ':') !== 0);
+                }
+            );
+            $normData[] = $value;
+            $value = implode("\n", $normData);
+        }
+
+        $this[$field] = $value;
+    }
+
     public function setIri()
     {
         if ($this->hasDatabaseField('norm_iri')) {
             $this->norm_iri = $this->iriFragment;
         }
+    }
+
+    /**
+     * Call a reconciliation service
+     *
+     * The services need to be configured in the type configuration with the following keys:
+     *
+     * - service (string) Identifier of the service class:
+     *   'reconcile' for ReconcileService or 'geo' for GeoService.
+     * - input (string) Name of the field that contains input data for the service
+     * - provider (string) Name of the provider used for the service
+     * - score (int) Optionally, a minimum score for a candidate to be accepted. Defaults to 20.
+     * - type (string) Optionally, a type parameter passed to the service.
+     *
+     * The service as identified by the service parameter must be implemented as a BaseService class.
+     * Its query method is called with an empty path parameter and a data array containing the following keys:
+     *
+     * - q (string) The term to be reconciled.
+     * - provider (string) The provider name.
+     * - type (string) Optionally, the type value passed to the service.
+     *
+     * The result must be an array with the following keys:
+     *
+     * - state (string) The state of the service call (SUCCESS or ERROR)
+     * - result.answers.candidates (array) The candidates returned by the service.
+     *
+     * Each candidate must have data about the match (match or score key).
+     * If match is true or the score is greater than the minimum score from the service configuration,
+     * the value (if null the id) is stored in the target field.
+     *
+     * - match (boolean) Whether the candidate is a match to the query term.
+     * - score (int) The score of the canditate.
+     * - value (string) The result value
+     * - id (string)  The result ID
+     *
+     * Norm data (if the target field is norm_data)
+     * is processed by removing existing entries with the same prefix
+     * and then adding the value to the field. Other fields are replaced.
+     *
+     * ### Options
+     * - onlyempty (bool) If set to true, only empty fields are reconciled.
+     *
+     * @param string $field The field name to be reconciled
+     * @param array $options
+     * @return Entity $this
+     * @throws \Exception
+     */
+    public function reconcile($field = 'norm_data', $options = []) {
+
+        $servicesConfigs = $this->type['merged']['fields'][$field]['services'] ?? [];
+
+        if (!empty($servicesConfigs)) {
+            foreach ($servicesConfigs as $serviceKey => $serviceConfig) {
+                $apiService = ServiceFactory::get($serviceConfig['service'], false);
+
+//                if ((($serviceConfig['service'] ?? '') !== $service) || empty($serviceConfig['provider'])) {
+//                    continue;
+//                }
+
+                // Check empty
+                if (!empty($options['onlyempty'])) {
+                    if (!empty($this[$field])) {
+                        continue;
+                    }
+                }
+
+                // Get value
+                $term = $this[$serviceConfig['input']] ?? '';
+                if ($term === '') {
+                    continue;
+                }
+                $data = [
+                    'q' => $term,
+                    'provider' => $serviceConfig['provider'] ?? ''
+                ];
+                if (!empty($serviceConfig['type'])) {
+                    $data['type'] = $serviceConfig['type'];
+                }
+                $task = $apiService->query(null, $data);
+
+                // Update value
+                if ($task['state'] === 'SUCCESS') {
+                    $minScore = $serviceConfig['score'] ?? 20;
+                    foreach ($task['result']['answers'] ?? [] as $answer) {
+                        foreach ($answer['candidates'] ?? [] as $candidate) {
+                            if (!empty($candidate['match']) || ($candidate['score'] ?? 0) > $minScore) {
+                                $value = $candidate['value'] ?? $candidate['id'];
+                                $this->mergeData($field, $value);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -1065,6 +1295,17 @@ class BaseEntity extends Entity
         return $this->iri_path;
     }
 
+    /**
+     * Check whether the entity has children
+     *
+     * Overwrite in child classes.
+     *
+     * @return false
+     */
+    protected function _getHasChildren()
+    {
+        return false;
+    }
 
     public function getEntityName()
     {
@@ -1204,6 +1445,6 @@ class BaseEntity extends Entity
     public function __sleep()
     {
         return array_diff(array_keys(get_object_vars($this)),
-            ['root', 'container', 'type', '_table', '_prepared_root', '_prepared_tree']);
+            ['root', 'container', 'type', '_table', '_tableLocator', '_prepared_root', '_prepared_tree']);
     }
 }

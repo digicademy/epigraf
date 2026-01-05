@@ -80,7 +80,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
         'iri' => 'string',
 
         'selected' => 'list',
-        'columns' => 'list',
+        'columns' => 'list-or-false',
 
         'load' => 'list',
         'save' => 'list'
@@ -137,12 +137,10 @@ class DocsTable extends BaseTable implements ScopedTableInterface
      * Before save method
      *
      * @param EventInterface $event
-     * @param $entity
-     * @param $options
-     *
-     * @return void
+     * @param Doc $entity
+     * @param array $options
      */
-    public function beforeSave(EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, $entity, $options = [])
     {
         if (!empty($this->scopeValue) && !empty($this->scopeField)) {
             $entity->{$this->scopeField} = $this->scopeValue;
@@ -220,7 +218,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
         $cats = PositionBehavior::addTreePositions($query->toArray(), true);
 
         $menu = [
-            'caption' => __('Categories'),
+            'caption' => __('Navigation'),
             'activate' => true,
             'scrollbox' => true,
             'search' => true,
@@ -261,13 +259,17 @@ class DocsTable extends BaseTable implements ScopedTableInterface
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
 
         $default = [
@@ -307,7 +309,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
         ];
 
 //        return $default;
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
     /**
@@ -338,7 +340,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
         // Search and category
         $query = $query->find('text', $params);
 
-        // Filter out nonpublic properties for guests
+        // Filter out nonpublic entities for guests
         if ($this::$userRole === 'guest') {
             $query = $query->where(['published' => PUBLICATION_BINARY_PUBLISHED]);
         }
@@ -357,7 +359,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
         $query = $query->formatResults(function ($results) {
             /** @var Doc $row */
             return $results->map(function ($row) {
-                $row->transformToHtml();
+                $row->prepareHtml();
                 return $row;
             });
         });
@@ -402,7 +404,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
                     $row['search'][] = new Doc(
                         [
                             'id' => $row->id,
-                            'value' => __('Content'),
+                            'caption' => __('Content'),
                             'content' => TextParser::highlightTerms(TextParser::stripTagsWithWhitespace($row->content),
                                 $terms),
                             'highlight' => $terms

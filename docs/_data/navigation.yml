@@ -43,5 +43,7 @@ docs:
     children:
       - title: "Backend Tests"
         url: /tests/backend/
+      - title: "Frontend Tests"
+        url: /tests/frontend/
       - title: "Acceptance Tests"
         url: /tests/acceptance/

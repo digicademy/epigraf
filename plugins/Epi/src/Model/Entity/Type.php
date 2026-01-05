@@ -250,7 +250,12 @@ class Type extends RootEntity
                     $config = array_replace_recursive($config, $subtype->config ?? []);
                 }
 
-                // Specific layout is merged if it matches the current layout
+                // Preset configuration for default mode
+                elseif (($subtype['mode'] ==='default') && ($subtype['preset'] === $presetName) && is_array($subtype->config)) {
+                    $presets[] = $subtype->config ?? [];
+                }
+
+                // Preset configuration for specific
                 elseif (($subtype['mode'] === $mode) && ($subtype['preset'] === $presetName) && is_array($subtype->config)) {
                     $presets[] = $subtype->config ?? [];
                 }
@@ -283,9 +288,11 @@ class Type extends RootEntity
 
 
     /**
-     * Returns fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -311,7 +318,7 @@ class Type extends RootEntity
                 'rows' => 15,
                 'format' => 'json',
                 'type' => 'jsoneditor',
-                'layout' => 'stacked'
+                'layout' => 'nested'
             ],
 
             'mode' => [
@@ -366,6 +373,16 @@ class Type extends RootEntity
         return $this->merged['header'] ?? [];
     }
 
+    public function getEntityIsVisible($options = [])
+    {
+        $userRole = $this->currentUserRole ?? $this->root->currentUserRole ?? 'guest';
+        if ($userRole !== 'guest') {
+            return true;
+        }
+
+        return parent::getEntityIsVisible($options);
+    }
+
     /**
      * Merge the types config with defaults
      *
@@ -399,7 +416,7 @@ class Type extends RootEntity
                 if (!empty($fieldConfig['keys']) && $unnest) {
                     // Map widget
                     if (!empty($fieldConfig['widgets'])) {
-                        $result[$fieldName] = ['format' => 'widget', 'layout' => 'stacked', 'caption'=> false, 'widgets' => $fieldConfig['widgets']];
+                        $result[$fieldName] = ['format' => 'widget', 'layout' => 'nested', 'caption'=> false, 'widgets' => $fieldConfig['widgets']];
                     }
 
                     foreach ($fieldConfig['keys'] as $keyName => $keyConfig) {

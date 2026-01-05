@@ -8,6 +8,7 @@
     "created_by": 2,
     "modified_by": 2,
     "name": "testpipeline",
+    "type": "export",
     "description": "do something",
     "tasks": [],
     "norm_iri": "testpipeline"

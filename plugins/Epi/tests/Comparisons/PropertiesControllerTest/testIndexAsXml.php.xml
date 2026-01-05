@@ -5,21 +5,16 @@
       <articles_count>1</articles_count>
     </property>
     <property>
-      <lemma>siehe</lemma>
-    </property>
-    <property>
       <lemma>Material 1a</lemma>
       <articles_count>0</articles_count>
     </property>
     <property>
       <lemma>siehe</lemma>
+      <articles_count>0</articles_count>
     </property>
     <property>
       <lemma>Material 2</lemma>
       <articles_count>0</articles_count>
-    </property>
-    <property>
-      <lemma>siehe</lemma>
     </property>
     <property>
       <lemma>Material 2a</lemma>
@@ -27,10 +22,11 @@
     </property>
     <property>
       <lemma>siehe</lemma>
+      <articles_count>0</articles_count>
     </property>
   </properties>
   <pagination>
-    <count>4</count>
+    <count>6</count>
     <page>1</page>
     <page_prev>0</page_prev>
     <page_next>0</page_next>

@@ -10,6 +10,7 @@
 
 namespace App\Model\Entity;
 
+use App\Model\Table\PipelinesTable;
 use Epi\Model\Behavior\PositionBehavior;
 
 /**
@@ -131,15 +132,23 @@ class Pipeline extends BaseEntity
             'outputfile' => false,
             'canskip' => false,
             'customcaption' => false
-        ]
+        ],
+        'import' => [
+            'caption' => 'Import into database',
+            'type' => 'import',
+            'inputfile' => true,
+            'outputfile' => false,
+            'canskip' => false,
+            'customcaption' => false
+        ],
     ];
 
     /**
-     * Patch the default pipeline
+     * Rearrange the tasks in the pipeline: first data, then transform, then save tasks.
      *
      * @return void
      */
-    public function patchDefault()
+    public function arrangeTasks()
     {
         //Default pipeline
         $tasks = $this->tasks;
@@ -176,9 +185,11 @@ class Pipeline extends BaseEntity
     }
 
     /**
-     * Return fields to be rendered in view/edit table
+     * Return fields to be rendered in entity tables
      *
-     * @return array[]
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -190,7 +201,7 @@ class Pipeline extends BaseEntity
             'type' => [
                 'caption' => __('Type'),
                 'type' => 'select',
-                'options' => ['export' => __('Export'), 'import' => __('Import')],
+                'options' => PipelinesTable::$pipelineTypes,
                 'action' => ['edit', 'add']
             ],
             'description' => [

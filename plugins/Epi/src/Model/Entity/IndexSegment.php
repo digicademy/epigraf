@@ -19,7 +19,7 @@ namespace Epi\Model\Entity;
  * # Database fields
  * @property string $propertytype
  */
-class IndexSegment extends BaseEntity
+class IndexSegment extends RootEntity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -99,5 +99,21 @@ class IndexSegment extends BaseEntity
             $indexProperty = new IndexProperty($property);
             $this->addProperty($indexProperty);
         }
+    }
+
+    /**
+     * Return fields to be rendered in entity tables
+     *
+     * See BaseEntityHelper::entityTable() for the supported options.
+     *
+     * @return array[] Field configuration array.
+     */
+    protected function _getHtmlFields()
+    {
+        return [
+            'propertytype' => [
+                'caption' => __('Property type')
+            ]
+        ];
     }
 }

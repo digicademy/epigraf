@@ -18,6 +18,7 @@
 <?=
     $entityHelper->taskTable($task, [
         'extension' => ['type' => 'text', 'label' => __('File extension'), 'value' => empty($task['extension']) ? '' : $task['extension']],
+        'bom' => ['type' => 'checkbox', 'label' => __('Add UTF-8 BOM'), 'checked' => $task['bom'] ?? 0],
         'download' => ['type' => 'checkbox', 'label' => __('Force download'), 'checked' => $task['download'] ?? 0]
     ], $options)
 ?>

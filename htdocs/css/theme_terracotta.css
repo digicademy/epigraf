@@ -7,7 +7,7 @@
  *
  */
 
-/** Custom Properties **/
+/** Custom Palette **/
 :root {
     --primary-200: hsl(35, 100%, 97%);
     --primary-300: hsl(30, 100%, 89%);
@@ -33,4 +33,12 @@
     --function-title: hsl(3, 89%, 35%);
     --function-home: hsl(8, 97%, 18%);
 
+}
+
+/* Overwrite properties */
+:root {
+    --nav-bg-color: var(--primary-600);
+    --nav-bg-color-active: var(--primary-600);
+    --table-bg-color-selected: var(--primary-600);
+    --table-bg-color-selected-hover: var(--primary-700);
 }

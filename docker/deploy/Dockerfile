@@ -7,7 +7,7 @@ WORKDIR /var/www/html
 RUN apt-get update
 
 # Timezone
-ENV TZ Europe/Berlin
+ENV TZ=Europe/Berlin
 
 # Install required components
 RUN apt-cache search libjpeg
@@ -79,13 +79,13 @@ RUN curl -sSL https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 
 # Install node.js / npm
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash \
+RUN curl -sL https://deb.nodesource.com/setup_21.x | bash \
   && apt-get install -y nodejs
 
 # Install Saxon/c dependencies
 RUN mkdir -p /usr/share/man/man1
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    openjdk-17-jre-headless libxml-commons-resolver1.1-java
+    openjdk-21-jre-headless libxml-commons-resolver1.1-java
 
 # Install Saxon/c
 WORKDIR /opt
@@ -139,8 +139,8 @@ RUN rm -rf /var/lib/apt/lists/*
 # Enable apache rewrite
 # RUN a2enmod rewrite
 
-# Set www permissions
-RUN usermod -u 1000 www-data
+# Align host and container user ID
+#RUN usermod -u 1000 www-data
 
 # Copy custom php.ini
 COPY docker/deploy/php.ini /usr/local/etc/php/

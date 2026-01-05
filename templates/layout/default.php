@@ -14,13 +14,14 @@
 <?php
 /**
  * @var $this App\View\AppView
+ * @var string $theme
  * @var string $pagetitle
+ * @var string $pagehelp Path in the help pages (or null)
  * @var array $sidemenu
  * @var array $menu
  * @var string $user_role
  * @var array $user
  * @var App\Model\Entity\Databank $database
- * @var string $theme
  */
 
 use Cake\Core\Configure;
@@ -30,9 +31,7 @@ use Cake\Core\Configure;
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-        <?= $pagetitle; ?>
-    </title>
+    <title><?= $pagetitle; ?></title>
 
     <?= $this->Html->meta('icon',Configure::read('App.icon', 'img/favicon_petrol.png')) ?>
     <?= $this->Html->meta('description',__('A research platform for multimodal text data')); ?>
@@ -117,12 +116,14 @@ use Cake\Core\Configure;
             'controller_' . h(strtolower($this->request->getParam('controller') ?? '')),
             'action_' . h(strtolower($this->request->getParam('action') ?? '')),
             'template_' . h($this->request->getParam('template','default')),
-            'theme_' . h($this->getThemeName()),
+            'theme_' . h($theme),
             'userrole_' . h($user_role)
         ]
     ]
 );
 ?>
+
+<?= $this->Link->getTrackingCode() ?>
 
 <div class="page-wrapper accordion">
 
@@ -140,7 +141,7 @@ use Cake\Core\Configure;
 
                 <?= $this->Link->renderSandwichButton(
                     "widget-sandwich-items-topmenu",
-                    ['dropdown' => 'bottomright']
+                    ['dropdown' => 'bottomright', 'title' => __('Menu')]
                 ) ?>
             </div>
 
@@ -148,25 +149,29 @@ use Cake\Core\Configure;
                 <div id="loader" style="display:none;"></div>
 
                 <?php if ($user_role === 'guest'): ?>
-                    <?= $this->Html->link('Login',['plugin'=>false,'controller'=>'users','action'=>'login']) ?>
+                    <?= $this->Html->link(
+                        __('Login'),
+                        ['plugin'=>false,'controller'=>'users','action'=>'login'],
+                        ['class' => 'btn', 'title' => __('Login')]
+                    ) ?>
                 <?php else: ?>
 
                     <?= $this->Html->link(
                         __('Logout'),
                         ['plugin' => false, 'controller' => 'Users', 'action' => 'logout'],
-                        ['class' => 'btn-logout', 'title' => __('Logout')]
+                        ['class' => 'btn', 'title' => __('Logout')]
                     ) ?>
                     <?= $this->Html->link(
                         "\u{f007}",
                         ['plugin' => false, 'controller' => 'Users', 'action' => 'view', $user['id']],
-                        ['class' => 'btn-profile', 'title' => $user['username']]
+                        ['class' => 'btn btn-icon', 'title' => $user['username']]
                     ) ?>
                 <?php endif; ?>
                 <?php if (in_array($user_role, ['admin', 'devel'])): ?>
                     <?= $this->Html->link(
                         "\u{f013}",
                         ['plugin' => false, 'controller' => 'Settings', 'action' => 'show', 'vars'],
-                        ['class' => 'btn-settings', 'title' => __('System settings')]
+                        ['class' => 'btn btn-icon', 'title' => __('System settings')]
                     ) ?>
                 <?php endif; ?>
             </div>
@@ -281,7 +286,12 @@ use Cake\Core\Configure;
     </div>
 
     <?php if ($this->getShowBlock('footer')): ?>
-        <?= $this->renderFooter($user_role !== 'guest') ?>
+        <?php
+            if ($user_role !== 'guest') {
+                $this->Link->addHelpAction($pagehelp);
+            }
+        ?>
+        <?= $this->renderFooter() ?>
     <?php endif; ?>
 
 </div>

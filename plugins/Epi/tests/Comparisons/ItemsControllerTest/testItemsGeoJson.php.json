@@ -6,10 +6,9 @@
             "data": {
                 "id": 796,
                 "number": 1,
-                "caption": "Signatur 3",
                 "quality": 0,
                 "radius": 10,
-                "url": "\/epi\/projects\/articles\/view\/4",
+                "rootId": 4,
                 "segment": "geolocations"
             },
             "geometry": {

@@ -16,7 +16,13 @@ import {SelectWindow} from "/widgets/js/frames.js";
 
 /**
  * Base class for document models
- * (articles, sections, items, files, properties, annotations, links, types)
+ *
+ * The models (articles, sections, items, files, properties, annotations, links, types)
+ * are instantiated in the parent document widget.
+ *
+ * Therefore, to access one model from another,
+ * follow the doc property of a model.
+ *
  */
 class BaseDocumentModel extends BaseModel {
 
@@ -26,7 +32,6 @@ class BaseDocumentModel extends BaseModel {
         this.doc = documentWidget;
         this.rootTable = documentWidget ? this.doc.rootTable : undefined;
         this.rootId = documentWidget ? this.doc.rootId : undefined;
-
     }
 
     /**
@@ -117,67 +122,6 @@ export class ArticlesModel extends BaseDocumentModel {
         return Utils.getInputValue(
             this.modelParent.widgetElement.querySelector('.doc-content select[name=projects_id]')
         );
-    }
-
-    /**
-     * Open an article choose window for external links
-     *
-     * //TODO: move to the links or annotation model
-     *
-     * @param anno {HTMLElement} The annotation element
-     * @param callback {function} Called when the value was changed
-     * @param isNew {boolean} Whether the annotation was just created
-     */
-    editAnno(anno, callback, isNew) {
-
-        const {selected, targets} = this.modelParent.models.links.getTargets(anno);
-
-        // TODO: do not transfer JSON, convert to explicit keys,
-        //       e.g. targets_articles=epi-articles&targets_sections=inscription,inscriptionpart
-        let url = App.databaseUrl
-            + 'articles/index'
-            + '?template=choose&show=content,searchbar'
-            + '&columns=signature,name, project_signature'
-            + '&targets='+ JSON.stringify(targets);
-
-        const project_id = this.getProjectId();
-        if (project_id) {
-            url = url + '&projects=' + project_id;
-        }
-
-        // TODO: select the selected option
-        //url = (selected.id !== undefined) ? url + '/' + selected.id : url;
-
-        const options = {
-            title: "External link",
-            //selected: selected.id,
-            height: 600,
-            width: 600,
-            focus: true,
-            url: url,
-
-            removeOnCancel: isNew,
-            buttonRemove: !isNew,
-            buttonSelect: true,
-            selectOnClick: false,
-
-            onRemove: () => callback(null),
-            onSelect: (element) => {
-                const value = element.dataset.value.split('-', 2);
-                const valueTab = value.length > 1 ? value[0] : 'articles';
-                const valueId = value.length > 1 ? value[1] : value[0];
-
-                callback(
-                    !element ? null : {
-                        'tab': valueTab,
-                        'id': valueId,
-                        'label': element.dataset.label,
-                    }
-                )
-            }
-        };
-
-        new SelectWindow(options);
     }
 
 }
@@ -515,12 +459,13 @@ export class SectionsModel extends BaseDocumentModel {
                 currentSection = currentSection.nextElementSibling;
             }
         });
+        this.updateNames();
 
         if (App.scrollsync) {
             App.scrollsync.updateWidget();
+            // restore the focus, which may have moved due to scroll sync operations
+            App.scrollsync.scrollToSection(this.getActiveSection(), true);
         }
-
-        this.updateNames();
     }
 
     /**
@@ -945,11 +890,12 @@ export class ItemsModel extends BaseDocumentModel {
 
         // Remove button
         if (event.target.classList.contains('doc-item-remove')) {
-            event.preventDefault();
-            event.stopPropagation();
 
             const item = event.target.closest('.doc-section-item');
             if (item) {
+                event.preventDefault();
+                event.stopPropagation();
+
                 if (await App.confirmAction('Are you sure you want to delete the selected item?')) {
                     this.delete(item);
                 }
@@ -1111,12 +1057,21 @@ export class ItemsModel extends BaseDocumentModel {
      * Item import can be triggered by the epi:import:item event.
      * Used for automated coding by the LLM service.
      *
+     * The event data has to contain the following properties:
+     * - sectiontype
+     * - itemtype
+     * - items
+     *
      * @param event
      */
     onImportItem(event) {
 
         const eventData = event.detail.data;
         if (!eventData || !eventData.sectiontype || !eventData.itemtype || !eventData.items) {
+            return;
+        }
+
+        if (eventData.items.length === 0) {
             return;
         }
 
@@ -1127,20 +1082,32 @@ export class ItemsModel extends BaseDocumentModel {
             return;
         }
 
-        const addButton = sectionElement.querySelector('.doc-section-item .doc-field-add-' + eventData.itemtype);
-        if (!addButton) {
+        // Add multiple non-existing items
+        const addButton= sectionElement.querySelector('.doc-section-item .doc-field-add-' + eventData.itemtype);
+        if (addButton) {
+
+            const templateItem = addButton.closest('.doc-section-item');
+            if (!templateItem) {
+                return;
+            }
+
+            eventData.items.forEach(item => {
+                this.add(templateItem, item, false);
+            });
+
             return;
         }
 
-        const templateItem = addButton.closest('.doc-section-item');
-        if (!templateItem) {
-            return;
+        // Update a single existing item
+        const targetItem = sectionElement.querySelector('[data-row-table="items"][data-row-type="' + eventData.itemtype + '"]');
+        if (targetItem) {
+            const data = {};
+            data['table'] = targetItem.dataset.rowTable;
+            data['id'] = targetItem.dataset.rowId;
+            data['content'] = eventData.items[0];
+            this.emitEvent(targetItem, 'epi:update:item', data);
         }
 
-        const items = eventData.items;
-        items.forEach(item => {
-            this.add(templateItem, item, false);
-        });
     }
 
     onUpdateItem(event) {
@@ -1152,7 +1119,14 @@ export class ItemsModel extends BaseDocumentModel {
         const item = document.querySelector('[data-row-table="' + eventData.table + '"][data-row-id="' + eventData.id + '"]');
         if (this.doc.ownedByDocument(item)) {
             for (const fieldName in  eventData.content) {
-                const fieldElement = item.querySelector( `[data-row-field="${fieldName}"]`);
+
+                let fieldElement = item.querySelector( `[data-row-field="${fieldName}"]`);
+                if (!fieldElement && (fieldName === 'properties_id')) {
+                    fieldElement = item.querySelector(`[data-row-field="property"] input.input-reference-value`);
+                }
+                else if (!fieldElement && (fieldName === 'properties_label')) {
+                    fieldElement = item.querySelector( `[data-row-field="property"] input.input-reference-text`);
+                }
                 this.setContent(fieldElement, eventData.content[fieldName]);
             }
         }
@@ -1278,7 +1252,8 @@ export class ItemsModel extends BaseDocumentModel {
         }
 
         // Update input
-        Utils.setInputValue(fieldElement.querySelector('input'), content);
+        const inputElement = Utils.querySelectorAndSelf(fieldElement, 'input');
+        Utils.setInputValue(inputElement, content || '');
 
         // Update XMLEditor
         const xmlEditorWidget = this.getWidget(fieldElement.querySelector('.doc-field-content'), 'xmleditor');
@@ -1338,13 +1313,12 @@ export class ItemsModel extends BaseDocumentModel {
         }
 
         if (itemData && itemData.properties_id) {
-            const fieldName = 'property';
             Utils.setInputValue(
-                item.querySelector(`.doc-fieldname-${fieldName} input.input-reference-value`),
+                item.querySelector(`.doc-fieldname-property input.input-reference-value`),
                 itemData['properties_id']
             );
             Utils.setInputValue(
-                item.querySelector(`.doc-fieldname-${fieldName} input.input-reference-text`),
+                item.querySelector(`.doc-fieldname-property input.input-reference-text`),
                 itemData['properties_label']
             );
         }
@@ -1495,7 +1469,7 @@ export class PropertiesModel extends BaseDocumentModel {
 
             const elmContent = field.querySelector('[data-row-field=properties_id]');
             const fieldData = this.doc.getFieldData(elmContent);
-            const propertiesId = elmContent? elmContent.dataset.rowValue : undefined;
+            const propertiesId = elmContent ? elmContent.dataset.rowValue : undefined;
 
             if (fieldData.field && propertiesId) {
                 this.view(propertiesId);
@@ -1520,76 +1494,6 @@ export class PropertiesModel extends BaseDocumentModel {
             external: true
         });
     }
-
-    /**
-     * Open a property choose window
-     *
-     * @param anno {HTMLElement} The annotation element
-     * @param callback {function} Called when the value was changed
-     * @param isNew {boolean} Whether the annotation was just created
-     */
-    editAnno(anno, callback, isNew) {
-        // @var targets A list of allowed property types
-        // @var selected The currently selected ID
-        const {selected, targets} = this.modelParent.models.links.getTargets(anno);
-        const propertytype = Utils.getValue(targets, 'properties.0');
-        const selectedId = ((selected.id !== undefined) && (!selected.new)) ? selected.id : undefined;
-        if (propertytype === undefined) {
-            return;
-        }
-
-        let url = App.databaseUrl + 'properties/index/' + propertytype + '?template=input&show=content';
-        url = (selectedId !== undefined) ? url + '&seek=' + selectedId : url;
-
-        if (selected.new && (selected.value !== undefined)) {
-            url = url + '&append=1&find=' + selected.value;
-        }
-
-        // Allow empty or not
-        let tagConfig = this.modelParent.models.links.getConfig(anno);
-        const required = Utils.getValue(tagConfig,'config.fields.to.required', true);
-        if (!required) {
-            url = url + '&empty=1';
-        }
-
-        if (Utils.getValue(tagConfig,'config.fields.to.append', false)) {
-            url = url + '&append=1';
-        }
-
-        // External manage URL
-        let urlManage = App.databaseUrl + 'properties/index/' + propertytype;
-        urlManage = (selectedId !== undefined) ? urlManage + '?seek=' + selectedId : urlManage;
-
-        const options = {
-            title: "Select property",
-            height: 500,
-            width: 600,
-
-            focus: true,
-            openDropdown: true,
-
-            url: url,
-            external: urlManage,
-            selected: selected,
-            required : required,
-
-            removeOnCancel: isNew,
-            buttonRemove: !isNew,
-
-            onRemove: () => callback(null),
-            onSelect: (value) => callback(
-                value === null ? null : {
-                    'tab': 'properties',
-                    'id': value.value,
-                    'type': value.type,
-                    'new': (value.new || false) == true, // Will be implicitly converted to boolean by '=='
-                    'label': value.label || value.caption || '',
-                }
-            )
-        };
-
-        new SelectWindow(options);
-    }
 }
 
 /**
@@ -1606,13 +1510,13 @@ export class AnnotationsModel extends BaseDocumentModel {
         super(modelParent);
         this.lastRowId = 0;
 
-        //TODO: replace jquery
-        $('body').on('mouseout', '[data-tagid], [data-from-tagid]', event => this.unhoverAnno(event));
-        $('body').on('mouseover', '[data-tagid], [data-from-tagid]', event => this.hoverAnno(event));
-
+        this.listenEvent(document, 'mouseover', event => this.hoverAnno(event), '[data-tagid] .xml_bracket_open, [data-tagid] .xml_bracket_close , .xml_text[data-tagid], .xml_format[data-tagid], [data-from-tagid]');
+        this.listenEvent(document, 'mouseout', event => this.unhoverAnno(event), '[data-tagid], [data-from-tagid]');
         this.listenEvent(document, 'click', event => this.onClickAnno(event));
-    }
+        this.listenEvent(document, 'epi:toggle:switch', event => (this.updatePositions(event.target.closest('.doc-section-links'))));
 
+        this.updatePositions();
+    }
 
     _createRowId() {
         this.lastRowId += 1;
@@ -1639,7 +1543,7 @@ export class AnnotationsModel extends BaseDocumentModel {
             if (tag) {
                 let target = tag.closest('[data-tagid]');
                 tagid = target.dataset.tagid;
-                sectionElement = this._getAnnoSection(target);
+                sectionElement = this._getSection(target);
                 if (sectionElement) {
                     anno = sectionElement.querySelector('.doc-section-link[data-from-tagid="' + tagid + '"]');
                 }
@@ -1648,7 +1552,7 @@ export class AnnotationsModel extends BaseDocumentModel {
 
             // Get tag
             tagid = anno.dataset.fromTagid;
-            sectionElement = this._getAnnoSection(anno);
+            sectionElement = this._getSection(anno);
             if (sectionElement) {
                 tag = sectionElement.querySelector('[data-tagid="' + tagid + '"]');
             }
@@ -1660,15 +1564,30 @@ export class AnnotationsModel extends BaseDocumentModel {
 
     _getAnnoByTagId(tagId, linkContainer) {
         let link;
-
         if (!linkContainer) {
             link = document.querySelector('.doc-section-links [data-from-tagid="' + tagId + '"]');
         } else {
             link = linkContainer.querySelector('[data-from-tagid="' + tagId + '"]');
         }
-
-
         return link;
+    }
+
+    /**
+     * Get all annotations with the same tag id
+     *
+     * @param {string} tagId The tag id
+     * @param {object} linkContainer The annotation container (next to the content) or undefined to search the whole document
+     * @return {NodeListOf<Element>}
+     * @private
+     */
+    _getAnnosByTagId(tagId, linkContainer) {
+        let links;
+        if (!linkContainer) {
+            links = document.querySelectorAll('.doc-section-links [data-from-tagid="' + tagId + '"]');
+        } else {
+            links = linkContainer.querySelectorAll('[data-from-tagid="' + tagId + '"]');
+        }
+        return links;
     }
 
     /**
@@ -1700,40 +1619,8 @@ export class AnnotationsModel extends BaseDocumentModel {
      * @param elm An element inside the section
      * @returns {Element|undefined}
      */
-    _getAnnoSection(elm) {
+    _getSection(elm) {
         return elm.closest('.doc-section-content, .doc-section-note');
-    }
-
-    /**
-     * Return the xml editor widget element of a tag
-     *
-     * @param {HTMLElement} tagElement An element inside the widget
-     * @returns {Element|undefined}
-     */
-    _getTagContainer(tagElement) {
-        return tagElement ? tagElement.closest('.widget-xmleditor') : undefined;
-    }
-
-    /**
-     * Return the tag inside the XML editor
-     *
-     * @param tagId The tag id
-     * @param {HTMLElement} widget The CKEditor editor (div.widget-xmleditor).
-     * @protected
-     */
-    _getTagByTagId(tagId, widget) {
-        let tagElement;
-
-        if (!widget) {
-            tagElement = this.modelParent.widgetElement.querySelector(
-                '.widget-xmleditor [data-tagid="' + tagId + '"], ' +
-                '.doc-field-content [data-tagid="' + tagId + '"]'
-            );
-        } else {
-            tagElement = widget.querySelector('[data-tagid="' + tagId + '"]');
-        }
-
-        return tagElement;
     }
 
     /**
@@ -1745,8 +1632,13 @@ export class AnnotationsModel extends BaseDocumentModel {
     hoverAnno(event) {
         this.unhoverAnno();
 
-        let target = event.currentTarget;
+        let target = event.target;
         let id = target.dataset.tagid || target.dataset.fromTagid;
+
+        if (!id) {
+            target = target.closest('[data-tagid], [data-from-tagid]');
+            id = target.dataset.tagid || target.dataset.fromTagid;
+        }
 
         // Set title (= hover text) and tag-hover class
         document.querySelectorAll('.doc-section-link[data-from-tagid="' + id + '"]').forEach(
@@ -1764,7 +1656,6 @@ export class AnnotationsModel extends BaseDocumentModel {
 
         event.preventDefault();
         return false;
-
     }
 
     /**
@@ -1787,6 +1678,153 @@ export class AnnotationsModel extends BaseDocumentModel {
     }
 
     /**
+     * Reorder annotations to match tag order
+     *
+     * @param {HTMLElement} section
+     * @param {HTMLElement} linkContainer
+     */
+    orderAnnos(section, linkContainer) {
+        const tags = Array.from(section.querySelectorAll('[data-tagid]'));
+        let currentLink = linkContainer.querySelector(['data-from-tagid']);
+
+        tags.forEach(tag => {
+            const tagid = tag.dataset.tagid;
+            const expectedLinks = linkContainer.querySelectorAll('[data-from-tagid="' + tagid + '"]');
+            if (!expectedLinks) {
+                return;
+            }
+
+            for (const expectedLink of expectedLinks) {
+                // Remove any spacer before the expected link
+                if (expectedLink.previousElementSibling && expectedLink.previousElementSibling.classList.contains('spacer')) {
+                    linkContainer.removeChild(expectedLink.previousElementSibling);
+                }
+
+                if (expectedLink !== currentLink) {
+                    linkContainer.insertBefore(expectedLink, currentLink);
+                }
+                currentLink = expectedLink.nextElementSibling;
+                while (currentLink && currentLink.classList.contains('spacer')) {
+                    currentLink = currentLink.nextElementSibling;
+                }
+            }
+        });
+    }
+
+    /**
+     * Order and shift annotations
+     *
+     * @param {HTMLElement} linkContainer If empty, all link containers will be updated
+     */
+    updatePositions(linkContainer) {
+        if (!linkContainer) {
+            const linkContainers = document.querySelectorAll('.doc-section-links');
+            linkContainers.forEach((linkContainer) => {
+                this.updatePositions(linkContainer);
+                this.initResizeObservers(linkContainer);
+            });
+            return;
+        }
+
+        if (!linkContainer.classList.contains('doc-section-links')) {
+            return;
+        }
+
+        const section = linkContainer.closest('.doc-section');
+        if (section) {
+            this.arrangeAnnos(section, linkContainer);
+        }
+
+    }
+
+    initResizeObservers(linkContainer) {
+        if (!linkContainer.classList.contains('doc-section-links')) {
+            return;
+        }
+        const section = linkContainer.closest('.doc-section');
+        if (!section) {
+            return;
+        }
+
+        this.doc.listenResize(section, entries => {
+            for (let entry of entries) {
+                const cbSection = entry.target.closest('.doc-section');
+                if (cbSection) {
+                    const cbLinkContainer = cbSection.querySelector('.doc-section-links');
+                    if (cbLinkContainer) {
+                        this.updatePositions(cbLinkContainer);                         }
+                }
+            }
+        });
+    }
+
+    /**
+     * Align annotations in linkContainer with the corresponding tags in section
+     *
+     * @param {HTMLElement} section The section element containing the tags and annotations
+     * @param {HTMLElement} annoContainer The element containing annotation elements
+     */
+    arrangeAnnos(section, annoContainer) {
+        annoContainer.style.position = 'relative';
+
+        const tagsContainer = section.querySelector('.doc-section-content');
+        if (!tagsContainer) {
+            return;
+        }
+
+        const zeroTop = annoContainer.getBoundingClientRect().top;
+        const zeroLeft = annoContainer.getBoundingClientRect().left;
+
+        // Start positioning after buttons
+        const buttons = annoContainer.querySelectorAll('button');
+        let minTop = 0;
+        if (buttons.length > 0) {
+            const lastButton  = buttons[buttons.length - 1];
+            minTop = lastButton.getBoundingClientRect().bottom - zeroTop;
+        }
+
+        const tags = section.querySelectorAll('[data-tagid]');
+
+        const marginLeft = 2;
+        const marginTop = 2;
+
+        // Collect annotations
+        const deltaTop = 10;
+        let currentTop = -1;
+        let currentBottom = -marginTop;
+        let currentLeft = 0;
+        let currentRight = 0;
+        let targetRight = 0;
+        tags.forEach((tag) => {
+            const annos = annoContainer.querySelectorAll('[data-from-tagid="' + tag.dataset.tagid + '"]');
+            if (annos.length) {
+                let targetTop = Math.max(tag.getBoundingClientRect().top - zeroTop, minTop);
+                targetTop = deltaTop * Math.floor(targetTop / deltaTop);
+                annos.forEach((anno) => {
+                    if (Utils.isElementVisible(anno)) {
+                        if (targetTop < currentBottom) {
+                            currentLeft = currentRight + marginLeft;
+                            targetRight = currentLeft + marginLeft + anno.scrollWidth;
+                            if (targetRight > annoContainer.clientWidth) {
+                                currentTop = currentBottom + marginTop;
+                                currentLeft = 0;
+                            }
+                        } else {
+                            currentTop = targetTop;
+                            currentLeft = 0;
+                        }
+                        anno.style.position = 'absolute';
+                        anno.style.top = currentTop + 'px';
+                        anno.style.left = currentLeft + 'px';
+                        currentRight = anno.getBoundingClientRect().right - zeroLeft;
+                        currentBottom = anno.getBoundingClientRect().bottom - zeroTop;
+                    }
+                });
+            }
+        });
+    }
+
+    /**
      * Show annotation properties in the sidebar
      *
      * @param anno {HTMLElement} The annotation element
@@ -1797,20 +1835,17 @@ export class AnnotationsModel extends BaseDocumentModel {
         let toId = anno.dataset.toId;
         let toTab = anno.dataset.toTab;
         let tagId = anno.dataset.fromTagid;
-        let tagType = anno.dataset.rowType;
+        let tagName = anno.dataset.fromTagname;
 
         this.doc.models.types.loadTypes().then((types) => {
-                types.links = types.links || {};
-                types.footnotes = types.footnotes || {};
-                let tagConfig = types.links[tagType] || types.footnotes[tagType] || {};
-
+                let tagConfig = types.links[tagName] || types.footnotes[tagName] || {};
                 let targets = Utils.getValue(tagConfig, 'config.fields.to.targets', {});
 
-                if (targets.articles && (toTab === 'articles') && toId) {
+                if ((toTab === 'articles') && toId) {
                     this.doc.view(toTab + '-' + toId);
-                } else if (targets.sections && (toTab === 'sections') && toId) {
+                } else if ((toTab === 'sections') && toId) {
                     this.doc.models.sections.view(toId);
-                } else if (targets.properties && (toTab === 'properties') && toId) {
+                } else if ((toTab === 'properties') && toId) {
                     this.doc.models.properties.view(toId);
                 } else if ((tagConfig.scope === 'footnotes') && tagId) {
                     this.doc.models.footnotes.view(tagId);
@@ -1820,156 +1855,24 @@ export class AnnotationsModel extends BaseDocumentModel {
     }
 
     /**
-     * Add an annotation next to the content field
-     *
-     * TODO: Refactor, move method to LinksModel (see FootnotesModel.add() for orientation).
-     *
-     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
-     * @param {object} tagAttributes The attributes of the created element, including:
-     *                               - data-tagid The tag id
-     *                               - data-type The link or footnote type
-     *                               - data-new Whether the element was created by the user using the toolbar
-     * @param {Object} tagSet
-     * @returns The new annotation element
-     */
-    add(widget, tagAttributes, tagSet) {
-
-        const tagId = tagAttributes['data-tagid'];
-        const typeName = tagAttributes['data-type'];
-        const scope = Utils.getValue(tagSet, typeName + '.scope');
-
-        const annoContainer = this._getAnnoContainer(widget);
-        if (!annoContainer) {
-            console.log('Annotation container not found.');
-            return;
-        }
-        annoContainer.classList.remove('doc-section-links-empty');
-
-        let fieldData = this.modelParent.getFieldData(widget);
-
-        let annoElement = this._getAnnoByTagId(tagId, annoContainer);
-        if (!annoElement) {
-            // The caption
-            let toValue = Utils.getValue(
-                tagAttributes, 'data-value',
-                Utils.getValue(tagSet, typeName + '.caption', 'UNDEFINED')
-            );
-
-            let toTab = Utils.getValue(tagAttributes, 'data-target-tab', '');
-            let toId = Utils.getValue(tagAttributes, 'data-target-id', '');
-
-            const annoId = this._createRowId();
-            const newLink = this.doc.spawnFromTemplate(
-                'template-annotation-' + scope,
-                {
-                    scope: scope,
-                    idx: annoId,
-                    id: annoId,
-                    // id: "",
-                    type: typeName,
-
-                    rootId: fieldData.rootId,
-                    rootTab: fieldData.rootTab,
-                    fromId: fieldData.id,
-                    fromTab: fieldData.table,
-                    fromField: fieldData.field,
-                    fromTagid: tagId,
-                    fromTagname: typeName,
-
-                    // Only for links, not for footnotes
-                    toId: toId,
-                    toTab: toTab,
-                    toValue: toValue,
-
-                    deleted: 0
-                }
-            );
-
-            if (newLink) {
-                annoContainer.appendChild(newLink);
-                annoElement = this._getAnnoByTagId(tagId, annoContainer);
-                annoElement.dataset.new = '1';
-            }
-        } else {
-            if (fieldData.deleted !== '1') {
-                Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), 0);
-                annoElement.dataset.deleted = '0';
-                this.enableInputs(annoElement);
-            }
-        }
-
-        if (scope === 'footnotes') {
-            this.modelParent.models.footnotes.add(widget, tagAttributes, tagSet);
-        }
-
-        return annoElement;
-    }
-
-    /**
      * Edit the annotation properties
-     * - links to properties, sections, footnotes, articles
-     * - footnote content
-     * - attributes
      *
-     * Called by onClickAnno and onCreateAnno
+     * Called by onClickAnno
      *
-     * @param {HTMLElement} anno The annotation element (div.doc-section-link inside div.doc-section-links)
+     * @param {HTMLElement} annoElement The annotation element (div.doc-section-link inside div.doc-section-links)
      * @param {boolean} isNew Whether the annotation is new, in which case the popup window is only shown for properties.
      */
-    edit(anno, isNew = true) {
+    edit(annoElement, isNew = true) {
 
-        this.doc.models.types.loadTypes().then(
-            (types) => {
-                if (!types.links && !types.footnotes) {
-                    return;
-                }
-                types.links = types.links || {};
-                types.footnotes = types.footnotes || {};
+        const tagId = annoElement.dataset.fromTagid;
+        const tagSection = this.doc.models.annotations._getSection(annoElement);
+        const tagElement = this.doc.models.tags.getTagByTagId(tagId, tagSection);
 
-                // Get element
-                const tagName = anno.dataset.rowType;
-                const tagConfig = types.links[tagName] || types.footnotes[tagName];
-
-                const isFootnote = types.footnotes && (types.footnotes[tagName] !== undefined);
-                const toFormat = Utils.getValue(tagConfig, 'config.fields.to.format');
-                const toTargets = Object.keys(Utils.getValue(tagConfig, 'config.fields.to.targets', {}));
-                const hasAttributes = Utils.getValue(tagConfig, 'config.attributes') !== undefined;
-
-                // Properties
-                let model;
-                if (isFootnote) {
-                    model = this.doc.models.footnotes;
-                }
-
-                else if (toTargets.includes('properties')) {
-                    model = this.doc.models.properties;
-                }
-
-                // External links
-                else if (toFormat === 'record') {
-                    model = this.doc.models.articles;
-                }
-
-                // Internal links
-                else if (toFormat === 'relation') {
-                    model = this.doc.models.links;
-                }
-
-                // Tag attributes
-                else if (hasAttributes || !isNew) {
-                    model = this.doc.models.attributes;
-                }
-
-                if (model) {
-                    model.editAnno(
-                        anno,
-                        (value) => this.updateAnno(anno, value, true),
-                        isNew
-                    );
-                }
-            }
-        );
-
+        if (tagElement) {
+            this.modelParent.models.tags.editAnnoOrTag(tagElement, isNew);
+        } else {
+            this.modelParent.models.tags.editAnnoOrTag(annoElement, isNew);
+        }
     }
 
     /**
@@ -1981,15 +1884,18 @@ export class AnnotationsModel extends BaseDocumentModel {
      */
     delete(widget, tagId) {
         const annoContainer = this._getAnnoContainer(widget);
-        let annoElement = annoContainer.querySelector('[data-from-tagid="' + tagId + '"]');
-        this.removeAnno(annoElement);
+        let annoElements = annoContainer.querySelectorAll('[data-from-tagid="' + tagId + '"]');
+
+        for (const annoElement of annoElements) {
+            this.removeAnno(annoElement);
+        }
 
         if (annoContainer) {
             const hasAnnos = annoContainer.querySelector('.doc-section-link:not([data-deleted="1"])');
             annoContainer.classList.toggle('doc-section-links-empty', !hasAnnos);
         }
 
-        return annoElement;
+        return annoElements;
     }
 
     /**
@@ -2012,13 +1918,28 @@ export class AnnotationsModel extends BaseDocumentModel {
     }
 
     /**
+     * Revive an element deleted by removeAnno
+     *
+     * @param {HTMLElement} annoElement The annotation element
+     */
+    reviveAnno(annoElement) {
+        if (annoElement && (annoElement.dataset.deleted === '1')) {
+            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), 0);
+            annoElement.dataset.deleted = '0';
+            if (annoElement.dataset.new) {
+                this.enableInputs(annoElement);
+            }
+        }
+    }
+
+    /**
      * Remove a tag
      *
      * @param {HTMLElement} tagElement The tag element within a xml editor widget
      * @return {HTMLElement}
      */
     removeTag(tagElement) {
-        const tagContainer = this._getTagContainer(tagElement);
+        const tagContainer = this.modelParent.models.tags.getTagContainer(tagElement);
         const tagEditor = this.doc.getWidget(tagContainer, 'xmleditor', false);
         if (tagEditor) {
             tagEditor.removeTag(tagElement);
@@ -2037,85 +1958,23 @@ export class AnnotationsModel extends BaseDocumentModel {
     }
 
     /**
-     * Called by edit to update the annotation and the tag
-     * after annotation properties have been edited
-     *
-     * @param {HTMLElement} anno The annotation element (div.doc-section-link inside div.doc-section-links)
-     * @param {Object|string|null} value The value, either null or an object with the keys
-     *              - label The text that will be displayed in the annotation and as textContent of the tag
-     *              - tab Set the to_tab property of the link (table name, e.g. properties)
-     *              - id Set the to_id property of the link (ID)
-     *              - further attributes will be added as data-attr-* attributes
-     *              If the value is a string, it will be parsed as JSON and converted to an object.
-     *              If the value is null, the tag will be removed.
-     * @param {boolean} focus Whether the element should get focus
-     */
-    updateAnno(anno, value, focus) {
-        // Convert to JSON
-        if (typeof value === 'string') {
-            try {
-                value = JSON.parse(decodeURI(value));
-            } catch (e) {
-                console.log(e.toString());
-                value = {};
-            }
-        }
-
-        // Remove annotation
-        if (value === null) {
-            this.removeAnno(anno);
-        }
-
-        // Update annotation
-        else {
-            if (value.label !== undefined) {
-                anno.querySelector('span').textContent = value.label;
-            }
-
-            if (value.tab !== undefined) {
-                anno.dataset.toTab = value.tab;
-                Utils.setInputValue(anno.querySelector('input[data-row-field=to_tab]'), value.tab);
-            }
-
-            if (value.id !== undefined) {
-                anno.dataset.toId = value.id;
-                Utils.setInputValue(anno.querySelector('input[data-row-field=to_id]'), value.id);
-            }
-
-            this.addProperty(anno, value);
-        }
-
-        // Update tag
-        const tagId = anno.dataset.fromTagid;
-        const tag = this._getTagByTagId(tagId, this._getAnnoSection(anno));
-        const tagContainer = this._getTagContainer(tag);
-        const tagEditor = this.doc.getWidget(tagContainer, 'xmleditor', false);
-
-        if (tagEditor) {
-            tagEditor.updateTag(tagId, value, true);
-        }
-
-    }
-
-    /**
      * Called after inserting footnotes to update the tags
      *
-     * @param widget
-     * @param anno The annotation element inside of div.doc-section-links
-     * @param value The value, either null or an object with the keys
-     *              - label
-     *              - tab and id.
-     *              If the value is a string, it will be parsed as JSON.
-     *              If the value is null, the tag should be removed
+     * @param {HTMLElement} widget The xml editor widget element containing the tag
+     * @param {HTMLElement} anno The annotation element inside div.doc-section-links
+     * @param {Object} values The values object passed to updateAnnoOrTag
+     * @param {Object} typeData The type entity data
      */
-    updateCounter(widget, anno, value) {
+    updateCounter(widget, anno, values, typeData) {
 
         if (widget.ckeditorInstance) {
-            this.updateAnno(anno, value, false);
+            this.doc.models.tags.updateAnnoOrTag(anno, values, false, typeData);
         } else {
             const tagId = anno.dataset.fromTagid;
-            const tagElement = this._getTagByTagId(tagId, widget);
+            const tagType = anno.dataset.fromTagname;
+            const tagElement = this.modelParent.models.tags.getTagByTagId(tagId, widget);
             if (tagElement) {
+                const value = values[tagType] || {};
                 tagElement.textContent = value.label || '*';
             }
         }
@@ -2167,9 +2026,6 @@ export class AnnotationsModel extends BaseDocumentModel {
         const [anno, tag] = this._getAnnoByEvent(event);
 
         if (anno) {
-            // TODO: use isInFrame()
-            const frame = event.target.closest('.frame-content');
-
             event.preventDefault();
             event.stopPropagation();
 
@@ -2181,49 +2037,7 @@ export class AnnotationsModel extends BaseDocumentModel {
             else {
                 this.show(anno);
             }
-
         }
-    }
-
-    /**
-     * Called from the editor everytime an element is created.
-     * Makes sure the annotation is created in the link container.
-     * (the annotation creates the footnote).
-     *
-     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
-     * @param {object} tagAttributes The attributes of the created element, including:
-     *                               - data-tagid The tag id
-     *                               - data-type The link or footnote type
-     *                               - data-new Whether the element was created by the user using the toolbar
-     * @returns Promise
-     */
-    onCreateAnno(widget, tagAttributes) {
-
-        return this.doc.models.types.getTagSet(widget, false).then(
-            (tagSet) => {
-                let anno = this.add(widget, tagAttributes, tagSet);
-                const isNew = tagAttributes['data-new'];
-                if (isNew && anno) {
-                    this.edit(anno, isNew);
-                }
-                return anno;
-            }
-        );
-
-    }
-
-    /**
-     * Will be called from the editor everytime an element is deleted.
-     * Hides the link in the link container.
-     *
-     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
-     * @param {object} tagAttributes The attributes of the created element, including:
-     *                              - data-tagid The tag id
-     *                              - data-type The link or footnote type
-     */
-    onRemoveAnno(widget, tagAttributes) {
-        const tagId = tagAttributes['data-tagid'];
-        this.delete(widget, tagId);
     }
 
 }
@@ -2340,7 +2154,7 @@ export class FootnotesModel extends BaseDocumentModel {
      * @return {*}
      */
     getFootnoteTag(tagId) {
-        return this.doc.models.annotations._getTagByTagId(tagId);
+        return this.modelParent.models.tags.getTagByTagId(tagId);
     }
 
     /**
@@ -2371,14 +2185,14 @@ export class FootnotesModel extends BaseDocumentModel {
                         // Count up
                         counter += 1;
 
-                        const widget = self.doc.models.annotations._getTagContainer(elm);
+                        const widget = self.doc.models.tags.getTagContainer(elm);
                         const anno = self.doc.models.annotations._getAnnoByTag(elm);
 
                         const label = Utils.numberToString(counter, Utils.getValue(typeData, 'config.fields.name.counter', 'numeric'));
                         const value = {label: label, tab: anno.dataset.toTab, id: anno.dataset.toId};
 
                         // Update tag and annotation
-                        self.doc.models.annotations.updateCounter(widget, anno, value);
+                        self.doc.models.annotations.updateCounter(widget, anno, { typeName: value}, typeData);
 
                         // Move annotation to bottom
                         anno.parentElement.appendChild(anno);
@@ -2467,7 +2281,7 @@ export class FootnotesModel extends BaseDocumentModel {
                 )
             );
 
-            // const tagElement = this.doc.models.annotations._getTagByTagId(tagId, widget);
+            // const tagElement = this.doc.models.annotations.getTagByTagId(tagId, widget);
             // const segment = tagElement ? tagElement.textContent : '';
 
             const annoId = annoElement.dataset.rowId || this.doc.models.annotations._createRowId();
@@ -2551,19 +2365,6 @@ export class FootnotesModel extends BaseDocumentModel {
         }
 
         return footnoteElement;
-    }
-
-    /**
-     * Show footnote editor
-     *
-     * @param anno {HTMLElement} The annotation element
-     * @param callback {function} Called when the value was changed
-     * @param isNew {boolean} Whether the annotation was just created
-     */
-    editAnno(anno, callback, isNew) {
-        if (anno) {
-            this.edit(anno.dataset.fromTagid);
-        }
     }
 
     /**
@@ -2679,27 +2480,53 @@ export class FootnotesModel extends BaseDocumentModel {
 export class LinksModel extends BaseDocumentModel {
 
     /**
-     * Get selected link data and possible targets from the config
+     * Get selected link data
+     *
+     * TODO: refactor, move a level up?
+     *
+     * The link data is an object with the following keys:
+     * - id   The target row ID
+     * - tab  The target table name
+     * - type The target row type
+     * - label The target caption
+     * - new  Whether this links to a row not yet created (invivo properties)
      *
      * @param {HTMLElement} link The annotation
-     * @return {string, Object, Array}  The tag ID, selected id and tab, target list
+     * @return {Object}  The link data
      */
-    getTargets(link) {
+    getAttributes(link) {
+
+        // TODO: rename id to toId and tab to toTab
         const selected = {
             id: link.dataset.toId,
-            tab: link.dataset.toTab
+            tab: link.dataset.toTab,
+            type: link.dataset.toType,
+            label : undefined,
+            new : undefined
         };
 
-        const isNew = Utils.isTrue(link.dataset.toNew);
-        if (isNew) {
-            selected.new = true;
-            selected.value = Utils.getInputValue(link.querySelector('[data-row-field="to_value"]'));
+        selected.new = Utils.isTrue(link.dataset.toNew);
+        if (selected.new) {
+            selected.label = Utils.getInputValue(link.querySelector('[data-row-field="to_value"]'));
             selected.type = Utils.getInputValue(link.querySelector('[data-row-field="to_type"]'));
+        } else if (link.dataset.toId) {
+            selected.label = Utils.getElementText(link.querySelector('.doc-section-link-text'));
         }
 
-        let tagId = link.dataset.fromTagid;
-        let tagName = link.dataset.rowType;
+        return selected;
+    }
 
+    /**
+     * Get selected link data and possible targets from the config
+     *
+     * TODO: refactor, move a level up?
+     *
+     * @param {HTMLElement} link The annotation
+     * @return {Array}  Target list
+     */
+    getTargets(anno) {
+
+        let tagName = anno.dataset.fromTagname;
         let targets = [];
 
         const types = this.modelParent.models.types._types;
@@ -2712,7 +2539,7 @@ export class LinksModel extends BaseDocumentModel {
             }
         }
 
-        return {tagId, selected, targets};
+        return targets;
     }
 
     /**
@@ -2722,11 +2549,744 @@ export class LinksModel extends BaseDocumentModel {
      * @return {Object} The types config
      */
     getConfig(anno) {
-        const tagName = anno.dataset.rowType;
+        const tagName = anno.dataset.fromTagname;
         const types = this.modelParent.models.types._types;
         if (types.links || types.footnotes) {
             return types.links[tagName] || types.footnotes[tagName];
         }
+    }
+
+    /**
+     * Add an annotation next to the content field
+     *
+     * May be a links or a footnotes annotation.
+     *
+     * @param {String} annoType
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                               - data-tagid The tag id
+     *                               - data-type The link or footnote type
+     *                               - data-new Whether the element was created by the user using the toolbar
+     * @param {Object} tagSet
+     * @param {Object} fieldData
+     * @returns The new link element
+     */
+    add(annoType, tagAttributes, tagSet, fieldData) {
+
+        const tagId = tagAttributes['data-tagid'];
+        const tagType = tagAttributes['data-type'];
+        const scope = Utils.getValue(tagSet, tagType + '.scope');
+        const tagGroup = Utils.getValue(tagSet, tagType + '.config.group');
+
+        const linkConfig = Utils.getValue(tagSet, annoType + '.config');
+
+        // Molecular annotations have attributes prefixed with the property type
+        let toType = Utils.getValue(linkConfig,'fields.to.targets.properties.0');
+
+        let toValue;
+        let toTab;
+        let toId;
+
+        if (toType) {
+            const attrPrefix = 'data-link-' + toType;
+            toValue = Utils.getValue(tagAttributes, attrPrefix + '-value', '');
+            toTab = Utils.getValue(tagAttributes, attrPrefix + '-tab', '');
+            toId = Utils.getValue(tagAttributes, attrPrefix + '-id', '');
+        }
+
+        // Atomic annotations have attributes prefixed with 'data-target-';
+        else {
+            const attrPrefix = 'data-target';
+            toValue = Utils.getValue(tagAttributes, attrPrefix + '-value', '');
+            toTab = Utils.getValue(tagAttributes, attrPrefix + '-tab', '');
+            toId = Utils.getValue(tagAttributes, attrPrefix + '-id', '');
+            toType = Utils.getValue(tagAttributes, attrPrefix + '-type', '');
+        }
+
+        // Fallback
+        if (!toValue) {
+            toValue = Utils.getValue(tagSet, annoType + '.caption', 'UNDEFINED');
+            // toValue = Utils.getValue(
+            //     tagAttributes, 'data-value',
+            //     Utils.getValue(tagSet, annoType + '.caption', 'UNDEFINED')
+            // );
+        }
+
+        const annoId = this.doc.models.annotations._createRowId();
+        const annoElement = this.doc.spawnFromTemplate(
+            'template-annotation-' + scope,
+            {
+                scope: scope,
+                idx: annoId,
+                id: annoId,
+                group: tagGroup,
+                // id: "",
+                // type: linkType,
+
+                rootId: fieldData.rootId,
+                rootTab: fieldData.rootTab,
+                fromId: fieldData.id,
+                fromTab: fieldData.table,
+                fromField: fieldData.field,
+                fromTagid: tagId,
+                fromTagname: tagType,
+
+                // Only for links, not for footnotes
+                toId: toId,
+                toTab: toTab,
+                toValue: toValue,
+                toType: toType,
+
+                deleted: 0
+            }
+        );
+
+        return annoElement;
+    }
+
+}
+
+/**
+ *  Manages tag attributes
+ *
+ * @param modelParent
+ * @constructor
+ */
+export class TagsModel extends BaseDocumentModel {
+
+    /**
+     * Get annotation attributes
+     *
+     * @param {HTMLElement} linkContainer
+     * @param {string} tagId
+     * @return {Object}
+     */
+    getLinkAttributes(linkContainer, tagId, tagConfig) {
+        const self = this;
+        let attributes = {};
+
+        const annos = linkContainer.querySelectorAll('[data-from-tagid="' + tagId + '"]');
+        for (const anno of annos) {
+            const annoType = anno.dataset.toType;
+            const annoDeleted = anno.dataset.deleted === '1';
+            if (annoType && !annoDeleted) {
+                attributes['data-links-' + annoType] = self.modelParent.models.links.getAttributes(anno);
+            }
+        }
+
+        return attributes;
+    }
+
+    /**
+     * Get tag attributes
+     *
+     * @param {Object} editor The ckeditor instance
+     * @param {string} tagId
+     * @param {Object} tagConfig
+     * @return {Object}
+     */
+    getTagAttributes(editor, tagId, tagConfig) {
+
+        // TODO: move calls to plugins.get('XmlTagEditing') into editors.js
+        let tagAttributes = {};
+        if (Utils.getValue(tagConfig, 'config.attributes', false)) {
+            const editing = editor.plugins.get('XmlTagEditing');
+            tagAttributes = editing.tagGetModelAttributes(editor, tagId);
+        }
+        return tagAttributes;
+    }
+
+    /**
+     * Return the tag inside the XML editor
+     *
+     * @param tagId The tag id
+     * @param {HTMLElement} widget The CKEditor editor (div.widget-xmleditor).
+     * @return {HTMLElement} The tag
+     * @protected
+     */
+    getTagByTagId(tagId, widget) {
+        let tagElement;
+
+        if (!widget) {
+            tagElement = this.modelParent.widgetElement.querySelector(
+                '.widget-xmleditor [data-tagid="' + tagId + '"], ' +
+                '.doc-field-content [data-tagid="' + tagId + '"]'
+            );
+        } else {
+            tagElement = widget.querySelector('[data-tagid="' + tagId + '"]');
+        }
+
+        return tagElement;
+    }
+
+
+    /**
+     * Return the xml editor widget element of a tag
+     *
+     * @param {HTMLElement} tagElement An element inside the widget
+     * @returns {Element|undefined}
+     */
+    getTagContainer(tagElement) {
+        return tagElement ? tagElement.closest('.widget-xmleditor') : undefined;
+    }
+
+
+    /**
+     * Create tag handler
+     *
+     * Called from the editor everytime an element is created.
+     * Creates annotations in the link container.
+     * Creates footnotes.
+     *
+     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                               - data-tagid The tag id
+     *                               - data-type The link or footnote type
+     *                               - data-new Whether the element was created by the user using the toolbar
+     * @returns Promise
+     */
+    onCreateTag(widget, tagAttributes) {
+        return this.doc.models.types.getTagSet(widget, false).then(
+            (tagSet) => {
+                const annoModel = this.modelParent.models.annotations;
+                const linksModel = this.modelParent.models.links;
+                const footnotesModel = this.modelParent.models.footnotes;
+
+                const tagId = tagAttributes['data-tagid'];
+                const tagType = tagAttributes['data-type'];
+                const scope = Utils.getValue(tagSet, tagType + '.scope');
+
+                // Add annotations
+                const annoContainer = annoModel._getAnnoContainer(widget);
+                if (!annoContainer) {
+                    console.log('Annotation container not found.');
+                    return;
+                }
+                annoContainer.classList.remove('doc-section-links-empty');
+
+                // Get annotation types
+                // A molecular tag config can be linked to multiple annotations in its attributes
+                const tagAttributesConfig = Utils.getValue(tagSet, tagType + '.config.attributes', {});
+                let annoTypes = Object.values(tagAttributesConfig)
+                    .filter(entry => entry.input === "link")
+                    .map(entry => entry.type);
+                const isMolecule = annoTypes.length > 0;
+
+                // An atomic tag config is linked to one annotation
+                if (!isMolecule) {
+                    annoTypes = [tagType];
+                }
+
+                // Update annotations (get existing or create new)
+                let annoElements = annoModel._getAnnosByTagId(tagId, annoContainer);
+                let leftoverElements = [];
+                if (isMolecule) {
+                    annoElements = Utils.groupElements(annoElements, 'toType');
+                    leftoverElements = Utils.getValue(annoElements, '',leftoverElements);
+                }
+
+                let fieldData = this.modelParent.getFieldData(widget);
+                annoTypes.forEach((annoType, annoIdx) => {
+
+                    let annoElement;
+                    if (isMolecule) {
+                        const propertyType =  Utils.getValue(tagSet, annoType + '.config.fields.to.targets.properties.0');
+                        annoElement = Utils.getValue(annoElements, propertyType + '.0');
+
+                        // Recylce annos
+                        if ((!annoElement) && (leftoverElements.length > 0)) {
+                            annoElement = leftoverElements.pop();
+                            annoElement.dataset.toType = propertyType;
+                        }
+                    } else {
+                        annoElement = annoElements[0];
+                    }
+
+                    if (!annoElement) {
+                        annoElement = linksModel.add(annoType, tagAttributes, tagSet, fieldData);
+                        if (annoElement) {
+                            annoContainer.appendChild(annoElement);
+                            annoElement.dataset.new = '1';
+                        }
+                    } else {
+                        if (fieldData.deleted !== '1') {
+                            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), 0);
+                            annoElement.dataset.deleted = '0';
+                            this.enableInputs(annoElement);
+                        }
+                    }
+                });
+
+                // Update footnotes
+                if (scope === 'footnotes') {
+                    footnotesModel.add(widget, tagAttributes, tagSet);
+                }
+
+                // Show editor
+                const isNew = tagAttributes['data-new'];
+                const tagElement = this.getTagByTagId(tagId, widget);
+                if (isNew && (tagElement)) {
+                    annoModel.updatePositions(annoContainer);
+                    this.editAnnoOrTag(tagElement, isNew);
+                }
+            }
+        );
+    }
+
+    /**
+     * Will be called from the editor everytime an element is deleted.
+     * Hides the link in the link container.
+     *
+     * @param {HTMLElement} widget The CkEditor (div.widget-xmleditor)
+     * @param {object} tagAttributes The attributes of the created element, including:
+     *                              - data-tagid The tag id
+     *                              - data-type The link or footnote type
+     */
+    onRemoveTag(widget, tagAttributes) {
+        const tagId = tagAttributes['data-tagid'];
+        this.doc.models.annotations.delete(widget, tagId);
+    }
+
+
+    /**
+     * Edit the annotation properties
+     * - links to properties, sections, footnotes, articles
+     * - footnote content
+     * - attributes
+     *
+     * Called by onClickAnno and onCreateTag
+     *
+     * @param {HTMLElement} annoOrTag The annotation or tag element
+     * @param {boolean} isNew Whether the annotation is new, in which case the popup window is only shown for properties.
+     */
+    editAnnoOrTag(annoOrTag, isNew = true) {
+
+        this.doc.models.types.loadTypes().then(
+            (types) => {
+
+                // Get type and config
+                const annoOrTagType = annoOrTag.dataset.type ?
+                    annoOrTag.dataset.type :  // From tag
+                    annoOrTag.dataset.fromTagname;  // From anno
+
+                const typeData = types.links[annoOrTagType] || types.footnotes[annoOrTagType];
+
+                // Determine target model
+                const isFootnote = types.footnotes && (types.footnotes[annoOrTagType] !== undefined);
+                const toFormat = Utils.getValue(typeData, 'config.fields.to.format');
+                const toTargets = Object.keys(Utils.getValue(typeData, 'config.fields.to.targets', {}));
+                const hasAttributes = Utils.getValue(typeData, 'config.attributes') !== undefined;
+
+                // Footnotes
+                let method;
+                if (isFootnote) {
+                    method = this.editFootnote;
+                }
+
+                // Properties
+                else if (toTargets.includes('properties')) {
+                    method = this.editProperty;
+                }
+
+                // External links
+                else if (toFormat === 'record') {
+                    method = this.editRecord;
+                }
+
+                // Internal links
+                else if (toFormat === 'relation') {
+                    method = this.editRelation;
+                }
+
+                // Tag attributes (including molecule annotations)
+                else if (hasAttributes || !isNew) {
+                    method = this.editAttributes;
+                }
+
+                if (method) {
+                    method.call(
+                        this,
+                        annoOrTag,
+                        (value) => this.updateAnnoOrTag(annoOrTag, value, true, typeData),
+                        isNew
+                    );
+                }
+            }
+        );
+    }
+
+
+    /**
+     * Called by edit to update the annotation and the tag
+     * after annotation properties have been edited
+     *
+     * @param {HTMLElement} tagOrAnno The tag (inside ckeditor) or annotation element (div.doc-section-link inside div.doc-section-links)
+     * @param {Object|string|null} values The values object (to update the annotation and tag) or null (to remove the annotation and tag).
+     *              In the values object,  keys starting with 'attr-' will be set on the tag.
+     *              All other keys will be treated as link values.
+     *              Each link value is an object with the following keys:
+     *              - label The text that will be displayed in the annotation and as text content of the tag
+     *                      All labels from the link values will be joined.
+     *              - tab The target tab of the link (e.g. properties)
+     *              - type The to_type property of the link
+     *              - id The target ID of the link
+
+     *              If the values object is a string, it will be parsed as JSON and converted to an object.
+
+     * @param {boolean} focus Whether the element should get focus
+     * @param {Object} typeData The type entity data
+     */
+    updateAnnoOrTag(tagOrAnno, values, focus, typeData) {
+        // Convert to JSON
+        if (typeof values === 'string') {
+            try {
+                values = JSON.parse(decodeURI(values));
+            } catch (e) {
+                console.log(e.toString());
+                values = {};
+            }
+        }
+
+        // Get tag elements
+        const tagId = (tagOrAnno.dataset.fromTagid) ?
+            tagOrAnno.dataset.fromTagid :
+            tagOrAnno.dataset.tagid;
+
+        const tag = (tagOrAnno.dataset.fromTagid) ?
+            this.getTagByTagId(tagId, this.doc.models.annotations._getSection(tagOrAnno)) :
+            tagOrAnno;
+
+        const tagContainer = this.getTagContainer(tag);
+
+        // Get annotations
+        const annoContainer = this.modelParent.models.annotations._getAnnoContainer(tagOrAnno);
+        const annos = this.modelParent.models.annotations._getAnnosByTagId(tagId, annoContainer);
+        let tagAttributes = {};
+
+        // Remove annotation
+        if (values === null) {
+            for (const anno of annos) {
+                this.doc.models.annotations.removeAnno(anno);
+            }
+            tagAttributes = null;
+        }
+
+        // Update annotation
+        else {
+
+            let annoIdx = 0;
+            let labels = [];
+            for (const [key, value] of Object.entries(values)) {
+
+                if (key.startsWith('attr-')) {
+                    tagAttributes[key.slice(5)] = value; // removes "attr-"
+                }
+                else {
+                    // Tag
+                    if (value.label !== undefined) {
+                        labels.push(value.label)
+                    }
+
+                    // Anno
+                    let anno = annos[annoIdx];
+                    if (anno) {
+                        if (value.label !== undefined) {
+                            let label = value.label;
+                            if ((label === '') && typeData) {
+                                label = typeData.caption || '';
+                            }
+
+                            anno.querySelector('span').textContent = label;
+                            anno.title = label;
+                        }
+
+                        if (value.tab !== undefined) {
+                            anno.dataset.toTab = value.tab;
+                            Utils.setInputValue(anno.querySelector('input[data-row-field=to_tab]'), value.tab);
+                        }
+
+                        if ((value.type !== undefined) && (value.type !== "undefined")) {
+                            anno.dataset.toType = value.type;
+                            Utils.setInputValue(anno.querySelector('input[data-row-field=to_type]'), value.type);
+                        }
+
+                        if (value.id !== undefined) {
+                            anno.dataset.toId = value.id;
+                            Utils.setInputValue(anno.querySelector('input[data-row-field=to_id]'), value.id);
+                        }
+
+                        this.doc.models.annotations.reviveAnno(anno);
+
+                        this.modelParent.models.annotations.addProperty(anno, value);
+                        annoIdx += 1;
+                    }
+                }
+
+            }
+
+            // Remove obsolete annos
+            for (let i = annoIdx; i < annos.length; i++) {
+                this.doc.models.annotations.removeAnno(annos[i]);
+            }
+
+            // Set tag title
+            if (labels.length > 0) {
+                tagAttributes['label'] = labels.join(' / ');
+            }
+        }
+
+        // Update tag attributes
+        const tagEditor = this.doc.getWidget(tagContainer, 'xmleditor', false);
+
+        if (tagEditor) {
+            tagEditor.updateTag(tagId, tagAttributes, true);
+        }
+
+    }
+
+    /**
+     * Open a window to set tag attributes or to remove the tag
+     *
+     * //TODO: split up the function
+     *
+     * @param {HTMLElement} annoOrTag The annotation element or the tag
+     * @param {function} setValue Called to change the value of the annotation and the tag.
+     *                            First parameter is the new value or null to remove annotation and tag.
+     * @param {boolean} isNew Whether the annotation was just created
+     */
+    editAttributes(annoOrTag, setValue, isNew) {
+        const self = this;
+
+        // Get the tag (it contains all data, atomic and molecular
+        let tagId;
+        let tagElement;
+        if (annoOrTag.classList.contains('doc-section-link')) {
+            tagId = annoOrTag.dataset.fromTagid;
+            tagElement = this.getTagByTagId(tagId, this.doc.models.annotations._getSection(annoOrTag));
+        } else {
+            tagId = annoOrTag.dataset.tagid;
+            tagElement = annoOrTag;
+        }
+        const tagContainer = this.getTagContainer(tagElement);
+        const editorWidget = this.doc.getWidget(tagContainer, 'xmleditor', false);
+
+
+        this.doc.models.types.loadTypes().then(
+            (types) => {
+
+                if (editorWidget && tagElement && tagContainer) {
+                    editorWidget.createEditor().then(editor => {
+                            const tagType = tagElement.dataset.type;
+                            const tagConfig = types.links[tagType] || types.footnotes[tagType];
+                            const linkContainer = this.modelParent.models.annotations._getAnnoContainer(annoOrTag);
+
+                            const tagAttributes = self.getTagAttributes(editor, tagId, tagConfig);
+                            const linkAttributes = self.getLinkAttributes(linkContainer, tagId, tagConfig);
+                            const moleculeAttributes = {...tagAttributes, ...linkAttributes};
+
+                            self.openAttributesDialog(tagConfig, setValue, isNew, tagContainer, moleculeAttributes);
+                        });
+                }
+
+                // Why? Broken annotations with missing tags?
+                else if (annoOrTag.dataset.rowType) {
+                    const annoType = annoOrTag.dataset.rowType;
+                    const annoConfig = types.links[annoType] || types.footnotes[annoType];
+                    self.openAttributesDialog(annoConfig,  setValue, isNew);
+                }
+            });
+    }
+
+
+    /**
+     * Show footnote editor
+     *
+     * @param annoOrTag {HTMLElement} The annotation element
+     * @param callback {function} Called when the value was changed
+     * @param isNew {boolean} Whether the annotation was just created
+     */
+    editFootnote(annoOrTag, callback, isNew) {
+        if (annoOrTag) {
+            this.doc.models.footnotes.edit(annoOrTag.dataset.tagid);
+        }
+    }
+
+    /**
+     * Open a property choose window
+     *
+     * @param annoOrTag {HTMLElement} The annotation or tag element
+     * @param callback {function} Called when the value was changed
+     * @param isNew {boolean} Whether the annotation was just created
+     */
+    editProperty(annoOrTag, callback, isNew) {
+
+        let anno = annoOrTag;
+        if (!anno.classList.contains('doc-section-link')) {
+            anno = this.modelParent.models.annotations._getAnnoByTag(
+                annoOrTag,
+                this.doc.models.annotations._getAnnoContainer(annoOrTag)
+            )
+            if (!anno) {
+                return
+            }
+        }
+
+        // @var selected The currently selected ID
+        const selected = this.modelParent.models.links.getAttributes(anno);
+        const selectedId = ((selected.id !== undefined) && (!selected.new)) ? selected.id : undefined;
+
+        // @var targets A list of allowed property types
+        const targets = this.modelParent.models.links.getTargets(anno);
+
+        const propertytype = Utils.getValue(targets, 'properties.0');
+        if (propertytype === undefined) {
+            return;
+        }
+
+        let url = App.databaseUrl + 'properties/index/' + propertytype + '?template=input&show=content';
+        url = (selectedId !== undefined) ? url + '&seek=' + selectedId : url;
+
+        if (selected.new && (selected.value !== undefined)) {
+            url = url + '&append=1&find=' + selected.value;
+        }
+
+        // Get anno configuration
+        let tagConfig = this.modelParent.models.links.getConfig(anno);
+
+        const limitProperties = Utils.getValue(tagConfig, 'config.fields.to.limit');
+        if ((limitProperties === 'article') && (this.rootTable === 'articles') && this.rootId) {
+            url = url + '&articles.field=id&articles.term=' + this.rootId;
+        }
+        if ((limitProperties === 'project')  && this.doc.models.articles){
+            const projectId = this.doc.models.articles.getProjectId();
+            if (projectId) {
+                url = url + '&projects=' + projectId;
+            }
+        }
+
+
+        // Allow empty or not
+        const required = Utils.getValue(tagConfig,'config.fields.to.required', true);
+        if (!required) {
+            url = url + '&empty=1';
+        }
+
+        if (Utils.getValue(tagConfig,'config.fields.to.append', false)) {
+            url = url + '&append=1';
+        }
+
+        // We don't need to manage fields here, as we have the external manage button in the popup
+        // if (Utils.getValue(tagConfig,'config.fields.to.manage', false)) {
+        //     url = url + '&manage=1';
+        // }
+
+        // External manage URL
+        let urlManage = App.databaseUrl + 'properties/index/' + propertytype;
+        urlManage = (selectedId !== undefined) ? (urlManage + '?seek=' + selectedId) : urlManage;
+
+        const options = {
+            title: "Select property",
+            height: 500,
+            width: 600,
+
+            focus: true,
+            openDropdown: true,
+
+            url: url,
+            external: urlManage,
+            selected: selected,
+            required : required,
+
+            removeOnCancel: isNew,
+            buttonRemove: !isNew,
+
+            onRemove: () => callback(null),
+            onSelect: (value) => callback(
+                value === null ? null : {
+                    propertytype : {
+                        'tab': 'properties',
+                        'id': value.value,
+                        'type': value.type,
+                        'new': (value.new || false) == true, // Will be implicitly converted to boolean by '=='
+                        'label': value.label || value.caption || ''
+                    }
+                }
+            )
+        };
+
+        new SelectWindow(options);
+    }
+
+    /**
+     * Open an article choose window for external links
+     *
+     * //TODO: move to the links or annotation model
+     *
+     * @param {HTMLElement} annoOrTag The annotation element
+     * @param {function} callback Called when the value was changed
+     * @param {boolean} isNew Whether the annotation was just created
+     */
+    editRecord(annoOrTag, callback, isNew) {
+        let anno = annoOrTag;
+        if (!anno.classList.contains('doc-section-link')) {
+            anno = this.modelParent.models.annotations._getAnnoByTag(
+                annoOrTag,
+                this.doc.models.annotations._getAnnoContainer(annoOrTag)
+            )
+            if (!anno) {
+                return
+            }
+        }
+
+        const targets = this.modelParent.models.links.getTargets(anno);
+
+        // TODO: do not transfer JSON, convert to explicit keys,
+        //       e.g. targets_articles=epi-articles&targets_sections=inscription,inscriptionpart
+        let url = App.databaseUrl
+            + 'articles/index'
+            + '?template=choose&show=content,searchbar'
+            + '&columns=signature,name, project_signature'
+            + '&targets='+ JSON.stringify(targets);
+
+        const project_id = this.modelParent.models.articles.getProjectId();
+        if (project_id) {
+            url = url + '&projects=' + project_id;
+        }
+
+        // TODO: select the selected option
+        //url = (selected.id !== undefined) ? url + '/' + selected.id : url;
+
+        const options = {
+            title: "External link",
+            //selected: selected.id,
+            height: 600,
+            width: 600,
+            focus: true,
+            url: url,
+
+            removeOnCancel: isNew,
+            buttonRemove: !isNew,
+            buttonSelect: true,
+            selectOnClick: false,
+
+            onRemove: () => callback(null),
+            onSelect: (element) => {
+                const value = element.dataset.value.split('-', 2);
+                const valueTab = value.length > 1 ? value[0] : 'articles';
+                const valueId = value.length > 1 ? value[1] : value[0];
+
+                callback(
+                    !element ? null : {
+                        'record' : {
+                            'tab': valueTab,
+                            'id': valueId,
+                            'label': element.dataset.label
+                        }
+                    }
+                )
+            }
+        };
+
+        new SelectWindow(options);
     }
 
     /**
@@ -2736,8 +3296,22 @@ export class LinksModel extends BaseDocumentModel {
      * @param callback {function} Called when the value was changed
      * @param isNew {boolean} Whether the annotation was just created
      */
-    editAnno(anno, callback, isNew) {
-        const {selected, targets} = this.modelParent.models.links.getTargets(anno);
+    editRelation(annoOrTag, callback, isNew) {
+
+        let anno = annoOrTag;
+        if (!anno.classList.contains('doc-section-link')) {
+            anno = this.modelParent.models.annotations._getAnnoByTag(
+                annoOrTag,
+                this.doc.models.annotations._getAnnoContainer(annoOrTag)
+            )
+            if (!anno) {
+                return
+            }
+        }
+
+        const selected = this.modelParent.models.links.getAttributes(anno);
+        const targets = this.modelParent.models.links.getTargets(anno);
+
         const targetList = this.doc.getTargetList(targets, selected);
 
         // TODO: add styling (hover effect)
@@ -2779,69 +3353,17 @@ export class LinksModel extends BaseDocumentModel {
                     const valueTab = valueParts.length > 1 ? valueParts[0] : undefined;
                     const valueId = valueParts.length > 1 ? valueParts[1] : valueParts[0];
                     callback({
-                        'tab': valueTab,
-                        'id': valueId,
-                        'label': value.label || value.caption || '',
+                        'relation' : {
+                            'tab': valueTab,
+                            'id': valueId,
+                            'label': value.label || value.caption || ''
+                        }
                     });
                 }
             }
         };
 
         new SelectWindow(options);
-    }
-}
-
-
-/**
- *  Manages tag attributes
- *
- * @param modelParent
- * @constructor
- */
-export class AttributesModel extends BaseDocumentModel {
-
-    /**
-     * Open a window to set tag attributes or to remove the tag
-     *
-     * //TODO: split up the function
-     *
-     * @param {HTMLElement} anno The annotation element
-     * @param {function} setValue Called to change the value of the annotation and the tag.
-     *                            First parameter is the new value or null to remove annotation and tag.
-     * @param {boolean} isNew Whether the annotation was just created
-     */
-    editAnno(anno, setValue, isNew) {
-        const self = this;
-        this.doc.models.types.loadTypes().then(
-            (types) => {
-                const tagName = anno.dataset.rowType;
-
-                types.links = types.links || {};
-                types.footnotes = types.footnotes || {};
-                const tagConfig = types.links[tagName] || types.footnotes[tagName];
-
-                const tagId = anno.dataset.fromTagid;
-                const tag = this.doc.models.annotations._getTagByTagId(tagId, this.doc.models.annotations._getAnnoSection(anno));
-                const container = this.doc.models.annotations._getTagContainer(tag);
-                const editorWidget = this.doc.getWidget(container, 'xmleditor', false);
-
-                if (editorWidget && tag && container) {
-                    editorWidget.createEditor().then(editor => {
-                            // Get attributes from xml editor
-                            let tagAttributes = {};
-
-                            // TODO: move calls to plugins.get('XmlTagEditing') into editors.js
-                            const editing = editor.plugins.get('XmlTagEditing');
-                            if (Utils.getValue(tagConfig, 'config.attributes', false)) {
-                                tagAttributes = editing.tagGetModelAttributes(editor, tagId);
-                            }
-
-                            self.openDialog(tagConfig, setValue, isNew, container, tagAttributes);
-                        });
-                } else {
-                    self.openDialog(tagConfig,  setValue, isNew);
-                }
-            });
     }
 
     /**
@@ -2851,17 +3373,21 @@ export class AttributesModel extends BaseDocumentModel {
      * @param {function} setValue
      * @param {boolean} isNew
      * @param {Element|undefined} widget
-     * @param {object} tagAttributes
+     * @param {object} moleculeAttributes An object with properties prefixed by 'tag' and 'links' that hold the respective attributes
      */
-    openDialog(tagConfig, setValue, isNew, widget, tagAttributes={}) {
+    openAttributesDialog(tagConfig, setValue, isNew, widget, moleculeAttributes={}) {
         const self = this;
         const caption = Utils.getValue(tagConfig, 'caption') || '';
         let options = {};
 
         // Create inputs in popup
-        const content = document.createElement('div');
-        content.classList.add('doc-attributes');
+        const tagAttributesConfig = Utils.getValue(tagConfig, 'config.attributes');
+        const content = self.createAttributesInputs(tagAttributesConfig, moleculeAttributes);
+        if (!tagAttributesConfig && !isNew) {
+            content.textContent = 'Do you want to remove the annotation?';
+        }
 
+        // Buttons
         let buttons = {};
         buttons.cancel = {
             'text': 'Cancel',
@@ -2889,47 +3415,27 @@ export class AttributesModel extends BaseDocumentModel {
             };
         }
 
-        const tagAttributesConfig = Utils.getValue(tagConfig, 'config.attributes');
-
         if (tagAttributesConfig) {
-            self.createInputs(content, tagAttributesConfig, tagAttributes);
-
             buttons.apply = {
                 'text': 'Apply',
                 'handler': (dialog) => {
-
-                    let value = {};
-                    const widgets = dialog.widgetElement.querySelectorAll('input[type=text], input[type=checkbox], select');
-                    let valid = true;
-                    if (widgets) {
-                        widgets.forEach((elm) => {
-                            valid = valid && (!elm.classList.contains('widget-validate') || elm.reportValidity());
-                            if (elm.getAttribute('type') === 'checkbox') {
-
-                                value[elm.name] = elm.checked ? elm.value : (elm.dataset.default || '');
-                            } else {
-                                value[elm.name] = elm.value;
-                            }
-                        });
+                    const {value, valid} = self.getAttributesInputValues(dialog);
+                    if (!valid) {
+                        return;
                     }
-
-                    if (valid) {
-                        setValue(value);
-                        dialog.closeWindow();
-                        if (widget) {
-                            widget.focus();
-                        }
+                    setValue(value);
+                    dialog.closeWindow();
+                    if (widget) {
+                        widget.focus();
                     }
                 }
             };
 
-        } else if (!isNew) {
-            content.textContent = 'Do you want to remove the annotation?';
         }
 
         options = {
             title: caption,
-            height: Utils.getValue(tagConfig, 'config.attributes') ? 400 : 150,
+            height: Utils.getValue(tagConfig, 'config.attributes') ? 450 : 150,
             width: 400,
             focus: true,
             dialogButtons: buttons
@@ -2938,7 +3444,21 @@ export class AttributesModel extends BaseDocumentModel {
         App.openPopup(content, options);
     }
 
-    createInputs(content, tagConfig, tagAttributes) {
+    /**
+     * Create a div containing all configured inputs
+     *
+     * @param {Object} tagConfig
+     * @param {Object} tagAttributes
+     * @return {HTMLDivElement}
+     */
+    createAttributesInputs(tagConfig, tagAttributes) {
+        const content = document.createElement('div');
+        content.classList.add('doc-attributes');
+
+        if (!tagConfig) {
+            return content;
+        }
+
         for (const [attrKey, attrConfig] of Object.entries(tagConfig)) {
 
             const fieldWrapper = Utils.spawnFromString('<div class="doc-content-element"></div>');
@@ -2973,6 +3493,7 @@ export class AttributesModel extends BaseDocumentModel {
 
             // Determine input type
             let inputType = attrConfig['input'];
+
             if ((inputType === undefined) && (typeof inputOptions === 'object')) {
                 inputType = 'select';
             } else if (inputType === undefined) {
@@ -2980,9 +3501,73 @@ export class AttributesModel extends BaseDocumentModel {
             }
 
             let input;
-            if (inputType === 'select') {
+
+            // Links to properties (molecular annotation)
+            if (inputType === 'link') {
+                // Molecular annotations:
+                // - They carry the name of the link config in the type property of each attribute config
+                // - The tagAttributes array contains both, tag attributes and link attributes.
+                //   Link attributes are named by the property type (TODO: not good!)
+                const annoType = Utils.getValue(attrConfig, 'type');
+                const types = this.modelParent.models.types._types;
+                const annoConfig = types.links[annoType] || types.footnotes[annoType];
+
+                const propertytype = Utils.getValue(annoConfig, 'config.fields.to.targets.properties.0');
+                const linksAttribute = 'data-links-' + propertytype;
+
+                if (propertytype !== undefined) {
+                    const selected = tagAttributes[linksAttribute] || {};
+                    const paneId = 'dropdown-pane-properties-' + propertytype;
+                    let paneElm = document.getElementById(paneId);
+                    if (paneElm) {
+                        paneElm.remove();
+                        paneElm = undefined;
+                    }
+
+                    // TODO: Make dry, see other property selectors
+                    let url = App.databaseUrl + 'properties/index/' + propertytype + '?template=choose&references=0&show=content';
+
+                    const limitProperties = Utils.getValue(annoConfig, 'config.fields.to.limit');
+                    if ((limitProperties === 'article') && (this.rootTable === 'articles') && this.rootId) {
+                        url = url + '&articles.field=id&articles.term=' + this.rootId;
+                    }
+                    if ((limitProperties === 'project')  && this.doc.models.articles){
+                        const projectId = this.doc.models.articles.getProjectId();
+                        if (projectId) {
+                            url = url + '&projects=' + projectId;
+                        }
+                    }
+
+                    if (Utils.getValue(annoConfig,'config.fields.to.append', false)) {
+                        url = url + '&append=1';
+                    }
+
+                    if (Utils.getValue(annoConfig,'config.fields.to.manage', false)) {
+                        url = url + '&manage=1';
+                    }
+
+                    let selectedId;
+                    if  ((selected.id !== undefined) && (!selected.new)) {
+                        url = url + '&seek=' + selected.id;
+                        selectedId = selected.id;
+                    }
+
+                    const inputData = {
+                        id: paneId,
+                        url: url,
+                        table: 'properties',
+                        type: propertytype,
+                        name: 'links-' + attrKey,
+                        label: selected.label || '',
+                        value: selectedId || ''
+                    };
+                    input = this.doc.spawnFromTemplate('template-widget-dropdown-selector', inputData);
+                    inputWrapper.appendChild(input);
+                }
+            }
+            else if (inputType === 'select') {
                 input = document.createElement('select');
-                input.setAttribute('name', attrKey);
+                input.setAttribute('name', 'attr-' + attrKey);
 
                 for (let inputKey in inputOptions) {
                     if (inputOptions.hasOwnProperty(inputKey)) {
@@ -3007,7 +3592,7 @@ export class AttributesModel extends BaseDocumentModel {
 
                 input = document.createElement('input');
                 input.setAttribute('type', 'checkbox');
-                input.setAttribute('name', attrKey);
+                input.setAttribute('name', 'attr-' + attrKey);
                 input.setAttribute('value', Object.keys(inputOptions)[1] || '1');
                 input.dataset.default = Object.keys(inputOptions)[0] || '0';
                 inputLabel.prepend(input);
@@ -3021,7 +3606,7 @@ export class AttributesModel extends BaseDocumentModel {
             } else {
                 input = document.createElement('input');
                 input.setAttribute('type', 'text');
-                input.setAttribute('name', attrKey);
+                input.setAttribute('name', 'attr-' + attrKey);
 
                 const inputPattern = attrConfig['values'];
                 if ((inputPattern !== undefined) && (typeof inputPattern === 'string')) {
@@ -3039,6 +3624,49 @@ export class AttributesModel extends BaseDocumentModel {
                 input.setAttribute('title', inputHelp);
             }
         }
+
+        return content;
+    }
+
+    /**
+     * Get values from the inputs
+     *
+     * @param  dialog
+     * @return {{valid: boolean, value: {}}}
+     */
+    getAttributesInputValues(dialog) {
+        let value = {};
+        const widgets = dialog.widgetElement.querySelectorAll('input[type=text], input[type=checkbox], select');
+        let valid = true;
+        if (widgets) {
+            widgets.forEach((elm) => {
+                valid = valid && (!elm.classList.contains('widget-validate') || elm.reportValidity());
+
+                // Links
+                if (elm.classList.contains('input-reference-text')) {
+                    const elmId = Utils.getNextSibling(elm,'.input-reference-value');
+                    const elmReference = elm.closest('.input.reference');
+
+                    const selected = {
+                        id : elmId.value,
+                        tab:  elmReference.dataset.referenceTab,
+                        type: elmReference.dataset.referenceType,
+                        label : elm.value
+                    };
+                    value[elmId.name] = selected;
+                }
+
+                // Tag attributes
+                else if (elm) {
+                    if (elm.getAttribute('type') === 'checkbox') {
+                        value[elm.name] = elm.checked ? elm.value : (elm.dataset.default || '');
+                    } else {
+                        value[elm.name] = elm.value;
+                    }
+                }
+            });
+        }
+        return {value: value, valid: valid};
     }
 }
 
@@ -3056,23 +3684,42 @@ export class TypesModel extends BaseDocumentModel {
         this._isLoading = false;
     }
 
-    // TODO: move to utils.js
+    /**
+     * Group types data by scope
+     * TODO do merging in PHP via URL parameter, remove merging code here
+     *
+     * @param {Object} data type configuration
+     * @return {Object}
+     */
     groupTypes(data) {
         let grouped = {};
 
         data = data.constructor === 'Array' ? data : Object.values(data);
+        // collect all versions
         for (const item of data) {
-            grouped[item.scope] = grouped[item.scope] || {};
-            grouped[item.scope][item.name] = item;
+            grouped[item.scope] ??= {};
+            grouped[item.scope][item.name] ??= [];
+            grouped[item.scope][item.name].push(item);
         }
+
+        // merge, assume that items are sorted (e.g. sort=sortno)
+        // fields like 'category' or 'caption' are joined
+        for (const scope of Object.keys(grouped)) {
+            grouped[scope] ??= {}; // empty as fallback/default
+            for (const [name, value] of Object.entries(grouped[scope])) {
+                grouped[scope][name] = Utils.replaceRecursive(true, ...value);
+            }
+        }
+
         return grouped;
     }
 
     /**
      * Fetch types
      *
-     * @param scope
-     * @returns Promise
+     * @param {string} scope The scope to load types for, e.g. 'links', 'footnotes'.
+     *                       Leave empty to get all types grouped by scope.
+     * @returns {Promise} A promise resolving to a types object.
      */
     async loadTypes(scope) {
         scope = scope || '';
@@ -3099,7 +3746,7 @@ export class TypesModel extends BaseDocumentModel {
                     // TODO: fetch paginated and only used types
                     // TODO: merge config modes (default, preview, code)
                     App.fetch(
-                        App.databaseUrl + 'types.json?limit=1000&modes=default',
+                        App.databaseUrl + 'types.json?sort=sortno&limit=1000&modes=default',
                         function (data) {
                             if (data.status === 'success') {
                                 self._types = self.groupTypes(data.types || {});
@@ -3117,6 +3764,49 @@ export class TypesModel extends BaseDocumentModel {
                 }
             }
         );
+    }
+
+    /**
+     * Get a list of annotation groups.
+     *
+     * The group configurations contain the following keys:
+     * - caption: The group caption. If a type without tag_type or with tag_type set to 'group' is found,
+     *            the type name is used. Otherwise, the group name is used.
+     *
+     * @param {string[]} scopes The scopes, a list of 'links' and/or 'footnotes'.
+     * @param {string[]} excludeTagTypes Exclude these tag types, e.g. ['character'].
+     * @return {Promise} A promise resolving to an object of group configurations keyed by group name.
+     */
+    async loadAnnoConfig(scopes = ['links', 'footnotes'], excludeTagTypes = ['character']) {
+        return new Promise( (resolve, reject) => {
+            this.loadTypes().then(types => {
+                const groups = {};
+
+                for (const scope of scopes) {
+                    const scopedTypes = types[scope] || {};
+                    Object.entries(scopedTypes).forEach(([typeName, type]) => {
+                        let tagType = type.config?.tag_type || '';
+                        tagType = tagType === 'group' ? '' : tagType; // group as alias for empty tag_type
+                        if (!excludeTagTypes.includes(tagType)) {
+                            const groupName = type.config?.group || '';
+                            if (groupName) {
+                                const groupConfig = groups[groupName] || {};
+                                groupConfig.caption = !tagType ? type.caption : (groupConfig.caption || groupName);
+                                groups[groupName] = groupConfig;
+                            }
+                        }
+                    });
+                }
+
+                // Sort groups by key (group name)
+                const sortedGroups = {};
+                Object.keys(groups).sort().forEach(key => {
+                    sortedGroups[key] = groups[key];
+                });
+
+                resolve(sortedGroups);
+            });
+        });
     }
 
     /**

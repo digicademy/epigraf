@@ -10,11 +10,17 @@
 
 namespace App\Model\Table;
 
+use App\Model\Entity\User;
 use App\Utilities\Converters\Attributes;
+use Cake\Collection\CollectionInterface;
+use Cake\Core\Configure;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\EventInterface;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Mailer\Mailer;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
+use Cake\Utility\Security;
 use Cake\Validation\Validator;
 use ArrayObject;
 use Cake\Datasource\EntityInterface;
@@ -36,7 +42,7 @@ class UsersTable extends BaseTable
 
     public $parameters = [
         'id' => 'list',
-        'columns' => 'list',
+        'columns' => 'list-or-false',
         'order' => 'list',
         'sort' => 'list',
         'selected' => 'list',
@@ -50,15 +56,23 @@ class UsersTable extends BaseTable
 
     public $captionField = 'username';
 
+    public static $states = [
+        USER_ACCOUNT_PENDING => 'Pending',
+        USER_ACCOUNT_ACTIVE => 'Active',
+        USER_ACCOUNT_INACTIVE => 'Inactive'
+    ];
+
     public static $locales = ['de_DE.UTF-8' => 'Deutsch', 'en_EN.UTF-8' => 'English'];
 
     public static $themes = [
         'light' => 'Light',
         'dark' => 'Dark',
         'terracotta' => 'Terracotta',
-        'serif' => 'Serif'
-//        'sapphire' => 'Sapphire',
-//        'leave' => 'Leave'
+        'serif' => 'Serif',
+        'sapphire' => 'Sapphire',
+        'leave' => 'Leave',
+        'minimal' => 'Minimal',
+        'dio' => 'DIO'
     ];
 
     /**
@@ -103,6 +117,7 @@ class UsersTable extends BaseTable
             'dependent' => false,
             'cascadeCallbacks' => false
         ]);
+
     }
 
     /**
@@ -128,9 +143,25 @@ class UsersTable extends BaseTable
             ->add('username', 'validFormat', [
                 'rule' => ['custom', '/^[0-9a-zA-Z]+$/'],
                 'message' => 'Only alphanumeric characters are allowed.'
-            ])
-            ->notEmptyString('password', 'A password is required')
-            ->add('role', 'inList', [
+            ]);
+
+        $validator
+            ->scalar('password')
+            ->maxLength('password', 255)
+            ->notEmptyString('password', 'A password is required');
+
+        if (!Configure::read('debug', false)) {
+            if (BaseTable::$userRole !== 'devel') {
+                $validator->add('password', 'custom', [
+                    'rule' => function ($value, $context) {
+                        return (bool)preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&]).{8,}$/', $value);
+                    },
+                    'message' => 'Password must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.'
+                ]);
+            }
+        }
+
+        $validator->add('role', 'inList', [
                 'rule' => ['inList', array_keys(PermissionsTable::$userRoles)],
                 'message' => 'Please enter a valid role'
             ])
@@ -152,10 +183,35 @@ class UsersTable extends BaseTable
      */
     public function findAuth(Query $query, array $options)
     {
-        $query->contain(['Databanks', 'PermissionsById', 'PermissionsByRole']);
+        $query
+            ->contain(['Databanks', 'PermissionsById', 'PermissionsByRole'])
+            ->find('guestPermissions');
+
         return $query;
     }
 
+
+    public function findGuestPermissions(Query $query, array $options): Query
+    {
+        $guestPermissions = $this
+            ->fetchTable('Permissions')
+            ->find('all')
+            ->where(['user_id IS' => null, 'user_role' => 'guest'])
+            ->toArray();
+
+        $query->formatResults(
+            function (CollectionInterface $results) use ($guestPermissions) {
+                return $results->map(
+                    function ($row) use ($guestPermissions) {
+                        $row['guestpermissions'] = $guestPermissions;
+                        return $row;
+                    }
+                );
+            }
+        );
+
+        return $query;
+    }
 
     /**
      * Find entities by request parameters
@@ -197,13 +253,13 @@ class UsersTable extends BaseTable
     }
 
     /**
-     * Contain table data
+     * Contain data necessary for table columns
      *
      * @param Query $query
      * @param array $options
      * @return Query
      */
-    public function findContainFields(Query $query, array $options)
+    public function findContainColumns(Query $query, array $options)
     {
         // TODO: automatically select contained associations
         $query = $query
@@ -213,7 +269,7 @@ class UsersTable extends BaseTable
             ->select($this->ArticlePipelines)
             ->select($this->BookPipelines);
 
-        $query = $query->find('sortFields', $options);
+        $query = $query->find('columnFields', $options);
 
         return $query;
     }
@@ -266,15 +322,27 @@ class UsersTable extends BaseTable
     /**
      * Before save method
      *
-     * @param EventInterface $event
-     * @param EntityInterface $entity
-     * @param ArrayObject $options
+     * ### Options
+     * - `keeppasswords` (bool): If set to true, passwords and tokens remain untouched.
+     *                           Otherwise, they are generated if empty. The SQL password is set if not empty.
      *
-     * @return void
+     * @param EventInterface $event
+     * @param User $entity
+     * @param array $options
      */
-    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
         if (empty($options['keeppasswords'])) {
+
+            // Set SQL password if the password was changed
+            if (!empty($entity->password) && !empty($entity->databank) && $entity->hasSqlAccess) {
+                $entity->databank->setPassword(
+                    'epi_' . $entity['username'],
+                    $entity->password
+                );
+            }
+
+            // Generate fresh access token and password
             if (empty($entity->accesstoken)) {
                 $entity->accesstoken = $this->generateAccesstoken();
             }
@@ -310,6 +378,48 @@ class UsersTable extends BaseTable
             }
         }
         return $rand_id;
+    }
+
+    /**
+     * Generate activation token that expires in 24 hours
+     *
+     * @param User $user
+     * @return User
+     */
+    public function generateActivationToken($user)
+    {
+        $user->activation_token = Security::hash(Security::randomBytes(32));
+        $user->activation_expires = FrozenTime::now()->addHours(18);
+        $user->activation_state = USER_ACCOUNT_PENDING;
+        return $user;
+    }
+
+    /**
+     * Send an email
+     *
+     * ### Content
+     * - `receiver` (string): The email address of the receiver
+     * - `subject` (string): The subject of the email
+     * - `body` (string): The body of the email
+     *
+     * @param array $content
+     * @return array
+     */
+    public function sendEmail($content)
+    {
+
+        if (empty($content['receiver'])) {
+            throw new BadRequestException(__('Email address is missing.'));
+        }
+
+        $email = new Mailer('default');
+        $mymail = $email
+            ->setEmailFormat('text')
+            ->setTo($content['receiver'])
+            ->setSubject($content['subject'])
+            ->deliver($content['body']);
+
+        return $mymail;
     }
 
     /**
@@ -356,21 +466,18 @@ class UsersTable extends BaseTable
             return $user;
         }
 
-        if (empty($scope)) {
-            return $user;
-        }
-
         // Update activity field and settings
         $now = FrozenTime::now();
         $settings = $user['settings'] ?? [];
 
-        if (!is_null($key)) {
+        if (!is_null($key) && !empty($scope)) {
             $settings[$scope][$key] = $value;
         }
-        else {
+        elseif (!empty($scope)) {
             $settings = array_replace_recursive($settings, [$scope => $value]);
         }
 
+        // TODO has no effect when settings are empty, why?
         $this->updateQuery()
             ->update()
             ->set(['lastaction' => $now, 'settings' => $settings])
@@ -425,13 +532,17 @@ class UsersTable extends BaseTable
     /**
      * Get columns to be rendered in table views
      *
+     *  ### Options
+     *  - type (string) Filter by type
+     *  - join (boolean) Join the columns to the query
+     *
      * @param array $selected The selected columns
      * @param array $default The default columns
-     * @param string|null $type Filter by type
+     * @param array $options
      *
      * @return array
      */
-    public function getColumns($selected = [], $default = [], $type = null)
+    public function getColumns($selected = [], $default = [], $options = [])
     {
         $default = [
             //To prevent autofill, use uname instead of username and map it in parseRequestParameters()
@@ -542,7 +653,7 @@ class UsersTable extends BaseTable
             ]
         ];
 
-        return parent::getColumns($selected, $default, $type);
+        return parent::getColumns($selected, $default, $options);
     }
 
 }

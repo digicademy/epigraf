@@ -28,7 +28,7 @@ class JobMutate extends Job
      *
      * @var string
      */
-    public $jobName = 'Mutate entities';
+    public $jobName = 'Mutate';
 
     /**
      * Number of entities that are processed in one iteration
@@ -56,11 +56,12 @@ class JobMutate extends Job
     }
 
     /**
-     * Return fields for the HTML configuration form
+     * Return fields for the job configuration form
      *
-     * The fields are obtained from the selected task
+     * The fields are obtained from the selected task.
+     * See BaseEntityHelper::entityTable() for the supported options.
      *
-     * @return array[]
+     * @return array[] Field configuration array.
      */
     protected function _getHtmlFields()
     {
@@ -89,6 +90,7 @@ class JobMutate extends Job
             [
                 'task' => false,
                 'selection' => false,
+                'id' => false,
                 $table => false
             ]
         );

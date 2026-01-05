@@ -161,10 +161,29 @@ class Link extends BaseEntity
         'from_tagname',
         'from_tagid',
         'to_id' => ['to_tab', 'to_id'],
+        'property' => 'to_id',
+        'article' => 'to_id',
+        'section' => 'to_id',
+        'footnote' => 'to_id',
         'to_value',
         'to_type',
-        'iri' => 'norm_iri' //TODO: rename in database
+        'iri' => 'norm_iri' //TODO: rename in database?
     ];
+
+    /**
+     * Check whether another entity depends on the entity
+     *
+     * @param \App\Model\Entity\BaseEntity $entity
+     * @return bool
+     */
+    public function hasRoot($entity)
+    {
+        if (!empty($entity) && ($this->root_tab === $entity->tableName) && ($entity->id === $this->root_id)) {
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Create a new property if the annotation links to a non-existing property
@@ -268,6 +287,16 @@ class Link extends BaseEntity
     }
 
     /**
+     * Get the property type of the annotation target if it is a property
+     */
+    protected function _getToPropertytype()
+    {
+        if (($this['to_tab'] == 'properties') && !empty($this->property)) {
+            return $this->property->propertytype;
+        }
+        return '';
+    }
+    /**
      * Get the annotation IRI based on its target or type
      *
      * // TODO: unify notation in other entities: define the  differences between
@@ -348,10 +377,10 @@ class Link extends BaseEntity
                 ['id' => $this->id]);
         }
         // TODO: Why can a from_tagid not be present? A warning comes up when saving an article.
-        elseif (count($this->root->links_by_tagid[$this->from_tagid] ?? []) > 1) {
-            $problems[] = __('Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id, 'tagid' => $this->from_tagid]);
-        }
+//        elseif (count($this->root->links_by_tagid[$this->from_tagid] ?? []) > 1) {
+//            $problems[] = __('Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you.',
+//                ['id' => $this->id, 'tagid' => $this->from_tagid]);
+//        }
 
         return $problems;
     }

@@ -33,9 +33,15 @@ class Logs
      * Parses the PHP error log to an array.
      *
      * @param string $filename
+     * @param array $filter Filter options:
+     * - 'type': array, filter by error type(s) (e.g. 'error', 'warning', 'notice')
+     * - 'exception': string, filter by exception content (e.g. 'PDOException')
+     * - 'endpoints': array, filter by request URL containing any of these strings
+     * - 'endpoints_flags': string, if set to 'rev', exclude matching endpoints instead of including them
+     *
      * @return \Generator
      */
-    static function parse($filename): \Generator
+    static function parse($filename, $filter): \Generator
     {
         $currentEntry = [];
         $currentKey = '';
@@ -51,7 +57,7 @@ class Logs
                 $currentMatches
             )) {
 
-                if (!empty($currentEntry)) {
+                if (!empty($currentEntry) && empty($currentEntry['skip'])) {
                     yield $currentEntry;
                 }
 
@@ -64,12 +70,20 @@ class Logs
                 if (preg_match('/^[^ ]+/', $currentLine, $currentMatches)) {
                     $currentLine = trim(substr($currentLine, strlen($currentMatches[0])));
                     $currentEntry['type'] = trim($currentMatches[0], " :\t\n\r\0\x0B");
+
+                    if (!empty($filter['type']) && !in_array($currentEntry['type'], (array)$filter['type'])) {
+                        $currentEntry['skip'] = true;
+                    }
                 }
 
                 // Exception type (e.g. "[PDOException]")
                 if (preg_match('/^\[[^\]]+]/', $currentLine, $currentMatches)) {
                     $currentLine = trim(substr($currentLine, strlen($currentMatches[0])));
                     $currentEntry['exception'] = trim($currentMatches[0], " :\t\n\r\0\x0B");
+
+                    if (!empty($filter['exception']) && stripos($currentEntry['exception'], $filter['exception']) === false) {
+                        $currentEntry['skip'] = true;
+                    }
                 }
 
                 $currentEntry['message'] = $currentLine;
@@ -95,9 +109,27 @@ class Logs
                 }
                 $currentEntry[$currentKey][] = $currentLine;
             }
+
+            // Filter endpoints
+            if (!empty($filter['endpoints']) && isset($currentEntry['Request URL'])) {
+                $matched = false;
+                foreach ((array)$filter['endpoints'] as $endpoint) {
+                    if (stripos($currentEntry['Request URL'],  trim($endpoint) ) !== false) {
+                        $matched = true;
+                        break;
+                    }
+                }
+
+                if (($filter['endpoints_flags'] ?? false) === 'rev') {
+                    $matched = !$matched;
+                }
+                if (!$matched) {
+                    $currentEntry['skip'] = true;
+                }
+            }
         }
 
-        if (!empty($currentEntry)) {
+        if (!empty($currentEntry) && empty($currentEntry['skip'])) {
             yield $currentEntry;
         }
     }

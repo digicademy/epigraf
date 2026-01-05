@@ -1,7 +1,7 @@
 {
     "items": [
         {
-            "value": "{\u0026quot;lat\u0026quot;:\u0026quot;51.96182703399873\u0026quot;,\u0026quot;lng\u0026quot;:\u0026quot;7.62451954667419\u0026quot;,\u0026quot;radius\u0026quot;:\u0026quot;10\u0026quot;,\u0026quot;val\u0026quot;:\u0026quot;0\u0026quot;}",
+            "value": "{\u0022lat\u0022:\u002251.96182703399873\u0022,\u0022lng\u0022:\u00227.62451954667419\u0022,\u0022radius\u0022:\u002210\u0022,\u0022val\u0022:\u00220\u0022}",
             "content": "M\u00fcnster",
             "id": "items-796"
         }

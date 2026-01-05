@@ -130,6 +130,7 @@ class XmlImport
      */
     var $renameattributes = false;
 
+    public $errors = [];
     /**
      * Constructor
      */

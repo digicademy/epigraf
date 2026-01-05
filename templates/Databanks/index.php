@@ -20,6 +20,10 @@
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Project databases')); ?>
 
+<div class="content-searchbar">
+    <?= $this->Table->filterBar('databanks') ?>
+</div>
+
 <!-- Content area -->
 <div class="content-main widget-scrollbox">
     <?=

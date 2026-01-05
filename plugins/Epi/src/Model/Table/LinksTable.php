@@ -17,6 +17,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
+use Epi\Model\Entity\Link;
 
 /**
  * Links table
@@ -44,6 +45,18 @@ class LinksTable extends BaseTable
         $this->setTable('links');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
+
+        $this->belongsTo(
+            'RootArticles',
+            [
+                'className' => 'Epi.Articles',
+                'foreignKey' => 'root_id',
+                //'strategy' => BelongsTo::STRATEGY_SELECT,
+                //'joinType' => Query::JOIN_TYPE_LEFT,
+                'propertyName' => 'root_article',
+                'conditions' => ['Links.root_tab' => 'articles', 'RootArticles.deleted' => 0]
+            ]
+        );
 
         $this->belongsTo(
             'Properties',
@@ -210,10 +223,10 @@ class LinksTable extends BaseTable
      * Save a new property as prepared in beforeMarshal()
      *
      * @param EventInterface $event
-     * @param $entity
-     * @param $options
+     * @param Link $entity
+     * @param array $options
      */
-    public function beforeSave(EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, $entity, $options = [])
     {
         // Create new property
         if (!empty($entity->newproperty)) {
@@ -223,4 +236,5 @@ class LinksTable extends BaseTable
             $entity->to_id = $property->id;
         }
     }
+
 }
