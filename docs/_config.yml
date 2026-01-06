@@ -147,14 +147,14 @@ defaults:
       path: ""   # all files in the root
       type: "pages"
     values:
-      layout: home
+      layout: single
       toc: false
-      author_profile: false
+      toc_sticky: false
       read_time: false
+      author_profile: false
       comments: false
       share: false
       related: false
-      toc_sticky: false
   - scope:
       path: "devel"   # all files under devel
       type: "pages"
@@ -164,12 +164,12 @@ defaults:
       sidebar:
         nav: "devel"
       toc: true
-      author_profile: false
+      toc_sticky: true
       read_time: true
+      related: false
+      author_profile: false
       comments: false
       share: false
-      related: true
-      toc_sticky: true
 
   - scope:
       path: "user"    # all files under help
@@ -180,10 +180,10 @@ defaults:
       sidebar:
         nav: "user"
       toc: true
-      author_profile: false
+      toc_sticky: true
       read_time: true
+      related: false
+      author_profile: false
       comments: false
       share: false
-      related: true
-      toc_sticky: true
 

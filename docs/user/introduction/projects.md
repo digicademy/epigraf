@@ -3,7 +3,7 @@ title: Introduction to Projects
 permalink: '/user/introduction/projects/'
 ---
 
-Articles are grouped into [projects](/projects).
+Articles are grouped into projects.
 A project includes, for example, the inscriptions of a region or a sample of threads on a social media platform.
 
 ![Epigraf Projects](../assets/img/projects_interface.png)

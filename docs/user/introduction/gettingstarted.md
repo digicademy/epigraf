@@ -5,7 +5,7 @@ permalink: '/user/introduction/gettingstarted/'
 
 The fastest way to get started is requesting a test account for an example database from us.
 Alternatively, install Epigraf on your own (local) server using the prepared docker setups
-as described in the [developer documentation](https://digicademy.github.io/epigraf/).
+as described in the [developer documentation](https://digicademy.github.io/epigraf/devel/).
 Installation should be finished within minutes if you are familiar with Docker.
 
 ## Create a project

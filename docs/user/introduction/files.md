@@ -18,9 +18,9 @@ The **database-specific files** are managed via the menu item "Files". Make sure
 
 Management of all other folders should be left to Epigraf:
 
--   backup: This is where the [database backups](../administration/databases) are located.
--   jobs: contains the result of [pipeline](../export/pipelines) jobs.
--   import: [Imported CSV files](../import/csv) are temporarily stored in this location.
+-   backup: This is where the [database backups](/user/administration/databases) are located.
+-   jobs: contains the result of [pipeline](/user/export/pipelines) jobs.
+-   import: [Imported CSV files](/user/import/csv) are temporarily stored in this location.
 
 **Cross-database files** are managed via the "Repository" menu item.
 The files are grouped into mounts. The shared mount contains at least the following folders:
@@ -48,8 +48,8 @@ If new files are uploaded, Epigraf automatically cleans up the file names.
 
 All files, whether images or documents, are accessed in Epigraf either via their file path or via an ID.
 
-- **Download links** offer the file for download, for example [/files/download/76459](/files/download/76459).
-- **Display links** display a file directly in the browser, if possible, for example [/files/display/76459](/files/display/76459).
+- **Download links** offer the file for download, for example `/files/download/76459`.
+- **Display links** display a file directly in the browser, if possible, for example `/files/display/76459`.
 
 In download and display links, the path and file name can also be specified as parameters as an alternative to the ID of a file.
 Example: `/files/display?root=shared&path=pages%2F01-start&filename=logo_mainz.png`.

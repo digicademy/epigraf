@@ -85,4 +85,4 @@ The domain model provides meaning from a specific research field to the data mod
     </table>
 </figure>
 
-How the data model is mapped to the domain model is defined in the [types configuration](../configuration).
+How the data model is mapped to the domain model is defined in the [types configuration](/user/configuration).

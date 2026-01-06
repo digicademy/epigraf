@@ -8,7 +8,6 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 title:
 permalink: /
-recent: false
 ---
 
 Epigraf is a research platform for collecting, annotating, linking and publishing multimodal text data.

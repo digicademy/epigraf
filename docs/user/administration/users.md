@@ -1,6 +1,6 @@
 ---
 title: User Management and Permissions
-permalink: '/user/administration/permissions/'
+permalink: '/user/administration/users/'
 ---
 
 By default, all data stored in Epigraf is only accessible after logging in with a user account.
@@ -26,7 +26,7 @@ Each user account is assigned a role that restricts the actions that can be take
         <tbody>
         <tr>
             <td>Guest</td>
-            <td>Can access published data without logging in. Usually, you should publish some pages for the main menu and one (<a href="/epi/epi_public/articles">public database</a>. After editors finished their work in own project databases, you publish data by transferring it into the public database.</td>
+            <td>Can access published data without logging in. Usually, you should publish some pages for the main menu and one public database. After editors finished their work in own project databases, you publish data by transferring it into the public database.</td>
             <td>No</td>
         </tr>
         <tr>
@@ -73,7 +73,7 @@ Each user account is assigned a role that restricts the actions that can be take
     </table>
 </figure>
 
-Epigraf has [hard-wired permissions](/permissions/endpoints) for the user roles.
+Epigraf has hard-wired permissions for the user roles (in the footer of the user management page, click the endpoints button).
 Thus, each user has a primary role that determines the base permissions.
 While admins and devels can access every database, other users need explicit access permissions for a project database.
 You either use the Grant and Revoke buttons in the user profile, or open the permissions page that gives you more fine-grained control.
@@ -145,11 +145,11 @@ A permission record consists of the following fields:
         </tr>
         <tr>
             <td>Entity Name</td>
-            <td>Name of the project database, including the `epi_` prefix. Names and IDs of databases can be found in the [database management page](/databanks).  The asterisk can be used to grant access to all databases. For  global endpoints that are not bound to a specific database, use the asterisk. To grant access to a service endpoint, enter the service name (e.g. http, llm, reconcile, geo).</td>
+            <td>Name of the project database, including the `epi_` prefix. Names and IDs of databases can be found in the database management page.  The asterisk can be used to grant access to all databases. For  global endpoints that are not bound to a specific database, use the asterisk. To grant access to a service endpoint, enter the service name (e.g. http, llm, reconcile, geo).</td>
         </tr>
         <tr>
             <td>Entity ID</td>
-            <td>The entity ID field is used to assign permissions to specific data records, for example to lock entities so that user's don't interfere when working in the same database. Usually you leave the ID field empty, or you set it to the database ID. Names and IDs of databases can be found in the [database management page](/databanks).</td>
+            <td>The entity ID field is used to assign permissions to specific data records, for example to lock entities so that user's don't interfere when working in the same database. Usually you leave the ID field empty, or you set it to the database ID. Names and IDs of databases can be found in the database management page.</td>
         </tr>
         <tr>
             <td>Permission Name</td>

@@ -13,7 +13,9 @@ For XML fields, you define the allowed annotations, i.e. links and footnotes. Al
 Note, in the documentation below, you can fully customize all fields not marked as reserved or internal.
 For reserved and interal fields you can customize their visiblity and labels. See the <a href="../configuration/fields">field configuration documentation</a> for further details.
 
-Based on the configuration, an article can be displayed in different modes. The view mode is a readonly representation of the article and the edit mode is used to modify an article. Collections of articles can be displayed in the table view where each article is a row,
+Based on the configuration, an article can be displayed in different modes.
+The view mode is a readonly representation of the article and the edit mode is used to modify an article.
+Collections of articles can be displayed in the table view where each article is a row,
 in lanes and tiles with short previews of an article. Further, maps, timelines and network graphs can be used to place articles in contexts. Those view options are configured in the article type. For example, in the columns key you configure how the columns in the overview table are filled with article fields or with data from the contained sections and items (as well as connected project entities and user entities). See the <a href="../configuration/columns">columns configuration documentation</a> for further details.
 
 ## Article type configuration

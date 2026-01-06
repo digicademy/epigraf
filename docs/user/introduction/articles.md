@@ -18,8 +18,8 @@ Items include text, images and references to categories.
 In text fields, annotations can be used to format text and to text segments
 to categories. Footnotes are a special type of annotation containing comments on a text segment.
 
-Articles and all associated data can either be [imported](../import) from external files,
-transferred from other databases, or [created and edited](/articles) directly in the user interface.
+Articles and all associated data can either be [imported](/user/import) from external files,
+transferred from other databases, or created and edited directly in the user interface.
 
 # Navigating articles
 
@@ -400,7 +400,7 @@ Windows systems provide the [Windows Character Map](https://support.microsoft.co
 For example, you can locate the Greek alphabet in the extended view by grouping by "Unicode subrange".
 For Windows users, an alternative is [BabelMap](https://www.babelstone.co.uk/Software/BabelMap.html).
 
-Particularly frequently used special characters can be [added to](../configuration/annotations) the Epigraf toolbar by administrators.
+Particularly frequently used special characters can be [added to](/user/configuration/annotations) the Epigraf toolbar by administrators.
 
 # Batch Processing
 

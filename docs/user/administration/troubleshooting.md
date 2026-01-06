@@ -8,7 +8,7 @@ permalink: '/user/administration/troubleshooting/'
 
 This error can occur if the section order is broken.
 This may happen if a parent section has been deleted without deleting the child sections.
-In the [error Log](/pages/show/logs), you should see the message
+In the error log (click the settings button in the top right page corner), you should see the message
 "The tree contains items with invalid parent IDs or with an invalid order".
 
 To fix the structure:
