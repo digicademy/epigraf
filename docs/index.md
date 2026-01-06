@@ -20,14 +20,14 @@ It includes a publication system for various document formats such as Word or TE
 
 
 - You want to know how Epigraf looks like and what it is good for?
-  The [user documentation](/user/) provides an introduction to Epigraf,
-  its configuration and administration.
+  The [user documentation](user/) provides an introduction to Epigraf,
+  including its configuration and administration.
 
-- Epigraf is an open source project under active development.
-  The [developer documentation](/devel/) guides you to installing Epigraf
-  and provides an overview about the tech stack.
-  The [Source code](https://github.com/digicademy/epigraf) is released on GitHub after major updates.
-  We are open to collaborative development and appreciate getting in touch with you.
+- Epigraf is an open source project that is under active development.
+  The [developer documentation](devel/) will guide you through
+  the installation process and provide an overview of the technology stack.
+  The [source code](https://github.com/digicademy/epigraf) is released on GitHub after major updates.
+  We welcome collaborative development and look forward to hearing from you.
 
 Epigraf emerged from the inter-academic edition project "The German Inscriptions of the Middle Ages and the Early Modern Period".
 It is used in the nine inscription research centers of the six participating academies of sciences.
