@@ -1,6 +1,6 @@
 ---
 title: Categories
-permalink: '/user/configuration/categories/'
+permalink: 'user/configuration/categories/'
 ---
 
 # The composition of category systems

@@ -1,6 +1,6 @@
 ---
 title: Administration
-permalink: '/user/administration/'
+permalink: 'user/administration/'
 ---
 
 Epigraf can handle different research teams on the same server.

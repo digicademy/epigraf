@@ -1,6 +1,6 @@
 ---
 title: Configuration
-permalink: '/user/configuration/'
+permalink: 'user/configuration/'
 ---
 
 

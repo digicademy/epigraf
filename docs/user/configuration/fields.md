@@ -1,6 +1,6 @@
 ---
 title: Fields configuration
-permalink: '/user/configuration/fields/'
+permalink: 'user/configuration/fields/'
 ---
 
 For all entity types – articles, sections, items, properties, links, and footnotes – the `fields` key is used along a field configuration object to specify which fields are to be used and how they are labelled.

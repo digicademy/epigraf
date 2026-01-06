@@ -1,6 +1,6 @@
 ---
 title: Articles
-permalink: '/user/configuration/articles/'
+permalink: 'user/configuration/articles/'
 ---
 
 

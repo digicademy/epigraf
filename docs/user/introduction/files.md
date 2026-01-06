@@ -1,6 +1,6 @@
 ---
 title: Working with Files
-permalink: '/user/introduction/files/'
+permalink: 'user/introduction/files/'
 ---
 
 Images, PDF files or other documents can be integrated into the project databases.
@@ -18,9 +18,9 @@ The **database-specific files** are managed via the menu item "Files". Make sure
 
 Management of all other folders should be left to Epigraf:
 
--   backup: This is where the [database backups](/user/administration/databases) are located.
--   jobs: contains the result of [pipeline](/user/export/pipelines) jobs.
--   import: [Imported CSV files](/user/import/csv) are temporarily stored in this location.
+-   backup: This is where the [database backups](user/administration/databases) are located.
+-   jobs: contains the result of [pipeline](user/export/pipelines) jobs.
+-   import: [Imported CSV files](user/import/csv) are temporarily stored in this location.
 
 **Cross-database files** are managed via the "Repository" menu item.
 The files are grouped into mounts. The shared mount contains at least the following folders:

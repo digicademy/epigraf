@@ -1,6 +1,6 @@
 ---
 title: Export Data using Pipelines
-permalink: '/user/export/pipelines/'
+permalink: 'user/export/pipelines/'
 ---
 
 
@@ -307,6 +307,6 @@ The *attribute* column refers to the [Extensible Metadata Platform](https://en.w
 
 To transfer metadata into image files, you need to create an export pipeline
 that puts all images into a ZIP-archive.
-In the [item type configuration](/user/configuration/articles) for images you can explicitly define metadata input fields.
+In the [item type configuration](user/configuration/articles) for images you can explicitly define metadata input fields.
 In the article export task, contained in a pipeline, you use placeholder strings to map article data (including image items
 and project data) to specific metadata attributes.

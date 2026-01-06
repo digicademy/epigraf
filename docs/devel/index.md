@@ -7,11 +7,11 @@
 #
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 title: Welcome Developers!
-permalink: '/devel/'
+permalink: 'devel/'
 ---
 
 *Note: You are currently reading the developer documentation.
-For information about how to use and configure Epigraf, see the [user documentation](/user/).*
+For information about how to use and configure Epigraf, see the [user documentation](user/).*
 
 Epigraf has a history.
 You will find archeological layers and legacy code from former development epochs
@@ -23,7 +23,7 @@ Look out for the flowers that are in bloom and help nurture the garden.
 ## Getting Started
 
 Epigraf is a classical web application.
-The [server infrastructure](/devel/servers) to run Epigraf consists of an Apache web server,
+The [server infrastructure](devel/servers) to run Epigraf consists of an Apache web server,
 a MariaDB database server, file storage, and optionally a Redis cache server.
 You can use the prepared docker compose setup to run the application:
 
@@ -58,18 +58,18 @@ You can use the prepared docker compose setup to run the application:
    with the username `admin` and the password `admin`.
 
 What's next?
-Before you proceed, get familiar with the [core concepts](/user/coreconcepts/) of Epigraf.
-Then learn how to [adapt Epigraf](/user/configuration/) to your use case.
+Before you proceed, get familiar with the [core concepts](user/coreconcepts/) of Epigraf.
+Then learn how to [adapt Epigraf](user/configuration/) to your use case.
 
 ## Architecture
 
-The [frontend](/devel/frontend) is rendered in the browser using HTML, CSS, and JavaScript. Frontend logic is based on the EpiWidJs framework.
-The [backend](/devel/backend) is implemented using the CakePHP framework and contains the application logic.
-MariaDB and the file system is used to store [data](/devel/database). There is one application database for managing
+The [frontend](devel/frontend) is rendered in the browser using HTML, CSS, and JavaScript. Frontend logic is based on the EpiWidJs framework.
+The [backend](devel/backend) is implemented using the CakePHP framework and contains the application logic.
+MariaDB and the file system is used to store [data](devel/database). There is one application database for managing
 user accounts and application-wide data. For the research data, multiple project databases are created.
 Frontend and database content is cached using Redis. If no Redis server is available, the cache is stored in the file system.
 
-![Epigraf architecture](assets/img/epigraf-architecture.png)
+![Epigraf architecture](devel/assets/img/epigraf-architecture.png)
 
 ## Directory structure
 

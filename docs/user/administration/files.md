@@ -1,6 +1,6 @@
 ---
 title: Files and Folders
-permalink: '/user/administration/files/'
+permalink: 'user/administration/files/'
 ---
 
 You can add a description to each folder that explains the role of the folder to users.
@@ -19,7 +19,7 @@ Example:
 
 ``` plaintext
 {
-  "origin": "https://gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epipresets/-/archive/devel/epipresets-devel.zip",
+  "origin": "https://gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epipresets/-/archivedevel/epipresets-devel.zip",
   "unzip": "epipresets-devel"
 }
 ```

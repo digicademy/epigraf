@@ -118,4 +118,4 @@ The application object implements methods...
 
 The `App` object is expanded by functions in widgets.js
 that attach JavaScript classes to HTML elements.
-See the [widget documentation](/devel/frontend/widgets).
+See the [widget documentation](devel/frontend/widgets).

@@ -1,6 +1,6 @@
 ---
 title: Introduction to Notes
-permalink: '/user/introduction/notes/'
+permalink: 'user/introduction/notes/'
 ---
 
 Notes and the wiki are used for the coordination of research efforts.
