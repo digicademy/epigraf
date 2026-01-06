@@ -1,6 +1,6 @@
 ---
 title: Database Administration
-permalink: 'user/administration/databases/'
+permalink: '/epigraf/user/administration/databases/'
 ---
 
 Epigraf manages separate databases for different projects.

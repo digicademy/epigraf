@@ -1,6 +1,6 @@
 ---
 title: Articles
-permalink: 'user/configuration/articles/'
+permalink: '/epigraf/user/configuration/articles/'
 ---
 
 

@@ -11,11 +11,11 @@ The tables include:
 - *databanks*: The configured project databases.
 - *users*: User data, including contact information and settings
 - *permissions*: User permissions,
-  see [Authentication and authorization](devel/backend/controller/#authentication-and-authorization).
+  see [Authentication and authorization](/epigraf/devel/backend/controller/#authentication-and-authorization).
 - *files*: Metadata for files managed by Epigraf.
 - *docs*: Wiki, help and public pages.
 - *pipelines*: Export pipeline configurations.
-- *jobs*: Each [batch operation](devel/database/batch-operations) generates a job.
+- *jobs*: Each [batch operation](/epigraf/devel/database/batch-operations) generates a job.
 
 See the entity classes in `src/model/Entity` for further information about the available fields in each table.
 
@@ -49,7 +49,7 @@ which includes the following tables:
 See below and see the entity classes in `plugins/Epi/src/model/Entity` for further information
 about the available fields in each table.
 
-![Graphic illustration of the data model](devel/assets/img/epigraf-data-model.png)
+![Graphic illustration of the data model](/epigraf/devel/assets/img/epigraf-data-model.png)
 
 ## Structure of the Project Databases
 

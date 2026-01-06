@@ -1,9 +1,9 @@
 ---
 title: Import Data Using the API
-permalink: 'user/import/api/'
+permalink: '/epigraf/user/import/api/'
 ---
 
-Importing data into Epigraf requires mapping your data to the [Relational Article Model](user/coreconcepts/model).
+Importing data into Epigraf requires mapping your data to the [Relational Article Model](/epigraf/user/coreconcepts/model).
 The most straightforward method is preparing your data with R using the [rpigraf-package](https://github.com/datavana/rpigraf/).
 In the [example vignette](https://github.com/datavana/rpigraf/blob/main/vignettes/import.Rmd), you find code chunks for importing data and for getting it back from Epigraf.
 Further, the package implements some useful features for data analysis such as showing annotated text segments.
@@ -45,7 +45,7 @@ The following example transforms three cases from a table into the relational ar
 
 That's how the result looks like:
 
-![Epigraf API](user/assets/img/import_api.png)
+![Epigraf API](/epigraf/user/assets/img/import_api.png)
 
 
 The craft functions either map existing columns or fill in values not

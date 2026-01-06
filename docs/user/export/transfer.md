@@ -1,6 +1,6 @@
 ---
 title: Transfer Entities between Databases
-permalink: 'user/export/transfer/'
+permalink: '/epigraf/user/export/transfer/'
 ---
 
 

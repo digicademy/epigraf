@@ -1,6 +1,6 @@
 ---
 title: Columns Configuration
-permalink: 'user/configuration/columns/'
+permalink: '/epigraf/user/configuration/columns/'
 ---
 
 For the overview tables for projects, articles, and categories, the `columns` key specifies which columns are available.

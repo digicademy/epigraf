@@ -1,6 +1,6 @@
 ---
 title: Trouble shooting
-permalink: 'user/administration/troubleshooting/'
+permalink: '/epigraf/user/administration/troubleshooting/'
 ---
 
 
