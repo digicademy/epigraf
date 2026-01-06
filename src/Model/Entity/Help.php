@@ -56,9 +56,13 @@ class Help extends Entity
                     return preg_replace('/[^a-z0-9]+/', '-', strtolower($text));
                 };
 
+                // Process URLs (translate from Jekyll documentation paths to Epigraf paths)
                 $baseUrl = $this->getBaseURL();
                 $parser->url_filter_func = function ($url) use ($baseUrl) {
 
+                    if (str_starts_with($url, '/user/')) {
+                        $url = preg_replace('/^\/user\//', '/help/', $url);
+                    }
                     if (!str_starts_with($url, 'http') && !str_starts_with($url, '/')) {
                         $url = $baseUrl . $url;
                     }
@@ -130,7 +134,7 @@ class Help extends Entity
      */
     public static function getHelpFolder(): string
     {
-        return ROOT . DS . 'help' . DS;
+        return ROOT . DS . 'docs/user' . DS;
     }
 
     protected static function addMenuItems($items, $menu, $level = 0, $parentPath = '')

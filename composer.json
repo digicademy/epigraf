@@ -1,7 +1,7 @@
 {
     "name": "epigraf/app",
     "description": "Epigraf",
-    "version": "5.2.0",
+    "version": "5.2.1",
     "type": "project",
     "license": "GPL-2.0",
     "require": {

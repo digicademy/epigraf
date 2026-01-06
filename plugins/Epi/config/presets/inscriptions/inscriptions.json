@@ -1,5 +1,5 @@
 {
-    "name" : "Example inscription database",
+    "name" : "Example inscription database (The German Inscriptions)",
     "category" : "Examples",
-    "description" : "Example database containing a small number of epigraphic articles"
+    "description" : "A small number of epigraphic articles from the DI project"
 }

@@ -1,49 +1,127 @@
 main:
-  - title: "Introduction"
-    url: /
+  - title: "User Documentation"
+    url: /user/
+  - title: "Developer Documentation"
+    url: /devel/
   - title: "GitHub"
     url: https://github.com/digicademy/epigraf
   - title: "Credits"
     url: /credits/
 
-docs:
+devel:
   - title: "Servers"
-    url: /servers/
+    url: /devel/servers/
   - title: "Backend"
-    url: /backend/
+    url: /devel/backend/
     children:
       - title: "Controller"
-        url: /backend/controller/
+        url: /devel/backend/controller/
       - title: "Model"
-        url: /backend/model/
+        url: /devel/backend/model/
       - title: "View"
-        url: /backend/view/
+        url: /devel/backend/view/
   - title: "Frontend"
-    url: /frontend/
+    url: /devel/frontend/
     children:
       - title: "Templates"
-        url: /frontend/templates/
+        url: /devel/frontend/templates/
       - title: "Widgets"
-        url: /frontend/widgets/
+        url: /devel/frontend/widgets/
       - title: "Themes"
-        url: /frontend/themes/
+        url: /devel/frontend/themes/
       - title: "Translation"
-        url: /frontend/translation/
+        url: /devel/frontend/translation/
   - title: "Database"
-    url: /database/
+    url: /devel/database/
     children:
       - title: "Datamodel"
-        url: /database/datamodel/
+        url: /devel/database/datamodel/
       - title: "Backups"
-        url: /database/backups/
+        url: /devel/database/backups/
       - title: "Batch Operations"
-        url: /database/batch-operations/
+        url: /devel/database/batch-operations/
   - title: "Tests"
-    url: /tests/
+    url: /devel/tests/
     children:
       - title: "Backend Tests"
-        url: /tests/backend/
+        url: /devel/tests/backend/
       - title: "Frontend Tests"
-        url: /tests/frontend/
+        url: /devel/tests/frontend/
       - title: "Acceptance Tests"
-        url: /tests/acceptance/
+        url: /devel/tests/acceptance/
+
+user:
+  - title: "Introduction"
+    url: /user/introduction/
+    children:
+      - title: "Get started"
+        url: /user/introduction/gettingstarted/
+      - title: "About articles"
+        url: /user/introduction/articles/
+      - title: "About categories"
+        url: /user/introduction/properties/
+      - title: "About projects"
+        url: /user/introduction/projects/
+      - title: "About files"
+        url: /user/introduction/files/
+      - title: "About notes"
+        url: /user/introduction/notes/
+  - title: "Core concepts"
+    url: /user/coreconcepts/
+    children:
+      - title: "RAM"
+        url: /user/coreconcepts/model/
+      - title: "IRIs"
+        url: /user/coreconcepts/iris/
+      - title: "Keys"
+        url: /user/coreconcepts/keys/
+      - title: "API"
+        url: /user/coreconcepts/api/
+  - title: "Import"
+    url: /user/import/
+    children:
+      - title: "CSV"
+        url: /user/import/csv/
+      - title: "XML"
+        url: /user/import/xml/
+      - title: "API"
+        url: /user/import/api/
+  - title: "Export"
+    url: /user/export/
+    children:
+      - title: "Pipelines"
+        url: /user/export/pipelines/
+      - title: "API"
+        url: /user/export/api/
+      - title: "Transfer"
+        url: /user/export/transfer/
+  - title: "Administration"
+    url: /user/administration/
+    children:
+      - title: "Databases"
+        url: /user/administration/databases/
+      - title: "Users"
+        url: /user/administration/users/
+      - title: "Files"
+        url: /user/administration/files/
+      - title: "Pages"
+        url: /user/administration/pages/
+      - title: "Troubleshooting"
+        url: /user/administration/troubleshooting/
+  - title: "Configuration"
+    url: /user/configuration/
+    children:
+      - title: "Articles"
+        url: /user/configuration/articles/
+      - title: "Categories"
+        url: /user/configuration/categories/
+      - title: "Annotations"
+        url: /user/configuration/annotations/
+      - title: "Fields"
+        url: /user/configuration/fields/
+      - title: "Columns"
+        url: /user/configuration/columns/
+      - title: "Triples"
+        url: /user/configuration/triples/
+      - title: "Services"
+        url: /user/configuration/services/
