@@ -1,11 +1,11 @@
 ---
 title: Getting Started
-permalink: '/epigraf/user/introduction/gettingstarted/'
+permalink: '/user/introduction/gettingstarted/'
 ---
 
 The fastest way to get started is requesting a test account for an example database from us.
 Alternatively, install Epigraf on your own (local) server using the prepared docker setups
-as described in the [developer documentation](https://digicademy.github.io/epigraf/epigraf/devel/).
+as described in the [developer documentation](https://digicademy.github.io/epigraf/devel/).
 Installation should be finished within minutes if you are familiar with Docker.
 
 ## Create a project
@@ -31,15 +31,15 @@ To edit a specific part of the article, click it:
   (b) Enter a search term into the field and the cursor jumps to the first property starting with the term.
   Then click on the entry and confirm with the Apply button. It is quicker to use the keyboard: press Enter twice to accept the selection. The Remove button removes the selected property from the article section or annotation.
 
-![Property selection example](/epigraf/user/assets/img/properties_selection.jpg)
+![Property selection example](/user/assets/img/properties_selection.jpg)
 
 In some sections, additional items can be added or existing items removed – for example, to include multiple languages or text types into the article. Try out the plus and minus buttons (see screenshot)!
 
-![Item list example](/epigraf/user/assets/img/items_add.jpg)
+![Item list example](/user/assets/img/items_add.jpg)
 
 Some basic metadata of the article – in particular the title, number and project selection – can be found at the very bottom of the page, below all sections.
 
-![Article metadata](/epigraf/user/assets/img/articles_fields.jpg)
+![Article metadata](/user/assets/img/articles_fields.jpg)
 
 Now, enter something into the **description field** of the article, for example "Stars are the suns of foreign worlds". You can also explore other editing features.
 

@@ -1,6 +1,6 @@
 ---
 title: Configuration
-permalink: '/epigraf/user/configuration/'
+permalink: '/user/configuration/'
 ---
 
 

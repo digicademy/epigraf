@@ -1,6 +1,6 @@
 ---
 title: Triples Configuration
-permalink: '/epigraf/user/configuration/triples/'
+permalink: '/user/configuration/triples/'
 ---
 
 Epigraf implements a generator for triples in accordance with the Resource Description Framework.

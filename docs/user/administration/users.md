@@ -1,6 +1,6 @@
 ---
 title: User Management and Permissions
-permalink: '/epigraf/user/administration/users/'
+permalink: '/user/administration/users/'
 ---
 
 By default, all data stored in Epigraf is only accessible after logging in with a user account.

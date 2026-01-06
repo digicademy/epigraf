@@ -6,7 +6,7 @@
 # @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
 #
 title: Welcome to Epigraf!
-permalink: '/epigraf/user/'
+permalink: '/user/'
 toc: false
 ---
 
@@ -18,7 +18,7 @@ and triples in TTL, JSON-LD and RDF/XML.
 
 Epigraf's modules support the entire research data lifecycle ([Higgins 2008](https://doi.org/10.2218/ijdc.v3i1.48)):
 
-![Epigraf Modules](/epigraf/user/assets/img/modules.png)
+![Epigraf Modules](/user/assets/img/modules.png)
 
 - **Collection**: Data sets can be both edited in the application as well as imported from files. The core concepts of Epigraf are articles and properties used in articles.
 - **Annotation**: Every article is composed of sections, that can be flexibly combined, containing text and all relevant metadata (descriptions, comments, categorizations via vocabularies) as well as embedded files or images. A configurable toolbar is available for the annotation of texts.
@@ -32,7 +32,7 @@ It is used in the nine inscription research centers of the six participating aca
 The application is being developed by the Digital Academy of Sciences and Literature \| Mainz and the Digital Media & Computational Methods Research Group at the University Münster.
 
 Epigraf is an open-source project that is under active development.
-The [developer documentation](https://digicademy.github.io/epigraf/epigraf/devel/) on GitHub
+The [developer documentation](https://digicademy.github.io/epigraf/devel/) on GitHub
 provides an overview of the tech stack and guides you through the installation process.
 The source code is released on GitHub following major updates.
 We welcome collaborative development and look forward to hearing from you.

@@ -1,6 +1,6 @@
 ---
 title: Introduction
-permalink: '/epigraf/user/introduction/'
+permalink: '/user/introduction/'
 ---
 
 # The user interface
@@ -26,7 +26,7 @@ Throughout the application, some standard functions are implemented:
 
 Note that sidebars (and columns) can be resized or collapsed using the mouse.
 
-![Epigraf Interface](/epigraf/user/assets/img/articles_interface.png)
+![Epigraf Interface](/user/assets/img/articles_interface.png)
 
 
 # Editing in a team

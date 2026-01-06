@@ -1,6 +1,6 @@
 ---
 title: Import Data
-permalink: '/epigraf/user/import/'
+permalink: '/user/import/'
 ---
 
 # The Relational Article Model (RAM)
@@ -9,7 +9,7 @@ CSV files and XML files can be imported into the databases using the "Import" bu
 Alternatively, the API can be used to import data. An R package and a Python package simplify API operations.
 
 The import function allows both, new articles, sections and categories to be created and existing entities to be updated.
-To prepare data imports, a basic understanding of the [data model](/epigraf/user/coreconcepts/model) will be helpful.
+To prepare data imports, a basic understanding of the [data model](/user/coreconcepts/model) will be helpful.
 Epigraf implements the Relational Article Model (RAM) to store documents in tables for projects, articles, sections, items, links, footnotes and properties.
 
 When it comes to data import, the most crucial aspect of the RAM are IRIs. IRIs are globally unique identifiers. In Epigraf databases,
@@ -551,7 +551,7 @@ See the aliases and their corresponding database fields as listed below.
 Projects contain articles, articles consist of sections and sections contain items. The items in turn refer to properties.
 The link between all these entities is established during import via IDs. IDs can be created in three different ways:
 
--   **IRI paths** (Internationalized Resource Identifiers) are particularly flexible and recommended, as they allow [data transfer](/epigraf/user/export/transfer) between different databases without knowing the internal database IDs. They are formed according to the scheme `<table>/<type>/<irifragment>`. Example: `properties/languages/iso-de-de`.
+-   **IRI paths** (Internationalized Resource Identifiers) are particularly flexible and recommended, as they allow [data transfer](/user/export/transfer) between different databases without knowing the internal database IDs. They are formed according to the scheme `<table>/<type>/<irifragment>`. Example: `properties/languages/iso-de-de`.
 -   **Database IDs** must correspond to an existing entity. They are used to overwrite existing data or to refer to existing data. These IDs are formed according to the scheme `<table>-<id>`, where the placeholder `<id>` contains an existing numeric ID. Example: `articles-1`.
 -   **Temporary IDs** are not imported into the database, but are only used for linking within a CSV file. They are formed according to the scheme `<table>-tmp<id>`, i.e. the table name is followed by the prefix "tmp" after a hyphen and then a custom name, which can be composed of any letters and numbers. When importing entities using temporary IDs, database-specific IDs are automatically created and used for all fields with the same temporary ID. Example: `articles-tmp123`.
 

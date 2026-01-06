@@ -1,6 +1,6 @@
 ---
 title: Services Configuration
-permalink: '/epigraf/user/configuration/services/'
+permalink: '/user/configuration/services/'
 ---
 
 Services pass entity data to a service and save the returned value in a target field of existing or newly generated items.

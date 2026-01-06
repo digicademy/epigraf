@@ -1,6 +1,6 @@
 ---
 title: Core Concepts
-permalink: '/epigraf/user/coreconcepts/'
+permalink: '/user/coreconcepts/'
 ---
 
 The core concepts of Epigraf evolved over several decades along experience with heterogeneous research databases.

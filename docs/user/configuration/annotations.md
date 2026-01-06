@@ -1,6 +1,6 @@
 ---
 title: Annotations
-permalink: '/epigraf/user/configuration/annotations/'
+permalink: '/user/configuration/annotations/'
 ---
 
 

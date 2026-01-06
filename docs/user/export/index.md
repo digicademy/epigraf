@@ -1,6 +1,6 @@
 ---
 title: Export Data
-permalink: '/epigraf/user/export/'
+permalink: '/user/export/'
 ---
 
 Epigraf supports to retrieve raw data from the Relational Article Model and to generate polished publication formats.

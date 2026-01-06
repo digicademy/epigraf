@@ -1,6 +1,6 @@
 ---
 title: Core Concepts - Data Fields and Extraction Keys
-permalink: '/epigraf/user/coreconcepts/keys/'
+permalink: '/user/coreconcepts/keys/'
 ---
 
 Entities such as projects, articles, sections, items, or categories are represented within the application objects.
