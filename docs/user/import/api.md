@@ -45,7 +45,7 @@ The following example transforms three cases from a table into the relational ar
 
 That's how the result looks like:
 
-![Epigraf API](/user/assets/img/import_api.png)
+![Epigraf API](../assets/img/import_api.png)
 
 
 The craft functions either map existing columns or fill in values not

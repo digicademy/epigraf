@@ -10,7 +10,7 @@ In the case of a letter edition, each letter constitutes an article.
 For social media analysis, it makes sense to think of an article as a post or a thread consisting of a post and its associated comments.
 Thus, an article contains a description of the research object.
 
-![Epigraf Editing](/user/assets/img/articles_composition.png)
+![Epigraf Editing](../assets/img/articles_composition.png)
 
 Each article is made up of sections that can be flexibly combined.
 Sections contain the text and all relevant metadata and associated files in their items.
@@ -54,7 +54,7 @@ Next to each category you see the number of articles that match the category. No
 Category systems may grow large and contain, for example, thousands of persons.
 Below each facet you find an input field to search categories.
 
-![Epigraf Research](/user/assets/img/articles_facets.png)
+![Epigraf Research](../assets/img/articles_facets.png)
 
 For the visible facet, you can select further options:
 - *Select all* results in all articles that have any of the categories. In this case, selecting single categories as well the *Include descendants* checkbox have no effect.
@@ -74,12 +74,12 @@ Examples:
 
 See the following images for an overview about the basic editing features.
 
-![Epigraf Articles](/user/assets/img/articles_editing.png)
+![Epigraf Articles](../assets/img/articles_editing.png)
 
 Text is annotated using a toolbar or corresponding keyboard shortcuts.
 Based on the database configuration, annotations can be linked to categories.
 
-![Epigraf Articles](/user/assets/img/annotation.png)
+![Epigraf Articles](../assets/img/annotation.png)
 
 
 # Date values
@@ -374,7 +374,7 @@ But what if the place is a complex building consisting of several parts, such as
 and the coordinates are not specific enough? Additionally, to locate the specific position within the building complex,
 you may refine or overwrite the coordinates directly in a geodata field of an article item.
 
-![Epigraf geolocation editing](/user/assets/img/geolocations_edit.png)
+![Epigraf geolocation editing](../assets/img/geolocations_edit.png)
 
 Once configured, you use the map view to change the coordinates.
 The **location marker** can be moved to the appropriate position on the map using drag and drop with the mouse, and the corresponding **latitude and longitude values** are determined automatically. Alternatively, known latitude and longitude values can be entered directly into the respective fields. The size of the location marker can be adjusted using the **radius field**. Note: The radius of the markers is only visible if the radius view has been activated beforehand using the button on the left side of the map.
@@ -391,7 +391,7 @@ The **publication status** of the item or category is used to indicate the relia
 Note: By choosing the publication status, the whole item or category is set to this status. In consequence, the property or item
 will be published or unpublished when it is transferred to a public database.
 
-![Epigraf map](/user/assets/img/geolocations_map.png)
+![Epigraf map](../assets/img/geolocations_map.png)
 
 # Special characters
 

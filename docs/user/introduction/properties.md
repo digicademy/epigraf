@@ -19,7 +19,7 @@ Whether your category system is a simple flat list, is organised as a tree, or e
 In the footer of the categories page, you will find a button for creating **new categories**.
 Categories always have a fixed order. New categories are placed in a specific position when they are created. Thus, before adding a new category, select a preceding category (or a parent category, if the category system is a tree). Categories can be moved to other positions at any later time. If necessary, an alphabetical order can be created using the mutate function, located in the footer.
 
-![Epigraf categories example](/user/assets/img/properties_languages.png)
+![Epigraf categories example](../assets/img/properties_languages.png)
 
 To **edit a category**, click on it in the list so that its details and an edit button appear in the sidebar. For going through many categories, you can switch to the revise mode using the button in the footer. This way, categories will always open in edit mode. Hover over the buttons to see the keyboard shortcuts, they might be handy.
 
@@ -38,7 +38,7 @@ not all fields may be accessible in a specific category system and they may have
 Categories are used, for example, to maintain a list of genres, people, or locations.
 Those lists are the basis for tagging and annotating articles.
 
-![Epigraf categories example](/user/assets/img/categories_interface.png)
+![Epigraf categories example](../assets/img/categories_interface.png)
 
 There are two ways to find categories:
 

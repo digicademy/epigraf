@@ -13,4 +13,4 @@ For interactive trees, tables and other widgets, Epigraf implements an own EpiWi
 Bundling JavaScript files, CSS files, language resources and images is done using Webpack.
 All bundles can be generated at once by calling `npm run build`.
 
-![Epigraf Editor](/devel/assets/img/epigraf-editor.png)
+![Epigraf Editor](../assets/img/epigraf-editor.png)

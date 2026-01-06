@@ -25,7 +25,7 @@ The Relational Article Model (RAM) distinguishes between the data model and the 
 -   **Properties** are vocabularies or categories that are used for the structured description of a research object and for annotations.
 -   **Projects** group several articles together.
 
-![Epigraf Datamodel](/user/assets/img/overview_datamodel.png)
+![Epigraf Datamodel](../assets/img/overview_datamodel.png)
 
 # Domain model
 

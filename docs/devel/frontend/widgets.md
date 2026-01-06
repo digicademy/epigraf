@@ -31,7 +31,7 @@ The base classes of the framework are defined in `htdocs/js/base.js`:
   A document consists of several parts such as sections, footnotes and notes.
   Document classes hold together the different parts and manage the interaction between them.
 
-![Inheritance hierarchy](/devel/assets/img/classes-widget-basemodel.png)
+![Inheritance hierarchy](../assets/img/classes-widget-basemodel.png)
 
 ### The Widget Life Cycle
 
@@ -127,7 +127,7 @@ Frames are HTML elements attached to derivates of the `BaseFrame` class that han
 - `TabFrame`: Responsible for tab sheets within in sidebars.
 - `PopupWindow`: Responsible for popups and dialogs.
 
-![Inheritance hierarchy](/devel/assets/img/classes-widget-baseframe.png)
+![Inheritance hierarchy](../assets/img/classes-widget-baseframe.png)
 
 The frame classes handle dynamic content loading and trigger the respective widget lifecycle methods:
 - `loadElement()` displays a DOM element already constructed on the page.
@@ -215,7 +215,7 @@ Both are descendants of the `BaseForm` class supporting features for saving data
 - Handle form validation and the form submission lifecycle.
 - Emit events for other widgets reacting to content updates.
 
-![Inheritance hierarchy](/devel/assets/img/classes-widget-basedocumentmodel.png)
+![Inheritance hierarchy](../assets/img/classes-widget-basedocumentmodel.png)
 
 The `EntityWidget` is used for simple entities, usually displayed in a vertical table.
 It inherits all methods and properties from `BaseForm`
