@@ -1,6 +1,7 @@
 ---
 title: Introduction to Notes
 permalink: '/user/introduction/notes/'
+toc: false
 ---
 
 Notes and the wiki are used for the coordination of research efforts.

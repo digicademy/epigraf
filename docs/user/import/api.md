@@ -1,6 +1,7 @@
 ---
 title: Import Data Using the API
 permalink: '/user/import/api/'
+toc: false
 ---
 
 Importing data into Epigraf requires mapping your data to the [Relational Article Model](/epigraf/user/coreconcepts/model).

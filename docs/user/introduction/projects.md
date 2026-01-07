@@ -1,6 +1,7 @@
 ---
 title: Introduction to Projects
 permalink: '/user/introduction/projects/'
+toc: false
 ---
 
 Articles are grouped into projects.

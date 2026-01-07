@@ -3,10 +3,6 @@ title: Articles
 permalink: '/user/configuration/articles/'
 ---
 
-
-# The composition of articles
-
-
 An article describes a research object, such as an object carrying inscriptions, a letter, or a social media post. The configuration specifies how the data model is used to represent your case. You start with article fields and then define the section types contained in an article. For each section type, in turn, you define its fields and the available item types.
 For XML fields, you define the allowed annotations, i.e. links and footnotes. All of those components are called entities. The root entity is the article which contains section, item, links and footnotes entities.
 
@@ -18,7 +14,7 @@ The view mode is a readonly representation of the article and the edit mode is u
 Collections of articles can be displayed in the table view where each article is a row,
 in lanes and tiles with short previews of an article. Further, maps, timelines and network graphs can be used to place articles in contexts. Those view options are configured in the article type. For example, in the columns key you configure how the columns in the overview table are filled with article fields or with data from the contained sections and items (as well as connected project entities and user entities). See the <a href="../configuration/columns">columns configuration documentation</a> for further details.
 
-## Article type configuration
+# Article type configuration
 
 <figure class="table">
   <table>
@@ -125,7 +121,7 @@ Example configuration:
   </table>
 </figure>
 
-### Sections contained in an article
+## Sections contained in an article
 
 The initial order and hierarchy of sections when **creating** an article is determined by the configuration in the sections key of an article type. You first need to configure the relevant section types (see below) before you can use them in the article configuration. The sections are then listed with keys that correspond to their type, and further settings are given in the value.
 
@@ -257,7 +253,7 @@ The following table provides an overview of the keys used in section configurati
   </table>
 </figure>
 
-### Configuration of the article tiles
+## Configuration of the article tiles
 
 In addition to the entity view and the entities tables, articles can be displayed in tiles or lanes.
 A tile contains an image or a text excerpt supplemented with summary information.
@@ -300,7 +296,7 @@ The following example defines a tile with an image from the item type "images", 
 }
 ```
 
-## Section type configuration
+# Section type configuration
 
 A section groups the items of an article. Each section has a name and contains a comment field, but no other fields with content. The content is stored in the items. Sections are arranged hierarchically. Thus, the sections work much like sections in a research paper that provide structure to the propositions within an article. In fact, the Relational Article Model of Epigraf is inspired of how scientist arrange their thinking when presenting insights to other persons.
 
@@ -378,7 +374,7 @@ A section groups the items of an article. Each section has a name and contains a
   </table>
 </figure>
 
-### Items contained in a section
+## Items contained in a section
 
 The items key of a section determines what items are available in a section. It contains a list of item configuration objects.
 A full item configuration object includes the following keys:
@@ -423,7 +419,7 @@ Instead you add them manually using the respective buttons in the interface.
 ]
 ```
 
-### Section templates and widgets
+## Section templates and widgets
 
 The following values are possible in the view key of a section type:
 
@@ -568,7 +564,7 @@ Each item is positioned in this grid, multiple items may also be stacked in one 
 The item position is stored in the item fields `pos_x`, `pos_y`, and `pos_z`, counting starts with 1.
 A grid, for example, can be used to store the position of coats of arms on an object.
 
-## Item type configuration
+# Item type configuration
 
 Items contain the contents of an article.
 Each single item represents a research proposition within an article.
@@ -646,7 +642,7 @@ and whether additional functionality (file metadata transfer, geocoding, externa
 </figure>
 
 
-### Fields available in an item
+## Fields available in an item
 
 Each item contains one data snippet of an article. The items provide several fields, for example, to represent images, annotated text or references to structured properties. The fields typically cover the following use cases:
 
@@ -776,7 +772,7 @@ The following field keys are available in item fields configuration objects:
   </table>
 </figure>
 
-### Compound items
+## Compound items
 
 In case the fields are not sufficient, there are four mechanisms for modeling more complex representations:
 

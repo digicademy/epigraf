@@ -3,12 +3,12 @@ title: Import XML files
 permalink: '/user/import/xml/'
 ---
 
-# Structure of XMl import files
-
 Articles including project data, categories, and all other related data can be imported from XML files.
 For orientation purposes, we recommend downloading an existing article via the "XML" button
 or a set of articles with the "Export" button using the default data pipeline.
 To import data from TEI, ODT, or DOCX files, you should transform them to XML files following the Relational Article Model (RAM) as implemented by Epigraf using XSLT stylesheets.
+
+# Structure of XML import files
 
 Each article is contained in an `<article>` element. Child elements such as `<name>`correspond to the fields in the database.
 

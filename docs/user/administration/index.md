@@ -1,6 +1,7 @@
 ---
 title: Administration
 permalink: '/user/administration/'
+toc: false
 ---
 
 Epigraf can handle different research teams on the same server.

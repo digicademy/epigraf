@@ -3,10 +3,8 @@ title: Categories
 permalink: '/user/configuration/categories/'
 ---
 
-# The composition of category systems
-
 Categories are used in items and annotations to add structured data to articles.
-Categories are stored in the properties table and each category system is configured as a separate property type.
+They are stored in the properties table and each category system is configured as a separate property type.
 
 There are four types of properties:
 
@@ -14,6 +12,9 @@ There are four types of properties:
 - Meta-properties used to categorize other properties in their `properties_id` field.
 - Properties used as categories to structure the tree, they are flagged in the `iscategory` field.
 - See-references establishing an edge between a source and a target property across the tree by using the `related_id` field.
+
+
+# Configuration options
 
 The configuration for each property type includes the following keys:
 
@@ -30,7 +31,6 @@ The configuration for each property type includes the following keys:
             <td>fields</td>
             <td>A list of field configuration objects. See the field configuration documentation for further details.</td>
         </tr>
-      <tr>
      <tr>
         <td>columns</td>
         <td>Optional. A list of column configuration objects, keyed by column identifiers.
@@ -106,7 +106,7 @@ The configuration for each property type includes the following keys:
   </table>
 </figure>
 
-## Available fields
+# Available fields
 
 <figure class="table">
   <table>

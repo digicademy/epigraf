@@ -1,6 +1,7 @@
 ---
 title: Pages
 permalink: '/user/administration/pages/'
+toc: false
 ---
 
 Pages are used to provide a home page and other pages in the main menu.

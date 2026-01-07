@@ -1,6 +1,7 @@
 ---
 title: Core Concepts
 permalink: '/user/coreconcepts/'
+toc: false
 ---
 
 The core concepts of Epigraf evolved over several decades along experience with heterogeneous research databases.

@@ -3,12 +3,12 @@ title: Import Data
 permalink: '/user/import/'
 ---
 
-# The Relational Article Model (RAM)
-
 CSV files and XML files can be imported into the databases using the "Import" button in the footer of the pages.
 Alternatively, the API can be used to import data. An R package and a Python package simplify API operations.
-
 The import function allows both, new articles, sections and categories to be created and existing entities to be updated.
+
+# The Relational Article Model (RAM)
+
 To prepare data imports, a basic understanding of the [data model](/epigraf/user/coreconcepts/model) will be helpful.
 Epigraf implements the Relational Article Model (RAM) to store documents in tables for projects, articles, sections, items, links, footnotes and properties.
 

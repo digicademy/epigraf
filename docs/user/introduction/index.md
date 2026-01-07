@@ -8,9 +8,12 @@ permalink: '/user/introduction/'
 The main entry page when working with Epigraf is the articles table. It lists the collection of all articles, optionally filtered by project, categories and full text search. The article collection, depending on the configuration of your database, can be displayed in alternative layouts. Use the buttons in the footer to switch the layout:
 
 -   Table: Articles are listed in a table. The columns are configured in the database types. Click the settings icon in the top left corner of the table to change the column selection. You can change the column order by dragging and dropping them the drop-down menu.
--   Map: All items containing geographic coordinates are displayed in the map view.
+-   Map: All items containing geographic coordinates are displayed on a map.
+    Coordinates can originate directly from the articles or from categories (e.g. a location list) used in the articles.
 -   Tiles: The tile view displays each article as a tile containing an image (if available) and selected content.
--   Lanes: In the lanes view, tiles are displayed in rows. Each row corresponds to a category selected in the filter facets of the left sidebar. Thus, you need to add a facet using the plus button and select at least one category.
+    Tiles can be arranged in rows or lanes.
+    Each row corresponds to a category selected in the filter facets of the left sidebar.
+    To activate the lanes view, add a facet using the plus button, select at least one category, and check the details checkbox.
 
 Table views are used throughout Epigraf for all kinds of entity collections such as projects or categories. A **single mouse click** on a row usually opens the entity in the right sidebar. **Double-clicking** opens the entity in the same window. **Ctrl+click** a row to open the entity in a new window. You will find buttons in the sidebar and in popups that also open entities in a new tabsheet.
 

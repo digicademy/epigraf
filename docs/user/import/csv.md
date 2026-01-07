@@ -3,12 +3,13 @@ title: Import CSV files
 permalink: '/user/import/csv/'
 ---
 
-# Structure of CSV import files
 
 Articles including project data, categories, and all other related data can be imported from CSV files.
 For orientation purposes, we recommend downloading an existing article via the "CSV" button
 or a set of articles with the "Export" button using the default data pipeline.
 Adapt the file for your own import. Alternatively, the R and Python packages support the transformation of any data into the import format.
+
+# Structure of CSV import files
 
 Understanding the [Relational Article Model](/epigraf/user/import) is crucial for preparing the CSV files.
 The default database table into which a CSV file is imported depends on the page where the import is started.

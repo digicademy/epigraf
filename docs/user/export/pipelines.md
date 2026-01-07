@@ -1,10 +1,8 @@
 ---
-title: Export Data using Pipelines
+title: Export Data Using Pipelines
 permalink: '/user/export/pipelines/'
 ---
 
-
-# Export pipelines
 
 Pipelines are used to transform data from the relational article model into other data formats
 For example, they are used to create Word files, TEI documents or HTML content for a website.

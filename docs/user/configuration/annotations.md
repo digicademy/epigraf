@@ -3,13 +3,11 @@ title: Annotations
 permalink: '/user/configuration/annotations/'
 ---
 
-
-# Annotations
-
 **Links** are used to link text segments to properties or other entities. The text segment is marked with a tag. Use links for structured annotations such as references to persons, places, content analysis categories or simple text highlighting.
 
 **Footnotes** are standalone tags or tags around a text segment that refer to a footnotes entity containing a comment relating to the text passage. Use footnotes for critical apparatus, comments, or memos.
 
+# Rendering options
 Both annotation types can be rendered as formatting (e.g. italic text), as stand-alone tags (e.g. word separators or literature references), or as brackets (e.g. indicating text added in a transcription). Each tag can contain additional attributes. They are stored in the database fields using XML tags and converted to HTML tags for displaying.
 
 Annotations do not necessarily need a links or footnotes entity and, thus, can also be used as simple markup tags. By default, each annotation has a button in the toolbar.
@@ -189,7 +187,7 @@ If possible, it is advised to set the default rendering to plain outputs without
 </table>
 </figure>
 
-## Examples
+# Examples
 
 **Example of a checkbox configuration:**
 
@@ -244,7 +242,7 @@ are configured without tool button. The `tag_type` key must be set to `attribute
 }
 ```
 
-## Toolbuttons
+# Toolbuttons
 
 A button is created for each annotation. Their design is defined in the `toolbutton` key.
 Icons (or short labels) for the buttons are configured using Uincode characters in the `symbol` key.
@@ -298,7 +296,7 @@ As an alternative, Epigraf ships with a set of SVG icons used for transcriptions
 </table>
 </figure>
 
-## Breaks
+# Breaks
 
 Line breaks are created in the editor with Shift+Enter. They are stored in XML as empty nl tags and rendered in HTML as br tags. You must always provide a links configuration named "nl" for line breaks, as follows:
 
@@ -311,7 +309,7 @@ Line breaks are created in the editor with Shift+Enter. They are stored in XML a
 
 If line breaks are allowed in an input field, the `nl` type must be listed in the types key of the XML field configuration.
 
-## Special characters
+# Special characters
 
 The editor contains a standard set of special characters (punctuation marks, currency symbols, units, etc.) that can be inserted using the *Special Characters* button in the toolbar.
 More special characters can be added by creating a links configuration with the following fields:
