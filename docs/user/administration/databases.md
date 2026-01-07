@@ -1,6 +1,7 @@
 ---
 title: Database Administration
 permalink: '/user/administration/databases/'
+toc: false
 ---
 
 Epigraf manages separate databases for different projects.
