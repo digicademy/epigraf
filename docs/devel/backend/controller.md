@@ -7,8 +7,8 @@ Epigraf maps URLs to action methods in controller classes.
 These methods perform three primary functions:
 
 1. Parameter parsing: Extract and validate URL parameters that control the data retrieval and view rendering.
-2. Data Handling: Retrieve and store data using the [model](/devel/backend/model) based on URL parameters and posted payloads.
-3. View Rendering: Pass data to [views](/devel/backend/view) for the browser (HTML) or API responses (e.g. JSON).
+2. Data Handling: Retrieve and store data using the [model](/epigraf/devel/backend/model) based on URL parameters and posted payloads.
+3. View Rendering: Pass data to [views](/epigraf/devel/backend/view) for the browser (HTML) or API responses (e.g. JSON).
 
 ## URL Mapping and Routing
 
@@ -180,7 +180,7 @@ User settings in Epigraf are either stored in the user record or in the session.
 All controllers extend the `AppController` class (`src/Controller/AppController.php`)
 which is derived from the base `Controller` class provided by the CakePHP framework.
 
-![Application controller class hierarchy](/devel/assets/img/classes-controller-app.png)
+![Application controller class hierarchy](/epigraf/devel/assets/img/classes-controller-app.png)
 
 On the application level, controllers serve the following purposes:
 
@@ -199,7 +199,7 @@ The Epi plugin implements an own `Epi\AppController` class (`plugins/Epi/Control
 derived from the global AppController, adding functionality for project database handling.
 All project database controllers within the Epi plugin extend this class.
 
-![Epi plugin controller class hierarchy](/devel/assets/img/classes-controller-epi.png)
+![Epi plugin controller class hierarchy](/epigraf/devel/assets/img/classes-controller-epi.png)
 
 They Epi plugin controllers serve the following purposes:
 
