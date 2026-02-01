@@ -412,6 +412,7 @@ export class TreeWidget extends BaseWidget {
      * @param item Item to toggle
      * @param hide Determines toggle direction
      * @param emitEvent Emit event. Set to false on initialization to avoid multiple events
+     * @fires epi:toggle:node
      */
     treeToggleItem(item, hide, emitEvent = true) {
         // Hide or show

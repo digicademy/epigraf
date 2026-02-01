@@ -12,7 +12,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Doc;
 use App\Model\Interfaces\ScopedTableInterface;
-use App\Utilities\Text\TextParser;
+use App\Utilities\Converters\Strings;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
 use Cake\Datasource\EntityInterface;
@@ -405,7 +405,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
                         [
                             'id' => $row->id,
                             'caption' => __('Content'),
-                            'content' => TextParser::highlightTerms(TextParser::stripTagsWithWhitespace($row->content),
+                            'content' => Strings::highlightTerms(Strings::stripTagsWithWhitespace($row->content),
                                 $terms),
                             'highlight' => $terms
                         ],

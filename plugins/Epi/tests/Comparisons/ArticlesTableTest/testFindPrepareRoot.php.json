@@ -33088,7 +33088,6 @@
             "created_by": null,
             "usertype": null,
             "name": "Jakob J\u00fcnger",
-            "acronym": "jj",
             "userrole": 0,
             "norm_iri": "juenger"
         },
@@ -33103,7 +33102,6 @@
             "created_by": null,
             "usertype": "human",
             "name": "Testuser",
-            "acronym": "TU",
             "userrole": 1,
             "norm_iri": null
         },

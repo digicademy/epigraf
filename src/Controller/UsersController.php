@@ -73,23 +73,13 @@ class UsersController extends AppController
      */
     public function login()
     {
-        //$this->Auth->logout();
+        $authentication = $this->request->getAttribute('authentication');
+        $result = $authentication->getResult();
 
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-            }
-            else {
-                $this->Flash->error(__('Invalid username or password, try again'));
-            }
-        }
+        // Redirect if user is logged in
+        if ($result && $result->isValid()) {
 
-        $user = $this->Auth->user();
-        $loggedIn = !empty($user);
-
-        // Set user role cookie for one year
-        if ($loggedIn) {
+            // Set user role cookie for one year (for Matomo user groups)
             $this->response = $this->response
                 ->withCookie(Cookie::create(
                     'EPIGRAF_ROLE',
@@ -114,14 +104,26 @@ class UsersController extends AppController
                         ]
                     ));
             }
+
+            // Redirect to start page if user is logged in
+            if (!$this->request->is('api')) {
+                $target = $this->Authentication->getLoginRedirect();
+                if (!$target) {
+                    $target = ['controller' => 'Users', 'action' => 'start'];
+                }
+                return $this->redirect($target);
+            }
         }
 
-        // Redirect to start page if user is logged in
-        if ($loggedIn && !$this->request->is('api')) {
-            return $this->redirect($this->Auth->redirectUrl());
+        // Display error if user submitted and authentication failed
+        else if ($this->request->is(['post'])) {
+            $this->Answer->error(__('Invalid username or password.'));
+        }
+        else if (!empty($result->getErrors())) {
+            $this->Answer->error(implode(' ', $result->getErrors()));
         }
 
-        $this->Answer->addAnswer(['success' => $loggedIn]);
+        $this->Answer->addAnswer(['success' => $result->isValid()]);
     }
 
     /**
@@ -131,7 +133,8 @@ class UsersController extends AppController
      */
     public function logout()
     {
-        return $this->redirect($this->Auth->logout());
+        $this->Authentication->logout();
+        return $this->redirect('/');
     }
 
     /**
@@ -156,7 +159,7 @@ class UsersController extends AppController
         }
 
         // ... or default pages
-        $user = $this->Auth->user();
+        $user = $this->getRequest()->getAttribute('identity');
         if (
             !empty($user['databank']['name']) &&
             in_array(Databank::addPrefix($user['databank']['name']), array_keys($this->getAllowedDatabases()))
@@ -323,7 +326,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         if ($id === 'me') {
-            $id = $this->Auth->user('id');
+            $id = $this->getRequest()->getAttribute('identity')['id'] ?? null;
         }
 
         $entity = $this->Users->get($id, [
@@ -387,7 +390,8 @@ class UsersController extends AppController
 
         // If the currently logged-in user is an admin or devel,
         // allow changes to the identity fields of a user record.
-        if (in_array($this->Auth->user('role'), ['admin', 'devel'])) {
+        $user = $this->getRequest()->getAttribute('identity');
+        if (in_array($user['role'] ?? null, ['admin', 'devel'])) {
             $entity->setAccess(['accesstoken'], true);
         }
 
@@ -447,20 +451,7 @@ class UsersController extends AppController
                 $scope = Attributes::cleanOption($scope, ['web', 'api', 'desktop']);
                 $role = Attributes::cleanOption($role, array_keys(PermissionsTable::$userRoles));
 
-                $result = true;
-                if (empty($scope) || ($scope === 'desktop')) {
-                    $result = $result && $databank->grantDesktopAccess('epi_' . $user['username']);
-                }
-
-                if (empty($scope) || ($scope === 'web')) {
-                    $result = $result && $databank->grantWebAccess($user['id'], $role);
-                }
-
-                if (empty($scope) || ($scope === 'api')) {
-                    $result = $result && $databank->grantApiAccess($user['id'], $role);
-                }
-
-                if ($result) {
+                if ($databank->grant($user, $scope, $role)) {
                     $this->Answer->success(__('Access has been granted.'), ['action' => 'view', $id]);
                 }
                 else {
@@ -488,7 +479,7 @@ class UsersController extends AppController
      *                      An asterisk has the same effect as null.
      * @param string $role User role for which access is revoked or null to revoke access for all roles.
      *                     An asterisk has the same effect as null.
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|void
      * @throws RecordNotFoundException If record not found
      */
     public function revoke($id = null, $databank = null, $scope = null, $role = null)
@@ -521,20 +512,7 @@ class UsersController extends AppController
             $scope = Attributes::cleanOption($scope, ['web', 'api', 'desktop']);
             $role = Attributes::cleanOption($role, array_keys(PermissionsTable::$userRoles), null);
 
-            $result = true;
-            if (empty($scope) || ($scope === 'desktop')) {
-                $result = $result && $databankEntity->revokeDesktopAccess('epi_' . $entity['username']);
-            }
-
-            if (empty($scope) || ($scope === 'web')) {
-                $result = $result && $databankEntity->revokeWebAccess($entity['id'], $role);
-            }
-
-            if (empty($scope) || ($scope === 'api')) {
-                $result = $result && $databankEntity->revokeApiAccess($entity['id'], $role);
-            }
-
-            if ($result) {
+            if ($databankEntity->revoke($entity, $scope, $role)) {
                 $this->Answer->success(__('Access has been revoked.'));
             }
             else {
@@ -556,7 +534,8 @@ class UsersController extends AppController
 
         // If the currently logged-in user is an admin or devel,
         // allow changes to the identity fields of a user record.
-        if (in_array($this->Auth->user('role'), ['admin', 'devel'])) {
+        $user = $this->getRequest()->getAttribute('identity');
+        if (in_array($user['role'] ?? null, ['admin', 'devel'])) {
             $entity->setAccess(['role', 'username', 'norm_iri', 'accesstoken'], true);
         }
 
@@ -583,15 +562,16 @@ class UsersController extends AppController
      * Generate an activation link
      *
      * @param string $id User id
+     * @param int $expires Hours until the activation link expires
      * @return void
      */
-    public function invite($id)
+    public function invite($id, $expires = 48)
     {
         $entity = $this->Users->get($id, ['contain' => []]);
 
         if ($this->request->is(['patch', 'post', 'put'])) {
 
-            $entity = $this->Users->generateActivationToken($entity);
+            $entity = $this->Users->generateActivationToken($entity, $expires);
             if ($this->Users->save($entity, ['associated' => false])) {
                 $this->Answer->addOptions(['stage' => 'show']);
             }
@@ -682,7 +662,8 @@ class UsersController extends AppController
 
         // If the currently logged-in user is an admin or devel,
         // allow changes to the identity fields of a user record.
-        if (in_array($this->Auth->user('role'), ['admin', 'devel'])) {
+        $user = $this->getRequest()->getAttribute('identity');
+        if (in_array($user['role'] ?? null, ['admin', 'devel'])) {
             $entity->setAccess(['role', 'username', 'norm_iri', 'accesstoken'], true);
         }
 

@@ -189,12 +189,12 @@ class BaseTaskData extends BaseTask
     /**
      * Reset the task progress
      *
-     * @return true
+     * @return array The updated task config
      */
-    public function init()
+    public function reset()
     {
         $this->config['offset'] = 0;
-        return true;
+        return $this->config;
     }
 
     /**

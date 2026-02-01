@@ -11,6 +11,7 @@
 namespace App\Model\Entity\Tasks;
 
 use App\Model\Entity\BaseTask;
+use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
 
 /**
@@ -24,19 +25,25 @@ class TaskExportDownload extends BaseTask
      *
      * Supports the following config keys:
      * - root One of database, job, shared. The root of the download destination.
-     * - target A folder within the root.
+     * - target A folder within the root. Can contain placeholders in curly brackets that refer to job data.
+     *   For example, give the job a name "awesomebook113" and then copy the result to "data/books/job-{name}"
+     *   within the shared folder. You must make sure the folder name is valid. Thus, usually you should not rely
+     *   on placeholders alone, add at least some prefix.
      * - files Each filename on a new line.
      *         Files may be prefixed with captions, separated by an equal sign.
-     *         Example: Final Book=book.xml
+     *         Example: Final Book=book.xml.
+     *         The filename can contain placeholders in curly brackets that refer to job data.
+     *         All files must already exist in the job folder.
      *
-     * Jumps to the job finish stage.
+     * When running a pipeline, jumps to the job finish stage.
      *
-     * @return bool Return true because the task is finished
+     * @return bool Return true because the task is always finished in one step.
      */
     public function execute()
     {
         $current = $this->config;
 
+        // Folders
         $root = $this->config['root'] ?? null;
         if ($root === 'database') {
             $rootPath = $this->job->databasePath;
@@ -50,28 +57,46 @@ class TaskExportDownload extends BaseTask
 
         $sourcePath =  $this->job->jobPath;
         $target = $this->config['target'] ?? '';
+        $target = Files::cleanPath(Attributes::replacePlaceholders($target, $this->job->toArray()));
+
         $targetPath = Files::addSlash(Files::addSlash($rootPath) . $target);
 
+        // File names
         $downloads = str_replace("\r\n", "\n", $current['files'] ?? '');
         $downloads = explode("\n", $downloads);
+
+        foreach ($downloads as $idx => $item) {
+            $item = explode('=', $item);
+
+            $downloadFilename = $item[1] ?? $item[0];
+            $downloadFilename = Files::cleanPath(
+                Attributes::replacePlaceholders($downloadFilename, $this->job->toArray()),
+                false
+            );
+
+            $downloadCaption = sizeof($item) > 1 ? $item[0] : $downloadFilename;
+
+            $downloads[$idx] = [
+                'filename' => $downloadFilename,
+                'caption' => $downloadCaption
+            ];
+        }
 
         // Copy files to destination
         if (!empty($target) && ($root !== 'job')) {
             foreach ($downloads as $item) {
-                $item = explode('=', $item);
-                Files::copyFiles($item[1] ?? $item[0], null, $sourcePath, $targetPath, true);
+                Files::copyFiles($item['filename'], null, $sourcePath, $targetPath, true);
             }
         }
 
         // Create download array
         $downloads = array_map(function ($item) use ($root, $target) {
-            $item = explode('=', $item);
             return [
-                'caption' => $item[0],
-                'name' => $item[1] ?? $item[0],
+                'caption' => $item['caption'],
+                'name' => $item['filename'],
                 'root' => $root,
                 'target' => $target,
-                'url' => '/jobs/execute/' . $this->job->id . '?download=' . ($item[1] ?? $item[0])
+                'url' => '/jobs/execute/' . $this->job->id . '?download=' . ($item['filename'])
             ];
         }, $downloads);
 

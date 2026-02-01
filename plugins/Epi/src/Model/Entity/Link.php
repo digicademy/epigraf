@@ -376,11 +376,13 @@ class Link extends BaseEntity
             $problems[] = __('Missing tag ID in annotation links-{id}. Your personal SQL hacker can help you.',
                 ['id' => $this->id]);
         }
-        // TODO: Why can a from_tagid not be present? A warning comes up when saving an article.
-//        elseif (count($this->root->links_by_tagid[$this->from_tagid] ?? []) > 1) {
-//            $problems[] = __('Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you.',
-//                ['id' => $this->id, 'tagid' => $this->from_tagid]);
-//        }
+        elseif (count($this->root->links_by_tagid[$this->from_tagid] ?? []) > 1) {
+            // Only if this is not a molecular annotation...
+            if (!empty($this->type->config['fields']['to']['targets'])) {
+                $problems[] = __('Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id, 'tagid' => $this->from_tagid]);
+            }
+        }
 
         return $problems;
     }

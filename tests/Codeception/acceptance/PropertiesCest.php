@@ -374,6 +374,32 @@ class PropertiesCest
     }
 
     /**
+     * Scenario: Filter properties by the project dropdown
+     *
+     * @group deploy
+     * @param AcceptanceTester $I
+     * @return void
+     */
+    public function filterProject(AcceptanceTester $I)
+    {
+        $I->login('devel', 'devel');
+        $I->amOnPage('/epi/projects/properties/index/objecttypes');
+        $I->wait(1);
+
+        $I->seeNumberOfElements('.widget-table [data-list-itemof=epi_properties]', 7);
+        $I->dontSeeVisualChanges('beforefilter', '.recordlist [data-list-name="epi_properties"]');
+
+        $I->click('[data-filter-param="articles.projects"] .widget-dropdown-selector');
+        $I->wait(1);
+
+        $I->click('#select-pane-articles-projects #select-pane-articles-projects__1');
+        $I->waitForTheAjaxResponse();
+
+        $I->seeNumberOfElements('.widget-table [data-list-itemof=epi_properties]', 3);
+        $I->dontSeeVisualChanges('afterfilter', '.recordlist [data-list-name="epi_properties"]');
+    }
+
+    /**
      * Scenario: Check the move buttons
      *
      * @group deploy

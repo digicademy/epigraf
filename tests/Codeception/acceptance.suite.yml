@@ -12,7 +12,7 @@ modules:
         - WebDriver:
             url: http://localhost
             browser: firefox
-            window_size: 1280x800  # Fix for strange screenshot size: 1280x848
+            window_size: 1280x848 # Fix for strange screenshot size: 1280x848
         - VisualCeption:
             maximumDeviation: 0.1             # deviation in percent (mean squared error over all channels, keep it low)
             saveCurrentImageIfFailure: true   # if true, VisualCeption saves the current
@@ -61,6 +61,9 @@ extensions:
         2: bin/cake setup tmp
         3: bin/cake cache clear_all
         4: chown -R www-data /tmp/cache
-        5: xvfb-run -a java -jar -Dwebdriver.chrome.driver="/usr/bin/chromedriver" /opt/selenium/selenium-server-standalone.jar > /dev/null 2>&1 &
+        #5: export GTK_THEME=Adwaita
+        #6: export GDK_SCALE=1
+        #7: export GDK_DPI_SCALE=1
+        8: xvfb-run -a java -jar -Dwebdriver.chrome.driver="/usr/bin/chromedriver" /opt/selenium/selenium-server-standalone.jar > /dev/null 2>&1 &
         sleep: 2
 

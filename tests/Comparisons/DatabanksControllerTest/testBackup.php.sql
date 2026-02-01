@@ -1,5 +1,5 @@
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.8.2-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19-11.8.3-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: test_sql    Database: test_projects
 -- ------------------------------------------------------
@@ -740,7 +740,7 @@ LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `token` VALUES
-(1,0,'2020-09-09 10:23:18','2025-09-02 06:39:53',1,1,'TESTTOKENAUTHOR','1234');
+(1,0,'2020-09-09 10:23:18','2026-01-31 11:38:40',1,1,'TESTTOKENAUTHOR','1234');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -809,7 +809,6 @@ CREATE TABLE `users` (
   `created_by` int(11) DEFAULT NULL,
   `usertype` varchar(50) DEFAULT NULL,
   `name` varchar(1500) DEFAULT NULL,
-  `acronym` varchar(1500) DEFAULT NULL,
   `userrole` int(11) DEFAULT NULL,
   `norm_iri` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -840,4 +839,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-09-02  8:39:57
+-- Dump completed on 2026-01-31 12:38:43

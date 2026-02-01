@@ -84,6 +84,12 @@ use Cake\Utility\Hash;
                             'category' => __('Fields'),
                             'checked' => $job->config['expand'] ?? false
                         ],
+                        'snippets' => [
+                            'type' => 'text',
+                            'label' => __('Snippets'),
+                            'placeholder' => 'default',
+                            'value' => $job->config['snippets'] ?? ''
+                        ],
                         'preset' => [
                             'type' => 'text',
                             'label' => __('Preset'),
@@ -109,58 +115,58 @@ use Cake\Utility\Hash;
                     </tr>
                 <?php endif; ?>
 
-                <?php $categories = Arrays::array_nest($job->config['options']['options'] ?? []); ?>
-                <?php foreach ($categories as $group => $options): ?>
+
+                <?php foreach ($job->htmlOptions as $group => $options): ?>
                     <tr>
                         <th scope="row"><?= empty($group) ? __('Tasks') : $group ?></th>
                         <td>
-                            <?php
-                                // Get radio options
-                                $radiooptions = array_values(array_filter($options, function ($x) {
-                                    return $x['type'] === 'radio';
-                                }));
-                                $radioValue = array_values(array_filter($radiooptions, function ($x) {
-                                    return !empty($x['output']);
-                                }));
-                            ?>
-                            <?php if (!empty($radiooptions)): ?>
-                                <?= $this->Form->radio(
-                                    'config.options.' . $radiooptions[0]['key'],
-                                    Hash::combine(
-                                        $radiooptions,
-                                        '{n}.value',
-                                        '{n}.label'
-                                    ),
-                                    ['value' => $radioValue[0]['value'] ?? null, 'hiddenField' => false]
-                                ); ?>
-                            <?php else: ?>
-                                <?php foreach ($options as $key => $option): ?>
-                                    <?php if ($option['type'] === 'text'): ?>
-                                        <?= $this->Form->control(
-                                            'config.options.' . $option['key'],
-                                            [
-                                                'type' => 'text',
-                                                'value' => $option['value'] ?? '',
-                                                'label' => empty($option['label']) ? false : $option['label']
-                                            ]
-                                        ); ?>
-                                    <?php else: ?>
-                                        <?= $this->Form->control(
-                                            'config.options.' . $option['key'],
-                                            [
-                                                'type' => 'checkbox',
-                                                'checked' => !empty($option['output']),
-                                                'label' => $option['label'],
-                                                'templateVars' => ['wrapperClass' =>' checkbox-horizontal']
-                                            ]
-                                        ); ?>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+
+                            <?php foreach ($options as $key => $option): ?>
+                                <?php if ($option['type'] === 'radio'): ?>
+                                    <?= $this->Form->radio(
+                                        'config.options.' . $option['key'],
+                                        $option['options'],
+                                        [
+                                            'value' => $job->config['options']['custom'][$option['key']] ?? null,
+                                            'hiddenField' => false
+                                        ]
+                                    ); ?>
+                                <?php elseif ($option['type'] === 'text'): ?>
+                                    <?= $this->Form->control(
+                                        'config.options.' . $option['key'],
+                                        [
+                                            'type' => 'text',
+                                            'value' => $job->config['options']['custom'][$option['key']] ?? '',
+                                            'label' => empty($option['label']) ? false : $option['label']
+                                        ]
+                                    ); ?>
+                                <?php else: ?>
+                                    <?= $this->Form->control(
+                                        'config.options.' . $option['key'],
+                                        [
+                                            'type' => 'checkbox',
+                                            'checked' => !empty($job->config['options']['custom'][$option['key']]),
+                                            'label' => $option['label'],
+                                            'templateVars' => ['wrapperClass' => ' checkbox-horizontal']
+                                        ]
+                                    ); ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
+
+            <tr>
+                <th scope="row"><?= __('Job name') ?></th>
+                <td><?= $this->Form->input(
+                    'name',
+                        [
+                            'placeholder' => 'default',
+                            'value' => $job->name ?? ''
+                        ]
+                    ) ?></td>
+            </tr>
 
         </table>
     </fieldset>

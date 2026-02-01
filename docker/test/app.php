@@ -79,6 +79,25 @@ return [
             'templates' => [ROOT . DS . 'templates' . DS],
             'locales' => [ROOT . DS . 'resources' . DS . 'locales' . DS],
         ],
+
+        // Enable deprecated EpiDesktop compatibility mode for testing
+        'epidesktop' => true
+    ],
+
+    /**
+     * Enabled login procedures. See Application.php.
+     *
+     * - form: Login via username and password form, saved in the session (true or false).
+     * - token: Login via access token provided as token query parameter or Authorization HTTP header  (true or false).
+     * - remote: Login via external providers, e.g. using mod_auth_openidc.
+     *           Set the value to an environment variable that contains the username, e.g. 'REDIRECT_OIDC_CLAIM_email'.
+     *           The value will be compared against the username fields in the database.
+     *           After successful login, the user info is stored in the session.
+     */
+    'Logins' => [
+        'form' => true,
+        'token' => true,
+        'remote' => false
     ],
 
     /**

@@ -98,10 +98,10 @@ class DatabanksTable extends BaseTable
 
         $validator
             ->notBlank('name')
-            ->add('name', 'validFormat', [
-                'rule' => ['custom', '/^[0-9a-zA-Z_]+$/'],
-                'message' => 'Only alphanumeric characters and underscore are allowed.'
-            ]);
+            ->regex('name',
+                '/^[0-9a-zA-Z_]+$/',
+                'Only alphanumeric characters and underscore are allowed.'
+            );
 
         return $validator;
     }

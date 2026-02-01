@@ -46,11 +46,13 @@ class ApplicationTest extends AppTestCase
         $app->bootstrap();
         $plugins = $app->getPlugins();
 
-        $this->assertCount(6, $plugins);
+        $this->assertCount(7, $plugins);
         $this->assertTrue($plugins->has('Rest'), 'plugins has Rest');
         $this->assertTrue($plugins->has('Epi'), 'plugins has Epi');
         $this->assertTrue($plugins->has('Files'), 'plugins has Files');
         $this->assertTrue($plugins->has('Widgets'), 'plugins has Widgets');
+        $this->assertTrue($plugins->has('Authentication'), 'plugins has Authentication');
+        $this->assertTrue($plugins->has('Authorization'), 'plugins has Authorization');
     }
 
     /**

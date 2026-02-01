@@ -324,13 +324,13 @@ class TaskImport extends BaseTask
     /**
      * Reset the task progress
      *
-     * @return true
+     * @return array The updated task config
      */
-    public function init()
+    public function reset()
     {
         $this->config['offset'] = 0;
         $this->config['page'] = 1;
-        return true;
+        return $this->config;
     }
 
     /**

@@ -7,6 +7,10 @@ use Cake\Database\Driver\Mysql;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
+/**
+ * Choose cache engine based on environment variable REDIS_HOST
+ */
+
 $redisServer = env('REDIS_HOST', false);
 
 if (!empty($redisServer)) {
@@ -133,6 +137,7 @@ if (!empty($redisServer)) {
     ];
 }
 
+// App configuration
 return [
     /**
      * Debug Level:
@@ -247,6 +252,25 @@ return [
             'templates' => [ROOT . DS . 'templates' . DS],
             'locales' => [ROOT . DS . 'resources' . DS . 'locales' . DS],
         ],
+
+        // Disable EpiDesktop compatibility mode
+        'epidesktop' => false,
+    ],
+
+    /**
+     * Enabled login procedures. See Application.php.
+     *
+     * - form: Login via username and password form, saved in the session (true or false).
+     * - token: Login via access token provided as token query parameter or Authorization HTTP header  (true or false).
+     * - remote: Login via external providers, e.g. using mod_auth_openidc.
+     *           Set the value to an environment variable that contains the username, e.g. 'REDIRECT_OIDC_CLAIM_email'.
+     *           The value will be compared against the username fields in the database.
+     *           After successful login, the user info is stored in the session.
+     */
+    'Logins' => [
+        'form' => true,
+        'token' => true,
+        'remote' => false
     ],
 
     /**

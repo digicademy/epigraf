@@ -64,7 +64,7 @@ and the research group
 
 **Citation**
 
-Jünger, J., Hertkorn, G., Gärtner, C.,
-Herold, J., Knispel, J., Kopp, M.,Kotthoff, H., Lentge, F., Michel, M., Syring, W-D. (2024).
+Jünger, J., Hertkorn, G., Dicke, P., Gärtner, C., Herold, J.,
+Höfig, L., Knispel, J., Kopp, M.,Kotthoff, H., Lentge, F., Michel, M., Syring, W-D. (2026).
 Epigraf: a research platform for collecting, annotating, linking and publishing multimodal text data.
-Version 5.0. https://github.com/digicademy/epigraf
+Version 5.2. https://digicademy.github.io/epigraf/

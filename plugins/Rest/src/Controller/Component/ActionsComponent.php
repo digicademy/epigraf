@@ -15,12 +15,11 @@ namespace Rest\Controller\Component;
 use App\Model\Behavior\TreeCorruptException;
 use App\Model\Entity\BaseEntity;
 use App\Model\Interfaces\ScopedTableInterface;
-use App\Model\Table\PermissionsTable;
 use App\Utilities\Converters\Attributes;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
@@ -104,10 +103,10 @@ class ActionsComponent extends Component
         }
         else {
 
-            $user = $this->getController()->Auth->user();
+            $user = $this->getController()->getRequest()->getAttribute('identity');
             $users = TableRegistry::getTableLocator()->get('Users');
             $user = $users->updateSettings($user, $scope, $key, $value);
-            $this->getController()->Auth->setUser($user);
+            $this->getController()->Authentication->setIdentity($user);
             $this->getController()->set(compact('user'));
 
             return $user['settings'] ?? [];
@@ -144,11 +143,15 @@ class ActionsComponent extends Component
         }
         else {
 
-            $user = $this->getController()->Auth->user();
-            $users = TableRegistry::getTableLocator()->get('Users');
-            $user = $users->updateSettings($user, $scope, $key, $value);
-            $this->getController()->Auth->setUser($user);
+            $user = $this->getController()->getRequest()->getAttribute('identity');
 
+            $user = TableRegistry::getTableLocator()
+                ->get('Users')
+                ->updateSettings($user, $scope, $key, $value);
+
+            $this
+                ->getController()->Authentication
+                ->setIdentity($user);
             return $user['settings'] ?? [];
         }
     }
@@ -158,7 +161,7 @@ class ActionsComponent extends Component
      *
      * @param string $scope
      * @param string $key
-     * @param string $storage user (store in the user record) or session (store in the user session)
+     * @param string $storage The storage, either 'user' (user record) or 'session' (user session)
      *
      * @return array|mixed
      */
@@ -179,12 +182,13 @@ class ActionsComponent extends Component
                     $session->delete('User.settings');
                 }
             }
-            $settings = $session->red('User.settings', []);
+            $settings = $session->read('User.settings', []);
             return $settings;
 
         }
         else {
-            $user = $this->getController()->Auth->user();
+            $user = $this->getController()->getRequest()->getAttribute('identity')->getOriginalData();
+
             $users = TableRegistry::getTableLocator()->get('Users');
 
             if ($key & $scope) {
@@ -198,7 +202,7 @@ class ActionsComponent extends Component
             }
 
             $user = $users->updateSettings($user, $scope);
-            $this->getController()->Auth->setUser($user);
+            $this->getController()->Authentication->setIdentity($user);
 
             return $user['settings'] ?? [];
         }
@@ -214,11 +218,12 @@ class ActionsComponent extends Component
      */
     public function reloadUserSettings($id)
     {
-        $user = $this->getController()->Auth->user();
+        $user = $this->getController()->getRequest()->getAttribute('identity');
         if ($id === $user['id']) {
-            $users = TableRegistry::getTableLocator()->get('Users');
-            $user = $users->get($user['id'], ['finder' => 'auth'])->toArray();
-            $this->getController()->Auth->setUser($user);
+            $user = TableRegistry::getTableLocator()
+                ->get('Users')
+                ->get($user['id'], ['finder' => 'auth']);
+            $this->getController()->Authentication->setIdentity($user);
         }
         return $user;
     }
@@ -241,7 +246,7 @@ class ActionsComponent extends Component
             $settings = $session->read('User.settings', null);
         }
         else {
-            $user = $this->getController()->Auth->user();
+            $user = $this->getController()->getRequest()->getAttribute('identity');
             $settings = $user['settings'] ?? null;
         }
 
@@ -392,7 +397,8 @@ class ActionsComponent extends Component
 
             // If the columns parameter is set to false, full entity data is requested
             // and serialized in Epi\BaseEntity::getExportFields().
-            if (($params['columns'] ?? []) === false) {
+            $fullEntities = ($params['columns'] ?? []) === false;
+            if ($fullEntities) {
                 $query = $query->find('containAll', $params);
             } else {
                 $query = $query->find('containColumns', $params);
@@ -603,7 +609,7 @@ class ActionsComponent extends Component
             $path = ROOT . '/templates/' . $templateFolder . '/' . $iri . '.php';
             if (file_exists($path)) {
                 if (!$this->getController()->userHasRole(['admin', 'devel']) && ($iri !== 'start')) {
-                    throw new ForbiddenException(__('You are not allowed to access this page, please login.'));
+                    throw new ForbiddenException(null, __('You are not allowed to access this page, please login.'));
                 }
 
                 try {
@@ -668,7 +674,7 @@ class ActionsComponent extends Component
             $path = ROOT . '/templates/' . $templateFolder . '/' . $iri . '.php';
             if (file_exists($path)) {
                 if (!$this->getController()->userHasRole(['admin', 'devel']) && ($iri !== 'start')) {
-                    throw new ForbiddenException(__('You are not allowed to access this page, please login.'));
+                    throw new ForbiddenException(null, __('You are not allowed to access this page, please login.'));
                 }
 
                 try {
@@ -763,7 +769,7 @@ class ActionsComponent extends Component
      * Add a new entity
      *
      * //TODO: Set proceed URL as option that will be rendered in the form/entity/doc instead of URL parameter
-     *         Harmonize with nexturl in jobs.js
+     *         Harmonize with nextUrl in jobs.js
      *
      * ### Options
      * - sidemenu: Optionally, set to the parameter that should be used for the sidemenu handling, e.g. `category`. Disable by null (default).
@@ -886,8 +892,11 @@ class ActionsComponent extends Component
             $this->Lock->releaseLock($entity);
 
             if ($result) {
+
+                $proceedUrl =  $this->getController()->getRequest()->getQuery('proceed', null);
                 $this->Answer->success(
                     __('The {0} has been deleted.', $entityCaption),
+                    $proceedUrl
                 );
             }
             else {

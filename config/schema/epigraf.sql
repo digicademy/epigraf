@@ -119,7 +119,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `acronym` varchar(10) DEFAULT NULL,
   `iri` varchar(255) DEFAULT NULL,
   `norm_iri` varchar(255) DEFAULT NULL,
   `contact` text DEFAULT NULL,
@@ -147,3 +146,13 @@ ALTER TABLE `users`
 
 ALTER TABLE `jobs`
 	ADD COLUMN `name` VARCHAR(100) NULL DEFAULT NULL AFTER `modified_by`;
+
+ALTER TABLE `jobs`
+	ADD COLUMN `schedule` VARCHAR(60) NULL DEFAULT NULL AFTER `delay`,
+	ADD COLUMN `nextrun` DATETIME NULL DEFAULT NULL AFTER `schedule`;
+
+ALTER TABLE `jobs`
+	ADD INDEX `nextrun` (`nextrun`);
+
+ALTER TABLE `users`
+	CHANGE COLUMN `username` `username` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci' AFTER `lastaction`;

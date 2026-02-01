@@ -64,7 +64,7 @@ use Cake\Routing\Router;
                 ];
 
                 if ($linkImage) {
-                    $url = Router::url(['action'=>'view', $article->id,'#'=>'items-' .  $item->id]);
+                    $url = Router::url(['plugin'=> 'Epi','database' => $article->database, 'controller'=>'Articles', 'action'=>'view', $article->id,'#'=>'items-' .  $item->id]);
                     $divAttributes['data-item-url'] = $url;
                 } else {
                     $url = false;

@@ -13,12 +13,13 @@ declare(strict_types=1);
 namespace App\View\Helper;
 
 use App\Model\Table\PermissionsTable;
+use Cake\Core\Configure;
 use Cake\View\Helper;
 
 /**
  * User helper
  *
- * Get user role and access permissions
+ * Get user role, access permissions and login configuration.
  *
  */
 class UserHelper extends Helper
@@ -120,5 +121,11 @@ class UserHelper extends Helper
             'web',
             $permissionOptions
         );
+    }
+
+    public function isLoginMethodSupported($method): bool
+    {
+        $loginMethods = Configure::read('Logins', ['form' => true, 'token' => true]);
+        return !empty($loginMethods[$method]);
     }
 }

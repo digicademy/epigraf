@@ -1,5 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # Exclude the redirect callback handled by mod_auth_openidc from rewriting
+    RewriteCond %{REQUEST_URI} !^/users/oidc$
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
     RewriteRule "^/\.well-known/traffic-advice$" - [T=application/trafficadvice+json,END]

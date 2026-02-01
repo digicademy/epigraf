@@ -32,19 +32,7 @@ class TaskOptions extends BaseTaskData
         }
 
         // User defined options
-        $userOptions = array_filter($this->job->config['options']['options'], function ($x) {
-            return ($x['type'] !== 'radio') || !empty($x['output']);
-        });
-
-        $userOptions = array_map(function ($x) {
-            $x['value'] = ($x['type'] === 'radio') ? $x['value'] : $x['output'];
-            return $x;
-        }, $userOptions);
-
-        $userOptions = array_combine(
-            array_map(fn($x) => $x['key'] ?? '_', $userOptions),
-            array_map(fn($x) => $x['value'] ?? '', $userOptions)
-        );
+        $userOptions = $this->job->config['options']['custom'] ?? [];
 
         // Data attributes
         /* @deprecated Remove data attributes.
@@ -78,7 +66,6 @@ class TaskOptions extends BaseTaskData
             $options['_xml_attributes'] = array_keys($options);
         }
         $content = $view->renderContent($options, ['tagname' => 'options'], 1);
-        //$content = "\n  <options " . Attributes::toHtml($options) . "></options>";
 
         $outputfile = $this->getCurrentOutputFilePath();
         Files::appendToFile($outputfile, $content);

@@ -34,6 +34,13 @@ import {
  */
 class BaseDocumentPart extends BaseForm {
 
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:load:dropdown
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -165,6 +172,11 @@ export class DocumentWidget extends BaseDocumentPart {
      */
     satellites = {};
 
+    /**
+     *
+     * @param doc
+     * @listens epi:focus:entity
+     */
     constructor(doc) {
         super(doc, 'document', undefined);
 
@@ -460,6 +472,7 @@ export class DocumentWidget extends BaseDocumentPart {
      * Handle inputs events for autofill and for sorting items
      *
      * @param event {InputEvent} Input event
+     * @fires epi:change:entity
      */
     onInput(event) {
         const sourceInput = event.target;
@@ -691,7 +704,7 @@ export class DocumentWidget extends BaseDocumentPart {
         if (table === 'articles') {
             const url = App.databaseUrl + 'articles/view/' + id;
 
-            App.openDetails(url, {
+            App.openSidebar(url, {
                 title: "Article",
                 ajaxButtons: ['submit'],
                 external: true
@@ -762,25 +775,33 @@ export class SectionWidget extends BaseDocument {
                 return;
             }
 
-            this.popup = new DetachedTab(element, tabsheetsWidget, {
-                title: this.modelParent.models.sections.getTitle(this.widgetElement),
-                onClose: (popup) => this.onRetach(element),
-                dialogButtons: {
-                    close: {
-                        text: i18n.t('Apply'),
-                        handler: (dialog) => tabsheetsWidget.removeTab('more')
+            this.popup = new DetachedTab(
+                element, tabsheetsWidget,
+                {
+                    title: this.modelParent.models.sections.getTitle(this.widgetElement),
+                    onClose: (popup, canceled) => this.onRetach(element),
+                    dialogButtons: {
+                        close: {
+                            text: i18n.t('Apply'),
+                            handler: (dialog) => tabsheetsWidget.removeTab('more')
+                        }
                     }
-                }
-            });
+                },
+                this.getFrame()
+            );
 
         }
         // Show popup
         else {
-            this.popup = new DetachedWindow(element, {
-                title: this.modelParent.models.sections.getTitle(this.widgetElement),
-                collapsable: true,
-                onClose: () => this.onRetach(element)
-            });
+            this.popup = new DetachedWindow(
+                element,
+                {
+                    title: this.modelParent.models.sections.getTitle(this.widgetElement),
+                    collapsable: true,
+                    onClose: (popup, canceled) => this.onRetach(element)
+                },
+                this.getFrame()
+            );
         }
     }
 
@@ -859,28 +880,35 @@ export class ItemWidget extends BaseDocument {
                 return;
             }
 
-            this.popup = new DetachedTab(element, tabsheetsWidget, {
-                title: Utils.getElementText(element.querySelector('.doc-field-itemtype'), 'Item'),
-                onLoad: (popup) => this.onLoad(popup, element),
-                onClose: (popup) => this.onRetach(popup, element),
-                dialogButtons: {
-                    close: {
-                        text: this.editMode ? i18n.t('Apply') : i18n.t('Close'),
-                        handler: (dialog) => tabsheetsWidget.removeTab('more')
+            this.popup = new DetachedTab(element, tabsheetsWidget,
+                {
+                    title: Utils.getElementText(element.querySelector('.doc-field-itemtype'), 'Item'),
+                    onLoad: (popup) => this.onLoad(popup, element),
+                    onClose: (popup, canceled) => this.onRetach(popup, element),
+                    dialogButtons: {
+                        close: {
+                            text: this.editMode ? i18n.t('Apply') : i18n.t('Close'),
+                            handler: (dialog) => tabsheetsWidget.removeTab('more')
+                        }
                     }
-                }
-            });
+                },
+                this.getFrame()
+            );
 
         }
 
         // Show popup
         else {
-            this.popup = new DetachedWindow(element, {
-                title: Utils.getElementText(element.querySelector('.doc-field-itemtype'), 'Item'),
-                collapsable: true,
-                onLoad: (popup) => this.onLoad(popup, element),
-                onClose: (popup) => this.onRetach(popup, element)
-            });
+            this.popup = new DetachedWindow(
+                element,
+                {
+                    title: Utils.getElementText(element.querySelector('.doc-field-itemtype'), 'Item'),
+                    collapsable: true,
+                    onLoad: (popup) => this.onLoad(popup, element),
+                    onClose: (popup, canceled) => this.onRetach(popup, element)
+                },
+                this.getFrame()
+            );
         }
     }
 
@@ -1015,6 +1043,14 @@ export class ItemWidget extends BaseDocument {
  * - Add attribute data-target with the ID of an element that contains the target annotations.
  */
 export class AnnoSelectorWidget extends BaseDocument {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:toggle:switch
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -1213,6 +1249,13 @@ export class AnnoSelectorWidget extends BaseDocument {
 }
 
 export class FieldGroupWidget extends BaseWidget {
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:focus:widgets
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
         this.listenEvent(document, 'epi:focus:widgets', (event) => this.onFocusWidgets(event));
@@ -1286,7 +1329,7 @@ export class FieldGroupWidget extends BaseWidget {
 /**
  * Satellite handling
  *
- * Footnotes and Notes are rendered in the sidebar, outside the document.
+ * Footnotes and notes are rendered in the sidebar, outside the document.
  * That's why the footnote and notes areas are called a satellite of the document.
  *
  * @param {DocumentWidget} docWidget The parent document widget

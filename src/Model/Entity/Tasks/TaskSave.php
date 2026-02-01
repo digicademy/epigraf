@@ -11,6 +11,7 @@
 namespace App\Model\Entity\Tasks;
 
 use App\Model\Entity\BaseTask;
+use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Files;
 use Cake\Core\Configure;
 
@@ -22,6 +23,8 @@ class TaskSave extends BaseTask
 
     /**
      * Save transformed file
+     *
+     * The output file name can contain placeholders that refer to the job.
      *
      * @return bool Return true if the task is finished
      */
@@ -43,6 +46,11 @@ class TaskSave extends BaseTask
 
         // Get filename
         $filename = $this->getCurrentOutputFileName();
+        $filename = Files::cleanPath(
+            Attributes::replacePlaceholders($filename, $this->job->toArray()),
+            false
+        );
+
         $current = $this->config;
         $current['files'] = $filename;
         $this->job->updateCurrentTaskConfig($current);

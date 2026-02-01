@@ -12,7 +12,7 @@ namespace App\Test\TestCase\Controller;
 
 use App\Test\TestCase\AppTestCase;
 use Cake\Core\Configure;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Cake\ORM\Table;
 use Epi\Model\Table\BaseTable;
 
@@ -449,7 +449,6 @@ class DatabanksControllerTest extends AppTestCase
 
 		// Unzip and compare content
         exec("gunzip ".$outputfile.'.sql.gz');
-
         $actual =  file_get_contents($outputfile . '.sql');
 
         if ($this->overwriteComparison) {
@@ -467,7 +466,7 @@ class DatabanksControllerTest extends AppTestCase
         $expected = preg_replace(array_keys($replacements),array_values($replacements),$expected);
         $actual = preg_replace(array_keys($replacements),array_values($replacements),$actual);
 
-        $this->assertTextEquals($expected,$actual);
+        $this->assertTextEquals($expected, $actual);
 		unlink($outputfile.'.sql');
 	}
 

@@ -24,6 +24,7 @@ class DropdownWidgetBase extends BaseWidget {
 
         this.input_id;
         this.pane;
+        this.paneHeightRestricted = false;
         this.pane_id;
     }
 
@@ -59,7 +60,10 @@ class DropdownWidgetBase extends BaseWidget {
      *                        changes due to positioning.
      */
     positionDropdown(first = true) {
-        if (!this.widgetElement || !this.pane || this.pane.classList.contains('widget-dropdown-pane-frame')) {
+        if (!this.widgetElement
+            || !this.pane
+            || this.pane.classList.contains('widget-dropdown-pane-frame')
+            || window.getComputedStyle(this.pane).display == "none") {
             return;
         }
 
@@ -109,8 +113,10 @@ class DropdownWidgetBase extends BaseWidget {
         const minHeight = 250;
 
         this.pane.style.maxHeight = maxHeight + 'px';
-        if (this.pane.offsetHeight > maxHeight) {
+        if (this.pane.offsetHeight > maxHeight || this.paneHeightRestricted) {
             this.pane.style.height = maxHeight + 'px';
+            // resize the pane again, e.g. if more space is available
+            this.paneHeightRestricted = true;
         }
 
         // Case a) The pane is inside a wrapper that also contains the input:
@@ -325,6 +331,8 @@ export class DropdownWidget extends DropdownWidgetBase {
     /**
      * Move the pane element to the direct child list of body.
      * This makes it possible to position the pane.
+     *
+     * @listens epi:clear:widgets
      */
     detachPane() {
         // Remove old pane (if updated by data snippet mechanism)
@@ -431,6 +439,8 @@ export class DropdownWidget extends DropdownWidgetBase {
 
     /**
      * Open dropdown pane in overlay, e.g. for narrow devices
+     *
+     * @listens epi:close:overlay
      */
     openDropDownInOverlay() {
         const headerTitle = this.widgetElement.parentElement.querySelector('.widget-dropdown-pane-header');
@@ -556,6 +566,14 @@ export class DropdownWidget extends DropdownWidgetBase {
  * @constructor
  */
 export class DropdownSelectorWidget extends DropdownWidgetBase {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:load:content
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -606,7 +624,12 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         this.listenEvent(window,'resize', event => this.positionDropdown());
         this.listenEvent(this.widgetElement,'epi:load:content', event => this.positionDropdown());
         this.listenEvent(this.pane,'epi:load:content', event => this.positionDropdown());
-        //document.addEventListener('scroll', this.positionDropdown);
+
+        const scrollable = this.widgetElement.closest('body').querySelector('.widget-scrollsync-content');
+        this.scrollTimeout = undefined;
+        if (scrollable) {
+            this.listenEvent(scrollable, 'scroll', (event) => this.onScroll(event));
+        }
     }
 
     /**
@@ -619,6 +642,8 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
     /**
      * Move the pane element to the direct child list of the body element.
      * This makes it possible to position the pane freely on the page.
+     *
+     * @listens epi:clear:widgets
      */
     detachPane() {
         this.pane_id = this.widgetElement.dataset.paneId;
@@ -738,6 +763,16 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         // Instant filtering for non ajax panes
         else {
             this.loadResults(term);
+        }
+    }
+
+    /**
+     * Resize dropdown, if necessary
+     */
+    onScroll(event) {
+        if (this.paneHeightRestricted) {
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = setTimeout(() => {this.positionDropdown();}, 300);
         }
     }
 
@@ -866,6 +901,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
      * The pane will be opened if necessary.
      *
      * @param term Search term.
+     * @fires epi:load:dropdown
      */
     loadResults(term = '') {
         // Open if not open
@@ -1037,6 +1073,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
      *
      * @param current Selected value
      * @param toggle True if selection is made via enter key. Toggles selection
+     * @emits epi:change:dropdown
      */
     selectValue(current, toggle = false) {
         if (!current) {
@@ -1088,7 +1125,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
             this.input_label.classList.toggle('append', append);
         }
 
-        this.emitEvent('changed', {'id': id, 'label' : label});
+        this.emitEvent('epi:change:dropdown', {'id': id, 'label' : label});
 
         if (!this.pane.classList.contains('widget-checkboxlist')) {
             this.closeDropdown();
@@ -1097,6 +1134,8 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
 
     /**
      * Set the value to null (no item selected).
+     *
+     * @emits epi:change:dropdown
      */
     clearValue() {
         this.input_id.value = '';
@@ -1105,7 +1144,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         this.input_label.dataset.oldvalue = '';
         this.input_label.classList.remove('dirty');
 
-        const changedEvent = new Event('changed', {bubbles: true, cancelable: false});
+        const changedEvent = new Event('epi:change:dropdown', {bubbles: true, cancelable: false});
         this.widgetElement.dispatchEvent(changedEvent);
 
         if (!this.pane.classList.contains('widget-checkboxlist')) {

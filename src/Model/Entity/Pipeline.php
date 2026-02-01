@@ -11,7 +11,6 @@
 namespace App\Model\Entity;
 
 use App\Model\Table\PipelinesTable;
-use Epi\Model\Behavior\PositionBehavior;
 
 /**
  * Pipeline Entity
@@ -144,44 +143,63 @@ class Pipeline extends BaseEntity
     ];
 
     /**
-     * Rearrange the tasks in the pipeline: first data, then transform, then save tasks.
+     * Rearrange the tasks in the pipeline: first input, then transformation, then output tasks.
      *
-     * @return void
+     * @param array $tasks The tasks array
+     * @return array The rearranged tasks array
      */
-    public function arrangeTasks()
+    public function arrangeTasks($tasks)
     {
-        //Default pipeline
-        $tasks = $this->tasks;
+        // Sort by number
+        if (is_array($tasks)) {
+            usort($tasks, function ($a, $b) {
+                return (intval($a['number']) - intval($b['number']));
+            });
+        }
 
         // Extract fixed tasks
-        $groups = ['data' => [], 'transform' => [], 'save' => []];
-        // TODO: add button to add specific data snippets (e.g. 'data_types')
-        foreach ($tasks as $element) {
-            if (($this->tasksConfig[$element['type'] ?? '']['type'] ?? '') === 'data') {
-                $element['fixed'] = true;
-                $groups['data'][] = $element;
+        $groups = ['input' => [], 'throughput' => [], 'output' => []];
+
+        foreach ($tasks as $task) {
+            $taskType = $task['type'] ?? '';
+            $taskConfigType = $this->tasksConfig[$taskType]['type'] ?? '';
+
+            if ($taskType === 'options') {
+                $options = $task['options'] ?? [];
+                if (is_array($options)) {
+                    usort($options, function ($a, $b) {
+                        return (intval($a['number']) - intval($b['number']));
+                    });
+                    $task['options'] = $options;
+                }
             }
-            elseif (($element['type'] ?? '') === 'save') {
-                $element['fixed'] = true;
-                $groups['save'][] = $element;
+
+            if ($taskConfigType === 'data') {
+                $task['fixed'] = true;
+                $groups['input'][] = $task;
+            }
+            elseif ($taskType === 'save') {
+                $task['fixed'] = true;
+                $groups['output'][] = $task;
             }
             else {
-                $groups['transform'][] = $element;
+                $groups['throughput'][] = $task;
             }
         }
 
         // Reassemble
         $tasks = array_merge(
-            array_values($groups['data']),
-            array_values($groups['transform']),
-            array_values($groups['save'])
+            array_values($groups['input']),
+            array_values($groups['throughput']),
+            array_values($groups['output'])
         );
 
         // Renumber
-        foreach ($tasks as $key => $element) {
+        foreach ($tasks as $key => $task) {
             $tasks[$key]['number'] = $key + 1;
         }
-        $this->tasks = $tasks;
+
+        return $tasks;
     }
 
     /**

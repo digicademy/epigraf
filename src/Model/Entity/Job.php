@@ -13,6 +13,7 @@ namespace App\Model\Entity;
 use App\Model\Interfaces\MutateTableInterface;
 use App\Model\Table\BaseTable;
 use App\Model\Table\JobsTable;
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Files\Files;
 use App\Cache\Cache;
 use Cake\Core\Configure;
@@ -20,11 +21,14 @@ use Cake\Error\Debugger;
 use Cake\Error\ErrorLogger;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\InternalErrorException;
+use Cake\I18n\FrozenTime;
 use Cake\Log\Engine\FileLog;
 use Cake\Log\Log;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cron\CronExpression;
 use Throwable;
 use Predis\Client;
 
@@ -35,8 +39,10 @@ use Predis\Client;
  * @property string name A job name for persistent jobs
  * @property string $jobtype
  * @property int $delay If this is a delayed job, a number greater than 0.
+ * @property string|null $schedule A cron expression for scheduled jobs.
+ * @property \DateTime|null $nextrun The next scheduled run time for scheduled jobs.
  * @property string $status
- * @property array $config
+ * @property array $config The config is an array, serialized as JSON.
  * @property array $result
  * @property int $progress
  * @property int $progressmax
@@ -98,6 +104,13 @@ class Job extends BaseEntity
     protected $_typedJob = null;
 
     /**
+     * Current pipeline, loaded using the pipeline_id key in the config field
+     *
+     * @var Pipeline|null
+     */
+    protected $_pipeline = null;
+
+    /**
      * Current job classes
      *
      * Map job type to entity
@@ -149,6 +162,8 @@ class Job extends BaseEntity
         'name' => true,
         'jobtype' => true,
         'delay' => true,
+        'schedule' => true,
+        'nextrun' => true,
         'status' => true,
         'config' => true,
         'result' => true,
@@ -160,11 +175,9 @@ class Job extends BaseEntity
     /**
      * Expose virtual fields
      *
-     * TODO: Rename nexturl to nextUrl
-     *
      * @var string[]
      */
-    protected $_virtual = ['nexturl', 'redirectUrl','downloadUrl','etc'];
+    protected $_virtual = ['nextUrl', 'redirectUrl','downloadUrl','etc'];
 
     /**
      * Constructor
@@ -429,7 +442,7 @@ class Job extends BaseEntity
     protected function _finishLogger()
     {
         if (!empty($job->error)) {
-            $job->nexturl = false;
+            $job->nextUrl = false;
         }
 
         if ($this->catchWarnings) {
@@ -612,7 +625,19 @@ class Job extends BaseEntity
      */
     protected function _getRedirectParams()
     {
-        return [];
+        $params = $this->config['params'] ?? [];
+        $table = $this->config['table'] ?? '';
+
+        $params = array_diff_key($params, array_flip(['task', 'selection', 'id', 'snippets', 'page', 'id', 'target','propertytype', $table]));
+
+        $task = $this->config['task'] ?? false;
+        if ($task) {
+            $task = $this->_getTypedTask(['type' => $task]);
+            $params = $task->updateRedirectParams($params);
+        }
+
+        $params = empty($params) ? [] : ['?' => $params];
+        return $params;
     }
 
     /**
@@ -620,7 +645,7 @@ class Job extends BaseEntity
      *
      * @return string|false
      */
-    public function _getNexturl()
+    public function _getNextUrl()
     {
         if (in_array($this->status, ['init', 'work'])) {
             return Router::url([
@@ -853,7 +878,7 @@ class Job extends BaseEntity
      */
     protected function _getJobPath()
     {
-        $folderpath = Databank::addPrefix($this->config['database']) . DS . 'jobs' . DS . 'job_' . $this->id . DS;
+        $folderpath = Databank::addPrefix($this->config['database']) . DS . 'jobs' . DS . Files::cleanFilename($this->caption) . DS;
         $folderpath = Configure::read('Data.databases') . $folderpath;
 
         return $folderpath;
@@ -917,20 +942,48 @@ class Job extends BaseEntity
      */
     public function getJobOutputFilePath($filename = null)
     {
-        $current = $this->getCurrentTaskConfig(true);
 
-        // Check if file name is valid
+        // Check if file is in download list
         if (!empty($filename) ) {
-            $downloads = str_replace("\r\n", "\n", $current['files'] ?? '');
-            $downloads = explode("\n", $downloads);
-            if (!in_array($filename,  $downloads)) {
-                $filename = null;
+
+            $found = false;
+
+            // First look in the results
+            $downloads = $this->result['downloads'] ?? [];
+            foreach ($downloads as $download) {
+                if ($download['name'] === $filename) {
+                    $target = $download['target'] ?? '';
+                    $root = $download['root'] ?? null;
+                    $found = true;
+                    break;
+                }
+            }
+
+            // Then look in the pipeline tasks
+            if (!$found) {
+                $current = $this->getCurrentTaskConfig(true);
+                $downloads = str_replace("\r\n", "\n", $current['files'] ?? '');
+                $downloads = explode("\n", $downloads);
+                if (in_array($filename, $downloads)) {
+                    $found = true;
+                    $target = $current['target'] ?? '';
+                    $root = $current['root'] ?? null;
+                }
+            }
+
+            if (!$found) {
+                throw new RecordNotFoundException(__('The file {0} is not available for download.', $filename));
             }
         }
 
+        // Tasks without download list in the results
         else {
+            $current = $this->getCurrentTaskConfig(true);
             $task = $this->_getTypedTask($current);
+
             $filename = $task->getCurrentOutputFilePath();
+            $target = $current['target'] ?? '';
+            $root = $current['root'] ?? null;
         }
 
         if (empty($filename)) {
@@ -942,7 +995,6 @@ class Job extends BaseEntity
         }
 
         // Make absolute path
-        $root = $current['root'] ?? null;
         if ($root === 'database') {
             $rootPath = $this->databasePath;
         }
@@ -953,7 +1005,6 @@ class Job extends BaseEntity
             $rootPath = $this->jobPath;
         }
 
-        $target = $current['target'] ?? '';
         $targetPath = Files::addSlash((Files::addSlash($rootPath) . $target)) . $filename;
 
         return $targetPath;
@@ -990,7 +1041,7 @@ class Job extends BaseEntity
      * In case a pipeline_id option is provided, the tasks are taken from the respective pipeline.
      * In case a pipeline_tasks option is provided, those tasks are used.
      *
-     * Don't mix the task option, pipeline_id option and pipeline_tasks option.
+     * Don't mix the task option, pipeline_id option and pipeline_tasks option!
      *
      * @return void
      */
@@ -1040,21 +1091,6 @@ class Job extends BaseEntity
         }
 
         $this->config = $options;
-    }
-
-    /**
-     * Update pipeline progress
-     *
-     * @param int $steps The steps to increase (if a task skips steps)
-     * @return void
-     */
-    public function updateProgress($steps = 1)
-    {
-        if ($this->status == 'finish') {
-            return;
-        }
-
-        $this->progress += $steps;
     }
 
     /**
@@ -1120,8 +1156,39 @@ class Job extends BaseEntity
     public function reset()
     {
         $this->status = 'init';
+
         unset($this->config['pipeline_progress']);
-        Files::removeFolder($this->jobPath, true);
+        if (!empty($this->config['pipeline_tasks'])) {
+            foreach (($this->config['pipeline_tasks'] ?? []) as $taskKey => $taskConfig) {
+
+                /** @var BaseTask $task */
+                $task = $this->_getTypedTask($taskConfig);
+                $this->config['pipeline_tasks'][$taskKey] = $task->reset();
+            }
+        }
+
+        $this->setDirty('config');
+
+        if (is_dir($this->jobPath)) {
+            Files::delete($this->jobPath);
+        }
+    }
+
+    /**
+     * Update next run date based on cron schedule
+     *
+     * @return \DateTime|null The next run date, or null if no schedule is set
+     */
+    public function updateNextRun()
+    {
+        if (empty($this->schedule)) {
+            $this->nextrun = null;
+        } else {
+            $cron = new CronExpression($this->schedule);
+            $this->nextrun = new FrozenTime($cron->getNextRunDate());
+        }
+
+        return  $this->nextrun;
     }
 
     /**
@@ -1161,15 +1228,17 @@ class Job extends BaseEntity
 
             $round += 1;
             $current = $this->getCurrentTaskConfig();
+            $currentType = $current['type'] ?? 'init';
 
             try {
 
                 //Init
-                if (($current['type'] ?? 'init') == 'init') {
+                if ($currentType == 'init') {
                     $this->task_init();
                     $this->status = 'work';
+                    $this->progress += 1;
                 }
-                elseif ($current['type'] === 'finish') {
+                elseif ($currentType === 'finish') {
                     $this->status = 'finish';
                 }
                 else {
@@ -1179,7 +1248,7 @@ class Job extends BaseEntity
                         $finished = $task->execute();
                     } // Or fallback to the legacy methods based approach
                     catch (InvalidTaskException $e) {
-                        $method = 'task_' . $current['type'];
+                        $method = 'task_' . $currentType;
                         if (!method_exists($this, $method)) {
                             throw new \Cake\Core\Exception\CakeException("Method {$method} is not a valid export method.");
                         }
@@ -1189,15 +1258,13 @@ class Job extends BaseEntity
                     if ($finished) {
                         $this->finishCurrentTask();
                     }
+                    $this->progress += 1;
                 }
 
                 if (!empty($this->_taskErrors)) {
                     $errors = implode('\n', $this->_taskErrors);
                     throw new \Cake\Core\Exception\CakeException($errors);
                 }
-
-                // Update progress
-                $this->updateProgress();
 
             } catch (\Cake\Core\Exception\CakeException $e) {
                 $this->error = __(
@@ -1235,6 +1302,38 @@ class Job extends BaseEntity
         $databanks = $this->fetchTable('Databanks');
         $this->databank = $databanks->activateDatabase($dbname);
         return $this->databank;
+    }
+
+    /**
+     * Get a caption containing the name or, as a fallback, the job id.
+     *
+     * @return string
+     */
+    protected function _getCaption()
+    {
+        $name = $this->name;
+        if (empty($name)) {
+            return 'job-' . $this->id;
+        }
+        return $name;
+    }
+
+    /**
+     * Virtual pipeline property
+     *
+     * @return Pipeline|null
+     */
+    protected function _getPipeline()
+    {
+        if (empty($this->config['pipeline_id'])) {
+            return null;
+        }
+
+        if (empty($this->_pipeline)) {
+            $this->_pipeline = $this->fetchTable('Pipelines')->get($this->config['pipeline_id']);
+        }
+
+        return $this->_pipeline;
     }
 
     /**
@@ -1335,6 +1434,14 @@ class Job extends BaseEntity
             'norm_iri' => ['caption' => __('IRI fragment'), 'action' => 'edit'],
             'status' => ['caption' => __('Status')],
             'delay' => ['caption' => __('Delayed')],
+            'schedule' => [
+                'caption' => __('Schedule'),
+                'help' => __('Add a crontab expression to schedule the job.')
+            ],
+            'nextrun' => [
+                'caption' => __('Next run'),
+                'help' => __('Current server time is {0}', FrozenTime::now())
+            ],
             'queueStatus' => ['caption' => __('Queue status'), 'action' => 'view'],
             'progressLabel' => ['caption' => __('Progress'), 'action' => 'view'],
             'progress' => ['caption' => __('Progress'), 'action' => 'edit'],
@@ -1357,7 +1464,6 @@ class Job extends BaseEntity
                 'caption' => __('Created'),
                 'action' => 'view'
             ],
-
             'modified' => [
                 'caption' => __('Modified'),
                 'action' => 'view'
@@ -1366,6 +1472,50 @@ class Job extends BaseEntity
         ];
 
         return $fields;
+    }
+
+    /**
+     * Get pipeline task options grouped by category
+     *
+     * @return array
+     */
+    protected function _getHtmlOptions()
+    {
+        $options = [];
+
+        $customOptions = [];
+        foreach (($this->pipeline['tasks'] ?? []) as $taskNo => $taskConfig) {
+            if (($taskConfig['type'] ?? '') === 'options') {
+                $customOptions = $taskConfig['options'] ?? [];
+                break;
+            }
+        }
+
+        $customOptions = Arrays::array_nest($customOptions, 'category');
+        foreach ($customOptions as $group => $groupOptions) {
+
+            // Assemble radio options
+            $radioOptions = array_values(array_filter($groupOptions, fn($x) =>  $x['type'] === 'radio'));
+            if (!empty($radioOptions)) {
+                $customKey = $radioOptions[0]['key'] ?? '';
+
+                $options[$group] = [
+                    [
+                        'type' => 'radio',
+                        'key' => $customKey,
+                        'options' => Hash::combine($radioOptions,'{n}.value','{n}.label')
+                    ]
+                ];
+            }
+
+            // Keep other options
+            else {
+                $options[$group] = $groupOptions;
+            }
+
+        }
+
+        return $options;
     }
 }
 

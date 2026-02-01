@@ -37,6 +37,7 @@ export class BaseModel {
      * @param {string} event The event name
      * @param {function} handler The event handler, with event as first parameter
      * @param {string} selector Optionally, for deferred listeners, a selector
+     * @listens epi:submit:form For AJAX form submissions
      */
     listenEvent(element, event, handler, selector) {
         if (!element) {
@@ -167,6 +168,8 @@ export class BaseWidget extends BaseModel {
      * @param {HTMLElement} element The DOM element
      * @param {string} name A name of the widget. Each DOM element can have one widget of a name.
      * @param {BaseWidget} parent The parent model or widget. Can be undefined.
+     * @listens epi:clear:widgets
+     * @listens epi:init:widgets
      */
     constructor(element, name, parent) {
         super(parent);
@@ -328,6 +331,7 @@ export class BaseWidget extends BaseModel {
      * Update the focus attributes
      *
      * @param {boolean} focus
+     * @fires epi:focus:widgets
      */
     setFocus(focus = true) {
         if (this.widgetElement && this.widgetElement instanceof Element) {
@@ -570,6 +574,7 @@ export class BaseForm extends BaseWidget {
      *
      * @param {HTMLFormElement} element
      * @para {boolean} force Whether to attach the form even if it is already attached
+     * @listens epi:open:tab
      */
     attachForm(element, force= true) {
         this.detachForm();
@@ -883,6 +888,7 @@ export class BaseForm extends BaseWidget {
      *
      * @param {boolean} close Whether to close the window
      * @return {boolean}
+     * @fires epi:cancel:row
      */
     cancelForm(close = true) {
         if (!this.formElement) {
@@ -954,6 +960,7 @@ export class BaseForm extends BaseWidget {
     /**
      * Validate the form before submit
      *
+     * @fires epi:save.form
      * @return {boolean} Whether the form can be saved.
      */
     validateForm() {
@@ -994,6 +1001,8 @@ export class BaseForm extends BaseWidget {
      * Save start hook. Override to show a loader.
      * Will be called for every attached form widget.
      *
+     * @fires app:show:loader
+     * @fires app:open:dialog
      * @return {boolean}
      */
     onSaveStart() {
@@ -1067,6 +1076,10 @@ export class BaseForm extends BaseWidget {
      * @param {string} data Data returned from the request
      * @param {string} textStatus Status message
      * @param {XMLHttpRequest} xhr The XMLHttpRequest object
+     * @fires epi:create:row'
+     * @fires epi:update:row'
+     * @fires epi:move:row'
+     * @fires epi:delete:row'
      * @return {boolean} Whether to further process the request
      */
     onSaveSuccess(entityId, data, textStatus, xhr) {
@@ -1086,62 +1099,78 @@ export class BaseForm extends BaseWidget {
 
         // Update entities
         const contentType = xhr.getResponseHeader("content-type");
-        let entityState = 'update';
-        let deletedIds = [];
-        if (xhr.method === 'GET') {
-            entityState = 'unchanged';
-        }
-        else {
-            if (!entityId) {
-                entityState = 'create';
-                // For new records: extract the new id from the response
 
-                if (contentType === 'application/json') {
-                    const entityDoc = data[Object.keys(data)[0]];
-                    if (entityDoc) {
-                        entityId = entityDoc.id;
-                    }
-                } else {
-                    const entityDoc = new DOMParser().parseFromString(data, 'text/html').querySelector('[data-root-table][data-root-id]');
-                    if (entityDoc) {
-                        entityId = entityDoc.dataset.rootTable + '-' + entityDoc.dataset.rootId;
-                    }
+        let entityState;
+        let createdIds = [];
+        let updatedIds = [];
+        let deletedIds = [];
+        let movedIds = [];
+
+        if (xhr.method !== 'GET') {
+
+            // Get entity ID from response
+            let newEntityId;
+            if (contentType === 'application/json') {
+                const entityDoc = data[Object.keys(data)[0]];
+                if (entityDoc) {
+                    newEntityId = entityDoc.id;
+
+                    // TODO: Get deleted, moved and merged IDs from JSON response
                 }
             } else {
-                // TODO: handle JSON respnses
                 const entityDoc = new DOMParser().parseFromString(data, 'text/html').querySelector('[data-root-table][data-root-id]');
-                if (entityDoc && entityDoc.dataset.deleted === '1') {
-                    deletedIds.push(entityId);
-                }
+                if (entityDoc) {
+                    newEntityId = entityDoc.dataset.rootTable + '-' + entityDoc.dataset.rootId;
 
-                if (entityDoc && entityDoc.dataset.mergedIds) {
-                    let mergedIds = entityDoc.dataset.mergedIds
-                        .split(',')
-                        .map(id => entityDoc.dataset.rootTable + '-' + id);
-                    deletedIds = deletedIds.concat(mergedIds);
-                }
+                    if (entityDoc.dataset.deleted === '1') {
+                        deletedIds.push(newEntityId);
+                    }
 
-                if (entityDoc && entityDoc.dataset.moved === '1') {
-                    entityState = 'moved';
+                    if (entityDoc.dataset.mergedIds) {
+                        const mergedIds = entityDoc.dataset.mergedIds
+                            .split(',')
+                            .map(id => entityDoc.dataset.rootTable + '-' + id);
+                        deletedIds = deletedIds.concat(mergedIds);
+                    }
+
+                    if (entityDoc.dataset.moved === '1') {
+                        movedIds.push(newEntityId);
+                    }
                 }
             }
-        }
-        // Advertise the new data
-        if ((entityState === 'update') && entityId && !deletedIds.includes(entityId)) {
-            this.emitEvent('epi:update:row', {row: entityId, sender: this});
-        }
-        else if ((entityState === 'moved') && entityId) {
-            this.emitEvent('epi:move:row', {row: entityId, sender: this});
-        }
-        else if ((entityState === 'create') && entityId) {
-            this.emitEvent('epi:create:row', {row: entityId, sender: this});
+
+            if (entityId && !deletedIds.includes(entityId) && !movedIds.includes(entityId)) {
+                updatedIds.push(entityId);
+            }
+
+            if (entityId && newEntityId && (entityId !== newEntityId)) {
+                updatedIds.push(newEntityId);
+            }
+
+            if (!entityId && newEntityId) {
+                // TODO: If an entity was created in a popup
+                //       but the result does not contain the created record,
+                //       for example when granting permissions in the user profile,
+                //       the wrong event will be fired.
+                //       Fix it!
+                createdIds.push(newEntityId);
+            }
         }
 
+        updatedIds.forEach((id) => this.emitEvent('epi:update:row', {row: id, sender: this}));
+        createdIds.forEach((id) => this.emitEvent('epi:create:row', {row: id, sender: this}));
+        movedIds.forEach((id) => this.emitEvent('epi:move:row', {row: id, sender: this}));
         deletedIds.forEach((id) => this.emitEvent('epi:delete:row', {row: id, sender: this}));
 
         return this.onSaveProceed(data, xhr);
     }
 
+    /**
+     * @param data
+     * @param xhr
+     * @fires app:show:message
+     * @returns {boolean}
+     */
     onSaveProceed(data, xhr) {
         // TODO: update current page or at least new records, otherwise double saving will produce duplicate records
 
@@ -1172,6 +1201,7 @@ export class BaseForm extends BaseWidget {
      * Will be called for the form widget that issued the saveForm() call.
      *
      * @param {XMLHttpRequest} xhr The XMLHttpRequest object
+     * @fires app:show:message
      */
     onSaveFailed(xhr)
     {
@@ -1183,6 +1213,8 @@ export class BaseForm extends BaseWidget {
      * Will be called for every attached form widget.
      *
      * @param {XMLHttpRequest} xhr The XMLHttpRequest object
+     * @fires app:close:dialog
+     * @fires app:hide:loader
      * @return {boolean}
      */
     onSaveEnd(xhr) {

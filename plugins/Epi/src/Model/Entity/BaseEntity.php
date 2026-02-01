@@ -14,6 +14,7 @@ use App\Model\Interfaces\ExportEntityInterface;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Strings;
 use App\Utilities\Files\Files;
+use App\Utilities\XmlParser\XmlFilter;
 use App\Utilities\XmlParser\XmlMunge;
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
@@ -284,53 +285,20 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
-     * By default, entities are not visible for guests.
-     * To show entities, in the types config, set the public key to true
-     * and set the published field of the item, section or article at least to PUBLICATION_PUBLISHED
+     * Get the lookup index for solving links
      *
-     * # Options
-     * - published An array of publication states to compare against. Will be taken from the request options, if not provided.
-     *
-     * @param array $options
-     * @return bool
+     * @return array
      */
-    public function getEntityIsVisible($options = [])
+    protected function &_getIndex(): ?array
     {
-        if ($this['hide'] ?? false) {
-            return false;
+        if (!isset($this->_lookup['index'])) {
+            $this->_lookup['index'] = [];
         }
 
-        $userRole = $this->currentUserRole ?? $this->root->currentUserRole ?? 'guest';
-        $minPublished = PUBLICATION_DRAFTED;
-
-        // For guests, hide unpublished content or content with nonpublic types
-        if ($userRole === 'guest') {
-            if (empty($this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED)) {
-                return false;
-            }
-            $minPublished = PUBLICATION_PUBLISHED;
-        }
-        // For readers, hide non-finished content
-        else if ($userRole === 'reader') {
-//            if (empty($this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED)) {
-//                return false;
-//            }
-            $minPublished = PUBLICATION_COMPLETE;
-        }
-
-        if (!empty($minPublished)) {
-            return $this->publishedState >= $minPublished;
-        }
-
-        // Simulate the published state for the current user
-        $requestAction = \App\Model\Table\BaseTable::$requestAction;
-        $published = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
-        if (($requestAction !== 'edit') && !empty($published) && $this->hasDatabaseField('published')) {
-            return in_array($this->publishedState ?? PUBLICATION_PUBLISHED, $published);
-        }
-
-        return true;
+        $index = &$this->_lookup['index'];
+        return $index;
     }
+
 
     /**
      * Parse the norm data field
@@ -373,637 +341,23 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
 
     /**
-     * Clear contained items.
-     * To be implemented in subclasses.
+     * Get a list of messages regarding link errors.
      *
-     * @return boolean
+     * @return string[]
      */
-    public function clear()
+    protected function _getLinkErrors()
     {
-        return true;
-    }
+        $output = [];
 
-    /**
-     * Convert imported raw data to the formats expected by the entity.
-     * Overwrite in entity classes for type conversions.
-     *
-     * Remove ids from $content and populate import properties
-     * (_import_table, _import_row, _import_id, _import_ids, _import_action)
-     *
-     * @param $content
-     * @param $options
-     * @return array
-     */
-    public function importData($content, $options)
-    {
-        // Keep import options
-        $this->_import_values = $content;
-        $this->_import_table = $options['table_name'] ?? null;
-        $this->_import_id = $content['id'] ?? null;
-        $this->_import_row = $options['table_row'] ?? null;
-        $this->_import_action = $options['action'] ?? null;
-        $this->_import_copyfile = $content['file_copyfrom'] ?? null;
-
-        // Ignore fields
-        if (!empty($options['fields'])) {
-            $content = array_intersect_key($content, array_flip($options['fields']));
-        }
-
-        foreach ($this->_fields_import as $old => $new) {
-
-            // Rename fields
-            if (is_numeric($old) || ($old === $new) || !isset($content[$old]) || (!is_array($new) && isset($content[$new]))) {
-                continue;
-            }
-
-            //  Split id fields (IRI paths, polymorphic relations)
-            if (is_array($new)) {
-                // IRI path (e.g. properties/languages/de)
-                $value = explode('/', $content[$old]);
-                if (sizeof($value) === 3) {
-                    $content[$new[0]] = $value[0];
-                    $content[$new[1]] = $content[$old];
-                }
-
-                // Polymorphic and combined IDs (e.g. properties-123)
-                else {
-                    $value = explode('-', $content[$old], 2);
-                    $content[$new[0]] = $value[0] ?? null;
-                    $content[$new[1]] = $content[$old];
-                }
-
-            } // Raw value
-            else {
-                $content[$new] = $content[$old];
-                unset($content[$old]);
+        foreach ($this->_link_errors as $field => $errors) {
+            foreach ($errors as $error) {
+                $output[] = "Link error in $field: $error";
             }
         }
 
-        // Separate ID and content fields
-        $fields_id = static::getIdFields();
-        $fields_content = array_diff($this->fields_import, $fields_id);
-
-        $ids = array_intersect_key($content, array_flip($fields_id));
-        $content = array_intersect_key($content, array_flip($fields_content));
-
-        // Add explicit ID matching the pattern <tablename>-<id> to the index
-        $explicit = array_filter($ids, fn($id) => preg_match('/^[a-z]+-[0-9]+$/', $id ?? ''));
-        foreach ($explicit as $importid) {
-            if (empty($options['index']['targets'][$importid])) {
-                $solvedId = explode('-', $importid);
-                $savedId = [
-                    'model' => $solvedId[0],
-                    'id' => (int)$solvedId[1]
-                ];
-
-                $options['index']['targets'][$importid] = $savedId;
-            }
-        }
-
-        $index = $options['index']['targets'] ?? [];
-
-        // Solve norm_iri
-        if ($index && !empty($content['norm_iri'])) {
-
-            $typeField = $options['type_field'] ?? null;
-            $typeName = ($typeField !== null) ? ($content[$typeField] ?? null) : null;
-
-            $qualifiedIri = implode('/', array_filter([
-                $this->_import_table,
-                $typeName,
-                $content['norm_iri']
-            ]));
-
-            $solvedId = !empty($qualifiedIri) ? ($index[$qualifiedIri] ?? null) : null;
-            if (!empty($solvedId)) {
-                $content['id'] = $solvedId['id'];
-                $this->_import_irimatched = true;
-            }
-
-            if (!empty($solvedId) && !empty($this->_import_id) && empty($options['index']['targets'][$this->_import_id])) {
-                $options['index']['targets'][$this->_import_id] = [
-                    'model' => $solvedId['model'],
-                    'id' => (int)$solvedId['id']
-                ];
-            }
-        }
-
-        // Solve IDs if possible from index (move from ids to content)
-        $this->_import_ids = $ids;
-        $this->solveIds($content, $index);
-
-        // Parse date and time fields
-        // e.g. '2016-02-04T12:58:47+01:00'
-        if (isset($content['created'])) {
-            $content['created'] = new FrozenTime($content['created']);
-        }
-        if (isset($content['modified'])) {
-            $content['modified'] = new FrozenTime($content['modified']);
-        }
-
-        // Add job id
-        if (isset($options['job_id'])) {
-            $content['job_id'] = $options['job_id'];
-        }
-
-        // Fix timestamps
-        if (isset($content['modified']) && empty($content['modified'])) {
-            unset($content['modified']);
-        }
-
-        if (isset($content['created']) && empty($content['created'])) {
-            unset($content['created']);
-        }
-
-        return $content;
+        return $output;
     }
 
-
-    /**
-     * Extract saved ID and add to index
-     *
-     * @param $index
-     */
-    public function indexIds(&$index)
-    {
-
-        foreach ($this->_import_ids as $field => $importedId) {
-            if (empty($importedId)) {
-                continue;
-            }
-
-            // Add the saved entity to targets index, others to sources
-            if ($field === 'id') {
-                $index['targets'][$importedId] = [
-                    'model' => $this->getSource(),
-                    'id' => $this->id
-                ];
-            }
-            else {
-                $index['sources'][$importedId][] = [
-                    'model' => $this->getSource(),
-                    'id' => $this->id,
-                    'field' => $field,
-                    'scope_field' => $this->fields_scope
-                ];
-            }
-        }
-    }
-
-    /**
-     * @param array|Entity $data
-     * @param array $index
-     */
-    public function solveIds(&$data, &$index)
-    {
-        if ($index) {
-            $solved = array_keys(
-                array_intersect_key(
-                    array_flip(
-                        array_filter(
-                            array_unique(
-                                $this->_import_ids
-                            )
-                        )
-                    ),
-                    $index
-                )
-            );
-            $solved = array_intersect($this->_import_ids, $solved);
-            $this->_import_ids = array_diff_key($this->_import_ids, $solved);
-            foreach ($solved as $field => $importid) {
-                $data[$field] = $index[$importid]['id'];
-            }
-        }
-    }
-
-    /**
-     * Index Ids of the entity and all contained entities
-     *
-     * @param array $options Needs an index key
-     *
-     */
-    public function collectIds($options = [])
-    {
-        if (!isset($options['index'])) {
-            $options['index'] = [];
-        }
-
-        $this->indexIds($options['index']);
-        $this->callRecursively('collectIds', null, $options);
-
-        return $options['index'];
-    }
-
-
-    /**
-     * Get the lookup index for solving links
-     *
-     * @return array
-     */
-    protected function &_getIndex(): ?array
-    {
-        if (!isset($this->_lookup['index'])) {
-            $this->_lookup['index'] = [];
-        }
-
-        $index = &$this->_lookup['index'];
-        return $index;
-    }
-
-    /**
-     * Link records
-     *
-     * Updates foreign key fields with the respective IDs as soon as
-     * a matching record occurs in the index.
-     *
-     * @return bool
-     */
-    public function saveLinks()
-    {
-        $index = &$this->_getIndex();
-        $this->collectIds(['index' => &$index]);
-        $result = $this->table->solveLinks($index, false);
-        return $result;
-    }
-
-    /**
-     * Get all tags in xml fields
-     *
-     * ### Options
-     * - recurse (bool) Whether to recurse into child entities
-     * - content (bool) Whether to extract the text content of the tags
-     * - to (bool) Whether to add to fields (to_tab, to_id) to the tag result
-     *
-     * @param string|array $fieldName The fieldname, e.g. "value".
-     *                                JSON keys can be provided using dot notation, e.g. "value.longitude".
-     *                                If the fieldname is null, then all fields and child entities will be visited.
-     * @param array $options Extraction options
-     * @return array An array containing tag IDs as keys and an array with from-keys.
-     */
-    public function extractXmlTags($fieldName = null, $options =  ['content' => false, 'recurse' =>  false, 'to' => false])
-    {
-        $tags = [];
-
-        // Iterate all fields and recurse into child entities
-        if ($fieldName === null) {
-            $fields = $this->getExportFields(['snippets' => ['comments']]);
-            $fields[] = 'footnotes'; //TODO: Why added manually
-            foreach ($fields as $oldName => $fieldConfig) {
-
-                $fieldKey = is_array($fieldConfig) ?
-                    $fieldConfig['key'] ?? $oldName :
-                    (is_numeric($oldName) ? $fieldConfig : $oldName);
-
-                if (isset($this->{$fieldKey})) {
-                    $value = $this->{$fieldKey};
-
-                    // Entity
-                    if (($value instanceof BaseEntity) && ($this->root === $value->root)) {
-                        $tags += $value->extractXmlTags(null, $options);
-                    }
-
-                    // Array
-                    elseif (is_array($value) && !empty($options['recurse'])) {
-                        foreach ($value as $row) {
-                            if ($row instanceof BaseEntity && ($this->root === $row->root)) {
-                                $tags += $row->extractXmlTags(null, $options);
-                            }
-                        }
-                    }
-
-                    // Single value
-                    else {
-                        $tags += $this->extractXmlTags($fieldKey, $options);
-                    }
-                }
-            }
-        }
-
-        // Extract tags from a field
-        else {
-
-            $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
-            $format = $this->getFieldFormat($fieldName);
-
-            if ($format === 'xml') {
-                $value = $this->getValueRaw($fieldName);
-                try {
-                    $fieldTags = XmlMunge::getXmlElements($value, !empty($options['content']));
-                } catch (Exception $e) {
-                    $this->setError($fieldName[0], $e->getMessage());
-                    $fieldTags = [];
-                }
-
-                $entity = $this;
-                $fieldTags = array_combine(
-                    array_keys($fieldTags),
-                    array_map(
-                        function ($tagid, $tag) use ($entity, $fieldName, $options) {
-                            $content = !empty($options['content']);
-                            $to = !empty($options['to']) ? $this->root->linksByTagid[$tagid][0] ?? [] : [];
-                            $tag = [
-                                'tab' => $this->tableName,
-                                'id' => $entity->id,
-                                'field' => $fieldName[0],
-                                'tagid' => $tagid,
-                                'to_id' => $to['to_id'] ?? null,
-                                'to_tab' => $to['to_tab'] ?? null,
-                                'to_type' => $to['to_propertytype'] ?? null,
-                                'caption' => $to['to_caption'] ?? null,
-                                'tagname' => ($content && is_array($tag)) ? $tag['name'] : $tag,
-                                'content' => ($content && is_array($tag)) ? $tag['content'] : null
-                            ];
-
-                            $tag = new Tag($tag,
-                                [
-                                    'source' => 'Epi.links',
-                                    'useSetters' => false,
-                                    'markClean' => true,
-                                    'markNew' => false
-                                ]
-                            );
-                            $tag->container = $entity;
-                            $tag->root = $entity->root;
-                            return $tag;
-                        },
-                        array_keys($fieldTags),
-                        $fieldTags
-                    )
-                );
-
-                $tags += $fieldTags;
-            }
-        }
-
-        return $tags;
-    }
-
-    /**
-     * Inject link data into XML elements
-     *
-     * Adds the attributes data-link-target and data-link-value.
-     *
-     * @param string $value The XML text
-     * @param array $options Options passed to getValueFormatted() when rendering to_id and to_caption
-     * @param string $fieldName The field name
-     * @return false|mixed|string
-     *
-     */
-    public function injectXmlAttributes($value = null, $options = [], $fieldName = '')
-    {
-        $links = $this->root->links_by_tagid ?? [];
-        $footnotes = $this->root->footnotes_by_tagid ?? [];
-
-        $entity = $this;
-        $callback_ids = static function (&$element, &$parser) use ($links, $footnotes, $options, $entity, $fieldName) {
-            if ($element['position'] == 'open') {
-
-                if (!empty($element['attributes']['id'])) {
-
-                    $matchingLinks = $links[$element['attributes']['id']] ?? [];
-                    $matchingFootnotes = $footnotes[$element['attributes']['id']] ?? [];
-
-                    if (empty($matchingLinks) && empty($matchingFootnotes)) {
-                        $entity->setLinkError(
-                            is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
-                            __('Missing link record for element ID {0}. ', $element['attributes']['id'])
-                        );
-                    }
-
-                    // Atomic annotations have exactly one link record
-                    // pointing to exactly one target.
-                    elseif (count($matchingLinks) === 1) {
-                        $link = $matchingLinks[0];
-
-                        $element['attributes']['data-link-target'] = $link->getValueFormatted(
-                            'to_id',['format' => 'raw'] + $options
-                        );
-                        $element['attributes']['data-link-iri'] = $link->getValueFormatted(
-                            'to_iri_path',['format' => 'raw'] + $options
-                        );
-                        $element['attributes']['data-link-value'] = $link->getValueFormatted(
-                            'to_caption',['format' => 'raw'] + $options
-                        );
-
-                        if (!isset($link->type->config['attributes']['value'])) {
-                            unset($element['attributes']['value']);
-                        }
-                    }
-                }
-            }
-            return true;
-        };
-
-        if (empty($value) || empty($links)) {
-            return $value;
-        }
-        else {
-            return XmlMunge::parseXmlString($value, $callback_ids);
-        }
-    }
-
-    /**
-     * Query select input options from the database
-     *
-     * @param string $modelName Model name including the plugin prefix (e.g. Epi.Properties)
-     * @param array $conditions Where condition
-     * @param string $fieldName The field with the values
-     * @return Query
-     */
-    public function getOptions($modelName, $conditions, $fieldName): Query
-    {
-        $options = $this->fetchTable($modelName)
-            ->find('list', ['keyField' => 'id', 'valueField' => $fieldName])
-            ->where($conditions);
-
-        return $options;
-    }
-
-    /**
-     * Get field caption
-     *
-     * @param $fieldName
-     *
-     * @return array|mixed|string|string[]
-     */
-    public function getFieldCaption($fieldName)
-    {
-        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
-
-        if (sizeof($fieldName) === 1) {
-            $field = $this->type['merged']['fields'][$fieldName[0]] ?? $fieldName[0];
-        }
-        elseif (sizeof($fieldName) > 1) {
-            $field = $this->type['merged']['fields'][$fieldName[0]]['keys'][$fieldName[1]] ?? $fieldName[1];
-        }
-
-        return is_string($field) ? $field : ($field['caption'] ?? $fieldName);
-    }
-
-
-    /**
-     * Get the field format from the type the entity belongs to
-     * (if it is loaded)
-     *
-     * @param string|array $fieldName
-     * @return string
-     */
-    public function getFieldFormat($fieldName)
-    {
-        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
-
-        $default = $this->_fields_formats[$fieldName[0]] ?? 'raw';
-//        if ($default !== 'raw') {
-//            return $default;
-//        }
-
-        $type = $this->type ?? [];
-        if (empty($type)) {
-            return $default;
-        }
-
-        if ((sizeof($fieldName) === 1)) {
-            return $type->config['fields'][$fieldName[0]]['format'] ?? $default;
-        }
-
-        if ((sizeof($fieldName) > 1)) {
-            return $type->config['fields'][$fieldName[0]]['keys'][$fieldName[1]]['format'] ?? $default;
-        }
-
-        return $default;
-    }
-
-    /**
-     * Get whether the field is public
-     *
-     * @param string|array $fieldName
-     * @param array $options
-     * @return string
-     */
-    public function getFieldIsVisible($fieldName, $options = [])
-    {
-        $userRole = $this->root->currentUserRole ?? 'guest';
-        $requestPublished = $options['published'] ?? \App\Model\Table\BaseTable::$requestPublished ?? [];
-        $requestAction = \App\Model\Table\BaseTable::$requestAction ?? null;
-
-        // Only show the published field in edit actions or when explicitly requested
-        if (in_array($fieldName, ['published'])) {
-            return !in_array($userRole, ['guest', 'reader']) && (empty($requestPublished) || ($requestAction !== 'view'));
-        }
-
-        // Users other than guests and readers can see all fields
-        if (!in_array($userRole, ['guest', 'reader'])) {
-            return true;
-        }
-
-        // ID fields are always public by default
-        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
-        if (in_array($fieldName[0], static::$_fields_ids) || isset(static::$_fields_ids[$fieldName[0]])) {
-            $default = true;
-        }
-        else {
-            $default = false;
-        }
-
-        // Check the type config
-        if ((sizeof($fieldName) === 1)) {
-            return $this->htmlFields[$fieldName[0]]['public'] ?? $default;
-        }
-        elseif ((sizeof($fieldName) > 1)) {
-            return $this->htmlFields[$fieldName[0]]['keys'][$fieldName[1]]['public'] ?? $default;
-        }
-        else {
-            return $default;
-        }
-    }
-
-    /**
-     * Get the field config from the type the entity belongs to
-     * (and loads the type entity if not already loaded)
-     *
-     * @param string|array $fieldName
-     * @return array
-     */
-    public function getFieldConfig($fieldName)
-    {
-        //TODO: merge default config from getHtmlFields, e.g. for items showing the published field
-        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
-
-        if (!empty($this->type) && (sizeof($fieldName) === 1)) {
-            return $this->type->config['fields'][$fieldName[0]] ?? [];
-        }
-        elseif (!empty($this->type) && (sizeof($fieldName) > 1)) {
-            return $this->type->config['fields'][$fieldName[0]]['keys'][$fieldName[1]] ?? [];
-        }
-        else {
-            return [];
-        }
-    }
-
-
-    /**
-     * Get unformatted value
-     *
-     * @param $fieldName
-     * @return false|mixed|string|null
-     */
-    public function getValueUnformatted($fieldName)
-    {
-        $raw = $this->get($fieldName);
-
-        $format = $this->getFieldFormat($fieldName);
-        if ($format === 'xml') {
-            try {
-                return $this->table->deRenderXmlFields($raw);
-            } catch (Exception $e) {
-                $this->setParsingError($fieldName, __('Error encoding XML: {0}', [$e->getMessage()]));
-//                return __('Error encoding XML: {0}', [$e->getMessage()]);
-                return $raw;
-            }
-
-        }
-        elseif ($format === 'json') {
-            try {
-                $jsonOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PARTIAL_OUTPUT_ON_ERROR;
-                return json_encode($raw, $jsonOptions);
-            } catch (Exception $e) {
-                $this->setParsingError($fieldName, $e->getMessage());
-
-                // TODO: better return $raw although not a string?
-                return __('Error encoding JSON: {0}', [$e->getMessage()]);
-            }
-        }
-        elseif (($format === 'geodata') && !is_string($raw)) {
-            try {
-                $jsonOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PARTIAL_OUTPUT_ON_ERROR;
-                return json_encode($raw, $jsonOptions);
-            } catch (Exception $e) {
-                $this->setParsingError($fieldName, $e->getMessage());
-
-                // TODO: better return $raw although not a string?
-                return __('Error encoding JSON: {0}', [$e->getMessage()]);
-            }
-        }
-        else {
-            return $raw;
-        }
-    }
-
-    /**
-     * Log a parsing error, e.g. when XML content could not be parsed
-     *
-     * @param string $fieldname The field that could not be parsed
-     * @param string $error The error message
-     * @return void
-     */
-    public function setParsingError($fieldname, $error)
-    {
-        if (!isset($this->_parsing_errors[$fieldname])) {
-            $this->_parsing_errors[$fieldname] = [];
-        }
-        $this->_parsing_errors[$fieldname][] = $error;
-    }
 
     /**
      * Get a list of messages regarding parsing errors.
@@ -1023,79 +377,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         return $output;
     }
 
-    /**
-     * Log a link error, e.g. when a link record for a tag ID could not be found
-     *
-     * @param string $fieldname
-     * @param string $error The error message
-     * @return void
-     */
-    public function setLinkError($fieldname, $error)
-    {
-        if (!isset($this->_link_errors[$fieldname])) {
-            $this->_link_errors[$fieldname] = [];
-        }
-        $this->_link_errors[$fieldname][] = $error;
-    }
-
-    /**
-     * Get a list of messages regarding link errors.
-     *
-     * @return string[]
-     */
-    protected function _getLinkErrors()
-    {
-        $output = [];
-
-        foreach ($this->_link_errors as $field => $errors) {
-            foreach ($errors as $error) {
-                $output[] = "Link error in $field: $error";
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * Get default published status options
-     *
-     * @return array
-     */
-    /**
-     * @param string|array $fieldName
-     * @return bool
-     */
-    public function getValueIsEmpty($fieldName)
-    {
-        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
-        $format = $this->getFieldFormat($fieldName);
-
-        if ($format === 'date') {
-            $content = $this->get($fieldName[0] . '_value');
-            return ($content === '') || ($content === null);
-        }
-        elseif ($format === 'file') {
-            $content = $this->get($fieldName[0] . '_name');
-            return ($content === '') || ($content === null);
-        }
-        elseif ($format === 'image') {
-            $content = $this->get($fieldName[0] . '_name');
-            return ($content === '') || ($content === null);
-        }
-        elseif ($format === 'record') {
-            return empty($this->get($fieldName[0] . '_id'));
-        }
-        elseif ($format === 'relation') {
-            return empty($this->get($fieldName[0] . '_id'));
-        }
-        elseif ($format === 'property') {
-            return empty($this->get('properties_id'));
-        }
-        else {
-            $content = empty($fieldName[0]) ? '' : $this->get($fieldName[0]);
-            return ($content === '') || ($content === null);
-        }
-    }
 
     /**
      * Get type path
@@ -1403,89 +684,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
-     * Copy the item image to a target folder
-     *
-     * Typical metadata fields:
-     *
-     * [
-     *   'dc:title' => 'DI 103, Nr. 251 - Wismar, St. Georgen - 1479, 1681',
-     *   'dc:rights' => 'Niedersächsische Akademie der Wissenschaften zu Göttingen (Jürgen Herold)',
-     *   'xmpRights:UsageTerms' => 'CC BY-NC 4.0'
-     * ]
-     *
-     * Adding exif data works for: jpg and jpeg files
-     *
-     * @param string $targetFolder The target folder, absolute path on the server
-     * @param array $metadataConfig If a metadata configuration is provided, metadata is written to the files.
-     *                              Each key is a metadata field in the file, each value is a placeholder extraction key.
-     *                              Instead of a single placeholder, an array of placeholders can be provided.
-     *                              In this case, the first value not evaluating to null or an empty string is used.
-     *                              The placeholder extraction key is resolved from the perspective of an image item.
-     *                              Example: ["xmpRights:UsageTerms" => "{file_licence}","dc:rights" => "{file_copyright}"]
-     * @return boolean
-     */
-    public function copyImage($targetFolder, $metadataConfig)
-    {
-        if (!($this->file_properties['exists'] ?? false) || empty($this->file_properties['root'])) {
-            return false;
-        }
-
-        $filename = $this->file_name;
-        $filetype = $this->file_properties['extension'];
-        $sourceFolder = Files::joinPath([$this->file_properties['root'], $this->file_properties['path']]);
-
-        // Copy
-        $result = Files::copyFile($filename, $sourceFolder, $targetFolder);
-
-        // Convert tif to jpg
-        if ($result && in_array($this->file_properties['extension'], ['tif'])) {
-            $result = Files::convertImage(Files::joinPath([$targetFolder, $filename]), 'jpg', true);
-
-            if ($result !== false) {
-                $filename = pathinfo($result, PATHINFO_BASENAME);
-                $filetype = 'jpg';
-                $result = true;
-
-                //  For processing in getValuePlaceholder
-                // TODO: better solution than changing the entity fields?
-                $this->file_type = $filetype;
-                $this->file_name = $filename;
-            }
-        }
-
-        // Resize if necessary
-        Files::resizeImage(Files::joinPath([$targetFolder, $filename]), 10, 5);
-
-        // Inject metadata (xmp, iptc, exif) into the file
-        if ($result && in_array($filetype, ['jpg', 'jpeg'])) {
-            $metadataConfig = array_merge($this->file_properties['metadata'] ?? [], $metadataConfig);
-            $metadata = [];
-            foreach ($metadataConfig as $field => $placeholderArray) {
-                $placeholderArray = !is_array($placeholderArray) ? [$placeholderArray] : $placeholderArray;
-                $value = null;
-                foreach ($placeholderArray as $placeholderString) {
-                    $value = $this->getValuePlaceholder($placeholderString, ['format' => false, 'collapse' => ', ']);
-                    if (!is_null($value) && ($value !== '')) {
-                        break;
-                    }
-                }
-                $metadata[$field] = $value;
-            }
-
-            // $metadata = array_filter($metadata);
-            $newFilename = $metadata['filename'] ?? $filename;
-            unset($metadata['filename']);
-
-            $result = Files::updateXmp(Files::joinPath([$targetFolder, $filename]), $metadata, true);
-            if ($result && ($newFilename !== $filename)) {
-                $result = Files::renameFile($targetFolder, $filename, $newFilename);
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Get local IRI
      *
      * @deprecated
@@ -1642,6 +840,284 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     {
         return $this->extractXmlTags(null, ['content' => true, 'to' => true]);
     }
+
+    /**
+     * By default, entities are not visible for guests.
+     * To show entities, in the types config, set the public key to true
+     * and set the published field of the item, section or article at least to PUBLICATION_PUBLISHED
+     *
+     * # Options
+     * - published An array of publication states to compare against. Will be taken from the request options, if not provided.
+     *
+     * @param array $options
+     * @return bool
+     */
+    public function getEntityIsVisible($options = [])
+    {
+        if ($this['hide'] ?? false) {
+            return false;
+        }
+
+        $userRole = $this->currentUserRole ?? $this->root->currentUserRole ?? 'guest';
+        $minPublished = PUBLICATION_DRAFTED;
+
+        // For guests, hide unpublished content or content with nonpublic types
+        if ($userRole === 'guest') {
+            if (empty($this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED)) {
+                return false;
+            }
+            $minPublished = PUBLICATION_PUBLISHED;
+        }
+        // For readers, hide non-finished content
+        else if ($userRole === 'reader') {
+//            if (empty($this->type['published'] ?? PUBLICATION_BINARY_UNPUBLISHED)) {
+//                return false;
+//            }
+            $minPublished = PUBLICATION_COMPLETE;
+        }
+
+        if (!empty($minPublished)) {
+            return $this->publishedState >= $minPublished;
+        }
+
+        // Simulate the published state for the current user
+        $requestAction = \App\Model\Table\BaseTable::$requestAction;
+        $published = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
+        if (($requestAction !== 'edit') && !empty($published) && $this->hasDatabaseField('published')) {
+            return in_array($this->publishedState ?? PUBLICATION_PUBLISHED, $published);
+        }
+
+        return true;
+    }
+
+    /**
+     * Query select input options from the database
+     *
+     * @param string $modelName Model name including the plugin prefix (e.g. Epi.Properties)
+     * @param array $conditions Where condition
+     * @param string $fieldName The field with the values
+     * @return Query
+     */
+    public function getOptions($modelName, $conditions, $fieldName): Query
+    {
+        $options = $this->fetchTable($modelName)
+            ->find('list', ['keyField' => 'id', 'valueField' => $fieldName])
+            ->where($conditions);
+
+        return $options;
+    }
+
+    /**
+     * Get field caption
+     *
+     * @param $fieldName
+     *
+     * @return array|mixed|string|string[]
+     */
+    public function getFieldCaption($fieldName)
+    {
+        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+
+        if (sizeof($fieldName) === 1) {
+            $field = $this->type['merged']['fields'][$fieldName[0]] ?? $fieldName[0];
+        }
+        elseif (sizeof($fieldName) > 1) {
+            $field = $this->type['merged']['fields'][$fieldName[0]]['keys'][$fieldName[1]] ?? $fieldName[1];
+        }
+
+        return is_string($field) ? $field : ($field['caption'] ?? $fieldName);
+    }
+
+
+    /**
+     * Get the field format from the type the entity belongs to
+     * (if it is loaded)
+     *
+     * @param string|array $fieldName
+     * @return string
+     */
+    public function getFieldFormat($fieldName)
+    {
+        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+
+        $default = $this->_fields_formats[$fieldName[0]] ?? 'raw';
+//        if ($default !== 'raw') {
+//            return $default;
+//        }
+
+        $type = $this->type ?? [];
+        if (empty($type)) {
+            return $default;
+        }
+
+        if ((sizeof($fieldName) === 1)) {
+            return $type->config['fields'][$fieldName[0]]['format'] ?? $default;
+        }
+
+        if ((sizeof($fieldName) > 1)) {
+            return $type->config['fields'][$fieldName[0]]['keys'][$fieldName[1]]['format'] ?? $default;
+        }
+
+        return $default;
+    }
+
+    /**
+     * Get whether the field is public
+     *
+     * @param string|array $fieldName
+     * @param array $options
+     * @return string
+     */
+    public function getFieldIsVisible($fieldName, $options = [])
+    {
+        $userRole = $this->root->currentUserRole ?? 'guest';
+        $requestPublished = $options['published'] ?? \App\Model\Table\BaseTable::$requestPublished ?? [];
+        $requestAction = \App\Model\Table\BaseTable::$requestAction ?? null;
+
+        // Only show the published field in edit actions or when explicitly requested
+        if (in_array($fieldName, ['published'])) {
+            return !in_array($userRole, ['guest', 'reader']) && (empty($requestPublished) || ($requestAction !== 'view'));
+        }
+
+        // Users other than guests and readers can see all fields
+        if (!in_array($userRole, ['guest', 'reader'])) {
+            return true;
+        }
+
+        // ID fields are always public by default
+        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+        if (in_array($fieldName[0], static::$_fields_ids) || isset(static::$_fields_ids[$fieldName[0]])) {
+            $default = true;
+        }
+        else {
+            $default = false;
+        }
+
+        // Check the type config
+        if ((sizeof($fieldName) === 1)) {
+            return $this->htmlFields[$fieldName[0]]['public'] ?? $default;
+        }
+        elseif ((sizeof($fieldName) > 1)) {
+            return $this->htmlFields[$fieldName[0]]['keys'][$fieldName[1]]['public'] ?? $default;
+        }
+        else {
+            return $default;
+        }
+    }
+
+    /**
+     * Get the field config from the type the entity belongs to
+     * (and loads the type entity if not already loaded)
+     *
+     * @param string|array $fieldName
+     * @return array
+     */
+    public function getFieldConfig($fieldName)
+    {
+        //TODO: merge default config from getHtmlFields, e.g. for items showing the published field
+        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+
+        if (!empty($this->type) && (sizeof($fieldName) === 1)) {
+            return $this->type->config['fields'][$fieldName[0]] ?? [];
+        }
+        elseif (!empty($this->type) && (sizeof($fieldName) > 1)) {
+            return $this->type->config['fields'][$fieldName[0]]['keys'][$fieldName[1]] ?? [];
+        }
+        else {
+            return [];
+        }
+    }
+
+
+    /**
+     * Get unformatted value
+     *
+     * @param $fieldName
+     * @return false|mixed|string|null
+     */
+    public function getValueUnformatted($fieldName)
+    {
+        $raw = $this->get($fieldName);
+
+        $format = $this->getFieldFormat($fieldName);
+        if ($format === 'xml') {
+            try {
+                return $this->table->deRenderXmlFields($raw);
+            } catch (Exception $e) {
+                $this->setParsingError($fieldName, __('Error encoding XML: {0}', [$e->getMessage()]));
+//                return __('Error encoding XML: {0}', [$e->getMessage()]);
+                return $raw;
+            }
+
+        }
+        elseif ($format === 'json') {
+            try {
+                $jsonOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PARTIAL_OUTPUT_ON_ERROR;
+                return json_encode($raw, $jsonOptions);
+            } catch (Exception $e) {
+                $this->setParsingError($fieldName, $e->getMessage());
+
+                // TODO: better return $raw although not a string?
+                return __('Error encoding JSON: {0}', [$e->getMessage()]);
+            }
+        }
+        elseif (($format === 'geodata') && !is_string($raw)) {
+            try {
+                $jsonOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PARTIAL_OUTPUT_ON_ERROR;
+                return json_encode($raw, $jsonOptions);
+            } catch (Exception $e) {
+                $this->setParsingError($fieldName, $e->getMessage());
+
+                // TODO: better return $raw although not a string?
+                return __('Error encoding JSON: {0}', [$e->getMessage()]);
+            }
+        }
+        else {
+            return $raw;
+        }
+    }
+
+    /**
+     * Get default published status options
+     *
+     * @return array
+     */
+    /**
+     * @param string|array $fieldName
+     * @return bool
+     */
+    public function getValueIsEmpty($fieldName)
+    {
+        $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+        $format = $this->getFieldFormat($fieldName);
+
+        if ($format === 'date') {
+            $content = $this->get($fieldName[0] . '_value');
+            return ($content === '') || ($content === null);
+        }
+        elseif ($format === 'file') {
+            $content = $this->get($fieldName[0] . '_name');
+            return ($content === '') || ($content === null);
+        }
+        elseif ($format === 'image') {
+            $content = $this->get($fieldName[0] . '_name');
+            return ($content === '') || ($content === null);
+        }
+        elseif ($format === 'record') {
+            return empty($this->get($fieldName[0] . '_id'));
+        }
+        elseif ($format === 'relation') {
+            return empty($this->get($fieldName[0] . '_id'));
+        }
+        elseif ($format === 'property') {
+            return empty($this->get('properties_id'));
+        }
+        else {
+            $content = empty($fieldName[0]) ? '' : $this->get($fieldName[0]);
+            return ($content === '') || ($content === null);
+        }
+    }
+
 
     /**
      * Generate triples based on the types config.
@@ -2131,7 +1607,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
-     * Get all property IDs referenced in the article
+     * Get all property IDs referenced in the entity
      *
      * @return \Generator Property IDs
      */
@@ -2251,130 +1727,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         return $nestedrows;
     }
 
-    /**
-     * Call a method for all contained objects
-     *
-     * @param string $method A method name.
-     * @param mixed $params Params passed to the method.
-     * @return void
-     */
-    public function callRecursively(string $method, $fields = null, ...$params)
-    {
-        if ($fields === null) {
-            $fields = $this->getVisible();
-        }
-
-        foreach ($fields as $field) {
-            $value = $this->get($field);
-
-            if (is_object($value) && method_exists($value, $method) && is_callable([$value, $method])) {
-                $value->{$method}(...$params);
-            }
-            else {
-                if (is_iterable($value)) {
-                    foreach ($value as $v) {
-                        if (is_object($v) && method_exists($v, $method) && is_callable([$v, $method])) {
-                            $v->{$method}(...$params);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Set the root entity for dependent entitities
-     *
-     * For example, articles are the root of sections and items,
-     * and articles are the container of sections, sections are the
-     * container of items.
-     *
-     * Be aware: When linking to external entities that are not root entities,
-     *           the root of those entities will be the root of the link.
-     *           For example, if an article links to a section in another article,
-     *           the root of the linked section will be the article containing the link,
-     *           not the article containing the section.
-     *           Likewise, IndexLink entities will have the IndexProperty as root,
-     *           although this does not reflect the database structure, it rather creates
-     *           a logical structure for index generation.
-     *           If you want to test whether such entities depend on the root entity,
-     *           use the hasRoot() method.
-     *
-     * @param \App\Model\Entity\BaseEntity $container The container entity
-     * @param \App\Model\Entity\BaseEntity $root The root entity
-     * @param bool $recurse Whether to recursively prepare the root and container property
-     * @param bool $reset Usually, already prepared entities are skipped.
-     *                    In case you change the structure of nested entities changes,
-     *                    you can reset the container.
-     * @return $this
-     */
-    public function prepareRoot($container = null, $root = null, $recurse = true, $reset = false)
-    {
-        if ($reset) {
-            $this->_prepared_root = false;
-            $recurse = false;
-        }
-
-        if ($this->_prepared_root) {
-            return $this;
-        }
-        else {
-            $this->_prepared_root = true;
-        }
-
-        // Set root
-        // TODO: Add $this->hasRoot($root) check? See the TODO in IndexProperty.
-        if (($root === null) || ($this instanceof RootEntity)) {
-            $root = $this;
-        }
-
-        $this->container = $container;
-        $this->root = $root;
-
-        // Recursively set the root
-        if ($recurse) {
-            $this->callRecursively('prepareRoot', null, $this, $root, $recurse);
-        }
-
-        return $this;
-
-    }
-
-    /**
-     * Prepare the IRI of the entity
-     *
-     * Assigns a local IRI to the entity if the norm_iri field is empty.
-     * The local IRI consists of the database name, table name and the row ID.
-     *
-     * @return void
-     */
-    public function prepareIri()
-    {
-        if ($this->_prepared_iri) {
-            return;
-        }
-
-        $normIri = $this['norm_iri'] ?? null;
-        if (empty($normIri)) {
-            $this->norm_iri = $this->iriFragment;
-        }
-
-        $this->_prepared_iri = true;
-    }
-
-    /**
-     * Prepare the tree properties of the entity
-     *
-     * @return void
-     */
-    public function prepareTree()
-    {
-        if ($this->_prepared_tree) {
-            return;
-        }
-
-        $this->_prepared_tree = true;
-    }
 
     /**
      * Recursively prepare fields for API export
@@ -2572,6 +1924,702 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         }
 
         return $filteredProperties;
+    }
+
+    /**
+     * Log a parsing error, e.g. when XML content could not be parsed
+     *
+     * @param string $fieldname The field that could not be parsed
+     * @param string $error The error message
+     * @return void
+     */
+    public function setParsingError($fieldname, $error)
+    {
+        if (!isset($this->_parsing_errors[$fieldname])) {
+            $this->_parsing_errors[$fieldname] = [];
+        }
+        $this->_parsing_errors[$fieldname][] = $error;
+    }
+
+
+    /**
+     * Log a link error, e.g. when a link record for a tag ID could not be found
+     *
+     * @param string $fieldname
+     * @param string $error The error message
+     * @return void
+     */
+    public function setLinkError($fieldname, $error)
+    {
+        if (!isset($this->_link_errors[$fieldname])) {
+            $this->_link_errors[$fieldname] = [];
+        }
+        $this->_link_errors[$fieldname][] = $error;
+    }
+
+    /**
+     * Set the root entity for dependent entitities
+     *
+     * For example, articles are the root of sections and items,
+     * and articles are the container of sections, sections are the
+     * container of items.
+     *
+     * Be aware: When linking to external entities that are not root entities,
+     *           the root of those entities will be the root of the link.
+     *           For example, if an article links to a section in another article,
+     *           the root of the linked section will be the article containing the link,
+     *           not the article containing the section.
+     *           Likewise, IndexLink entities will have the IndexProperty as root,
+     *           although this does not reflect the database structure, it rather creates
+     *           a logical structure for index generation.
+     *           If you want to test whether such entities depend on the root entity,
+     *           use the hasRoot() method.
+     *
+     * @param \App\Model\Entity\BaseEntity $container The container entity
+     * @param \App\Model\Entity\BaseEntity $root The root entity
+     * @param bool $recurse Whether to recursively prepare the root and container property
+     * @param bool $reset Usually, already prepared entities are skipped.
+     *                    In case you change the structure of nested entities changes,
+     *                    you can reset the container.
+     * @return $this
+     */
+    public function prepareRoot($container = null, $root = null, $recurse = true, $reset = false)
+    {
+        if ($reset) {
+            $this->_prepared_root = false;
+            $recurse = false;
+        }
+
+        if ($this->_prepared_root) {
+            return $this;
+        }
+        else {
+            $this->_prepared_root = true;
+        }
+
+        // Set root
+        // TODO: Add $this->hasRoot($root) check? See the TODO in IndexProperty.
+        if (($root === null) || ($this instanceof RootEntity)) {
+            $root = $this;
+        }
+
+        $this->container = $container;
+        $this->root = $root;
+
+        // Recursively set the root
+        if ($recurse) {
+            $this->callRecursively('prepareRoot', false, false, $this, $root, $recurse);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Prepare the IRI of the entity
+     *
+     * Assigns a local IRI to the entity if the norm_iri field is empty.
+     * The local IRI consists of the database name, table name and the row ID.
+     *
+     * @return void
+     */
+    public function prepareIri()
+    {
+        if ($this->_prepared_iri) {
+            return;
+        }
+
+        $normIri = $this['norm_iri'] ?? null;
+        if (empty($normIri)) {
+            $this->norm_iri = $this->iriFragment;
+        }
+
+        $this->_prepared_iri = true;
+    }
+
+    /**
+     * Prepare the tree properties of the entity
+     *
+     * @return void
+     */
+    public function prepareTree()
+    {
+        if ($this->_prepared_tree) {
+            return;
+        }
+
+        $this->_prepared_tree = true;
+    }
+
+
+    /**
+     * Call a method for all contained objects
+     *
+     * @param string $method A method name.
+     * @param boolean $self Whether to call the method on the entity itself. Defaults to true.
+     * @param boolean $dirtify Whether to bubble up the dirty flag after changing entities
+     * @param mixed $params Params passed to the method.
+     * @return void
+     */
+    public function callRecursively(string $method, $self = true, $dirtify = false, ...$params)
+    {
+        if ($self && method_exists($this, $method) && is_callable([$this, $method])) {
+            $this->{$method}(...$params);
+        }
+
+        $fields = $this->getVisible();
+
+        foreach ($fields as $field) {
+            $value = $this->get($field);
+
+            if (is_object($value) && method_exists($value, $method) && is_callable([$value, $method])) {
+                $value->{$method}(...$params);
+                if ($dirtify && $value instanceof Entity && $value->isDirty()) {
+                    $this->setDirty($field);
+                }
+            }
+            else {
+                if (is_iterable($value)) {
+                    foreach ($value as $child) {
+                        if (is_object($child) && method_exists($child, $method) && is_callable([$child, $method])) {
+                            $child->{$method}(...$params);
+                            if ($dirtify && $child instanceof Entity && $child->isDirty()) {
+                                $this->setDirty($field);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Clear contained items.
+     * To be implemented in subclasses.
+     *
+     * @return boolean
+     */
+    public function clear()
+    {
+        return true;
+    }
+
+    /**
+     * Convert imported raw data to the formats expected by the entity.
+     * Overwrite in entity classes for type conversions.
+     *
+     * Remove ids from $content and populate import properties
+     * (_import_table, _import_row, _import_id, _import_ids, _import_action)
+     *
+     * @param $content
+     * @param $options
+     * @return array
+     */
+    public function importData($content, $options)
+    {
+        // Keep import options
+        $this->_import_values = $content;
+        $this->_import_table = $options['table_name'] ?? null;
+        $this->_import_id = $content['id'] ?? null;
+        $this->_import_row = $options['table_row'] ?? null;
+        $this->_import_action = $options['action'] ?? null;
+        $this->_import_copyfile = $content['file_copyfrom'] ?? null;
+
+        // Ignore fields
+        if (!empty($options['fields'])) {
+            $content = array_intersect_key($content, array_flip($options['fields']));
+        }
+
+        foreach ($this->_fields_import as $old => $new) {
+
+            // Rename fields
+            if (is_numeric($old) || ($old === $new) || !isset($content[$old]) || (!is_array($new) && isset($content[$new]))) {
+                continue;
+            }
+
+            //  Split id fields (IRI paths, polymorphic relations)
+            if (is_array($new)) {
+                // IRI path (e.g. properties/languages/de)
+                $value = explode('/', $content[$old]);
+                if (sizeof($value) === 3) {
+                    $content[$new[0]] = $value[0];
+                    $content[$new[1]] = $content[$old];
+                }
+
+                // Polymorphic and combined IDs (e.g. properties-123)
+                else {
+                    $value = explode('-', $content[$old], 2);
+                    $content[$new[0]] = $value[0] ?? null;
+                    $content[$new[1]] = $content[$old];
+                }
+
+            } // Raw value
+            else {
+                $content[$new] = $content[$old];
+                unset($content[$old]);
+            }
+        }
+
+        // Separate ID and content fields
+        $fields_id = static::getIdFields();
+        $fields_content = array_diff($this->fields_import, $fields_id);
+
+        $ids = array_intersect_key($content, array_flip($fields_id));
+        $content = array_intersect_key($content, array_flip($fields_content));
+
+        // Add explicit ID matching the pattern <tablename>-<id> to the index
+        $explicit = array_filter($ids, fn($id) => preg_match('/^[a-z]+-[0-9]+$/', $id ?? ''));
+        foreach ($explicit as $importid) {
+            if (empty($options['index']['targets'][$importid])) {
+                $solvedId = explode('-', $importid);
+                $savedId = [
+                    'model' => $solvedId[0],
+                    'id' => (int)$solvedId[1]
+                ];
+
+                $options['index']['targets'][$importid] = $savedId;
+            }
+        }
+
+        $index = $options['index']['targets'] ?? [];
+
+        // Solve norm_iri
+        if ($index && !empty($content['norm_iri'])) {
+
+            $typeField = $options['type_field'] ?? null;
+            $typeName = ($typeField !== null) ? ($content[$typeField] ?? null) : null;
+
+            $qualifiedIri = implode('/', array_filter([
+                $this->_import_table,
+                $typeName,
+                $content['norm_iri']
+            ]));
+
+            $solvedId = !empty($qualifiedIri) ? ($index[$qualifiedIri] ?? null) : null;
+            if (!empty($solvedId)) {
+                $content['id'] = $solvedId['id'];
+                $this->_import_irimatched = true;
+            }
+
+            if (!empty($solvedId) && !empty($this->_import_id) && empty($options['index']['targets'][$this->_import_id])) {
+                $options['index']['targets'][$this->_import_id] = [
+                    'model' => $solvedId['model'],
+                    'id' => (int)$solvedId['id']
+                ];
+            }
+        }
+
+        // Solve IDs if possible from index (move from ids to content)
+        $this->_import_ids = $ids;
+        $this->solveIds($content, $index);
+
+        // Parse date and time fields
+        // e.g. '2016-02-04T12:58:47+01:00'
+        if (isset($content['created'])) {
+            $content['created'] = new FrozenTime($content['created']);
+        }
+        if (isset($content['modified'])) {
+            $content['modified'] = new FrozenTime($content['modified']);
+        }
+
+        // Add job id
+        if (isset($options['job_id'])) {
+            $content['job_id'] = $options['job_id'];
+        }
+
+        // Fix timestamps
+        if (isset($content['modified']) && empty($content['modified'])) {
+            unset($content['modified']);
+        }
+
+        if (isset($content['created']) && empty($content['created'])) {
+            unset($content['created']);
+        }
+
+        return $content;
+    }
+
+
+    /**
+     * Extract saved ID and add to index
+     *
+     * @param $index
+     */
+    public function indexIds(&$index)
+    {
+
+        foreach ($this->_import_ids as $field => $importedId) {
+            if (empty($importedId)) {
+                continue;
+            }
+
+            // Add the saved entity to targets index, others to sources
+            if ($field === 'id') {
+                $index['targets'][$importedId] = [
+                    'model' => $this->getSource(),
+                    'id' => $this->id
+                ];
+            }
+            else {
+                $index['sources'][$importedId][] = [
+                    'model' => $this->getSource(),
+                    'id' => $this->id,
+                    'field' => $field,
+                    'scope_field' => $this->fields_scope
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param array|Entity $data
+     * @param array $index
+     */
+    public function solveIds(&$data, &$index)
+    {
+        if ($index) {
+            $solved = array_keys(
+                array_intersect_key(
+                    array_flip(
+                        array_filter(
+                            array_unique(
+                                $this->_import_ids
+                            )
+                        )
+                    ),
+                    $index
+                )
+            );
+            $solved = array_intersect($this->_import_ids, $solved);
+            $this->_import_ids = array_diff_key($this->_import_ids, $solved);
+            foreach ($solved as $field => $importid) {
+                $data[$field] = $index[$importid]['id'];
+            }
+        }
+    }
+
+    /**
+     * Index Ids of the entity and all contained entities
+     *
+     * @param array $options Needs an index key
+     *
+     */
+    public function collectIds($options = [])
+    {
+        if (!isset($options['index'])) {
+            $options['index'] = [];
+        }
+
+        $this->indexIds($options['index']);
+        $this->callRecursively('collectIds', false, false, $options);
+
+        return $options['index'];
+    }
+
+
+    /**
+     * Link records
+     *
+     * Updates foreign key fields with the respective IDs as soon as
+     * a matching record occurs in the index.
+     *
+     * @return bool
+     */
+    public function saveLinks()
+    {
+        $index = &$this->_getIndex();
+        $this->collectIds(['index' => &$index]);
+        $result = $this->table->solveLinks($index, false);
+        return $result;
+    }
+
+    /**
+     * Get all tags in xml fields
+     *
+     * TODO: merge with callRecursively?
+     *
+     * ### Options
+     * - recurse (bool) Whether to recurse into child entities
+     * - content (bool) Whether to extract the text content of the tags
+     * - to (bool) Whether to add to fields (to_tab, to_id) to the tag result
+     *
+     * @param string|array $fieldName The fieldname, e.g. "value".
+     *                                JSON keys can be provided using dot notation, e.g. "value.longitude".
+     *                                If the fieldname is null, then all fields and child entities will be visited.
+     * @param array $options Extraction options
+     * @return array An array containing tag IDs as keys and an array with from-keys.
+     */
+    public function extractXmlTags($fieldName = null, $options =  ['content' => false, 'recurse' =>  false, 'to' => false])
+    {
+        $tags = [];
+
+        // Iterate all fields and recurse into child entities
+        if ($fieldName === null) {
+            $fields = $this->getExportFields(['snippets' => ['comments']]);
+            $fields[] = 'footnotes'; //TODO: Why added manually, to recurse into footnote entities?
+            foreach ($fields as $oldName => $fieldConfig) {
+
+                $fieldKey = is_array($fieldConfig) ?
+                    $fieldConfig['key'] ?? $oldName :
+                    (is_numeric($oldName) ? $fieldConfig : $oldName);
+
+                if (isset($this->{$fieldKey})) {
+                    $value = $this->{$fieldKey};
+
+                    // Entity
+                    if (($value instanceof BaseEntity) && ($this->root === $value->root)) {
+                        $tags += $value->extractXmlTags(null, $options);
+                    }
+
+                    // Array
+                    elseif (is_array($value) && !empty($options['recurse'])) {
+                        foreach ($value as $row) {
+                            if ($row instanceof BaseEntity && ($this->root === $row->root)) {
+                                $tags += $row->extractXmlTags(null, $options);
+                            }
+                        }
+                    }
+
+                    // Single value
+                    else {
+                        $tags += $this->extractXmlTags($fieldKey, $options);
+                    }
+                }
+            }
+        }
+
+        // Extract tags from a field
+        else {
+
+            $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
+            $format = $this->getFieldFormat($fieldName);
+
+            if ($format === 'xml') {
+                $value = $this->getValueRaw($fieldName);
+                try {
+                    $fieldTags = XmlMunge::getXmlElements($value, !empty($options['content']));
+                } catch (Exception $e) {
+                    $this->setError($fieldName[0], $e->getMessage());
+                    $fieldTags = [];
+                }
+
+                $entity = $this;
+                $fieldTags = array_combine(
+                    array_keys($fieldTags),
+                    array_map(
+                        function ($tagid, $tag) use ($entity, $fieldName, $options) {
+                            $content = !empty($options['content']);
+                            $to = !empty($options['to']) ? $this->root->linksByTagid[$tagid][0] ?? [] : [];
+                            $tag = [
+                                'tab' => $this->tableName,
+                                'id' => $entity->id,
+                                'field' => $fieldName[0],
+                                'tagid' => $tagid,
+                                'to_id' => $to['to_id'] ?? null,
+                                'to_tab' => $to['to_tab'] ?? null,
+                                'to_type' => $to['to_propertytype'] ?? null,
+                                'caption' => $to['to_caption'] ?? null,
+                                'tagname' => ($content && is_array($tag)) ? $tag['name'] : $tag,
+                                'content' => ($content && is_array($tag)) ? $tag['content'] : null
+                            ];
+
+                            $tag = new Tag($tag,
+                                [
+                                    'source' => 'Epi.links',
+                                    'useSetters' => false,
+                                    'markClean' => true,
+                                    'markNew' => false
+                                ]
+                            );
+                            $tag->container = $entity;
+                            $tag->root = $entity->root;
+                            return $tag;
+                        },
+                        array_keys($fieldTags),
+                        $fieldTags
+                    )
+                );
+
+                $tags += $fieldTags;
+            }
+        }
+
+        return $tags;
+    }
+
+    /**
+     * Remove tags from xml fields
+     *
+     * @param array $tags An array of element names
+     * @param bool $recurse Whether to recurse into child entities
+     */
+    public function removeXmlTags($tags, $recurse = false)
+    {
+        // Iterate all XML fields
+        foreach ($this->_fields as $fieldName => $fieldValue) {
+            if (!$this->hasDatabaseField($fieldName)) {
+                continue;
+            }
+            $format = $this->getFieldFormat($fieldName);
+            if ($format === 'xml') {
+                try {
+                    $this[$fieldName] = XmlFilter::removeTags($fieldValue, array_map(fn($x) => ['tagname' => $x], $tags));
+                } catch (Exception $e) {
+                    $this->setError($fieldName, $e->getMessage());
+                }
+            }
+        }
+
+        // Recurse
+        if ($recurse) {
+            $this->callRecursively('removeXmlTags', false, true, $tags, $recurse);
+        }
+    }
+
+    /**
+     * Inject link data into XML elements
+     *
+     * Adds the attributes data-link-target and data-link-value.
+     *
+     * @param string $value The XML text
+     * @param array $options Options passed to getValueFormatted() when rendering to_id and to_caption
+     * @param string $fieldName The field name
+     * @return false|mixed|string
+     *
+     */
+    public function injectXmlAttributes($value = null, $options = [], $fieldName = '')
+    {
+        $links = $this->root->links_by_tagid ?? [];
+        $footnotes = $this->root->footnotes_by_tagid ?? [];
+
+        $entity = $this;
+        $callback_ids = static function (&$element, &$parser) use ($links, $footnotes, $options, $entity, $fieldName) {
+            if ($element['position'] == 'open') {
+
+                if (!empty($element['attributes']['id'])) {
+
+                    $matchingLinks = $links[$element['attributes']['id']] ?? [];
+                    $matchingFootnotes = $footnotes[$element['attributes']['id']] ?? [];
+
+                    if (empty($matchingLinks) && empty($matchingFootnotes)) {
+                        $entity->setLinkError(
+                            is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
+                            __('Missing link record for element ID {0}. ', $element['attributes']['id'])
+                        );
+                    }
+
+                    // Atomic annotations have exactly one link record
+                    // pointing to exactly one target.
+                    elseif (count($matchingLinks) === 1) {
+                        $link = $matchingLinks[0];
+
+                        $element['attributes']['data-link-target'] = $link->getValueFormatted(
+                            'to_id',['format' => 'raw'] + $options
+                        );
+                        $element['attributes']['data-link-iri'] = $link->getValueFormatted(
+                            'to_iri_path',['format' => 'raw'] + $options
+                        );
+                        $element['attributes']['data-link-value'] = $link->getValueFormatted(
+                            'to_caption',['format' => 'raw'] + $options
+                        );
+
+                        if (!isset($link->type->config['attributes']['value'])) {
+                            unset($element['attributes']['value']);
+                        }
+                    }
+                }
+            }
+            return true;
+        };
+
+        if (empty($value) || empty($links)) {
+            return $value;
+        }
+        else {
+            return XmlMunge::parseXmlString($value, $callback_ids);
+        }
+    }
+
+    /**
+     * Copy the item image to a target folder
+     *
+     * Typical metadata fields:
+     *
+     * [
+     *   'dc:title' => 'DI 103, Nr. 251 - Wismar, St. Georgen - 1479, 1681',
+     *   'dc:rights' => 'Niedersächsische Akademie der Wissenschaften zu Göttingen (Jürgen Herold)',
+     *   'xmpRights:UsageTerms' => 'CC BY-NC 4.0'
+     * ]
+     *
+     * Adding exif data works for: jpg and jpeg files
+     *
+     * @param string $targetFolder The target folder, absolute path on the server
+     * @param array $metadataConfig If a metadata configuration is provided, metadata is written to the files.
+     *                              Each key is a metadata field in the file, each value is a placeholder extraction key.
+     *                              Instead of a single placeholder, an array of placeholders can be provided.
+     *                              In this case, the first value not evaluating to null or an empty string is used.
+     *                              The placeholder extraction key is resolved from the perspective of an image item.
+     *                              Example: ["xmpRights:UsageTerms" => "{file_licence}","dc:rights" => "{file_copyright}"]
+     * @return boolean
+     */
+    public function copyImage($targetFolder, $metadataConfig)
+    {
+        if (!($this->file_properties['exists'] ?? false) || empty($this->file_properties['root'])) {
+            return false;
+        }
+
+        $filename = $this->file_name;
+        $filetype = $this->file_properties['extension'];
+        $sourceFolder = Files::joinPath([$this->file_properties['root'], $this->file_properties['path']]);
+
+        // Copy
+        $result = Files::copyFile($filename, $sourceFolder, $targetFolder);
+
+        // Convert tif to jpg
+        if ($result && in_array($this->file_properties['extension'], ['tif'])) {
+            $result = Files::convertImage(Files::joinPath([$targetFolder, $filename]), 'jpg', true);
+
+            if ($result !== false) {
+                $filename = pathinfo($result, PATHINFO_BASENAME);
+                $filetype = 'jpg';
+                $result = true;
+
+                //  For processing in getValuePlaceholder
+                // TODO: better solution than changing the entity fields?
+                $this->file_type = $filetype;
+                $this->file_name = $filename;
+            }
+        }
+
+        // Resize if necessary
+        Files::resizeImage(Files::joinPath([$targetFolder, $filename]), 10, 5);
+
+        // Inject metadata (xmp, iptc, exif) into the file
+        if ($result && in_array($filetype, ['jpg', 'jpeg'])) {
+            $metadataConfig = array_merge($this->file_properties['metadata'] ?? [], $metadataConfig);
+            $metadata = [];
+            foreach ($metadataConfig as $field => $placeholderArray) {
+                $placeholderArray = !is_array($placeholderArray) ? [$placeholderArray] : $placeholderArray;
+                $value = null;
+                foreach ($placeholderArray as $placeholderString) {
+                    $value = $this->getValuePlaceholder($placeholderString, ['format' => false, 'collapse' => ', ']);
+                    if (!is_null($value) && ($value !== '')) {
+                        break;
+                    }
+                }
+                $metadata[$field] = $value;
+            }
+
+            // $metadata = array_filter($metadata);
+            $newFilename = $metadata['filename'] ?? $filename;
+            unset($metadata['filename']);
+
+            $result = Files::updateXmp(Files::joinPath([$targetFolder, $filename]), $metadata, true);
+            if ($result && ($newFilename !== $filename)) {
+                $result = Files::renameFile($targetFolder, $filename, $newFilename);
+            }
+        }
+
+        return $result;
     }
 
 }

@@ -1,5 +1,5 @@
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.8.2-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19-11.8.3-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: test_sql    Database: test_newprojects
 -- ------------------------------------------------------
@@ -424,8 +424,8 @@ LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `meta` VALUES
-(1,0,'0000-00-00 00:00:00','2026-01-06 09:47:41',NULL,NULL,'db_version','4.5'),
-(2,0,'0000-00-00 00:00:00','2026-01-06 09:47:41',NULL,NULL,'db_name','Epigraf');
+(1,0,'0000-00-00 00:00:00','2026-01-31 11:38:40',NULL,NULL,'db_version','4.5'),
+(2,0,'0000-00-00 00:00:00','2026-01-31 11:38:40',NULL,NULL,'db_name','Epigraf');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -738,7 +738,6 @@ CREATE TABLE `users` (
   `created_by` int(11) DEFAULT NULL,
   `usertype` varchar(50) DEFAULT NULL,
   `name` varchar(1500) DEFAULT NULL,
-  `acronym` varchar(1500) DEFAULT NULL,
   `userrole` int(11) DEFAULT NULL,
   `norm_iri` varchar(1500) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -769,4 +768,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-01-06 10:47:41
+-- Dump completed on 2026-01-31 12:38:41

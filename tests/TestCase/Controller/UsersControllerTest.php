@@ -13,7 +13,7 @@ namespace App\Test\TestCase\Controller;
 use App\Test\TestCase\AppTestCase;
 use App\Utilities\Converters\Attributes;
 use Cake\Chronos\Chronos;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 
 /**
  * App\Controller\UsersController Test Case
@@ -84,7 +84,7 @@ class UsersControllerTest extends AppTestCase
     public function testWrongPasswordAuthor()
     {
         $this->post('users/login', ['username' => 'author', 'password' => 'wrongpassword']);
-        $this->assertResponseContains('Invalid username or password, try again');
+        $this->assertResponseContains('Invalid username or password.');
         $this->assertResponseEqualsComparison();
     }
 
@@ -181,7 +181,7 @@ class UsersControllerTest extends AppTestCase
     {
         $this->get('users/index');
         $this->assertResponseCode(302);
-        $this->assertRedirect([
+        $this->assertRedirectEquals([
             'controller' => 'Users',
             'action' => 'login',
             '?' => ['redirect' => '/users/index']
@@ -189,7 +189,7 @@ class UsersControllerTest extends AppTestCase
 
         $this->get('users/view');
         $this->assertResponseCode(302);
-        $this->assertRedirect([
+        $this->assertRedirectEquals([
             'controller' => 'Users',
             'action' => 'login',
             '?' => ['redirect' => '/users/view']
@@ -197,7 +197,7 @@ class UsersControllerTest extends AppTestCase
 
         $this->get('users/edit/1');
         $this->assertResponseCode(302);
-        $this->assertRedirect([
+        $this->assertRedirectEquals([
             'controller' => 'Users',
             'action' => 'login',
             '?' => ['redirect' => '/users/edit/1']
@@ -400,8 +400,7 @@ class UsersControllerTest extends AppTestCase
             'created_by' => 2,
             'modified_by' => 2,
             'email' => null,
-            'name' => null,
-            'acronym' => null
+            'name' => null
         ];
         $this->assertEquals($expected, $user);
     }
@@ -482,8 +481,7 @@ class UsersControllerTest extends AppTestCase
             'created_by' => null,
             'modified_by' => 2,
             'email' => null,
-            'name' => null,
-            'acronym' => null
+            'name' => null
         ];
         $this->assertEquals($expected, $user);
     }
@@ -568,8 +566,7 @@ class UsersControllerTest extends AppTestCase
             'created_by' => null,
             'modified_by' => $userid,
             'email' => null,
-            'name' => null,
-            'acronym' => null
+            'name' => null
         ];
         $this->assertEquals($expected, $user);
     }

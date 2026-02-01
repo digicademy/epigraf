@@ -21,7 +21,6 @@ use Epi\Model\Table\UsersTable;
  * # Database fields (without inherited fields)
  * @property string $usertype
  * @property string $name
- * @property string $acronym
  * @property int $userrole
  * @property string $norm_iri
  *
@@ -47,7 +46,6 @@ class User extends RootEntity
         'name' => true,
         'usertype' => true,
         'norm_iri' => true,
-        'acronym' => true,
         'userrole' => true,
     ];
 
@@ -59,7 +57,6 @@ class User extends RootEntity
     public $_serialize_fields = [
         'id',
         'name',
-        'acronym',
         'usertype',
         'userrole',
         'norm_iri'
@@ -95,7 +92,7 @@ class User extends RootEntity
      */
     public static $_fields_ids = ['id'];
 
-    protected $_field_iri = 'acronym';
+    protected $_field_iri = 'norm_iri';
 
     protected $_fields_formats = [
         'id' => 'id',
@@ -116,7 +113,6 @@ class User extends RootEntity
         'name',
         'type' => 'usertype',
         'userrole',
-        'acronym',
         'iri' => 'norm_iri'
     ];
 
@@ -135,7 +131,6 @@ class User extends RootEntity
             'config' => [
                 'fields' => [
                     'name' => 'Name',
-                    'acronym' => 'Acronym',
                     'userrole' => [
                         'caption' => __('User role'),
                         'type' => 'select',
@@ -202,11 +197,6 @@ class User extends RootEntity
             'name' => [
                 'caption' => __('Name'),
                 'help' => __('The full name of the user.')
-            ],
-
-            'acronym' => [
-                'caption' => __('Acronym'),
-                'help' => __('The first letters of the name in upper case.')
             ],
 
             'userrole' => [

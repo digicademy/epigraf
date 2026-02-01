@@ -23,6 +23,9 @@ import Utils from '/js/utils.js';
  *
  */
 export default class InsertImage extends Plugin {
+    /**
+     * @fires epi:select
+     */
     init() {
         const editor = this.editor;
         editor.ui.componentFactory.add( 'insertImage', locale => {

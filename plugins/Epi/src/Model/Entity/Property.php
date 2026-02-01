@@ -199,7 +199,8 @@ class Property extends RootEntity
     protected $_serialize_snippets = [
         'published' => ['published'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
-        'problems' => ['problems']
+        'problems' => ['problems'],
+        'articles' => ['articles']
     ];
 
     /**

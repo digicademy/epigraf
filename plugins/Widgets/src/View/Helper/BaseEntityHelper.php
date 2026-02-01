@@ -2558,7 +2558,7 @@ class BaseEntityHelper extends Helper
      * // TODO: Can we output all the forms with $doc = true?
      * // TODO: Use entityForm() for article rendering
      *
-     * @param RootEntity $entity
+     * @param BaseEntity $entity
      * @param string $action view|edit|add|delete|merge
      * @param array $options Options passed to the form helper
      * @param boolean $doc Wrap the table in document markup. Set to true if you need annotations.
@@ -2754,6 +2754,12 @@ class BaseEntityHelper extends Helper
                 if (!in_array($action, $modes)) {
                     continue;
                 }
+
+                $roles = $fieldOptions['roles'] ?? ['*'];
+                if (!$this->User->hasRole($roles)) {
+                    continue;
+                }
+                unset($fieldOptions['roles']);
 
                 $out .= $this->entityRow($entity, $fieldName, $fieldOptions, $action);
             }

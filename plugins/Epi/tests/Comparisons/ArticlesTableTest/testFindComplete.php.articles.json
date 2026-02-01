@@ -25490,7 +25490,6 @@
             "deleted": 0,
             "created": "2024-11-09T12:06:13+01:00",
             "name": "Jakob J\u00fcnger",
-            "acronym": "jj",
             "userrole": 0,
             "norm_iri": "juenger"
         },
@@ -25500,7 +25499,6 @@
             "created": "2022-04-01T08:45:59+02:00",
             "usertype": "human",
             "name": "Testuser",
-            "acronym": "TU",
             "userrole": 1
         },
         "database": "projects"

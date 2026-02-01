@@ -92,21 +92,22 @@ class JobsTableTest extends AppTestCase
         );
 
         //Create job
-        /** @var Job $job */
-        $params = [
-            'database' => 'test_projects',
-            'selection' => 'filtered',
-            'sort' => 'signature'
-        ];
         $typedJob = $this->Jobs->newEntity(['jobtype' => 'export'])->typedJob;
 
-        $typedJob = $typedJob->patchExportOptions($params);
-        $typedJob->config['pipeline_tasks'] = [
-            [
-                'number' => '1',
-                'type' => 'data_articles',
-                'snippets' => 'indexes,paths,editors,comments',
-                'format' => 'xml'
+        $typedJob->config = [
+            'database' => 'test_projects',
+            'table' => 'articles',
+            'selection' => 'filtered',
+            'params' => [
+                'sort' => 'signature'
+            ],
+            'pipeline_tasks' => [
+                [
+                    'number' => '1',
+                    'type' => 'data_articles',
+                    'snippets' => 'indexes,paths,editors,comments',
+                    'format' => 'xml'
+                ]
             ]
         ];
 
@@ -115,7 +116,7 @@ class JobsTableTest extends AppTestCase
         // Determine output file
         $outputfile = Configure::read('Data.databases')
             . Databank::addPrefix($typedJob['config']['database'] ?? '') . DS
-            . 'jobs' . DS . 'job_' . $typedJob->id . DS . 'job_' . $typedJob->id . '.xml';
+            . 'jobs' . DS . 'job-' . $typedJob->id . DS . 'job-' . $typedJob->id . '.xml';
 
         if (file_exists($outputfile)) {
             unlink($outputfile);

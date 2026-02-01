@@ -16,8 +16,10 @@ and the research group
 - Jakob Jünger, ORCID ID: [0000-0003-1860-6695](https://orcid.org/0000-0003-1860-6695)
 - Jane Knispel
 - Jürgen Herold
+- Lennart Höfig
 - Maximilian Kopp
 - Maximilian Michel, ORCID ID: [0009-0003-1802-3745](https://orcid.org/0009-0003-1802-3745)
+- Paula Dicke
 - Wolf-Dieter Syring
 
 With gratitude to the always patient, helpful and excellent
@@ -53,6 +55,7 @@ Epigraf is developed using third-party software under open source licenses.
 - [npm](https://npmjs.com/), Artistic License 2.0,
 - [OpenSpout](https://github.com/openspout/openspout), MIT License, Apache 2.0 License
 - [Open Street Map](https://www.openstreetmap.org), Open Data Commons Open Database License (ODbL)
+- [PHP Cron Expression Parser](https://github.com/dragonmantank/cron-expression), MIT License
 - [phpDocumentor](https://phpdoc.org/), MIT License
 - [PHPUnit](https://phpunit.de/index.html), BSD 3-Clause License
 - [Plotly.js](https://github.com/plotly/plotly.js/), MIT License

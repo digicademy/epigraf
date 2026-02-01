@@ -31,21 +31,80 @@ class TaskGenerateItems extends BaseTaskMutate
 
         $fields = [];
 
+        $database = $this->job->activateDatabank($this->job->config['database']);
+        $task = Attributes::cleanOption($this->job->config['params']['llmtask'] ?? 'summarize', ['summarize', 'coding', 'annotate'], 'summarize');
+        $mode = Attributes::cleanOption($this->job->config['params']['mode'] ?? 'single', ['single', 'multi'], 'single');
+
+        $fields['config.params.llmtask'] =
+            [
+                'caption' => __('Workflow'),
+                'type' => 'select',
+                'empty' => false,
+                'options' => [
+                    'summarize' => __('Summarize'),
+                    'coding' => __('Coding'),
+                    'annotate' => __('Annotate')
+                ],
+                'data-form-update' => 'llmtask',
+                'default' => $task,
+                'value' => $task
+            ];
+
+        if (in_array($task, ['summarize','coding'])) {
+            $fields['config.params.mode'] =
+                [
+                    'caption' => __('Mode'),
+                    'type' => 'select',
+                    'empty' => false,
+                    'options' => [
+                        'single' => __('Single value output'),
+                        'multi' => __('Multi value output'),
+                    ],
+                    'data-form-update' => 'mode',
+                    'default' => $mode,
+                    'value' => $mode
+                ];
+        }
+
+        // Property types
+        if (!(($task === 'summarize') && ($mode == 'single'))) {
+            $propertyTypes = $database->types['properties'] ?? [];
+            $propertyTypes = Hash::combine($propertyTypes, '{*}.name', '{*}.caption');
+            $propertyType = $this->job->config['params']['propertytype'] ?? null;
+
+            $fields['config.params.propertytype'] =
+                [
+                    'caption' => __('Rules'),
+                    'type' => 'select',
+                    'empty' => false,
+                    'value' => $propertyType,
+                    'options' => $propertyTypes,
+                    'help' => __('The property type used to generate rules.'),
+                ];
+        }
+
+        $fields['config.params.input'] = [
+            'caption' => __('Input value'),
+            'type' => 'textarea',
+            'help' => __('Define the input using placeholder strings. Placeholder strings can contain extraction keys to get data from the selected article in curly brackets.'),
+            'placeholder' => '{sections.*.items.*.content}',
+            'value' => $this->job->config['params']['input'] ?? '{sections.*.items.*.content}',
+        ];
+
         $fields['config.params.systemprompt'] = [
             'caption' => __('System prompt'),
             'type' => 'textarea',
-            'help' => __('Leave empty to use a prompt template. Alternatively, insert the system prompt.'),
-            'value' => $this->job->config['params']['systemprompt'] ?? ''
+            'help' => __('Leave empty to use the default prompt for the workflow. Alternatively, insert the system prompt. The placeholder {{text}} will be replaced by the input value. The placeholder {{rules}} will be replaced by the rules generated from the selected property type.'),
+            'value' => $this->job->config['params']['systemprompt'] ?? '',
         ];
 
-        $fields['config.params.prompts'] = [
-            'caption' => __('Prompt template'),
-            'type' => 'text',
-            'help' => __('Leave empty for default prompts. Alternatively provide the name of a prompt template that is supported by the server.'),
-            'value' => $this->job->config['params']['prompts'] ?? 'default'
+        $fields['config.params.userprompt'] = [
+            'caption' => __('User prompt'),
+            'type' => 'textarea',
+            'help' => __('Leave empty to use the default prompt for the workflow. Alternatively, insert the system prompt. The placeholder {{text}} will be replaced by the input value. The placeholder {{rules}} will be replaced by the rules generated from the selected property type.'),
+            'value' => $this->job->config['params']['userprompt'] ?? ''
         ];
 
-        $database = $this->job->activateDatabank($this->job->config['database']);
 
         // Section and item types
         $sectionTypes = $database->types['sections'] ?? [];
@@ -53,9 +112,8 @@ class TaskGenerateItems extends BaseTaskMutate
 
         $fields['config.params.sectiontype'] =
             [
-                'caption' => __('Section type'),
+                'caption' => __('Output section type'),
                 'type' => 'select',
-                'empty' => true,
                 'options' => $sectionTypes,
                 'default' => $this->job->config['params']['sectiontype'] ?? 'summary',
                 'value' => $this->job->config['params']['sectiontype'] ?? 'summary'
@@ -63,7 +121,7 @@ class TaskGenerateItems extends BaseTaskMutate
 
 
         $fields['config.params.sectionname'] = [
-            'caption' => __('Section name'),
+            'caption' => __('Output section name'),
             'type' => 'text',
             'help' => __('The section name in case a new section has to be generated.'),
             'default' => $this->job->config['params']['sectionname'] ?? __('Summary'),
@@ -76,39 +134,21 @@ class TaskGenerateItems extends BaseTaskMutate
 
         $fields['config.params.itemtype'] =
             [
-                'caption' => __('Item type'),
+                'caption' => __('Output item type'),
                 'type' => 'select',
-                'empty' => true,
                 'options' => $itemTypes,
                 'default' => $this->job->config['params']['itemtype'] ?? 'summary',
                 'value' => $this->job->config['params']['itemtype'] ?? 'summary'
             ];
 
         $fields['config.params.irifragment'] = [
-            'caption' => __('Item name'),
+            'caption' => __('Output item identifier'),
             'type' => 'text',
             'help' => __('IRI suffix of the new item. Existing items with this suffix will be updated.'),
             'default' => $this->job->config['params']['irifragment'] ?? 'summary',
             'value' => $this->job->config['params']['irifragment'] ?? 'summary'
 
         ];
-
-        // Property types
-        $propertyTypes = $database->types['properties'] ?? [];
-        $propertyTypes = Hash::combine($propertyTypes, '{*}.name', '{*}.caption'); // , '{*}.category'
-
-        $propertyType = $this->job->config['params']['propertytype'] ?? null;
-        //$this->job->config['params']['propertytype'] = $propertyType;
-
-        $fields['config.params.propertytype'] =
-            [
-                'caption' => __('Property type'),
-                'type' => 'select',
-                'empty' => true,
-                'value' => $propertyType,
-                'options' => $propertyTypes,
-                'help' => __('Leave empty to generate text. Optionally select a property type if you want to assign properties that match the result.'),
-            ];
 
         return $fields;
     }
@@ -123,42 +163,42 @@ class TaskGenerateItems extends BaseTaskMutate
 
         $params = parent::getTaskParams();
 
-        // Section
+        // LLM task
+        $params['task'] = $this->job->config['params']['task'] ?? null;
+        $params['mode'] = $this->job->config['params']['mode'] ?? null;
+
+        // Rules
+        $params['propertytype'] = $this->job->config['params']['propertytype'] ?? null;
+
+        // Input
+        $params['input'] = $this->job->config['params']['input'] ?? null;
+
+        // Prompts
+        $params['prompts'] = [];
+        if (!empty($this->job->config['params']['systemprompt'])) {
+            $params['prompts']['system'] = $this->job->config['params']['systemprompt'];
+        }
+        if (!empty($this->job->config['params']['userprompt'])) {
+            $params['prompts']['user'] = $this->job->config['params']['userprompt'];
+        }
+        if (empty($params['prompts'])) {
+            unset($params['prompts']);
+        }
+
+        // Output section
         $params['sectiontype'] = Attributes::nonEmptyOption($this->job->config['params']['sectiontype'] ?? null, 'summary');
         $params['sectionname'] = Attributes::nonEmptyOption($this->job->config['params']['sectionname'] ?? null, __('Summary'));
 
-        // Item
+        // Output item
         $params['itemtype'] = Attributes::nonEmptyOption($this->job->config['params']['itemtype'] ?? null, 'summary');
         $params['irifragment'] = Attributes::nonEmptyOption($this->job->config['params']['irifragment'] ?? null,'summary');
 
-        // Fields
-        $params['resultfield'] = $this->job->config['params']['itemfield'] ?? 'content';
-        $params['statefield'] = $this->job->config['params']['statefield'] ?? 'value';
-        $params['propertytype'] = $this->job->config['params']['propertytype'] ?? null;
+//        // Fields
+//        $params['resultfield'] = $this->job->config['params']['itemfield'] ?? 'content';
+//        $params['statefield'] = $this->job->config['params']['statefield'] ?? 'value';
 
-        // Prompt
-        if (!empty($this->job->config['params']['systemprompt'])) {
-            $params['prompts'] = [
-                'user' => '{{text}}',
-                'system' => $this->job->config['params']['systemprompt']
-            ];
-        } else {
-            $params['prompts'] = $this->job->config['params']['prompts'] ?? 'default';
-        }
 
         return $params;
     }
-
-    /**
-     * Update parameters that redirect to the mutated entitites
-     *
-     * @param array $params The parameters to be changed
-     * @return array The updated parameters
-     */
-    public function updateRedirectParams($params)
-    {
-        return $params;
-    }
-
 
 }

@@ -122,16 +122,47 @@ class AnswerComponent extends Component
      */
     public function redirectToLogin($msg = null)
     {
-        if ($this->getController()->getRequest()->is('api')) {
+        $request = $this->getController()->getRequest();
+        if ($request->is('api')) {
             throw new UnauthorizedException($msg);
         }
 
-        if (!empty($this->getController()->Auth->user())) {
+        if (!empty($this->getController()->getRequest()->getAttribute('identity'))) {
             $msg = $msg ?? __('You have no access to the requested page.');
         } else {
             $msg = $msg ?? __('Please log in to access this location.');
         }
-        $this->error($msg, $this->getController()->getLoginUrl());
+        $this->error($msg, self::getLoginUrl($request));
+    }
+
+
+    /**
+     * Build a login URL that redirect to the requested page
+     *
+     * @return array
+     */
+    public static function getLoginUrl($request)
+    {
+        // Build redirect URL
+        $params = $request->getAttribute('params');
+        $redirect = $params + $params['pass'] ?? [];
+        unset($redirect['pass']);
+        unset($redirect['_matchedRoute']);
+        $redirect['?']['token'] = false;
+
+        // If already tried to log in on this URL, then stop
+        if (!empty($redirect['?']['login'])) {
+            $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'stop'];
+        }
+
+        // Add login parameter signalling the user already tried to log in
+        else {
+            $redirect['?']['login'] = '1';
+            $redirect = Router::url($redirect);
+            $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'login', '?' => ['redirect' => $redirect]];
+        }
+
+        return $url;
     }
 
     /**

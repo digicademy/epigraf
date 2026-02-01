@@ -130,7 +130,7 @@ class FilesController extends AppController
 
         // TODO: check mount of file if requested by ID (view, edit, select...)
         //       Update: the permission to access the mount is checked in getFileEntity()
-        $user = $this->Auth->user();
+        $user = $this->request->getAttribute('identity');
         $allowedMounts = $this->getMounts($user);
         $allowedMounts = array_intersect_key($mounts, array_flip($allowedMounts));
         $this->mounts = $allowedMounts;

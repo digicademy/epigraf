@@ -323,27 +323,6 @@ class LinkHelper extends Helper
     }
 
     /**
-     * Add an edit button
-     *
-     * @deprecated Use addEditButtons() instead
-     *
-     * @param string $target The value for the data-target attribute, e.g. articles-123
-     * @return void
-     */
-    public function addEditAction($url, $target)
-    {
-        return $this->addAction(
-            __('Edit'),
-            $url,
-            [
-                'shortcuts' => ['F2'],
-                'data-role'=>'edit',
-                'data-target'=> $target
-            ]
-        );
-    }
-
-    /**
      * Add a save button
      *
      * // TODO: replace, only used once
@@ -939,6 +918,7 @@ class LinkHelper extends Helper
         }
         else {
             $queryparams['selection'] = 'entity';
+            $queryparams['name'] = $article->caption;
         }
 
         // Build URL
@@ -989,15 +969,14 @@ class LinkHelper extends Helper
                 $this->addAction(
                     $pipelineConfig['caption'] ?? $pipelineIri,
                     [
-                        'plugin' => false,
-                        'controller' => 'Jobs',
-                        'action' => 'download',
+                        'plugin' => 'Epi',
+                        'controller' => 'Articles',
+                        'action' => 'export',
                         '?' => $queryparams + [
-                            'scope' => 'article',
-
                             'projects' => $article->project->id ?? null,
                             'articles' => $article->id,
-                            'pipeline' => $pipelineIri
+                            'pipeline' => $pipelineIri,
+                            'timeout' => 3
                         ]
                     ],
                     $buttonOptions

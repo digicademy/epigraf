@@ -92,7 +92,7 @@ return function (RouteBuilder $routes): void {
             ->setPatterns(['iri' => '[a-z0-9_-]+']);
 
         /* Export and article view */
-        //TODO: implement Articles/export instead of Jobs/add
+        // @deprecated: Remove in EpiDesktop, then remove export route. Or connect it to the articles controller
         $builder->connect('/export', ['controller' => 'Jobs', 'action' => 'add']);
         $builder->connect('/show', ['controller' => 'Articles', 'action' => 'show']);
 
@@ -143,14 +143,14 @@ return function (RouteBuilder $routes): void {
             unset($params['?']['token']);
         }
 
-        //  For other controllers, carry token
-        elseif ($request->getQuery('token') && !isset($params['?']['token'])) {
-            $params['?']['token'] = $request->getQuery('token');
-        }
-
         // If set to false, remove token
         elseif (isset($params['?']['token']) && ($params['?']['token'] === false)) {
             unset($params['?']['token']);
+        }
+
+        //  For other controllers, carry token
+        elseif ($request->getQuery('token') && !isset($params['?']['token'])) {
+            $params['?']['token'] = $request->getQuery('token');
         }
 
         return $params;
@@ -178,7 +178,7 @@ return function (RouteBuilder $routes): void {
         }
         elseif ($database) {
 
-            // URLs completely outside the plugin
+            // URLs completely outside a plugin
             if (!$request->getParam('plugin') && !isset($params['database'])) {
                 $params['?']['database'] = $database;
             }

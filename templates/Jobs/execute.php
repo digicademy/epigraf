@@ -27,7 +27,7 @@ use Cake\Utility\Inflector;
     'div',
     [
         'class' => 'content-tight widget-job',
-        'data-job-nexturl' => $job->nexturl,
+        'data-job-nexturl' => $job->nextUrl,
         'data-job-cancel' => $job->cancelUrl,
         'data-job-download' => $job->downloadUrl,
         'data-job-redirect' => $job->redirectUrl
@@ -52,7 +52,7 @@ use Cake\Utility\Inflector;
     <?php endif; ?>
 
 
-    <?php if (empty($job->error) && !empty($job->nexturl)): ?>
+    <?php if (empty($job->error) && !empty($job->nextUrl)): ?>
         <div class="widget-job-bar"></div>
     <?php endif; ?>
 
@@ -87,10 +87,10 @@ use Cake\Utility\Inflector;
             <td><?= h($job->config['database'] ?? '') ?></td>
         </tr>
 
-        <?php if (!empty($job->config['model'])): ?>
+        <?php if (!empty($job->config['table'])): ?>
             <tr>
-                <th scope="row"><?= __('Model') ?></th>
-                <td><?= h($job->config['model'] ?? '') ?></td>
+                <th scope="row"><?= __('Table') ?></th>
+                <td><?= h($job->config['table'] ?? '') ?></td>
             </tr>
         <?php endif; ?>
 
@@ -112,14 +112,14 @@ use Cake\Utility\Inflector;
     <?php $this->Link->beginActionGroup ('content'); ?>
     <?php
         $this->Link->addAction(
-            empty($job->nexturl) ? __('Close') : __('Cancel'),
+            empty($job->nextUrl) ? __('Close') : __('Cancel'),
             '#',
             ['class' => 'widget-job-cancel button', 'data-role' => 'cancel', 'data-target' => 'main']
         );
     ?>
 
     <?php
-        $url = $job->responseUrl ?? $job->nexturl ?? '#';
+        $url = $job->responseUrl ?? $job->nextUrl ?? '#';
         if (empty($job->error) && !empty($url)) {
 
             // Download
@@ -132,14 +132,14 @@ use Cake\Utility\Inflector;
             }
 
             // Proceed in frame or in main
-            else {
+            elseif ($url !== '#') {
                 $this->Link->addAction(
                      __('Proceed'),
                     $url,
                     [
                         'class' => 'widget-job-proceed button',
                         'data-role' => 'proceed',
-                        'data-target' =>  empty($job->nexturl) ? 'main' : ''
+                        'data-target' =>  empty($job->nextUrl) ? 'main' : ''
                     ]
                 );
 

@@ -112,9 +112,17 @@ Make sure to configure the namespaces within the property type configuration to 
 
 # How to configure a service for article data?
 
+Epigraf implements summarising, coding and annotating text using a Large Language Model.
+The source data is handed over to the [databoard service](https://databoard.uni-muenster.de/) developed by the research unit
+Digital Media & Computational Methods at the University of Münster.
+
+
 ## Item configuration
 
-The services configuration for articles is added to the source item. It is an object with an arbitrary key for each service and a service configuration object as value. The configuration object for items contains the following keys:
+The services configuration for articles is added to the item that contains the input text in the `content` field.
+It is an object with an arbitrary key for each service and a service configuration object as value.
+
+The configuration object for items contains the following keys:
 
 <figure class="table">
     <table>
@@ -139,27 +147,40 @@ The services configuration for articles is added to the source item. It is an ob
         </tr>
         <tr>
             <td>prompts</td>
-            <td>Optionally, a prompt template supported by the service. Defaults to an empty string for default prompts. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
+            <td>Optional. A prompt template supported by the service. Defaults to an empty string for default prompts. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
         </tr>
         <tr>
             <td>multinomial</td>
-            <td>Whether to perform the task in single or in multi mode. Coding tasks return the best matching property in single mode and a value for each property in multi mode. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
+            <td>Optional. Whether to perform the task in single or in multi mode. Coding tasks return the best matching property in single mode and a value for each property in multi mode. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
         </tr>
         <tr>
             <td>input</td>
-            <td>Either the whole article is sent to the service in Markdown format (<code>article</code>) or the content of the item with the service configuration (<code>item</code>). Artikel data is taken from the last saved state while item content ist taken directly from the field in an open article.</td>
+            <td>Either the whole article is sent to the service in Markdown format (<code>article</code>)
+                or the content of the item (<code>item</code>).
+                Artikel data is taken from the last saved state
+                while item content ist taken directly from the field in an open article.
+            </td>
         </tr>
         <tr>
             <td>target</td>
-            <td>An object with the keys container, itemtype, sectiontype and fields.
-                <p>The container value determines whether to update the source item (<code>item</code>), add or update other items in the same section (<code>section</code>) or other items other sections of the article (<code>article</code>). Item type and section type determine which items and sections are affected inside the container.</p>
-                <p>The item fields where the result should be stored.</p>
-                <p>For summarize tasks, defaults to <code>{"content": "llm_result", "value": "state"}</code>.</p>
-                For other tasks such as coding it defaults to <code>{"properties_id": "properties_id", "properties_label": "properties_label", 'value': "value"}</code>.</td>
-        </tr>
-        <tr>
-            <td>tagname</td>
-            <td>For annotation tasks the name of the links configuration that will be used to add intext annotation. The property type is derived from the links configuration.</td>
+            <td>An object with the keys container, itemtype, sectiontype, fields and tagname.
+                <ul>
+                    <li>container: The container value determines whether to update the source item (<code>item</code>), add or update other items in the same section (<code>section</code>) or other items other sections of the article (<code>article</code>). Item type and section type determine which items and sections are affected inside the container.
+                    </li>
+                    <li>itemtype: The item fields where the result should be stored.</li>
+                    <li>fields:
+                        For summarize tasks, defaults to <code>{"content": "llm_result", "value": "state"}</code>.
+                        For coding tasks it defaults to <code>{"properties_id": "properties_id", "properties_label": "properties_label", 'value': "value"}</code>.
+                        For annotate tasks, defaults to <code>{"content": "llm_result", "value": "state"}</code>.
+                    </li>
+                    <li>tagname: Used for annote tasks. The name of a link type configuration.
+                        The target tag and the property type are derived from the link type configuration.
+                        Make sure the link configures a property type in its `to` field configuration.
+                        Each property must have a name in the `lemma` field and an example in the `content` field.
+                        The lemma field is used as category description, the content field should contain a short text segment (e.g. a word) that might be annotated.
+                    </li>
+                </ul>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -211,9 +232,33 @@ text:
 }
 ```
 
-In the item type used in the configuration ("categories") configure the property field and link it to a property type. The properties are used to create the rule book.
+In the item type used in the configuration ("categories") configure the property field
+and link it to a property type. The properties are used to create the rule book.
 
-The result is inserted into the article section defined in the sectiontype value. If a section can hold multiple items (count is set to *), one item for each answer is added. Otherwise the first matching item is updated.
+The result will be stored in an item in another section.
+It is inserted into the section defined in the sectiontype value.
+If a section can hold multiple items (count is set to *), one item for each answer is added.
+Otherwise the first matching item is updated.
+
+## Example: Automated annotation with a Large Language Model
+
+```
+  "services": {
+    "anno": {
+      "caption": "Annotate figures",
+      "service": "llm",
+      "task": "annotate",
+      "input": "item",
+      "target": {
+        "tagname": "anno"
+      }
+    }
+  }
+```
+
+You need to configure a link type named "anno" that is configured for manual annotation.
+The link type must refer to a property type in its `to` configuration field.
+You need to add at least one property with the name in the `lemma` field and an example text in the `content` field.
 
 # How to make a service available in Epigraf?
 

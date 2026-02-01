@@ -17,12 +17,14 @@ declare(strict_types=1);
 
 namespace Rest\Error\Middleware;
 
+use Authorization\Exception\ForbiddenException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Routing\Router;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Rest\Controller\Component\AnswerComponent;
 
 /**
  * Error handling middleware.
@@ -47,6 +49,21 @@ class RestAnswerMiddleware extends ErrorHandlerMiddleware
             return $handler->handle($request);
         } catch (RestAnswerException $exception) {
             return $this->handleRestAnswer($request, $exception);
+        } catch (ForbiddenException $exception) {
+
+            // Redirect non API requests to the login page
+            // TODO: There is some confusion about what an API request is:
+            //       a) requests for structured data formats
+            //       b) token authenticated requests
+            //       Tidy up!
+            if (!$request->is('api') && $request->is('token')) {
+                return new RedirectResponse(
+                    Router::url(AnswerComponent::getLoginUrl($request))
+                );
+            }
+
+            // Rethrow to let global error handler manage it
+            throw $exception;
         }
     }
 
@@ -75,7 +92,7 @@ class RestAnswerMiddleware extends ErrorHandlerMiddleware
                     $url = Router::parseRoutePath($url);
                 }
                 $url['_ext'] = $request->getParam('_ext');
-                $data['nexturl'] = Router::url($url, true);
+                $data['nextUrl'] = Router::url($url, true);
             }
             $data = array_merge($data, $exception->data);
 
@@ -89,4 +106,5 @@ class RestAnswerMiddleware extends ErrorHandlerMiddleware
             );
         }
     }
+
 }

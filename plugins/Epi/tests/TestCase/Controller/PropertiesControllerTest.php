@@ -4,10 +4,9 @@ namespace Epi\Test\TestCase\Controller;
 
 
 use App\Utilities\Converters\Arrays;
-use Cake\Controller\Exception\InvalidParameterException;
 use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Epi\Test\TestCase\EpiTestCase;
 
 /**

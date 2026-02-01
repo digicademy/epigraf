@@ -36,6 +36,7 @@ class TaskDataProperties extends BaseTaskData
     {
         $dataparams = parent::getDataParams();
         $dataparams['scope'] = $this->config['propertytype'] ?? $this->config['scope'] ?? '';
+        $dataparams['snippets'] = $this->config['snippets'] ?? '';
         return $dataparams;
 
     }

@@ -65,6 +65,8 @@ export class SwitchButtons extends BaseWidget {
      * @param {HTMLElement} button The element with the widget-switch class
      * @param {boolean} active If undefined, toggles the button.
      *                         Otherwise, activates or deactivates the button.
+     * @fires epi:toggle:switch:before
+     * @fires epi:toggle:switch
      */
     switchButton(button, active= undefined) {
         if (button) {
@@ -179,6 +181,13 @@ export class ToggleButtons extends BaseWidget {
  *
  */
 export class SandwichButton extends BaseWidget {
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @fires epi:replace:content
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -208,6 +217,11 @@ export class SandwichButton extends BaseWidget {
         }, 40);
     }
 
+    /**
+     *
+     * @param event
+     * @listens epi:replace:content
+     */
     onReplaced(event) {
         const sourceElement = event.target;
         const menuDot = this.sandwichPane.querySelector(
@@ -390,6 +404,13 @@ export class Shortcuts extends BaseWidget {
  */
 export class ChooseButtons extends BaseWidget {
 
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:select
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -435,7 +456,7 @@ export class ChooseButtons extends BaseWidget {
                     }
                 };
 
-                new SelectWindow(options);
+                new SelectWindow(options, this.getFrame());
                 return false;
             }
         });
@@ -449,7 +470,7 @@ export class ChooseButtons extends BaseWidget {
             }
             options = {...options, ...event.detail.data};
 
-            new SelectWindow(options);
+            new SelectWindow(options, this.getFrame());
             return false;
         });
     }

@@ -183,7 +183,7 @@ use App\Utilities\Converters\Attributes;
 <?php if (!$options['edit']): ?>
 
     <?php
-        // TODO: generate link in App.openDetails()
+        // TODO: generate link in App.openSidebar()
         if ($this->request->is('ajax') && !in_array($mode, [MODE_REVISE])) {
             $action = $this->User->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
             $url = ['action' => $action, $entity->id];

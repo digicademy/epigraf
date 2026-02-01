@@ -231,6 +231,13 @@ export class MapWidget extends BaseWidget {
 
     /**
      * Bind events to map.
+     *
+     * @listens epi:add:item
+     * @listens epi:remove:item
+     * @listens epi:change:item
+     * @listens epi:change:entity
+     * @listens epi:load:facets
+     * @listens epi:close:facets
      */
     bindEvents() {
         // General map events
@@ -1164,7 +1171,7 @@ export class MapWidget extends BaseWidget {
             return;
         }
         url = decodeURI(url).formatUnicorn(marker.sourceTarget.customData);
-        App.openDetails(url, {'external':false});
+        App.openSidebar(url, {'external':false});
     }
 
     /**
@@ -1179,7 +1186,7 @@ export class MapWidget extends BaseWidget {
         }
         const markerIds = markers.map(marker => marker.customData.rootId).join(',');
         url = decodeURI(url).formatUnicorn({'rootId': markerIds});
-        App.openDetails(url, {'external':false});
+        App.openSidebar(url, {'external':false});
     }
 
     /**

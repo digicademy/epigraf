@@ -14,6 +14,14 @@ import {BaseDocument} from '/js/base.js';
  * JSON Editor class for editing JSON-like input (configurations etc.)
  */
 export class JsonEditor extends BaseWidget {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:save:form
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -101,6 +109,14 @@ export class JsonEditor extends BaseWidget {
  * Instantiate the customized HTML-Ckeditor
  */
 export class HtmlEditor extends BaseWidget {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:save:form
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -127,6 +143,14 @@ export class HtmlEditor extends BaseWidget {
  * Does not create the CKEditor instance, see models.js.
  */
 export class XmlEditor extends BaseDocument {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:save:form
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 

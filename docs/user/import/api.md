@@ -6,7 +6,8 @@ toc: false
 
 Importing data into Epigraf requires mapping your data to the [Relational Article Model](/epigraf/user/coreconcepts/model).
 The most straightforward method is preparing your data with R using the [rpigraf-package](https://github.com/datavana/rpigraf/).
-In the [example vignette](https://github.com/datavana/rpigraf/blob/main/vignettes/import.Rmd), you find code chunks for importing data and for getting it back from Epigraf.
+Then you can upload it to Epigraf using the [Epigraf API](/epigraf/user/coreconcepts/api).
+In the [example vignettes](https://github.com/datavana/rpigraf/blob/main/vignettes/), you find code chunks for importing data and for getting it back from Epigraf.
 Further, the package implements some useful features for data analysis such as showing annotated text segments.
 
 The following example transforms three cases from a table into the relational article model:

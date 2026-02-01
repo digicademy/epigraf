@@ -14,6 +14,14 @@ import {BaseWidget} from '/js/base.js';
  * Resizable Sidebar.
  */
 export class ResizableSidebar extends BaseWidget {
+    /**
+     *
+     * @param element
+     * @param orientation
+     * @param snapwidth
+     * @param collapsed
+     * @fires epi:open:tab
+     */
     constructor(element, orientation, snapwidth, collapsed) {
         super(element);
         if (!element) {
@@ -92,10 +100,7 @@ export class ResizableSidebar extends BaseWidget {
             this.exploder.classList.add('sidebar-empty');
         }
 
-        // TODO: use events
-        if (typeof App !== 'undefined'  && App.accordion) {
-            App.accordion.showMain();
-        }
+        this.emitEvent('epi:hide:sidebar', {'sidebar' : this.sidebar}, false);
     }
 
     /**
@@ -129,10 +134,7 @@ export class ResizableSidebar extends BaseWidget {
         this.sidebar.classList.remove('sidebar-empty');
         this.exploder.classList.remove('sidebar-empty');
 
-        // TODO: use events
-        if (typeof App !== 'undefined' && App.accordion) {
-            App.accordion.showPanel(this.sidebar);
-        }
+        this.emitEvent('epi:show:sidebar', {'sidebar' : this.sidebar}, false);
     }
 
     /**
@@ -245,8 +247,14 @@ export class Accordion extends BaseWidget {
         super(element, name, parent);
 
         this.items = element.querySelectorAll('.accordion-item');
-        this.toggles = element.querySelectorAll('.accordion-toggle');
         this.main = element.querySelector('.accordion-main');
+
+
+        this.toggles = [];
+        this.items.forEach(elm=> {
+            this.toggles.push(...document.querySelectorAll('[data-toggle-accordion="' + elm.dataset.accordionItem + '"]'));
+        });
+
 
         // Attach event listeners
         this.toggles.forEach(elm =>
@@ -257,8 +265,22 @@ export class Accordion extends BaseWidget {
                 this.listenEvent(elm,'click', event => this.onLinkClick(event));
             }
         });
+
+        this.listenEvent(this.widgetElement,'epi:hide:sidebar', (event) => this.onHideSidebar(event));
+        this.listenEvent(this.widgetElement,'epi:show:sidebar', (event) => this.onShowSidebar(event));
     }
 
+    onShowSidebar(event) {
+        if (!event.detail.data || !event.detail.data.sidebar) {
+            return;
+        }
+
+        this.showPanel(event.detail.data.sidebar);
+    }
+
+    onHideSidebar(event) {
+        this.showMain();
+    }
     /**
      * Show main panel of accordion.
      */
@@ -355,7 +377,16 @@ export class Accordion extends BaseWidget {
 }
 
 
+
 export class Tabsheets extends BaseWidget {
+
+    /**
+     *
+     * @param {HTMLElement} element
+     * @param {String} name
+     * @param {BaseWidget} parent
+     * @listens epi:change:dropdown
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -365,7 +396,7 @@ export class Tabsheets extends BaseWidget {
         const addButton = this.widgetElement.querySelector('.btn-add');
         if (addButton) {
             const tabAddPane = document.querySelector('#' + addButton.dataset.toggle);
-            this.listenEvent(tabAddPane, 'changed', (event) => this.onTabAdd(event));
+            this.listenEvent(tabAddPane, 'epi:change:dropdown', (event) => this.onTabAdd(event));
         }
 
         this.listenEvent(this.buttonContainer, 'click', (event) => this.onTabClick(event));
@@ -390,6 +421,7 @@ export class Tabsheets extends BaseWidget {
      *
      * @param {string} name The tab identifier
      * @param {string} caption The tab caption
+     * @fires epi:create:tabsheet
      * @return {HTMLElement} The tabsheet element
      */
     createTab(name, caption) {
@@ -417,6 +449,11 @@ export class Tabsheets extends BaseWidget {
         return tabSheet;
     }
 
+    /**
+     *
+     * @param name
+     * @fires epi:remove:tabsheet
+     */
     removeTab(name) {
 
         let tabSheet = this.widgetElement.querySelector('.widget-tabsheets-sheet[data-tabsheet-id="' + name + '"]');
@@ -442,6 +479,7 @@ export class Tabsheets extends BaseWidget {
      *
      * @param {string} name
      * @param {string} position Set to 'last' to move the tab to the last position
+     * @fires epi:show:tabsheet
      * @return {HTMLElement}
      */
     showTab(name, position) {
@@ -524,10 +562,10 @@ export class Tabsheets extends BaseWidget {
     /**
      * Fired by the dropdown selector when a value was selected
      *
-     * @param{Event} event The changed event
+     * @param {Event} event The changed event
      */
     onTabAdd(event) {
-        if (event.type === 'changed') {
+        if (event.type === 'epi:change:dropdown') {
             this.loadTab(event.detail.data.id, event.detail.data.label);
             const addButton = this.widgetElement.querySelector('.btn-add');
             const addWidget = this.getWidget(addButton, 'dropdown', false);
@@ -568,6 +606,10 @@ export class Tabsheets extends BaseWidget {
  * @constructor
  */
 export class ScrollSync extends BaseWidget {
+
+    /**
+     * @listens epi:focus:widgets
+     */
     constructor() {
         super();
         this.content = null;
@@ -852,6 +894,7 @@ export class ScrollSync extends BaseWidget {
      * @param {HTMLElement} section
      * @param {boolean} force Usually, sections marked with the class doc-section-collapsed,
      *                        stay collapsed. You can force expanding by this parameter.
+     * @fires epi:focus:section
      */
     expandSection(section, force = false) {
         if (force || (section && !section.classList.contains('doc-section-collapsed'))) {
@@ -976,6 +1019,9 @@ export class ContentLoader extends BaseWidget {
         this.url = this.widgetElement.dataset.url;
     }
 
+    /**
+     * @listens epi:show:tabsheet
+     */
     initWidget() {
 
         // Load when tabsheet is shown
@@ -1001,3 +1047,4 @@ export class ContentLoader extends BaseWidget {
 window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['tabsheets'] = Tabsheets;
 window.App.widgetClasses['loadcontent'] = ContentLoader;
+window.App.widgetClasses['accordion'] = Accordion;

@@ -9,13 +9,10 @@
  */
 namespace App\Test\TestCase\Controller;
 
-use Cake\Http\Exception\BadRequestException;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Cake\Http\Exception\MissingControllerException;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Http\Exception\UnauthorizedException;
 use App\Test\TestCase\AppTestCase;
-use Cake\ORM\TableRegistry;
 
 /**
  * App\Controller\DocsController Test Case
@@ -118,7 +115,7 @@ class DocsControllerTest extends AppTestCase
     public function testHelpOpenFromDesktop()
     {
         $this->get("/help?token=TESTTOKENAUTHOR");
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/help?login=1']]);
+        $this->assertRedirectEquals(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/help?login=1']]);
     }
 
 
@@ -293,7 +290,7 @@ class DocsControllerTest extends AppTestCase
     public function testWikiViewRedirectTokenAuth()
     {
         $this->get("/docs/view/wiki/117?token=TESTTOKENAUTHOR");
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/docs/view/wiki/117?login=1']]);
+        $this->assertRedirectEquals(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/docs/view/wiki/117?login=1']]);
     }
 
     /**
@@ -304,7 +301,7 @@ class DocsControllerTest extends AppTestCase
     public function testWikiOpenFromDesktop()
     {
         $this->get("/wiki?token=TESTTOKENAUTHOR");
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/wiki?login=1']]);
+        $this->assertRedirectEquals(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/wiki?login=1']]);
     }
 
     /**
@@ -316,7 +313,7 @@ class DocsControllerTest extends AppTestCase
     {
         $this->loginUser('author');
         $this->get("/wiki/nonexistingkey");
-        $this->assertRedirect("/docs/add/wiki/nonexistingkey");
+        $this->assertRedirectEquals(['controller' => 'Docs', 'action' => 'add', 'wiki', 'nonexistingkey', '_full' => true]);
     }
 
     /**

@@ -49,6 +49,40 @@ See the docker folder for examples how to configure the servers for different en
 - Test: `docker/test/app.php`.
 - Production: `docker/deploy/app.php`.
 
+## Authentication
+
+Epigraf is prepared to work with Open ID Connect using Apache [mod_auth_openidc](https://github.com/OpenIDC/mod_auth_openidc).
+See the comments and examples in `docker/apache/apache.openidc.conf` for guidance.
+
+To use Open ID Connect, in the app.php, set the `Logins.remote` key to an environment variable
+that will contain an authenticated username.
+The username must exist in the Epigraf user database.
+You can use email addresses or other identifiers as usernames.
+Be aware that the environment variable name, depending on your configuration,
+may be prefixed with `REDIRECT_`, e.g. `REDIRECT_OIDC_CLAIM_email`.
+
+To trigger the authentication flow, in the Apache configuration,
+require authentication on the `/users/login` endpoint.
+You can use the `/users/oidc` endpoint to handle the Open ID Connect callback.
+
+It is advised to disable form based authentication
+by setting the `Logins.form` key to `false`.
+This hides the login form on the login page and
+disables the form auhenticator, thus, effectively preventing logins by direct post requests.
+Anyway, the login page will only become visible if the claim
+expected by Epigraf is not present in the environment.
+Usually this only happens if the OIDC provider is not working properly
+or if it does not handle failed logins on its own site.
+
+Each time a user accesses Epigraf (preferebly via the login endpoint),
+Epigraf reads the environment variable configured in `Logins.remote`,
+looks up a corresponding user in the database, and if authenticated,
+stores the user data in a session managed by Epigraf.
+Since the oidc session is not used in subsequent requests,
+re-authentication is not required until the Epigraf session expires or the user logs out.
+
+See `Application::getAuthenticationService()` in `src/Application.php` for how the authentication service is configured.
+
 ## Logs
 Logs of the Epigraf application are
 configured in the `config.php` file and

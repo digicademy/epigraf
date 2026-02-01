@@ -14,7 +14,7 @@ use App\Cache\Cache;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Files\Logs;
 use Cake\Event\EventInterface;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 
@@ -129,7 +129,7 @@ class SettingsController extends AppController
     {
         // Just to make sure, even if permissions were granted manually
         if (!$this->userHasRole(['admin', 'devel'])) {
-            throw new ForbiddenException(__('You are not allowed to access this page.'));
+            throw new ForbiddenException(null, __('You are not allowed to access this page.'));
         }
 
         return $this->Actions->static($iri, ['templates' => ['settings' => 'Settings']]);
@@ -189,7 +189,7 @@ class SettingsController extends AppController
     {
         // Just to make sure, even if permissions were granted manually
         if (!$this->userHasRole(['admin', 'devel'])) {
-            throw new ForbiddenException(__('You are not allowed to access this page.'));
+            throw new ForbiddenException(null, __('You are not allowed to access this page.'));
         }
 
         if ($this->request->is('delete')) {

@@ -11,8 +11,8 @@ namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\Databank;
 use App\Utilities\Files\Files;
+use Authentication\Authenticator\UnauthenticatedException;
 use Cake\Core\Configure;
-use Cake\Http\Exception\UnauthorizedException;
 use App\Test\TestCase\AppTestCase;
 
 /**
@@ -80,18 +80,6 @@ class JobsControllerTest extends AppTestCase
     }
 
     /**
-     * Test download method
-     *
-     * @return void
-     */
-    public function testDownload()
-    {
-        $this->loginUser('admin');
-        $this->get("/export?scope=article&database=projects&project=1&articles=1");
-        $this->assertResponseEqualsComparison();
-    }
-
-    /**
      * Test article export method
      *
      * @return void
@@ -99,7 +87,11 @@ class JobsControllerTest extends AppTestCase
     public function testExportArticle()
     {
         $this->loginUser('author');
+
         $this->get("/export?scope=article&database=projects&project=1&articles=1");
+        $this->assertRedirect('/epi/projects/articles/export?scope=article&project=1&articles=1');
+
+        $this->get("/epi/projects/articles/export?articles=1&scope=article&projects=1");
         $this->assertResponseEqualsComparison();
     }
 
@@ -111,7 +103,11 @@ class JobsControllerTest extends AppTestCase
     public function testExportBook()
     {
         $this->loginUser('author');
+
         $this->get("/export?scope=book&database=projects&project=1&articles=1");
+        $this->assertRedirect('/epi/projects/articles/export?scope=book&project=1&articles=1');
+
+        $this->get("/epi/projects/articles/export?articles=1&scope=book&projects=1");
         $this->assertResponseEqualsComparison();
     }
 
@@ -123,7 +119,7 @@ class JobsControllerTest extends AppTestCase
     public function testExportNoAuth()
     {
         $this->get("/export?scope=article&database=projects&project=1&articles=1");
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/export?scope=article&database=projects&project=1&articles=1']]);
+        $this->assertRedirectEquals(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/export?scope=article&database=projects&project=1&articles=1']]);
     }
 
     /**
@@ -135,7 +131,7 @@ class JobsControllerTest extends AppTestCase
     {
         $this->loginUser('admin');
         $this->get("export?database=projects");
-        $this->assertResponseEqualsComparison();
+        $this->assertRedirect('/epi/projects/articles/export');
     }
 
 
@@ -148,6 +144,9 @@ class JobsControllerTest extends AppTestCase
     {
         $this->loginUser('admin');
         $this->get("export?database=projects&scope=article");
+        $this->assertRedirect('/epi/projects/articles/export?scope=article');
+
+        $this->get('/epi/projects/articles/export?scope=article');
         $this->assertResponseEqualsComparison();
     }
 
@@ -160,6 +159,9 @@ class JobsControllerTest extends AppTestCase
     {
         $this->loginUser('admin');
         $this->get("export?database=projects&scope=book");
+        $this->assertRedirect('/epi/projects/articles/export?scope=book');
+
+        $this->get('/epi/projects/articles/export?scope=book');
         $this->assertResponseEqualsComparison();
     }
 
@@ -171,7 +173,7 @@ class JobsControllerTest extends AppTestCase
     public function testExportTokenRedirect()
     {
         $this->get("/export?token=TESTTOKENAUTHOR&scope=article&database=projects&project=1&articles=1");
-        $this->assertRedirect([
+        $this->assertRedirectEquals([
             'controller' => 'Users',
             'action' => 'login',
             '?' => [
@@ -188,8 +190,8 @@ class JobsControllerTest extends AppTestCase
      */
     public function testExportWrongToken()
     {
-        $this->expectException(UnauthorizedException::class);
-        $this->expectExceptionMessage('Unauthorized');
+        $this->expectException(UnauthenticatedException::class);
+        $this->expectExceptionMessage('Authentication is required to continue');
         $this->get("/export?token=TESTWRONGAUTHOR&scope=article&database=projects&project=1&articles=1");
     }
 
@@ -205,7 +207,7 @@ class JobsControllerTest extends AppTestCase
      * @return void
      * @throws \Exception
      */
-    protected function _testPipeline($params, $compareFile, $downloadFile, $downloadSize, $contentType)
+    protected function _testPipeline($database, $params, $compareFile, $downloadFile, $downloadSize, $contentType)
     {
         // TODO: über get request einsteigen, nicht über post request.
         //       dann post request in stufe 2
@@ -213,9 +215,9 @@ class JobsControllerTest extends AppTestCase
         //       geht aber auch erstmal so
 
         // Remove old export folder if present
-        $outputfolder = Configure::read('Data.databases') . 'test_projects' . DS . 'jobs' . DS . 'job_3' . DS;
+        $outputfolder = Configure::read('Data.databases') . 'test_projects' . DS . 'jobs' . DS . 'job-3' . DS;
         if (is_dir($outputfolder)) {
-            Files::removeFolder($outputfolder);
+            Files::delete($outputfolder);
         }
 
         // 1. CREATE JOB
@@ -227,9 +229,9 @@ class JobsControllerTest extends AppTestCase
         $data = include $this->testdataFile;
         $this->loginUser('author');
 
-        // Pipeline #19 for article export
-        $this->post("/export?" . $params, $data);
-        $this->assertRedirect('/jobs/execute/3?database=projects&close=0');
+        //$this->post("/export?" . $params, $data);
+        $this->post('/epi/' . $database . '/articles/export?' . $params, $data);
+        $this->assertRedirect('/jobs/execute/3?database=' . $database . '&close=0');
 
         // Check if job exists
         $jobs = $this->fetchTable("Jobs")->find()->disableHydration()->toArray();
@@ -266,9 +268,9 @@ class JobsControllerTest extends AppTestCase
             $i = $response['job']['progress'] ?? $i;
 
             // Determine output file
-            $outputfolder = 'job_3';
+            $outputfolder = 'job-3';
             $database =  $response['job']['config']['database'] ?? '';
-            $this->assertEquals('projects',$database);
+            $this->assertEquals('test_projects', $database);
             $outputfile = Configure::read('Data.databases') . Databank::addPrefix($database) . DS;
             $outputfile .= 'jobs' . DS . $outputfolder . DS . $outputfolder . '.xml';
 
@@ -277,9 +279,9 @@ class JobsControllerTest extends AppTestCase
             // Check errors
             $error = $response['job']['error'] ?? '';
             if ($error) {
-                echo "{$response['job']['config']['database']} {$response['job']['config']['model']} {$error}" . "\n";
+                echo "{$response['job']['config']['database']} {$response['job']['config']['table']} {$error}" . "\n";
             } else {
-                echo "{$response['job']['config']['database']} {$response['job']['config']['model']}";
+                echo "{$response['job']['config']['database']} {$response['job']['config']['table']}";
             }
             $this->assertEquals('',$error);
         }
@@ -292,12 +294,12 @@ class JobsControllerTest extends AppTestCase
         );
 
         $database =  $response['job']['config']['database'];
-        $foldername =  'job_3';
+        $foldername =  'job-3';
         $outputfolder = Configure::read('Data.databases') . Databank::addPrefix($database) . DS . 'jobs' . DS . $foldername . DS;
         $outputfile = $outputfolder . $foldername . '.xml';
 
         // Clean for test
-        Files::replaceContent($outputfile, ['/folder="[^"]+"/' => 'folder="job_3"']);
+        Files::replaceContent($outputfile, ['/folder="[^"]+"/' => 'folder="job-3"']);
 
         $copyto = $this->comparisonFile. '/' . $compareFile;
         $copyto .= $this->overwriteComparison ? '' : '.status';
@@ -344,7 +346,7 @@ class JobsControllerTest extends AppTestCase
         $this->assertResponseEquals($compare);
 
         // 4. CLEAN UP
-        Files::removeFolder($outputfolder);
+        Files::delete($outputfolder);
         $this->assertFileDoesNotExist($outputfolder);
     }
 
@@ -357,9 +359,10 @@ class JobsControllerTest extends AppTestCase
     public function testExportExecuteArticle()
     {
         $this->_testPipeline(
-            'database=projects&project=1&articles=1&pipeline=19&sort=location',
+            'projects',
+            'projects=1&articles=1&pipeline=19&sort=location',
             'result.doc',
-            'job_3.doc',
+            'job-3.doc',
             '67069',
             'application/msword'
 
@@ -375,9 +378,10 @@ class JobsControllerTest extends AppTestCase
     public function testExportExecuteBook()
     {
         $this->_testPipeline(
-            'database=projects&project=1&articles=1&pipeline=21',
+            'projects',
+            'projects=1&articles=1&pipeline=21',
             'result.doc',
-            'job_3.doc',
+            'job-3.doc',
             '33743',
             'application/msword'
         );
@@ -392,10 +396,11 @@ class JobsControllerTest extends AppTestCase
     public function testExportExecuteXml()
     {
         $this->_testPipeline(
-            'database=projects&project=1&articles=1&pipeline=16',
+            'projects',
+            'projects=1&articles=1&pipeline=16',
             'result.xml',
-            'job_3.xml',
-            '451657',
+            'job-3.xml',
+            '451550',
             'application/xml; charset=UTF-8'
         );
     }

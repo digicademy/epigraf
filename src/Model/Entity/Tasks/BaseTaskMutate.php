@@ -27,25 +27,14 @@ class BaseTaskMutate extends BaseTask
      *
      * Overwrite in derived classes
      *
+     * TODO: The derived classes mainly recreate the fields. Rename $field to $values and pass the values to the fields.
+     *
      * @param array $fields
      * @return array[]
      */
     public function updateHtmlFields($fields)
     {
         return $fields;
-    }
-
-    /**
-     * Update parameters that redirect to the mutated entitites
-     *
-     * Overwrite in derived classes
-     *
-     * @param array $params The parameters to be changed
-     * @return array The updated parameters
-     */
-    public function updateRedirectParams($params)
-    {
-        return $params;
     }
 
     /**
@@ -83,12 +72,12 @@ class BaseTaskMutate extends BaseTask
     /**
      * Reset the task progress
      *
-     * @return true
+     * @return array The updated task config
      */
-    public function init()
+    public function reset()
     {
         $this->config['offset'] = 0;
-        return true;
+        return $this->config;
     }
 
     /**

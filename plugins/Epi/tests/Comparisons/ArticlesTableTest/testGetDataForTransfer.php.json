@@ -19,17 +19,15 @@
             "created": "2022-04-01T08:45:59+02:00",
             "id": "users-tmp1",
             "name": "Testuser",
-            "acronym": "TU",
             "usertype": "human",
             "userrole": 1,
-            "norm_iri": "projects~tu",
+            "norm_iri": "projects~1",
             "file_copyfrom": ""
         },
         {
             "created": "2024-11-09T12:06:13+01:00",
             "id": "users-tmp2",
             "name": "Jakob J\u00fcnger",
-            "acronym": "jj",
             "userrole": 0,
             "norm_iri": "juenger",
             "file_copyfrom": ""

@@ -11,8 +11,7 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Test\TestCase\AppTestCase;
-use Cake\Chronos\Chronos;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 
 /**
  * App\Controller\PermissionsController Test Case

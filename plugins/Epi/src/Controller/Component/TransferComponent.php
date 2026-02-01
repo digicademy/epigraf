@@ -61,7 +61,7 @@ class TransferComponent extends Component
     protected $parameters = [
         'scope',
         'source', 'target', 'stage','close', 'tablename','skip',
-        'tree', 'versions', 'dates', 'fulltext','files', 'comments','snippets', 'published'
+        'tree', 'versions', 'dates', 'fulltext','files', 'comments', 'published'
     ];
 
     /**
@@ -114,6 +114,7 @@ class TransferComponent extends Component
         $this->controller = $this->getController();
         $this->request = $this->controller->getRequest();
         $this->Databanks = FactoryLocator::get('Table')->get('Databanks');
+        $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
 
         $modelname = $this->getConfig('model');
         $this->model = FactoryLocator::get('Table')->get($modelname);
@@ -245,8 +246,6 @@ class TransferComponent extends Component
         }
         $tableName = $this->model->getTable();
         $pipelineId = null;
-
-        $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
 
         // Create import folder
         $folder = Configure::read('Data.databases') . $this->controller->activeDatabase['name'] . DS;
@@ -497,14 +496,10 @@ class TransferComponent extends Component
                 [
                     'controller' => $this->request->getParam('controller'),
                     'action' => 'index',
-                    $scope,
-                    '?' => Arrays::array_remove_keys($params, array_merge($this->parameters, ['page','id']))
+                    $scope
                 ]
             )
         ];
-
-
-        $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
 
         // Delayed jobs will be processed by a worker
         $delayedJob = !empty(Configure::read('Jobs.delay', false));
@@ -565,10 +560,33 @@ class TransferComponent extends Component
     /**
      * Export data through the job system
      *
+     * Creates a job entity with the following configuration keys:
+     * - server The current server's base URL.
+     * - database Based on the location from which a job is created, the current project database name
+     * - table Based on the location from which a job is created, the current table name (e.g. 'articles')
+     * - scope Based on the location from which a job is created, the current table scope (e.g. the property type within the properties table)
+     * - params The query parameters. A scope and a selection key are added.
+     * - selection: Set to 'selected' to limit the export to explicitly selected entities.
+     *              Set to 'entity' for a single entity export.
+     * - pipeline_id: The pipeline ID corresponding to the pipeline identified by the IRI that ist passed in the pipeline query parameter.
+     *                For article exports, it defaults to the pipeline ID in the user profile.
+     *
+     * Without a pipeline ID (but only for selections different from 'entity'),
+     * the request data is merged into the configuration.
+     * In addition, default tasks are added to the configuration.
+     *
+     * If a pipeline ID is provided, the selected options are patched into the configuration,
+     * in the options key. The value consists of an array with the keys
+     * 'custom' (custom option values), 'enabled' (task status), and 'index' (whether an index task exists).
+     *
+     * With pipeline ID, the tasks configuration will be added at job execution time.
+     *
+     *
      * @param string $scope
+     * @param array $params The query parameters. A timeout parameter greater than 0 immediately starts the job.
      * @return void
      */
-    public function export($scope = null)
+    public function export($scope = null, $params = [])
     {
         if (empty($this->model)) {
             throw new BadRequestException(__('Model not configured'));
@@ -577,18 +595,25 @@ class TransferComponent extends Component
 
         // Prepare job
         $database = BaseTable::getDatabaseName();
-        $params = $this->request->getQueryParams();
 
         if (!empty($scope)) {
             $params['scope'] = $scope;
         }
 
+        $timeout = intval($params['timeout'] ?? 0);
+
         // Delayed jobs will be processed by a worker
         $delayedJob = !empty(Configure::read('Jobs.delay', false));
         $selection = $params['selection'] ?? 'selected';
 
+        // Job name can be passed in the post data or in the query parameters
+        $jobName = $this->request->getData('name',  $this->request->getQuery('name'));
+
+        $params = Arrays::array_remove_keys($params, ['timeout', 'token', 'load', 'save', 'name']);
+
         // TODO: Refactor, move to model
         $jobdata = [
+            'name' => $jobName,
             'jobtype' => 'export',
             'delay' =>  $delayedJob ? 1 : 0,
             'config' => [
@@ -614,14 +639,14 @@ class TransferComponent extends Component
         if (!empty($pipelineIri)) {
             $jobdata['config']['pipeline_id'] = $this->_getPipelineId($pipelineIri);
         }
+        unset($params['pipeline']);
+        unset($jobdata['config']['params']['pipeline']);
 
-        $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
         $job = $this->Jobs->newEntity($jobdata)->typedJob;
 
         // Add pipeline data
         if (!empty($job->config['pipeline_id'])) {
-            $pipeline = $this->Jobs->fetchTable('Pipelines')->get($job->config['pipeline_id']);
-            $job = $job->patchOptions($pipeline, $this->request->getParsedBody());
+            $job = $job->patchOptions($this->request->getParsedBody());
         }
 
         // Add default tasks
@@ -637,6 +662,7 @@ class TransferComponent extends Component
                     'scope' => $scope,
                     'format' => $outputFormat,
                     'preset' => $job->config['preset'] ?? '',
+                    'snippets' => $job->config['snippets'] ?? '',
                     'wrap' => true,
                     'expand' => Attributes::isTrue($job->config['expand'] ?? true),
                     'columns' => $job->config['params']['columns'] ?? ''
@@ -652,8 +678,15 @@ class TransferComponent extends Component
         }
 
         // Save job
-        if ($this->request->is('post')) {
+        $submit = !empty($timeout) || $this->request->is('post');
+        if ($submit) {
             if ($this->Jobs->save($job)) {
+
+                $executeParams = ['database' => $job->config['database'], 'close'=> false];
+                if (!empty($timeout)) {
+                    $executeParams['timeout'] = $timeout;
+                }
+
                 $this->controller->Answer->success(
                     false,
                     [
@@ -661,7 +694,7 @@ class TransferComponent extends Component
                         'controller' => 'Jobs',
                         'action' => 'execute',
                         $job->id,
-                        '?' => ['database' => $job->config['database'], 'close'=> false]
+                        '?' => $executeParams
                     ],
                     ['job_id' => $job->id]
                 );
@@ -732,7 +765,6 @@ class TransferComponent extends Component
             ]
         ];
 
-        $this->Jobs = FactoryLocator::get('Table')->get('Jobs');
         $job = $this->Jobs->newEntity($jobdata)->typedJob;
 
         // Save job

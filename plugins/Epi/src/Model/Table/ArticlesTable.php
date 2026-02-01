@@ -20,7 +20,7 @@ use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Geo;
 use App\Utilities\Converters\HistoricDates;
 use App\Utilities\Converters\Objects;
-use App\Utilities\Text\TextParser;
+use App\Utilities\Converters\Strings;
 use App\View\MarkdownView;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
@@ -38,6 +38,7 @@ use Epi\Model\Entity\Article;
 use Epi\Model\Entity\IndexProperty;
 use Epi\Model\Entity\IndexSection;
 use Epi\Model\Entity\SectionPath;
+use InvalidArgumentException;
 
 /**
  * Articles table
@@ -347,10 +348,10 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $validator
             ->scalar('norm_iri')
             ->maxLength('norm_iri', 500)
-            ->add('norm_iri', 'validFormat', [
-                'rule' => ['custom', '/^[a-z0-9_~-]+$/'],
-                'message' => 'Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed.'
-            ])
+            ->regex('norm_iri',
+                '/^[a-z0-9_~-]+$/',
+                'Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed.'
+            )
             ->allowEmptyString('norm_iri');
 
         return $validator;
@@ -928,7 +929,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                         ->formatResults(function (CollectionInterface $results) use ($terms) {
                             return $results->map(function ($item) use ($terms) {
                                 $item['caption'] = I18n::getTranslator()->translate(Inflector::humanize($item['value']));
-                                $item['content'] = TextParser::highlightTerms($item['content'], $terms);
+                                $item['content'] = Strings::highlightTerms($item['content'], $terms);
                                 $item['highlight'] = $terms;
                                 return $item;
                             });
@@ -1015,6 +1016,9 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         elseif ($snippets === ['search']) {
             $snippets =  ['users', 'projects', 'sections', 'items', 'links', 'footnotes', 'search'];
         }
+        if (in_array('problems', $options['columns'] ?? [])) {
+            $snippets[] = 'targets';
+        }
 
         // Add default sort: This makes sure that findColumnFields runs through the join code which simplifies the query
         if (empty($options['sort'])) {
@@ -1038,7 +1042,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         if (in_array('sections', $snippets)) {
             $containSections = function ($q) use ($options) {
                 $q = $q
-                    ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name']);
+                    ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name', 'lft', 'rght']);
 
                 $types = $options['sectiontypes'] ?? [];
                 if (!empty($types)) {
@@ -1082,6 +1086,19 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $contain[] = 'Links';
             $contain[] = 'Links.PropertiesWithAncestors';
             $contain[] = 'Links.PropertiesWithAncestors.Types';
+
+            if (in_array('targets', $snippets)) {
+                $contain[] = 'Links.Articles';
+                $contain[] ='Links.Articles.Projects';
+
+                $contain[] ='Links.SectionsWithAncestors';
+                $contain[] ='Links.SectionsWithAncestors.SectionArticles';
+                $contain[] ='Links.SectionsWithAncestors.SectionArticles.Projects';
+
+                $contain[] ='Links.Footnotes';
+                $contain[] ='Links.Footnotes.FootnoteArticles';
+                $contain[] ='Links.Footnotes.FootnoteArticles.Projects';
+            }
 
         }
 
@@ -1869,18 +1886,26 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Get filter options including lanes and geodata configuration
+     * Get filter options
      *
-     * The geodata configuration in the article type is a dict with
-     * itemtypes as keys and extraction paths as values, example:
+     * The result contains an array with the following keys:
+     * - search: An array of searchable fields. Contains the captions keyed by search fields.
+     * - lanes: A query result collection containing properties that are selected in the facets
+     * - date: An array with the item types that contain dates in the `itemtypes` key
+     *         and the normalized date value of the current date search term in the `normalized` key.
+     * - geodata: The merged geodata configuration of the article types
      *
-     *   "geodata" : {
-     *     "geolocations" : "value",
-     *     "locations" : "property.content"
-     *    }
+     *              The geodata configuration in the article type is a dict with
+     *              itemtypes as keys and extraction paths as values, example:
+     *
+     *              "geodata" : {
+     *                  "geolocations" : "value",
+     *                  "locations" : "property.content"
+ *                  }
+     *
      *
      * @param array $params
-     * @return array
+     * @return array Array with the keys search, date, lanes, and geodata
      */
     public function getFilter($params)
     {
@@ -1978,7 +2003,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'rebuild_fulltext' => 'Rebuild fulltext index',
             'rebuild_dates' => 'Rebuild dates index',
             'batch_delete' => 'Delete articles',
-            'batch_copy' => 'Copy articles'
+            'batch_copy' => 'Copy articles',
+            'remove_xml' => 'Remove XML tags',
 //            'publish' => 'Set publication state',
         ];
 
@@ -2048,13 +2074,12 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         /** @var Article $article */
         foreach ($articles as $article) {
-            $article->setIri();
-            $article->callRecursively('setIri');
+            $article->callRecursively('setIri', true);
         }
 
         $options = ['associated' => ['Sections', 'Sections.Items', 'Links', 'Footnotes']];
         if (!$this->saveMany($articles, $options)) {
-            throw new SaveManyException('Could save articles.');
+            throw new SaveManyException('Could not save articles.');
         }
 
         return $articles;
@@ -2462,6 +2487,53 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         }
 
         return $entities;
+    }
+
+    /**
+     * Mutate entities: Remove XML tags from items
+     *
+     * // TODO: don't update timestamps?
+     *
+     * @param array $taskParams
+     * @param array $dataParams
+     * @param array $paging Array with the keys 'offset' and 'limit'
+     * @return array The mutated entities
+     */
+    public function mutateEntitiesRemoveXml($taskParams, $dataParams, $paging): array
+    {
+
+        $offset = $paging['offset'] ?? 0;
+        $limit = $paging['limit'] ?? 1;
+
+        $dataParams = $this->parseRequestParameters($dataParams);
+        $articles = $this
+            ->find('hasParams', $dataParams)
+            ->find('containAll', $dataParams)
+            ->limit($limit)
+            ->offset($offset)
+            ->toArray();
+
+        $tagNames = Attributes::commaListToStringArray($taskParams['tagnames'] ?? []);
+        if (empty($tagNames)) {
+            throw new InvalidArgumentException(__('No tag names specified.'));
+        }
+
+        /** @var Article $article */
+        foreach ($articles as $article) {
+            $article->removeXmlTags($tagNames, true);
+            foreach ($article->links as $link) {
+                if (in_array($link->from_tagname, $tagNames)) {
+                    $link['deleted'] = 1;
+                }
+            }
+        }
+
+        $options = ['associated' => ['Sections', 'Sections.Items', 'Links', 'Footnotes']];
+        if (!$this->saveMany($articles, $options)) {
+            throw new SaveManyException('Could not save articles.');
+        }
+
+        return $articles;
     }
 
 }

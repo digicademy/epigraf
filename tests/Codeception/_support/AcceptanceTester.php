@@ -34,9 +34,9 @@ class AcceptanceTester extends \Codeception\Actor
         $I = $this;
 
         // Skip login if snapshot exists
-        if ($I->loadSessionSnapshot('login')) {
-            return;
-        }
+//        if ($I->loadSessionSnapshot('login')) {
+//            return;
+//        }
 
         // Log in
         $I->amOnPage('/users/login');

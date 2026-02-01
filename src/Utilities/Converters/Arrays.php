@@ -10,7 +10,7 @@
 
 namespace App\Utilities\Converters;
 
-use App\Utilities\Text\TextParser;
+use App\Utilities\Converters\Strings;
 use Cake\Collection\Collection;
 use Cake\Collection\CollectionInterface;
 use Cake\Utility\Hash;
@@ -567,19 +567,20 @@ class Arrays
      *     ]
      * ]
      *
-     * @param array $data Input key/value array where each value contains 'category'
+     * @param array $data Array of arrays containing a grouping value.
+     * @param string $key The key to use for grouping, e.g. 'category'
      * @return array Nested array grouped by category
      */
-    public static function array_nest($data, $categoryKey = 'category')
+    public static function array_nest($data, $key)
     {
         $nested = [];
 
         foreach ($data as $no => $option) {
-            if (!isset($option[$categoryKey])) {
+            if (!isset($option[$key])) {
                 continue;
             }
 
-            $category = $option[$categoryKey];
+            $category = $option[$key];
             $nested[$category][$no] = $option;
         }
 
@@ -952,7 +953,7 @@ class Arrays
         $conditions = [
             'OR' => array_map(
                 function ($andTerm) use ($fields, $operator, $type, $filter) {
-                    $andTerms = TextParser::tokenize($andTerm); // user can use quotes to keep words together
+                    $andTerms = Strings::tokenize($andTerm); // user can use quotes to keep words together
                     $andConditions =  array_map(
                         function ($term) use ($fields, $operator, $type) {
                             $or = array_map(

@@ -10,12 +10,12 @@
 
 namespace App\Controller;
 
-use App\Model\Entity\Job;
 use App\Utilities\Converters\Attributes;
-use Cake\Core\Configure;
+use App\Utilities\Exceptions\DeprecatedException;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Exception\RedirectException;
 
 
 /**
@@ -119,144 +119,67 @@ class JobsController extends AppController
 
 
     /**
-     * Add a new export job, based on query params and user defaults
+     * Add a new articles export job
      *
-     * @deprecated Use TransferComponent (and rename it to JobComponent)
+     * @deprecated Always use the articles controller
      *
-     * @return \Cake\Http\Response|void redirects on successful job creation, renders view otherwise
-     * @throws \Cake\Http\Exception\NotFoundException if valid database or pipeline is provided in the request
-     */
-    public function add()
-    {
-        // Get pipeline parameters
-        $params = $this->request->getQueryParams();
-        $params = $this->Jobs->parseRequestParameters($params, null, 'add');
-
-        $pipelinesTable = $this->fetchTable('Pipelines');
-
-        // Get all pipelines
-        if (in_array($this->userRole, ['admin', 'devel'])) {
-            $pipelines = $pipelinesTable->find('list')->order(['name' => 'asc'])->toArray();
-        }
-        // Get configured pipelines
-        else {
-            $pipelines = $pipelinesTable->find('forArticles', $params)->order(['name' => 'asc'])->toArray();
-        }
-
-        if (empty($params['pipeline']) && !empty($pipelines)) {
-            $params['pipeline'] = array_keys($pipelines)[0];
-        }
-
-        // Delayed jobs will be processed by a worker
-        $delayedJob = !empty(Configure::read('Jobs.delay', false));
-
-        //Create job
-        /** @var Job $job */
-        $job = $this->Jobs->newEntity(['jobtype' => 'export', 'delay' => $delayedJob ? 1 : 0])->typedJob;
-        $job = $job->patchExportOptions($params);
-
-        // Load pipeline
-        if ($job->config['pipeline_id']) {
-            $pipeline = $pipelinesTable->get($job->config['pipeline_id']);
-        }
-        else {
-            $pipeline = null;
-        }
-
-        //Patch default values for pipeline
-        $job = $job->patchOptions($pipeline, $this->request->getParsedBody());
-
-        //Save
-        if ($this->request->is('post')) {
-
-            if (empty($job->config['database'])) {
-                throw new NotFoundException('No valid database selected.');
-            }
-
-            if (!$pipeline) {
-                throw new NotFoundException('No valid pipeline selected.');
-            }
-
-            if ($this->Jobs->save($job)) {
-                return $this->redirect([
-                    'plugin' => false,
-                    'controller' => 'Jobs',
-                    'action' => 'execute',
-                    $job->id,
-                    '?' => ['database' => $job->config['database'], 'close' => false]
-                ]);
-            }
-            else {
-                $this->Answer->error(__('The job could not be created. Please, try again.'));
-            }
-        }
-
-        $this->set(compact(['job', 'pipelines']));
-    }
-
-    /**
-     * Download method
-     *
-     * @deprecated Use TransferComponent (and rename it to JobComponent)
-     *
-     * Immediately executes export job, based on query params and user defaults.
      * Provide the following query parameters:
+     *
      * - pipeline_id (default value: user setting)
      * - database (default value: user setting)
      * - project_id
      * - articles_ids
      *
-     * @return \Cake\Http\Response|void Redirects on successful job execution, renders view otherwise.
-     * @throws \Cake\Http\Exception\NotFoundException If no valid database or pipeline is provided in the request.
+     * @return void
+     * @throws RedirectException Redirects to the articles controller
+    */
+    public function add()
+    {
+        $params = $this->request->getQueryParams();
+        unset($params['database']);
+
+        $this->Answer->redirect([
+            'plugin' => 'Epi',
+            'database' => $this->request->getQuery('database'),
+            'controller' => 'articles',
+            'action' => 'export',
+            '?' => $params
+        ]);
+    }
+
+    /**
+     * Download method
+     *
+     * @deprecated Always use the articles controller. Can already be removed, blackout test with bad request exception.
+     *
+     * Immediately executes export job, based on query params and user defaults.
+     *
+     * Provide the following query parameters:
+     *
+     * - pipeline_id (default value: user setting)
+     * - database (default value: user setting)
+     * - project_id
+     * - articles_ids
+     *
+     * @return void
+     * @throws RedirectException Redirects to the articles controller
      */
     public function download()
     {
-        // Get pipeline parameters
+        throw new DeprecatedException('Deprecated. Always use the articles controller.');
+
         $params = $this->request->getQueryParams();
         $params = $this->Jobs->parseRequestParameters($params, null, 'download');
 
-        // Delayed jobs will be processed by a worker
-        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+        $this->Answer->redirect([
+            'plugin' => 'Epi',
+            'database' => $this->request->getParam('database'),
+            'controller' => 'articles',
+            'action' => 'export',
+            3,
+            '?' => $params
+        ]);
 
-        //Create job
-        $job = $this->Jobs->newEntity(['jobtype' => 'export', 'delay' => $delayedJob ? 1 : 0])->typedJob;
-        $job->patchExportOptions($params);
-
-        //Check if user has database access
-        if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
-            throw new ForbiddenException('You have no access to the selected database');
-        }
-
-        if (empty($job->config['pipeline_id'])) {
-            throw new NotFoundException('No valid pipeline selected. Please check your user profile.');
-        }
-
-        //Patch default values for pipeline
-        $pipelinesTable = $this->fetchTable('Pipelines');
-        $pipeline = $pipelinesTable->get($job->config['pipeline_id']);
-        $job->patchOptions($pipeline, $this->request->getParsedBody());
-
-        //Save and start
-        if ($this->Jobs->save($job)) {
-            return $this->redirect([
-                'plugin' => false,
-                'controller' => 'Jobs',
-                'action' => 'execute',
-                $job->id,
-                '?' => ['timeout' => '3', 'database' => $job->config['database'], 'close' => false]
-            ]);
-        }
-        else {
-            $this->Answer->error(
-                __('The export job could not be created. Please, try again.'),
-                [
-                    'plugin' => false,
-                    'controller' => 'Jobs',
-                    'action' => 'add',
-                    '?' => ['database' => $job->config['database'] ?? '']
-                ]
-            );
-        }
     }
 
     /**
@@ -272,7 +195,7 @@ class JobsController extends AppController
      * @param string|null $job_id Job id
      *
      * @return \Cake\Http\Response|null|void
-     * @throws \Cake\Http\Exception\ForbiddenException if user is not allowed to export database
+     * @throws \Authorization\Exception\ForbiddenException if user is not allowed to export database
      * @throws \Cake\Http\Exception\NotFoundException if job record not found
      */
     public function execute($job_id = null)
@@ -285,12 +208,12 @@ class JobsController extends AppController
 
         //Check if user has database access
         if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
-            throw new ForbiddenException('You have no access to the selected database');
+            throw new ForbiddenException(null, __('You have no access to the selected database'));
         }
 
         //Check if the current user created the job
         if (($job->config['user_id'] ?? '') !== $this->Jobs::$userId) {
-            throw new ForbiddenException('You have no access to the selected job');
+            throw new ForbiddenException(null, __('You have no access to the selected job'));
         }
 
         // Reset
@@ -366,12 +289,12 @@ class JobsController extends AppController
 
         //Check if user has database access
         if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
-            throw new ForbiddenException('You have no access to the selected database');
+            throw new ForbiddenException(null, __('You have no access to the selected database'));
         }
 
         //Check if the current user created the job
         if (!$this->userHasRole(['admin', 'devel'])  && (($job->config['user_id'] ?? '') !== $this->Jobs::$userId)) {
-            throw new ForbiddenException('You have no access to the selected job');
+            throw new ForbiddenException(null, __('You have no access to the selected job'));
         }
 
         $job = $job->cancel();

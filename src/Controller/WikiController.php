@@ -108,7 +108,7 @@ class WikiController extends AppController
             ]);
 
 
-        $user = $this->Auth->user();
+        $user = $this->getRequest()->getAttribute('identity');
         if ((PermissionsTable::getUserRole($user, null,  $this->_getRequestScope()) !== 'guest') || ($this->segment === 'help')) {
             $published = PermissionsTable::getUserRole($user, null,  $this->_getRequestScope()) === 'guest';
             $this->sidemenu = $this->Docs->getMenu($published);

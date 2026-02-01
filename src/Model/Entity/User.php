@@ -15,6 +15,7 @@ use App\Model\Table\UsersTable;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
@@ -27,7 +28,6 @@ use Cake\Utility\Hash;
  * @property string $password
  * @property string $email
  * @property string $name
- * @property string $acronym
  * @property string $contact
  * @property string $accesstoken
  * @property string $settings
@@ -97,7 +97,8 @@ class User extends BaseEntity
      */
     protected function _setPassword($password)
     {
-        return (new DefaultPasswordHasher)->hash($password);
+        $hasher = new DefaultPasswordHasher();
+        return $hasher->hash($password);
     }
 
 
@@ -295,8 +296,8 @@ class User extends BaseEntity
             $webPermissions[$i]['actions'] = [
                 'revoke' => [
                     'title' => 'Revoke',
-                    'url' => ['controller' => 'permissions', 'action' => 'delete', $permission->id],
-                    'options' => ['class' => 'doc-item-remove button tiny popup']
+                    'url' => ['controller' => 'permissions', 'action' => 'delete', $permission->id, '?' => ['proceed' => 'users/view/' . $this->id]],
+                    'options' => ['class' => 'doc-item-remove button tiny popup', 'data-role' => 'update' ]
                 ]
             ];
         }
@@ -306,7 +307,7 @@ class User extends BaseEntity
             $sqlPermissions[$i]['actions'] = [
                 'revoke' => [
                     'title' => __('Revoke'),
-                    'url' => ['action' => 'revoke', $this->id, '{entity_name}', '{user_request}', '{user_role}'],
+                    'url' => ['action' => 'revoke', $this->id, '{entity_name}', '{user_request}', '{user_role}', '?' => ['proceed' => 'users/view/' . $this->id]],
                     'options' => ['class' => 'doc-item-remove button tiny popup']
                 ]
             ];
@@ -372,22 +373,18 @@ class User extends BaseEntity
         $fields = [
             'username' => [
                 'caption' => __('Username'),
-                'help' => __('The username should contain the real name of the person. Only alphanumeric characters are allowed. Maximum length is 50 characters.')
+                'help' => __('The username should contain the real name of the person. Maximum length is 100 characters.')
             ],
 
             'role' => [
                 'caption' => __('Role'),
-                'options' => PermissionsTable::$userRoles
+                'options' => PermissionsTable::$userRoles,
+                'roles' => ['admin', 'devel']
             ],
 
             'name' => [
                 'caption' => __('Name'),
                 'help' => __('First and last name.')
-            ],
-
-            'acronym' => [
-                'caption' => __('Acronym'),
-                'help' => __('First letters of the name.')
             ],
 
             'email' => [
@@ -404,49 +401,59 @@ class User extends BaseEntity
                 'caption' => __('Activation'),
                 'options' => UsersTable::$states,
                 'action' => ['view']
-            ],
+            ]
+        ];
 
-            'password' => [
+        $loginConfig = Configure::read('Logins', ['token' => true, 'form' => true]);
+        if (!empty($loginConfig['form'])) {
+            $fields['password'] = [
                 'caption' => __('Password'),
                 'autocomplete' => "off",
                 'action' => ['edit', 'add'],
                 'display' => 'password',
                 'help' => __("Please enter a strong password and remember it well. The password can't be restored. If you loose it, you have to enter a new password.")
-                         . " " . __('It must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.')
-            ],
+                    . " " . __('It must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.')
+            ];
+        }
 
-            'accesstoken' => [
+        if (!empty($loginConfig['token'])) {
+            $fields['accesstoken'] = [
                 'caption' => 'Access token',
                 'autocomplete' => "off",
                 'action' => ['view'],
                 'display' => 'password',
                 'help' => __('The access token is used for API access and for access from EpiDesktop. Leave empty to automatically create an access token.')
-            ],
+            ];
+        }
 
-            'databank_id' => [
-                'options' => $databanks,
-                'empty' => true,
-                'caption' => __('Default Database'),
-                'extract' => 'databank.caption',
-                'help' => __('Select the database that should open after you login.')
-            ],
+        $fields['databank_id'] = [
+            'options' => $databanks,
+            'empty' => true,
+            'caption' => __('Default Database'),
+            'extract' => 'databank.caption',
+            'help' => __('Select the database that should open after you login.')
+        ];
 
-            'pipeline_article_id' => [
+        if (Configure::read('App.epidesktop', false)) {
+
+            $fields['pipeline_article_id'] = [
                 'options' => $pipelines,
                 'empty' => true,
                 'caption' => __('Default Article Pipeline'),
                 'extract' => 'article_pipeline.name',
                 'help' => __('Only Epigraf-Desktop users: Select the pipeline that exports single articles.')
-            ],
+            ];
 
-            'pipeline_book_id' => [
+            $fields['pipeline_book_id'] = [
                 'options' => $pipelines,
                 'empty' => true,
                 'caption' => __('Default Book Pipeline'),
                 'extract' => 'book_pipeline.name',
                 'help' => __('Only Epigraf-Desktop users: Select the pipeline that exports a complete book.')
-            ],
+            ];
+        }
 
+        $fields = array_merge($fields, [
             'settings.ui.locale' => [
                 'options' => UsersTable::$locales,
                 'empty' => true,
@@ -465,12 +472,12 @@ class User extends BaseEntity
             'norm_iri' => [
                 'caption' => __('IRI fragment'),
                 'action' => ['edit', 'add'],
-                'help' => __(' Usually the IRI equals the username. The IRI is used to match users in the main database to users in the project databases.'),
+                'help' => __('If empty, the IRI fragment is generated from the username. Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed. The IRI is used to match users in the main database to users in the project databases.'),
                 'autofill' => [
                     'source' => 'username',
                     'process' => ['irifragment']
-                ]
-
+                ],
+                'roles' => ['admin', 'devel']
             ],
 
             'iri_path' => [
@@ -488,7 +495,7 @@ class User extends BaseEntity
                 'caption' => __('Modified'),
                 'action' => 'view'
             ],
-        ];
+        ]);
 
         return $fields;
     }
@@ -506,11 +513,7 @@ class User extends BaseEntity
             'name' => 'default',
             'norm_iri' => 'default',
             'published' => PUBLICATION_BINARY_PUBLISHED,
-            'config' => [
-                'fields' => [
-
-                ]
-            ]
+            'config' => ['fields' => []]
         ]);
         return $type;
     }

@@ -522,14 +522,8 @@ div.doc-section-links button.button-settings.used {
     min-height: 1.8em;
 }
 
-.doc-section-link[data-to-id=''] {
+.doc-section-link[data-to-id='']:not(.tag-problem) {
     color:var(--dim-font-color);
-}
-
-
-/* TODO: hide annos in the beginning */
-.doc-section-link:not(tag-problem) {
-    /*display:none;*/
 }
 
 .doc-section-link[data-deleted='1'] {
@@ -723,6 +717,13 @@ div.doc-section-link.tag-hover a:hover {
     color: var(--button-font-color);
     cursor: pointer;
 }
+
+div.doc-section-link.tag-hover[data-to-id=''],
+div.doc-section-link.tag-hover[data-to-id=''] a,
+div.doc-section-link.tag-hover[data-to-id=''] a:hover {
+    color: var(--button-font-color);
+}
+
 
 /* Comment and content toggle */
 .doc-section-content.toggle-hide,

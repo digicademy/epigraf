@@ -42,18 +42,16 @@ class Plugin extends BasePlugin
                 $contentType = empty($contentType) ? $request->accepts()[0] ?? '' : $contentType;
                 $ext = $request->getParam('_ext');
 
-                return in_array($ext,API_EXTENSIONS)
-                    || in_array($contentType, API_CONTENTTYPES);
+                return in_array($ext,API_EXTENSIONS) || in_array($contentType, API_CONTENTTYPES);
             }
         );
 
-        // Handle API redirects
-//        $this->getEventManager()->on('Controller.beforeRedirect', function ($event) {
-//
-//            if ($this->request->is('api')) {
-//                $event->stop();
-//            }
-//        });
+        ServerRequest::addDetector(
+            'token',
+            function ($request) {
+                return !empty($request->getQuery('token') || !empty($request->getHeader('Authorization')));
+            }
+        );
     }
 
     /**

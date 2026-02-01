@@ -52,7 +52,7 @@ class LockComponent extends Component
     public function createLock($entity, $redirect = false)
     {
         try {
-            $user = $this->Auth->user();
+            $user = $this->getController()->getRequest()->getAttribute('identity');
             $permissionId = $entity->lockid ?? $this->getController()->getRequest()->getData('lock');
             $permissionId = $permissionId === '' ? null : $permissionId;
             $lock = empty($user) ? null : $entity->lock($user['id'], $permissionId);
@@ -82,7 +82,7 @@ class LockComponent extends Component
      */
     public function releaseLock($entity)
     {
-        $user = $this->Auth->user();
+        $user = $this->getController()->getRequest()->getAttribute('identity');
         $permissionId = $entity->lockid ?? $this->getController()->getRequest()->getData('lock');
         $permissionId = $permissionId === '' ? null : $permissionId;
 

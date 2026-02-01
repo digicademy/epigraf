@@ -12,6 +12,7 @@
 /**
  * @var array $task
  * @var string $optionNumber
+ * @var string $number
  * @var string $category
  * @var string $label
  * @var string $key
@@ -24,11 +25,18 @@
 <tr class="doc-section-item" data-row-type="option">
     <td class="first">
 
-        <?= $this->Form->hidden(
-            'Tasks.' . $task['number'] . '.options.' . $optionNumber . '.number',
-            ['value' => $optionNumber, 'class' => 'options_number', 'data-row-field' => 'sortno']
-        ); ?>
+        <?php if ($edit ?? false): ?>
+            <?= $this->Form->input(
+                'Tasks.' . $task['number'] . '.options.' . $optionNumber . '.number',
+                ['value' => $number, 'class' => 'options_number', 'data-row-field' => 'sortno']
+            ); ?>
+        <?php else: ?>
+            <?= $optionNumber ?>
+        <?php endif; ?>
 
+    </td>
+
+    <td>
         <?php if ($edit ?? false): ?>
             <?= $this->Form->control(
                 'Tasks.' . $task['number'] . '.options.' . $optionNumber . '.category',

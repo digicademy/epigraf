@@ -57,7 +57,13 @@ class ArticlesControllerTest extends AppTestCase
     public function testSearchNoAuth()
     {
         $this->get("/articles/search?database=projects&project=1");
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/articles/search?database=projects&project=1']]);
+        $this->assertRedirectEquals(
+            [
+                'controller' => 'Users',
+                'action' => 'login',
+                '?' => ['redirect' => '/articles/search?database=projects&project=1']
+            ]
+        );
     }
 
 
@@ -81,7 +87,7 @@ class ArticlesControllerTest extends AppTestCase
     public function testShowNoAuth()
     {
         $this->get("/show?database=projects&article=1");
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/show?database=projects&article=1']]);
+        $this->assertRedirectEquals(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/show?database=projects&article=1']]);
     }
 
 }

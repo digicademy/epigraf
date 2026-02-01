@@ -14,6 +14,15 @@ import Utils from '/js/utils.js';
  * Plot widget
  */
 export class PlotWidget extends BaseWidget {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:load:facets
+     * @listens epi:close:facets
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -209,6 +218,7 @@ export class PlotWidget extends BaseWidget {
      * Open the row in the sidebar
      *
      * @param {Object} params
+     * @fires epi:open:details
      */
     showDetails(params) {
         let url = this.widgetElement.dataset.viewUrl;
@@ -216,7 +226,7 @@ export class PlotWidget extends BaseWidget {
             return;
         }
         url = decodeURI(url).formatUnicorn(params);
-        this.emitEvent('epi:open:details', {url: url})
+        this.emitEvent('epi:open:details', {url: url, target: 'sidebar'})
     }
 
     /**
@@ -230,7 +240,7 @@ export class PlotWidget extends BaseWidget {
             return;
         }
         url = decodeURI(url).formatUnicorn(params);
-        this.emitEvent('epi:open:details', {url: url})
+        this.emitEvent('epi:open:details', {url: url, target: 'sidebar'})
     }
 
     /**

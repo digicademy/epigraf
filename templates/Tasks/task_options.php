@@ -20,6 +20,7 @@
         <table class="options_list">
             <thead>
             <tr>
+                <th><?= __('Number') ?></th>
                 <th><?= __('Category') ?></th>
                 <th><?= __('Label') ?></th>
                 <th><?= __('Key') ?></th>
@@ -34,6 +35,7 @@
                     <?php
                         $option['task'] = $task;
                         $option['optionNumber'] = $optionNumber + 1;
+                        $option['number'] = $option['number'] ?? $option['optionNumber'];
                         $option['edit'] = $options['edit'] ?? false;
                         if (($option['radio'] ?? '') === '1') {
                             $option['type'] = 'radio';
@@ -55,6 +57,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
                         <td>
                             <button class="doc-item-add tiny"
                                     title="<?= __('Add item') ?>"
@@ -64,7 +67,8 @@
                                 $option = [
                                     'edit' => $options['edit'] ?? false,
                                     'task' => $task,
-                                    'optionNumber' => '{id}'
+                                    'optionNumber' => '{id}',
+                                    'number' => ''
                                 ];
                                 ?>
                                 <?= $this->element('../Tasks/task_options_custom', $option); ?>

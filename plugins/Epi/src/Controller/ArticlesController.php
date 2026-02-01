@@ -11,6 +11,7 @@
 namespace Epi\Controller;
 
 use App\Model\Behavior\TreeCorruptException;
+use App\Model\Table\BaseTable;
 use App\Model\Table\JobsTable;
 use App\Utilities\Converters\Attributes;
 use Cake\Core\Configure;
@@ -452,7 +453,33 @@ class ArticlesController extends AppController
      */
     public function export()
     {
-        return $this->Transfer->export();
+        $params = $this->request->getQueryParams();
+        //$params = $this->Articles->parseRequestParameters($params, null, 'export');
+
+        // Rename project to projects
+        // TODO: Handle in parseRequestParameters?
+        // @deprecated Used for export from EpiDesktop. Change in EpiDesktop, then remove here.
+        if (isset($params['project'])) {
+            $params['projects'] = $params['project'];
+            unset($params['project']);
+        }
+
+        // Pipeline from user settings
+        // TODO: Handle in parseRequestParameters?
+        $pipeline_id = $params['pipeline'] ?? null;
+        if (is_null($pipeline_id)) {
+            $user = BaseTable::$user;
+            if (($params['scope'] ?? 'article') == 'book') {
+                $pipeline_id = $user['pipeline_book_id'] ?? null;
+            }
+            else {
+                $pipeline_id = $user['pipeline_article_id'] ?? null;
+            }
+            $params['pipeline'] = $pipeline_id;
+        }
+        unset($params['scope']);
+
+        return $this->Transfer->export(null, $params);
     }
 
     /**

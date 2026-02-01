@@ -53,6 +53,11 @@ export class GridWidget extends BaseWidget {
 
     /**
      * Bind events
+     *
+     * @listens epi:add:item
+     * @listens epi:remove:item
+     * @listens epi:change:item
+     * @listens epi:drop:item
      */
     initWidget() {
         this.sectionElement = this.widgetElement.closest('.doc-section');

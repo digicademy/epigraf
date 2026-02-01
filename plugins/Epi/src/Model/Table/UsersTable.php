@@ -97,11 +97,6 @@ class UsersTable extends BaseTable
             ->allowEmptyString('name');
 
         $validator
-            ->scalar('acronym')
-            ->maxLength('acronym', 1500)
-            ->allowEmptyString('acronym');
-
-        $validator
             ->integer('userrole')
             ->allowEmptyString('userrole')
             ->add('role', 'inList', [
@@ -145,7 +140,6 @@ class UsersTable extends BaseTable
     {
         $default = [
             'name' => ['caption' => __('Name'), 'width' => 200, 'default' => true],
-            'acronym' => ['caption' => __('Acronym'), 'width' => 100, 'default' => true],
             'userrole' => ['caption' => __('Rolle'), 'width' => 100, 'default' => true],
             'norm_iri' => ['caption' => __('IRI fragment'), 'width' => 200, 'default' => true],
             'id' => ['caption' => 'ID', 'width' => 100, 'default' => true]

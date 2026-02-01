@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace App\Model\Entity\Jobs;
 
 use App\Model\Entity\Job;
-use App\Model\Entity\Pipeline;
+use App\Utilities\Exceptions\DeprecatedException;
 use Cake\Routing\Router;
 
 /**
@@ -36,11 +36,13 @@ class JobExport extends Job
      *
      * @deprecated See TransferComponent::export()
      *
-     * @param $queryparams
+     * @param array $queryparams
      * @return Job
      */
     public function patchExportOptions($queryparams = [])
     {
+        throw new DeprecatedException('Deprecated.');
+
         $config = [];
 
         // Pipeline
@@ -88,24 +90,29 @@ class JobExport extends Job
     /**
      * Transfer options from the pipeline tasks and from the post request data to the job options
      *
-     * @param Pipeline $pipeline
-     * @param array $requestData
-     *
+     * @param array $requestData The values in the options array are merged into the options key of the entity's `config.options` field.
      * @return $this
      */
-    public function patchOptions($pipeline = null, $requestData = [])
+    public function patchOptions($requestData = [])
     {
 
+        if (empty($this->pipeline)) {
+            return $this;
+        }
+
+        $this->config['pipeline_name'] = $this->pipeline['name'] ?? '';
+
         // Get options of the job
-        // TODO: rename "tasks" to "options" and "options" to "custom"
         $jobOptions = $this->config['options'] ?? [];
         $jobOptions['enabled'] = [];
-        $jobOptions['options'] = [];
+        $jobOptions['custom'] = [];
+
+        $customOptions = [];
 
         //
         // 1. Transfer task options to job options
         //
-        foreach (($pipeline['tasks'] ?? []) as $taskNo => $taskConfig) {
+        foreach (($this->pipeline['tasks'] ?? []) as $taskNo => $taskConfig) {
 
             // Enable / disable
             if (!empty($taskConfig['canskip'])) {
@@ -120,40 +127,44 @@ class JobExport extends Job
 
             // Options
             if (($taskConfig['type'] ?? '') === 'options') {
-                $jobOptions['options'] = $taskConfig['options'] ?? [];
+                $customOptions = $taskConfig['options'] ?? [];
             }
         }
 
         //
         // 2. Merge options from the request data
         //
+        foreach ($customOptions as $customOption) {
+            $customKey = $customOption['key'] ?? '_';
+            $requestValue = $requestData['config']['options'][$customKey] ?? null;
 
-        foreach ($jobOptions['options'] as $key => $option) {
-            if (($option['type'] ?? '') === 'check') {
-                $option['output'] = intval($requestData['config']['options'][$option['key']] ?? $option['output'] ?? 0);
+            if (($customOption['type'] ?? '') === 'check') {
+                $customValue = intval($requestValue ?? $customOption['output'] ?? 0);
             }
-            elseif (($option['type'] ?? '') === 'radio') {
-                if (isset($requestData['config']['options'][$option['key']])) {
-                    $radioSelected = ($option['value'] ?? '') == ($requestData['config']['options'][$option['key']] ?? '');
+            elseif (($customOption['type'] ?? '') === 'radio') {
+                if (is_null($requestValue) && !empty($customOption['output'])) {
+                    $customValue = $customOption['value'] ?? '';
                 } else {
-                    $radioSelected = $option['output'] ?? false;
-                }
-                $option['output'] = (int)$radioSelected;
-            }
-            elseif (($option['type'] ?? '') === 'text') {
-                $option['output'] = $option['value'] ?? '';
-                if (!empty($requestData['config']['options']['text'])) {
-                    $option['output'] = $requestData['config']['options'][$option['key']] ?? [$option['output']] ?? '';
+                    $customValue = $requestValue ?? '';
                 }
             }
-            $jobOptions['options'][$key] = $option;
+            elseif (($customOption['type'] ?? '') === 'text') {
+                $customValue = $customOption['value'] ?? '';
+                if (($requestValue ?? '') !== '') {
+                    $customValue = $requestValue;
+                }
+            }
+            else {
+                continue;
+            }
+
+            $jobOptions['custom'][$customKey] = $customValue;
         }
 
         //
         // 3. Transfer to job config
         //
         $this->config['options'] = $jobOptions;
-        $this->config['pipeline_name'] = $pipeline['name'] ?? '';
 
         return $this;
     }

@@ -39,7 +39,7 @@ use Cake\Routing\Router;
  * @property mixed $rootFolder
  * @property mixed $baseFolder
  * @property string $basedFolder
- * @property string $absoluteFolder
+ * @property string $absoluteParentFolder
  * @property string $relativeFolder
  * @property string $fullPath
  * @property string $relativePath
@@ -193,22 +193,16 @@ class FileRecord extends BaseEntity
     }
 
     /**
-     * Get virtual field absoluteFolder
+     * Get virtual field absoluteParentFolder
      *
-     * Contains the absolute path of the entity.
-     *
-     * @return string
+     * @return string The absolute path of the entity's parent folder, without trailing separator
      */
-    protected function _getAbsoluteFolder()
+    protected function _getAbsoluteParentFolder()
     {
-        $fullpath = $this->rootFolder;
+        $fullpath = rtrim($this->rootFolder, DS);
 
         if ($this->path !== '') {
             $fullpath .= DS . $this->path;
-        }
-
-        if (($this->name !== '') && ($this->isfolder)) {
-            $fullpath .= DS . $this->name;
         }
 
         return rtrim($fullpath, DS);
@@ -389,6 +383,21 @@ class FileRecord extends BaseEntity
             $this->id,
             'database' => false
         ]);
+//
+//        $params = [];
+//        if ($this->root !== $this->getTable()->defaultMount ?? '') {
+//            $params['root'] = $this->root;
+//        }
+//        $params['path'] = $this->path;
+//        $params['filename'] = $this->name;
+//
+//        return Router::url([
+//            'plugin' => false,
+//            'database' => false,
+//            'controller' => 'Files',
+//            'action' => 'download',
+//            '?' => $params
+//        ]);
     }
 
     /**
@@ -406,6 +415,23 @@ class FileRecord extends BaseEntity
             '?' => ['format' => 'thumb', 'size' => '600'],
             'database' => false
         ]);
+
+//        $params = [];
+//        if ($this->root !== $this->getTable()->defaultMount ?? '') {
+//            $params['root'] = $this->root;
+//        }
+//        $params['path'] = $this->path;
+//        $params['filename'] = $this->name;
+//        $params['format'] = 'thumb';
+//        $params['size'] = '600';
+//
+//        return Router::url([
+//            'plugin' => false,
+//            'database' => false,
+//            'controller' => 'Files',
+//            'action' => 'display',
+//            '?' => $params
+//        ]);
     }
 
     /**
@@ -619,23 +645,33 @@ class FileRecord extends BaseEntity
     }
 
     /**
-     * Rename file or folder
+     * Rename file or folder on disk after the name field was changed
      *
-     * @param $rootFolder
+     * @param bool $mutableExtension Optional. Determines whether the file extension is allowed to be changed. Default: false.
      * @return bool
      */
-    public function rename($rootFolder)
+    public function rename($mutableExtension = false)
     {
+        $oldFullPath = $this->absoluteParentFolder . DS . $this->getOriginal('name');
+
         if (empty($this->isfolder)) {
-            return Files::renameFile(
-                $rootFolder,
-                $this->getOriginal('name'),
-                $this->name
-            );
+
+
+            if(!$mutableExtension && pathinfo($this->fullPath, PATHINFO_EXTENSION) !== pathinfo($oldFullPath, PATHINFO_EXTENSION)){
+                return false;
+            }
+            else {
+                return Files::renameFile(
+                    $this->absoluteParentFolder,
+                    $this->getOriginal('name'),
+                    $this->name
+                );
+            }
+
         }
         else {
             return Files::renameFolder(
-                $rootFolder,
+                $oldFullPath,
                 $this->name
             );
         }
@@ -688,5 +724,31 @@ class FileRecord extends BaseEntity
     public function getProperties()
     {
         return [];
+    }
+
+    /**
+     * Delete thumbs
+     *
+     * @return void
+     */
+    public function clearThumbs()
+    {
+        if (empty($this->isfolder)) {
+            Files::delete(TMP . 'thumbs' . DS . $this->absoluteParentFolder, $this->name);
+        }
+    }
+
+    /**
+     * Update type and size of the file
+     *
+     * @return void
+     */
+    public function updateMetadata()
+    {
+        if (empty($this->isfolder)) {
+            $this->size = filesize($this->fullPath) ?? null;
+            // $this->type = pathinfo($this->fullPath, PATHINFO_EXTENSION) ?? null;
+            $this->type = explode('/',mime_content_type($this->fullPath))[1] ?? null;
+        }
     }
 }

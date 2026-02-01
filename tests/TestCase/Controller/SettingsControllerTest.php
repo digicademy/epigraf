@@ -9,7 +9,7 @@
  */
 namespace App\Test\TestCase\Controller;
 
-use Cake\Http\Exception\ForbiddenException;
+use Authorization\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use App\Test\TestCase\AppTestCase;
 
@@ -108,7 +108,7 @@ class SettingsControllerTest extends AppTestCase
     public function testShowNoAuth()
     {
         $this->get('/settings/show/vars');
-        $this->assertRedirect([
+        $this->assertRedirectEquals([
             'controller' => 'Users', 'action' => 'login',
             '?' => ['redirect' => '/settings/show/vars']
         ]);
@@ -122,7 +122,7 @@ class SettingsControllerTest extends AppTestCase
     public function testShowMissingNoAuth()
     {
         $this->get('/settings/show/nonexistingkey');
-        $this->assertRedirect([
+        $this->assertRedirectEquals([
             'controller' => 'Users', 'action' => 'login',
             '?' => ['redirect' => '/settings/show/nonexistingkey']
         ]);

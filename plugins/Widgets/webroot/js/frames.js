@@ -61,6 +61,7 @@ export class BaseFrame extends BaseForm {
         this.formOptions = {};
         this.currentUrl = undefined;
         this.isSaving = false;
+        this.parentFrame = undefined;
     }
 
 
@@ -72,7 +73,10 @@ export class BaseFrame extends BaseForm {
     initWidget() {
         this.listenEvent(this.widgetElement,'app:show:message', event => this.showMessage(event));
         this.listenEvent(this.widgetElement,'app:hide:message', event => this.hideMessage(event));
+        this.listenEvent(this.widgetElement, 'epi:load:content', event => this.onLoadContent(event));
+        this.listenEvent(this.widgetElement,'epi:open:details', event => this.onOpenDetails(event));
     }
+
 
     /**
      * Show content
@@ -101,12 +105,14 @@ export class BaseFrame extends BaseForm {
      * - title string The title of the frame or window
      *
      * @param options Options object
+     * @param {BaseFrame} parentFrame The frame that issued the request or undefined
      * @returns this
      */
-    showData(options) {
+    showData(options , parentFrame) {
 
         // Overwrite default options
         this.options = {...(this.defaults), ...options};
+        this.parentFrame = parentFrame || this.parentFrame;
 
         // Init and open window
         this.openWindow(options.frameTarget || 'details', options.force);
@@ -242,6 +248,7 @@ export class BaseFrame extends BaseForm {
      *
      * @param {Array} actions Array of elements
      * @param {Object} options
+     * @fires epi:click:button
      * @returns {Array}
      */
     attachButtons(actions, options) {
@@ -505,6 +512,69 @@ export class BaseFrame extends BaseForm {
             $(this.widgetElement).scrollTop(0);
         }
     }
+
+    /**
+     * Update navigation elements after new snippets were loaded
+     *
+     * @param {CustomEvent} event
+     */
+    onLoadContent(event) {
+        if (event.detail.data) {
+            this.updateNavigation(event.detail.data);
+        }
+    }
+
+    /**
+     * Open a detail frame: popup, sidebar, new browser tab
+     *
+     * @param {CustomEvent} event
+     * @return {boolean}
+     */
+    onOpenDetails(event) {
+
+        if (!event.detail || !event.detail.data) {
+            return;
+        }
+
+        const data = event.detail.data;
+
+        if (data.url) {
+
+            if (data.target === 'tab') {
+                App.openTab(data.url);
+            }
+            else if (data.target === 'sidebar') {
+
+                // TODO: Refactor so that we can directly pass the data object to openSidebar()
+                const linkOptions = {
+                    external: data.frameExternal || true,
+                    frameTarget: data.frameTarget || 'details',
+                    frameCaption: data.frameCaption || 'Details',
+                    force: false
+                };
+
+                App.openSidebar(data.url, linkOptions, this);
+            }
+            else {
+                // TODO: Refactor so that we can directly pass the data object to openPopup()
+                const isUpdateLink = data.role === 'update';
+                const linkOptions = {
+                    external: true,
+                    modal: Utils.isTrue(data.popupModal),
+                    focus: Utils.isTrue(data.popupModal),
+                    size: data.popupSize,
+                    onClose: (popup, isCanceled) => { if (!isCanceled && isUpdateLink) { this.reloadUrl(); } }
+                };
+
+                App.openPopup(data.url, linkOptions, this);
+            }
+
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+    }
+
     /**
      * After loading new data, update title and buttons
      *
@@ -731,12 +801,22 @@ export class BaseFrame extends BaseForm {
             }
         });
     }
+
+    reloadUrl() {
+        if (this.currentUrl) {
+            this.loadUrl(this.currentUrl);
+        }
+    }
 }
 
 /**
  * Main content
+ *
+ * @listens epi:open:details
  */
 export class MainFrame extends BaseFrame {
+
+
     constructor(options) {
 
         const wrapper = document.querySelector('.content-content');
@@ -753,6 +833,20 @@ export class MainFrame extends BaseFrame {
             const form = this.widgetElement.querySelector('.widget-entity form, .widget-document form');
             this.attachForm(form);
         }
+    }
+
+    /**
+     * Widget initialization
+     *
+     * The method is called once after all widgets were constructed and are ready to be used.
+     */
+    initWidget() {
+        this.currentUrl = window.location.toString();
+        // TODO: Always use document in the main frame?
+        this.listenEvent(this.widgetElement,'app:show:message', event => this.showMessage(event));
+        this.listenEvent(this.widgetElement,'app:hide:message', event => this.hideMessage(event));
+        this.listenEvent(this.widgetElement, 'epi:load:content', event => this.onLoadContent(event));
+        this.listenEvent(document,'epi:open:details', event => this.onOpenDetails(event));
     }
 
     /**
@@ -806,6 +900,7 @@ export class MainFrame extends BaseFrame {
             return;
         }
     }
+
 
     /**
      * Update the page
@@ -899,6 +994,7 @@ export class TabFrame extends BaseFrame {
      *
      * @param {String} frame
      * @param {boolean} force Whether to force open (true) or to respect the user settings (false).
+     * @listens epi:reload:page
      */
     openWindow(frame = 'default', force=true) {
         // Clear
@@ -941,7 +1037,7 @@ export class TabFrame extends BaseFrame {
 
         // Call onClose callback
         if (this.options.onClose) {
-            this.options.onClose(this);
+            this.options.onClose(this, canceled);
         }
 
         if (canceled) {
@@ -1041,6 +1137,7 @@ export class TabFrame extends BaseFrame {
      *
      * @param {boolean} showLoader
      * @param {boolean} removePanes Whether to remove the panes (true) or just clear them (false)
+     * @fires epi:clear:widgets
      */
     clearData(showLoader, removePanes = false) {
 
@@ -1078,6 +1175,29 @@ export class TabFrame extends BaseFrame {
         }
 
         super.clearData(showLoader);
+    }
+
+    /**
+     * Open a detail frame: popup, sidebar, new browser tab
+     *
+     * @param {CustomEvent} event
+     * @return {boolean}
+     */
+    onOpenDetails(event) {
+
+        if (!event.detail || !event.detail.data) {
+            return;
+        }
+
+        // // Prevent popups in select list
+        // (e.g. when selecting an external article in an annotation)
+        if (event.detail.data.linkwrapper) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+
+        return super.onOpenDetails(event);
     }
 
     /**
@@ -1221,6 +1341,9 @@ export class PopupWindow extends BaseFrame {
         }
     }
 
+    /**
+     * @listens epi:reload:page
+     */
     openWindow() {
 
         // Init window
@@ -1294,7 +1417,7 @@ export class PopupWindow extends BaseFrame {
 
         // Call onClose callback
         if (this.options.onClose) {
-          this.options.onClose(this);
+          this.options.onClose(this, canceled);
         }
 
         this.clearData();
@@ -1386,6 +1509,11 @@ export class PopupWindow extends BaseFrame {
         }
     }
 
+    /**
+     *
+     * @param showLoader
+     * @fires epi:clear:widgets
+     */
     clearData(showLoader) {
         if (this.openExtButton) {
             this.openExtButton.remove();
@@ -1402,6 +1530,33 @@ export class PopupWindow extends BaseFrame {
         }
 
         super.clearData(showLoader);
+    }
+
+    /**
+     * Open a detail frame: popup, sidebar, new browser tab
+     *
+     * @param {CustomEvent} event
+     * @return {boolean}
+     */
+    onOpenDetails(event) {
+
+        if (!event.detail || !event.detail.data) {
+            return;
+        }
+
+        // Prevent popups in select list
+        // (e.g. when selecting an external article in an annotation)
+        if (event.detail.data.linkwrapper) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        }
+
+        // Always open in popups
+        event.detail.data.target = 'popup';
+
+        // Call parent method
+        return super.onOpenDetails(event);
     }
 
     /**
@@ -1512,14 +1667,15 @@ export class ConfirmWindow extends PopupWindow {
     }
 
     /**
-     * Pass the message in options.message
+     * Show the message
      *
-     * @param options
+     * @param {Object} options An object with the message in the 'message' property.
+     * @param {BaseFrame} parent The frame that issued the request or undefined
      */
-    showData(options) {
+    showData(options, parentFrame) {
         this.isConfirmed = false;
         options.element = Utils.spawnFromString('<div>' + options.message + '</div>');
-        super.showData(options);
+        super.showData(options, parentFrame);
     }
 
     /**
@@ -1554,7 +1710,7 @@ export class ConfirmWindow extends PopupWindow {
  */
 export class MessageWindow extends PopupWindow {
 
-    constructor(options) {
+    constructor(options, parentFrame) {
         super(options);
 
         this.defaults = {
@@ -1567,15 +1723,16 @@ export class MessageWindow extends PopupWindow {
             dialogButtons: {}
         };
 
-        setTimeout((event) => this.showData(options), options.delay || 0);
+        setTimeout((event) => this.showData(options, parentFrame), options.delay || 0);
     }
 
     /**
-     * Pass the message in options.message
+     * Show the message
      *
-     * @param {Object} options Leave empty to use the default options
+     * @param {Object} options An object with the message in the 'message' property. Leave empty to use the default options
+     * @param {BaseFrame} parentFrame The frame that issued the request or undefined
      */
-    showData(options) {
+    showData(options, parentFrame) {
         if (this.isClosing) {
             return;
         }
@@ -1585,7 +1742,7 @@ export class MessageWindow extends PopupWindow {
         options.element.appendChild(Utils.spawnFromString('<div class="messagebox-loader loader"></div>'));
         options.element.appendChild(Utils.spawnFromString('<div class="messagebox-message">' + options.message + '</div>'));
 
-        super.showData(options);
+        super.showData(options, parentFrame);
     }
 
 }
@@ -1607,7 +1764,7 @@ export class MessageWindow extends PopupWindow {
  */
 export class SelectWindow extends PopupWindow {
 
-    constructor(options) {
+    constructor(options, parentFrame) {
 
         let buttons = {};
         buttons.cancel = {
@@ -1638,9 +1795,13 @@ export class SelectWindow extends PopupWindow {
         options.dialogButtons = buttons;
 
         super(options);
-        this.showData(options);
+        this.showData(options, parentFrame);
     }
 
+    /**
+     *
+     * @listens epi:change:dropdown
+     */
     openWindow() {
         super.openWindow();
 
@@ -1654,7 +1815,7 @@ export class SelectWindow extends PopupWindow {
         // Watch dropdown change
         if (!this.listenerChanged) {
             this.listenerChanged = event => this.onChange(event);
-            this.listenEvent(this.widgetElement, 'changed', this.listenerChanged);
+            this.listenEvent(this.widgetElement, 'epi:change:dropdown', this.listenerChanged);
         }
 
         // Watch search input
@@ -1665,13 +1826,18 @@ export class SelectWindow extends PopupWindow {
 
     }
 
+    /**
+     *
+     * @param canceled
+     * @return {boolean}
+     */
     closeWindow(canceled) {
         if (this.listenerClick) {
             this.unlistenEvent(this.widgetElement, 'click', this.listenerClick);
             this.unlistenEvent(this.widgetElement, 'dblclick', this.listenerClick);
         }
         if (this.listenerChanged) {
-            this.unlistenEvent(this.widgetElement, 'changed', this.listenerChanged);
+            this.unlistenEvent(this.widgetElement, 'epi:change:dropdown', this.listenerChanged);
         }
         if (this.listenerKeyDown) {
             this.unlistenEvent(this.widgetElement, 'keydown', this.listenerKeyDown);
@@ -1819,7 +1985,14 @@ export class SelectWindow extends PopupWindow {
 
 export class DetachedWindow extends PopupWindow {
 
-    constructor(element, options) {
+    /**
+     * Create a popup showing an element
+     *
+     * @param {HTMLElement} element
+     * @param {Object} options
+     * @param {BaseFrame} parentFrame The frame that issued the request or undefined
+     */
+    constructor(element, options, parentFrame) {
         super(options);
 
         this.defaults = {
@@ -1832,7 +2005,7 @@ export class DetachedWindow extends PopupWindow {
             closeIcon: "ui-icon-check"
         };
 
-        this.showData(element, options);
+        this.showData(element, options, parentFrame);
     }
 
     /**
@@ -1840,15 +2013,16 @@ export class DetachedWindow extends PopupWindow {
      *
      * @param {Element} element
      * @param {Object} options Options passed to showData()
+     * @param {BaseFrame} parentFrame The frame that issued the request or undefined
      */
-    showData(element, options = {}) {
+    showData(element, options = {}, parentFrame) {
         if (!element) {
             return;
         }
 
         this.storeElement(element);
         options.element = element;
-        super.showData(options);
+        super.showData(options, parentFrame);
     }
 
     /**
@@ -1880,7 +2054,16 @@ export class DetachedWindow extends PopupWindow {
 
 export class DetachedTab extends TabFrame {
 
-    constructor(element, tabsheetsWidget, options) {
+    /**
+     *
+     * Constructor
+     * @param {HTMLElement} element The element to detach
+     * @param {Tabsheets} tabsheetsWidget The tabsheets widget where a tab will be created
+     * @param {Object} options Options with the tab title. Passed to showData().
+     * @param {BaseFrame} parentFrame The frame that issued the request
+     * @listens epi:remove:tabsheet
+     */
+    constructor(element, tabsheetsWidget, options, parentFrame) {
 
         // Get or create the more tabsheet
         const tabsheet = tabsheetsWidget.createTab('more', options.title);
@@ -1902,7 +2085,7 @@ export class DetachedTab extends TabFrame {
             closeIcon: "ui-icon-check"
         };
 
-        this.showData(element, options);
+        this.showData(element, options, parentFrame);
     }
 
     /**
@@ -1910,8 +2093,9 @@ export class DetachedTab extends TabFrame {
      *
      * @param {Element} element
      * @param {Object} options Options passed to showData()
+     * @param {BaseFrame} parentFrame The frame that issued the request or undefined
      */
-    showData(element, options = {}) {
+    showData(element, options = {}, parentFrame) {
         if (!element) {
             return;
         }
@@ -1923,7 +2107,7 @@ export class DetachedTab extends TabFrame {
         delete options.title;
         delete options.frameCaption;
 
-        super.showData(options);
+        super.showData(options, parentFrame);
     }
 
     /**
@@ -1980,39 +2164,42 @@ export class Overlay extends BaseModel {
      */
     build(title = null, buttonsSide = 'right') {
         this.overlay = document.createElement('div');
-        this.paneParent = this.pane.parentElement;
-        const header = document.createElement('div');
-        let headerTitle = null
-        if (title) {
-            headerTitle = document.createElement('div');
-            headerTitle.textContent = title;
-        }
-        const headerButtons = document.createElement('div');
-        this.closeButton = document.createElement('button');
-        this.content = document.createElement('div');
-
-        // set CSS classes
-        this.closeButton.classList.add('btn-close');
-        headerButtons.classList.add('overlay-header-buttons', 'overlay-header-buttons-' + buttonsSide);
-        if (headerTitle) {
-            headerTitle.classList.add('overlay-header-title');
-        }
-        header.classList.add('overlay-header');
-        this.content.classList.add('overlay-content-inner');
         this.overlay.classList.add('overlay-center');
 
+        this.paneParent = this.pane.parentElement;
+
+        const header = document.createElement('div');
+        header.classList.add('overlay-header');
+
+        if (title) {
+            let headerTitle = document.createElement('div');
+            headerTitle.textContent = title;
+            headerTitle.classList.add('overlay-header-title');
+            header.appendChild(headerTitle);
+        }
+
+        // Header buttons
+        const headerButtons = document.createElement('div');
+        headerButtons.classList.add('overlay-header-buttons', 'overlay-header-buttons-' + buttonsSide);
+        header.appendChild(headerButtons);
+
+        // Close button
+        this.closeButton = document.createElement('button');
+        this.closeButton.classList.add('btn-close');
+        this.closeButton.innerHTML = '<span class="icon fontawesome"></span>';
         this.listenEvent(this.closeButton, 'click', event => this.close(event));
+        headerButtons.appendChild(this.closeButton);
+
+        // Content
+        this.content = document.createElement('div');
+        this.content.classList.add('overlay-content-inner');
+
         this.listenEvent(this.content, 'keyup', event => {
             if (event.key === "Escape") {
                 this.close(event);
             }
         });
 
-        headerButtons.appendChild(this.closeButton);
-        if (headerTitle) {
-            header.appendChild(headerTitle);
-        }
-        header.appendChild(headerButtons);
         this.content.append(header, this.pane);
         this.overlay.append(this.content);
     }
@@ -2023,6 +2210,11 @@ export class Overlay extends BaseModel {
         this.content.focus();
     }
 
+    /**
+     *
+     * @param event
+     * @fires epi:close:overlay
+     */
     close(event) {
         // move pane back
         if (this.paneParent) {

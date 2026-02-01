@@ -38,7 +38,8 @@ RUN apt-get install -y --no-install-recommends \
     unzip \
     librsvg2-bin \
     nano \
-    exiftool
+    exiftool \
+    cron
 
 # Install redis
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -163,13 +164,13 @@ RUN rm -rf /var/www/html/vendor/*
 RUN rm -rf /var/www/html/node_modules/*
 RUN rm -rf /var/www/html/tmp/*
 RUN rm -rf /var/www/html/logs/*
-RUN rm -rf /var/www/html/docs/*
 
 RUN rm -f config/app.php
 
 # Init data folder
-#COPY data/ /var/www/data/
 RUN mkdir -p /var/www/data/
+RUN mkdir -p /var/www/logs/
+RUN mkdir -p /var/www/tmp/
 
 # Install epigraf with the deploy configuration
 COPY config/app.deploy.php /var/www/html/config/app.default.php
@@ -180,6 +181,8 @@ RUN bin/cake cache clear_all
 
 RUN chown -R www-data /var/www/html
 RUN chown -R www-data /var/www/data
+RUN chown -R www-data /var/www/logs
+RUN chown -R www-data /var/www/tmp
 
 # Link logs folder into data folder
 # RUN ln -s /var/www/html/logs /var/www/data/logs

@@ -11,6 +11,7 @@
 <?php $this->Breadcrumbs->add(__('Login')); ?>
 <?= $this->Flash->render('auth') ?>
 
+<?php if ($this->User->isLoginMethodSupported('form')): ?>
 <div class="content-extratight">
     <?= $this->Form->create(null, ['id' => 'form-login','data-message'=>'']) ?>
     <fieldset>
@@ -28,3 +29,4 @@
         ['linktype' => 'submit', 'form' => 'form-login']
     );
 ?>
+<?php endif; ?>

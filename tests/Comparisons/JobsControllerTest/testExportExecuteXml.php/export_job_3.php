@@ -13,25 +13,32 @@
      'timezone_type' => 3,
      'timezone' => 'Europe/Berlin',
   )),
+  'scheduled' => NULL,
   'created_by' => 1,
   'modified_by' => 1,
+  'name' => NULL,
   'jobtype' => 'export',
+  'norm_iri' => NULL,
+  'delay' => 0,
+  'schedule' => NULL,
+  'nextrun' => NULL,
   'status' => 'work',
   'progress' => 1,
   'progressmax' => 10,
   'config' => 
   array (
-    'pipeline_id' => '16',
-    'database' => 'projects',
     'server' => 'http://localhost/',
-    'model' => 'articles',
+    'database' => 'test_projects',
     'table' => 'articles',
+    'scope' => NULL,
     'params' => 
     array (
-      'articles' => '1',
       'projects' => '1',
+      'articles' => '1',
     ),
     'selection' => 'selected',
+    'pipeline_id' => '16',
+    'pipeline_name' => 'Rohdaten',
     'options' => 
     array (
       'enabled' => 
@@ -52,12 +59,11 @@
           'enabled' => 1,
         ),
       ),
-      'options' => 
+      'custom' => 
       array (
       ),
       'index' => 1,
     ),
-    'pipeline_name' => 'Rohdaten',
     'user_role' => 'author',
     'user_id' => 1,
     'pipeline_progress' => 0,

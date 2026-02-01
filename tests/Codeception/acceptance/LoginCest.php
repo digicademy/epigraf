@@ -50,7 +50,7 @@ class LoginCest
         // Provide the #content css selector as context so that it is not
         // mixed up with the login link
         $I->click('Login','#content');
-        $I->see('Invalid username or password, try again');
+        $I->see('Invalid username or password.');
         $I->seeCurrentUrlMatches('~/users/login$~');
     }
 

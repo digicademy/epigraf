@@ -79,8 +79,6 @@ class TaskAssignProperty extends BaseTaskMutate
     public function updateRedirectParams($params)
     {
         $params['properties.' . ($params['propertytype'] ?? '') . '.selected'] = $params['target'] ?? null;
-        unset($params['target']);
-        unset($params['propertytype']);
         return $params;
     }
 

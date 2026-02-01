@@ -83,13 +83,6 @@ window.App.initApp = function() {
         App.sidebarleft = new ResizableSidebar(document.querySelector('.sidebar-left'), 'left');
         App.sidebarright = new ResizableSidebar(document.querySelector('.sidebar-right'), 'right');
     }
-
-    //Accordion (layout.js)
-    // TODO: merge accordion and sidebar logic, without App.sidebarleft and App.sidebarright and App.accordion
-    if (typeof Accordion === 'function') {
-        App.accordion = new Accordion(document.querySelector('.accordion'), 'accordion');
-    }
-
 };
 
 /**
@@ -99,6 +92,7 @@ window.App.initApp = function() {
  * // TODO: make the code DRY
  *
  * @param {HTMLElement|document} scope Set to the parent element of widgets, used after AJAX requests
+ * @fires epi:init:widgets
  */
 window.App.initWidgets = function(scope=null) {
 
@@ -148,6 +142,7 @@ window.App.initWidgets = function(scope=null) {
  * Shutdown widgets
  *
  * @param {HTMLElement|document} scope
+ * @fires epi:remove:content
  */
 window.App.finishWidgets = function(scope=null) {
     if (scope) {
@@ -230,6 +225,15 @@ window.App.hideDialog = function(event) {
 };
 
 /**
+ * Open a URL in a new browser tab
+ *
+ * @param {String} url
+ */
+window.App.openTab = function(url) {
+    window.open(url);
+}
+
+/**
  * Open a popup window and load the URL
  *
  * ### Options
@@ -241,10 +245,11 @@ window.App.hideDialog = function(event) {
  * @param {String|Object|undefined} data The URL to be loaded, the element to be shown or undefined
  *     if the options are provided as the second parameter.
  * @param {Object} options
+ * @param {BaseFrame} parentFrame The frame that issued the request or undefined
  *
  * @returns {PopupWindow}
  */
-window.App.openPopup = function(data, options) {
+window.App.openPopup = function(data, options, parentFrame) {
 
     // Merge options
     if (typeof data === 'string') {
@@ -270,7 +275,7 @@ window.App.openPopup = function(data, options) {
         App.addWidget(options.name, popup);
     }
 
-    popup.showData(options);
+    popup.showData(options, parentFrame);
 
     return popup;
 }
@@ -282,6 +287,54 @@ window.App.hidePopup = function(name) {
     }
     return dialog;
 };
+
+/**
+ * Show a URL in a sidebar frame
+ *
+ * @param data URL or element to be loaded.
+ *             Can be skipped if the URL or an element is provided in the options
+ * @param options Object with the following keys
+ *                - url
+ *                - element
+ *                - actions
+ * @param {BaseFrame} parentFrame The frame that issued the request or undefined
+ */
+window.App.openSidebar = function (data, options, parentFrame) {
+
+    // Merge options
+    if (typeof data === 'string') {
+        options = options || {};
+        options.url = data;
+    }
+    else if (typeof data === 'object') {
+        options = options || {};
+        options.element = data;
+    }
+    else {
+        options = data || options || {};
+    }
+
+    // Get widget
+    const tabsheetsWidget = App.findWidget(App.sidebarright.widgetElement,'tabsheets');
+    if (!tabsheetsWidget) {
+        return;
+    }
+
+    setTimeout(() => {
+        // TODO: Use the ajaxQueue in showData()?
+        //       Note that not only the table but also the map markers rely on openSidebar()
+        // if (App.ajaxQueue.stopped) {
+        //     return;
+        // }
+
+        options.frameTarget = options.frameTarget || 'details';
+        options.frameCaption = options.frameCaption || 'Details';
+        const tabsheet = tabsheetsWidget.createTab(options.frameTarget, options.frameCaption);
+        const detailWidget = App.createWidget(tabsheet,'frame');
+        detailWidget.showData(options, parentFrame);
+
+    }, 200);
+}
 
 window.App.initApp();
 window.App.initWidgets();

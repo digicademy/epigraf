@@ -50,7 +50,6 @@ class TaskAssignProject extends BaseTaskMutate
     public function updateRedirectParams($params)
     {
         $params['projects'] = $this->job->config['params']['target'] ?? null;
-        unset($params['target']);
         return $params;
     }
 

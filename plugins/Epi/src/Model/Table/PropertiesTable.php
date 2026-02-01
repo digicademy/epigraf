@@ -133,6 +133,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         'load' => 'list',
         'save' => 'list',
         'mode' => 'constant-mode',
+        'snippets' => 'list',
 
         'template' => 'raw',
         'articles' => [
@@ -424,10 +425,10 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         $validator
             ->scalar('norm_iri')
             ->maxLength('norm_iri', 500)
-            ->add('norm_iri', 'validFormat', [
-                'rule' => ['custom', '/^[a-z0-9_~-]+$/'],
-                'message' => 'Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed.'
-            ])
+            ->regex('norm_iri',
+                '/^[a-z0-9_~-]+$/',
+                'Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed.'
+            )
             ->allowEmptyString('norm_iri');
 
         return $validator;

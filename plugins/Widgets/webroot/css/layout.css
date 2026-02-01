@@ -191,7 +191,7 @@
 
 /* ------------- Accordion ------------- */
 
-.accordion {
+.widget-accordion {
     background-color: var(--content-bg-color);
 }
 .accordion-toggle {
@@ -204,8 +204,12 @@
 
 @media screen and (max-width: 767.98px) {
 
-	.accordion .sidebar-exploder,
-	.accordion .sidebar-imploder {
+	.widget-accordion {
+		flex-direction: column;
+	}
+
+	.widget-accordion .sidebar-exploder,
+	.widget-accordion .sidebar-imploder {
 		display: none;
 	}
 
@@ -217,8 +221,9 @@
         flex-direction: column;
     }
 
+    /** TODO: improve alignment in image viewer header line, usually not visible, see images.js -> updateNavigation() **/
 	.accordion-toggle {
-		display: block;
+		display: inline-block;
 
 		font-size: 0.9rem;
 		padding: 0.3rem;
@@ -242,12 +247,16 @@
 		color: var(--nav-font-color-active);
 	}
 
+	.widget-accordion .sidebar {
+		display: none;
+	}
+
 	/* Hide by reducing the height. Note that "display: none" can't be used
 	  because the hidden elements don't have dimensions,
 	  preventing the table layout mechanism (including resizable columns)
 	  to calculate column and table widths.
 	 */
-	.accordion .accordion-collapsed {
+	.widget-accordion .accordion-collapsed {
 		overflow:hidden !important;
 		height:0 !important;
 		flex:0 !important;
@@ -258,7 +267,7 @@
 		margin-bottom:0 !important;
 	}
 
-	.accordion .accordion-expanded {
+	.widget-accordion .accordion-expanded {
 		display:inherit !important;
 		flex:1;
 	}
@@ -284,6 +293,11 @@
 
     .content-searchbar-item.small-order-5 {
         order: 5;
+    }
+
+    .overlay button.btn-download,
+    .overlay button.btn-meta {
+        display: none;
     }
 
 }
@@ -564,73 +578,57 @@
 /* ------------- Overlay ------------- */
 
 
-.overlay {
-    position:absolute;
-    left:0;
-    top:0;
-    height: 100%;
-    width: 100%;
-    background:white;
+/* Hide scrollbar */
+body.no-scroll {
+    overflow: hidden;
+}
+
+.overlay,
+.overlay-center {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-color:var(--overlay-bg-color);
     z-index: 200;
     display: flex;
     flex-direction: column;
 }
 
+
 .overlay-center {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 200;
+}
+
+.hidden {
+    display: none;
 }
 
 .overlay-header {
     display: flex;
-    background-color: var(--top-menu-app-bg-color);
-    color: var(--button-font-color);
-    margin-bottom: 1em;
+    flex-wrap: nowrap;
+    background-color: var(--overlay-header-bg-color);
+    color: var(--overlay-header-font-color);
+    white-space: nowrap;
+    margin: 0;
 }
 
 .overlay-header-title {
-    padding-left: 1em;
+    padding: 0 1em;
     line-height: 2.2em;
     flex:1;
-}
-
-.overlay-header-buttons .btn-open,
-.overlay-header-buttons .btn-close {
-    background-size: 50%;
-    padding: 1em;
-    height: 100%;
-    width: 2.2em;
-}
-
-.overlay-header-buttons button {
-    margin:0 0.5em 0 0;
-    background-color: var(--button-bg-color);
-}
-
-.overlay-header-buttons button:hover {
-    background-color: var(--button-bg-color);
-}
-
-.overlay-header-buttons button:first-child {
-    margin-left:0.5em;
-}
-
-.overlay-header-buttons button:last-child {
-    margin-right:0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .overlay-content {
     flex:1;
     display: flex;
-    overflow: auto;
+    overflow:auto;
 }
 
 .overlay-content-inner {
@@ -689,8 +687,122 @@
     width: inherit;
 }
 
-.overlay-footer {
+footer.overlay-footer {
+    height:2.2em;
+}
 
+footer.overlay-footer {
+    background-color: var(--overlay-footer-bg-color);
+    color: var(--overlay-footer-font-color);
+    display: flex;
+}
+
+footer.overlay-footer nav {
+    padding: 0;
+}
+
+.overlay button {
+    border: 0;
+    background-color: var(--button-bg-color);
+    cursor: pointer;
+    margin: 0 0.25em;
+    color:white;
+    font-size: 0.9rem;
+}
+
+.overlay nav button:first-child {
+    margin-left: 0.5em;
+}
+
+.overlay button .icon {
+    padding:0 0.1em;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.overlay button.btn-open .icon,
+.overlay button.btn-download .icon {
+    font-size: 1em;
+    padding: 0 0.25em;
+}
+
+.overlay-header button.button-svg,
+.overlay-header button.accordion-toggle {
+    height:100%;
+}
+
+.overlay-header-buttons-right button,
+.overlay-footer-buttons-right button {
+    background-image: none;
+    background-color: var(--button-bg-color);
+
+    width: auto;
+    height:100%;
+
+    padding: 0 0.3em;
+    font-size: 0.8em;
+}
+
+.overlay-header-buttons button {
+    vertical-align: middle;
+    background-size: 50%;
+    padding: 0 0.5em;
+}
+
+.overlay-header-buttons button .icon {
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
+.overlay-footer-buttons button,
+.overlay-header-buttons button {
+    margin:0 0.5em 0 0;
+    background-color: var(--button-bg-color);
+}
+
+.overlay-footer-buttons button:hover,
+.overlay-header-buttons button:hover {
+    background-color: var(--button-bg-color);
+}
+
+.overlay-header-buttons button:first-child {
+    margin-left:0.5em;
+}
+
+.overlay-header-buttons button:last-child,
+.overlay-footer-buttons button:last-child {
+    margin-right:0;
+}
+
+.overlay-header-buttons-left {
+    display: none;
+}
+
+.overlay-center .overlay-header {
+    margin-bottom: 1em;
+}
+.overlay-center .overlay-header-buttons button {
+    margin: 0;
+}
+
+.overlay-title-arrows .overlay-header-buttons-left {
+    display: block;
+}
+
+.overlay-footer-title {
+    flex: 1;
+    font-size: 1.5em;
+    line-height: 2em;
+    text-align: right;
+    padding-right:0.25em;
+}
+
+.overlay-footer-buttons-right {
+    font-size: 1.2em;
+}
+
+.overlay .sidebar-collapsed.sidebar-exploder.sidebar-exploder-right {
+    display:none;
 }
 
 

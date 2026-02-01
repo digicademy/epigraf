@@ -8,6 +8,10 @@
  */
 
 
+/* ------------- Images ------------- */
+
+
+
 .image-container {
     flex: 1;
     overflow: hidden;
@@ -31,13 +35,105 @@
     height: 100%;
 }
 
-/* Buttons */
+
+/** Metadata **/
+
+.ui-dialog .popup-image.ui-dialog-content {
+    display: flex;
+    padding: 0;
+}
+
+.metadata-container {
+    flex: 0 0 40%;
+    position: relative;
+    background-color: var(--pane-bg-color);
+}
+
+.metadata-container table tbody {
+    background-color: var(--pane-bg-color);
+}
+
+.metadata-container table tbody tr:hover {
+    background-color: var(--pane-bg-color);
+}
+
+.metadata-content {
+    margin: 1em;
+    width: 100%;
+}
+
+
+.metadata-toggle {
+    background-color: var(--button-bg-color);
+    background-image: url('../img/dropdown_down.svg');
+    transform: rotate(90deg);
+    background-size: cover;
+    width: 1.5em;
+    height: 1.5em;
+    border: none;
+    cursor: pointer;
+}
+
+.metadata-toggle.imploded {
+    background-image: url('../img/dropdown_up.svg');
+}
+
+.metadata-toggle.active, .metadata-toggle:hover {
+    background-color: var(--button-bg-color-hover);
+    transition: background-color 300ms ease-out 0s;
+}
+
+
+/* Full screen viewer */
+
+.overlay .loader {
+    top:50%;
+    left:50%;
+}
+
+.content-content .image-viewer-frame {
+    flex:1;
+}
+
+.content-content .metadata-container {
+    flex: 0 0 20%;
+}
+
+.content-content .image-container {
+    height: 100%;
+    width: 100%;
+}
+
+.sidebar .doc-image.selected {
+  background-color: var(--nav-bg-color-active);
+    color:white;
+}
+
+.sidebar .doc-image.selected a {
+    color:var(--button-font-color);
+}
+
+.sidebar .doc-image-content {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+/** Animation **/
+img.animate-zoom {
+    transition: left 150ms ease-in-out, top 150ms ease-in-out, height 150ms ease-in-out;
+}
+
+/** Overlay buttons **/
+
 .ui-dialog .ui-dialog-buttonset {
     width: 100%;
 }
 
 .ui-button.button-right {
-  float: right;
+    float: right;
 }
 
 button.button-svg,
@@ -84,84 +180,33 @@ button.button-next,
     background-image: url('../img/next_image.svg');
 }
 
-.ui-dialog .popup-image.ui-dialog-content {
-    display: flex;
-    padding: 0;
-}
-
-.metadata-container {
-    flex: 0 0 40%;
-    position: relative;
-    background-color: var(--pane-bg-color);
-}
-
-.metadata-container table tbody {
-    background-color: var(--pane-bg-color);
-}
-
-.metadata-toggle {
-    background-color: var(--button-bg-color);
-    background-image: url('../img/dropdown_down.svg');
-    transform: rotate(90deg);
-    background-size: cover;
-    width: 1.5em;
-    height: 1.5em;
-    border: none;
+.overlay-image-prev,
+.overlay-image-next {
+    display:none;
+    position: absolute;
+    color: var(--button-overlay-nav);
+    font-size: 2em;
+    width: 1em;
+    top: 40%;
+    opacity: 0.3;
     cursor: pointer;
+    z-index: 200;
 }
 
-.metadata-toggle.imploded {
-    background-image: url('../img/dropdown_up.svg');
+.overlay-image-prev {
+    left: 0;
 }
 
-.metadata-toggle.active, .metadata-toggle:hover {
-    background-color: var(--button-bg-color-hover);
-    transition: background-color 300ms ease-out 0s;
+.overlay-image-next {
+    right: 0;
 }
 
-.metadata-content {
-    margin: 1em;
-    width: 100%;
+.overlay-inline-arrows .overlay-image-next,
+.overlay-inline-arrows .overlay-image-prev {
+    display: block;
 }
 
-/* Full screen viewer */
-
-.overlay .loader {
-    top:50%;
-    left:50%;
-}
-
-.content-content .image-viewer-frame {
-    flex:1;
-}
-
-.content-content .metadata-container {
-    flex: 0 0 20%;
-}
-
-.content-content .image-container {
-    height: 100%;
-    width: 100%;
-}
-
-.sidebar .doc-image.selected {
-  background-color: var(--nav-bg-color-active);
-    color:white;
-}
-
-.sidebar .doc-image.selected a {
-    color:var(--button-font-color);
-}
-
-.sidebar .doc-image-content {
-    display: none;
-}
-
-.hidden {
-    display: none;
-}
-
-/** Animation **/
-img.animate-zoom {
-    transition: left 150ms ease-in-out, top 150ms ease-in-out, height 150ms ease-in-out;
+.overlay-inline-arrows .image-container:hover .overlay-image-next,
+.overlay-inline-arrows .image-container:hover .overlay-image-prev {
+    display: block;
 }

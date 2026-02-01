@@ -133,7 +133,7 @@ If additional properties are to be configured, an object with the following keys
         </tr>
         <tr>
             <td>autofill</td>
-            <td>Field contents can be generated automatically from other fields during entry. To do this, the data
+            <td>Field contents can be generated automatically from other fields during editing. To do this, the data
                 source is specified as the extraction key in the source key. The extraction key contains the table name,
                 the row type in square brackets, and finally the field name separated by a period.
                 <p>Content is normally only overwritten if the field is empty and has not been edited manually. The
@@ -143,7 +143,7 @@ If additional properties are to be configured, an object with the following keys
                 <pre class="plaintext">
 "signature": {
   "caption": "Signatur",
-    "help": "Wird automatisch aus der ersten Signatur übernommen",
+    "help": "Automatically filled using the first signature item in the article.",
     "autofill": {
       "source": "items[signatures].value",
       "force": true

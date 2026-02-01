@@ -156,8 +156,15 @@ The **index endpoints** support selecting columns to be returned by using the `c
 - If the columns parameter is empty, the default fields will be returned.
 - Additional columns are configured in the [types configuration](/epigraf/user/configuration/articles) by the `columns` key.
 - Registered users can also request ad hoc columns using extraction keys. An ad hoc column consists of the caption, followed by an equal sign and the extraction key. The parameter must be URL-encoded because it contains an equal sign.
+- Settings the columns parameter to `false` (or `0`) on the index endpoints will result in
+  full entity data (e.g. articles and all contained data) being returned instead of just the flat table.
 
-The extraction key can adress simple fields of the article object (e.g. `title`) or nested fields using dot notation (e.g. `project.shortname`). This follows the conventions of the types configuration. To access lists, an asterisk placeholder can be used (e.g. `items.{\*}.value`). Lists can be filtered with conditions in square brackets (e.g. `items.{\*}[itemtype=conditions].date`). For further details, see the [CakePHP documentation on hash syntax](https://book.cakephp.org/4/en/core-libraries/hash.html#Cake\Utility\Hash::extract).
+The extraction key can adress simple fields of the article object (e.g. `title`)
+or nested fields using dot notation (e.g. `project.shortname`).
+This follows the conventions of the types configuration. To access lists,
+an asterisk placeholder can be used (e.g. `items.{\*}.value`).
+Lists can be filtered with conditions in square brackets (e.g. `items.{\*}[itemtype=conditions].date`).
+For further details, see the [CakePHP documentation on hash syntax](https://book.cakephp.org/4/en/core-libraries/hash.html#Cake\Utility\Hash::extract).
 
 By default, all ID fields contain IRI paths. To request IDs, use the idents parameter.
 
@@ -170,9 +177,12 @@ For HTML output, specific components can be explicitly requested using the `show
 - leftsidebar: The left sidebar.
 - rightsidebar: The right sidebar.
 
-Styling of the rendered view depends on the `theme` parameter. The `minimal` theme creates a compact view with reduced outer margins, which is particularly useful when embedding content in iframes.
+Styling of the rendered view depends on the `theme` parameter.
+The `minimal` theme creates a compact view with reduced outer margins,
+which is particularly useful when embedding content in iframes.
 
-The `flow` parameter determines the click target of entities in a collection (e.g. table views). The options include `frame`, `popup` or `tab`.
+The `flow` parameter determines the click target of entities in a collection (e.g. table views).
+The options include `frame`, `popup` or `tab`.
 
 ## Available endpoints
 
@@ -221,6 +231,28 @@ A list of all projects. Example: `/epi/public/projects?term=greifswald`.
 <tr>
 <td>projecttypes</td>
 <td>Optional. A comma-separated list, restricts the result to projects with the specific types.</td>
+</tr>
+</tbody>
+</table>
+</figure>
+
+### GET /epi/\<db\>/projects/view/\<id\>
+
+The content of a single project entity.
+
+
+<figure class="table">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;id&gt;</td>
+<td>Mandatory. The ID of the project.</td>
 </tr>
 </tbody>
 </table>
@@ -319,11 +351,16 @@ Depending on the accuracy of the data, points may be approximate and only repres
 <tr>
 <td>columns</td>
 <td>Optional. Comma-separated list of fields to be displayed in the table.
-<ul><li>By default the fields articlenumber, title and norm_iri are displayed.</li>
-<li>Available fields are configured in the columns key of article types.</li>
-<li>Authenticated users can define ad hoc fields. An ad hoc field consists of a column name followed by an equal sign and an extraction key. The field must be URL-encoded because it contains an equal sign.
-</li></ul>
-Extraction keys are article fields (e.g., `title`) or nested fields with dot notation (e.g., `project.shortname`). To access lists, an asterisk placeholder can be used (e.g., `items.{*}.value`). Lists can be filtered with conditions in square brackets (e.g., <code>items.{*}[itemtype=conditions].date</code>). For further details, see the <a href="https://book.cakephp.org/4/en/core-libraries/hash.html#Cake\Utility\Hash::extract">CakePHP hash syntax documentation</a>.</td>
+<ul>
+  <li>By default the fields articlenumber, title and norm_iri are displayed.</li>
+  <li>Available fields are configured in the columns key of article types.</li>
+  <li>Authenticated users can define ad hoc fields. An ad hoc field consists of a column name followed by an equal sign and an extraction key. The field must be URL-encoded because it contains an equal sign.</li>
+  <li>You can set the columns parameter to `false` or `0` to get full entity data instead of a table with extracted columns.</li>
+</ul>
+Extraction keys are article fields (e.g., `title`) or nested fields with dot notation (e.g., `project.shortname`).
+To access lists, an asterisk placeholder can be used (e.g., `items.{*}.value`).
+Lists can be filtered with conditions in square brackets (e.g., <code>items.{*}[itemtype=conditions].date</code>).
+For further details, see the [extraction key documentation](/epigraf/user/coreconcepts/keys/).</td>
 </tr>
 <tr>
 <td>published</td>
@@ -363,6 +400,30 @@ hierarchical structure of sections and lemmas.</li>
 </tbody>
 </table>
 </figure>
+
+
+### GET /epi/\<db\>/articles/view/\<id\>
+
+The content of a single article entity.
+
+
+<figure class="table">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Mandatory. The ID of the article.</td>
+</tr>
+</tbody>
+</table>
+</figure>
+
 
 ### POST /epi/\<db\>/articles/import
 
@@ -477,11 +538,34 @@ List of categories of a category type.
 <tbody>
 <tr>
 <td>&lt;propertytype&gt;</td>
-<td>Name of the category system.</td>
+<td>Mandatory. Name of the category system. You can provide it as path parameter or as query parameter.</td>
 </tr>
 </tbody>
 </table>
 </figure>
+
+
+### GET /epi/\<db\>/properties/view/\<id\>
+
+The content of a single property entity.
+
+<figure class="table">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;id&gt;</td>
+<td>Mandatory. The ID of the property.</td>
+</tr>
+</tbody>
+</table>
+</figure>
+
 
 ### GET /epi/\<db\>/properties/merge
 
@@ -632,6 +716,29 @@ Each type defines what kind of projects, articles, sections, items, annotations 
 <tr>
 <td>term</td>
 <td>Optional. Filter the result by entities contain the search term in their name, caption, description or IRI.</td>
+</tr>
+</tbody>
+</table>
+</figure>
+
+
+### GET /epi/\<db\>/types/view/\<id\>
+
+The content of a single type entity.
+
+
+<figure class="table">
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;id&gt;</td>
+<td>Mandatory. The ID of the type.</td>
 </tr>
 </tbody>
 </table>

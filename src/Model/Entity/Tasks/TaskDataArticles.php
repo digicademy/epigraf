@@ -35,22 +35,22 @@ class TaskDataArticles extends BaseTaskData
     public function getDataParams()
     {
         if (!empty($this->config['matchprojects'])) {
-            $dataparams = [
+            $dataParams = [
                 'projects' => $this->job->config['params']['projects'] ?? '-1'
             ];
         }
         else {
-            $dataparams = $this->job->dataParams;
+            $dataParams = $this->job->dataParams;
         }
 
-        $dataparams['articletypes'] = Attributes::commaListToStringArray($this->config['articletypes'] ?? '');
-        $dataparams['snippets'] = array_merge(
-            Attributes::commaListToStringArray($dataparams['snippets'] ?? ''),
+        $dataParams['articletypes'] = Attributes::commaListToStringArray($this->config['articletypes'] ?? '');
+        $dataParams['snippets'] = array_merge(
+            Attributes::commaListToStringArray($dataParams['snippets'] ?? ''),
                 Attributes::commaListToStringArray($this->config['snippets'] ?? '')
             //['indexes', 'paths', 'editors', 'comments']
         );
 
-        return $dataparams;
+        return $dataParams;
     }
 
     /**

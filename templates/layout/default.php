@@ -125,7 +125,7 @@ use Cake\Core\Configure;
 
 <?= $this->Link->getTrackingCode() ?>
 
-<div class="page-wrapper accordion">
+<div class="page-wrapper widget-accordion">
 
     <?php if ($this->getShowBlock('mainmenu')): ?>
         <nav class="actions-main">

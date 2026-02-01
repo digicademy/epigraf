@@ -78,10 +78,9 @@ trait LockTrait
             if ($canLock && empty(\Epi\Model\Table\BaseTable::$databaseUserId)) {
                 $usersTable = TableRegistry::getTableLocator()->get('Epi.Users');
                 $user = $usersTable->newEntity([
-                    'usertye' => 'human',
+                    'usertype' => 'human',
                     'userrole' => USER_AUTHOR,
                     'name' => BaseTable::$user['name'] ?? null,
-                    'acronym' => BaseTable::$user['acronym'] ?? null,
                     'norm_iri' => BaseTable::$userIri,
                 ]);
                 $canLock = $usersTable->save($user);

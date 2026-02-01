@@ -107,6 +107,10 @@ export class ServiceButtonWidget extends ServiceWidget {
         event.preventDefault();
     }
 
+    /**
+     * @fires epi:save:form
+     * @returns {string|*|number|boolean}
+     */
     getItemContent() {
         const itemElement = this.widgetElement.closest('[data-row-table="items"]');
         if (!itemElement) {
@@ -248,6 +252,11 @@ export class ServiceButtonWidget extends ServiceWidget {
         }
     }
 
+    /**
+     *
+     * @fires epi:import:item
+     * @fires epi:update:item
+     */
     showResult(response, taskConfig) {
         if (!this.isPolling) {
             return;
@@ -491,7 +500,7 @@ export class ReconcileButtonWidget extends ServiceWidget {
             }
         };
 
-        new SelectWindow(options);
+        new SelectWindow(options, this.getFrame());
     }
 
     applyValue(value) {

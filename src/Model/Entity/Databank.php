@@ -598,6 +598,58 @@ class Databank extends BaseEntity
     }
 
     /**
+     * Grant database access
+     *
+     * @param User $user The user entity
+     * @param string $scope One of 'desktop', 'web' or 'api'
+     * @param string $role For web and api permissions, the role for the permission.
+     * @return bool Whether the operation could be completed.
+     */
+    public function grant($user, $scope, $role)
+    {
+        $result = true;
+        if (empty($scope) || ($scope === 'desktop')) {
+            $result = $result && $this->grantDesktopAccess('epi_' . $user['username']);
+        }
+
+        if (empty($scope) || ($scope === 'web')) {
+            $result = $result && $this->grantWebAccess($user['id'], $role);
+        }
+
+        if (empty($scope) || ($scope === 'api')) {
+            $result = $result && $this->grantApiAccess($user['id'], $role);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Revoke database access
+     *
+     * @param User $user The user entity
+     * @param string $scope One of 'desktop', 'web' or 'api'
+     * @param string $role For web and api permissions, the role for the permission.
+     * @return bool Whether the operation could be completed.
+     */
+    public function revoke($user, $scope, $role)
+    {
+        $result = true;
+        if (empty($scope) || ($scope === 'desktop')) {
+            $result = $result && $this->revokeDesktopAccess('epi_' . $user['username']);
+        }
+
+        if (empty($scope) || ($scope === 'web')) {
+            $result = $result && $this->revokeWebAccess($user['id'], $role);
+        }
+
+        if (empty($scope) || ($scope === 'api')) {
+            $result = $result && $this->revokeApiAccess($user['id'], $role);
+        }
+
+        return $result;
+    }
+
+    /**
      * Grant SQL database access
      *
      * @param $username

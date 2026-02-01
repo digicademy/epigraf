@@ -8,7 +8,7 @@
  */
 
 import {BaseWidget} from '/js/base.js';
-import {ResizableSidebar} from './layout.js';
+import {Accordion, ResizableSidebar} from './layout.js';
 import Utils from "/js/utils.js";
 
 /**
@@ -38,9 +38,12 @@ export class ImagesWidget extends BaseWidget{
 
         this.config = {
             closeOnOpen: false,
-            recreateContainer: false,
+            recreateContainer: true,
+            buttons: {},
             containerSelector: '.doc-imagelist',
-            imageSelector: '.doc-image'
+            imageSelector: '.doc-image',
+            thumbs: true,
+            inlineArrows: false
         }
 
         this.overlay = undefined;
@@ -69,20 +72,22 @@ export class ImagesWidget extends BaseWidget{
         this.selectImageByHash();
     }
 
-
-    static attachImages(selContainer, selImages) {
+    static attachImages(selContainer, selImages, config = {}) {
         const elmContainer = document.querySelector(selContainer);
         if (!elmContainer) {
             return;
         }
-        const items = elmContainer.querySelector(selImages);
-        if (!items) {
+        const item = elmContainer.querySelector(selImages);
+        if (!item) {
             return;
         }
 
         const widget = new ImagesWidget(container);
         widget.config.containerSelector = selContainer;
         widget.config.imageSelector = selImages;
+        widget.config = Object.assign(widget.config, config);
+        widget.config.thumbs = Utils.isTrue(item.dataset.epiImageThumbs, true);
+
     }
 
     /**
@@ -91,40 +96,53 @@ export class ImagesWidget extends BaseWidget{
      * @return {HTMLElement}
      */
     createOverlay() {
+
+        const leftsidebar = 'sidebar-init-collapsed'; // sidebar-init-expanded;
+
         const template = '<div class="overlay hidden">\n' +
             '    <div class="overlay-header">\n' +
-            '        <div class="overlay-header-buttons overlay-header-buttons-left"></div>\n' +
+            '        <div class="overlay-header-buttons overlay-header-buttons-left">' +
+        '          <button class="accordion-toggle" data-toggle-accordion="overlay-sidebar-left"></button>' +
+        '</div>\n' +
             '        <div class="overlay-header-title"></div>\n' +
             '        <div class="overlay-header-buttons overlay-header-buttons-right"></div>\n' +
             '    </div>\n' +
-            '    <div class="overlay-content">\n' +
-            '        <nav class="sidebar sidebar-left sidebar-size-2 sidebar-expanded">\n' +
+            '    <div class="overlay-content widget-accordion">\n' +
+            '        <nav class="sidebar sidebar-left sidebar-size-2 accordion-item ' + leftsidebar + '" data-accordion-item="overlay-sidebar-left">\n' +
             '            <div class="sidebar-content"></div>\n' +
             '        </nav>\n' +
             '\n' +
-            '        <div class="image-container">\n' +
+            '        <div class="image-container accordion-item accordion-main" data-accordion-item="overlay-main">\n' +
+            '            <div class="overlay-image-prev fontawesome">\uf053</div>\n' +
             '            <div class="image-viewport" style="transform: rotate(0deg);">\n' +
             '                <img alt="" src="" class="">\n' +
             '                <div class="loader"></div>\n' +
             '            </div>\n' +
+            '            <div class="overlay-image-next fontawesome">\uf054</div>"\n' +
             '        </div>\n' +
-            '        <div class="metadata-container">\n' +
+            '        <div class="metadata-container sidebar sidebar-right accordion-item" data-accordion-item="overlay-sidebar-right">\n' +
             '            <div class="metadata-content"></div>\n' +
             '        </div>\n' +
             '    </div>\n' +
             '    <footer class="overlay-footer">\n' +
             '        <div class="overlay-footer-left">\n' +
-            '        <nav></nav>\n' +
+            '            <nav></nav>\n' +
             '        </div>\n' +
             '        <div class="overlay-footer-title"></div>\n' +
+            '        <div class="overlay-footer-buttons overlay-footer-buttons-right"></div>\n' +
             '    </footer>\n' +
             '</div>';
 
         const overlay = Utils.spawnFromString(template);
+        document.querySelector('body').append(overlay);
+        App.initWidgets(overlay);
+
         this.listenEvent(overlay, 'click', event => this.clickOnImage(event));
+        this.listenEvent(overlay.querySelector('.overlay-image-prev') ,'click', event => this.previousImage());
+        this.listenEvent(overlay.querySelector('.overlay-image-next') ,'click', event => this.nextImage());
+        Utils.listenEvent(document,'keyup', event => this.onKeyUp(event));
         return overlay;
     }
-
 
     /**
      * Copy images from a page into the image viewer's sidebar, if it is still empty
@@ -147,7 +165,9 @@ export class ImagesWidget extends BaseWidget{
             else {
                 const items = imageList.querySelectorAll(this.config.imageSelector);
                 imageList = document.createElement('div');
-                imageList.classList.add('image-list');
+
+                imageList.classList.add('doc-imagelist');
+                imageList.classList.add('doc-imagelist-medium');
                 items.forEach(elm => {
                     const newElm = elm.cloneNode(true);
                     newElm.classList.remove('hidden');
@@ -160,14 +180,8 @@ export class ImagesWidget extends BaseWidget{
 
         this.items = sidebar.querySelectorAll(this.config.imageSelector);
 
-        const navButtons =  this.overlay.querySelector('.overlay-header-buttons-left');
-        if (this.items.length < 2) {
-            this.sideBarLeft.hideSidebar(true);
-            Utils.hide(navButtons);
-        } else {
-            this.sideBarLeft.showSidebar();
-            Utils.show(navButtons);
-        }
+        // Show / hide navigation elements
+        this.updateNavigation();
     }
 
     /**
@@ -176,7 +190,7 @@ export class ImagesWidget extends BaseWidget{
      * @param event Click
      */
     clickOnImage(event) {
-        if (!event.target.closest('a.link-image') || event.ctrlKey || event.metaKey) {
+        if (!event.target.closest('a') || event.ctrlKey || event.metaKey) {
             return;
         }
 
@@ -189,18 +203,41 @@ export class ImagesWidget extends BaseWidget{
     }
 
     /**
+     * Prev/ next image by keyboard
+     *
+     * @param {Event} event
+     */
+    onKeyUp(event) {
+        if (!this.isActive() || !this.items || (this.items.length < 2)) {
+            return;
+        }
+
+        if (event.key === 'ArrowLeft') {
+            this.previousImage();
+            event.preventDefault();
+        } else if (event.key === 'ArrowRight') {
+            this.nextImage();
+            event.preventDefault();
+        }
+    }
+
+    /**
      * Show image
      *
-     * @param selected An image item, either from the article or from the overlay
+     * @param {Element} selected An image item, either from the article or from the overlay
      */
     selectImageByElement(selected) {
 
         if (this.isActive() && this.items) {
             this.currentPosition = Array.from(this.items).findIndex(elm => selected === elm);
-        } else {
+        }
+
+        else {
+
             // Prepare overlay
             this.showOverlay();
 
+            // Construct image list
             const imageList = selected.closest(this.config.containerSelector);
 
             if (imageList) {
@@ -241,6 +278,10 @@ export class ImagesWidget extends BaseWidget{
      * @returns {HTMLDivElement|null} Image container.
      */
     getCurrentImage() {
+        if (!this.items) {
+            return;
+        }
+
         if ((this.currentPosition > -1) && (this.currentPosition < this.items.length)) {
             return this.items[this.currentPosition];
         }
@@ -269,28 +310,102 @@ export class ImagesWidget extends BaseWidget{
         downloadingImage.onload = () => {
             downloadingImage.onload = null;
             this.loader.classList.add('hidden');
-            this.image_image.classList.remove('hidden');
             this.image_image.setAttribute('src', downloadingImage.src);
+            this.image_image.classList.remove('hidden');
         };
 
         const img = selected.querySelector('img');
         downloadingImage.src = img ? img.dataset.display : '';
 
-        // Show metadata
-        this.showMetadata(selected);
-
         // Fit
         this.fitSize();
+
+        // Show metadata
+        this.showMetadata(selected);
     }
 
     getMetadata(selected) {
         let data = {};
-        const metadata = selected.querySelector('.doc-image-metadata');
-        if (metadata) {
-            data['title'] = metadata.querySelector('[data-row-field="file"]').textContent;
-            data['element'] = metadata.cloneNode(true);
+
+        // Use metadata element
+        const metadataElm = selected.querySelector('.doc-image-metadata');
+        if (metadataElm) {
+            data['title'] = metadataElm.querySelector('[data-row-field="file"]').textContent;
+            data['element'] = metadataElm.cloneNode(true);
+            return data;
         }
+
+        // Use image attributes
+
+        const img = selected.querySelector('img');
+        if (!img) {
+            return data;
+        }
+
+        // Title and footer
+        let header = '';
+        header += img.getAttribute('alt') || '';
+        header += '. ' + img.getAttribute('title') || '';
+        data['title'] = header;
+
+        if (img.dataset.copyright) {
+            data['footer'] = img.dataset.copyright || '';
+        }
+
+        // Metadata
+        if (img.dataset.metadata) {
+            try {
+                const metadata = JSON.parse(img.dataset.metadata);
+                data['element'] = this.createMetaTable(metadata);
+            } catch (e) {
+                console.error('Invalid JSON:', e);
+            }
+        }
+
         return data;
+    }
+
+    /**
+     * Create a table from an object
+     *
+     * @param {Object} data An object with keys/value pairs to be displayed in a table
+     * @returns {HTMLTableElement} The generated table
+     */
+    createMetaTable(data) {
+        const table = document.createElement('table');
+        table.classList.add('doc-image-metadata');
+        const tbody = document.createElement('tbody');
+        table.appendChild(tbody);
+
+        // Iterate over own enumerable properties only
+        for (const key in data) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
+                const row = document.createElement('tr');
+
+                const keyCell = document.createElement('td');
+                keyCell.textContent = key;
+                row.appendChild(keyCell);
+
+                const valueCell = document.createElement('td');
+
+                // Convert value to string
+                let value = data[key];
+                if (value === null || value === undefined) {
+                    valueCell.textContent = '';
+                } else if (typeof value === 'object') {
+                    // For objects/arrays, stringify prettily
+                    valueCell.textContent = JSON.stringify(value, null, 2);
+                } else {
+                    valueCell.textContent = value.toString();
+                }
+
+                row.appendChild(valueCell);
+
+                tbody.appendChild(row);
+            }
+        }
+
+        return table;
     }
 
     showMetadata(selected) {
@@ -302,7 +417,6 @@ export class ImagesWidget extends BaseWidget{
             titleElement.innerText = metadata['title'] || '';
         }
 
-        // Change footer
         const footerElement = this.overlay.querySelector('.overlay-footer-title');
         if (footerElement && metadata['footer']) {
             footerElement.innerText = metadata['footer'] || '';
@@ -324,9 +438,23 @@ export class ImagesWidget extends BaseWidget{
 
     }
 
+    updateNavigation() {
+        if (!this.items) {
+            return;
+        }
 
-    isActive() {
-        return this.overlay && !this.overlay.classList.contains('hidden');
+        const showThumbs = Utils.isWideScreen() && ((this.items.length > 1) &&  (this.config.thumbs));
+        const showInlineArrows = (this.items.length > 1) && (this.config.inlineArrows || !Utils.isWideScreen());
+        const showTitleArrows = (this.items.length > 1) && !showThumbs && !showInlineArrows;
+
+        if (!showThumbs) {
+            this.sideBarLeft.hideSidebar(true);
+        } else {
+            this.sideBarLeft.showSidebar();
+        }
+
+        this.overlay.classList.toggle('overlay-inline-arrows', showInlineArrows);
+        this.overlay.classList.toggle('overlay-title-arrows', showTitleArrows);
     }
 
     /**
@@ -339,6 +467,24 @@ export class ImagesWidget extends BaseWidget{
         }
     }
 
+    downloadImage() {
+        if (this.image_image) {
+            const src = this.image_image.src;
+
+            const link = document.createElement('a');
+            link.href = src;
+            link.download = src.split('/').pop().split('?')[0].split('#')[0];
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+    isActive() {
+        return this.overlay && !this.overlay.classList.contains('hidden');
+    }
+
     /**
      * Create and show overlay
      */
@@ -349,6 +495,9 @@ export class ImagesWidget extends BaseWidget{
             return;
         }
 
+        // Buttons
+        const buttons = this.getDialogButtons();
+
         // Add markup
         this.overlay = this.createOverlay()
         this.overlay.classList.remove('hidden');
@@ -357,13 +506,9 @@ export class ImagesWidget extends BaseWidget{
         // Header bar
         this.overlay_header = this.overlay.querySelector('.overlay-header');
 
-        const topButtons = this.getDialogButtons();
-        for (const [key, value] of Object.entries(topButtons)) {
+        for (const [key, value] of Object.entries(buttons)) {
             if ((value.position === 'topleft') || (value.position === 'topright')) {
-                const button = document.createElement('button');
-                button.className = value.class;
-                button.addEventListener('click', value.click);
-
+                const button = this.createButton(value);
                 if (value.position === 'topleft') {
                     this.overlay_header.querySelector('.overlay-header-buttons-left').append(button);
                 } else if (value.position === 'topright') {
@@ -383,17 +528,17 @@ export class ImagesWidget extends BaseWidget{
         this.sideBarRight = new ResizableSidebar(rightSidebarElement, 'right', 10, true);
 
         const leftSidebarElement = this.overlay.querySelector('.sidebar-left');
-        this.sideBarLeft = new ResizableSidebar(leftSidebarElement, 'left', 10, false);
+        this.sideBarLeft = new ResizableSidebar(leftSidebarElement, 'left', 10, this.config.thumbs);
 
         // Footer
-        const footerButtons = this.getDialogButtons();
-        for (const [key, value] of Object.entries(footerButtons)) {
+        for (const [key, value] of Object.entries(buttons)) {
             if (value.position === 'bottom') {
-                const button = document.createElement('button');
-                button.className = value.class;
-                button.addEventListener('click', value.click);
-
+                const button = this.createButton(value);
                 this.overlay.querySelector('.overlay-footer-left nav').append(button);
+            }
+            if (value.position === 'bottomright') {
+                const button = this.createButton(value);
+                this.overlay.querySelector('.overlay-footer-buttons-right').append(button);
             }
         }
 
@@ -404,8 +549,32 @@ export class ImagesWidget extends BaseWidget{
         this.image_container.addEventListener('mousedown', event => this.dragMouseDown(event));
         this.image_container.addEventListener('wheel', event => this.mouseWheel(event));
         this.image_image.addEventListener('load', event => this.fitSize(event));
+
+        this.listenEvent(this.overlay,'epi:hide:sidebar', (event) => this.onHideSidebar(event));
     }
 
+    createButton(value) {
+        const button = document.createElement('button');
+        button.className = value.class;
+
+        button.textContent = value.content || '';
+        button.ariaLabel = value.areaLabel || '';
+        button.title = value.title || '';
+
+        if (value.symbol) {
+            const icon = document.createElement('span');
+            icon.className = 'icon fontawesome';
+            icon.textContent = value.symbol;
+            button.prepend(icon);
+        }
+
+        button.addEventListener('click', value.click);
+        return button;
+    }
+
+    onHideSidebar(event) {
+        this.fitSize(event);
+    }
 
     /**
      * Open the image viewer in a new tab
@@ -414,7 +583,6 @@ export class ImagesWidget extends BaseWidget{
         const selected = this.getCurrentImage();
         if (selected && selected.dataset.itemUrl) {
             window.open(selected.dataset.itemUrl, '_blank');
-
             if (this.config.closeOnOpen) {
                 this.closeOverlay();
             }
@@ -427,19 +595,19 @@ export class ImagesWidget extends BaseWidget{
      * @returns {{Object}} Button configuration object
      */
     getDialogButtons() {
-        return {
+        const defaultConfig = {
             // 'Manage file': function () {
             //     window.open(self.url_manage, '_blank').focus();
             //     self.overlay.dialog("close");
             // },
-            'Previous Image': {
+            'prev': {
                 class: 'button-svg button-previous',
                 title: 'Previous image',
                 ariaLabel: 'Previous image',
                 position: 'topleft',
                 click: event => this.previousImage()
             },
-            'Next Image': {
+            'next': {
                 class: 'button-svg button-next',
                 position: 'topleft',
                 title: 'Next image',
@@ -447,29 +615,46 @@ export class ImagesWidget extends BaseWidget{
                 click: event => this.nextImage()
             },
 
-            'Open in new tab': {
+            'open': {
                 class: 'btn-open',
                 title: 'Open in new tab',
                 ariaLabel: 'Open in new tab',
+                symbol: '\uf35d',
                 position: 'topright',
                 click: event => this.openInNewTab()
             },
-            'Close': {
-                class: 'btn-close',
+            'download': {
+                class: 'btn-download',
+                position: 'topright',
+                title: 'Download',
+                symbol: '\uf0c7',
+                ariaLabel: 'Download',
+                click: event => this.downloadImage()
+            },
+            'close': {
+                class: 'btn',
                 position: 'topright',
                 title: 'Close',
+                symbol: '\uf00d',
                 ariaLabel: 'Close',
                 click: event => this.closeOverlay()
             },
-
-            'Rotate to left': {
+            'meta': {
+                class: 'btn-meta',
+                position: 'bottomright',
+                title: 'Metadata',
+                symbol: '\uf05a',
+                ariaLabel: 'Metadata',
+                click: event => this.sideBarRight.toggleSidebar()
+            },
+            'rotateleft': {
                 class: 'button-svg button-rotate-left',
                 title: 'Rotate left',
                 ariaLabel: 'Rotate left',
                 position: 'bottom',
                 click: event => this.rotateLeft()
             },
-            'Rotate to right': {
+            'rotateright': {
                 class: 'button-svg button-rotate-right',
                 title: 'Rotate right',
                 ariaLabel: 'Rotate right',
@@ -477,7 +662,7 @@ export class ImagesWidget extends BaseWidget{
                 click: event => this.rotateRight()
             },
 
-            'Zoom in': {
+            'zoomin': {
                 class: 'button-svg button-zoom-in',
                 title: 'Zoom in',
                 ariaLabel: 'Zoom in',
@@ -485,7 +670,7 @@ export class ImagesWidget extends BaseWidget{
                 click: event => this.zoomIn()
             },
 
-            'Zoom out': {
+            'zoomout': {
                 class: 'button-svg button-zoom-out',
                 title: 'Zoom out',
                 ariaLabel: 'Zoom out',
@@ -493,7 +678,7 @@ export class ImagesWidget extends BaseWidget{
                 click: event => this.zoomOut()
             },
 
-            'Fit size': {
+            'fitsize': {
                 class: 'button-svg button-size-fit',
                 title: 'Fit image size to frame',
                 ariaLabel: 'Fit image size to frame',
@@ -501,6 +686,19 @@ export class ImagesWidget extends BaseWidget{
                 click: event => this.fitSize(event)
             },
         };
+
+
+        for (const [key, value] of Object.entries(this.config.buttons)) {
+            if (key in defaultConfig) {
+                if (value === false) {
+                    delete defaultConfig[key];
+                } else {
+                    defaultConfig[key] = Object.assign(defaultConfig[key], value);
+                }
+            }
+        }
+
+        return defaultConfig;
     }
 
 
@@ -713,8 +911,6 @@ export class ImagesWidget extends BaseWidget{
      * @param event Click or load
      */
     fitSize(event) {
-        this.loader.classList.add('hidden');
-
         const viewport = this.image_viewport;
         viewport.style.transform = 'rotate(0deg)';
 

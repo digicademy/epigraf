@@ -867,6 +867,15 @@ class Utils {
     }
 
     /**
+     * Check whether we have a desktop screen
+     *
+     * @return {boolean}
+     */
+    static isWideScreen() {
+        return window.matchMedia('(min-width: 767.98px)').matches;
+    }
+
+    /**
      * Find the nearest positioned ancestor of an element.
      *
      * The nearest positioned ancestor is the closest ancestor element that has a position value other than static.

@@ -133,22 +133,23 @@ class UsersTable extends BaseTable
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->notEmptyString('username', 'A username is required')
+            ->notEmptyString('username', 'A username is required.')
             ->add('username', [
                 'length' => [
-                    'rule' => ['maxLength', 50],
-                    'message' => 'Usernames should be 50 characters long at maximum.',
+                    'rule' => ['maxLength', 100],
+                    'message' => 'Usernames should be 100 characters long at maximum.',
                 ]
             ])
-            ->add('username', 'validFormat', [
-                'rule' => ['custom', '/^[0-9a-zA-Z]+$/'],
-                'message' => 'Only alphanumeric characters are allowed.'
-            ]);
+            ->regex(
+                'username',
+                '/^([A-Za-z0-9.-]+:)?[A-Za-z0-9@._-]+$/',
+                'Only characters contained in scoped email addresses are allowed.'
+            );
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
-            ->notEmptyString('password', 'A password is required');
+            ->notEmptyString('password', 'A password is required.');
 
         if (!Configure::read('debug', false)) {
             if (BaseTable::$userRole !== 'devel') {
@@ -163,11 +164,10 @@ class UsersTable extends BaseTable
 
         $validator->add('role', 'inList', [
                 'rule' => ['inList', array_keys(PermissionsTable::$userRoles)],
-                'message' => 'Please enter a valid role'
+                'message' => 'Please select a valid role.'
             ])
-            ->notEmptyString('name', 'A full name is required')
-            ->notEmptyString('acronym', 'An acronym is required')
-            ->notEmptyString('norm_iri', 'A unique IRI fragment is required')
+            ->notEmptyString('name', 'A full name is required.')
+            ->notEmptyString('norm_iri', 'A unique IRI fragment is required.')
             ->email('email');
 
         return $validator;
@@ -352,7 +352,9 @@ class UsersTable extends BaseTable
         }
 
         if (empty($entity['norm_iri'])) {
-            $entity['norm_iri'] = Attributes::cleanIdentifier($entity->username);
+            $entity['norm_iri'] = Attributes::cleanIdentifier($entity['username']);
+        } else {
+            $entity['norm_iri'] = Attributes::cleanIdentifier($entity['norm_iri']);
         }
     }
 
@@ -381,15 +383,16 @@ class UsersTable extends BaseTable
     }
 
     /**
-     * Generate activation token that expires in 24 hours
+     * Generate activation token that expires in three days
      *
      * @param User $user
+     * @param int $expires Hours until the link expires
      * @return User
      */
-    public function generateActivationToken($user)
+    public function generateActivationToken($user, $expires = 48)
     {
         $user->activation_token = Security::hash(Security::randomBytes(32));
-        $user->activation_expires = FrozenTime::now()->addHours(18);
+        $user->activation_expires = FrozenTime::now()->addHours($expires);
         $user->activation_state = USER_ACCOUNT_PENDING;
         return $user;
     }
@@ -425,8 +428,8 @@ class UsersTable extends BaseTable
     /**
      * Update last action and retrieve a new user record every 30 seconds
      *
-     * @param array $user A user entity retrieved with the Auth component
-     * @return array
+     * @param User $user A user entity
+     * @return User
      */
     public function updateActive($user)
     {
@@ -445,20 +448,19 @@ class UsersTable extends BaseTable
             ->execute();
 
         // Get new user object
-        $user = $this->get($user['id'], ['finder' => 'auth'])->toArray();
-
+        /** @var User $user */
+        $user = $this->get($user['id'], ['finder' => 'auth']);
         return $user;
     }
 
     /**
      * Update user settings
      *
-     * @param array $user A user entity retrieved with the Auth component.
+     * @param User $user A user entity
      * @param string $scope For example 'ui' or 'paths'
      * @param string $key
      * @param mixed $value
-     *
-     * @return array
+     * @return User
      */
     public function updateSettings($user, $scope = null, $key = null, $value = null)
     {
@@ -491,8 +493,8 @@ class UsersTable extends BaseTable
         }
 
         // Get new user object
-        $user = $this->get($user['id'], ['finder' => 'auth'])->toArray();
-
+        /** @var User $user */
+        $user = $this->get($user['id'], ['finder' => 'auth']);
         return $user;
     }
 
@@ -587,9 +589,11 @@ class UsersTable extends BaseTable
                 'default' => true,
                 'sort' => 'databank.name',
                 'filter' => false
-            ],
+            ]
+        ];
 
-            'pipeline_article' => [
+        if (Configure::read('App.epidesktop', false)) {
+            $default['pipeline_article'] = [
                 'caption' => __('Article pipeline'),
                 'key' => 'article_pipeline.name',
                 'type' => 'text',
@@ -598,9 +602,9 @@ class UsersTable extends BaseTable
                 'sort' => true,
                 'action' => ['index'],
                 'filter' => false
-            ],
+            ];
 
-            'pipeline_book' => [
+            $default['pipeline_book'] = [
                 'caption' => __('Book pipeline'),
                 'key' => 'book_pipeline.name',
                 'type' => 'text',
@@ -609,8 +613,11 @@ class UsersTable extends BaseTable
                 'sort' => true,
                 'action' => ['index'],
                 'filter' => false
-            ],
+            ];
 
+        }
+
+        $default = array_merge($default, [
             'active' => [
                 'caption' => __('Active'),
                 'align' => 'center',
@@ -651,7 +658,7 @@ class UsersTable extends BaseTable
                 'sort' => true,
                 'default' => true
             ]
-        ];
+        ]);
 
         return parent::getColumns($selected, $default, $options);
     }

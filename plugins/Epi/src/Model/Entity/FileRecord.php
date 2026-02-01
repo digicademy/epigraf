@@ -68,6 +68,23 @@ class FileRecord extends \Files\Model\Entity\FileRecord
      */
     protected function _getDownloadurl()
     {
+//        $database = $this->getTable()->getDatabaseName();
+//
+//        $params = [];
+//        if ($this->root !== $this->getTable()->defaultMount ?? '') {
+//            $params['root'] = $this->root;
+//        }
+//        $params['path'] = $this->path;
+//        $params['filename'] = $this->name;
+//
+//        return Router::url([
+//            'plugin' => 'Epi',
+//            'controller' => 'Files',
+//            'action' => 'download',
+//            'database' => Databank::removePrefix($database),
+//            '?' => $params
+//        ]);
+
         return Router::url([
             'plugin' => 'Epi',
             'controller' => 'Files',
@@ -82,6 +99,25 @@ class FileRecord extends \Files\Model\Entity\FileRecord
      */
     protected function _getDisplayurl()
     {
+//        $database = $this->getTable()->getDatabaseName();
+//
+//        $params = [];
+//        if ($this->root !== $this->getTable()->defaultMount ?? '') {
+//            $params['root'] = $this->root;
+//        }
+//        $params['path'] = $this->path;
+//        $params['filename'] = $this->name;
+//        $params['format'] = 'thumb';
+//        $params['size'] = '600';
+//
+//        return Router::url([
+//            'plugin' => 'Epi',
+//            'controller' => 'Files',
+//            'action' => 'display',
+//            'database' => Databank::removePrefix($database),
+//            '?' => $params
+//        ]);
+
         return Router::url([
             'plugin' => 'Epi',
             'controller' => 'Files',

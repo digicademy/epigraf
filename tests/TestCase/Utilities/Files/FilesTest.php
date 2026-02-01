@@ -12,6 +12,7 @@
 namespace App\Test\TestCase\Utilities\Files;
 
 use App\Utilities\Files\Files;
+use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -71,4 +72,33 @@ class FilesTest extends TestCase
         );
     }
 
+    /**
+     * Test creating, filling, clearing and removing a folder
+     *
+     * @return void
+     */
+    public function testClear(): void
+    {
+        // 1. Create folder
+        $folder = Configure::read('Data.databases') . 'test_projects' . DS . 'jobs' . DS . 'testfolder' . DS;
+        $proceed = Files::createFolder($folder);
+
+        $this->assertEquals(true, $proceed);
+        $this->assertDirectoryExists($folder);
+
+        // 2. Fill folder
+        $file = $folder . 'testfile.txt';
+        $this->assertFileDoesNotExist($file);
+        Files::appendToFile( $file, 'TEST CONTENT');
+        $this->assertFileExists($file);
+
+        // 3. Clean folder
+        Files::clearFolder($folder);
+        $this->assertFileDoesNotExist($file);
+        $this->assertDirectoryExists($folder);
+
+        // 4. Remove folder
+        Files::delete($folder);
+        $this->assertDirectoryDoesNotExist($folder);
+    }
 }

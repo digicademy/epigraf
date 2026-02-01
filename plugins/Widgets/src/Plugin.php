@@ -23,18 +23,6 @@ use Cake\Routing\RouteBuilder;
  */
 class Plugin extends BasePlugin
 {
-    /**
-     * Load all the plugin configuration and bootstrap logic.
-     *
-     * The host application is provided as an argument. This allows you to load
-     * additional plugin dependencies, or attach events.
-     *
-     * @param \Cake\Core\PluginApplicationInterface $app The host application
-     * @return void
-     */
-    public function bootstrap(PluginApplicationInterface $app): void
-    {
-    }
 
     /**
      * Add routes for the plugin.

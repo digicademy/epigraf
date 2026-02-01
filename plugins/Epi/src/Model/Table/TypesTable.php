@@ -290,18 +290,18 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         $validator
             ->scalar('name')
             ->maxLength('name', 100)
-            ->add('name', 'validFormat', [
-                'rule' => ['custom', '/^[A-Za-z0-9_-]+$/'],
-                'message' => 'Only lowercase alphanumeric characters, underscore and hyphen are allowed.'
-            ]);
+            ->regex('name',
+                '/^[A-Za-z0-9_-]+$/',
+                'Only lowercase alphanumeric characters, underscore and hyphen are allowed.'
+            );
 
         $validator
             ->scalar('norm_iri')
             ->maxLength('norm_iri', 500)
-            ->add('norm_iri', 'validFormat', [
-                'rule' => ['custom', '/^[a-z0-9_~-]+$/'],
-                'message' => 'Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed.'
-            ])
+            ->regex('norm_iri',
+                '/^[a-z0-9_~-]+$/',
+                'Only lowercase alphanumeric characters, underscore, hyphen and tilde are allowed.'
+            )
             ->allowEmptyString('norm_iri');
 
         $validator

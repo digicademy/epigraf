@@ -459,6 +459,9 @@ class FilterColumns extends FilterItemWidget {
         super(element, name, parent);
     }
 
+    /**
+     * @listens epi:move:row
+     */
     initWidget() {
         if (!this.coordinator) {
             console.log('Missing coordinator.');
@@ -715,6 +718,7 @@ class FilterSelector {
      * Initialize widget and bind event listeners.
      *
      * @returns {boolean} False if no dropdown or checkbox list exists
+     * @listens epi:change:dropdown
      */
     initWidgets() {
         if (!this.coordinator) {
@@ -732,7 +736,7 @@ class FilterSelector {
         const newDropdown = this.widgetElement ? this.widgetElement.querySelector('.widget-dropdown-selector') : undefined;
         if (newDropdown && (newDropdown !== this.dropdown)) {
             this.dropdown = newDropdown;
-            this.dropdown.addEventListener('changed', event => this.updateResults(event));
+            this.dropdown.addEventListener('epi:change:dropdown', event => this.updateResults(event));
             return true
         }
 
@@ -829,6 +833,9 @@ class FilterFacetsBase extends FilterItemWidget {
         this.flagsParameter = undefined;
     }
 
+    /**
+     * @listens epi:update:filter
+     */
     initWidget() {
           if (!this.coordinator) {
             return;
@@ -889,6 +896,7 @@ class FilterFacetsBase extends FilterItemWidget {
      * Fired when a checkbox for selection modifications changed
      *
      * @param {Event} event
+     * @fires epi:load:facets
      */
     onFlagsChanged(event) {
         const widgetFilterFacetsOptions = this.widgetElement.querySelector('.widget-filter-facets-options');
@@ -989,6 +997,7 @@ class FilterFacetsBase extends FilterItemWidget {
      * Fired when a node is (de)selected
      *
      * @param {Event} event
+     * @fires epi:load:facets
      */
     onNodeChanged(event) {
         const widgetFilterFacetResults = event.target.closest('.widget-filter-facets-results')
@@ -1007,6 +1016,9 @@ class FilterFacetsBase extends FilterItemWidget {
         this.inputTimeout = setTimeout( () => this.coordinator.updateResults(this), App.settings.timeout);
     }
 
+    /**
+     * @fires epi:close:facets
+     */
     clearWidget() {
         this.emitEvent('epi:close:facets');
         super.clearWidget();
@@ -1052,6 +1064,7 @@ class FilterFacetsBase extends FilterItemWidget {
 
     /**
      * Load properties
+     * @fires epi:load:facets
      */
     loadFacets() {
         if (!this.coordinator) {

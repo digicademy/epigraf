@@ -364,8 +364,7 @@ class AppTestCase extends TestCase
         /** @var \App\Model\Entity\User $user */
         $user = $users->find('auth')->where(['role' => $role])->first();
 
-        $this->session(['Auth' => ['User' => $user]]);
-
+        $this->session(['Auth' => $user]);
         return $user;
     }
 
@@ -380,7 +379,7 @@ class AppTestCase extends TestCase
     {
 
         $this->get($url);
-        $this->assertRedirect(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/' . $url]]);
+        $this->assertRedirectEquals(['controller' => 'Users', 'action' => 'login', '?' => ['redirect' => '/' . $url]]);
     }
 
     /**
@@ -423,7 +422,7 @@ class AppTestCase extends TestCase
         // Remove folders
         $folder = Configure::read('Data.databases') . Databank::addPrefix($name);
         if (is_dir($folder)) {
-            Files::removeFolder($folder);
+            Files::delete($folder);
         }
     }
 

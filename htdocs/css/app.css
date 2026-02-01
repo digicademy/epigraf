@@ -199,6 +199,15 @@
     --help-button-size-small: 1.1rem;
     --help-button-size-medium: 1.7rem;
 
+    --button-overlay-nav: var(--neutral-900);
+
+    /* Overlay */
+    --overlay-bg-color: var(--neutral-100);
+    --overlay-header-bg-color: var(--top-menu-app-bg-color);
+    --overlay-footer-bg-color: var(--neutral-100);
+    --overlay-header-font-color: var(--button-font-color);
+    --overlay-footer-font-color: var(--button-font-color);
+
     /* Inputs */
     --input-border-color: var(--neutral-400);
     --input-border-radius: 3px;
@@ -297,6 +306,12 @@
     src: url('../webfonts/source_sans/SourceSans3-Bold.ttf.woff2') format('woff2'),
     url('../webfonts/source_sans/SourceSans3-Bold.otf.woff') format('woff');
 }
+
+
+.fontawesome {
+    font-family: "Font Awesome 6 Free", fantasy;
+}
+
 
 /** Layout **/
 

@@ -443,7 +443,6 @@ CREATE TABLE IF NOT EXISTS `users` (
                                        `modified_by` int(11) DEFAULT NULL,
                                        `created_by` int(11) DEFAULT NULL,
                                        `name` varchar(1500)  COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-                                       `acronym` varchar(1500)  COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                                        `userrole` int(11) DEFAULT NULL,
                                        `norm_iri` varchar(1500)  COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                                        PRIMARY KEY (`id`),

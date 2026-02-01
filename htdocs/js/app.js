@@ -58,6 +58,17 @@ class EpiApp {
         }
     }
 
+    /**
+     * Add event listener to `document`
+     *
+     * @listens app:show:message
+     * @listens app:hide:message
+     * @listens app:show:loader
+     * @listens app:hide:loader
+     * @listens app:open:dialog
+     * @listens app:close:dialog
+     * @listens epi:open:details
+     */
     initEvents() {
         // Catch errors
         window.addEventListener('error', (ev) => this.logError(ev));
@@ -68,9 +79,7 @@ class EpiApp {
 
         // Popup links
         // TODO: create a widget
-        Utils.listenEvent(document, 'click', (ev) => this.openPopupLink(ev), 'a.popup, a.popup *');
-        Utils.listenEvent(document, 'click', (ev) => this.openTabLink(ev), 'a.tab, a.tab *');
-        Utils.listenEvent(document, 'click', (ev) => this.openDetailLink(ev), 'a.frame, a.frame *');
+        Utils.listenEvent(document, 'click', (ev) => this.onOpenLinkClick(ev), 'a.popup, a.popup *, a.tab, a.tab *, a.frame, a.frame *');
 
         // Listen to messages
         Utils.listenEvent(document,'app:show:message', (ev) => this.showMessage(ev));
@@ -79,9 +88,6 @@ class EpiApp {
         Utils.listenEvent(document,'app:hide:loader', (ev) => this.hideLoader());
         Utils.listenEvent(document,'app:open:dialog', (ev) => this.showDialog(ev));
         Utils.listenEvent(document,'app:close:dialog', (ev) => this.hideDialog(ev));
-
-        Utils.listenEvent(document,'epi:open:details', (ev) => this.onOpenDetailsEvent(ev));
-
 
         // Focus first input
         // TODO: think about focus control
@@ -183,22 +189,25 @@ class EpiApp {
      * @param {string|Event} message The message or an event containing a message in the details
      * @param {string} status
      * @param {BaseFrame} containerWidget The container where the flash message should be shown
-     * @param {String} msgId An ID that can be used to hide the message later
      */
-    showMessage(message, status='error', containerWidget, msgId) {
+    showMessage(message, status='error', containerWidget) {
         if (message instanceof Event) {
             status = message.detail.data.status || status;
             let errors = message.detail.data.errors || {};
 
-            if (!containerWidget && message.detail.sender) {
+            if (!containerWidget && message.detail.sender && message.detail.sender.getFrame) {
                 containerWidget = message.detail.sender.getFrame(true, true);
             }
 
             message = message.detail.data.msg;
             if (errors) {
-              message = message + '<br>' + Object.entries(errors).flatMap(
-                  ([key, values]) => values.map(value => `${key}: ${value}`)
-              );
+                errors = Object.entries(errors).flatMap(
+                    ([key, values]) =>
+                        Array.isArray(values)
+                            ? values.map(value => `${key}: ${value}`)
+                            : [`${key}: ${values}`]
+                );
+                message = message + '<br>' + errors.join('<br>');
             }
         }
 
@@ -256,36 +265,6 @@ class EpiApp {
 
             App.confirmWindow.showData(options);
         });
-    }
-
-    /**
-     * Return the content pane which contains the element.
-     *
-     * //TODO: remove redundancy with base.js: getFrame()
-     *
-     * Used to determine whether the scope of the widget should be constrained to AJAX content.
-     * See popups.js.
-     * For document level widgets, this is the document,
-     * for widgets within a popup, this is the popup element,
-     * for widgets within the sidebar, this is the sidebar element.
-     *
-     * @param {HTMLElement}  element The contained element
-     * @param {boolean} widget Return the widget or the HTML element?
-     * @return {*|Document|HTMLElement|BaseWidget}
-     */
-    getFrame(element, widget=true) {
-        if (!element) {
-            return document;
-        }
-
-        const frame = element.closest('.widget-content-pane');
-        if (!widget) {
-            return (frame && !frame.classList.contains('widget-content-pane-main')) ? frame : document;
-        }
-        else {
-            const frameWidget = frame ? frame.widgets['content-pane'] : document;
-            return frameWidget ? frameWidget : document;
-        }
     }
 
     /**
@@ -411,6 +390,7 @@ class EpiApp {
      * @param {HTMLElement} container
      * @param {boolean} history Push the URL to history (true|false)
      * @param {boolean} updateNavigation Whether to update the navigation in the frame
+     * @fires epi:load:content
      */
     loadDataSnippets(url, container, history=false, updateNavigation=false) {
 
@@ -429,8 +409,7 @@ class EpiApp {
                     window.history.pushState(url, "Epigraf", url);
                 }
 
-                const frame = this.getFrame(container);
-                this.replaceDataSnippets(data, container);
+                container = this.replaceDataSnippets(data, container);
 
                 // Messages
                 const message = Utils.extractSnippetText(data,'message');
@@ -438,13 +417,8 @@ class EpiApp {
                     this.showMessage(message);
                 }
 
-                // Popup and frame navigation elements
-                if (updateNavigation && frame && frame.updateNavigation) {
-                    frame.updateNavigation(data)
-                }
-
                 if (container) {
-                    this.emitEvent(container,'epi:load:content');
+                    this.emitEvent(container, 'epi:load:content', updateNavigation ? data : undefined);
                 }
 
             },
@@ -479,6 +453,8 @@ class EpiApp {
      * @param {HTMLElement|document} container Only replace snippets within this element.
      *                                      If the container is the document, only snippets within
      *                                      widget-content-pane-main and the footer element are replaced.
+     * @return {HTMLElement|document} The container element. If the container was replaced, the new container element is returned.
+     * @fires epi:replace:content
      */
     replaceDataSnippets(data, container) {
         const snippets = Utils.querySelectorAllAndSelf(
@@ -490,22 +466,25 @@ class EpiApp {
             return;
         }
 
+        let targets;
         if ((typeof container === "undefined")  || (container === document) ) {
-            container = [
+            targets = [
                 document.querySelector('.widget-content-pane-main'),
                 document.querySelector('.page-wrapper > footer')
             ];
-        }
-
-        if (!Array.isArray(container)) {
-            container = [container];
+        } else {
+            targets = [container];
         }
 
         snippets.forEach( (elm) => {
             const selector = '[data-snippet="' +elm.dataset.snippet + '"]';
-            const snip_old = Utils.querySelectorAndSelf(container, selector);
+            const snip_old = Utils.querySelectorAndSelf(targets, selector);
 
             if (snip_old) {
+                if (container === snip_old) {
+                    container = elm;
+                }
+
                 if (typeof this.finishWidgets === 'function') {
                     this.finishWidgets(snip_old);
                 }
@@ -516,6 +495,8 @@ class EpiApp {
                 this.emitEvent(snip_old, 'epi:replace:content', {newTarget: elm});
             }
         });
+
+        return container;
     }
 
     // Update snippets from AJAX calls: add below
@@ -534,89 +515,18 @@ class EpiApp {
      * @param {Event} event
      * @returns {boolean}
      */
-    openPopupLink(event) {
-        // Single clicks only
-        if (event.detail > 1) {
-            return;
-        }
-
-        const a = event.target.closest('a');
-        let url = a.href;
-        if (url && !(event.ctrlKey || event.metaKey)) {
-
-            const size = a.dataset.popupSize;
-            let modal = a.dataset.popupModal;
-            modal = (modal === 'true') || (modal === '1');
-
-            App.openPopup(url,{external:true, modal:modal, focus: modal, size: size});
-
-            event.preventDefault();
-            return false;
-        }
-    }
-
-    /**
-     * Tab link handler
-     *
-     * @param {Event} event
-     * @returns {boolean}
-     */
-    openTabLink(event) {
-        // Single clicks only
-        if (event.detail > 1) {
-            return;
-        }
-
-        const a = event.target.closest('a');
-        let url = a.href;
-        if (url && !(event.ctrlKey  || event.metaKey)) {
-            App.openTab(url);
-            event.preventDefault();
-            return false;
-        }
-    }
-
-    openTab(url) {
-        window.open(url);
-    }
-
-    /**
-     * Frame link handler
-     *
-     * @param event
-     * @returns {boolean}
-     */
-    openDetailLink(event) {
+    onOpenLinkClick(event) {
         // Single clicks only
         if ((event.detail > 1) || event.ctrlKey || event.metaKey) {
             return;
         }
 
-        // Perform default action on ctrl click
-        if (event.ctrlKey || event.metaKey) {
-            return;
-        }
 
-        const container = event.target.closest('.ui-dialog, .sidebar');
-        const popup = event.target.closest('.ui-dialog');
         const a = event.target.closest('a');
-
-        // Prevent popups in select list (e.g. when selecting an external article in an annotation)
-        if (container && a.dataset.linkwrapper) {
-            event.preventDefault();
-            return false;
-        }
-
-        // Redirect clicks in popups to popups
-        if (popup) {
-            App.openPopupLink(event);
-            event.preventDefault();
-            return false;
-        }
-
         let url = a.href;
 
         // Get the view and tab link from tables
+        // TODO: listen to epi:open:details in table widget and change event there
         if (a.dataset.linkwrapper) {
             const tableWidget = App.findWidget(a, 'table');
             if (tableWidget) {
@@ -625,84 +535,26 @@ class EpiApp {
             }
         }
 
-        if (url) {
-            const linkOptions = {
-                external: a.dataset.frameExternal || true,
-                frameTarget: a.dataset.frameTarget || 'details',
-                frameCaption: a.dataset.frameCaption || 'Details',
-                force: false
-            };
-
-            App.openDetails(url, linkOptions);
-            event.preventDefault();
-            return false;
-        }
-    }
-
-    onOpenDetailsEvent(event) {
-
-        let url;
-        if (event.detail && event.detail.data) {
-            url = event.detail.data.url;
-        }
-
-        if (url) {
-            const linkOptions = {
-                external: true,
-                frameTarget: 'details',
-                frameCaption: 'Details',
-                force: false
-            };
-
-            App.openDetails(url, linkOptions);
-            event.preventDefault();
-            return false;
-        }
-    }
-
-   /**
-     * Show data loaded from an URL in a frame (instead of a popup)
-     *
-     * @param data URL to be loaded. Can be skipped
-     * @param options Object with the following keys
-     *                - url
-     *                - actions
-     */
-    openDetails(data, options) {
-
-        // Merge options
-        if (typeof data === 'string') {
-            options = options || {};
-            options.url = data;
-        }
-        else if (typeof data === 'object') {
-            options = options || {};
-            options.element = data;
-        }
-        else {
-            options = data || options || {};
-        }
-
-        // Get widget
-        const tabsheetsWidget = App.findWidget(App.sidebarright.widgetElement,'tabsheets');
-        if (!tabsheetsWidget) {
+        if (!url) {
             return;
+
         }
 
-       setTimeout(() => {
-           // TODO: Use the ajaxQueue in showData()?
-           //       Note that not only the table but also the map markers rely on openDetails()
-           // if (App.ajaxQueue.stopped) {
-           //     return;
-           // }
+        const data = {...a.dataset} || {};
+        data['url'] = url;
+        if (a.classList.contains('popup')) {
+            data['target'] = 'popup';
+        }
+        else if (a.classList.contains('tab')) {
+            data['target'] = 'tab';
+        }
+        else if (a.classList.contains('frame')) {
+            data['target'] = 'sidebar';
+        }
 
-           options.frameTarget = options.frameTarget || 'details';
-           options.frameCaption = options.frameCaption || 'Details';
-           const tabsheet = tabsheetsWidget.createTab(options.frameTarget, options.frameCaption);
-           const detailWidget = App.createWidget(tabsheet,'frame');
-           detailWidget.showData(options);
-
-       }, 200);
+        Utils.emitEvent(a, 'epi:open:details', data);
+        event.preventDefault();
+        return false;
     }
 
     /**

@@ -136,7 +136,7 @@ class BaseTable extends Table
     public static $requestPublished = null;
 
     /**
-     * Current user data: id, iri, role, name, acronym
+     * Current user data: id, iri, role, name
      *
      * @var null|array
      */

@@ -30,7 +30,7 @@ class TaskDataJob extends BaseTaskData
 
         $data = array_intersect_key(
             $this->job->config ?? [],
-            array_flip(['pipeline_id', 'pipeline_name', 'database', 'model'])
+            array_flip(['pipeline_id', 'pipeline_name', 'database', 'table'])
         );
 
         $data['created'] = Chronos::now()->toIso8601String();
@@ -43,7 +43,7 @@ class TaskDataJob extends BaseTaskData
                 '_http' => false
             ], true) . '/';
         $data['folder'] = $this->job->jobPath;
-        $data['_xml_attributes'] = ['server', 'database', 'model', 'baseiri', 'pipeline_name', 'pipeline_id', 'folder'];
+        $data['_xml_attributes'] = ['server', 'database', 'table', 'baseiri', 'pipeline_name', 'pipeline_id', 'folder'];
         $data['params'] = $this->job->dataParams;
 
         $view = $this->getView();

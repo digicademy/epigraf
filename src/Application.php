@@ -12,21 +12,31 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Authentication\Identifier\TokenFallbackIdentifier;
+use App\Policy\ControllerPolicy;
+use Authentication\Identifier\PasswordIdentifier;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\ResolverInterface;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
-use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
-use Cake\Http\Middleware\CsrfProtectionMiddleware;
-use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Http\Middleware\HttpsEnforcerMiddleware;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Cake\Routing\Router;
 use Rest\Error\Middleware\RestAnswerMiddleware;
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Application setup class.
@@ -34,7 +44,7 @@ use Rest\Error\Middleware\RestAnswerMiddleware;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface,  AuthorizationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -56,22 +66,23 @@ class Application extends BaseApplication
             );
         }
 
+        $this->addPlugin('Authentication');
+        $this->addPlugin('Authorization');
+
         /*
          * Only try to load DebugKit in development mode
          * Debug Kit should not be installed on a production system
          */
-        if (Configure::read('debug')) {
-            Configure::write('DebugKit.panels', ['DebugKit.History' => false, 'DebugKit.Variables' => false]);
-            $this->addPlugin('DebugKit');
-        }
+//        if (Configure::read('debug')) {
+//            Configure::write('DebugKit.panels', ['DebugKit.History' => false, 'DebugKit.Variables' => false]);
+//            $this->addPlugin('DebugKit');
+//        }
 
         // Load more plugins here
         $this->addPlugin('Rest');
         $this->addPlugin('Files');
         $this->addPlugin('Widgets');
         $this->addPlugin('Epi', ['bootstrap' => false, 'routes' => true, 'autoload' => true]);
-//        $this->addPlugin('BryanCrowe/ApiPagination', ['autoload'=>true]);
-
     }
 
     /**
@@ -119,19 +130,13 @@ class Application extends BaseApplication
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/4/en/controllers/middleware.html#body-parser-middleware
-            ->add(new BodyParserMiddleware());
+            ->add(new BodyParserMiddleware())
 
-        // Cross Site Request Forgery (CSRF) Protection Middleware
-        // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
-//            ->add(new CsrfProtectionMiddleware([
-//                'httponly' => false,
-//            ]));
-
-
-        // Allow iframes: @deprecated, use Content-Security-Policy: frame-ancestors
-        //$securityHeadersMiddleware = new SecurityHeadersMiddleware();
-        //$middlewareQueue->add($securityHeadersMiddleware);
-
+            // Authentication and authorization
+            // https://book.cakephp.org/authentication
+            // https://book.cakephp.org/authorization
+            ->add(new AuthenticationMiddleware($this))
+            ->add(new AuthorizationMiddleware($this));
 
         return $middlewareQueue;
     }
@@ -147,7 +152,126 @@ class Application extends BaseApplication
     {
     }
 
+    /**
+     * Returns a service provider instance.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @param \Psr\Http\Message\ResponseInterface $response Response
+     * @return \Authentication\AuthenticationServiceInterface
+     */
+    public function getAuthenticationService(ServerRequestInterface $request) : AuthenticationServiceInterface
+    {
+        $service = new AuthenticationService();
 
+        $loginConfig = Configure::read('Logins', ['token' => true, 'form' => true]);
+
+        // Login via a username provided in an environment variable (mod_auth_openidc)
+        if (!empty($loginConfig['remote'])) {
+
+            // For non-token requests, save to session
+            if (!$request->is('token')) {
+                $fields = [
+                    PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
+                    PasswordIdentifier::CREDENTIAL_PASSWORD => 'password'
+                ];
+                $service->loadIdentifier('Authentication.Password', compact('fields'));
+
+                $service->loadAuthenticator('Authentication.Session', [
+                    'identifiers' => ['Authentication.Password'],
+                ]);
+            }
+
+            // Configure a token identifier that maps an env var to the username column
+            $service->loadIdentifier('Authentication.Token', [
+                'tokenField' => 'username',
+                'dataField' => $loginConfig['remote'],
+            ]);
+
+            // Choose which environment variables exposed by the
+            // authentication provider are used to authenticate.
+            $service->loadAuthenticator('Authentication.Environment', [
+                'fields' => [
+                    $loginConfig['remote']
+                ]
+            ]);
+        }
+
+        // Access token authentication for API requests
+        if (!empty($loginConfig['token']) && $request->is('token')) {
+
+            $service->loadIdentifier(TokenFallbackIdentifier::class, [
+                'tokenField' => 'accesstoken',
+                'hashAlgorithm' => 'sha256'
+            ]);
+
+            $service->loadAuthenticator('Authentication.Token', [
+                'identifiers' => ['Authentication.Token'],
+                'queryParam' => 'token',
+                'header' => 'Authorization',
+                'tokenPrefix' => 'Token'
+            ]);
+        }
+
+        // Form based authentication
+        elseif (!empty($loginConfig['form'])) {
+
+            // Configure unauthenticated redirect
+            $service->setConfig([
+                'unauthenticatedRedirect' => Router::url(['plugin'=>false, 'controller' => 'Users', 'action' => 'login']),
+                'queryParam' => 'redirect'
+            ]);
+
+            $fields = [
+                PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
+                PasswordIdentifier::CREDENTIAL_PASSWORD => 'password'
+            ];
+
+
+            // Load identifiers
+            $service->loadIdentifier('Authentication.Password', compact('fields'));
+
+            $service->loadAuthenticator('Authentication.Session',  [
+                'identifiers' => ['Authentication.Password'],
+            ]);
+
+            $service->loadAuthenticator('Authentication.Form', [
+                'identifiers' => ['Authentication.Password'],
+                'fields' => $fields,
+                'loginUrl' => Router::url([
+                    'prefix' => false,
+                    'plugin' => null,
+                    'controller' => 'Users',
+                    'action' => 'login',
+                ]),
+            ]);
+
+        }
+
+        return $service;
+    }
+
+    public function getAuthorizationService(ServerRequestInterface $request): \Authorization\AuthorizationServiceInterface
+    {
+        // Custom policy resolver that returns ControllerPolicy for controller objects
+        $policyResolver = new class implements ResolverInterface {
+
+            /**
+             * Resolve a policy instance for controllers
+             *
+             * @param mixed $resource
+             * @return object|null
+             */
+            public function getPolicy($resource)
+            {
+                if (is_object($resource) && is_subclass_of($resource, \Cake\Controller\Controller::class)) {
+                    return new ControllerPolicy($resource);
+                }
+                return null;
+            }
+        };
+
+        return new AuthorizationService($policyResolver);
+    }
     /**
      * Bootstrapping for CLI application.
      *
@@ -158,6 +282,6 @@ class Application extends BaseApplication
     protected function bootstrapCli(): void
     {
         $this->addOptionalPlugin('Bake');
-        $this->addPlugin('Migrations');
+//        $this->addPlugin('Migrations');
     }
 }

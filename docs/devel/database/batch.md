@@ -49,7 +49,17 @@ To run jobs as background tasks:
   With this flag, jobs are not executed immediately but are put into a queue,
   see JobsController::execute() for details.
 - Run the worker which will process jobs by starting `bin/cake jobs process`.
+  The worker should run in a separate container or be started as a background process on the server.
   See the `JobsCommand` class in the `src/command` folder for implementation details.
+
+To run a single job from the command line, e.g. using cronjobs for periodic exports,
+you first need to create (and run) the job using the frontend or API.
+Then lookup the job ID. You will find a jobs button in the footer of the pipelines menu.
+You can repeat the job with the following command:
+
+```
+bin/cake jobs execute --id=JOB_ID
+```
 
 ## API Packages
 

@@ -15,6 +15,7 @@ use App\Utilities\Converters\Attributes;
 use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
 use Cake\Database\Schema\TableSchemaInterface;
@@ -199,58 +200,6 @@ class JobsTable extends BaseTable
         }
     }
 
-
-    /**
-     * Extract search parameters from request parameters
-     *
-     * Sets the pipeline ID based on pipeline query parameter or user settings.
-     *
-     * @param array $requestParameters Request parameters
-     * @param string|null $requestPath The property type
-     * @param string $requestAction
-     * @return array
-     */
-    public function parseRequestParameters(array $requestParameters = [], $requestPath = '', $requestAction = ''): array
-    {
-        unset($requestParameters['page']);
-
-        // @deprecated: use TransferComponent
-        if (in_array($requestAction, ['add', 'download'])) {
-            $params = $requestParameters;
-
-            $pipeline_id = $params['pipeline'] ?? null;
-
-            // Pipeline from user settings
-            if (is_null($pipeline_id)) {
-                $user = BaseTable::$user;
-                if (($params['scope'] ?? 'article') == 'book') {
-                    $pipeline_id = $user['pipeline_book_id'] ?? null;
-                }
-                else {
-                    $pipeline_id = $user['pipeline_article_id'] ?? null;
-                }
-                $params['pipeline'] = $pipeline_id;
-                unset($params['scope']);
-            }
-
-            // Pipeline from norm_iri
-            elseif (!is_numeric($pipeline_id)) {
-                $pipelinesTable = $this->fetchTable('Pipelines');
-                $pipeline_id = $pipelinesTable
-                    ->find('all')
-                    ->where(['norm_iri' => $pipeline_id])
-                    ->first();
-
-                $params['pipeline'] = $pipeline_id['id'] ?? null;
-            }
-
-            return $params;
-        }
-
-        $params = Attributes::parseQueryParams($requestParameters, $this->parameters, 'articles');
-        return $params;
-    }
-
     /**
      * Get columns to be rendered in table views
      *
@@ -280,6 +229,16 @@ class JobsTable extends BaseTable
             'name' => [
                 'caption' => __('Name'),
                 'filter' => 'text',
+                'default' => true
+            ],
+            'nextrun' => [
+                'caption' => __('Next run'),
+                'sort' => true,
+                'default' => true
+            ],
+            'schedule' => [
+                'caption' => __('Schedule'),
+                'sort' => true,
                 'default' => true
             ],
             'jobtype' => [
@@ -356,7 +315,7 @@ class JobsTable extends BaseTable
         $pagination = parent::getPaginationParams($params, $columns);
 
         return [
-                'order' => ['id' => 'DESC'],
+                'order' => ['nextrun' => 'DESC', 'id' => 'DESC'],
                 'sortableFields' => $this->getSortableFields($columns),
                 'limit' => 100,
                 'maxLimit' => 1000
@@ -378,5 +337,22 @@ class JobsTable extends BaseTable
             ->select($this->Creator);
 
         return $query;
+    }
+
+    /**
+     * Find scheduled jobs that are due to run
+     *
+     * @param Query $query
+     * @param array $options
+     * @return Query
+     */
+    public function findDue(Query $query, array $options)
+    {
+        return $query
+            ->where([
+                'nextrun IS NOT' => null,
+                'nextrun <=' => FrozenTime::now()
+            ])
+            ->orderAsc('nextrun');
     }
 }

@@ -76,35 +76,6 @@ class JobMutate extends Job
     }
 
     /**
-     * Return parameters used to redirect to the mutated entities
-     *
-     * @return array[]
-     */
-    protected function _getRedirectParams()
-    {
-        $params = $this->config['params'] ?? [];
-        $table = $this->config['table'] ?? '';
-
-        $params = array_diff_key(
-            $params,
-            [
-                'task' => false,
-                'selection' => false,
-                'id' => false,
-                $table => false
-            ]
-        );
-
-        $task = $this->config['task'] ?? false;
-        if ($task) {
-            $task = $this->_getTypedTask(['type' => $task]);
-            $params = $task->updateRedirectParams($params);
-        }
-
-        return ['?' => $params];
-    }
-
-    /**
      * Get the maximum number of steps one task needs
      *
      * Called by the mutate tasks

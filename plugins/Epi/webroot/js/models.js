@@ -139,6 +139,9 @@ export class SectionsModel extends BaseDocumentModel {
      * Constructor
      *
      * @param {DocumentWidget} modelParent
+     * @listens epi:move:row
+     * @listens epi:focus:section
+     * @listens epi:change:dropdown
      */
     constructor(modelParent) {
         super(modelParent);
@@ -152,7 +155,7 @@ export class SectionsModel extends BaseDocumentModel {
             // Add section listener
             const sideBar = this.sectionMenu.closest('.sidebar');
             this.listenEvent(sideBar, 'click', event => this.sectionMenuClick(event));
-            this.listenEvent(sideBar, 'changed', event => this.sectionMenuClick(event));
+            this.listenEvent(sideBar, 'epi:change:dropdown', event => this.sectionMenuClick(event));
             this.listenEvent(this.sectionMenu, 'epi:move:row', event => this.updatePositions());
             this.listenEvent(this.doc.widgetElement, 'epi:focus:section', event => this.view(event.target.dataset.rowId));
         }
@@ -404,7 +407,7 @@ export class SectionsModel extends BaseDocumentModel {
             if (currentSection && !currentMenuItem.classList.contains('fixed')) {
                 if (currentSection.dataset.rowId !== currentMenuItem.dataset.id) {
                     const movedSection = this.modelParent.widgetElement
-                        .querySelector('[data-row-id="' + currentMenuItem.dataset.id + '"]');
+                        .querySelector('.doc-section[data-row-id="' + currentMenuItem.dataset.id + '"]');
                     currentSection.before(movedSection);
                     currentSection = movedSection;
                 }
@@ -452,7 +455,7 @@ export class SectionsModel extends BaseDocumentModel {
                 sortNumber += 1;
 
                 Utils.setInputValue(
-                    currentSection.querySelector('.doc-section-name [data-row-field="sortno"], :scope > [data-row-field="sortno"]'),
+                    currentSection.querySelector('.doc-section-name input[data-row-field="sortno"], :scope > input[data-row-field="sortno"]'),
                     sortNumber
                 );
 
@@ -672,7 +675,7 @@ export class SectionsModel extends BaseDocumentModel {
     sectionMenuClick(event) {
         const menuItem = this.getActiveMenuItem();
 
-        if (event.target.classList.contains('doc-section-add') && (event.type === 'changed')) {
+        if (event.target.classList.contains('doc-section-add') && (event.type === 'epi:change:dropdown')) {
             this.fetchNewSections(menuItem, false, event.detail.data.id);
         } else if (event.target.classList.contains('doc-section-remove')) {
             this.delete(menuItem);
@@ -828,7 +831,10 @@ export class SectionsModel extends BaseDocumentModel {
  * Items model
  *
  * @param options
- * @constructor
+ * @listens epi:upload:files
+ * @listens epi:update:item
+ * @listens epi:import:item
+ * @listens epi:change:dropdown
  */
 export class ItemsModel extends BaseDocumentModel {
 
@@ -837,9 +843,9 @@ export class ItemsModel extends BaseDocumentModel {
         this.lastId = 0;
 
         this.listenEvent(document, 'click', event => this.onClick(event), '.doc-item-remove, .doc-item-add');
-        this.listenEvent(document, 'changed', event => this.onChanged(event));
         this.listenEvent(document, 'input', event => this.onInput(event));
         this.listenEvent(document, 'keydown', event => this.onKeyDown(event));
+        this.listenEvent(document, 'epi:change:dropdown', event => this.onChanged(event));
         this.listenEvent(document, 'epi:upload:files', event => this.onUploadFiles(event));
         this.listenEvent(document, 'epi:update:item', event => this.onUpdateItem(event));
         this.listenEvent(document, 'epi:import:item', event => this.onImportItem(event));
@@ -981,6 +987,7 @@ export class ItemsModel extends BaseDocumentModel {
      * - For item changes, fire the epi:change:item event
      *
      * @param event
+     * @fires epi:change:item
      */
     onInput(event) {
         const sourceInput = event.target;
@@ -1063,6 +1070,7 @@ export class ItemsModel extends BaseDocumentModel {
      * - items
      *
      * @param event
+     * @fires epi:update:item
      */
     onImportItem(event) {
 
@@ -1139,7 +1147,7 @@ export class ItemsModel extends BaseDocumentModel {
      * Delete an item
      *
      * @param {HTMLElement }item The item element to delete
-     * @fires {epi:remove:item}
+     * @fires epi:remove:item
      */
     delete(item) {
         if (item.classList.contains('doc-section-item-first')) {
@@ -1272,6 +1280,7 @@ export class ItemsModel extends BaseDocumentModel {
      *                                   for id, itemsId and sectionsId
      * @param {Object} itemData The new data, including the fields fileName, property and content
      * @param {boolean} focusItem If true, the first input of the new item will be focused
+     * @fires epi:add:item
      */
     add(templateItem, itemData, focusItem = true) {
 
@@ -1431,7 +1440,7 @@ export class FilesModel extends BaseDocumentModel {
 
         let url = App.databaseUrl + 'files/view?root=root&path=' + filepath + '&filename=' + filename;
 
-        App.openDetails(url, {
+        App.openSidebar(url, {
             title: "File",
             ajaxButtons: ['submit'],
             external: true
@@ -1488,7 +1497,7 @@ export class PropertiesModel extends BaseDocumentModel {
         }
 
         const url = App.databaseUrl + 'properties/view/' + id;
-        App.openDetails(url, {
+        App.openSidebar(url, {
             title: "Property",
             ajaxButtons: ['submit'],
             external: true
@@ -1506,6 +1515,10 @@ export class PropertiesModel extends BaseDocumentModel {
  */
 export class AnnotationsModel extends BaseDocumentModel {
 
+    /**
+     * @param modelParent
+     * @listens epi:toggle:switch
+     */
     constructor(modelParent) {
         super(modelParent);
         this.lastRowId = 0;
@@ -3213,7 +3226,7 @@ export class TagsModel extends BaseDocumentModel {
             )
         };
 
-        new SelectWindow(options);
+        new SelectWindow(options, this.doc.getFrame());
     }
 
     /**
@@ -3286,7 +3299,7 @@ export class TagsModel extends BaseDocumentModel {
             }
         };
 
-        new SelectWindow(options);
+        new SelectWindow(options, this.doc.getFrame());
     }
 
     /**
@@ -3363,7 +3376,7 @@ export class TagsModel extends BaseDocumentModel {
             }
         };
 
-        new SelectWindow(options);
+        new SelectWindow(options, this.doc.getFrame());
     }
 
     /**

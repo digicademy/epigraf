@@ -101,6 +101,7 @@ class WikiCest
     /**
      * Scenario: Expand, collapse and click a menu item
      *
+     * @group deploy
      * @param AcceptanceTester $I
      * @return void
      */
@@ -125,7 +126,7 @@ class WikiCest
             if (!empty($this->norm_iri)) {
                 $I->seeCurrentUrlEquals('/' . $this->segment . '/' . $this->norm_iri);
             } else {
-                $I->seeCurrentUrlEquals('/' . $this->segment . '?category=' . $this->category);
+                $I->seeCurrentUrlEquals('/docs/show/' . $this->segment . '?category=' . $this->category);
             }
         }
     }

@@ -69,6 +69,9 @@ export class UploadWidget extends BaseWidget {
         }
     }
 
+    /**
+     * @fires epi:reload:page
+     */
     onComplete() {
         // Reload page in popup or in window
         if (this.isInFrame())  {
@@ -96,6 +99,11 @@ export class UploadWidget extends BaseWidget {
         return false;
     }
 
+    /**
+     *
+     * @param fileItems
+     * @fires epi:upload:files
+     */
     importFiles(fileItems) {
         if (!this.dataList) {
             return;

@@ -18,6 +18,14 @@ import {BaseWidget} from '/js/base.js';
  * - A comma separated list of words to highlight in the data-highlight attribute
  */
 export class HighlightText extends BaseWidget {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:save:form
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
         this.terms = Utils.getDataValue(this.widgetElement, 'highlight');

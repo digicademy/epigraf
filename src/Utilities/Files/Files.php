@@ -151,14 +151,12 @@ class Files
         $files = glob($path . "*");
         $now = time();
 
-        foreach ($files as $file) // 1 day old files and folders
+        foreach ($files as $file)
         {
+            // 1 day old files and folders
             if ($now - filemtime($file) >= 60 * 60 * 24 * 1) {
-                if (is_file($file)) {
-                    unlink($file);
-                }
-                elseif (is_dir($file)) {
-                    Files::removeFolder($file);
+                if (file_exists($file)) {
+                    Files::delete($file);
                 }
             }
         }
@@ -218,26 +216,6 @@ class Files
     }
 
     /**
-     * Delete a folder and its content
-     *
-     * //TODO: merge with Files::delete
-     *
-     * See https://stackoverflow.com/questions/1653771/how-do-i-remove-a-directory-that-is-not-empty
-     * @param $dirname
-     * @param boolean $silent If false, an exception will be thrown if the directory does not exist
-     */
-    static function removeFolder($dirname, $silent = false)
-    {
-        if (is_dir($dirname)) {
-            Files::delete($dirname);
-        }
-        else if (!$silent) {
-            throw new Exception('This is not a directory');
-        }
-
-    }
-
-    /**
      * Create a folder if it doesn't exist
      *
      * @param string $dirname
@@ -265,7 +243,7 @@ class Files
     static function recreateFolder($dirname)
     {
         if (is_dir($dirname)) {
-            Files::removeFolder($dirname);
+            Files::delete($dirname);
         }
 
         return mkdir($dirname, 0777, true);
@@ -408,6 +386,9 @@ class Files
     /**
      * Get a clean path by removing special characters
      *
+     * Since multiple dots are replaced by a single dot, at the same time,
+     * directory traversal attempts are neutralized.
+     *
      * @param string $path
      * @param bool $lower Convert to lower case
      * @return string A clean path
@@ -447,15 +428,16 @@ class Files
     /**
      * Prepend a path segment if not empty
      *
-     * @param string $prefix
-     * @param string $path
+     * @param string $prefix The path segment to prepend
+     * @param string $path The path
+     * @param string $sep Path separator
      * @return string
      */
-    public static function prependPath($prefix, $path)
+    public static function prependPath($prefix, $path, $sep = DS)
     {
-        $prefix = rtrim($prefix, '/');
+        $prefix = rtrim($prefix, $sep);
         if (($prefix !== '') && ($path !== '')) {
-            return $prefix . '/' . $path;
+            return $prefix . $sep . ltrim($path, $sep);
         }
         else {
             return $prefix . $path;
@@ -793,29 +775,35 @@ class Files
     /**
      * Rename file
      *
-     * @param string $path Path with trailing DS
-     * @param string $oldname
-     * @param string $newname
-     * @return bool
+     * @param string $path Parent path of the file
+     * @param string $oldname File name without path
+     * @param string $newname New file name
+     * @return bool Whether the rename operation was successful
      */
     static public function renameFile($path, $oldname, $newname)
     {
-        if (strpos($path . DS . $oldname . $newname, '..') !== false) {
+        $oldPath = rtrim($path, DS) . DS . $oldname;
+        $newPath = rtrim($path, DS) . DS . $newname;
+
+        if (strpos($oldPath . $newPath, '..') !== false) {
             return false;
         }
-        elseif (file_exists($path . DS . $newname)) {
+        elseif (file_exists($newPath)) {
+            return false;
+        }
+        elseif (!file_exists( $oldPath)) {
             return false;
         }
         else {
-            return rename($path . DS . $oldname, $path . DS . $newname);
+            return rename($oldPath, $newPath);
         }
     }
 
     /**
      * Rename folder
      *
-     * @param $path
-     * @param $newname
+     * @param string $path Full folder path
+     * @param string $newname New name
      *
      * @return bool
      */
@@ -951,31 +939,31 @@ class Files
     }
 
     /**
-     * Remove a file or folder and all its content
+     * Remove a file or a folder and all its content
      *
-     * See https://stackoverflow.com/questions/1653771/how-do-i-remove-a-directory-that-is-not-empty
-     *
-     * @param string $file The path
+     * @param string $fileOrFolder The file or folder path
+     * @param string|null $pattern A name that limits deleting only files or folders that contain the pattern in their name.
      * @return bool
      */
-    static public function delete($file)
+    static public function delete($fileOrFolder, $pattern = null)
     {
-        if (!file_exists($file)) {
+        if (!file_exists($fileOrFolder)) {
             throw new BadRequestException('The file or folder does not exist.');
         }
 
-        if (is_dir($file)) {
-            $objects = scandir($file);
-            foreach ($objects as $object) {
-                if ($object != "." && $object != ".." && !is_link($file . DS . $object)) {
-                    Files::delete($file . DS . $object);
-                }
+        if (is_dir($fileOrFolder)) {
+            $cleaned = Files::clearFolder($fileOrFolder);
+            if ($cleaned) {
+                $cleaned = rmdir($fileOrFolder);
             }
-            return rmdir($file);
-
+            return $cleaned;
         }
         else {
-            return unlink($file);
+            $match = ($pattern === null) || (stripos($fileOrFolder, $pattern) !== false);
+            if ($match) {
+                unlink($fileOrFolder);
+            }
+            return $match;
         }
     }
 
@@ -2056,6 +2044,23 @@ class Files
         if ($result === false) {
             throw new Exception("Could not write to the file: " . $filename);
         }
+    }
+
+    /**
+     * Check if a file has a given mime type.
+     *
+     * Subtypes are ignored
+     *
+     * @param string $filepath The file path
+     * @param string $mimeTypeToCompare Mime type to compare
+     *
+     * @return bool
+     */
+    static public function hasMimeType(string $filepath, string $mimeType): bool{
+        $fileType = explode('/', mime_content_type($filepath))[0] ?? '';
+        $mimeType = explode('/', $mimeType)[0] ?? '';
+        return  $fileType === $mimeType;
+
     }
 }
 

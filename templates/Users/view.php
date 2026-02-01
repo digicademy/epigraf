@@ -12,8 +12,8 @@
 /**
  * @var \App\View\AppView $this
  * @var App\Model\Entity\User $entity
+ * @var string $user_role
  */
-
 use App\Utilities\Converters\Attributes;
 
 ?>
@@ -29,6 +29,7 @@ use App\Utilities\Converters\Attributes;
 
     <?= $this->EntityHtml->entityForm($entity, 'view') ?>
 
+    <?php if ($this->User->isLoginMethodSupported('form')): ?>
     <?= $this->Link->authLink(
         __('Generate invitation'),
         ['action' => 'invite', $entity->id],
@@ -39,7 +40,9 @@ use App\Utilities\Converters\Attributes;
         ]
     );
     ?>
+    <?php endif; ?>
 
+    <?php if ($this->User->isLoginMethodSupported('token')): ?>
     <?= $this->Link->authLink(
         __('Regenerate access token'),
         ['action' => 'token', $entity->id],
@@ -50,6 +53,7 @@ use App\Utilities\Converters\Attributes;
         ]
     );
     ?>
+    <?php endif; ?>
 </div>
 
 <?php if($entity->hasSqlAccess): ?>
@@ -134,7 +138,7 @@ use App\Utilities\Converters\Attributes;
     <?= $this->Link->authLink(
         __('Grant'),
         ['action' => 'grant', $entity->id],
-        ['class' => 'doc-item-add button tiny popup']
+        ['class' => 'doc-item-add button tiny popup', 'data-role' => 'update']
         );
     ?>
 </div>

@@ -22,7 +22,6 @@ CREATE TABLE `users`
     `password`            varchar(255) NOT NULL,
     `email`            varchar(255) DEFAULT NULL,
     `name`            varchar(255) DEFAULT NULL,
-    `acronym`            varchar(10) DEFAULT NULL,
     `norm_iri`            varchar(255) NOT NULL,
     `contact`             text         DEFAULT NULL,
     `accesstoken`         varchar(255) DEFAULT NULL,
@@ -113,21 +112,30 @@ CREATE TABLE `files`
 --
 
 DROP TABLE IF EXISTS `jobs`;
-CREATE TABLE `jobs`
-(
-    `id`          int(10) unsigned NOT NULL AUTO_INCREMENT,
-    `created`     datetime DEFAULT NULL,
-    `modified`    datetime DEFAULT current_timestamp() ON UPDATE current_timestamp (),
-    `created_by`  int(11) DEFAULT NULL,
-    `modified_by` int(11) DEFAULT NULL,
-    `jobtype`         varchar(100) NOT NULL,
-    `status`      varchar(50)  NOT NULL,
-    `progress`    int(11) NOT NULL DEFAULT 0,
-    `progressmax` int(11) NOT NULL DEFAULT 0,
-    `config`      text     DEFAULT NULL,
-    `result`      text     DEFAULT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `jobs` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`created` DATETIME NULL DEFAULT NULL,
+	`modified` DATETIME NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+	`scheduled` DATETIME NULL DEFAULT NULL,
+	`created_by` INT(11) NULL DEFAULT NULL,
+	`modified_by` INT(11) NULL DEFAULT NULL,
+	`name` VARCHAR(100) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`jobtype` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`norm_iri` VARCHAR(500) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`delay` TINYINT(4) NOT NULL DEFAULT '0',
+	`schedule` VARCHAR(10) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`nextrun` DATETIME NULL DEFAULT NULL,
+	`status` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`progress` INT(11) NOT NULL DEFAULT '0',
+	`progressmax` INT(11) NOT NULL DEFAULT '0',
+	`config` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`result` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `nextrun` (`nextrun`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB;
+
 
 --
 -- Table structure for table `permissions`

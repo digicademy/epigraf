@@ -43,6 +43,20 @@ import Utils from '/js/utils.js';
  *   Make sure, the configured data-list-action-get endpoint supports the id parameter.
  */
 export class ScrollPaginator extends BaseWidget {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:toggle:node
+     * @listens epi:show:tabsheet
+     * @listens epi:create:row
+     * @listens epi:update:row
+     * @listens epi:cancel:row
+     * @listens epi:delete:row
+     * @listens epi:move:row
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 

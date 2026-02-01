@@ -61,9 +61,10 @@ namespace App\Utilities\Converters;
  *
  *  The date key is used to establish an order that reflects the following criteria:
  *  - Every date represents a period of time. A date consisting of a year covers the entire year.
- *  - Each date is sorted based on its reference point and how far it extends into the past and future.
- *    Dates extending farther back in time appear before dates extending less far back.
- *    Dates extending further into the future appear after dates that do not extend as far into the future.
+ *  - In ascending order, each date is sorted based on its reference point.
+ *    It is also ordered according to how far it extends into the past and future.
+ *    Date ranges extending further back in time appear before those extending less far back.
+ *    Date ranges extending further into the future appear after dates that do not extend as far into the future.
  *    Therefore, a potentially older date is sorted before a potentially younger date,
  *    and a potentially younger date is sorted after a potentially older date.
  *

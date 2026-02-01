@@ -26,6 +26,8 @@ class JsonType extends \Cake\Database\Type\JsonType
                 return $value;
             }
 
+        } elseif ($value === '') {
+            return null;
         }
         return $value;
     }

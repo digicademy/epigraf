@@ -23,7 +23,6 @@ class ArticlesCest
      * Scenario: Test if the table shows up
      *
      * @group deploy
-     * @group test
      * @param AcceptanceTester $I
      * @return void
      */
@@ -147,12 +146,12 @@ class ArticlesCest
     /**
      * Scenario: Change the size of a column in the articles table.
      *
+     * @group deploy
      * @param AcceptanceTester $I
      * @return void
      */
     public function changeColumnSize(AcceptanceTester $I)
     {
-
         $I->login('devel', 'devel');
         $I->amOnPage('/epi/projects/articles');
         $I->seeElement('table th[data-col="name"]');
@@ -435,7 +434,7 @@ class ArticlesCest
         // Check result
         $I->switchToNextTab();
         $I->waitForElement("#rawdata-tab");
-        $I->seeCurrentUrlMatches('~/jobs/execute/46315\.json\?download=job_46315\.json&database=projects$~');
+        $I->seeCurrentUrlMatches('~/jobs/execute/78664\.json\?download=job-78664\.json&database=projects$~');
         $I->click("#rawdata-tab");
 
         foreach ($selectedTitles as $title) {
@@ -750,12 +749,14 @@ class ArticlesCest
         // Edit the title
         $contentSelector = '.doc-content input[name="name"]';
         $I->click($contentSelector);
+
         $I->pressKey(
             $contentSelector,
             ['ctrl', 'a'],
             WebDriverKeys::DELETE,
             'Fancynewtitle'
         );
+        $I->wait(0.5);
 
         // Save and compare output
         $I->click('Save', '.sidebar-right');
@@ -874,6 +875,7 @@ class ArticlesCest
             WebDriverKeys::DELETE,
             'Fancynewtitle'
         );
+        $I->wait(0.5);
 
         // Save and compare output
         $I->click('Save', '.sidebar-right');
@@ -928,6 +930,7 @@ class ArticlesCest
             WebDriverKeys::DELETE,
             'Fancynewtitle'
         );
+        $I->wait(0.5);
 
         // Save and compare output
         $I->click('Save', 'nav.actions-bottom');
@@ -1375,11 +1378,9 @@ class ArticlesCest
      * Scenario: Add location to article
      *
      * @group incomplete
-     *
      * @param AcceptanceTester $I
      * @return void
      */
-
     public function addLocation(AcceptanceTester $I)
     {
         // Login

@@ -37,6 +37,9 @@ export class JobWidget extends BaseWidget {
         this.frameWidget = this.getFrame();
     }
 
+    /**
+     * @listens epi:click:button
+     */
     initWidget() {
         this.frameWidget = this.getFrame();
 
@@ -321,14 +324,14 @@ export class JobWidget extends BaseWidget {
                 }
 
                 // Continue
-                else if (data.nexturl && !self.isCancelled) {
+                else if (data.nextUrl && !self.isCancelled) {
 
                     // For delayed jobs, request status every second
                     if (data.delay === 1) {
                         self.delay = 1000;
                     }
 
-                    const target = new URL(data.nexturl, App.baseUrl);
+                    const target = new URL(data.nextUrl, App.baseUrl);
                     self.continuePolling(target);
                 }
 

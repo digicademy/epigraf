@@ -221,9 +221,34 @@ The `EntityWidget` is used for simple entities, usually displayed in a vertical 
 It inherits all methods and properties from `BaseForm`
 and does not provide any additional functionality.
 
-The `DocumentWidget` is used for more complex data,
-for example an article which consists of sections or a property which may contain annotations.
-The document widget initializes the respective frontend models (e.g., `ArticlesModel` and `PropertiesModel`).
+The `DocumentWidget` is used for more complex data.
+For example, it can be used for an article consisting of sections or a property containing annotations.
+The document widget initializes the corresponding frontend models (ArticlesModel, SectionsModel, etc.).
+
+The classes in the model hierarchy provide basic functions for navigating the DOM according to the model structure.
+Service functions facilitate access to entity data. In addition, content can be created, modified, or deleted.
+Classes outside the model hierarchy can access the model hierarchy provided they are linked to an element
+that is a child of an element linked to the DocumentWidget class.
+For example, the `BaseModel.getWidget` function finds an instance of DocumentWidget.
+The `models` property contains the classes of the model hierarchy.
+
+Example
+``` javascript
+export class FooWidget extends BaseWidget {
+    constructor(element, name, parent) {
+       super(element, name, parent);
+
+       // Init vars
+       this.widgetElement = element;
+    }
+
+    myFunction() {
+       const doc = this.getWidget(this.widgetElement, 'document', true);
+       const types = doc.models.types;
+       // ...
+    }
+}
+```
 
 Parts of a document may be distributed on the page. Two cases are distinguished in documents:
 - **Satellites** are displayed outside the main content area.

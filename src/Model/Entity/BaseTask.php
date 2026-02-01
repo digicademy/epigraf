@@ -17,6 +17,8 @@ use Exception;
 /**
  * Base class for tasks
  *
+ * TODO: Implement some kind of plugin system for tasks?
+ *
  * To create a new task:
  * - Create a new class in the folder Model/Entity/Tasks that extends BaseTask
  * - Create a new template in the folder templates/Tasks that provides the configuration form
@@ -94,6 +96,19 @@ class BaseTask
 
 
     /**
+     * Update query parameters that redirect to the processed entities
+     *
+     * Overwrite in derived classes
+     *
+     * @param array $params The query parameters to be changed
+     * @return array The updated query parameters
+     */
+    public function updateRedirectParams($params)
+    {
+        return $params;
+    }
+
+    /**
      * Get current input file
      *
      * The full path to the input file is stored in 'inputpath'.
@@ -119,7 +134,7 @@ class BaseTask
         }
 
         // If no input file is specified, return the default job file
-        $filename = 'job_' . $this->job->id . '.xml';
+        $filename = $this->job->caption . '.xml';
         return $this->job->jobPath . $filename;
     }
 
@@ -170,7 +185,7 @@ class BaseTask
                 $filename = Files::getTempFilename('temp', $ext);
             }
             else {
-                $filename = 'job_' . $this->job->id . '.' . $ext;
+                $filename = Files::cleanFilename($this->job->caption . '.' . $ext);
             }
         }
         return $filename;
@@ -204,11 +219,11 @@ class BaseTask
     /**
      * Reset the task progress
      *
-     * @return true
+     * @return array The updated task config
      */
-    public function init()
+    public function reset()
     {
-        return true;
+        return $this->config;
     }
 
     /**

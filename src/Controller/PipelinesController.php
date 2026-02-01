@@ -113,23 +113,9 @@ class PipelinesController extends AppController
 
         if ($this->request->is(['patch', 'post', 'put'])) {
 
-            //Reorder tasks
-            //TODO: move to model
+            //Reorder tasks and options
             $tasks = $this->request->getData('Tasks');
-            if (is_array($tasks)) {
-                usort($tasks, function ($a, $b) {
-                    return ((int)$a['number'] - (int)$b['number']);
-                });
-            }
-
-            //TODO: move to model
-            $options = $this->request->getData('Tasks.0.options');
-            if (is_array($options)) {
-                usort($options, function ($a, $b) {
-                    return ($a['number'] - $b['number']);
-                });
-                $tasks[0]['options'] = $options;
-            }
+            $tasks = $entity->arrangeTasks($tasks);
 
             //Save data
             $this->request = $this->request->withData('tasks', $tasks);
@@ -141,9 +127,10 @@ class PipelinesController extends AppController
             else {
                 $this->Answer->error(__('The pipeline could not be saved. Please, try again.'));
             }
-        }
+        } else {
 
-        $entity->arrangeTasks();
+            $entity->tasks = $entity->arrangeTasks($entity->tasks ?? []);
+        }
 
         $this->sidemenu = $entity->getMenu();
         $this->sidemenu['move'] = true;

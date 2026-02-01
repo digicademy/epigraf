@@ -184,7 +184,7 @@ trait CompareHtmlTrait
             '/<input type="hidden" name="_Token[^>]+>/' => '',
             '/[0-9]{2}\.[0-9]{2}\.[0-9]{2}, [0-9]{2}:[0-9]{2}/' => '#TIME#',
             '/[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2}, [0-9]{1,2}:[0-9]{1,2}( [AP]M)?/' => '#TIME#',
-            '/[rf][rwx-]{9}  (root|www-data)/' => '#PERMISSIONS'
+            '/[rf][rwx-]{9}( *(root|www-data))?/' => '#PERMISSIONS'
         ];
         $replacements = array_merge($default, $replacements);
 

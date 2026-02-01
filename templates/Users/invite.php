@@ -37,7 +37,7 @@
 
     <p>Here comes a template including the activation link. You can send it to the new user.</p>
 
-    <?php $this->Form->create(null, ['id' => 'form-mail']) ?>
+    <?= $this->Form->create(null, ['id' => 'form-mail', 'url' => ['action' => 'mail'] ]) ?>
     <?= $this->Form->control('receiver',['type'=>'email','value' => $email['receiver'], 'label'=>__('Receiver')]) ?>
     <?= $this->Form->control('subject',['value' => $email['subject'], 'label'=>__('Subject')]) ?>
 
@@ -47,11 +47,13 @@
         'rows' => 15,
     ]) ?>
 
+
     <?php
-    $this->Link->addCancelAction(['controller' => 'Users', 'action' => 'view', $entity->id]);
-    //$this->Link->addSubmitAction(__('Send'), ['form' => 'form-mail']);
+        $this->Link->beginActionGroup ('content');
+        $this->Link->addCancelAction(['controller' => 'Users', 'action' => 'view', $entity->id]);
+        $this->Link->addSubmitAction(__('Send'), ['form' => 'form-mail']);
     ?>
 
-<?php $this->Form->end() ?>
+<?= $this->Form->end() ?>
 
 <?php endif; ?>

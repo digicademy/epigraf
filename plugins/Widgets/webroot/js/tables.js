@@ -759,7 +759,7 @@ export class TableWidget extends BaseWidget {
 
             // Open frame
             else if (this.widgetElement.classList.contains("actions-toframe") && !tr.classList.contains("actions-noframe")) {
-                App.openDetails(url, {external: true, force: false, focus: false});
+                App.openSidebar(url, {external: true, force: false, focus: false});
             }
             // Open page
             else {
@@ -820,6 +820,7 @@ export class TableWidget extends BaseWidget {
      *
      * @param {HTMLTableRowElement} row
      * @param {boolean} open Perform the row action
+     * @fires epi:focus:entity
      */
     activateEntity(row) {
         if (row) {
@@ -1179,6 +1180,14 @@ export class TableWidget extends BaseWidget {
  * Whenever a row is dropped, the widget element emits the event 'epi:move:row'.
  */
 export class DragItemsWidget extends BaseWidget {
+
+    /**
+     *
+     * @param element
+     * @param name
+     * @param parent
+     * @listens epi:toggle:switch
+     */
     constructor(element, name, parent) {
         super(element, name, parent);
 
@@ -1511,6 +1520,7 @@ export class DragItemsWidget extends BaseWidget {
      * Finish the drag object
      *
      * @param {object} dragObject
+     * @fires epi:move:row
      * @return {void}
      */
     releaseDragObject(dragObject) {

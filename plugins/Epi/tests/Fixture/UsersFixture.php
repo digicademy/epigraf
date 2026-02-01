@@ -45,7 +45,6 @@ class UsersFixture extends TestFixture
         'modified_by' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created_by' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'name' => ['type' => 'string', 'length' => 1500, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
-        'acronym' => ['type' => 'string', 'length' => 1500, 'null' => true, 'default' => null, 'collate' => 'utf8mb4_unicode_ci', 'comment' => '', 'precision' => null],
         'userrole' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'norm_iri' => ['type' => 'string', 'length' => 50, 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'comment' => '', 'precision' => null],
         '_indexes' => [
@@ -79,7 +78,6 @@ class UsersFixture extends TestFixture
                 'modified_by' => null,
                 'created_by' => null,
                 'name' => '',
-                'acronym' => ' u1',
                 'userrole' => 2,
             ],
             [
@@ -90,7 +88,6 @@ class UsersFixture extends TestFixture
                 'modified_by' => null,
                 'created_by' => null,
                 'name' => '',
-                'acronym' => 'u2',
                 'userrole' => 2,
             ],
             [
@@ -101,7 +98,6 @@ class UsersFixture extends TestFixture
                 'modified_by' => null,
                 'created_by' => null,
                 'name' => '',
-                'acronym' => '',
                 'userrole' => 2,
             ]
         ];

@@ -32,3 +32,10 @@ Epigraf emerged from the inter-academic edition project "The German Inscriptions
 It is used in the nine inscription research centers of the six participating academies of sciences.
 The application is being developed by the Digital Academy of Sciences and Literature \| Mainz and the Digital Media & Computational Methods Research Group at the University Münster.
 
+
+**Citation**
+
+Jünger, J., Hertkorn, G., Dicke, P., Gärtner, C., Herold, J.,
+Höfig, L., Knispel, J., Kopp, M.,Kotthoff, H., Lentge, F., Michel, M., Syring, W-D. (2026).
+Epigraf: a research platform for collecting, annotating, linking and publishing multimodal text data.
+Version 5.2. https://digicademy.github.io/epigraf/

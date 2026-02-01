@@ -1715,7 +1715,6 @@ CREATE TABLE `users` (
   `created_by` int(11) DEFAULT NULL,
   `usertype` varchar(50) DEFAULT NULL,
   `name` varchar(1500) DEFAULT NULL,
-  `acronym` varchar(1500) DEFAULT NULL,
   `userrole` int(11) DEFAULT NULL,
   `norm_iri` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -1733,8 +1732,8 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,0,NULL,NULL,'2022-04-01 08:45:59','2023-03-15 00:09:29',NULL,NULL,'human','Testuser','TU',1,NULL),
-(2,0,NULL,NULL,'2024-11-09 13:06:13','2024-11-09 13:06:13',NULL,NULL,NULL,'Jakob Jünger','jj',0,'juenger');
+(1,0,NULL,NULL,'2022-04-01 08:45:59','2023-03-15 00:09:29',NULL,NULL,'human','Testuser',1,NULL),
+(2,0,NULL,NULL,'2024-11-09 13:06:13','2024-11-09 13:06:13',NULL,NULL,NULL,'Jakob Jünger',0,'juenger');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 

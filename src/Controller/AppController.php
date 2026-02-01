@@ -31,6 +31,8 @@ use App\View\MarkdownView;
 use App\View\RdfView;
 use App\View\TtlView;
 use App\View\XmlView;
+use Authentication\Controller\Component\AuthenticationComponent;
+use Authorization\Exception\ForbiddenException;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Database\Exception\MissingConnectionException;
@@ -52,6 +54,7 @@ use Rest\Controller\Component\ApiPaginationComponent;
  * @property ActionsComponent $Actions
  * @property AnswerComponent $Answer
  * @property ApiPaginationComponent $ApiPagination
+ * @property AuthenticationComponent $Authentication
  */
 class AppController extends Controller
 {
@@ -72,11 +75,11 @@ class AppController extends Controller
      *
      * @var array $menu
      */
-    public $menu = [
+    public $menu = [[
         'label' => 'Epigraf »',
         'escape' => false,
         'class' => 'menu_public menu-home'
-    ];
+    ]];
 
     /**
      * Side menu items
@@ -256,7 +259,12 @@ class AppController extends Controller
                 'enableBeforeRedirect' => false
             ]
         );
-        $this->loadComponent('Flash', ['duplicate' => false]);
+
+        $this->loadComponent(
+            'Flash',
+            ['duplicate' => false]
+        );
+
         $this->loadComponent(
             'Rest.ApiPagination',
             [
@@ -274,12 +282,21 @@ class AppController extends Controller
                 ]
             ]
         );
+
         $this->loadComponent('Rest.Actions');
         $this->loadComponent('Rest.Answer');
         $this->loadComponent('Rest.Lock');
 
         // TODO: move to Rest plugin?
-        $this->_initAuthorization();
+        $this->loadComponent('Authentication.Authentication', [
+            //Check user in initialize to provide user info in beforeFilter
+            'identityCheckEvent' => 'Controller.initialize',
+        ]);
+        $this->loadComponent('Authorization.Authorization');
+
+
+        $this->allowPublic($this->authorized['web']['guest'] ?? []);
+
         $this->_initLocale();
     }
 
@@ -800,36 +817,6 @@ class AppController extends Controller
         return Attributes::cleanOption($theme, array_keys(UsersTable::$themes), 'default');
     }
 
-    /**
-     * Build a login URL that redirect to the page afterwards
-     *
-     * @return array
-     */
-    public function getLoginUrl()
-    {
-        // Build redirect URL
-        $request = $this->getRequest();
-        $params = $request->getAttribute('params');
-        $redirect = $params + $params['pass'] ?? [];
-        unset($redirect['pass']);
-        unset($redirect['_matchedRoute']);
-        $redirect['?']['token'] = false;
-
-        // If already tried to log in on this URL, then stop
-        if (!empty($redirect['?']['login'])) {
-            $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'stop'];
-        }
-
-        // Add login parameter signalling the user already tried to log in
-        else {
-            $redirect['?']['login'] = '1';
-            $redirect = Router::url($redirect);
-            $url = ['plugin' => false, 'controller' => 'Users', 'action' => 'login', '?' => ['redirect' => $redirect]];
-        }
-
-        return $url;
-    }
-
     public function getStrippedDatabaseUrl()
     {
         $request = $this->getRequest();
@@ -874,72 +861,18 @@ class AppController extends Controller
     }
 
     /**
-     * Authorisation settings
-     *
-     * Users can access the database via tokens or web authorisation.
-     *
-     * @return void
-     * @throws \Exception
-     */
-    protected function _initAuthorization()
-    {
-        // Switch between token authentication or form authentication
-        $token = $this->request->getQuery('token');
-
-        if ($token) {
-            $this->loadComponent('Auth', [
-                'authenticate' => [
-                    'Token' => [
-                        'finder' => 'auth',
-                        'fields' => ['token' => 'accesstoken', 'password' => 'password'],
-                        'parameter' => 'token',
-                        'header' => false
-                    ]
-                ],
-                'authorize' => ['Controller'],
-                'unauthorizedRedirect' => $this->request->is('api') ? false : $this->getLoginUrl(),
-                'authError' => $this->request->is('api') ? null : false,
-                'storage' => 'Memory',
-                'loginRedirect' => false,
-                'logoutRedirect' => false
-            ]);
-        }
-        else {
-            $this->loadComponent('Auth', [
-                'authenticate' => [
-                    'Form' => ['finder' => 'auth']
-                ],
-                'authorize' => ['Controller'],
-                'unauthorizedRedirect' => false,
-                'storage' => '\App\Auth\Storage\SessionStorage',
-                'loginRedirect' => [
-                    'controller' => 'Users',
-                    'action' => 'start'
-                ],
-                'logoutRedirect' => [
-                    'controller' => 'Pages',
-                    'action' => 'show',
-                    'start'
-                ]
-            ]);
-        }
-
-        //Check user in initialize to provide user info in beforeFilter
-        $this->Auth->setConfig('checkAuthIn', 'Controller.initialize');
-
-        // Allow public actions
-        $this->allowPublic($this->authorized['web']['guest'] ?? []);
-
-    }
-
-    /**
      * Get request scope
      *
-     * @return string 'api' for requests with access tokens, othereise 'web'
+     * TODO: There is some confusion about what an API request is:
+     *       a) requests for structured data formats
+     *       b) token authenticated requests
+     *       Tidy up: rename 'api' to 'token' and 'web' to 'form'.
+     *
+     * @return string 'api' for requests with access tokens, otherwise 'web'
      */
     public function _getRequestScope()
     {
-        return $this->request->getQuery('token', false) ? 'api' : 'web';
+        return $this->request->is('token') ? 'api' : 'web';
     }
 
     /**
@@ -1005,19 +938,16 @@ class AppController extends Controller
      */
     protected function _getUserIri($user = null)
     {
-        $user = $user ?? $this->Auth->user();
+        $user = $user ?? $this->getRequest()->getAttribute('identity');
         return $user['norm_iri'] ?? null;
     }
 
     /**
-     * Allow public actions
+     * Allow public actions for non-token authenticated users
      *
-     * Auth->allow() bypasses the Authorization process.
-     * Therefore, check for empty user and tokens.
-     * Otherwise, for token users, only public databases are accessible.
+     * TODO: Should this be moved to another place?
      *
-     * @param $actions
-     *
+     * @param array $actions
      * @return void
      */
     protected function allowPublic($actions)
@@ -1026,11 +956,9 @@ class AppController extends Controller
             return;
         }
 
-        $user = $this->Auth->user();
-        $token = $this->request->getQuery('token');
-
-        if (empty($user) && empty($token)) {
-            $this->Auth->allow($actions);
+        $user = $this->getRequest()->getAttribute('identity');
+        if (empty($user) &&  !$this->getRequest()->is('token')) {
+            $this->Authentication->allowUnauthenticated($actions);
         }
 
     }
@@ -1047,7 +975,7 @@ class AppController extends Controller
         if ($this->allowedDatabases === null) {
 
             try {
-                $user = $user ?? $this->Auth->user();
+                $user = $user ?? $this->getRequest()->getAttribute('identity');
                 $this->allowedDatabases = $this->fetchTable('Databanks')
                     ->find('allowedBy', ['user' => $user])
                     ->all()
@@ -1184,7 +1112,7 @@ class AppController extends Controller
      */
     protected function _selectDatabase()
     {
-        $user = $this->Auth->user();
+        $user = $this->getRequest()->getAttribute('identity');
         $db_allowed = $this->getAllowedDatabases($user);
 
         $db_selected = Databank::addPrefix(
@@ -1201,9 +1129,8 @@ class AppController extends Controller
 
             // Second, redirect to login
             else {
-                $this->Answer->error(
-                    __('You are not allowed to access the selected database.'),
-                    $this->getLoginUrl()
+                $this->Answer->redirectToLogin(
+                    __('You are not allowed to access the selected database.')
                 );
             }
         }
@@ -1224,31 +1151,40 @@ class AppController extends Controller
      */
     protected function _initUser()
     {
-        // Pass user record to view, update activity flags and update session object
-        $user = $this->Auth->user();
-        if ($user) {
-            $users = TableRegistry::getTableLocator()->get('Users');
 
+        try {
+            $this->Authorization->authorize($this);
+        } catch (ForbiddenException $e) {
+            throw new ForbiddenException(null, __('You are not authorized to access that location.'));
+        }
+
+        // Pass user record to view, update activity flags and update session object
+        $userIdentity = $this->getRequest()->getAttribute('identity');
+
+        if ($userIdentity) {
             try {
-                $user_db = $users->updateActive($user);
+                $userEntity = TableRegistry::getTableLocator()
+                    ->get('Users')
+                    ->updateActive($userIdentity->getOriginalData());
+
             } catch (RecordNotFoundException $e) {
-                $this->Auth->logout();
+                $this->Authentication->logout();
                 $this->Answer->redirect(['controller' => 'Users', 'action' => 'login']);
             }
 
             if (
-                ($user['modified'] ?? false) != ($user_db['modified'] ?? false) ||
-                ($user['lastaction'] ?? false) != ($user_db['lastaction'] ?? false)
+                ($userIdentity['modified'] ?? false) != ($userEntity['modified'] ?? false) ||
+                ($userIdentity['lastaction'] ?? false) != ($userEntity['lastaction'] ?? false)
             ) {
-                $this->Auth->setUser($user_db);
+                $this->Authentication->setIdentity($userEntity);
             }
         }
 
         // Pass to controllers
         $activeDatabase = $this->getRequest()->getParam('database');
         $selectedDatabase = $this->getRequest()->getParam('database') ?? $this->getRequest()->getQuery('database');
-        $this->userRole = PermissionsTable::getUserRole($user, $activeDatabase, $this->_getRequestScope());
-        $this->userDbRole = PermissionsTable::getUserRole($user, $selectedDatabase,  $this->_getRequestScope());
+        $this->userRole = PermissionsTable::getUserRole($userIdentity, $activeDatabase, $this->_getRequestScope());
+        $this->userDbRole = PermissionsTable::getUserRole($userIdentity, $selectedDatabase,  $this->_getRequestScope());
         $this->requestScope = $this->_getRequestScope();
         $this->requestMode = $this->_getRequestMode();
         $this->requestAction = $this->_getRequestAction();
@@ -1261,7 +1197,7 @@ class AppController extends Controller
         $this->set('user_scope', $this->requestScope);
 
         // Pass to model
-        BaseTable::$user = $user;
+        BaseTable::$user = $userIdentity;
         BaseTable::$requestScope = $this->requestScope;
         BaseTable::$requestMode = $this->requestMode;
         BaseTable::$requestPreset = $this->requestPreset;
@@ -1269,8 +1205,8 @@ class AppController extends Controller
         BaseTable::$requestAction = $this->requestAction;
         BaseTable::$requestTarget = $this->request->getRequestTarget();
         BaseTable::$userRole = $this->userRole;
-        BaseTable::$userId = PermissionsTable::getUserId($user);
-        BaseTable::$userIri = $this->_getUserIri($user);
+        BaseTable::$userId = PermissionsTable::getUserId($userIdentity);
+        BaseTable::$userIri = $this->_getUserIri($userIdentity);
         BaseTable::$userSettings = $this->Actions->getUserSettings();
 
         // Pass to JavaScript
@@ -1280,7 +1216,7 @@ class AppController extends Controller
         $this->initTour();
 
         // Pass to view
-        $this->set('user', $user);
+        $this->set('user', $userIdentity);
     }
 
     /**

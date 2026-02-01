@@ -37,10 +37,7 @@ use App\Model\Entity\Databank;
             ['data-target'=>'main','data-role' => 'open']
         );
     }
-    $this->Link->addEditAction (
-        ['action' => 'edit', $entity->id],
-        'databanks-' . $entity->id
-    );
+    $this->Link->addEditButtons($entity);
 
     if (!$entity->available) {
         $this->Link->addAction(

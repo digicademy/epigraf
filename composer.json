@@ -1,7 +1,7 @@
 {
     "name": "epigraf/app",
     "description": "Epigraf",
-    "version": "5.2.1",
+    "version": "5.3.0",
     "type": "project",
     "license": "GPL-2.0",
     "require": {
@@ -23,13 +23,17 @@
         "ext-pdo": "*",
         "ext-curl": "*",
         "ext-posix": "*",
+        "ext-fileinfo": "*",
         "lampager/lampager-cakephp": "^2.0",
         "masterminds/html5": "^2.7",
         "ivopetkov/html5-dom-document-php": "2.*",
         "cakephp/bake": "^2.5",
         "predis/predis": "^2.3",
         "symfony/yaml": "^7.3",
-        "openspout/openspout": "^4.32"
+        "openspout/openspout": "^4.32",
+        "dragonmantank/cron-expression": "^3.6",
+        "cakephp/authentication": "^2.11",
+        "cakephp/authorization": "^2.5"
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "~4.3.0",

@@ -197,7 +197,6 @@ class XmlImport
         else {
             call_user_func_array($this->elementhandler, array(&$element, &$this));
         }
-        //$this->elementhandler($element,$this);
 
         // Rename attributes and element name
         if (!isset($element['renameattributes']) || $element['renameattributes']) {

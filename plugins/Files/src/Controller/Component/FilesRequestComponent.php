@@ -232,7 +232,6 @@ class FilesRequestComponent extends Component
             throw new NotFoundException('File or folder not found');
         }
 
-
         if ($this->request->getParam('plugin') === 'Epi') {
             $database = $this->request->getParam('database');
         } else {
@@ -241,7 +240,7 @@ class FilesRequestComponent extends Component
 
         if ($checkPermissions && !$file->isPermitted(
             PermissionsTable::getPermissionMask(
-                $this->controller->Auth->user(),
+                $this->request->getAttribute('identity'),
                 $database,
                 $this->request->getParam('controller'),
                 $this->request->getParam('action'),
@@ -667,7 +666,7 @@ class FilesRequestComponent extends Component
 
         }
         elseif ($file->isFolder) {
-            $downloadPath = Files::zipFolder($file->absoluteFolder);
+            $downloadPath = Files::zipFolder($file->fullPath);
 
             if (empty($downloadPath)) {
                 throw new NotFoundException('Zip failed.');
@@ -1046,13 +1045,12 @@ class FilesRequestComponent extends Component
         if ($this->request->is(['patch', 'post', 'put'])) {
             /** @var FileRecord $entity */
             $entity = $this->model->patchEntity($entity, $this->request->getData());
-
             $proceed = true;
 
             //Rename
             if ($entity->isDirty('name')) {
                 $entity->name = Files::cleanFilename($entity->name);
-                $proceed = $entity->rename($this->controller->currentFolder);
+                $proceed = $entity->rename();
 
                 if (!$proceed) {
                     $this->controller->Answer->error(__('The file or folder could not be renamed.'));
@@ -1066,6 +1064,10 @@ class FilesRequestComponent extends Component
                 $this->request = $this->request->withData('oldname', $entity->oldname);
                 $data = $this->request->getData('data');
 
+                if (!Files::hasMimeType($entity->fullPath, $data->getClientMediaType())) {
+                    $this->controller->Answer->error(__('The file type of the uploaded file is not compatible with the file extension. Please change the filename or the uploaded file.'));
+                }
+
                 $uploadpath = $this->controller->currentFolder;
                 $files = Files::saveUploadedFile($uploadpath, $data, true, $entity->name);
                 $proceed = empty($files['error']);
@@ -1073,6 +1075,10 @@ class FilesRequestComponent extends Component
                 if (!$proceed) {
                     $this->controller->Answer->error(__('The file could not be uploaded.'));
                 }
+
+                $entity->clearThumbs();
+                $entity->updateMetadata();
+
             }
 
             //Save
@@ -1179,9 +1185,9 @@ class FilesRequestComponent extends Component
 
             if ($scope === 'content') {
 
-                    // Move folder
+                // Move folder
                 $target_abs = $item->rootFolder . DS . $target;
-                $source_abs = $item->absoluteFolder;
+                $source_abs = $item->fullPath;
 
                 if (!Files::moveContent($source_abs, $target_abs, $overwrite)) {
                     $this->controller->Answer->error(

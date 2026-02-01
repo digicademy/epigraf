@@ -47,20 +47,6 @@ class Plugin extends BasePlugin
     }
 
     /**
-     * bootstrap callback
-     *
-     * Add constants, load configuration defaults
-     * By default will load `config/bootstrap.php` in the plugin.
-     *
-     * @param PluginApplicationInterface $app
-     * @return void
-     */
-    public function bootstrap(PluginApplicationInterface $app): void
-    {
-        parent::bootstrap($app);
-    }
-
-    /**
      * routes callback
      *
      * By default will load `config/routes.php` in the plugin.

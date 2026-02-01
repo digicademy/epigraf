@@ -11,6 +11,7 @@
 
 <?php
 /**
+ * @var $this \App\View\AppView
  * @var $entity \App\Model\Entity\Job
  */
 ?>
@@ -108,5 +109,5 @@ $this->Breadcrumbs->add($entity->id);
       $this->Link->addAction(__('Run'), ['controller' => 'Jobs', 'action' => 'execute', $entity->id, '?' => ['reset' => 1]]);
   }
 
-  $this->Link->addAction(__('Edit'), 'jobs/edit/' . $entity->id);
+  $this->Link->addEditButtons($entity);
 ?>

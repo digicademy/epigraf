@@ -105,13 +105,13 @@
                 "Jakob J\u00fcnger",
                 null
             ],
-            "acronym": [
-                "jj",
-                null
-            ],
             "norm_iri": [
                 "juenger",
                 "admin"
+            ],
+            "usertype": [
+                null,
+                "human"
             ]
         }
     }
