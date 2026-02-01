@@ -1176,7 +1176,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      */
     protected function _distanceJoin($itemtype, $property = false)
     {
-        $itemAlias = 'geo_dist_' . $itemtype;
+        $itemAlias = 'geo_dist_' . Attributes::cleanFieldname($itemtype);
         $itemJoin = [
             'table' => 'items',
             'alias' => $itemAlias,
@@ -1219,7 +1219,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $propertyJoin = ($fieldName[0] ?? '') === 'property';
         $valueField = count($fieldName) > 1 ? $fieldName[1] : $fieldName[0];
 
-        $itemAlias = 'geo_' . $itemtype;
+        $itemAlias = 'geo_' . Attributes::cleanFieldname($itemtype);
 
         if ($propertyJoin) {
             $itemJoin = [
@@ -1280,7 +1280,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $valueField = count($fieldName) > 1 ? $fieldName[1] : $fieldName[0];
         $propertyJoin = ($fieldName[0] ?? '') === 'property';
 
-        $itemAlias = 'geo_tile_' . $itemType;
+        $itemAlias = 'geo_tile_' . Attributes::cleanFieldname($itemType);
         $propertyAlias = $itemAlias . '_property';
         $geoAlias = $propertyJoin ? $propertyAlias : $itemAlias;
 
@@ -1370,7 +1370,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         foreach ($filter['geodata'] ?? [] as $itemType => $itemField) {
             $query = $query
                 ->select($this)
-                ->select(['distance' => $this->_distanceField($query, $options, 'geo_dist_' . $itemType, $itemField)])
+                ->select(['distance' => $this->_distanceField($query, $options, 'geo_dist_' . Attributes::cleanFieldname($itemType), $itemField)])
                 ->join($this->_distanceJoin($itemType))
                 ->group(['Articles.id'])
                 ->having(['distance IS NOT' => null]);

@@ -259,8 +259,9 @@ breaks. You can use the namespaces configured in the property or article type. T
 
 Further fields are used for relating different entities to each other:
 
+<ul>
 <li>record: References to entities outside the root entity, e.g. to link from one article to another. Only available for polymophic ID fields that store a target table and a target ID. See the `targets` key.</li>
 <li>relation: References within the root entity, e.g. to link from an item to a section. Only available for polymophic ID fields that store a target table and a target ID. See the `targets` key.</li>
 <li>property: Link to a property. Only available for property ID fields. See the `types` key.</li>
-<li>sectionname: Within articles, to use values from the properties as section names, first, set the key `sectionname.option` in the section type configuration to a property type. Second, set the format of the property field of an item to `sectionname`. Note that this establishes a permanent relation between the item and the property, but (by now) the section name is not automatically updated once the property content changes.
-</li>
+<li>sectionname: Within articles, to use values from the properties as section names, first, set the key `sectionname.option` in the section type configuration to a property type. Second, set the format of the property field of an item to `sectionname`. Note that this establishes a permanent relation between the item and the property, but (by now) the section name is not automatically updated once the property content changes.</li>
+</ul>
