@@ -57,7 +57,7 @@ class TaskExportDownload extends BaseTask
 
         $sourcePath =  $this->job->jobPath;
         $target = $this->config['target'] ?? '';
-        $target = Files::cleanPath(Attributes::replacePlaceholders($target, $this->job->toArray()));
+        $target = Files::cleanPath(Attributes::replacePlaceholders($target, $this->job));
 
         $targetPath = Files::addSlash(Files::addSlash($rootPath) . $target);
 
@@ -70,7 +70,7 @@ class TaskExportDownload extends BaseTask
 
             $downloadFilename = $item[1] ?? $item[0];
             $downloadFilename = Files::cleanPath(
-                Attributes::replacePlaceholders($downloadFilename, $this->job->toArray()),
+                Attributes::replacePlaceholders($downloadFilename, $this->job),
                 false
             );
 

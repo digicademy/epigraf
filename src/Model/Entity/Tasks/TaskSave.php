@@ -22,6 +22,22 @@ class TaskSave extends BaseTask
 {
 
     /**
+     * Use the caption as current output file name
+     *
+     * @return string
+     */
+    public function getCurrentOutputFileName()
+    {
+        if (empty($this->config['outputfile']) && !empty($this->job->id)) {
+            $filename = $this->job->caption. '.' . $this->getCurrentOutputExtension();
+            return Files::cleanFilename($filename);
+        }
+
+        return parent::getCurrentOutputFileName();
+
+    }
+
+    /**
      * Save transformed file
      *
      * The output file name can contain placeholders that refer to the job.
@@ -46,10 +62,6 @@ class TaskSave extends BaseTask
 
         // Get filename
         $filename = $this->getCurrentOutputFileName();
-        $filename = Files::cleanPath(
-            Attributes::replacePlaceholders($filename, $this->job->toArray()),
-            false
-        );
 
         $current = $this->config;
         $current['files'] = $filename;

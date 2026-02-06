@@ -16,7 +16,6 @@ use Epi\Model\Table\BaseTable;
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Databank $database
- * @var string $user_role
  * @var array $groups
  */
 ?>

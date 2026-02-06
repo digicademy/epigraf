@@ -13,14 +13,13 @@
 <?php
 /**
  * @var \App\Model\Entity\Doc $entity
- * @var string $user_role
  */
 ?>
 
 <?php $this->setSidebarConfig(['right' => ['size' => 3]]); ?>
 
 <!-- Breadcrumbs -->
-<?php if ($user_role !== 'guest'): ?>
+<?php if (!$this->User->hasRole(['guest'])): ?>
     <?php $this->setSidebarConfig(['left'=>['init' => 'expanded']]); ?>
     <?php $this->Breadcrumbs->add($title ?? __('Pages'), ['action' => 'index']); ?>
     <?php $this->Breadcrumbs->add($entity->captionPath); ?>
@@ -55,7 +54,7 @@
     ]
 ) ?>
 
-<?php if ($user_role !== 'guest'): ?>
+<?php if (!$this->User->hasRole(['guest'])): ?>
     <!-- Actions -->
     <?php
         $this->setShowBlock(['footer']);

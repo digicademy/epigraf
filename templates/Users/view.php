@@ -12,7 +12,6 @@
 /**
  * @var \App\View\AppView $this
  * @var App\Model\Entity\User $entity
- * @var string $user_role
  */
 use App\Utilities\Converters\Attributes;
 
@@ -103,7 +102,7 @@ use App\Utilities\Converters\Attributes;
 </div>
 <?php endif; ?>
 
-<?php if (in_array($user_role, ['admin', 'devel'])) : ?>
+<?php if ($this->User->hasRole(['admin', 'devel'])) : ?>
 <div class="content-section">
     <h2 id="toc-access" class="widget-scrollsync-section"><?= __('Databases') ?></h2>
     <?=

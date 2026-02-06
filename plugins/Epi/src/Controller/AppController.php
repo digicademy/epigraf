@@ -112,12 +112,12 @@ class AppController extends BaseController
                 (($permission['entity_type'] ?? '') === 'databank') &&
                 ((($permission['entity_name'] ?? '') === $selectedDatabase) || (($permission['entity_name'] ?? '') === '*')) &&
                 ((($permission['user_request'] ?? '') === $requestScope) || (($permission['user_request'] ?? '') === '')) &&
-                $this->inWiredPermissions($permission['user_role'] ?? $user['role'] ?? '', $requestScope, $requestAction)
+                $this->inWiredPermissions($permission['user_role'] ?? $user['role'] ?? 'guest', $requestScope, $requestAction)
             ) {
                 return true;
             }
         }
 
-        return $this->inWiredPermissions($user['role'] ?? '', $requestScope, $requestAction);
+        return $this->inWiredPermissions($user['role'] ?? 'guest', $requestScope, $requestAction);
     }
 }

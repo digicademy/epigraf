@@ -348,7 +348,7 @@ class PermissionsTable extends BaseTable
     }
 
     /**
-     * Get user role
+     * Get user role based on permissions in the database
      *
      * // TODO: Implement own component for all user related methods
      *

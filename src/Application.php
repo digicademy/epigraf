@@ -170,11 +170,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             // For non-token requests, save to session
             if (!$request->is('token')) {
-                $fields = [
-                    PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
-                    PasswordIdentifier::CREDENTIAL_PASSWORD => 'password'
-                ];
-                $service->loadIdentifier('Authentication.Password', compact('fields'));
+
+                $service->loadIdentifier(
+                    'Authentication.Password',
+                    [
+                        PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
+                        PasswordIdentifier::CREDENTIAL_PASSWORD => 'password',
+                        'identityClass' => \App\Model\Entity\User::class,
+                    ]
+                );
 
                 $service->loadAuthenticator('Authentication.Session', [
                     'identifiers' => ['Authentication.Password'],
@@ -185,6 +189,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             $service->loadIdentifier('Authentication.Token', [
                 'tokenField' => 'username',
                 'dataField' => $loginConfig['remote'],
+                'identityClass' => \App\Model\Entity\User::class,
             ]);
 
             // Choose which environment variables exposed by the
@@ -201,7 +206,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             $service->loadIdentifier(TokenFallbackIdentifier::class, [
                 'tokenField' => 'accesstoken',
-                'hashAlgorithm' => 'sha256'
+                'hashAlgorithm' => 'sha256',
+                'identityClass' => \App\Model\Entity\User::class,
             ]);
 
             $service->loadAuthenticator('Authentication.Token', [
@@ -221,14 +227,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'queryParam' => 'redirect'
             ]);
 
-            $fields = [
-                PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
-                PasswordIdentifier::CREDENTIAL_PASSWORD => 'password'
-            ];
-
-
             // Load identifiers
-            $service->loadIdentifier('Authentication.Password', compact('fields'));
+            $service->loadIdentifier(
+                'Authentication.Password',
+                [
+                    PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
+                    PasswordIdentifier::CREDENTIAL_PASSWORD => 'password',
+                    'identityClass' => \App\Model\Entity\User::class,
+                ]
+            );
 
             $service->loadAuthenticator('Authentication.Session',  [
                 'identifiers' => ['Authentication.Password'],
@@ -236,7 +243,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             $service->loadAuthenticator('Authentication.Form', [
                 'identifiers' => ['Authentication.Password'],
-                'fields' => $fields,
+                'fields' => [
+                    PasswordIdentifier::CREDENTIAL_USERNAME => 'username',
+                    PasswordIdentifier::CREDENTIAL_PASSWORD => 'password'
+                ],
                 'loginUrl' => Router::url([
                     'prefix' => false,
                     'plugin' => null,

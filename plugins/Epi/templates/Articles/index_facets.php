@@ -2,7 +2,6 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Databank $database
- * @var string $user_role
  */
 
 use Cake\Utility\Hash;
@@ -54,7 +53,7 @@ use Cake\Utility\Hash;
             ]
         ) ?>
 
-        <?php if (in_array($user_role, ['devel', 'admin'])): ?>
+        <?php if ($this->User->hasRole(['devel', 'admin'])): ?>
         <?= $this->Table->filterSelector(
                 $tableGroup,
             "articles.published",

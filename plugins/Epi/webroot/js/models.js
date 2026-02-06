@@ -3759,7 +3759,7 @@ export class TypesModel extends BaseDocumentModel {
                     // TODO: fetch paginated and only used types
                     // TODO: merge config modes (default, preview, code)
                     App.fetch(
-                        App.databaseUrl + 'types.json?sort=sortno&limit=1000&modes=default',
+                        App.databaseUrl + 'types.json?sort=sortno&limit=1000&modes=default&presets=default',
                         function (data) {
                             if (data.status === 'success') {
                                 self._types = self.groupTypes(data.types || {});

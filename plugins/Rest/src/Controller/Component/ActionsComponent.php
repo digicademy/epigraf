@@ -14,8 +14,10 @@ namespace Rest\Controller\Component;
 
 use App\Model\Behavior\TreeCorruptException;
 use App\Model\Entity\BaseEntity;
+use App\Model\Entity\User;
 use App\Model\Interfaces\ScopedTableInterface;
 use App\Utilities\Converters\Attributes;
+use Authorization\Identity;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Datasource\Exception\RecordNotFoundException;
@@ -37,7 +39,7 @@ use Epi\Model\Table\BaseTable;
 class ActionsComponent extends Component
 {
     // Other components used
-    public $components = ['Lock', 'Answer'];
+    public $components = ['Lock', 'Answer', 'Authentication'];
 
     /**
      * Default configuration.
@@ -70,6 +72,57 @@ class ActionsComponent extends Component
     }
 
     /**
+     * Persist changed user data to the session and update the request identity
+     *
+     * @param User $userEntity
+     * @return void
+     */
+    public function updateUserIdentity($userEntity)
+    {
+
+        // Update session
+        $controller = $this->getController();
+        $request = $controller->getRequest();
+        $request->getSession()->write('Auth', $userEntity);
+
+        // Update identity
+        $service = $this->Authentication->getAuthenticationService();
+        $userIdentity = $service->buildIdentity($userEntity);
+        $userIdentity = new Identity($request->getAttribute('authorization'), $userIdentity);
+
+        $request = $request->withAttribute('identity', $userIdentity);
+        $this->getController()->setRequest($request);
+    }
+
+    /**
+     * Update the last activity timestamp of the current user
+     *
+     * @param Identity|null $userIdentity
+     * @return void
+     */
+    public function updateUserActivity($userIdentity)
+    {
+        if ($userIdentity) {
+            try {
+                $userEntity = TableRegistry::getTableLocator()
+                    ->get('Users')
+                    ->updateActive($userIdentity->getOriginalData());
+
+            } catch (RecordNotFoundException $e) {
+                $this->Authentication->logout();
+                $this->Answer->redirect(['controller' => 'Users', 'action' => 'login']);
+            }
+
+            if (
+                ($userIdentity['modified'] ?? false) != ($userEntity['modified'] ?? false) ||
+                ($userIdentity['lastaction'] ?? false) != ($userEntity['lastaction'] ?? false)
+            ) {
+                $this->updateUserIdentity($userEntity);
+            }
+        }
+    }
+
+    /**
      * Update user settings
      *
      * @param string $scope
@@ -77,14 +130,13 @@ class ActionsComponent extends Component
      * @param array $value
      * @param string $storage user (store in the user record) or session (store in the user session)
      *
-     * @return array|mixed
+     * @return void
      */
     public function updateUserSettings($scope = null, $key = null, $value = [], $storage = 'user')
     {
 
         if ($storage === 'session') {
             $session = $this->getController()->getRequest()->getSession();
-
             $settings = $session->read('User.settings', []);
 
             if ($scope && $key) {
@@ -97,19 +149,16 @@ class ActionsComponent extends Component
             $settings = array_replace_recursive($settings, $value);
 
             $session->write('User.settings', $settings);
-            return $settings;
-
-
         }
         else {
 
-            $user = $this->getController()->getRequest()->getAttribute('identity');
-            $users = TableRegistry::getTableLocator()->get('Users');
-            $user = $users->updateSettings($user, $scope, $key, $value);
-            $this->getController()->Authentication->setIdentity($user);
-            $this->getController()->set(compact('user'));
+            $userIdentity = $this->getController()->getRequest()->getAttribute('identity');
 
-            return $user['settings'] ?? [];
+            $userEntity = TableRegistry::getTableLocator()
+                ->get('Users')
+                ->updateSettings($userIdentity, $scope, $key, $value);
+
+            $this->updateUserIdentity($userEntity);
         }
     }
 
@@ -121,7 +170,7 @@ class ActionsComponent extends Component
      * @param array $value
      * @param string $storage user (store in the user record) or session (store in the user session)
      *
-     * @return array|mixed
+     * @return void
      */
     public function mergeUserSettings($scope = null, $key = null, $value = [], $storage = 'user')
     {
@@ -139,20 +188,16 @@ class ActionsComponent extends Component
             $settings = array_replace_recursive($settings, $value);
 
             $session->write('User.settings', $settings);
-            return $settings;
         }
         else {
 
-            $user = $this->getController()->getRequest()->getAttribute('identity');
+            $userIdentity = $this->getController()->getRequest()->getAttribute('identity');
 
-            $user = TableRegistry::getTableLocator()
+            $userEntity = TableRegistry::getTableLocator()
                 ->get('Users')
-                ->updateSettings($user, $scope, $key, $value);
+                ->updateSettings($userIdentity, $scope, $key, $value);
 
-            $this
-                ->getController()->Authentication
-                ->setIdentity($user);
-            return $user['settings'] ?? [];
+            $this->updateUserIdentity($userEntity);
         }
     }
 
@@ -163,7 +208,7 @@ class ActionsComponent extends Component
      * @param string $key
      * @param string $storage The storage, either 'user' (user record) or 'session' (user session)
      *
-     * @return array|mixed
+     * @return void
      */
     public function deleteUserSettings($scope = null, $key = null, $storage = 'user')
     {
@@ -182,29 +227,27 @@ class ActionsComponent extends Component
                     $session->delete('User.settings');
                 }
             }
-            $settings = $session->read('User.settings', []);
-            return $settings;
-
         }
         else {
-            $user = $this->getController()->getRequest()->getAttribute('identity')->getOriginalData();
+            $userIdentity = $this->getController()->getRequest()->getAttribute('identity');
+            $userData = $userIdentity->getOriginalData();
 
-            $users = TableRegistry::getTableLocator()->get('Users');
 
             if ($key & $scope) {
-                unset($user['settings'][$scope][$key]);
+                unset($userData['settings'][$scope][$key]);
             }
             elseif ($scope) {
-                unset($user['settings'][$scope]);
+                unset($userData['settings'][$scope]);
             }
             else {
-                $user['settings'] = [];
+                $userData['settings'] = [];
             }
 
-            $user = $users->updateSettings($user, $scope);
-            $this->getController()->Authentication->setIdentity($user);
+            $userEntity = TableRegistry::getTableLocator()
+                ->get('Users')
+                ->updateSettings($userData, $scope);
 
-            return $user['settings'] ?? [];
+            $this->updateUserIdentity($userEntity);
         }
     }
 
@@ -214,18 +257,18 @@ class ActionsComponent extends Component
      * Updates the settings in the auth object from the database
      *
      * @param int $id The user ID
-     * @return array|mixed
+     * @return void
      */
     public function reloadUserSettings($id)
     {
-        $user = $this->getController()->getRequest()->getAttribute('identity');
-        if ($id === $user['id']) {
-            $user = TableRegistry::getTableLocator()
+        $userIdentity = $this->getController()->getRequest()->getAttribute('identity');
+        if ($id === $userIdentity['id']) {
+            $userEntity = TableRegistry::getTableLocator()
                 ->get('Users')
-                ->get($user['id'], ['finder' => 'auth']);
-            $this->getController()->Authentication->setIdentity($user);
+                ->get($userIdentity['id'], ['finder' => 'auth']);
+
+            $this->updateUserIdentity($userEntity);
         }
-        return $user;
     }
 
 
@@ -389,7 +432,6 @@ class ActionsComponent extends Component
         try {
             // Get search parameters from request
             [$params, $columns, $paging, $filter] = $this->prepareParameters();
-            $params['action'] = 'index';
 
             // Assemble query
             $scopefield = $model->scopeField;
@@ -418,8 +460,6 @@ class ActionsComponent extends Component
             }
             $this->Answer->error($e->getMessage(), $redirect);
         }
-        // Get problems
-        $problems = $model->getProblems();
 
         // Sidemenu
         $scopedMenuField = $options['scopemenu'] ?? null;
@@ -453,9 +493,16 @@ class ActionsComponent extends Component
             }
         }
 
+        // Get problems
+        if (in_array('problems', $params['snippets'] ?? [])) {
+            $this->Answer->addOptions(['problems' => $model->getProblems()]);
+        }
+
         // Output
         // TODO: set model in a way that can be used by filterTable()
-        $this->Answer->addOptions(compact('params', 'scopefield', 'scope', 'columns', 'filter', 'problems'));
+        $this->Answer->addOptions(compact('params', 'scopefield', 'scope', 'columns', 'filter'));
+
+
         $this->Answer->addAnswer(compact('entities'));
 
         // Summary

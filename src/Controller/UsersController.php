@@ -74,6 +74,9 @@ class UsersController extends AppController
     public function login()
     {
         $authentication = $this->request->getAttribute('authentication');
+        // TODO: use $authentication->getAuthenticationProvider(); to get the successful authenticator
+        //      or $authentication->getIdentificationProvider(); ?
+        $formAuthenticator = $authentication->authenticators()->has('Form');
         $result = $authentication->getResult();
 
         // Redirect if user is logged in
@@ -119,7 +122,7 @@ class UsersController extends AppController
         else if ($this->request->is(['post'])) {
             $this->Answer->error(__('Invalid username or password.'));
         }
-        else if (!empty($result->getErrors())) {
+        else if (!$formAuthenticator && !empty($result->getErrors())) {
             $this->Answer->error(implode(' ', $result->getErrors()));
         }
 

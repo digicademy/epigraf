@@ -474,7 +474,16 @@ class PropertiesControllerTest extends EpiTestCase
     {
         $this->loginUser('reader');
         $this->expectException(ForbiddenException::class);
-        $this->get('epi/projects/properties/mutate/objecttypes');
+        $this->get('/epi/projects/properties/mutate/objecttypes');
+//        $this->assertRedirectEquals(
+//            [
+//                'plugin' => false,
+//                'controller' => 'Users',
+//                'action' => 'login',
+//                '?' => ['redirect' => '/epi/projects/properties/mutate/objecttypes?login=1'],
+//                '_full' => true
+//            ]
+//        );
     }
 
     /**

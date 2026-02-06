@@ -14,6 +14,9 @@ use App\Model\Table\PermissionsTable;
 use App\Model\Table\UsersTable;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\IdentityInterface as AuthorizationIdentity;
+use Authentication\IdentityInterface as AuthenticationIdentity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
@@ -22,6 +25,8 @@ use Cake\Utility\Hash;
 
 /**
  * User Entity
+ *
+ * TODO: Should we implement AuthorizationIdentity & AuthenticationIdentity instead of using the default decorator?
  *
  * # Database fields (without inherited fields)
  * @property string $username
@@ -54,6 +59,8 @@ use Cake\Utility\Hash;
  */
 class User extends BaseEntity
 {
+
+    protected $authorization;
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

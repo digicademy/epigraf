@@ -2755,8 +2755,7 @@ class BaseEntityHelper extends Helper
                     continue;
                 }
 
-                $roles = $fieldOptions['roles'] ?? ['*'];
-                if (!$this->User->hasRole($roles)) {
+                if (!$this->User->hasRole(array_merge($fieldOptions['roles'] ?? ['*'], ['admin', 'devel']))) {
                     continue;
                 }
                 unset($fieldOptions['roles']);

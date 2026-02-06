@@ -83,7 +83,7 @@ class MenuHelper extends Helper
         //Init
         $class = $options['class'] ?? '';
         $data = $options['data'] ?? [];
-        $userRole = $this->_View->get('user_role') ?? 'guest';
+        $userRole = $this->User->userRole();
 
         //Extract settings (all non-numeric keys)
         $settings = array_filter($menu, function($x, $idx) { return !is_numeric($idx); },ARRAY_FILTER_USE_BOTH);

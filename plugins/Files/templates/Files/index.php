@@ -15,7 +15,6 @@
 /**
  *
  * @var \App\View\AppView $this
- * @var string $user_role
  * @var \Files\Model\Entity\FileRecord $entity
  * @var \Files\Model\Entity\FileRecord[] $entities
  *
@@ -81,7 +80,7 @@
 			<th data-col="thumb" scope="col">Thumbnail</th>
 			<th data-col="modified" scope="col"><?= $this->Link->sortLink('modified', __('Modified')) ?></th>
 			<th data-col="size" scope="col"><?= $this->Link->sortLink('size', __('Size')) ?></th>
-			<?php if (in_array($user_role, ['devel'])): ?>
+			<?php if ($this->User->hasRole(['devel'])): ?>
 			<th data-col="permissions" scope="col"><?= $this->Link->sortLink('permissions', __('Permissions')) ?></th>
 			<?php endif; ?>
 			<th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -97,7 +96,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<?php if (in_array($user_role, ['devel'])): ?>
+				<?php if ($this->User->hasRole(['devel'])): ?>
 				<td></td>
 				<?php endif; ?>
 				<td class="actions">
@@ -121,7 +120,7 @@
 					</td>
 					<td><?= $file['modified']->i18nFormat(null, 'Europe/Paris') ?></td>
 					<td><?= Files::formatFileSize($file['size']) ?></td>
-					<?php if (in_array($user_role, ['devel'])): ?>
+					<?php if ($this->User->hasRole(['devel'])): ?>
 					<td><?= h($file['filePermissions']) ?>  <?= h($file['fileOwner']) ?></td>
 					<?php endif; ?>
 					<td class="actions">
@@ -138,7 +137,7 @@
 					<td class="thumb"></td>
 					<td><?= $file['modified']->i18nFormat(null, 'Europe/Paris') ?></td>
 					<td></td>
-					<?php if (in_array($user_role, ['devel'])): ?>
+					<?php if ($this->User->hasRole(['devel'])): ?>
 					<td><?= h($file['filePermissions']) ?> <?= h($file['fileOwner']) ?></td>
 					<?php endif; ?>
 					<td class="actions">
@@ -184,7 +183,7 @@
     $this->Link->beginActionGroup('bottom');
     $this->Link->addAction(__('Create folder'), ['action' => 'newfolder', '?' => ['root' => $root, 'path' => $entity->relativePath]], ['data-role'=>'add']);
 
-    if (in_array($user_role, ['devel']) && !empty($entity->relativePath)) {
+    if ($this->User->hasRole(['devel']) && !empty($entity->relativePath)) {
         $this->Link->addAction(__('Edit'),['action' => 'edit', '?' => ['root' => $root, 'path' => $entity->relativePath]],['shortcuts' => ['F2']]);
         $this->Link->addAction(__('Move folder'),['action' => 'move', $entity->id,'item', '?' => ['root' => $root, 'path' => $entity->relativePath]] );
         $this->Link->addAction(__('Move content'),['action' => 'move', '?' => ['root' => $root, 'path' => $entity->relativePath]] );
@@ -196,7 +195,7 @@
 
     $this->Link->beginActionGroup('bottom-right');
     $this->Link->addAction(__('Download latest file'),['action' => 'download', '?' => ['root' => $root, 'path' => $entity->relativePath, 'find' => 'latest']]);
-    if (in_array($user_role, ['devel']) && !empty($entity->relativePath)) {
+    if ($this->User->hasRole(['devel']) && !empty($entity->relativePath)) {
         $this->Link->addAction(__('Zip'), ['action' => 'download', $entity->id]);
     }
 ?>

@@ -250,7 +250,7 @@ class ArticlesCest
      */
     public function sortByTitle(AcceptanceTester $I)
     {
-        $I->login('devel', 'devel');
+        $I->login('devel', 'devel', false);
         $I->amOnPage('/epi/projects/articles');
 
         $I->testSortTableByColumn(
@@ -259,7 +259,6 @@ class ArticlesCest
             'asc'
         );
     }
-
 
     /**
      * Scenario: Search articles by project
@@ -306,7 +305,6 @@ class ArticlesCest
         $I->see("Artikel 1 für das Testsystem", 'tr[data-id="1"]');
         $I->dontSee("Artikel 2 für das Testsystem");
     }
-
 
     /**
      * Scenario: Open the sidebar content in a new tab
@@ -454,7 +452,7 @@ class ArticlesCest
      */
     public function viewArticle(AcceptanceTester $I)
     {
-        $I->login('devel', 'devel');
+        $I->login('devel', 'devel', false);
         $I->amOnPage('/epi/projects/articles');
 
         // Select one row
@@ -738,6 +736,7 @@ class ArticlesCest
             $contentSelector,
             'Fancynewtext'
         );
+        $I->wait(1);
 
         // Because the field size changes, a new item comes into view
         // Depending on where the mouse cursor is, it gets focused or not.

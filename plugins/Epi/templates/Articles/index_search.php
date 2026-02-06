@@ -1,13 +1,11 @@
 <?php
 
 use Cake\Routing\Router;
-use Cake\Utility\Hash;
 ?>
 <?php
 /**
  * @var App\View\AppView $this
  * @var \App\Model\Entity\Databank $database
- * @var string $user_role
  */
 ?>
 
@@ -22,7 +20,7 @@ use Cake\Utility\Hash;
 ?>
 <div class="content-searchbar">
 
-    <?php $fullTextDefault = ($user_role === 'guest'); ?>
+    <?php $fullTextDefault = $this->User->hasRole(['guest']); ?>
     <?= $this->Table->filterSearch(
         $tableGroup,
         "articles.",

@@ -867,7 +867,7 @@ class Job extends BaseEntity
      */
     public function _prepareOutputPath()
     {
-        Files::pruneFiles(Configure::read('Data.databases') . Databank::addPrefix($this->config['database']) . DS . 'jobs');
+        Files::pruneFiles(Configure::read('Data.databases') . Databank::addPrefix($this->config['database']) . DS . 'jobs' . DS);
         Files::createFolder($this->jobPath, true);
     }
 
@@ -878,7 +878,8 @@ class Job extends BaseEntity
      */
     protected function _getJobPath()
     {
-        $folderpath = Databank::addPrefix($this->config['database']) . DS . 'jobs' . DS . Files::cleanFilename($this->caption) . DS;
+        $folderpath = Databank::addPrefix($this->config['database']) . DS
+            . 'jobs' . DS .'job-' . $this->id . DS;
         $folderpath = Configure::read('Data.databases') . $folderpath;
 
         return $folderpath;

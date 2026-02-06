@@ -147,13 +147,16 @@ class AppController extends Controller
      * @var string $requestScope
      * @var array $requestPublished An array of publication states the visible items must match or null to show all items.
      * @var string $userRole
-     */
+     * @var string $userDbRole
+ */
     public $requestAction = '';
     public $requestMode = '';
     public $requestPreset = '';
     public $requestScope = '';
     public $requestPublished = null;
+
     public $userRole = 'guest';
+    public $userDbRole = 'guest';
 
     /**
      * Access permissions
@@ -293,10 +296,7 @@ class AppController extends Controller
             'identityCheckEvent' => 'Controller.initialize',
         ]);
         $this->loadComponent('Authorization.Authorization');
-
-
         $this->allowPublic($this->authorized['web']['guest'] ?? []);
-
         $this->_initLocale();
     }
 
@@ -334,6 +334,8 @@ class AppController extends Controller
 
         // Create menu
         $this->_createMainMenu();
+
+        $this->_authorizeUser();
     }
 
     /**
@@ -1129,9 +1131,7 @@ class AppController extends Controller
 
             // Second, redirect to login
             else {
-                $this->Answer->redirectToLogin(
-                    __('You are not allowed to access the selected database.')
-                );
+                throw new ForbiddenException(null, __('You are not allowed to access the selected database.'));
             }
         }
 
@@ -1145,40 +1145,16 @@ class AppController extends Controller
     /**
      * Initialize user settings
      *
-     * //TODO: always pass User entity to controller, templates and js
+     * //TODO: always pass User entity to controller, templates and js -> use request identity
      *
      * @return void
      */
     protected function _initUser()
     {
 
-        try {
-            $this->Authorization->authorize($this);
-        } catch (ForbiddenException $e) {
-            throw new ForbiddenException(null, __('You are not authorized to access that location.'));
-        }
-
         // Pass user record to view, update activity flags and update session object
         $userIdentity = $this->getRequest()->getAttribute('identity');
-
-        if ($userIdentity) {
-            try {
-                $userEntity = TableRegistry::getTableLocator()
-                    ->get('Users')
-                    ->updateActive($userIdentity->getOriginalData());
-
-            } catch (RecordNotFoundException $e) {
-                $this->Authentication->logout();
-                $this->Answer->redirect(['controller' => 'Users', 'action' => 'login']);
-            }
-
-            if (
-                ($userIdentity['modified'] ?? false) != ($userEntity['modified'] ?? false) ||
-                ($userIdentity['lastaction'] ?? false) != ($userEntity['lastaction'] ?? false)
-            ) {
-                $this->Authentication->setIdentity($userEntity);
-            }
-        }
+        $this->Actions->updateUserActivity($userIdentity);
 
         // Pass to controllers
         $activeDatabase = $this->getRequest()->getParam('database');
@@ -1190,11 +1166,6 @@ class AppController extends Controller
         $this->requestAction = $this->_getRequestAction();
         $this->requestPreset = $this->_getRequestPreset();
         $this->requestPublished = $this->_getRequestPublished();
-
-        // Pass to view / templates
-        $this->set('user_role', $this->userRole);
-        $this->set('user_dbrole', $this->userDbRole);
-        $this->set('user_scope', $this->requestScope);
 
         // Pass to model
         BaseTable::$user = $userIdentity;
@@ -1212,11 +1183,28 @@ class AppController extends Controller
         // Pass to JavaScript
         $this->addToJsUser(['role' => $this->userRole, 'scope' => $this->requestScope]);
 
+        // Pass to view / templates
+        $this->set('user_role', $this->userRole);
+        $this->set('user_dbrole', $this->userDbRole);
+
         // Init tours
         $this->initTour();
+    }
 
-        // Pass to view
-        $this->set('user', $userIdentity);
+    /**
+     * Authorize the user
+     *
+     * See ControllerPolicy.php which mimicks the legacy _isAuthorized method.
+     *
+     * @return void
+     */
+    protected function _authorizeUser()
+    {
+        try {
+            $this->Authorization->authorize($this);
+        } catch (ForbiddenException $e) {
+            throw new ForbiddenException(null, __('You are not authorized to access that location.'));
+        }
     }
 
     /**

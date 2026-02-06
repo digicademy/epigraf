@@ -39,7 +39,31 @@ class UserHelper extends Helper
      */
     protected $_defaultConfig = [];
 
+    /**
+     * Gets user data
+     *
+     * @param string|null $key Key of something you want to get from the identity data
+     * @return mixed
+     */
+    public function get(?string $key = null)
+    {
+        if (empty($key)) {
+            return null;
+        }
 
+        $request = $this->_View->getRequest();
+        $identity = $request->getAttribute('identity');
+        if (empty($identity)) {
+            return null;
+        }
+
+        return $identity->getOriginalData()->get($key);
+    }
+
+    public function userRole()
+    {
+        return $this->_View->get('user_role', 'guest');
+    }
     /**
      * Check whether the current user has the role
      *
@@ -48,9 +72,7 @@ class UserHelper extends Helper
      */
     public function hasRole($roles = []): bool
     {
-        $role = $this->_View->get('user_role') ?? 'guest';
-        $allowed = array_merge(($roles ?? ['*']), ['admin', 'devel']);
-        return in_array($role, $allowed) || in_array('*', $allowed);
+        return in_array($this->userRole(), $roles) || in_array('*', $roles);
     }
 
     /**
@@ -73,7 +95,7 @@ class UserHelper extends Helper
      */
     public function hasPermission($url, $options = []) {
         // Check role option
-        $role = $this->_View->get('user_dbrole') ?? 'guest';
+        $role = $this->_View->get('user_dbrole', 'guest');
         $allowed = array_merge(($options['roles'] ?? ['*']), ['admin', 'devel']);
         if (!(in_array($role, $allowed) | in_array('*', $allowed))) {
             return false;

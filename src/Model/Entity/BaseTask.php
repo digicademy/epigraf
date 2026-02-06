@@ -122,9 +122,9 @@ class BaseTask
         $task = $this->config ?? [];
 
         // If present, 'inputpath' contains the full path to the input file
-        $filename = $task['inputpath'] ?? null;
-        if (!empty($filename)) {
-            return $filename;
+        $filepath = $task['inputpath'] ?? null;
+        if (!empty($filepath)) {
+            return $filepath;
         }
 
         // Otherwise, 'inputfile' may contain the relative path to the input file
@@ -134,12 +134,12 @@ class BaseTask
         }
 
         // If no input file is specified, return the default job file
-        $filename = $this->job->caption . '.xml';
+        $filename = 'job-' . $this->job->id . '.xml';
         return $this->job->jobPath . $filename;
     }
 
     /**
-     * Import modes depend on the source: csv file, xml file or folder (with xml files
+     * Import modes depend on the source: csv file, xml file or folder (with xml files)
      *
      * @return string
      * @throws Exception
@@ -171,24 +171,33 @@ class BaseTask
     }
 
     /**
+     * Get the current output file extension
+     *
+     * @return string
+     */
+    public function getCurrentOutputExtension()
+    {
+        $ext = empty($this->config['extension']) ? 'xml' : $this->config['extension'];
+        return trim($ext, " \n\r\t\v\x00/.");
+    }
+
+    /**
      * Get the current output file name
      *
      * @return string
      */
     public function getCurrentOutputFileName()
     {
-        $current = $this->config;
-        $filename =  $current['outputfile'] ?? '';
+        $filename =  $this->config['outputfile'] ?? '';
         if (empty($filename)) {
-            $ext = empty($current['extension']) ? 'xml' : trim($current['extension'], " \n\r\t\v\x00/.");
+            $ext = $this->getCurrentOutputExtension();
             if (empty($this->job->id)) {
                 $filename = Files::getTempFilename('temp', $ext);
-            }
-            else {
-                $filename = Files::cleanFilename($this->job->caption . '.' . $ext);
+            } else {
+                $filename = 'job-' . $this->job->id . '.' . $ext;
             }
         }
-        return $filename;
+        return Files::cleanFilename($filename);
     }
 
     /**

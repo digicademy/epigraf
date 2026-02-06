@@ -65,6 +65,9 @@ class ErrorController extends AppController
             $this->viewBuilder()->setOption('serialize', ['error']);
         }
 
+        $this->_initUser();
+        $this->_createMainMenu();
+
         parent::beforeRender($event);
         $this->viewBuilder()->setTemplatePath('Error');
     }

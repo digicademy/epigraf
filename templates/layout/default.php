@@ -19,8 +19,6 @@
  * @var string $pagehelp Path in the help pages (or null)
  * @var array $sidemenu
  * @var array $menu
- * @var string $user_role
- * @var array $user
  * @var App\Model\Entity\Databank $database
  */
 
@@ -117,7 +115,7 @@ use Cake\Core\Configure;
             'action_' . h(strtolower($this->request->getParam('action') ?? '')),
             'template_' . h($this->request->getParam('template','default')),
             'theme_' . h($theme),
-            'userrole_' . h($user_role)
+            'userrole_' . h($this->User->userRole())
         ]
     ]
 );
@@ -148,7 +146,7 @@ use Cake\Core\Configure;
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-                <?php if ($user_role === 'guest'): ?>
+                <?php if ($this->User->hasRole(['guest'])): ?>
                     <?= $this->Html->link(
                         __('Login'),
                         ['plugin'=>false,'controller'=>'users','action'=>'login'],
@@ -163,11 +161,11 @@ use Cake\Core\Configure;
                     ) ?>
                     <?= $this->Html->link(
                         "\u{f007}",
-                        ['plugin' => false, 'controller' => 'Users', 'action' => 'view', $user['id']],
-                        ['class' => 'btn btn-icon', 'title' => $user['username']]
+                        ['plugin' => false, 'controller' => 'Users', 'action' => 'view', 'me'],
+                        ['class' => 'btn btn-icon', 'title' => $this->User->get('username')]
                     ) ?>
                 <?php endif; ?>
-                <?php if (in_array($user_role, ['admin', 'devel'])): ?>
+                <?php if ($this->User->hasRole(['admin', 'devel'])): ?>
                     <?= $this->Html->link(
                         "\u{f013}",
                         ['plugin' => false, 'controller' => 'Settings', 'action' => 'show', 'vars'],
@@ -287,7 +285,7 @@ use Cake\Core\Configure;
 
     <?php if ($this->getShowBlock('footer')): ?>
         <?php
-            if ($user_role !== 'guest') {
+            if (!$this->User->hasRole(['guest'])) {
                 $this->Link->addHelpAction($pagehelp);
             }
         ?>

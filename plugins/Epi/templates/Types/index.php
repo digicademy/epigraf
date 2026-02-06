@@ -103,6 +103,8 @@ use Cake\Routing\Router;
     $this->Link->addAction(__('Import'), ['action' => 'import']);
 
     $queryparams = Attributes::paramsToQueryString($this->getConfig('options')['params'] ?? [], ['action']);
+    unset($queryparams['snippets']);
+
     $this->Link->addAction(
         __('Transfer'),
         ['action' => 'transfer' , '?' => $queryparams],
@@ -113,7 +115,6 @@ use Cake\Routing\Router;
             'data-popup-modal' => true
         ]
     );
-
 
     $this->Link->exportButtons($queryparams, 'epi_types');
 ?>

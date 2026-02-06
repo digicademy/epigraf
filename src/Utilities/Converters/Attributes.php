@@ -639,7 +639,7 @@ class Attributes
      * The corresponding data is taken from the array with the key 'id'.
      *
      * @param string $haystack
-     * @param array $data
+     * @param array|\ArrayAccess $data
      */
     public static function replacePlaceholders($haystack, $data)
     {

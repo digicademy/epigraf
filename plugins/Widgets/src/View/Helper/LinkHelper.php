@@ -19,7 +19,6 @@ use Cake\View\Helper;
 use Epi\Model\Entity\Article;
 use Epi\Model\Entity\RootEntity;
 use Rest\Entity\LockInterface;
-use function PHPUnit\Framework\isNull;
 
 /**
  * Link helper
@@ -1613,7 +1612,7 @@ class LinkHelper extends Helper
      */
     public function authButton(string $title, $options = []): string
     {
-        if ($this->User->hasRole($options['roles'] ?? ['*'])) {
+        if ($this->User->hasRole(array_merge($options['roles'] ?? ['*'], ['admin', 'devel']))) {
             unset($options['roles']);
             return $this->Form->button($title, $options);
         }
@@ -1853,7 +1852,7 @@ class LinkHelper extends Helper
      */
     public function getTrackingCode()
     {
-        $loggedIn = $this->getView()->get('user_role') !== 'guest';
+        $loggedIn = !$this->User->hasRole(['guest']);
         $afterLogin = strpos($this->_View->getRequest()->referer() ?? '', '/users/login') === 0;
 
         if ($loggedIn && !$afterLogin) {

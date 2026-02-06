@@ -87,6 +87,8 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         'term' => 'string',
         'scopes' => 'list',
         'modes' => 'list',
+        'snippets' => 'list',
+        'presets' => 'list',
         'categories' => 'list',
         'columns' => 'list-or-false',
         'name' => 'list',
@@ -554,6 +556,11 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
     {
         $params = Attributes::parseQueryParams($requestParameters, $this->parameters, 'types');
         $params['action'] = $requestAction;
+
+        if (empty($params['snippets']) && ($requestAction === 'index') && ($this::$requestFormat === 'html')) {
+            $params['snippets'] = ['problems'];
+        }
+
         return $params;
     }
 
@@ -586,6 +593,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
                 'norm_iri' => $params['iri'] ?? null,
                 'scope' => $params['scopes'] ?? null,
                 'mode' => $params['modes'] ?? null,
+                'preset' => $params['presets'] ?? null,
                 'category' => $params['categories'] ?? null
             ]
         ]);

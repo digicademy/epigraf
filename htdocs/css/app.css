@@ -217,14 +217,14 @@
 
     /* Messages */
     --message-bg-color: var(--primary-300);
-
-
-    --msg-error-bg: var(--function-remove);
-    --msg-danger-bg: var(--function-warning);
-    --msg-error-fg: var(--function-warning);
     --msg-success-bg: var(--accent-open-normal);
     --msg-error-color: var(--neutral-100);
     --msg-info-font-color: var(--primary-300);
+
+    --msg-error-bg: var(--function-remove);
+    --msg-error-fg: var(--function-warning);
+    --msg-danger-bg: var(--function-warning);
+    --msg-danger-fg: var(--neutral-100);
 
     --cake-debug-bg: var(--function-warning);
     --cake-code-highlight: var(--function-warning);
@@ -1156,7 +1156,7 @@ div.message.error a, div.message.error a:hover {
 
 div.message.danger {
     background-color: var(--msg-danger-bg);
-    color: var(--title-font-color);
+    color: var(--msg-danger-fg);
 }
 
 div.message.danger:before {

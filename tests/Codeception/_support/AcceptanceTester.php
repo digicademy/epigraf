@@ -25,25 +25,32 @@ class AcceptanceTester extends \Codeception\Actor
      *
      * See https://codeception.com/docs/AcceptanceTests#Common-Cases
      *
-     * @param $username
-     * @param $password
+     * @param string $username
+     * @param string $password
+     * @param bool $fromSession If true, the login will be skipped if a session snapshot exists.
      * @return void
      */
-    public function login($username, $password)
+    public function login($username, $password, $fromSession = false)
     {
         $I = $this;
 
         // Skip login if snapshot exists
-//        if ($I->loadSessionSnapshot('login')) {
-//            return;
-//        }
+        if ($fromSession) {
+            if ($I->loadSessionSnapshot('login')) {
+                return;
+            }
+        }
 
         // Log in
         $I->amOnPage('/users/login');
-        $I->fillField('username', $username);
-        $I->fillField('password', $password);
-        $I->click('Login','#content');
-        $I->waitForText('Logout', 15, '.actions-main');
+
+        $logoutTexts = $I->grabTextFrom('.actions-main');
+        if (strpos($logoutTexts, 'Logout') === false) {
+            $I->fillField('username', $username);
+            $I->fillField('password', $password);
+            $I->click('Login', '#content');
+            $I->waitForText('Logout', 15, '.actions-main');
+        }
 
         // Save
         $I->saveSessionSnapshot('login');

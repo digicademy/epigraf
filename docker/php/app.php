@@ -300,7 +300,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ERROR,
         'skipLog' => [],
         'log' => true,
         'trace' => true,

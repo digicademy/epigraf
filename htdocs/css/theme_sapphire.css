@@ -33,3 +33,8 @@
     --function-title: hsl(3, 89%, 35%);
     --function-home: #003453;
 }
+
+/** Overwrite properties **/
+:root {
+    --section-highlight-bg-color: hwb(340deg 96% 0%);
+}
