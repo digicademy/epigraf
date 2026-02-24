@@ -23,9 +23,10 @@ use App\Utilities\Converters\Attributes;
  */
 ?>
 <?php
+    $params = $this->getConfig('options')['params'];
     $options = ['edit' => $edit, 'mode' => $mode, 'template_article' => $template_article, 'buttons' => true];
-    $params = $this->getConfig('options')['params']; // Attributes::paramsToQueryString($this->getConfig('options')['params']);
     $docContentToTop = Attributes::isOption('position', 'top', $template_article, $edit);
+
     $this->append('css', $this->Types->getTagStyles());
     $entityHelper = $edit ? $this->EntityInput : $this->EntityHtml;
 ?>
@@ -160,7 +161,7 @@ use App\Utilities\Converters\Attributes;
 
     <!-- Article metrics -->
     <?php if (!in_array($entity->currentUserRole, ['guest','reader'])): ?>
-        <?= $entityHelper->docProblems($entity) ?>
+        <?= $entityHelper->docWarnings($entity) ?>
         <?php // $this->element('../Sections/view_metrics'); TODO: move to BaseEntityHelper ?>
     <?php endif; ?>
 

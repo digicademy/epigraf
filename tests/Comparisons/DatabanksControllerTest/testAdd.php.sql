@@ -424,8 +424,8 @@ LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `meta` VALUES
-(1,0,'0000-00-00 00:00:00','2026-01-31 11:38:40',NULL,NULL,'db_version','4.5'),
-(2,0,'0000-00-00 00:00:00','2026-01-31 11:38:40',NULL,NULL,'db_name','Epigraf');
+(1,0,'0000-00-00 00:00:00','2026-02-23 13:43:07',NULL,NULL,'db_version','4.5'),
+(2,0,'0000-00-00 00:00:00','2026-02-23 13:43:07',NULL,NULL,'db_name','Epigraf');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -454,7 +454,7 @@ CREATE TABLE `notes` (
   `sortkey` varchar(50) DEFAULT NULL,
   `content` mediumtext DEFAULT NULL,
   `format` varchar(15) NOT NULL DEFAULT 'html',
-  `norm_iri` varchar(50) DEFAULT NULL,
+  `norm_iri` varchar(1500) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `published` (`published`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -768,4 +768,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-01-31 12:38:41
+-- Dump completed on 2026-02-23 14:43:07

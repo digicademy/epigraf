@@ -23,7 +23,6 @@ use App\Utilities\Converters\Attributes;
 
 <!-- Content area -->
 <div class="content-section">
-    <?= $this->EntityHtml->docProblems($entity) ?>
     <h2 id="toc-overview" class="widget-scrollsync-section"><?= __('Profile') ?></h2>
 
     <?= $this->EntityHtml->entityForm($entity, 'view') ?>

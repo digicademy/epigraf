@@ -12,7 +12,7 @@ modules:
         - WebDriver:
             url: http://localhost
             browser: firefox
-            window_size: 1280x848  # Fix for strange screenshot size: 1280x848
+            window_size: 1280x800  # Fix for strange screenshot size: 1280x848
         - VisualCeption:
             maximumDeviation: 0.1             # deviation in percent (mean squared error over all channels, keep it low)
             saveCurrentImageIfFailure: true   # if true, VisualCeption saves the current

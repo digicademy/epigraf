@@ -11,7 +11,7 @@
 namespace App\Model\Entity\Tasks;
 
 /**
- * Delete articles
+ * Copy articles
  */
 class TaskBatchCopy extends BaseTaskMutate
 {

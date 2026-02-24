@@ -71,7 +71,7 @@
 }
 
 
-/* Article metrics and problems */
+/* Article metrics and warnings */
 .art-metrics {
     display:flex;
     gap: 1em;
@@ -81,7 +81,7 @@
     padding:0.3em;
 }
 
-.art-problems {
+.art-warnings {
     background-color: var(--problems-bg-color);
     color: var(--problems-font-color);
     margin-bottom: 1em;
@@ -169,6 +169,7 @@
     line-height: 1;
     margin:0;
     width: auto;
+    flex:1;
 }
 
 .doc-section-head .doc-section-name,
@@ -176,6 +177,11 @@
 .doc-section-head .doc-section-property,
 .doc-section-head .doc-section-property select {
     font-weight:bold;
+}
+
+.doc-section-head .doc-section-name {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .doc-section-head .doc-section-published {
@@ -522,7 +528,7 @@ div.doc-section-links button.button-settings.used {
     min-height: 1.8em;
 }
 
-.doc-section-link[data-to-id='']:not(.tag-problem) {
+.doc-section-link[data-to-id='']:not(.tag-warning) {
     color:var(--dim-font-color);
 }
 
@@ -700,7 +706,7 @@ button.button-section-content {
 }
 
 /* Tags */
-.tag-problem {
+.tag-warning {
     background-color: var(--problems-bg-color);
     color: var(--problems-font-color);
 }
@@ -768,7 +774,7 @@ div.doc-section-link.tag-hover[data-to-id=''] a:hover {
     color: var(--button-font-color);
 }
 
-.doc-footnote .doc-footnote-number.tag-problem {
+.doc-footnote .doc-footnote-number.tag-warning {
     background-color: var(--problems-bg-color);
     color: var(--problems-font-color);
 }

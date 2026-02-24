@@ -82,7 +82,7 @@ class PropertiesControllerTest extends EpiTestCase
     /**
      * Test that forbidden sort fields are ignored
      *
-     * TODO: Make a real problem scenarion.
+     * TODO: Make a real scenario.
      *       The problem occurs only when the sort field is not removed in Paginator->validateSort()
      *       and the limit is lower than the available rows
      *       and the provided sort field produces an order different from the lft order

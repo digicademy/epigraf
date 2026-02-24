@@ -382,7 +382,7 @@ class ArticlesController extends AppController
             null,
             $default,
             [
-                'save' => ['associated' => ['Sections', 'Sections.Items'], 'addsections' => true],
+                'save' => ['associated' => ['Sections', 'Sections.Items'], 'craft' => true],
                 'open' => 'edit'
             ]
         );

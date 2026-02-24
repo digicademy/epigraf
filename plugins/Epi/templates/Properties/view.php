@@ -27,7 +27,6 @@
 
 <div class="content-tight">
 
-    <?= $this->EntityHtml->docProblems($entity) ?>
     <?= $this->EntityHtml->entityForm($entity, 'view', [], true) ?>
 
     <?php if (empty($entity->related_id)): ?>

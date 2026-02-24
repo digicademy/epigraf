@@ -71,8 +71,8 @@ class EntityHtmlHelper extends BaseEntityHelper
         $article = $section->container;
 
         $mode = $options['mode'] ?? 'view';
-        $template_section = $options['template_section'] ?? [];
-        $template_article = $options['template_article'] ?? [];
+        $sectionTemplate = $options['template_section'] ?? [];
+        $articleTemplate = $options['template_article'] ?? [];
 
 
         $groupClasses = [$options['view'] ?? 'doc-section-stack'];
@@ -103,8 +103,8 @@ class EntityHtmlHelper extends BaseEntityHelper
                 ],
                 'templates' => [
                     'template_item' => $itemTemplate,
-                    'template_section' => $template_section,
-                    'template_article' => $template_article
+                    'template_section' => $sectionTemplate,
+                    'template_article' => $articleTemplate
                 ]
             ];
 
@@ -363,7 +363,7 @@ class EntityHtmlHelper extends BaseEntityHelper
         $data = parent::footnoteContent($footnote, $root, $options, $typeConfig);
 
         // Filter out unpublished footnotes for guests
-//        if (!empty($data['problems']) && ($footnote->currentUserRole === 'guest')) {
+//        if (!empty($data['warnings']) && ($footnote->currentUserRole === 'guest')) {
 //            return '';
 //        }
 
@@ -388,8 +388,8 @@ class EntityHtmlHelper extends BaseEntityHelper
 
         // Footnote number
         $numberClasses = ['doc-footnote-number'];
-        if (!empty($data['problems'])) {
-            $numberClasses[] = 'tag-problem';
+        if (!empty($data['warnings'])) {
+            $numberClasses[] = 'tag-warning';
         }
         $out .= $this->Element->outputHtmlElement(
             'div',

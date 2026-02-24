@@ -234,6 +234,13 @@ The following table provides an overview of the keys used in section configurati
         <td>Optional. Key of the parent section to create a hierarchy.</td>
       </tr>
       <tr>
+        <td>count</td>
+        <td>Allow an arbitrary number of sections by setting the `count` key to an asterisk `*`.
+            You can fix the number to exactly one item by setting the key to `1` (default).
+            Use `+` to require at least one item and allow multiple.
+        </td>
+      </tr>
+      <tr>
         <td>default</td>
         <td>Optional. By default, all sections are created when an article is created. If this is not desired, the default key can be set to `false`.</td>
       </tr>
@@ -321,7 +328,14 @@ A section groups the items of an article. Each section has a name and contains a
       </tr>
       <tr>
         <td>sections</td>
-        <td>Optional. A list of section types that defines which subsections are allowed.</td>
+        <td>
+            Optional. A list of section types or section configuration objects. Defines which subsections are allowed.
+            A section configuration object contains the keys `type` and `count`.
+            This allows you to further specify the number of required or allowed child sections.
+            Allow an arbitrary number of children by setting the `count` key to an asterisk `*`.
+            You can fix the number to exactly one section by setting the key to `1`.
+            Use `+` to require at least one item.
+        </td>
       </tr>
       <tr>
         <td>items</td>
@@ -394,12 +408,17 @@ A full item configuration object includes the following keys:
       </tr>
       <tr>
         <td>default</td>
-        <td> By default, when a new section is created, one instance of the configured item type is automatically generated. You can disable this behavior by setting the `default` key to false
-</td>
+        <td>By default, when a new section is created with the count key set to `*`,
+            one instance of the configured item type is automatically generated.
+            You can disable this behavior by setting the `default` key to false.
+        </td>
       </tr>
       <tr>
         <td>count</td>
-        <td>Allow an arbitrary number of items in the section by setting the `count` key to an asterisk `*`. You can fix the number to exactly one item by setting the key to `1`.</td>
+        <td>Allow an arbitrary number of items in the section by setting the `count` key to an asterisk `*`.
+            You can fix the number to exactly one item by setting the key to `1`.
+            Use `+` to require at least one item.
+        </td>
       </tr>
     </tbody>
   </table>

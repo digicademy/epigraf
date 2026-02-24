@@ -249,7 +249,7 @@ class EntityInputHelper extends BaseEntityHelper
 
                 $itemCount = $itemConfig['count'] ?? '1';
                 $itemEdit = $template_item['edit'] ?? $template_section['edit'] ?? $template_article['edit'] ?? true;
-                $itemCreate = $itemEdit && ($itemCount === '1') && (count($items) === 0);
+                $itemCreate = $itemEdit && (count($items) === 0);
                 $itemAdd = $itemDelete = $itemEdit && ($itemCount === '*');
 
                 foreach ($items as $idx => $item) {
@@ -590,7 +590,7 @@ class EntityInputHelper extends BaseEntityHelper
 
         // TODO: output name and create chooser
         // TODO: rename 'links' to 'to' in the database and everywhere
-        // TODO: output class field-problem for missing targets as in itemFieldProperty()
+        // TODO: output class field-warning for missing targets as in itemFieldProperty()
 
         $content = $item->getValueFormatted($fieldNameParts);
 
@@ -787,8 +787,8 @@ class EntityInputHelper extends BaseEntityHelper
 
         // Footnote number
         $numberClasses = ['doc-footnote-number'];
-        if (!empty($data['problems'])) {
-            $numberClasses[] = 'tag-problem';
+        if (!empty($data['warnings'])) {
+            $numberClasses[] = 'tag-warning';
         }
         $out .= $this->Element->outputHtmlElement(
             'div',

@@ -581,6 +581,11 @@ class ArticlesTableTest extends EpiTestCase
 		$this->assertEquals($articlesEmpty1, $articlesEmpty2);
 	}
 
+    /**
+     * Test getColumns() method
+     *
+     * @return void
+     */
     public function testGetColumns()
     {
         $columns = $this->Articles->getColumns(['id','signature']);

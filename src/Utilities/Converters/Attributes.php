@@ -687,6 +687,19 @@ class Attributes
     }
 
     /**
+     * Trim a value if it is a string, otherwise return a default value
+     *
+     * @param mixed $value
+     * @param string $trim Trim characters
+     * @param string $default
+     * @return string
+     */
+    public static function trimString($value, $trim = " \n\r\t\v\x00/.", $default = '')
+    {
+        return is_string($value) ? trim($value, $trim) : $default;
+    }
+
+    /**
      * Remove special characters to create a valid xml tag.
      *
      * @param string $tagname The non-conform element name
@@ -893,6 +906,26 @@ class Attributes
     {
         $value = is_array($value) ? reset($value) : $value;
         return ($value === 'false') || ($value === false) || ($value === '0') || ($value === 0);
+    }
+
+    /**
+     * Return whether a value is null or an empty string
+     *
+     * @param null|string $value
+     * @return bool
+     */
+    public static function isBlank($value)
+    {
+        if (is_null($value)) {
+            return true;
+        }
+        if (is_string($value) && ($value === '')) {
+            return true;
+        }
+        if (is_array($value) && empty($value)) {
+            return true;
+        }
+        return false;
     }
 
     /**

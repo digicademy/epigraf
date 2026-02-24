@@ -645,3 +645,21 @@ ALTER TABLE `properties`
 
 ALTER TABLE `items`
 	ADD COLUMN `status` VARCHAR(1500) NULL DEFAULT NULL AFTER `published`;
+
+ALTER TABLE `footnotes`
+	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `from_sort`;
+
+ALTER TABLE `items`
+	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `pos_z`;
+
+ALTER TABLE `links`
+	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `to_tagid`;
+
+ALTER TABLE `notes`
+	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `format`;
+
+ALTER TABLE `types`
+	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `config`;
+
+ALTER TABLE `users`
+	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `userrole`;

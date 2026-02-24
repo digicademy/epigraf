@@ -383,7 +383,7 @@ class ArticlesTransferTest extends EpiTestCase
             'controller' => 'Articles',
             'action' => 'index',
             null,
-            '?'=>['projects'=>2]
+            '?' => ['projects' => 2]
         ]);
 
         // Target article

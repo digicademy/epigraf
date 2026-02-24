@@ -193,10 +193,9 @@ class TaskGenerateItems extends BaseTaskMutate
         $params['itemtype'] = Attributes::nonEmptyOption($this->job->config['params']['itemtype'] ?? null, 'summary');
         $params['irifragment'] = Attributes::nonEmptyOption($this->job->config['params']['irifragment'] ?? null,'summary');
 
-//        // Fields
-//        $params['resultfield'] = $this->job->config['params']['itemfield'] ?? 'content';
-//        $params['statefield'] = $this->job->config['params']['statefield'] ?? 'value';
-
+        // Fields
+        $params['resultfield'] = $this->job->config['params']['resultfield'] ?? 'content';
+        $params['statefield'] = $this->job->config['params']['statefield'] ?? 'value';
 
         return $params;
     }

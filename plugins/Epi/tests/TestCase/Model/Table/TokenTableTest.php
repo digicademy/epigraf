@@ -102,12 +102,6 @@ class TokenTableTest extends EpiTestCase
 	/**
 	 * Test updateSessionToken method
 	 *
-	 * @MM: Nochmal überprüfen, warum ist die Zeit die gleiche?? (Nachricht an selbst)
-	 * (Vielleicht weil der Test zu schnell ausgeführt wird)
-	 * -> UPDATE: Da beim Abfragen der Zeit immer ein neues Time-Object erzeugt wird,
-	 * einfach eine Sekunde davon abziehen, dann vergleichen (Problem war, dass die kleinste Zeiteinheit
-	 * darin Sekunden sind, aber die Unterschiede vmtl. im Millisekundenbereich liegen)
-	 *
 	 * @return void
 	 */
 	public function testUpdateSessionToken()

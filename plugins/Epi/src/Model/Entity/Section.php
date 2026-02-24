@@ -54,7 +54,7 @@ use Cake\Utility\Hash;
  * @property int $articles_id
  *
  * # Virtual fields
- * @property array $problems
+ * @property array $warnings
  * @property bool $empty
  * @property string $statusText
  * @property null|bool $complete
@@ -169,7 +169,7 @@ class Section extends BaseEntity
         'comments' => ['comment'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
         'paths' => ['path'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**
@@ -251,18 +251,39 @@ class Section extends BaseEntity
      *
      * @return array
      */
-    protected function _getProblems()
+    protected function _getWarnings()
     {
-        $problems = [];
+        if (is_null($this->_warnings)) {
 
-        if (empty($this->lft) || empty($this->rght)) {
-            $problems[] = __('Section {0} has no left or right value.', $this->id);
-        }
-        foreach ($this->items as $item) {
-            $problems = array_merge($problems, $item->problems);
-        }
+            $warnings = [];
 
-        return $problems;
+            // Recurse into items
+            $shouldHave = !empty($this->type) ? $this->type->getShouldArray('items') : [];
+            foreach ($this->items as $item) {
+                // Count items
+                $shouldHave[$item->itemtype] = $shouldHave[$item->itemtype] ?? ['has' => 0];
+                $shouldHave[$item->itemtype]['has'] += 1;
+                // Collect warnings
+                $warnings = Arrays::array_merge_grouped($warnings, $item->warnings);
+            }
+
+            // Compare to expectations
+            if (!empty($this->type)) {
+                $shouldWarnings = $this->type->evalShouldArray($shouldHave, 'sections-' . $this->id);
+                if (!empty($shouldWarnings)) {
+                    $warnings = Arrays::array_merge_grouped($warnings, ['items' => $shouldWarnings]);
+                }
+            }
+
+            // Check section tree
+            if (empty($this->lft) || empty($this->rght)) {
+                $warnings['tree-error'][] = ['msg' => __('Section {0} has no left or right value.', $this->id)];
+            }
+
+            $this->_warnings = parent::_getWarnings() ?? [];
+            $this->_warnings = Arrays::array_merge_grouped($this->_warnings, $warnings);
+        }
+        return $this->_warnings;
     }
 
 
@@ -862,9 +883,8 @@ class Section extends BaseEntity
 
         $this->items = [];
         foreach ($type['merged']['items'] ?? [] as $itemKey => $itemConfig) {
-            $itemTypeName = is_string($itemConfig) ? $itemConfig : ($itemConfig['type'] ?? '');
-            $itemType = $itemTypes[$itemTypeName] ?? [];
-            $itemConfig = is_array($itemConfig) ? $itemConfig : [];
+            $itemConfig = is_array($itemConfig) ? $itemConfig : ['type' => $itemConfig];
+
             if (($itemConfig['default'] ?? true) && (($itemConfig['count'] ?? '1') !== '*')) {
 
                 $itemId = Attributes::uuid('new');
@@ -880,12 +900,12 @@ class Section extends BaseEntity
                     'id' => $itemId,
                     'sections_id' => $this->id,
                     'articles_id' => $this->articles_id,
-                    'itemtype' => $itemTypeName,
+                    'itemtype' => $itemConfig['type'] ?? '',
                     'sortno' => 1
                 ], $options);
 
                 // Autofill properties_id from the section caption
-                if (($itemType['merged']['fields']['property']['format'] ?? '') === 'sectionname') {
+                if (($itemTypes[$itemConfig['type'] ?? '']['merged']['fields']['property']['format'] ?? '') === 'sectionname') {
                     $item['properties_id'] = $this->properties_id;
                 }
 

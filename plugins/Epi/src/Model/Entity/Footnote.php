@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Epi\Model\Entity;
 
+use App\Utilities\Converters\Arrays;
+
 /**
  * Footnote Entity
  *
@@ -112,7 +114,7 @@ class Footnote extends BaseEntity
         'deleted' => ['deleted', 'version_id', 'created', 'modified'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
         'deprecated' => ['sortno', 'fntype', 'name'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**
@@ -159,6 +161,15 @@ class Footnote extends BaseEntity
         'content' => 'xml',
         'segment' => 'xml'
     ];
+
+    /**
+     * Tag entities referring this entity
+     *
+     * See `Tag->_getWarnings()`.
+     *
+     * @var array
+     */
+    public $linkedTags = [];
 
     /**
      * Check whether another entity depends on the entity
@@ -215,6 +226,30 @@ class Footnote extends BaseEntity
     }
 
     /**
+     * Find footnote warnings
+     *
+     * @return array
+     */
+    protected function _getWarnings()
+    {
+        if (is_null($this->_warnings)) {
+            $warnings = [];
+
+            // Make sure that tags were extracted and tag warnings were evaluated beforehand
+            if (empty($this->linkedTags)) {
+                $warnings['missing-tag'][] = [
+                    'msg' => __('Missing tag for annotation footnotes-{id}#{from_tagid}.', $this->_fields)
+                ];
+            }
+
+            $this->_warnings = parent::_getWarnings() ?? [];
+            $this->_warnings = Arrays::array_merge_grouped($this->_warnings, $warnings);
+        }
+
+        return $this->_warnings;
+    }
+
+    /**
      * Convert fntype to boolean
      *
      * //TODO: use from_tagname
@@ -252,7 +287,7 @@ class Footnote extends BaseEntity
     public function getEntityIsVisible($options = [])
     {
         if (!empty($this->root) && !empty($this->root->_filterAnnos) && method_exists($this->root, 'getTree')) {
-            $tree = $this->root->getTree(['articles'=>true,'sections'=>true,'items'=>true]);
+            $tree = $this->root->getTree(['articles' => true, 'sections' => true, 'items' => true]);
             if (!isset($tree[$this->from_tab . '-' . $this->from_id])) {
                 return false;
             }

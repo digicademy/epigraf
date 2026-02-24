@@ -71,7 +71,23 @@ class XmlMunge
         return $parser->importXMLFile($fileName);
     }
 
-    static function getXmlElements($value, $content = false)
+    /**
+     * Extract all xml elements from a string and merge them by their id attribute
+     *
+     * Content of elements with the same id will be merged together.
+     * Elements without an id attribute will be returned under a generated id "no-x" where x is a running number.
+     *
+     * ### Options
+     * - content: Whether to extract the tag content.
+     * - parents: Whether to add tag parent ids.
+     *
+     * @param string $value The XML string to extract elements from.
+     * @param array $options Options for the extraction, e.g. ['content' => true, 'parents' => true].
+     * @param callable|null $spawnCallback Optional callback function to be called for each tag, with signature function($tagId, $tagData).
+     * @return array
+     * @throws \Exception
+     */
+    static function getXmlElements($value, $options = ['content' => false, 'parents' => false], $spawnCallback = null)
     {
         $tags = [];
         if (empty($value)) {
@@ -83,34 +99,36 @@ class XmlMunge
          * @param XmlImport $parser
          * @return void
          */
-        $callback_ids = static function (&$element, &$parser) use (&$tags, $content) {
-            if (($element['position'] === 'open') && (!empty($element['attributes']['id']))) {
+        $callback_ids = static function (&$element, &$parser) use (&$tags, $options, $spawnCallback) {
+            if ($element['position'] === 'open') {
 
-                if ($content) {
-                    if (empty($tags[$element['attributes']['id']])) {
-                        $tags[$element['attributes']['id']] = ['name' => $element['name'], 'content' => ''];
-                    }
+                $tagId = $element['attributes']['id'] ?? ('no-' . (count($tags) + 1));
 
-                    if (empty($element['empty'])) {
-//                        $parser->beginTrack($element['attributes']['id']);
-                        // TODO: Optionally, render styles
-                        $element['customoutput'] = $parser->parseCurrentElement();
-                        $tags[$element['attributes']['id']]['content'] .= ' ' . trim($element['customoutput']);
-                        $tags[$element['attributes']['id']]['content'] = trim($tags[$element['attributes']['id']]['content']);
-//                        $parser->endTrack($element['attributes']['id']);
-                    }
-                }
-                else {
-                    $tags[$element['attributes']['id']] = $element['name'];
+                // TODO: Throw an error if the same id occurs more than once under different element names
+                if (empty($tags[$tagId])) {
+                    $tags[$tagId] = ['name' => $element['name']];
                 }
 
-            }
-            elseif (($element['position'] === 'open')) {
-                $tags['no-' . (count($tags) + 1)] = $element['name'];
+                if (!empty($options['content']) && empty($element['empty'])) {
+                    // TODO: Optionally, render styles
+                    $element['customoutput'] = $parser->parseCurrentElement();
+                    $tags[$tagId]['content'] = ($tags[$tagId]['content'] ?? '') . ' ' . trim($element['customoutput']);
+                    $tags[$tagId]['content'] = trim($tags[$tagId]['content']);
+                }
+
+                // TODO: Handle the case where a tag with the same ID occurs under different parents
+                if (!empty($options['parents']) && count($parser->stack) > 1) {
+                    $parentId = end($parser->stack)['attributes']['id'] ?? null;
+                    $tags[$tagId]['parent_id'] = $parentId;
+                }
+
+                if (!empty($spawnCallback)) {
+                    $spawnCallback($tagId, $tags[$tagId]);
+                }
             }
         };
-        XmlMunge::parseXmlString($value, $callback_ids);
 
+        XmlMunge::parseXmlString($value, $callback_ids);
         return $tags;
     }
 

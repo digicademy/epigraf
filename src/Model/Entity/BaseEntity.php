@@ -52,6 +52,7 @@ use Rest\Entity\LockTrait;
  * @property string $newId
  * @property null|string $currentUserRole
  * @property null|\Cake\ORM\Query $versions
+ * @property array $warnings
  *
  * @property string $fileBasepath
  * @property string $fileDownloadpath
@@ -138,6 +139,15 @@ class BaseEntity extends Entity
      * @var string
      */
     protected $_newId = null;
+
+    /**
+     * A warnings array grouped by warning type.
+     * Used for caching warnings. Null indicates that warnings have not been checked yet.
+     * See _getWarnings() for details.
+     *
+     * @var null|array
+     */
+    protected $_warnings = null;
 
     /**
      * By default, entities outside the Epi plugin are visible to authenticated users.
@@ -232,6 +242,32 @@ class BaseEntity extends Entity
     protected function _getHtmlFields()
     {
         return $this->type->config['fields'] ?? [];
+    }
+
+    /**
+     * Check whether the entity is well-formed
+     *
+     * Returns an array of warnings grouped by warning type.
+     * Each warning is an array with at least a 'msg' key
+     * containing a message to be displayed to the user.
+     *
+     * @return array An array of warnings grouped by warning type
+     */
+    protected function _getWarnings()
+    {
+        return $this->_warnings;
+    }
+
+    /**
+     * Returns validation warning messages of a field
+     *
+     * @param string $field Field name to get the errors from
+     * @return string[] An array of warning messages for the given field
+     */
+    public function getWarnings(string $field)
+    {
+        $warnings = $this->warnings[$this->tableName . '-' . $field] ?? [];
+        return array_map(fn($warning) => $warning['msg'] ?? '', $warnings);
     }
 
     /**
@@ -386,7 +422,7 @@ class BaseEntity extends Entity
     /**
      * Get the default type for the entity, if no type configuration is available in the types table
      *
-     * @return array|null
+     * @return DefaultType
      */
     protected function _getDefaultType()
     {
@@ -401,7 +437,6 @@ class BaseEntity extends Entity
      *
      * Otherwise, loads the type entity if not already loaded
      *
-     * @param $field
      * @return array
      */
     protected function _getType()

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-03-02 14:18+0100\n"
+"POT-Creation-Date: 2026-02-09 12:55+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,51 +14,79 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:604
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:669
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:659
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:724
 msgid "You are not allowed to access this page, please login."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:611
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:678
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:666
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:733
 msgid "Page not found."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:629
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:684
 msgid "Entity not found"
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:683
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:738
 msgid "Page not found"
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:735
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:815
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:790
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:870
 msgid "The {0} has been saved."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:741
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:796
 msgid "The {0} could not be saved, please try again."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:785
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:840
 msgid "The table is open in EpiDesktop. Close or unlock in EpiDesktop."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:818
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:873
 msgid "The {0} could not be saved. Please, try again."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:858
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:913
 msgid "The {0} has dependencies. Please remove the dependencies first."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:873
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:927
+msgid "The {0} has children. Please remove the children first."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:945
 msgid "The {0} has been deleted."
 msgstr ""
 
-#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:877
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:950
 msgid "The {0} could not be deleted. Please, try again."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:1018
+msgid "The property has been moved."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:1023
+msgid "The node could not be moved. Please try again."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:1043
+msgid "Could not move node #{0} to the new target."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:1050
+msgid "{0} of {1} nodes could not be moved to their new target."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/ActionsComponent.php:1055
+msgid "Moved {0} nodes to new targets."
+msgstr ""
+
+#: ./plugins/Rest/src/Controller/Component/AnswerComponent.php:131
+msgid "You have no access to the requested page."
 msgstr ""
 
 #: ./plugins/Rest/src/Controller/Component/AnswerComponent.php:133

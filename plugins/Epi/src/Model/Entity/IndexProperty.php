@@ -95,7 +95,7 @@ class IndexProperty extends Property
         'index' => ['sections', 'properties_id', 'related_id'],
         'published' => ['published'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**

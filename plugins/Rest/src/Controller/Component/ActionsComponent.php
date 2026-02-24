@@ -493,9 +493,9 @@ class ActionsComponent extends Component
             }
         }
 
-        // Get problems
-        if (in_array('problems', $params['snippets'] ?? [])) {
-            $this->Answer->addOptions(['problems' => $model->getProblems()]);
+        // Get warnings
+        if (in_array('warnings', $params['snippets'] ?? [])) {
+            $this->Answer->addOptions(['warnings' => $model->getWarnings()]);
         }
 
         // Output

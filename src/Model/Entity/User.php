@@ -47,7 +47,7 @@ use Cake\Utility\Hash;
  * # Virtual fields (without inherited fields)
  * @property string $sqlUsername
  * @property bool $hasSqlAccess
- * @property string $problems
+ * @property string $warnings
  *
  * # Relations
  * @property UsersTable $table
@@ -327,30 +327,32 @@ class User extends BaseEntity
      *
      * @return string[] Error messages
      */
-    protected function _getProblems()
+    protected function _getWarnings()
     {
-        $errors = [];
+        if (is_null($this->_warnings)) {
 
-        if (empty($this->norm_iri)) {
-            $errors[] = __('The IRI is missing.');
+            $this->_warnings = [];
+
+            if (empty($this->norm_iri)) {
+                $this->_warnings['missing-iri'][] = ['msg' => __('The IRI is missing.')];
+            }
+
+            if (empty($this->databank_id)) {
+                $this->_warnings['missing-database'][] = ['msg' => __('No default database selected.')];
+            } else {
+                // TODO: implement hasPermission method
+                //            $dbPermissions = array_filter($this->permissions, function ($x) {
+                //                return ($x->entity_type === 'databank') &&
+                //                    ($x->entity_id === $this->databank_id) &&
+                //                    ($x->permission_type === 'access');
+                //            });
+                //            if (empty($dbPermissions)) {
+                //                $errors[] = __('No access to default database. Did you forget to grant access?');
+                //            }
+            }
         }
 
-        if (empty($this->databank_id)) {
-            $errors[] = __('No default database selected');
-        }
-        else {
-            // TODO: implement hasPermission method
-//            $dbPermissions = array_filter($this->permissions, function ($x) {
-//                return ($x->entity_type === 'databank') &&
-//                    ($x->entity_id === $this->databank_id) &&
-//                    ($x->permission_type === 'access');
-//            });
-//            if (empty($dbPermissions)) {
-//                $errors[] = __('No access to default database. Did you forget to grant access?');
-//            }
-        }
-
-        return $errors;
+        return $this->_warnings;
     }
 
     /**

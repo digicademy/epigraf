@@ -2758,7 +2758,7 @@ export class TagsModel extends BaseDocumentModel {
      * @returns Promise
      */
     onCreateTag(widget, tagAttributes) {
-        return this.doc.models.types.getTagSet(widget, false).then(
+        return this.doc.models.types.getTagSet(widget).then(
             (tagSet) => {
                 const annoModel = this.modelParent.models.annotations;
                 const linksModel = this.modelParent.models.links;
@@ -3857,66 +3857,186 @@ export class TypesModel extends BaseDocumentModel {
     }
 
     /**
-     * Return the tagset from the config for a given item field
+     * Get selectors for a tag
      *
-     * @param {HTMLElement} elm
-     * @param {boolean} filter Only return configured tags
+     * @param {Object} tag The tag object as loaded by loadTypes().
+     * @return {String[]} A list of selectors for the tag, ordered from more specific to more general.
+     */
+    getSelectors(tag) {
+        let selectors = [
+            tag.name,
+            tag.scope + '.' + tag.name,
+            // @deprectated: remove tag.category as criterion, use config.group
+            tag.category,
+            tag.scope + '.' + tag.category
+        ];
+
+        const tagGroup = Utils.getValue(tag, 'config.group');
+        if (tagGroup) {
+            selectors.push(tagGroup);
+            selectors.push(tag.scope + '.' + tagGroup);
+        }
+        return selectors;
+    }
+
+    /**
+     * Evaluate whether a tag matches the allowed types for the current field.
+     *
+     * Supported selectors are:
+     *
+     * - tag name (e.g. 'del')
+     * - scope and tag name (e.g. 'links.del')
+     * - group name (e.g. 'transcription')
+     * - scope and group name (e.g. 'links.transcription')
+     *
+     * The scope is one of 'footnotes' or 'links'.
+     * The tag name corresponds to the type entity name.
+     *
+     * @param {String[]} tagSelectors The list of selectors for the tag, ordered from more specific to more general.
+     * @param {String[]} allowedSelectors A list of selectors to compare against the tagSelectors.
+     * @return {Object} The tag object with an added 'matched' property and 'sortidx' if matched.
+     */
+    isAllowedRoot(tagSelectors, allowedSelectors ) {
+        for (let i = 0; i < tagSelectors.length; i++) {
+            if (allowedSelectors.includes(tagSelectors[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determine whether a tag is allowed as descendant.
+     *
+     * TODO: Build a tree and store it in the TypesModel class
+     *
+     * @param {string} tagName
+     * @param {Object} tagMap
+     * @param {Set<string>} visited
+     * @returns {boolean}
+     */
+    isDescendantAllowed(tagName, tagMap, memo = {}, visited = new Set()) {
+
+        // Cached result
+        if (memo[tagName] !== undefined) {
+            return memo[tagName];
+        }
+
+        // Prevent cycles
+        if (visited.has(tagName)) {
+            memo[tagName] = false;
+            return false;
+        }
+
+        visited.add(tagName);
+
+        const tag = tagMap[tagName];
+
+        if (!tag) {
+            return false;
+        }
+
+        // Root tags are always allowed
+        if (tag.isAllowedRoot) {
+            memo[tagName] = true;
+            return true;
+        }
+
+        const parents = Array.isArray(tag.allowedParents)
+            ? tag.allowedParents
+            : [];
+
+        for (let i = 0; i < parents.length; i++) {
+            if (this.isDescendantAllowed(
+                parents[i],
+                tagMap,
+                memo,
+                new Set(visited) // isolate branch traversal
+            )) {
+                memo[tagName] = true;
+                return true;
+            }
+        }
+
+        memo[tagName] = false;
+        return false;
+    }
+
+    /**
+     * Return the tagset from the config for a given item field.
+     *
+     * All links and footnotes will be merged.
+     *
+     * Each tag will get an 'isAllowedRoot' property that is true if the tag is allowed as root in the current field.
+     * Each tag will get a 'isAllowedDescendant' property that is true if the tag is allowed in the field as root or descendant of root tags, otherwise false.
+     * Each tag will get an 'allowedParents' property that lists the allowed parent tag names
+     * (tags that select this tag as allowed child in their types key).
+     *
+     *
+     * @param {HTMLElement} elm The element that represents the field.
      * @returns Promise
      */
-    getTagSet(elm, filter = true) {
+    getTagSet(elm) {
 
         let fieldData = this.doc.getFieldData(elm);
 
         return this.loadTypes().then(
             (types) => {
 
-                // XML tags
-                let tagSet = Object.entries({...types.links, ...types.footnotes});
-
-                // Extract field config from the item
-                let fieldConfig = [];
+                // Get the selectors for types allowed in the current field
+                let allowedRootSelectors;
                 if (fieldData.field && fieldData.type && fieldData.table) {
-                    const typeKey = fieldData.table + '.' + fieldData.type + '.config' +
-                        '.fields' + '.' + fieldData.field + '.types';
-                    fieldConfig = Utils.getValue(types, typeKey, []);
+                    const allowedFieldTypesKey = fieldData.table +
+                        '.' + fieldData.type +
+                        '.config' +
+                        '.fields' +
+                        '.' + fieldData.field +
+                        '.types';
+                    allowedRootSelectors = Utils.getValue(types, allowedFieldTypesKey, []);
                 }
 
-                // Disable toolbuttons for unconfigured tags
-                // @deprectated: remove tag.category as criterion, use config.group
-                tagSet = tagSet.map(([tagName, tag]) => {
-                    tag.matched = false;
+                // Get all tags' config
+                let tagEntries = Object.entries({...types.links, ...types.footnotes});
 
-                    let selectors = [
-                        tag.name,
-                        tag.scope + '.' + tag.name,
-                        tag.category,
-                        tag.scope + '.' + tag.category
-                    ];
-
-                    const tagGroup = Utils.getValue(tag,'config.group');
-                    if (tagGroup) {
-                        selectors.push(tagGroup);
-                        selectors.push(tag.scope + '.' + tagGroup);
+                // Build a reverse selector map.
+                // It contains all selectors used in a tag's types keys and holds the tag names as value.
+                const selectedByMap = {};
+                for (const [tagName, tag] of tagEntries) {
+                    const tagTypes = tag.config?.types || [];
+                    for (const selector of tagTypes) {
+                        if (!selectedByMap[selector]) {
+                            selectedByMap[selector] = [];
+                        }
+                        selectedByMap[selector].push(tagName);
                     }
+                }
 
-                    for (let i = 0; i < selectors.length; i++) {
-                        tag.sortidx = fieldConfig.indexOf(selectors[i]);
-                        if (tag.sortidx > -1) {
-                            tag.matched = true;
-                            break;
+                // Compute allowedParents + isAllowedRoot
+                const tagMap = {};
+                for (let [tagName, tag] of tagEntries) {
+
+                    const selectors = this.getSelectors(tag);
+
+                    const allowedParentsSet = new Set();
+                    for (const selector of selectors) {
+                        for (const p of selectedByMap[selector] || []) {
+                            allowedParentsSet.add(p);
                         }
                     }
+                    tag.allowedParents = Array.from(allowedParentsSet);
+                    tag.isAllowedRoot = this.isAllowedRoot(selectors, allowedRootSelectors);
 
-                    return [tagName, tag];
-                });
-
-                // Remove unconfigured tags
-                if (filter) {
-                    tagSet = tagSet.filter(([tagName, tag]) => tag.matched);
+                    tagMap[tagName] = tag;
                 }
 
-                tagSet = Object.fromEntries(tagSet);
-                return tagSet;
+                // Determine isAllowedDescendant in a second pass
+                const memo = {};
+                for (const tagName of Object.keys(tagMap)) {
+                    tagMap[tagName].isAllowedDescendant =
+                        this.isDescendantAllowed(tagName, tagMap, memo);
+                }
+
+                return tagMap;
             }
         );
     }

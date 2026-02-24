@@ -111,7 +111,7 @@ class FilesRequestComponent extends Component
         $this->model = $this->controller->Files;
         $this->model->mounts = $this->getConfig('mounts');
 
-        // TODO: path, file, and folder should be initialized as empty strings (?), see problems.
+        // TODO: path, file, and folder should be initialized as empty strings (?), see warnings.
         // TODO: Init controller properties in a trait
         // Absolute paths
         $this->controller->rootFolder = false;

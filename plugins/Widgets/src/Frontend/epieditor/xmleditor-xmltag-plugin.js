@@ -19,7 +19,11 @@ import {EpiButtonView, EpiDropdownButtonView} from './epi-buttonview-plugin.js';
 import {createDropdown} from '@ckeditor/ckeditor5-ui/src/dropdown/utils';
 
 import clickOutsideHandler from '@ckeditor/ckeditor5-ui/src/bindings/clickoutsidehandler';
-import {XmleditorXmltagEditing, XML_COMMAND} from './xmleditor-xmltag-editing';
+import {
+    XmleditorXmltagEditing,
+    XML_COMMAND,
+    XML_BRACKET, XML_FORMAT, XML_TAG
+} from './xmleditor-xmltag-editing';
 import Utils from "/js/utils.js";
 
 export default class XmlButtons extends Plugin {
@@ -41,6 +45,7 @@ export default class XmlButtons extends Plugin {
         const self = this;
         const editor = this.editor;
         const tagGroups = editor.config.get('tagGroups');
+        const doConstrain = editor.config.get('doConstrain');
 
         // Load icons
         this.icons = {};
@@ -55,7 +60,7 @@ export default class XmlButtons extends Plugin {
         Object.keys(tagGroups).forEach(function (groupName) {
             tagGroups[groupName]['children'].forEach(function (tagName) {
                 editor.ui.componentFactory.add('xml' + tagName.capitalize(), locale => {
-                    return self.createToolbarButton(editor, locale, tagName, groupName !== 'default');
+                    return self.createToolbarButton(editor, locale, tagName, groupName !== 'default', doConstrain);
                 });
             });
 
@@ -84,14 +89,24 @@ export default class XmlButtons extends Plugin {
         });
     }
 
-    // See https://ckeditor.com/docs/ckeditor5/latest/examples/builds-custom/bottom-toolbar-editor.html
+    /**
+     * Create a dropdown toolbar group if the group contains more than one button, otherwise return a single button.
+     *
+     * See https://ckeditor.com/docs/ckeditor5/latest/examples/builds-custom/bottom-toolbar-editor.html
+     *
+     * @param {XmlEditor} editor
+     * @param {Locale} locale
+     * @param {string} groupName
+     * @return {EpiButtonView|DropdownView}
+     */
     createToolbarGroup(editor, locale, groupName) {
         const tagGroups = editor.config.get('tagGroups');
+        const doConstrain = editor.config.get('doConstrain');
 
         // Output a single button if the group only contains one button
         const firstButton = tagGroups[groupName].children[0];
         if (tagGroups[groupName].children.length < 2) {
-            return this.createToolbarButton(editor, locale, firstButton, false);
+            return this.createToolbarButton(editor, locale, firstButton, false, doConstrain);
         }
 
         // Get group button
@@ -141,14 +156,17 @@ export default class XmlButtons extends Plugin {
     }
 
     /**
+     * Create a toolbar button
      *
-     * @param editor
-     * @param locale
-     * @param typeName
-     * @param isInGroup {boolean} True if tag belongs to group, false otherwise
+     * @param {XmlEditor} editor
+     * @param {Locale} locale
+     * @param {string} typeName
+     * @param {boolean} isInGroup True if tag belongs to group, false otherwise
+     * @param {boolean} doConstrain Whether to constrain allowed root tags and nested tags based on the configuration.
+     *                              Without constrains, all tags configured for the field are allowed in any position.
      * @returns {EpiButtonView}
      */
-    createToolbarButton(editor, locale, typeName, isInGroup = true) {
+    createToolbarButton(editor, locale, typeName, isInGroup = true, doConstrain = true) {
         const typeData = editor.config.get('tagSet')[typeName];
         const {caption, icon, symbol, font, style, shortcut} = this.getToolbarButtonConfig(typeData)
 
@@ -174,30 +192,74 @@ export default class XmlButtons extends Plugin {
         // Disable text of toolbuttons if symbol or icon are defined
         toolButtonConfig.withText = ((symbol === undefined) && (icon === undefined));
 
-        const view = new EpiButtonView(locale);
-        view.set(toolButtonConfig);
+        const toolButton = new EpiButtonView(locale);
+        toolButton.set(toolButtonConfig);
 
         // Callback executed once the tool button is clicked.
-        view.on('execute', (evt, data) => {
+        toolButton.on('execute', (evt, data) => {
             editor.execute(XML_COMMAND, {'data-type': typeName});
             editor.editing.view.focus();
         });
 
+        // Shortcut
         if (shortcut) {
             editor.keystrokes.set(shortcut, (keyEvtData, cancel) => {
-                editor.execute(XML_COMMAND, {'data-type': typeName, 'initiator': 'shortcut'});
-                cancel();
-                editor.editing.view.focus();
+                if (toolButton.isEnabled) {
+                    editor.execute(XML_COMMAND, {'data-type': typeName, 'initiator': 'shortcut'});
+                    cancel();
+                    editor.editing.view.focus();
+                }
             });
         }
 
-        return view;
+        // Update visibility on selection change
+        if (doConstrain) {
+            editor.model.document.selection.on('change:range', () => this.updateVisibility(editor, toolButton, typeData));
+            this.updateVisibility(editor, toolButton, typeData);
+        }
+
+        return toolButton;
+    }
+
+    getCurrentTagType(editor) {
+        const selection = editor.model.document.selection;
+        const position = selection.getFirstPosition();
+        if (position) {
+            let parent = position.parent;
+            while (parent && ![XML_BRACKET, XML_FORMAT, XML_TAG].includes(parent.name)) {
+                parent = parent.parent;
+            }
+            if (parent) {
+                return parent.getAttribute('data-type');
+            }
+        }
+    }
+
+    updateVisibility(editor, toolButton, typeData) {
+
+        if (!editor.model ||! editor.model.document) {
+            return;
+        }
+        editor.model.change(writer => {
+            const parentType = this.getCurrentTagType(editor);
+            if (!parentType) {
+                toolButton.isEnabled = typeData.isAllowedRoot;
+            }
+            else if (typeData && typeData.allowedParents) {
+                toolButton.isEnabled = typeData.allowedParents.includes(parentType);
+            }
+            else {
+                toolButton.isEnabled = false;
+            }
+        });
     }
 
     /**
      * Return toolbar button configuration of normal and dropdown button
      * (caption, icon, unicode symbol, font, shortcut)
      * if values are set in button type configuration.
+     *
+     * // TODO: Use config of dropdown button if this is a dropdown child
      *
      * @param typeData Type configuration object
      * @returns {{caption: String, icon: SVGElement, symbol: String, font: 'awesome' | undefined, style: String, shortcut: String}}

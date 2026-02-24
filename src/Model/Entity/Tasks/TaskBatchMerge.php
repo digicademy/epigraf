@@ -11,7 +11,7 @@
 namespace App\Model\Entity\Tasks;
 
 /**
- * Build fulltext index
+ * Merge properties
  */
 class TaskBatchMerge extends BaseTaskMutate
 {

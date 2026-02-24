@@ -14,6 +14,8 @@ use Cake\I18n\FrozenTime;
 
 /**
  * Token table
+ *
+ * @deprecated Used EpiDesktop permission synchronisation.
  */
 class TokenTable extends BaseTable
 {

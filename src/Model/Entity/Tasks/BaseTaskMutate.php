@@ -13,6 +13,7 @@ namespace App\Model\Entity\Tasks;
 use App\Model\Entity\BaseEntity;
 use App\Model\Entity\BaseTask;
 use App\Model\Interfaces\MutateTableInterface;
+use App\Model\Table\BaseTable;
 use Cake\Http\Exception\InternalErrorException;
 use Exception;
 
@@ -23,11 +24,29 @@ class BaseTaskMutate extends BaseTask
 {
 
     /**
+     * A list of models that can be used with the task.
+     * (e.g. Epi.Articles)
+     *
+     * TODO: Implement task registry
+     *
+     * @var array
+     */
+    public static $taskModels = [];
+
+    /**
+     * A list of URL parameters managed by the task.
+     *
+     * @var array
+     */
+    protected $taskParameters = [];
+
+    /**
      * Get options for the configuration form
      *
      * Overwrite in derived classes
      *
-     * TODO: The derived classes mainly recreate the fields. Rename $field to $values and pass the values to the fields.
+     * TODO: The derived classes mainly recreate the fields.
+     *       Rename $field to $values and pass the values to the fields.
      *
      * @param array $fields
      * @return array[]
@@ -53,7 +72,26 @@ class BaseTaskMutate extends BaseTask
             $params['cursor'] = $this->config['cursor'] ?? null;
         }
 
+        foreach ($this->taskParameters as $paramName) {
+            $params[$paramName] = $this->job->config['params'][$paramName] ?? null;
+        }
+
         return $params;
+    }
+
+    /**
+     * Get data query parameters that are passed to the mutateEntities method
+     *
+     * Filter out task params from the data params
+     *
+     * @return array
+     */
+    public function getDataParams()
+    {
+        $jobParams = parent::getDataParams();
+        $taskParams = $this->getTaskParams();
+
+        return array_diff_key($jobParams, $taskParams);
     }
 
     /**
@@ -89,6 +127,7 @@ class BaseTaskMutate extends BaseTask
     {
         $this->job->activateDatabank($this->job->config['database']);
 
+        /** @var \Epi\Model\Table\BaseTable $model */
         $model = $this->job->getModel($this->job->config['table'], 'Epi');
         if (!($model instanceof MutateTableInterface)) {
             throw new InternalErrorException('The model does not support entity mutation.');
@@ -100,15 +139,10 @@ class BaseTaskMutate extends BaseTask
 
         // TODO: keep sort/order parameter
         $taskParams = $this->getTaskParams();
-        $dataParams = $this->job->dataParams;
+        $dataParams = $this->getDataParams();
 
         try {
-            $entities = $model->mutateEntities(
-                $taskParams,
-                $dataParams,
-                $offset,
-                $limit
-            );
+            $entities = $this->mutate($model, $taskParams, $dataParams, $offset, $limit);
 
             foreach ($entities as $entity) {
                 if ($entity instanceof BaseEntity) {
@@ -134,6 +168,28 @@ class BaseTaskMutate extends BaseTask
 
         // Is the task finished?
         return (count($entities) < $this->job->limit);
+    }
+
+    /**
+     * Mutate entities.
+     *
+     * Overwrite in derived classes if the respective mutate method is not implemented in the model.
+     *
+     * @param BaseTable $model
+     * @param array $taskParams
+     * @param array $dataParams
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    protected function mutate($model, $taskParams, $dataParams, $offset, $limit)
+    {
+        return $model->mutateEntities(
+            $taskParams,
+            $dataParams,
+            $offset,
+            $limit
+        );
     }
 
 

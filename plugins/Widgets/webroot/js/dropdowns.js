@@ -625,7 +625,9 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         this.listenEvent(this.widgetElement,'epi:load:content', event => this.positionDropdown());
         this.listenEvent(this.pane,'epi:load:content', event => this.positionDropdown());
 
-        const scrollable = this.widgetElement.closest('body').querySelector('.widget-scrollsync-content');
+        // Listen to scroll events of the page to adjust the dropdown position if necessary
+        const body = this.widgetElement.closest('body');
+        const scrollable = body ? body.querySelector('.widget-scrollsync-content') : undefined;
         this.scrollTimeout = undefined;
         if (scrollable) {
             this.listenEvent(scrollable, 'scroll', (event) => this.onScroll(event));

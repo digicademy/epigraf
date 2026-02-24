@@ -218,7 +218,7 @@ export class JobWidget extends BaseWidget {
         }
 
         if (data.downloadUrl) {
-            window.open(this.proceedUrl);
+            Utils.sendDownload(this.proceedUrl);
         } else {
             window.location = this.proceedUrl;
         }

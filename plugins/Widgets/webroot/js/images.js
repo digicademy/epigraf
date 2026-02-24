@@ -43,6 +43,7 @@ export class ImagesWidget extends BaseWidget{
             containerSelector: '.doc-imagelist',
             imageSelector: '.doc-image',
             thumbs: true,
+            counter: true,
             inlineArrows: false
         }
 
@@ -87,6 +88,7 @@ export class ImagesWidget extends BaseWidget{
         widget.config.imageSelector = selImages;
         widget.config = Object.assign(widget.config, config);
         widget.config.thumbs = Utils.isTrue(item.dataset.epiImageThumbs, true);
+        widget.config.counter = Utils.isTrue(item.dataset.epiImageCounter, true);
 
     }
 
@@ -413,9 +415,15 @@ export class ImagesWidget extends BaseWidget{
 
         // Change title
         const titleElement = this.overlay.querySelector('.overlay-header-title');
+        let titleText = '';
         if (titleElement && metadata['title']) {
-            titleElement.innerText = metadata['title'] || '';
+            titleText = metadata['title'] || '';
         }
+        if (this.config.counter && this.items && (this.items.length > 1)) {
+            const counterText =  `[${this.currentPosition + 1}/${this.items.length}] `;
+            titleText = counterText + titleText;
+        }
+        titleElement.innerText = titleText;
 
         const footerElement = this.overlay.querySelector('.overlay-footer-title');
         if (footerElement && metadata['footer']) {

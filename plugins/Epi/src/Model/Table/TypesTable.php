@@ -429,7 +429,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
      *
      * @return array
      */
-    public function getProblems()
+    public function getWarnings()
     {
         $dependent = [
             'Projects' => 'projecttype',
@@ -439,7 +439,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
             'Properties' => 'propertytype'
         ];
 
-        $problems = [];
+        $warnings = [];
 
         foreach ($dependent as $modelName => $field) {
             $model = $this->fetchTable('Epi.' . $modelName);
@@ -456,11 +456,11 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
                 ->toArray();
 
             foreach ($missing as $missingType) {
-                $problems[] = __('For {0}, the {1} configuration is missing.', $scope, $missingType);
+                $warnings[] = __('For {0}, the {1} configuration is missing.', $scope, $missingType);
             }
         }
 
-        return $problems;
+        return $warnings;
     }
 
     /**
@@ -558,7 +558,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         $params['action'] = $requestAction;
 
         if (empty($params['snippets']) && ($requestAction === 'index') && ($this::$requestFormat === 'html')) {
-            $params['snippets'] = ['problems'];
+            $params['snippets'] = ['warnings'];
         }
 
         return $params;

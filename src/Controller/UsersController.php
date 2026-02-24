@@ -152,8 +152,7 @@ class UsersController extends AppController
     public function start()
     {
         // Load last visited page...
-        $requestIdentifier = $this->Actions->getUserSettings('log', 'request');
-        $requestIdentifier = is_string($requestIdentifier) ? trim($requestIdentifier, " \n\r\t\v\x00/.") : '';
+        $requestIdentifier = Attributes::trimString($this->Actions->getUserSettings('log', 'request', ''));
 
         if (!empty($requestIdentifier)) {
             $requestIdentifier .= '&load=1';

@@ -27,9 +27,7 @@ class TaskAssignNumber extends TaskAssignProperty
 
         $fields = [];
 
-//        $database = $this->job->activateDatabank($this->job->config['database']);
         $propertyType = PROPERTYTYPE_LITERATURE; // TODO: make configurable
-
 
         $fields['config.params.target'] =
             [
@@ -56,12 +54,11 @@ class TaskAssignNumber extends TaskAssignProperty
      */
     public function getTaskParams()
     {
-
         $params = parent::getTaskParams();
         $params['target'] = $this->job->config['params']['target'] ?? null;
-        $params['sectiontype'] = SECTIONTYPE_SIGNATURES; // TODO: get from config
-        $params['sectionname'] = SECTIONNAME_SIGNATURES; // TODO: get from config
-        $params['itemtype'] = ITEMTYPE_SIGNATURES;       // TODO: get from config
+        $params['sectiontype'] = SECTIONTYPE_SIGNATURES;   // TODO: get from config
+        $params['itemtype'] = ITEMTYPE_SIGNATURES;         // TODO: get from config
+        $params['propertytype'] = PROPERTYTYPE_LITERATURE; // TODO: get from config
         $params['counter'] = true;
         $params['position'] = 'first';
         return $params;

@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Epi\Model\Entity;
 
+use App\Utilities\Converters\Arrays;
+
 /**
  * Link Entity
  *
@@ -35,7 +37,7 @@ namespace Epi\Model\Entity;
  * @property mixed $toIriPath
  * @property string $toCaption
  *
- * @property array $problems
+ * @property array $warnings
  * @property string $caption
  */
 class Link extends BaseEntity
@@ -117,7 +119,7 @@ class Link extends BaseEntity
     protected $_serialize_snippets = [
         'deleted' => ['deleted', 'version_id', 'created', 'modified'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**
@@ -169,6 +171,15 @@ class Link extends BaseEntity
         'to_type',
         'iri' => 'norm_iri' //TODO: rename in database?
     ];
+
+    /**
+     * Tag entities referring this entity
+     *
+     * See `Tag->_getWarnings()`.
+     *
+     * @var array
+     */
+    public $linkedTags = [];
 
     /**
      * Check whether another entity depends on the entity
@@ -343,48 +354,59 @@ class Link extends BaseEntity
     }
 
     /**
-     * Find missing link targets
+     * Find missing link targets, missing tag IDs and duplicate tag IDs
      *
      * @return array
      */
-    protected function _getProblems()
+    protected function _getWarnings()
     {
-        $problems = [];
-        if (!is_null($this['to_id']) && ($this['to_tab'] === 'properties') && (empty($this['property']))) {
-            $problems[] = __('Missing target property in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id]);
-        }
-        elseif (!is_null($this['to_id']) && ($this['to_tab'] === 'articles') && (empty($this['article']))) {
-            $problems[] = __('Missing target article in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id]);
-        }
-        elseif (!is_null($this['to_id']) && ($this['to_tab'] === 'sections') && (empty($this['section']))) {
-            $problems[] = __('Missing target section in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id]);
-        }
-        elseif (!is_null($this['to_id']) && ($this['to_tab'] === 'footnotes') && (empty($this['footnote']))) {
-            $problems[] = __('Missing target footnote in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id]);
-        }
+        if (is_null($this->_warnings)) {
 
-        if (empty($this['from_tab']) || empty($this['from_id']) || empty($this['from_field']) || empty($this['from_tagid'])) {
-            $problems[] = __('Missing source data in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id]);
-        }
+            $warnings = [];
 
-        if (empty($this->from_tagid)) {
-            $problems[] = __('Missing tag ID in annotation links-{id}. Your personal SQL hacker can help you.',
-                ['id' => $this->id]);
-        }
-        elseif (count($this->root->links_by_tagid[$this->from_tagid] ?? []) > 1) {
-            // Only if this is not a molecular annotation...
-            if (!empty($this->type->config['fields']['to']['targets'])) {
-                $problems[] = __('Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you.',
-                    ['id' => $this->id, 'tagid' => $this->from_tagid]);
+            if (!is_null($this['to_id']) && ($this['to_tab'] === 'properties') && (empty($this['property']))) {
+                $warnings['missing-target'][] = ['msg' => __('Missing target property in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id])];
             }
+            elseif (!is_null($this['to_id']) && ($this['to_tab'] === 'articles') && (empty($this['article']))) {
+                $warnings['missing-target'][] = ['msg' =>  __('Missing target article in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id])];
+            }
+            elseif (!is_null($this['to_id']) && ($this['to_tab'] === 'sections') && (empty($this['section']))) {
+                $warnings['missing-target'][] = ['msg' =>  __('Missing target section in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id])];
+            }
+            elseif (!is_null($this['to_id']) && ($this['to_tab'] === 'footnotes') && (empty($this['footnote']))) {
+                $warnings['missing-target'][] = ['msg' => __('Missing target footnote in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id])];
+            }
+
+            if (empty($this['from_tab']) || empty($this['from_id']) || empty($this['from_field']) || empty($this['from_tagid'])) {
+                $warnings['missing-from'][] = ['msg' =>  __('Missing from data in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id])];
+            }
+
+            if (empty($this->from_tagid)) {
+                $warnings['missing-tagid'][] = ['msg' =>  __('Missing tag ID in annotation links-{id}. Your personal SQL hacker can help you.',
+                    ['id' => $this->id])];
+            }
+            elseif (count($this->root->links_by_tagid[$this->from_tagid] ?? []) > 1) {
+                // Only if this is not a molecular annotation...
+                if (!empty($this->type->config['fields']['to']['targets'])) {
+                    $warnings['duplicate-tagid'][] = ['msg' => __('Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker can help you.',
+                        ['id' => $this->id, 'tagid' => $this->from_tagid])];
+                }
+            }
+            // Make sure that tags were extracted and tag warnings were evaluated beforehand
+            elseif (empty($this->linkedTags)) {
+                $warnings['missing-tag'][] = ['msg' =>  __('Missing tag {from_tagname}#{from_tagid} for annotation links-{id}.', $this->_fields)];
+            }
+
+            $this->_warnings = parent::_getWarnings() ?? [];
+            $this->_warnings = Arrays::array_merge_grouped($this->_warnings, $warnings);
         }
 
-        return $problems;
+        return $this->_warnings;
     }
 
     /**
@@ -422,7 +444,12 @@ class Link extends BaseEntity
     public function getEntityIsVisible($options = [])
     {
         if (!empty($this->root) && !empty($this->root->_filterAnnos) && method_exists($this->root, 'getTree')) {
-            $tree = $this->root->getTree(['articles'=>true,'sections'=>true,'items'=>true,'footnotes'=>true]);
+            $tree = $this->root->getTree([
+                'articles' => true,
+                'sections' => true,
+                'items' => true,
+                'footnotes' => true
+            ]);
             if (!isset($tree[$this->from_tab . '-' . $this->from_id])) {
                 return false;
             }

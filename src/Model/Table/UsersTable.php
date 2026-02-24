@@ -486,10 +486,9 @@ class UsersTable extends BaseTable
             ->where(['id' => $user['id']])
             ->execute();
 
-        // Update session token
-        if (!empty($user['accesstoken'])) {
-            $token = $this->fetchTable('Epi.Token');
-            $token->updateSessionToken($user['accesstoken']);
+        // Update EpiDesktop session token to prevent session expiration during active use
+        if (Configure::read('App.epidesktop') && !empty(self::$_databaseName) && !empty($user['accesstoken'])) {
+            $this->fetchTable('Epi.Token')->updateSessionToken($user['accesstoken']);
         }
 
         // Get new user object

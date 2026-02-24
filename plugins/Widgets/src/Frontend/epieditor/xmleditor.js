@@ -25,7 +25,7 @@ export default class XmlEditor extends DecoupledEditor {
      *
      * @returns {Promise}
      */
-    static create(sourceElement, tagSet) {
+    static create(sourceElement, tagSet, doConstrain = true) {
 
         // Define which toolbuttons are available
         // (how they look is processed in xmleditor-xmltag-plugin.js)
@@ -48,6 +48,7 @@ export default class XmlEditor extends DecoupledEditor {
             specialCharacters: specialCharacterConfig,
             tagSet: tagSet,
             tagGroups: tagGroups,
+            doConstrain: doConstrain,
             iconPath : "/img/icons.min.js", // Will be loaded by dynamic import
             specialCharacterSet: customCharacters,
             toolbar: {items: toolbar, shouldNotGroupWhenFull: true},
@@ -79,8 +80,8 @@ export default class XmlEditor extends DecoupledEditor {
         // Sort buttons
         let sortedTags =  Object.entries(tagSet);
         sortedTags.sort(function([aName,a],[bName,b]) {
-            if (a.sortidx !== b.sortidx) {
-                return a.sortidx - b.sortidx;
+            if (a.sortno !== b.sortno) {
+                return a.sortno - b.sortno;
             } else {
                 return a.sortno - b.sortno;
             }
@@ -110,7 +111,7 @@ export default class XmlEditor extends DecoupledEditor {
                     tagGroups[toolbuttonConfig.group].button = tagName;
                 }
                 // The matched property is set in models.js::getTagSet()
-                else if ((toolbuttonConfig.enable !== false) && tagValue.matched) {
+                else if ((toolbuttonConfig.enable !== false) && tagValue.isAllowedDescendant) {
 
                     // Add button or group to toolbar
                     const toolButton = (toolbuttonConfig.group === 'default') ?
@@ -151,7 +152,7 @@ export default class XmlEditor extends DecoupledEditor {
         // Special Characters
         let customCharacters = Object.values(tagSet)
             .filter((tag) => tag.config.tag_type === 'character')
-            .filter((tag) => tag.matched);
+            .filter((tag) => tag.isAllowedDescendant);
 
         const specialCharacterConfig = {
             order: [

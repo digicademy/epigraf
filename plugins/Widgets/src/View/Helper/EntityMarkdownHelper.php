@@ -900,7 +900,7 @@ class EntityMarkdownHelper extends BaseEntityHelper
     {
         // TODO: output name and create chooser
         // TODO: rename 'links' to 'to' in the database and everywhere
-        // TODO: output class field-problem for missing targets as in itemFieldProperty()
+        // TODO: output class field-warning for missing targets as in itemFieldProperty()
         $content = $item->getValueFormatted($fieldNameParts);
         return $content;
     }

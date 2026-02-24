@@ -38,7 +38,7 @@ The configuration for each property type includes the following keys:
       </tr>
       <tr>
         <td>type</td>
-        <td>A tree structure is used by default (value ´tree`), alternatively a flat list can be used (`flat`).</td>
+        <td>Deprecated. Instead, configure the parent_id field to indicate a tree structure. Legacy values: A tree structure is used by default (value ´tree`), alternatively a flat list can be used (`flat`).</td>
       </tr>
       <tr>
         <td>displayfield</td>
@@ -60,11 +60,7 @@ The configuration for each property type includes the following keys:
       </tr>
       <tr>
         <td>alphasort</td>
-        <td>Optional, experimental. All properties have a fixed position in the tree.
-            In future versions, we may implement automatic ordering or validation of the tree structure.
-            Set the alphasort key to `true` if you are sure that your properties should follow an alphabetic order.
-            The default value is `false`.
-        </td>
+        <td>Deprecated. Use the sort key instead.</td>
       </tr>
         <tr>
         <td>edge</td>
@@ -85,6 +81,10 @@ The configuration for each property type includes the following keys:
             Set the role to `search` to make it available. Alternatively, you can use `index` to indicate
             that the category system is not only to be used for faceted search, but for indexes in printed publications,
              if an export stylesheet implements this feature.</td>
+      </tr>
+      <tr>
+        <td>sort</td>
+        <td>The field used for sorting in mutate operations.</td>
       </tr>
       <tr>
         <td>export</td>

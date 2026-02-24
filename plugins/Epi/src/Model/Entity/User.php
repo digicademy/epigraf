@@ -82,7 +82,7 @@ class User extends RootEntity
     protected $_serialize_snippets = [
         'deleted' => ['deleted', 'version_id', 'created', 'modified'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**

@@ -387,7 +387,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             }
         }
 
-        if ($options['addsections'] ?? false) {
+        if ($options['craft'] ?? false) {
             $entity->addDefaultSections(true);
         }
 
@@ -1016,7 +1016,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         elseif ($snippets === ['search']) {
             $snippets =  ['users', 'projects', 'sections', 'items', 'links', 'footnotes', 'search'];
         }
-        if (in_array('problems', $options['columns'] ?? [])) {
+        if (in_array('warnings', $options['columns'] ?? [])) {
             $snippets[] = 'targets';
         }
 
@@ -1987,6 +1987,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     /**
      * Get the list of supported tasks
      *
+     * TODO: Implement task registry in an own tasks plugin
+     *
      * @return string[]
      */
     public function mutateGetTasks(): array
@@ -2004,6 +2006,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'rebuild_dates' => 'Rebuild dates index',
             'batch_delete' => 'Delete articles',
             'batch_copy' => 'Copy articles',
+            'batch_publish' => 'Publish articles',
             'remove_xml' => 'Remove XML tags',
 //            'publish' => 'Set publication state',
         ];
@@ -2086,10 +2089,18 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Mutate entities: Assign the article to a collection.
+     * Mutate entities: Patch an item with a property for each article in the result set
      *
-     * There must be a single collection section, if missing it will be created.
-     * For each property, a single item will be created.
+     * Supported task parameters:
+     * - target: The property ID to assign (required).
+     * - sectiontype: The section type (default: collection). If no section of this type exists, it will be created.
+     * - itemtype: The item type (default: collection). If no item of this type exists in the section, it will be created.
+     * - irifragment: The IRI fragment to use for the item (default: {propertytype}~{propertyiriFragment}).
+     * - counter: Whether to set the article number and item value to a counter value (default: false)
+     *           The counter value is calculated by adding the offset to the index of the article in
+     *           the result set and padding it to 3 digits, example: 001, 002, etc.
+     * - position: Set to 'first' to move the patched item to the first position (default: false).
+     * - clear: Whether to delete other items with the same item type in the section (default: false).
      *
      * // TODO: don't update timestamps?
      *
@@ -2103,17 +2114,30 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $offset = (int)$paging['offset'] ?? 0;
         $limit = (int)$paging['limit'] ?? 1;
 
-        $property = $this->Sections->Items->Properties->get($taskParams['target']);
+        $propertyId = $taskParams['target'];
+        $property = $this->Sections->Items->Properties->get($propertyId);
+        if (empty($property)) {
+            throw new InvalidArgumentException('Invalid property: ' . $propertyId);
+        }
+
         $sectionType = $taskParams['sectiontype'] ?? SECTIONTYPE_COLLECTION;
+        if (empty($this->getDatabase()->types['sections'][$sectionType])) {
+            throw new InvalidArgumentException('Invalid section type: ' . $sectionType);
+        }
+        $sectionName = $this->getDatabase()->types['sections'][$sectionType]['caption'] ?? __('Collection');
+
         $itemType = $taskParams['itemtype'] ?? ITEMTYPE_COLLECTION;
-        $sectionName = $taskParams['sectionname'] ?? __('Collections');
+        if (empty($this->getDatabase()->types['items'][$itemType])) {
+            throw new InvalidArgumentException('Invalid item type: ' . $itemType);
+        }
 
         $setCounter = $taskParams['counter'] ?? false;
         $itemPosition = $taskParams['position'] ?? false;
-
-        $articles = $this->getExportData($dataParams, ['limit' => $limit, 'offset' => $offset]);
+        $clearSection = $taskParams['clearsection'] ?? false;
 
         $entities = [];
+
+        $articles = $this->getExportData($dataParams, ['limit' => $limit, 'offset' => $offset]);
 
         /** @var Article $article */
         foreach ($articles as $idx => $article) {
@@ -2142,12 +2166,12 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             if (!empty($targetItems)) {
                 $targetItem = array_values($targetItems)[0];
                 $itemId = 'items-' . $targetItem->id;
-                $targetId = $targetItem->id;
+                $targetItemId = $targetItem->id;
             }
             else {
                 $iriItemFragment = $taskParams['irifragment'] ?? ($property->propertytype . '~' . $property->iriFragment);
                 $itemId = 'items/' . $itemType . '/' . $article->iriFragment . '~' . $iriItemFragment;
-                $targetId = null;
+                $targetItemId = null;
             }
 
             $itemEntity = [
@@ -2175,19 +2199,27 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 $entities[] = $articleEntity;
             }
 
+            // Delete existing items
+            if ($clearSection) {
+                $otherItems = $targetSection->getItemsByType($itemType);
+                foreach ($otherItems as $itemIdx => $otherItem) {
+                    if (empty($targetItemId) || ($otherItem['id'] !== $targetItemId)) {
+                        $entities[] = ['id' => 'items-' . $otherItem->id, 'deleted' => 1];
+                    }
+                }
+            }
+
             // Reorder items
-            if (!empty($itemPosition) && ($itemPosition === 'first')) {
+            else if (!empty($itemPosition) && ($itemPosition === 'first')) {
                 $itemEntity['sortno'] = 1;
 
-                if (!empty($targetSection)) {
-                    $otherItems = $targetSection->getItemsByType($itemType);
-                    $otherItems = Hash::sort($otherItems, '{n}.sortno');
-                    $itemNo = 2;
-                    foreach ($otherItems as $itemIdx => $otherItem) {
-                        if (empty($targetId) || ($otherItem['id'] !== $targetId)) {
-                            $entities[] = ['id' => 'items-' . $otherItem->id, 'sortno' => $itemNo];
-                            $itemNo += 1;
-                        }
+                $otherItems = $targetSection->getItemsByType($itemType);
+                $otherItems = Hash::sort($otherItems, '{n}.sortno');
+                $itemNo = 2;
+                foreach ($otherItems as $itemIdx => $otherItem) {
+                    if (empty($targetItemId) || ($otherItem['id'] !== $targetItemId)) {
+                        $entities[] = ['id' => 'items-' . $otherItem->id, 'sortno' => $itemNo];
+                        $itemNo += 1;
                     }
                 }
             }

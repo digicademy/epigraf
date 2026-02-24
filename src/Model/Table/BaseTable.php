@@ -68,7 +68,7 @@ class BaseTable extends Table
     public $mergeJson = false;
 
     /**
-     * Default database
+     * Default database connection name
      *
      * @var string
      */
@@ -172,6 +172,13 @@ class BaseTable extends Table
      */
     public static $userSettings = [];
 
+
+    /**
+     * Last set database name
+     *
+     * @var null
+     */
+    protected static $_databaseName = null;
 
     /**
      * Current cache name
@@ -358,13 +365,12 @@ class BaseTable extends Table
         ConnectionManager::setConfig($conn_aliased, $config);
 
         TableRegistry::getTableLocator()->clear();
+        BaseTable::$_databaseName = $name;
+
 
         return ConnectionManager::get($conn)
             ->enableQueryLogging($old->isQueryLoggingEnabled())
             ->setLogger($old->getLogger());
-
-        // Alternative approach, not working: Alias the active account's shard to our 'default' connection.
-        //ConnectionManager::alias('shard' . $mapping->shard_id, 'projects');
     }
 
     /**
@@ -1362,11 +1368,11 @@ class BaseTable extends Table
     }
 
     /**
-     * Get problems on the table level
+     * Get warnings on the table level
      *
      * @return array
      */
-    public function getProblems()
+    public function getWarnings()
     {
         return [];
     }

@@ -39,6 +39,43 @@ class ArraysTest extends TestCase
         parent::tearDown();
     }
 
+
+    /**
+     * Test array_merge_grouped
+     *
+     * @return void
+     */
+    public function test_array_merge_grouped(): void
+    {
+        $data = [
+            'validation' => [
+                ['msg' => 'Name is required'],
+            ],
+        ];
+
+        $incoming = [
+            'validation' => [
+                ['msg' => 'Email is invalid'],
+            ],
+            'logic' => [
+                ['msg' => 'Something went wrong'],
+            ],
+        ];
+
+        $expected = [
+            'validation' => [
+                ['msg' => 'Name is required'],
+                ['msg' => 'Email is invalid'],
+            ],
+            'logic' => [
+                ['msg' => 'Something went wrong'],
+            ],
+        ];
+
+        $result = Arrays::array_merge_grouped($data, $incoming);
+        $this->assertSame($expected, $result);
+    }
+
     /**
      * Test parseFieldKey
      *

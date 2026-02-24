@@ -48,8 +48,6 @@ use App\Utilities\Converters\Arrays;
  * @property array $tree
  * @property bool $hasToReferences
  * @property mixed $toReferences
- * @property string $problems
- * @property string $missingTypes
  * @property int $amountOfAnnotations
  * @property float|int $amountOfText
  * @property string $contentState
@@ -158,7 +156,7 @@ class Article extends RootEntity
     protected $_serialize_snippets = [
         'published' => ['published'],
         'comments' => ['status'],
-        'problems' => ['problems'],
+        'warnings' => ['warnings'],
         'editors' => ['creator', 'modifier', 'created', 'modified']
     ];
 
@@ -515,7 +513,7 @@ class Article extends RootEntity
         }
 
         $nodes = PositionBehavior::addTreePositions($nodes);
-        $this->_lookup['tree'] = collection($nodes)->groupBy('id')->toArray();
+        $this->_lookup['tree'] = Arrays::array_group($nodes, 'id', true);
         return $this->_lookup['tree'];
 
     }
@@ -589,117 +587,56 @@ class Article extends RootEntity
      *  - unresolved links, footnotes and properties
      *  - differences between image items and images in folder
      *  - not configured fields
-     *  - Yield problems from generator?
+     *  - Yield warnings from generator?
      *
      * @return string[] Error messages
      */
-    protected function _getProblems()
+    protected function _getWarnings()
     {
-        $errors = [];
         $this->prepareRoot();
 
+        if (is_null($this->_warnings)) {
 
-        // Missing types
-        $errors = array_merge($errors, $this->missingTypes);
-        $errors = array_merge($errors, $this->parsingErrors);
-        $errors = array_merge($errors, $this->linkErrors);
+            $warnings = [];
 
-        if ($this->container === null) {
+            // Recurse into sections
+            $shouldHave = !empty($this->type) ? $this->type->getShouldArray('sections') : [];
+            foreach ($this->sections ?? [] as $section) {
+                // Count children
+                $shouldHave[$section->sectiontype] = $shouldHave[$section->sectiontype] ?? ['has' => 0];
+                $shouldHave[$section->sectiontype]['has'] += 1;
+
+                $warnings = Arrays::array_merge_grouped($warnings, $section->warnings);
+            }
+
+            // Compare to expectations
+            if (!empty($this->type)) {
+                $shouldWarnings = $this->type->evalShouldArray($shouldHave, 'articles-' . $this->id);
+                if (!empty($shouldWarnings)) {
+                    $warnings = Arrays::array_merge_grouped($warnings, ['sections' => $shouldWarnings]);
+                }
+            }
 
             // Items outside a section
-            $section_ids = array_column($this->sections, 'id');
-            $items_section_ids = Objects::extract($this->getItemsByType(), '*.sections_id');
-            $orphaned = array_diff($items_section_ids, $section_ids);
-            if ($orphaned) {
-                $errors[] = __(
-                    'The article contains {0} items outside of a section. Ask your personal SQL hacker for help.',
-                    count($orphaned)
-                );
-            }
-        }
-
-        // Missing annotation tags
-        $errors = array_merge(
-            $errors,
-            array_map(fn($x) => $x['problem'], $this->missing_xml_tags)
-        );
-
-        // Collect problems from links
-        // TODO: detect duplicate tagids
-        foreach ($this->links ?? [] as $link) {
-            $errors = array_merge($errors, $link->problems);
-        }
-
-        // Collect problems from sections
-        foreach ($this->sections ?? [] as $section) {
-            $errors = array_merge($errors, $section->problems);
-        }
-
-        return $errors;
-    }
-
-    /**
-     * Find all records with empty or unconfigured types:
-     * project, article, sections, items, links, and footnotes are analyzed
-     *
-     * TODO: move to the specific entities (implement getProblems() for each entity)?
-     *
-     * @return string[] A list of error messages
-     */
-    protected function _getMissingTypes()
-    {
-        $errors = [];
-
-        // Only for root items
-        if ($this->container !== null) {
-            return $errors;
-        }
-
-        // Undefined types
-        $checks = [
-            'projects' => ['fieldname' => 'projecttype', 'rows' => (empty($this->project) ? [] : [$this->project])],
-            'articles' => ['fieldname' => 'articletype', 'rows' => [$this]],
-            'sections' => ['fieldname' => 'sectiontype', 'rows' => $this->sections],
-            'items' => ['fieldname' => 'itemtype', 'rows' => $this->getItemsByType()],
-            'links' => ['fieldname' => 'from_tagname', 'rows' => $this->links],
-            'footnotes' => ['fieldname' => 'from_tagname', 'rows' => $this->footnotes]
-        ];
-
-        $types = $this->table->getDatabase()->types;
-        foreach ($checks as $scope => $check) {
-            if (empty($types) || empty($check['rows'])) {
-                continue;
+            if ($this->container === null) {
+                $section_ids = array_column($this->sections, 'id');
+                $items_section_ids = Objects::extract($this->getItemsByType(), '*.sections_id');
+                $orphaned = array_diff($items_section_ids, $section_ids);
+                if ($orphaned) {
+                    $warnings['orphaned-items'][] = [
+                        'msg'=> __(
+                        'The article contains {0} items outside of a section. Ask your personal SQL hacker for help.',
+                            count($orphaned)
+                        )
+                    ];
+                }
             }
 
-            // Empty types
-            $emptyTypes = array_filter(
-                $check['rows'] ?? [],
-                fn($x) => empty($x[$check['fieldname']])
-            );
-
-            if ($emptyTypes) {
-                $errors[] = __(
-                    'The article contains {0} with empty types. '
-                    . 'Ask your personal SQL hacker for help.',
-                    $scope
-                );
-            }
-
-            // Unconfigured types
-            $missingTypes = array_diff(
-                array_map(fn($x) => $x[$check['fieldname']] ?? '', $check['rows'] ?? []),
-                array_keys($types[$scope] ?? [])
-            );
-
-            if ($missingTypes) {
-                $errors[] = __(
-                    'The article contains undefined {0} types {1}. ',
-                    $scope,
-                    implode(', ', $missingTypes)
-                );
-            }
+            $this->_warnings = parent::_getWarnings() ?? [];
+            $this->_warnings = Arrays::array_merge_grouped($this->_warnings, $warnings);
         }
-        return $errors;
+
+        return $this->_warnings;
     }
 
     /**

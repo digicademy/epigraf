@@ -727,7 +727,7 @@ class ItemsTable extends BaseTable
     {
         return $query->find('list', ['keyField' => 'value', 'valueField' => 'value'])
             ->distinct()
-            ->where(['itemtype' => 'search', 'value IS NOT' => null, 'value <>' => ''])
+            ->where(['itemtype' => ITEMTYPE_FULLTEXT, 'value IS NOT' => null, 'value <>' => ''])
             ->find('cached', ['cachekey' => 'searchIndexes'])
             ->formatResults(function ($results) {
                 $results = $results->toArray();

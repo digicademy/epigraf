@@ -9,6 +9,7 @@
 
 import {BaseWidget} from '/js/base.js';
 import {BaseDocument} from '/js/base.js';
+import Utils from "/js/utils.js";
 
 /**
  * JSON Editor class for editing JSON-like input (configurations etc.)
@@ -159,6 +160,9 @@ export class XmlEditor extends BaseDocument {
         this.isActivating = false;
         this.position = false;
 
+        // Whether allowed root and nested elements should be contrained
+        this.doConstrain = Utils.isTrue(this.widgetElement.dataset.constrain, true);
+
         this.listenEvent(document, 'epi:save:form', event => this.onBeforeSave(event));
     }
 
@@ -224,8 +228,8 @@ export class XmlEditor extends BaseDocument {
                 } else if (self.widgetElement.ckeditorInstance) {
                     resolve(self.widgetElement.ckeditorInstance);
                 } else {
-                    documentWidget.models.types.getTagSet(self.widgetElement, false).then(
-                        (fieldConfig) => {
+                    documentWidget.models.types.getTagSet(self.widgetElement).then(
+                        (tagSet) => {
 
                             // Remove focus, otherwise clicking into the element disturbs
                             //  Ckeditor's position initialization
@@ -233,7 +237,7 @@ export class XmlEditor extends BaseDocument {
                                 self.widgetElement.blur();
                             }
 
-                            EpiEditor.XmlEditor.create(self.widgetElement, fieldConfig)
+                            EpiEditor.XmlEditor.create(self.widgetElement, tagSet, self.doConstrain)
                                 .then(editor => {
 
                                     // Activate inspector

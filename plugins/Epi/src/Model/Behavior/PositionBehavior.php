@@ -16,8 +16,8 @@ use Cake\Collection\CollectionInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Entity;
 use Cake\ORM\Query;
-use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
+use Epi\Model\Entity\Node;
 use Epi\Model\Entity\Property;
 use Exception;
 
@@ -104,7 +104,7 @@ class PositionBehavior extends Behavior
      *
      * The result is saved in tree_* properties.
      *
-     * @param array|ResultSet $results A list of nodes with at least id and one of parent_id or level fields
+     * @param array|CollectionInterface $results A list of nodes with at least id and one of parent_id or level fields
      * @param boolean $dataAttributes Create data-attributes?
      * @return Entity[] A list of entities
      * @throws TreeCorruptException
@@ -136,7 +136,7 @@ class PositionBehavior extends Behavior
         $tree = [];
         $stack = [];
 
-        $rootitem = new Entity(['id' => null, 'tree_children' => 0]);
+        $rootitem = new Node(['id' => null, 'tree_children' => 0]);
         $stack[] = $rootitem;
         $cached = [];
 
@@ -154,7 +154,7 @@ class PositionBehavior extends Behavior
 
             // Convert to object
             if (!$item instanceof Entity) {
-                $item = new Entity($item);
+                $item = new Node($item);
             }
 
             // Add id if missing
@@ -190,7 +190,7 @@ class PositionBehavior extends Behavior
             }
 
             if (count($stack) == 0) {
-                // TODO: add error to entity problems, don't throw exception
+                // TODO: add error to entity warnings, don't throw exception
                 throw new TreeCorruptException('The tree order is corrupt. Check the items are queried in the correct order and mptt fields are populated.');
             }
 
@@ -220,7 +220,7 @@ class PositionBehavior extends Behavior
                 array_walk(
                     $item['references_to'],
                     function ($x) use ($item, &$tree) {
-                        $x = ($x instanceof Entity) ? $x : new Entity($x);
+                        $x = ($x instanceof Entity) ? $x : new Node($x);
                         $x->parent = $item;
                         $x['tree_position'] = $item['tree_children'];
                         $x['tree_level'] += 1;
@@ -248,7 +248,7 @@ class PositionBehavior extends Behavior
         }
 
         if (!empty($cached)) {
-            // TODO: add error to entity problems, don't throw exception
+            // TODO: add error to entity warnings, don't throw exception
             throw new TreeCorruptException('The tree contains items with invalid parent IDs or with an invalid order.');
         }
 

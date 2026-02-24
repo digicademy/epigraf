@@ -33,6 +33,20 @@ The base classes of the framework are defined in `htdocs/js/base.js`:
 
 ![Inheritance hierarchy](/epigraf/devel/assets/img/classes-widget-basemodel.png)
 
+### Developing and building the widgets
+
+Depending on the production flag in `config/app.php`, assets are delivered as separate files or as a single file bundle.
+
+For production, all widget classes are bundled into a single file `widgets.js` using webpack.
+Run `npm run build` from inside the container to compile the bundle.
+
+Most widgets can be developed and tested without rebuilding the bundle
+by setting the production flag to `false`.
+Only the XmlEditor and HtmlEditor widgets require rebuilding the bundle because they import the CKEditor library.
+Run `npm run watch` from inside the container to compile the bundle during development.
+
+See `package.json` for details about the available commands and `webpack.config.js` for the configuration.
+
 ### The Widget Life Cycle
 
 There are two types of widgets: global and scoped. Global widgets include widgets that are responsible

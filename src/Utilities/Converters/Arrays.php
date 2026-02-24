@@ -119,6 +119,55 @@ class Arrays
     }
 
     /**
+     * Merge grouped arrays by merging the values of each group
+     *
+     * Example:
+     * $data = [
+ *      'validation' => [
+     *      ['msg' => 'Name is required'],
+     *   ]
+     * ];
+     *
+     * $incoming = [
+     *  'validation' => [
+     *      ['msg' => 'Email is invalid'],
+     *  ],
+     *  'logic' => [
+     *      ['msg' => 'Something went wrong'],
+     *  ]
+     * ];
+     *
+     * Result
+     *
+     * [
+     *  'validation' => [
+     *      ['msg' => 'Name is required'],
+     *      ['msg' => 'Email is invalid']
+ *      ],
+     *  'logic' => [
+ *          ['msg' => 'Something went wrong']
+     *  ]
+     * ]
+     *
+     * TODO: Write test
+     *
+     * @param array $data
+     * @param array $incoming
+     * @return array
+     */
+    public static function array_merge_grouped(array $data, array $incoming): array
+    {
+        foreach ($incoming as $groupKey => $groupValues) {
+            $data[$groupKey] = array_merge(
+                $data[$groupKey] ?? [],
+                $groupValues
+            );
+        }
+        return $data;
+    }
+
+
+    /**
      * Remove null values from array
      *
      * @param $haystack

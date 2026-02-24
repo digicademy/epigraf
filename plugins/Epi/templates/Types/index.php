@@ -24,7 +24,7 @@ use Cake\Routing\Router;
 <?php $this->setSidebarConfig(['right'=> ['size' =>5]]); ?>
 
 <!-- Content area -->
-<?= $this->Table->getProblems() ?>
+<?= $this->Table->getWarnings() ?>
 
 <div class="content-searchbar">
 

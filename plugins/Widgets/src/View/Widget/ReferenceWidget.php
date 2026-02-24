@@ -99,7 +99,7 @@ class ReferenceWidget implements WidgetInterface
         }
 
         if ($data['error'] ?? false) {
-            $widgetClasses[] = 'field-problem';
+            $widgetClasses[] = 'field-warning';
         }
 
 

@@ -226,22 +226,24 @@ class BaseEntityHelper extends Helper
     }
 
     /**
-     * Output problems in orange boxes
+     * Output warnings in orange boxes
      *
      * @param BaseEntity $entity
      * @param array $options Not used yet
      * @return string
      */
-    public function docProblems($entity, $options = [])
+    public function docWarnings($entity, $options = [])
     {
-        $problems = $entity->problems ?? [];
-        if (empty($problems)) {
+        $warnings = $entity->warnings ?? [];
+        if (empty($warnings)) {
             return '';
         }
 
-        $out = '<div class="art-problems">';
-        foreach ($problems as $problem) {
-            $out .= '<div class="art-problems-value">' . $problem . '</div>';
+        $out = '<div class="art-warnings">';
+        foreach ($warnings as $warningGroup) {
+            foreach ($warningGroup as $warning) {
+                $out .= '<div class="art-warnings-value">' . $warning['msg'] . '</div>';
+            }
         }
         $out .= '</div>';
 
@@ -1026,6 +1028,12 @@ class BaseEntityHelper extends Helper
 
         // Container classes and attributes
         $classes = ['doc-field', 'doc-fieldname-' . implode('-', $fieldNameParts)];
+
+        $errors = !empty($fieldNameParts[0]) ? $item->getError($fieldNameParts[0]) : [];
+        $warnings = !empty($fieldNameParts[0]) ? $item->getWarnings($fieldNameParts[0]) : [];
+        $classes[] = ($edit && !empty($errors)) ? 'doc-field-error' : '';
+        $classes[] = ($edit && !empty($warnings)) ? 'doc-field-warning' : '';
+
         $classes[] = $empty ? 'doc-field-empty' : '';
         $classes[] = ($options['class'] ?? false) ? $options['class'] : '';
 
@@ -1063,8 +1071,7 @@ class BaseEntityHelper extends Helper
             $out .= "<span class=\"doc-field-caption\">{$caption}</span>";
         }
 
-        // Errors
-        $errors = !empty($fieldNameParts[0]) ? $item->getError($fieldNameParts[0]) : [];
+        // Error messages
         if (!empty($errors)) {
             $errors = implode(' ', $errors);
             $out .= "<div class=\"doc-field-error\">{$errors}</div>";
@@ -1259,10 +1266,19 @@ class BaseEntityHelper extends Helper
                 $styles['min-height'] = $options['fieldConfig']['height'] . 'em';
             }
 
+            $attributes = ['class' => 'doc-field-content widget-xmleditor'];
+            if (!empty($styles)) {
+                $attributes['style'] = $styles;
+            }
+
+            if (Attributes::isFalse($options['fieldConfig']['constrain'] ?? true) ) {
+                $attributes['data-constrain'] = 'false';
+            }
+
             $out .= $this->Element->outputHtmlElement(
                 'div',
                 $content,
-                ['class' => 'doc-field-content widget-xmleditor', 'style' => empty($styles) ? null : $styles]
+                $attributes
             );
         }
         else {
@@ -1854,9 +1870,9 @@ class BaseEntityHelper extends Helper
             $typeGroup = $typeConfig['group'] ?? '';
 
             $number = $entity->getCounter($anno->from_tagname)[$anno->from_tagid] ?? null;
-            $problems = [];
+            $warnings = [];
             if ($number === null) {
-                $problems[] = __('Tag number is missing.');
+                $warnings[] = __('Tag number is missing.');
             }
 
             $number = $number ?? '*';
@@ -1877,7 +1893,7 @@ class BaseEntityHelper extends Helper
                 'from_tagname' => $anno->from_tagname,
 
                 'name' => $number,
-                'problems' => $problems
+                'warnings' => $warnings
             ];
 
             $out .= $this->annoTemplate(
@@ -1913,9 +1929,14 @@ class BaseEntityHelper extends Helper
             $typeGroup = $typeConfig['group'] ?? '';
 
             $number = $entity->getCounter('tags')[$anno->from_tagid] ?? null;
-            $problems = $anno->problems ?? [];
+
+            // Evaluate root warnings first because they will check whether tags are missing
+            // $rootWarnings = $entity->root->warnings;
+            // $warnings = $anno->warnings ?? [];
+
+            $warnings = [];
             if ($number === null) {
-                $problems[] = __('Tag is missing.');
+                $warnings['missing-tag'][] = ['msg' => __('Tag is missing.')];
             }
 
             $data = [
@@ -1936,7 +1957,7 @@ class BaseEntityHelper extends Helper
                 'to_type' => $anno->to_propertytype,
                 'to_value' => $anno->to_value,
                 'deleted' => $anno->deleted,
-                'problems' => $problems
+                'warnings' => $warnings
             ];
 
             // TODO: reduce redundancy between divs and inputs
@@ -2065,8 +2086,8 @@ class BaseEntityHelper extends Helper
         $labelValue = $data[$labelName] ?? ('{' . Inflector::variable($labelName) . '}');
 
         $linkClasses = ['doc-section-link'];
-        if (!empty($data['problems'])) {
-            $linkClasses[] = 'tag-problem';
+        if (!empty($data['warnings'])) {
+            $linkClasses[] = 'tag-warning';
         }
 
         $linkAttributes = [
@@ -2270,9 +2291,9 @@ class BaseEntityHelper extends Helper
 
             // Get number
             $number = $root->getCounter($footnote->from_tagname)[$footnote->from_tagid] ?? null;
-            $options['problems'] = [];
+            $options['warnings'] = [];
             if ($number === null) {
-                $options['problems'][] = __('Tag number is missing.');
+                $options['warnings'][] = __('Tag is missing.');
             }
             $number = $number ?? '*';
             $tagRenderer = $typeConfig['merged']['fields']['name']['counter'] ?? 'numeric';
@@ -2299,7 +2320,7 @@ class BaseEntityHelper extends Helper
                 'from_tagname' => $footnote->from_tagname,
 
                 'edit' => $options['edit'] ?? false,
-                'problems' => $options['problems'] ?? []
+                'warnings' => $options['warnings'] ?? []
             ];
         }
         else {
@@ -2665,6 +2686,11 @@ class BaseEntityHelper extends Helper
 
         $out .= $this->Element->closeHtmlElement('div');
 
+
+        if (!$entity->isNew() && !in_array($entity->currentUserRole, ['guest','reader'])) {
+            $out =  $out . $this->docWarnings($entity) ;
+        }
+
         return $out;
     }
 
@@ -2920,6 +2946,16 @@ class BaseEntityHelper extends Helper
                 // Read-only
                 if (!$enabled) {
                     $inputOptions['readonly'] = true;
+                }
+
+                // Warnings for existing entities
+                if (!$entity->isNew()) {
+                    $warnings = $entity->getWarnings($fieldNameParts[0]);
+                    if (!empty($warnings)) {
+                        $inputClass = $inputOptions['class'] ?? '';
+                        $inputClass = empty($inputClass) ? 'field-warning' : ($inputClass . ' field-warning');
+                        $inputOptions['class'] = $inputClass;
+                    }
                 }
 
                 // Nested values

@@ -133,6 +133,25 @@ class ArticleTest extends EpiTestCase
     }
 
     /**
+     * Test getTree() method
+     *
+     * @return void
+     */
+    public function testTree()
+    {
+        $id = 1;
+
+        $article = $this->Articles
+            ->find('containColumns')
+            ->where(['Articles.id'=>$id])
+            ->first();
+
+        $tree = $article->tree;
+        $compare = $this->saveComparisonJson($tree);
+        $this->assertJsonStringEqualsComparison($compare);
+    }
+
+    /**
      * Test getting file properties
      *
      * @return void

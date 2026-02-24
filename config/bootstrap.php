@@ -310,6 +310,12 @@ define('SECTIONTYPE_COLLECTION', 'collections');
 define('SECTIONTYPE_SIGNATURES', 'signatures');
 define('SECTIONNAME_SIGNATURES', 'Signaturen');
 define('PROPERTYTYPE_LITERATURE', 'literature');
+define('PROPERTYTYPE_COLLECTION', 'collections');
+
+/**
+ * Tags
+ */
+define('TAGNAME_NL', 'nl');
 
 /**
  * Limits

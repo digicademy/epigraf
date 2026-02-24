@@ -75,9 +75,8 @@ If additional properties are to be configured, an object with the following keys
         </tr>
         <tr>
             <td>required</td>
-            <td>For fields with the formats record or relation, a value must be selected by default. To also allow empty
-                values (a selection option is then created for this in the drop-down selector), required can be set to
-                false.
+            <td>Determines whether a field may be empty (required is `false`) or not (required is `false`).
+                By default, fields with text content may be empty. Fields linking to other entites (formats record or relation) may not be empty.
             </td>
         </tr>
         <tr>
@@ -99,10 +98,17 @@ If additional properties are to be configured, an object with the following keys
         </tr>
         <tr>
             <td>types</td>
-            <td><p>In XML fields: Which annotations are permitted? A list of link names (name field of the annotation)
-                or link groups (config.group field of the annotation) is specified.</p>
-                In property fields: What type of properties are linked? The name of the property type is specified as a
-                string.
+            <td>In XML fields: Which annotations are permitted? A list of link names (name field of the annotation)
+                or link groups (config.group field of the annotation). <br>
+                In property fields: What type of properties are linked? The name of the property type as a string.
+            </td>
+        </tr>
+        <tr>
+            <td>constrain</td>
+            <td>By default, for nested annotations, the links and footnotes (or groups) within each annotation need
+                to be listed in the `types` key of the links or footnotes type.
+                To disable validity checks and to allow any link or footnote within the annotation,
+                the `constrain` key of the field configuration can be set to `false`.
             </td>
         </tr>
         <tr>
@@ -120,6 +126,10 @@ If additional properties are to be configured, an object with the following keys
 }
 </pre>
             </td>
+        </tr>
+        <tr>
+            <td>pattern</td>
+            <td>For fields containing text content, you can require the values to follow a pattern. The pattern is a regular expression.</td>
         </tr>
         <tr>
             <td>edit</td>

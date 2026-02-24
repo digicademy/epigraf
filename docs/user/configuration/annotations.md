@@ -3,22 +3,33 @@ title: Annotations
 permalink: '/user/configuration/annotations/'
 ---
 
-**Links** are used to link text segments to properties or other entities. The text segment is marked with a tag. Use links for structured annotations such as references to persons, places, content analysis categories or simple text highlighting.
+**Links** are used to link text segments to properties or other entities. The text segment is marked with a tag.
+Use links for structured annotations such as references to persons, places,
+content analysis categories or simple text highlighting.
 
-**Footnotes** are standalone tags or tags around a text segment that refer to a footnotes entity containing a comment relating to the text passage. Use footnotes for critical apparatus, comments, or memos.
+**Footnotes** are standalone tags or tags around a text segment that refer to a footnotes entity containing
+a comment relating to the text passage. Use footnotes for critical apparatus, comments, or memos.
 
 # Rendering options
-Both annotation types can be rendered as formatting (e.g. italic text), as stand-alone tags (e.g. word separators or literature references), or as brackets (e.g. indicating text added in a transcription). Each tag can contain additional attributes. They are stored in the database fields using XML tags and converted to HTML tags for displaying.
+Both annotation types can be rendered as formatting (e.g. italic text),
+as stand-alone tags (e.g. word separators or literature references),
+or as brackets (e.g. indicating text added in a transcription).
+Each tag can contain additional attributes.
+They are stored in the database fields using XML tags and converted to HTML tags for displaying.
 
-Annotations do not necessarily need a links or footnotes entity and, thus, can also be used as simple markup tags. By default, each annotation has a button in the toolbar.
+Annotations do not necessarily need a links or footnotes entity and, thus,
+can also be used as simple markup tags. By default, each annotation has a button in the toolbar.
 
 The tag_type key of the configuration determines the behavior (work in progress):
 
-- **Tags**: Tags with standard tool buttons. Rendering is determined by the tag_type key: `text` (render a standalone value), `format` (format a text segment), `bracket` (the text segment is enclosed in brackets). Each tag can have attributes and link to one single entity, such as a property or an article.
+- **Tags**: Tags with standard tool buttons.
+  Rendering is determined by the tag_type key: `text` (render a standalone value),
+  `format` (format a text segment), `bracket` (the text segment is enclosed in brackets).
+  Each tag can have attributes and link to one single entity, such as a property or an article.
 - **Attributes**: Annotations that link to multiple categories are called molecules. The molecule itself is a standard tag configruation. It refers to other link types in their attributes key. The configuration entitities need to have the tag type `attribute` and their toolbutton must be disabled.
-- **Dropdowns**: Annoations can be grouped to create drop-down buttons. To create such a tool button, configure a simple links annotation but omit the tag_type key. In the toolbutton configuration object, set the dropdown key to `true` and set a value in the group key. All other links types to be subsumed under this dropdown must have the same group key value in their toolbutton configuration and no other toolbutton keys.
+- **Dropdowns**: Annotations can be grouped to create drop-down buttons. To create such a tool button, configure a simple links annotation but omit the tag_type key. In the toolbutton configuration object, set the dropdown key to `true` and set a value in the group key. All other links types to be subsumed under this dropdown must have the same group key value in their toolbutton configuration and no other toolbutton keys.
 - **Line breaks**: Line breaks need to be configured using a links annotation with tag type `break`.
-- **Special characters**: Configuratiuon entities with the tag_type `character` are considered special characters and are inserted via the special characters button in the toolbar.
+- **Special characters**: Configuration entities with the tag_type `character` are considered special characters and are inserted via the special characters button in the toolbar.
 
 Each annotation, whether link or footnote, has a name and optionally can be assigned to a custom group by setting a common value in the group key. When editing, for each group, you can separately toggle the annotation boxes using the settings button next to the text input fields. Further, you can use the group names instead of annotation names to configure which annotations are allowed in which fields.
 
@@ -97,6 +108,13 @@ The options are determined by the <a href="https://ckeditor.com/docs/ckeditor5/l
 <li>title (optional): A brief help text.</li>
 </ul>
 The attributes <code>id</code>, <code>value</code>, <code>class</code> and attributes with an <code>data</code> prefix are reserved and must not be used.</td>
+</tr>
+<tr>
+<td>types</td>
+<td>A list of annotation types (name of links types, footnotes types or group names) allowed within this element.
+    The toolbar will prevent inserting annotations in other places. You can disable this behavior using the
+    `constrain` key in the field configuration.
+</td>
 </tr>
 <tr>
 <td>fields</td>

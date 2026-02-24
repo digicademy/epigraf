@@ -105,6 +105,46 @@ class RootEntity extends BaseEntity
     }
 
     /**
+     * Get warnings of the root entity and its links and footnotes
+     *
+     * Important: _getTagErrors() must be evaluated beforehand to collect the tags for the links and footnotes.
+     *
+     * @return array
+     */
+    protected function _getWarnings()
+    {
+        $this->prepareRoot();
+
+        if (is_null($this->_warnings)) {
+
+            $warnings = parent::_getWarnings() ?? [];
+
+            // Note: This will check for any footnotes or links with missing tags.
+            //       Thus, it is important to request footnote and link warnings
+            //       *after* all tags were extracted, their warnings were evaluated and their corresponding
+            //       links or footnotes were assigned. And link warnings need to be requested after footnote warnings,
+            //       since footnotes may contain annotations.
+            //       Because in an article's _getWarning() function the sections and everything else
+            //       is evaluated before calling the parent's function, this should work as expected.
+
+            $annoWarnings = [];
+
+            // Footnote warnings
+            foreach ($this->footnotes ?? [] as $footnote) {
+                $annoWarnings = Arrays::array_merge_grouped($annoWarnings, $footnote->warnings);
+            }
+
+            // Link warnings
+            foreach ($this->links ?? [] as $link) {
+                $annoWarnings = Arrays::array_merge_grouped($annoWarnings, $link->warnings);
+            }
+
+            $this->_warnings = Arrays::array_merge_grouped($warnings, $annoWarnings);
+        }
+        return $this->_warnings;
+    }
+
+    /**
      * Get ordered footnotes by type
      *
      * @param $typeName
@@ -133,105 +173,6 @@ class RootEntity extends BaseEntity
         }
 
         return $footnotes;
-    }
-
-    /**
-     * Return a list of links and footnotes
-     *
-     * @return array
-     */
-    public function extractAnnotations()
-    {
-        $annos = array_merge(
-            $this->links_by_tagid ?? [],
-            $this->footnotes_by_tagid ?? []
-        );
-
-        // TODO: unnest duplicate annotation
-        $annos = array_map(fn($x) => [
-            'from_tab' => $x[0]['from_tab'],
-            'from_id' => $x[0]['from_id'],
-            'from_field' => $x[0]['from_field'],
-            'from_tagname' => $x[0]['from_tagname'],
-            'from_tagid' => $x[0]['from_tagid']
-        ], $annos);
-
-        return $annos;
-    }
-
-    /**
-     * Check whether elements in XML fields and link/footnote annotations match
-     *
-     * For fields containing XML, the links and footnotes are compared to the tags.
-     * Missing tag IDs (in the links or footnote records as well as in the xml content)
-     * are returned.
-     *
-     * @return array An array with error messages for missing tags
-     */
-    protected function _getMissingXmlTags()
-    {
-        // Extract all tags that should link somewhere
-        // TODO: don't recurse, call in each _getProblems()
-        $tags = $this->extractXmlTags(null, ['recurse' =>  true]);
-        $tags = array_map(fn($x) => [
-            'type' => 'tag',
-            'from_tagname' => $x['tagname'],
-            'from_tagid' => $x['tagid'],
-            'from_tab' => $x['tab'],
-            'from_id' => $x['id'],
-            'from_field' => $x['field']
-        ], $tags);
-
-        // Extract all annotations
-        $annos = $this->extractAnnotations();
-        $annos = array_map(fn($x) => array_replace($x, ['type' => 'annotation']), $annos);
-
-        // Get missing tags and annotations
-        $missing = array_merge(
-            array_diff_key($tags, $annos),
-            array_diff_key($annos, $tags)
-        );
-
-        // Only keep tags that have a link configuration
-        $types_links = $this->table->getDatabase()->types['links'] ?? [];
-        $types_footnotes = $this->table->getDatabase()->types['footnotes'] ?? [];
-
-        $missing = array_filter(
-            $missing,
-            fn($x) => (
-                ($x['type'] !== 'tag') ||
-                (
-                    !empty($types_footnotes[$x['from_tagname']]) &&
-                    !empty($types_links[$x['from_tagname']]['merged']['fields']['to'])
-                )
-            )
-        );
-        $missing = array_map(fn($tag) => array_replace($tag, [
-            'problem' => __(
-                'Missing {type} {from_tagname}#{from_tagid} in field {from_tab}-{from_id}.{from_field}.',
-                array_replace($tag, ['type' => $tag['type'] === 'annotation' ? 'tag' : 'annotation'])
-            )
-        ]), $missing);
-
-        // Unconfigured tags
-        $unconfigured = array_filter(
-            $tags,
-            fn($x) => (
-                empty($types_footnotes[$x['from_tagname']]) &&
-                empty($types_links[$x['from_tagname']])
-            )
-        );
-        $unconfigured = array_map(fn($tag) => array_replace($tag, [
-            'problem' => __(
-                'Missing configuration for {type} {from_tagname}#{from_tagid} in field {from_tab}-{from_id}.{from_field}.',
-                $tag
-            )
-        ]), $unconfigured);
-
-        // Merge
-        $missing = array_merge($missing, $unconfigured);
-
-        return $missing;
     }
 
     /**

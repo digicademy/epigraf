@@ -69,6 +69,14 @@ class Utils {
         return window.getComputedStyle(elm).getPropertyValue('display') !== 'none';
     }
 
+    static sendDownload(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || '';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
 
     waitFor(selector, timeout = 3000) {
         return new Promise((resolve, reject) => {

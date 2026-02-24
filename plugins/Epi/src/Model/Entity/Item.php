@@ -11,6 +11,7 @@
 namespace Epi\Model\Entity;
 
 use App\Model\Entity\DefaultType;
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\HistoricDates;
 use App\Utilities\Files\Files;
 
@@ -61,7 +62,7 @@ use App\Utilities\Files\Files;
  * @property DefaultType $defaultType
  * @property string $caption
  * @property array $tree
- * @property array $problems
+ * @property array $warnings
  * @property bool $empty
  *
  * @property null|string $sectiontype
@@ -197,7 +198,7 @@ class Item extends BaseEntity
         'deleted' => ['deleted', 'version_id', 'created', 'modified'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
         'paths' => ['sectionpath'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**
@@ -571,46 +572,54 @@ class Item extends BaseEntity
      *
      * @return array
      */
-    protected function _getProblems()
+    protected function _getWarnings()
     {
-        $errors = [];
-//        $errors = array_merge($errors, $this->parsingErrors);
-//        $errors = array_merge($errors, $this->linkErrors);
+        if (is_null($this->_warnings)) {
 
-        $missing = [];
+            $warnings = [];
 
-        if (!empty($this->properties_id) && empty($this->property)) {
-            $missing[] = [
-                'to_tab' => 'properties',
-                'to_id' => $this->properties_id,
-                'from_tab' => 'items',
-                'from_id' => $this->id,
-                'from_field' => 'properties_id'
-            ];
-        }
+            if (!empty($this->properties_id) && empty($this->property)) {
 
-        if (!empty($this->links_id) || !empty($this->links_tab)) {
-            if (empty($this->links_article) && empty($this->links_section)) {
-                $missing[] = [
-                    'to_tab' => $this->links_tab,
-                    'to_id' => $this->links_id,
+                $warning = [
+                    'to_tab' => 'properties',
+                    'to_id' => $this->properties_id,
                     'from_tab' => 'items',
                     'from_id' => $this->id,
-                    'from_field' => 'links_id'
+                    'from_field' => 'properties_id'
                 ];
+
+                $warning['msg'] = __(
+                    'Missing property {to_tab}-{to_id} in field {from_tab}-{from_id}.{from_field}.',
+                    $warning
+                );
+
+                $warnings['missing-property'][] = $warning;
             }
+
+            if (!empty($this->links_id) || !empty($this->links_tab)) {
+                if (empty($this->links_article) && empty($this->links_section)) {
+                    $warning = [
+                        'to_tab' => $this->links_tab,
+                        'to_id' => $this->links_id,
+                        'from_tab' => 'items',
+                        'from_id' => $this->id,
+                        'from_field' => 'links_id'
+                    ];
+
+                    $warning['msg'] = __(
+                        'Missing target {to_tab}-{to_id} in field {from_tab}-{from_id}.{from_field}.',
+                        $warning
+                    );
+
+                    $warnings['missing-target'][] = $warning;
+                }
+            }
+
+            $this->_warnings = parent::_getWarnings() ?? [];
+            $this->_warnings = Arrays::array_merge_grouped($this->_warnings, $warnings);
         }
 
-        $missing = array_map(
-            fn($x) => __(
-                'Missing property {to_tab}-{to_id} in field {from_tab}-{from_id}.{from_field}.',
-                $x
-            ),
-            $missing
-        );
-
-        $errors = array_merge($errors, $missing);
-        return $errors;
+        return $this->_warnings;
     }
 
     /**

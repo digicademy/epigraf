@@ -1790,21 +1790,21 @@ class TableHelper extends Helper
     }
 
     /**
-     * Output orange problem boxes
+     * Output orange warning boxes
      *
      * @return string
      */
-    public function getProblems()
+    public function getWarnings()
     {
         $out = '';
 
-        $problems = $this->_View->getConfig('options')['problems'] ?? [];
-        foreach ($problems as $problem) {
-            $out .= '<div class="art-problems-value">' . $problem . '</div>';
+        $warnings = $this->_View->getConfig('options')['warnings'] ?? [];
+        foreach ($warnings as $warning) {
+            $out .= '<div class="art-warnings-value">' . $warning . '</div>';
         }
 
         if (!empty($out)) {
-            $out = '<div class="art-problems">' . $out . '</div>';
+            $out = '<div class="art-warnings">' . $out . '</div>';
         }
 
         return $out;

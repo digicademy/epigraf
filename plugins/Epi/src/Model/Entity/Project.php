@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Epi\Model\Entity;
 
-use App\Model\Entity\Databank;
 use App\Model\Entity\DefaultType;
 use Cake\Routing\Router;
 
@@ -110,7 +109,7 @@ class Project extends RootEntity
     protected $_serialize_snippets = [
         'published' => ['published'],
         'editors' => ['creator', 'modifier', 'created', 'modified'],
-        'problems' => ['problems']
+        'warnings' => ['warnings']
     ];
 
     /**
@@ -160,11 +159,6 @@ class Project extends RootEntity
         $label = $this->name . ' [' . $this->signature . ']';
 
         return $label;
-    }
-
-    protected function _getShortname()
-    {
-        return $this->captionPath;
     }
 
     protected function _getFullName()

@@ -12,6 +12,7 @@ namespace Epi\Model\Entity;
 use App\Model\Entity\Databank;
 use App\Model\Interfaces\ExportEntityInterface;
 use App\Utilities\Converters\Arrays;
+use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Strings;
 use App\Utilities\Files\Files;
 use App\Utilities\XmlParser\XmlFilter;
@@ -56,8 +57,9 @@ use Rest\Entity\LockInterface;
  * @property array $solvedIds In the process of importing data, the array solved Ids
  *
  * @property array $index A lookup index
- * @property array $parsedErrors Parsing errors
+ * @property array $parsingErrors Parsing errors
  * @property array $linkErrors Link errors
+ * @property array $tagErrors Tag errors
  *
  * @property string $typePath
  * @property array|Query $typeOptions
@@ -127,7 +129,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      *
      * @var array
      */
-    protected $_serialize_snippets = ['problems' => ['problems']];
+    protected $_serialize_snippets = ['warnings' => ['warnings']];
 
     /**
      * Fields to be serialized as attributes the XmlView
@@ -173,6 +175,13 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * @var null
      */
     public $_xml_tag = null;
+
+    /**
+     * Tags extracted from XML content
+     *
+     * @var null|Tag[]
+     */
+    protected $_tags = null;
 
     /**
      * Fields used for data import
@@ -341,42 +350,203 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
 
     /**
-     * Get a list of messages regarding link errors.
+     * Get a list of link warnings, keyed by 'link-errors'.
      *
-     * @return string[]
+     * @return array
      */
     protected function _getLinkErrors()
     {
-        $output = [];
-
-        foreach ($this->_link_errors as $field => $errors) {
-            foreach ($errors as $error) {
-                $output[] = "Link error in $field: $error";
+        $warnings = [];
+        foreach ($this->_link_errors ?? [] as $fieldName => $errors) {
+            foreach ($errors as $errorMsg) {
+                $warnings[] = ['field' => $fieldName, 'msg' => $errorMsg];
             }
         }
-
-        return $output;
+        if (empty($warnings)) {
+            return [];
+        }
+        return ['link-errors' => $warnings];
     }
 
 
     /**
-     * Get a list of messages regarding parsing errors.
+     * Get a list of parsing errors, keyed by 'parsing-errors'
      *
-     * @return string[]
+     * @return array
      */
     protected function _getParsingErrors()
     {
-        $output = [];
+        $warnings = [];
+        foreach ($this->_parsing_errors ?? [] as $fieldName => $errors) {
+            foreach ($errors as $errorMsg) {
+                $warnings[] = ['field' => $fieldName, 'msg' => $errorMsg];
+            }
+        }
+        if (empty($warnings)) {
+            return [];
+        }
+        return ['parsing-errors' => $warnings];
+    }
 
-        foreach ($this->_parsing_errors as $field => $errors) {
-            foreach ($errors as $error) {
-                $output[] = "Error in $field: $error";
+    /**
+     * Check whether the entity is well-formed
+     *
+     * Returns an array of warnings grouped by warning type.
+     * Each warning is an array with at least a 'msg' key
+     * containing a message to be displayed to the user.
+     *
+     * @return array An array of warnings grouped by warning type
+     */
+    protected function _getWarnings()
+    {
+        $warnings = parent::_getWarnings() ?? [];
+
+        // Type warnings
+        $typeField = $this->table->typeField ?? null;
+        if (!empty($typeField)) {
+            if (empty($this->_fields[$typeField])) {
+                $warning = [
+                    'table' => $this->tableName,
+                    'field' => $typeField,
+                    'id' => $this->id
+                ];
+                $warning['msg'] = __('The type field is empty in {table}-{id}.', $warning);
+                $warnings[$this->tableName . '-' . $typeField][] = $warning;
+            }
+            elseif (empty($this->type)) {
+                $warning = [
+                    'table' => $this->tableName,
+                    'field' => $typeField,
+                    'id' => $this->id
+                ];
+                $warning['msg'] = __('The type configuration is not available in {table}-{id}.', $warning);
+                $warnings[$this->tableName . '-' . $typeField][] = $warning;
+            }
+            else {
+                $fieldsConfig = $this->type->config['fields'] ?? [];
+
+// Ugly, find better solution
+//                $skipFields = [
+//                    'id', 'deleted', $typeField, 'type',
+//                    'created', 'modified', 'created_by', 'modified_by','modifier', 'creator',
+//                    'parent_id', 'lft', 'rght', 'level',
+//                    'root_id', ' root_tab', 'from_id ', 'from_tab', 'from_field', 'to_id', 'to_tab', 'to_field',
+//                    'articles_id', 'sections_id', 'items_id',
+//                    'lastopen_id', 'lastopen_tab', 'lastopen_field',
+//                    'pos_x', 'pos_y','pos_z',
+//                    'date_start', 'date_end', 'date_sort',
+//                    'links', 'footnotes', 'sections', 'items', 'project', 'property','sectionpath',
+//                    'collapsed','tree_position', 'tree_level', 'tree_children', 'tree_first', 'tree_last', 'preceding_id', 'weight'
+//
+//                ];
+
+
+                foreach($this->_fields as $fieldName => $fieldValue) {
+
+                    if (in_array($fieldName, $this->_hidden)) {
+                        continue;
+                    }
+
+                    // Skip internal fields
+//                    if (in_array($fieldName, $skipFields)) {
+//                        continue;
+//                    }
+
+                    // Field names to config keys
+                    // TODO: Ugly, how to make it better?
+                    $fieldKey = $fieldName;
+                    if ($fieldName === 'date_value') {
+                        $fieldKey = 'date';
+                    }
+                    elseif ($fieldName === 'properties_id') {
+                        $fieldKey = 'property';
+                    }
+                    elseif ($fieldName === 'file_name') {
+                        $fieldKey = 'file';
+                    }
+
+
+                    $fieldConfig = $fieldsConfig[$fieldKey] ?? [];
+
+                    // Unconfigured fields with values
+//                    if (empty($fieldConfig) && !Attributes::isBlank($fieldValue)) {
+//                        $warning = [
+//                            'type' => 'unconfigured',
+//                            'table' => $this->tableName,
+//                            'field' => $fieldName,
+//                            'id' => $this->id
+//                        ];
+//                        $warning['msg'] = __('The field {field} is not configured in {table}-{id}.', $warning);
+//                        $warnings[$this->tableName.'-'.$fieldKey][] = $warning;
+//                    }
+
+                    // Required values
+                    $required = isset($fieldConfig['required']) && !empty($fieldConfig['required']);
+                    $fieldFormat = $fieldConfig['format'] ?? null;
+
+                    if ($required && Attributes::isBlank($fieldValue) && ($fieldFormat !== 'check')) {
+                        $warning = [
+                            'type' => 'required',
+                            'table' => $this->tableName,
+                            'field' => $fieldName,
+                            'id' => $this->id
+                        ];
+                        $warning['msg'] = __('The field {field} must not be empty in {table}-{id}.', $warning);
+                        $warnings[$this->tableName.'-'.$fieldKey][] = $warning;
+                    }
+
+                    // Patterns
+                    $pattern = $fieldConfig['pattern'] ?? '';
+                    if (!Attributes::isBlank($fieldValue) && !Attributes::isBlank($pattern)) {
+                        if (!preg_match('/' . $pattern . '/', $fieldValue)) {
+                            $warning = [
+                                'type' => 'pattern',
+                                'pattern' => $pattern,
+                                'table' => $this->tableName,
+                                'field' => $fieldName,
+                                'id' => $this->id
+                            ];
+                            $warning['msg'] = __('The field {field} must follow the pattern {pattern} in {table}-{id}.', $warning);
+                            $warnings[$this->tableName . '-' . $fieldKey][] = $warning;
+                        }
+                    }
+                }
             }
         }
 
-        return $output;
+        // Link and parsing warnings
+        // Note: by requesting tag errors, xml fields are parsed and tag entities are created.
+        // Further, tag entities are assigned to their corresponding link or footnote entities.
+        // If you later, at the end of an article's warning evaluation, request the warnings of each link,
+        // you will detect any annotations without assigned tags.
+        $warnings = Arrays::array_merge_grouped($warnings, $this->tagErrors);
+        $warnings = Arrays::array_merge_grouped($warnings, $this->parsingErrors);
+//        $warnings = Arrays::array_merge_grouped($warnings, $this->linkErrors);
+
+        return $warnings;
     }
 
+    /**
+     * Check whether elements in XML fields and link/footnote annotations match
+     *
+     * For fields containing XML, the links and footnotes are compared to the tags.
+     * Missing tag IDs (in the links or footnote records as well as in the xml content)
+     * are returned.
+     *
+     * @return array An array with error messages for missing tags
+     */
+    protected function _getTagErrors()
+    {
+        // Extract all tags that should link somewhere
+        $tags = $this->extractXmlTags(null, ['parents' => true]);
+        $warnings = [];
+
+        foreach ($tags as $tag) {
+            $warnings = Arrays::array_merge_grouped($warnings, $tag->warnings);
+        }
+
+        return $warnings;
+    }
 
     /**
      * Get type path
@@ -435,6 +605,12 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     protected function _getDatabase()
     {
         return Databank::removePrefix($this->databaseName);
+    }
+
+
+    protected function _getShortname()
+    {
+        return $this->captionPath;
     }
 
     /**
@@ -1945,16 +2121,16 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     /**
      * Log a link error, e.g. when a link record for a tag ID could not be found
      *
-     * @param string $fieldname
-     * @param string $error The error message
+     * @param string $fieldName
+     * @param string $error An error message
      * @return void
      */
-    public function setLinkError($fieldname, $error)
+    public function setLinkError($fieldName, $error)
     {
-        if (!isset($this->_link_errors[$fieldname])) {
-            $this->_link_errors[$fieldname] = [];
+        if (!isset($this->_link_errors[$fieldName])) {
+            $this->_link_errors[$fieldName] = [];
         }
-        $this->_link_errors[$fieldname][] = $error;
+        $this->_link_errors[$fieldName][] = $error;
     }
 
     /**
@@ -2335,10 +2511,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     /**
      * Get all tags in xml fields
      *
-     * TODO: merge with callRecursively?
-     *
      * ### Options
-     * - recurse (bool) Whether to recurse into child entities
      * - content (bool) Whether to extract the text content of the tags
      * - to (bool) Whether to add to fields (to_tab, to_id) to the tag result
      *
@@ -2348,14 +2521,17 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * @param array $options Extraction options
      * @return array An array containing tag IDs as keys and an array with from-keys.
      */
-    public function extractXmlTags($fieldName = null, $options =  ['content' => false, 'recurse' =>  false, 'to' => false])
+    public function extractXmlTags($fieldName = null, $options =  ['content' => false, 'to' => false, 'parents' => false])
     {
+        if (!is_null($this->_tags)) {
+            return $this->_tags;
+        }
+
         $tags = [];
 
         // Iterate all fields and recurse into child entities
         if ($fieldName === null) {
             $fields = $this->getExportFields(['snippets' => ['comments']]);
-            $fields[] = 'footnotes'; //TODO: Why added manually, to recurse into footnote entities?
             foreach ($fields as $oldName => $fieldConfig) {
 
                 $fieldKey = is_array($fieldConfig) ?
@@ -2363,28 +2539,10 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                     (is_numeric($oldName) ? $fieldConfig : $oldName);
 
                 if (isset($this->{$fieldKey})) {
-                    $value = $this->{$fieldKey};
-
-                    // Entity
-                    if (($value instanceof BaseEntity) && ($this->root === $value->root)) {
-                        $tags += $value->extractXmlTags(null, $options);
-                    }
-
-                    // Array
-                    elseif (is_array($value) && !empty($options['recurse'])) {
-                        foreach ($value as $row) {
-                            if ($row instanceof BaseEntity && ($this->root === $row->root)) {
-                                $tags += $row->extractXmlTags(null, $options);
-                            }
-                        }
-                    }
-
-                    // Single value
-                    else {
-                        $tags += $this->extractXmlTags($fieldKey, $options);
-                    }
+                    $tags += $this->extractXmlTags($fieldKey, $options);
                 }
             }
+            $this->_tags = $tags;
         }
 
         // Extract tags from a field
@@ -2394,50 +2552,59 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             $format = $this->getFieldFormat($fieldName);
 
             if ($format === 'xml') {
-                $value = $this->getValueRaw($fieldName);
+
+                $fieldTags = [];
+
+                // Generate a tag object for each element
+                $spawnTag = function ($tagId, $tagData) use ($fieldName, $options, &$fieldTags) {
+
+                    $to = !empty($options['to']) ? $this->root->linksByTagid[$tagId][0] ?? [] : [];
+
+                    $tag = [
+                        'tab' => $this->tableName,
+                        'id' => $this->id,
+                        'field' => $fieldName[0],
+                        'tagid' => $tagId,
+                        'to_id' => $to['to_id'] ?? null,
+                        'to_tab' => $to['to_tab'] ?? null,
+                        'to_type' => $to['to_propertytype'] ?? null,
+                        'caption' => $to['to_caption'] ?? null,
+                        'tagname' => is_array($tagData)? $tagData['name'] : $tagData
+                    ];
+
+                    if (!empty($options['parents'])  && is_array($tagData)) {
+                        $tag['parent_id'] = $tagData['parent_id'] ?? null;
+                    }
+
+                    if (!empty($options['content']) && is_array($tag)) {
+                        $tag['content'] = $tagData['content'] ?? null;
+                    }
+
+                    $tag = new Tag(
+                        $tag,
+                        [
+                            'source' => 'Epi.links',
+                            'useSetters' => false,
+                            'markClean' => true,
+                            'markNew' => false
+                        ]
+                    );
+                    $tag->container = $this;
+                    $tag->root = $this->root;
+
+                    if (!empty($options['parents']) && !empty($tagData['parent_id']) ) {
+                        $tag->parent = $fieldTags[$tagData['parent_id']] ?? null;
+                    }
+
+                    $fieldTags[$tagId] = $tag;
+                };
+
                 try {
-                    $fieldTags = XmlMunge::getXmlElements($value, !empty($options['content']));
+                    $value = $this->getValueRaw($fieldName);
+                    XmlMunge::getXmlElements($value, $options, $spawnTag);
                 } catch (Exception $e) {
-                    $this->setError($fieldName[0], $e->getMessage());
-                    $fieldTags = [];
+                    $this->setParsingError($fieldName[0], $e->getMessage());
                 }
-
-                $entity = $this;
-                $fieldTags = array_combine(
-                    array_keys($fieldTags),
-                    array_map(
-                        function ($tagid, $tag) use ($entity, $fieldName, $options) {
-                            $content = !empty($options['content']);
-                            $to = !empty($options['to']) ? $this->root->linksByTagid[$tagid][0] ?? [] : [];
-                            $tag = [
-                                'tab' => $this->tableName,
-                                'id' => $entity->id,
-                                'field' => $fieldName[0],
-                                'tagid' => $tagid,
-                                'to_id' => $to['to_id'] ?? null,
-                                'to_tab' => $to['to_tab'] ?? null,
-                                'to_type' => $to['to_propertytype'] ?? null,
-                                'caption' => $to['to_caption'] ?? null,
-                                'tagname' => ($content && is_array($tag)) ? $tag['name'] : $tag,
-                                'content' => ($content && is_array($tag)) ? $tag['content'] : null
-                            ];
-
-                            $tag = new Tag($tag,
-                                [
-                                    'source' => 'Epi.links',
-                                    'useSetters' => false,
-                                    'markClean' => true,
-                                    'markNew' => false
-                                ]
-                            );
-                            $tag->container = $entity;
-                            $tag->root = $entity->root;
-                            return $tag;
-                        },
-                        array_keys($fieldTags),
-                        $fieldTags
-                    )
-                );
 
                 $tags += $fieldTags;
             }
@@ -2498,18 +2665,26 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 if (!empty($element['attributes']['id'])) {
 
                     $matchingLinks = $links[$element['attributes']['id']] ?? [];
-                    $matchingFootnotes = $footnotes[$element['attributes']['id']] ?? [];
 
-                    if (empty($matchingLinks) && empty($matchingFootnotes)) {
-                        $entity->setLinkError(
-                            is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
-                            __('Missing link record for element ID {0}. ', $element['attributes']['id'])
-                        );
-                    }
+//                    $matchingFootnotes = $footnotes[$element['attributes']['id']] ?? [];
+//
+//                    if (empty($matchingLinks) && empty($matchingFootnotes)) {
+//                        $entity->setLinkError(
+//                            is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
+//                            __(
+//                                'Missing annotation for tag {name}#{id}. ',
+//                                [
+//                                    'name' => $element['name'],
+//                                    'id' => $element['attributes']['id']
+//                                ]
+//                            )
+//                        );
+//                    }
+//                    elseif (count($matchingLinks) === 1) {
 
                     // Atomic annotations have exactly one link record
                     // pointing to exactly one target.
-                    elseif (count($matchingLinks) === 1) {
+                    if (count($matchingLinks) === 1) {
                         $link = $matchingLinks[0];
 
                         $element['attributes']['data-link-target'] = $link->getValueFormatted(

@@ -1784,10 +1784,13 @@ select:focus, select:focus-visible {
     color: var(--msg-error-color);
 }
 
-.field-problem,
-.field-problem input {
-    background-color: var(--problems-bg-color);
-    color: var(--problems-font-color);
+
+.field-warning:not(:focus),
+.field-warning input:not(:focus),
+.doc-field-warning:not(:focus) input:not(.dirty),
+.doc-field-warning:not(:focus) select:not(.dirty),
+.doc-field-warning:not(:focus) div.widget-xmleditor:not(.dirty) {
+    outline: var(--problems-bg-color) solid 3px;
     min-width: 1em;
     min-height: 1em;
 }

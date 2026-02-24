@@ -200,6 +200,18 @@ class ArticlesControllerTest extends EpiTestCase
     }
 
     /**
+     * Test the tree template
+     *
+     * @return void
+     */
+    public function testViewAsTree()
+    {
+        $this->loginUser('devel');
+        $this->get('/epi/projects/articles/view/1?template=tree');
+        $this->assertHtmlEqualsComparison(true, '[data-snippet="article-tree"]');
+    }
+
+    /**
      * Test edit method (HTML file)
      *
      * @return void

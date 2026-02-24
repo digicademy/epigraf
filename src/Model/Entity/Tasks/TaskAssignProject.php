@@ -16,6 +16,8 @@ namespace App\Model\Entity\Tasks;
 class TaskAssignProject extends BaseTaskMutate
 {
 
+    protected $taskParameters = ['target'];
+
     /**
      * Get options for the configuration form
      *
@@ -53,15 +55,4 @@ class TaskAssignProject extends BaseTaskMutate
         return $params;
     }
 
-    /**
-     * Get parameters that are passed to the mutateEntities method
-     *
-     * @return array
-     */
-    public function getTaskParams()
-    {
-        $params = parent::getTaskParams();
-        $params['target'] = $this->job->config['params']['target'] ?? null;
-        return $params;
-    }
 }
