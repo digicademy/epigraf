@@ -1457,12 +1457,11 @@ class Files
     /**
      * Get classes in path
      *
-     * @param $path
-     * @param $namespace
-     * @param $ignoreList
+     * @param array $namespaces An array of namespaces indexed by path
+     * @param array|null $ignoreList
      * @return string[]
      */
-    public static function getClassesInPath($path, $namespace, $ignoreList = null)
+    public static function getClassesInPath($namespaces, $ignoreList = null)
     {
         if ($ignoreList === null) {
             $ignoreList = [
@@ -1472,16 +1471,26 @@ class Files
                 'AppController.php',
             ];
         }
-        $files = scandir($path);
-        $files = array_diff($files, $ignoreList);
 
-        $classes = array_map(function ($file) use ($namespace) {
-            return $namespace . '\\' . basename($file, '.php');
-        }, $files);
+        $allClasses = [];
+        foreach($namespaces as $path => $namespace) {
 
-        return array_filter($classes, function ($possibleClass) {
-            return class_exists($possibleClass);
-        });
+            $files = scandir($path);
+            $files = array_diff($files, $ignoreList);
+
+            $classes = array_map(function ($file) use ($namespace) {
+                return $namespace . '\\' . basename($file, '.php');
+            }, $files);
+
+            $classes = array_filter($classes, function ($possibleClass) {
+                return class_exists($possibleClass);
+            });
+
+            $allClasses = array_merge($allClasses, $classes);
+
+        }
+
+        return $allClasses;
     }
 
     /**

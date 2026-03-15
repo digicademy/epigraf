@@ -435,7 +435,7 @@ class Property extends RootEntity
      */
     protected function _getCaption()
     {
-        return $this[$this->type['merged']['displayfield'] ?? 'lemma'] ?? $this['name'];
+        return $this[$this->type['merged']['displayfield'] ?? 'path'] ?? $this['name'];
     }
 
     /**
@@ -445,7 +445,7 @@ class Property extends RootEntity
      */
     protected function _getShortname()
     {
-        $value = $this[$this->type['merged']['displayfield'] ?? 'lemma'] ?? $this['name'];
+        $value = $this[$this->type['merged']['displayfield'] ?? 'path'] ?? $this['name'];
         $unit = $this->unit ?? '';
         if ($unit !== '') {
             $value .= ' (' . $unit . ')';

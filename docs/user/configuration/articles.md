@@ -3,8 +3,18 @@ title: Articles
 permalink: '/user/configuration/articles/'
 ---
 
-An article describes a research object, such as an object carrying inscriptions, a letter, or a social media post. The configuration specifies how the data model is used to represent your case. You start with article fields and then define the section types contained in an article. For each section type, in turn, you define its fields and the available item types.
-For XML fields, you define the allowed annotations, i.e. links and footnotes. All of those components are called entities. The root entity is the article which contains section, item, links and footnotes entities.
+An article describes a research object, such as an object carrying inscriptions, a letter, or a social media post.
+The configuration specifies how the data model is used to represent your case.
+You start with article fields and then define the section types contained in an article.
+For each section type, in turn, you define its fields and the available item types.
+For XML fields, you define the allowed annotations, i.e. links and footnotes.
+All of those components are called entities.
+The root entity is the article which contains section, item, link and footnote entities.
+
+<p class="infobox">
+    🚀 See the <a href="/user/configuration/articles-howto">step-by-step guide</a>
+    to get started with article configuration in an example database.
+</p>
 
 Note, in the documentation below, you can fully customize all fields not marked as reserved or internal.
 For reserved and interal fields you can customize their visiblity and labels. See the <a href="../configuration/fields">field configuration documentation</a> for further details.
@@ -339,7 +349,9 @@ A section groups the items of an article. Each section has a name and contains a
       </tr>
       <tr>
         <td>items</td>
-        <td>Setup of items contained in an article. A named list of item configuration objects. This list is used to create an empty section. See below for further details. </td>
+        <td>Definition of items contained in an article. A list of item configuration objects.
+            The list is also used when new sections are created. See below for further details.
+        </td>
       </tr>
       <tr>
         <td>name</td>
@@ -467,9 +479,13 @@ The following values are possible in the view key of a section type:
   </table>
 </figure>
 
-The view key can either contain one of the values or a section view configuration object. Using a section view configuration object allows further options such as displaying a map or a grid widget in addition to a table. Widgets such as `map`, `thumbs`, `grid`, or `upload` summarize the content or provide simplified user interfaces for interacting with the content.
+The view key can either contain one of the values or a section view configuration object.
+Using a section view configuration object allows further options such as displaying a map or a grid widget in addition to a table.
+Widgets such as `map`, `thumbs`, `grid`, or `upload` summarize the content
+or provide simplified user interfaces for interacting with the content.
 
-In a section view configuration object, the view template is given in the `name` key. See the following example for a full-blown image section with thumbnails and upload widget:
+In a section view configuration object, the view template is given in the `name` key.
+See the following example for a full-blown image section with thumbnails and upload widget:
 
 ```
 {
@@ -512,7 +528,11 @@ In a section view configuration object, the view template is given in the `name`
 
 **Settings for the table template**
 
-By default, a separate table is created for each item type. The columns of the table result from the fields in the item type configuration. If there are items with images (and the images are available on the server), a thumbnail view of all images is generated above the table. You can tweak the default behaviour by the following keys:
+By default, a separate table is created for each item type.
+The columns of the table result from the fields in the item type configuration.
+If there are items with images (and the images are available on the server),
+a thumbnail view of all images is generated above the table.
+You can tweak the default behaviour by the following keys:
 
 -   Set `captions` to `true` to show the item names as captions above the tables. This does not work in combination with the grouped key set to `true`.
 -   Set `grouped` to `true` to generate one table for all items. The item names appear in the first column. The other colums are shared by the fields of all item types in the section.
@@ -546,6 +566,7 @@ The `itemtypes` key contains a keyed list of item type configuration objects. Yo
 **Thumbnail widget**
 
 Given you have configured item types containing images, you can display a thumbnail list preceding the item table.
+The image file name or URL must be stored in the `file_name` field of an item.
 Example configuration (the `widgets` key is part of the section view configuration object, see above):
 
 
@@ -562,7 +583,39 @@ Example configuration (the `widgets` key is part of the section view configurati
 }
 ```
 
-The `link` key defines whether clicking on the image opens the image viewer. The `fields` key contains a list of item field names that provide data to be displayed along the thumbnail.
+The thumbs widget is configured using the following keys:
+
+<figure class="table">
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>link</td>
+        <td>Boolean. Defines whether clicking on the image opens the image viewer.</td>
+      </tr>
+      <tr>
+        <td>fields</td>
+        <td>A list of item field names that provide data to be displayed along the thumbnail.</td>
+      </tr>
+      <tr>
+        <td>size</td>
+        <td>The thumbnail size, one of 'small', 'medium' or 'large'.</td>
+      </tr>
+      <tr>
+        <td>property</td>
+        <td>Boolean. By default, the image is taken from the file field of the item.
+            You can display property images by setting the value to `true`.
+            In this case, the image is taken from the file field of the property linked in the item.
+        </td>
+      </tr>
+    </tbody>
+    </table>
+</figure>
 
 **File upload widget**
 

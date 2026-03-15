@@ -1,7 +1,7 @@
 {
     "name": "epigraf/app",
     "description": "Epigraf",
-    "version": "5.3.2",
+    "version": "5.3.3",
     "type": "project",
     "license": "GPL-2.0",
     "require": {
@@ -59,7 +59,8 @@
             "Epi\\": "./plugins/Epi/src/",
             "Widgets\\": "./plugins/Widgets/src/",
             "Files\\": "./plugins/Files/src/",
-            "Rest\\": "./plugins/Rest/src/"
+            "Rest\\": "./plugins/Rest/src/",
+            "Batch\\": "./plugins/Batch/src/"
         }
     },
     "autoload-dev": {
@@ -69,7 +70,8 @@
             "Epi\\Test\\": "./plugins/Epi/tests/",
             "Widgets\\Test\\": "./plugins/Widgets/tests/",
             "Files\\Test\\": "./plugins/Files/tests/",
-            "Rest\\Test\\": "./plugins/Rest/tests/"
+            "Rest\\Test\\": "./plugins/Rest/tests/",
+            "Batch\\Test\\": "./plugins/Batch/tests/"
         }
     },
     "scripts": {

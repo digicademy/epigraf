@@ -2010,8 +2010,9 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     /**
      * Return the full text fields
      *
-     * @return string[] Keys are field names, values are index keys
-     */
+     * @return string[]|array[] Keys are field names, values are index keys or configuration arrays
+     * *                  with the keys `index`, `fulltext` and `process`.
+ */
     public function getFulltextFields()
     {
         $fields = [];
@@ -2034,9 +2035,12 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     /**
      * Get items for fulltext index
      *
-     * In the field config, set the 'fulltext' key to the index name
-     * or an array with the index name and an array of
-     * additional processing options in the process key.
+     * In the field config, set the 'fulltext' key to the index name.
+     * Alternatively, set the 'fulltext' key to a fulltext configuration object.
+     * Fulltext configuration objects consist of the following keys:
+     * - index: The index name.
+     * - process An array of additional processing steps.
+     * - footnotes A boolean indicating whether footnotes should be included (defaults to true).
      *
      * The process options are passed to the Strings::processStrings().
      *
@@ -2045,8 +2049,9 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * "content": {
      *     "caption": "Translation",
      *     "fulltext": {
-     *         "index": "Translation",
-     *        "process": ["stripbrackets"]
+     *        "index": "Translation",
+     *        "process": ["stripbrackets"],
+     *        "footnotes": true
      *     }
      * }
      *
@@ -2058,9 +2063,9 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             $fieldIndex = $indexConfig['index'] ?? $fieldName;
             $text = trim($this->getValueFormatted($fieldName, ['format' => 'txt']) ?? '');
 
-            if (!empty($indexConfig['footnotes'] ?? false)) {
+            if (!empty($indexConfig['footnotes'] ?? true)) {
                 foreach ($this->footnotes as $footnote) {
-                    $text .= '\n' . trim($footnote->getValueFormatted('content', ['format' => 'txt']) ?? '');
+                    $text .= "\n-" . trim($footnote->getValueFormatted('content', ['format' => 'txt']) ?? '');
                 }
             }
 
@@ -2614,12 +2619,17 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
-     * Remove tags from xml fields
+     * Clean xml fields
+     *
+     * ## Steps
+     * - remove: Remove the tags
+     * - unnest: Remove nested tags, for example if a 'quot' tag contains a child 'quot' tag, remove the child element.
      *
      * @param array $tags An array of element names
+     * @param array $steps An array of processing steps
      * @param bool $recurse Whether to recurse into child entities
      */
-    public function removeXmlTags($tags, $recurse = false)
+    public function cleanXmlTags($tags, $steps = [], $recurse = false)
     {
         // Iterate all XML fields
         foreach ($this->_fields as $fieldName => $fieldValue) {
@@ -2629,7 +2639,15 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             $format = $this->getFieldFormat($fieldName);
             if ($format === 'xml') {
                 try {
-                    $this[$fieldName] = XmlFilter::removeTags($fieldValue, array_map(fn($x) => ['tagname' => $x], $tags));
+                    foreach ($steps as $step) {
+                        if ($step === 'remove') {
+                            $fieldValue = XmlFilter::removeTags($fieldValue, array_map(fn($x) => ['tagname' => $x], $tags));
+                        }
+                        elseif ($step === 'unnest') {
+                            $fieldValue = XmlMunge::unnestTags($fieldValue, array_map(fn($x) => ['name' => $x], $tags));
+                        }
+                    }
+                    $this[$fieldName] = $fieldValue;
                 } catch (Exception $e) {
                     $this->setError($fieldName, $e->getMessage());
                 }
@@ -2638,7 +2656,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
         // Recurse
         if ($recurse) {
-            $this->callRecursively('removeXmlTags', false, true, $tags, $recurse);
+            $this->callRecursively('cleanXmlTags', false, true, $tags, $steps, $recurse);
         }
     }
 

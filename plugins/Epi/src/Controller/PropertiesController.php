@@ -10,13 +10,13 @@
 
 namespace Epi\Controller;
 
-use Cake\Event\EventInterface;
-use Epi\Controller\Component\TransferComponent;
-use Rest\Controller\Component\LockTrait;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Exception\BadRequestException;
 use App\Utilities\Converters\Attributes;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
+use Batch\Controller\Component\BatchComponent;
+use Rest\Controller\Component\LockTrait;
 
 /**
  * Articles Controller
@@ -24,7 +24,7 @@ use Cake\Http\Response;
  * Provide access to Epigraf3 articles of type 'objekt'
  *
  * @property \Epi\Model\Table\PropertiesTable $Properties
- * @property TransferComponent $Transfer
+ * @property BatchComponent $Batch
  */
 class PropertiesController extends AppController
 {
@@ -110,7 +110,7 @@ class PropertiesController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->loadComponent('Epi.Transfer', ['model' => 'Epi.Properties']);
+        $this->loadComponent('Batch.Batch', ['model' => 'Epi.Properties']);
     }
 
     /**
@@ -323,7 +323,7 @@ class PropertiesController extends AppController
             );
         }
 
-        $this->Transfer->import($scope);
+        $this->Batch->import($scope);
     }
 
 
@@ -343,7 +343,7 @@ class PropertiesController extends AppController
             throw new BadRequestException('Missing property type.');
         }
 
-        return $this->Transfer->export($scope);
+        return $this->Batch->export($scope);
     }
 
     /**
@@ -376,7 +376,7 @@ class PropertiesController extends AppController
             );
         }
 
-        return $this->Transfer->mutate($scope);
+        return $this->Batch->mutate($scope);
     }
 
     /**
@@ -404,7 +404,7 @@ class PropertiesController extends AppController
         }
 
         $params = $this->request->getQueryParams();
-        $this->Transfer->transfer($scope, $params);
+        $this->Batch->transfer($scope, $params);
     }
 
 }

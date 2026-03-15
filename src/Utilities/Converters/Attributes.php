@@ -329,6 +329,7 @@ class Attributes
                     $parsed[$name] = Attributes::isTrue($value);
                 }
             }
+            // TODO: Provide the options in $config, don't hard code
             elseif ($method == 'constant-mode') {
                 $mode = Attributes::cleanOption(
                     $params[$name] ?? MODE_DEFAULT,

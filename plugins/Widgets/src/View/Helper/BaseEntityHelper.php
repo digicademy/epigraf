@@ -482,7 +482,7 @@ class BaseEntityHelper extends Helper
         }
 
         // Title
-        $out .= '<div class="doc-section-name" data-row-name="' . htmlentities($section->name) . '">';
+        $out .= '<div class="doc-section-name" data-row-name="' . htmlentities($section->name ?? '') . '">';
         $fieldConfig = $section->type->config['fields'] ?? [];
 
         // Edit section fields?
@@ -3211,12 +3211,12 @@ class BaseEntityHelper extends Helper
     public function entityFieldIri($entity, $fieldName, $edit, $fieldOptions, $value)
     {
         $out = '';
-        if (!empty($entity->iri_path)) {
+        if (!empty($entity->iriPath)) {
             if (Databank::removePrefix($entity->databaseName) === DATABASE_PUBLIC) {
-                $out .= $this->Html->link($entity->iri_path, 'iri/' . $entity->iri_path);
+                $out .= $this->Html->link($entity->iriPath, 'iri/' . $entity->iriPath);
             }
             else {
-                $out .= $entity->iri_path;
+                $out .= $this->Html->link($entity->iriPath, $entity->iriUrl);
             }
         }
         return $out;
@@ -3458,9 +3458,9 @@ class BaseEntityHelper extends Helper
         $out = $this->taskStart($task, $options);
 
         // Section content
-        $element = "../Tasks/task_" . $task['type'];
+        $element = "Batch.Tasks/Export/task_" . $task['type'];
         if (!$this->getView()->elementExists($element)) {
-            $element = "../Tasks/task";
+            $element = "Batch.Tasks/Export/task";
         }
         $out .= $this->getView()->element($element, ['task' => $task, 'options' => $options]);
 

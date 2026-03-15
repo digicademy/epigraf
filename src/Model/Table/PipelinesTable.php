@@ -30,6 +30,13 @@ class PipelinesTable extends BaseTable
     public $captionField = 'name';
 
     /**
+     * Type field for scoped queries and IRI paths
+     *
+     * @var null|string
+     */
+    public $typeField = 'type';
+
+    /**
      * Request parameter config
      *
      * @var string[]

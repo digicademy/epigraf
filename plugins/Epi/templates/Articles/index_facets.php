@@ -53,7 +53,7 @@ use Cake\Utility\Hash;
             ]
         ) ?>
 
-        <?php if ($this->User->hasRole(['devel', 'admin'])): ?>
+        <?php if (!$this->User->hasRole(['guest'])): ?>
         <?= $this->Table->filterSelector(
                 $tableGroup,
             "articles.published",

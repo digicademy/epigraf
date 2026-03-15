@@ -28,16 +28,16 @@ Finally, the resulting file is stored in the file system or made available for d
 
 ## Batch Manipulation
 
-Epigraf's job system allows multiple records to be imported, transferred, exported or modified in a batch process.
+Epigraf's job system allows multiple records to be imported, transferred, exported or modified in a batch.
 Import, export and mutate operations are implemented in job classes to be found in the
 `src/Model/Entity/Jobs` directory. Transfer operations are an import into a target database from a source database.
 
-Each job contains tasks. The available task classes can be found in the `src/Model/Entity/Tasks` directory.
+Each job contains tasks. The available task classes can be found in the `plugins/Batch/src/Model/Tasks` directory.
 
 The possible mutate operations, i.e. batch operations for modifying records,
-are listed in the table classes. For example, the fulltext index can be regenerated,
+are implemented in the task classes. For example, the fulltext index can be regenerated,
 articles can be moved to another project or be deleted in batches
-(see `ArticlesTable.php`).
+(see the `Batch` plugin).
 
 ## Background Jobs
 

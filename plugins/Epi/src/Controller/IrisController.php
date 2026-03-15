@@ -40,13 +40,69 @@ class IrisController extends AppController
         ]
     ];
 
+    public static $tableMap = [
+        'pipelines' => [
+            'plugin' => false,
+            'controller' => 'Pipelines',
+            'scopeField' => 'type',
+            'iriField' => 'norm_iri'
+        ],
+        'jobs' => [
+            'plugin' => false,
+            'controller' => 'Jobs',
+            'scopeField' => 'jobtype',
+            'iriField' => 'norm_iri'
+        ],
+        'users' => [
+            'plugin' => false,
+            'controller' => 'Users',
+            'scopeField' => 'role'
+        ],
+        'docs' => [
+            'plugin' => false,
+            'controller' => 'Wiki',
+            'scopeField' => 'segment',
+            'iriField' => 'id'
+        ],
+        'types' => [
+            'controller' => 'Types',
+            'scopeField' => 'scope',
+            'iriField' => 'name'
+        ],
+        'properties' => [
+            'controller' => 'Properties',
+            'scopeField' => 'propertytype',
+        ],
+        'projects' => [
+            'controller' => 'Projects',
+            'scopeField' => 'projecttype',
+            'iriField' => 'signature'
+        ],
+        'articles' => [
+            'controller' => 'Articles',
+            'scopeField' => 'articletype',
+        ],
+        'sections' => [
+            'controller' => 'Sections',
+            'scopeField' => 'sectiontype',
+        ],
+        'items' => [
+            'controller' => 'Items',
+            'scopeField' => 'itemtype',
+        ],
+        'notes' => [
+            'controller' => 'Notes',
+            'scopeField' => 'notetype'
+        ]
+    ];
+
     /**
      * Resolves a IRI and redirects to the corresponding entity
      *
      * TODO: Handle renamed types / IRIs
      * TODO: Handle IRIs of merged properties
      * TODO: Resolve footnotes and links IRIs
-     * TODO: Resolve IRIs for files, users, notes
+     * TODO: Resolve IRIs for files and notes
      *
      * Resolves different types of IRIs:
      * - Typed public IRIs: articles/epi-article/mv~168
@@ -78,7 +134,8 @@ class IrisController extends AppController
                 'database' => $dbQuery,
                 'controller' => 'Iris',
                 'action' => 'show',
-                $table, $type, $irifragment
+                $table, $type, $irifragment,
+                '_ext' => $this->request->getParam('_ext')
             ],
             303);
         }
@@ -92,56 +149,26 @@ class IrisController extends AppController
             $table = $table[0] ?? '';
         }
 
-        // TODO: Derive from tables / entities which have properties
-        //       such as $_field_iri. Make them static.
-        $tableMap = [
-            'jobs' => [
-                'plugin' => false,
-                'controller' => 'Jobs',
-                'scopeField' => 'jobtype',
-                'iriField' => 'norm_iri'
-            ],
-            'types' => [
-                'controller' => 'Types',
-                'scopeField' => 'scope',
-                'iriField' => 'name'
-            ],
-            'properties' => [
-                'controller' => 'Properties',
-                'scopeField' => 'propertytype',
-            ],
-            'projects' => [
-                'controller' => 'Projects',
-                'scopeField' => 'projecttype',
-                'iriField' => 'signature'
-            ],
-            'articles' => [
-                'controller' => 'Articles',
-                'scopeField' => 'articletype',
-            ],
-            'sections' => [
-                'controller' => 'Sections',
-                'scopeField' => 'sectiontype',
-            ],
-            'items' => [
-                'controller' => 'Items',
-                'scopeField' => 'itemtype',
-            ]
-        ];
+        $controller = self::$tableMap[$table]['controller'] ?? null;
+        $model = $controller;
+        $scopeField = self::$tableMap[$table]['scopeField'] ?? null;
+        $plugin = self::$tableMap[$table]['plugin'] ?? 'Epi';
 
-        $controller = $tableMap[$table]['controller'] ?? null;
-        $scopeField = $tableMap[$table]['scopeField'] ?? null;
-        $plugin = $tableMap[$table]['plugin'] ?? 'Epi';
+        // Docs have two controllers, based on their type
+        if ($table === 'docs') {
+            $controller = ($type === 'pages')  ? 'Pages' : 'Wiki';
+            $model = ($type === 'pages')  ? 'Docs' : 'Wiki';
+        }
 
         // Quick fix. TODO: handle renamed types / IRIs
         if (($table === 'articles') && ($type=='object')) {
             $type = 'epi-article';
         }
 
-        // For Job IRIS
-        if (empty($plugin) && !empty($controller) && !empty($scopeField)) {
+        // For global entities
+        if (empty($plugin) && !empty($model) && !empty($scopeField)) {
 
-            $modelTable = $this->fetchTable($controller);
+            $modelTable = $this->fetchTable($model);
             $item = $modelTable
                 ->find('all')
                 ->where([$scopeField => $type, 'norm_iri' => $irifragment])
@@ -156,8 +183,8 @@ class IrisController extends AppController
 
             $dbDefault = false;
         }
-        elseif (empty($id) && !empty($controller) && !empty($scopeField)) {
-            $modelTable = $this->fetchTable('Epi.'. $controller);
+        elseif (empty($id) && !empty($model) && !empty($scopeField)) {
+            $modelTable = $this->fetchTable('Epi.'. $model);
             $item = $modelTable
                 ->find('all')
                 ->where([$scopeField => $type, 'norm_iri' => $irifragment])
@@ -177,13 +204,14 @@ class IrisController extends AppController
                             'database' => 'epi_' . $fragmentParts[0],
                             'controller' => 'Iris',
                             'action' => 'show',
-                            $table, $type, $irifragment
+                            $table, $type, $irifragment,
+                            '_ext' => $this->request->getParam('_ext')
                         ],303);
                     }
 
                     // Find record
                     else {
-                        $iriField = $tableMap[$table]['iriField'] ?? 'id';
+                        $iriField = self::$tableMap[$table]['iriField'] ?? 'id';
                         $item = $modelTable
                             ->find('all')
                             ->where([$scopeField => $type, $iriField => $fragmentParts[1]])
@@ -204,7 +232,8 @@ class IrisController extends AppController
             'database' => $dbDefault,
             'controller' => $controller,
             'action' => 'view',
-            $id
+            $id,
+            '_ext' => $this->request->getParam('_ext')
         ],303);
     }
 }

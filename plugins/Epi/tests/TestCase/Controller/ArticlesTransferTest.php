@@ -7,7 +7,9 @@ use Cake\Core\Configure;
 use Epi\Test\TestCase\EpiTestCase;
 
 /**
- * Epi\Controller\Component\TransferComponent Test Case
+ * Batch\Controller\Component\BatchComponent Test Case
+ *
+ * TODO: move test to Batch plugin
  *
  * @uses \Epi\Controller\ArticlesController
  */

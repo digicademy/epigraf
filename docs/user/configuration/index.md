@@ -4,7 +4,17 @@ permalink: '/user/configuration/'
 ---
 
 
-Epigraf can be adapted to suit a wide range of use cases. The building blocks of projects, articles, sections, items and annotations (including links and footnotes) are predefined by the data model. However, how this structure is filled with meaning can be freely configured. For example, you can define different section types (e.g. description sections, transcription sections, lists of locations) and configure which fields are displayed, how they are labelled and the data formats they contain.
+Epigraf can be adapted to suit a wide range of use cases. The building blocks of projects, articles, sections,
+items and annotations (including links and footnotes) are predefined by the data model.
+However, how this structure is filled with meaning can be freely configured.
+For example, you can define different section types (e.g. description sections, transcription sections, lists of locations)
+and configure which fields are displayed, how they are labelled and the data formats they contain.
+
+<p class="infobox">
+    🚀 To get started with an example database, take a look at the step-by-step guides
+    for <a href="/user/configuration/articles-howto">article configuration</a>
+    and <a href="/user/configuration/annotations-howto">annotation configuration</a>.
+</p>
 
 The configuration is accessible for administrators via the `Types` menu. This is where you define how articles are composed, which category systems are available and which annotations, footnotes or other apparatuses are possible. A complete configuration consists of types for the following components:
 
@@ -16,14 +26,26 @@ The configuration is accessible for administrators via the `Types` menu. This is
 -   **Footnotes** within text fields
 -   **Properties** used in items and links.
 
-One JSON configuration containing keys and values is created for each type. The configuration, for example, defines the labels of fields and how different types relate to each other.
+One JSON configuration containing keys and values is created for each type.
+The configuration, for example, defines the labels of fields and how different types relate to each other.
 
-In addition to the standard configuration, further display modes can be configured. For this purpose, a type configurations is created for the mode. The mode specific configuration can be minimalistic and just override specific settings. It is merged into the default configuration, and thus, inherits all those settings.
+In addition to the standard configuration, further display modes can be configured.
+For this purpose, a type configurations is created for the mode.
+The mode specific configuration can be minimalistic and just override specific settings.
+It is merged into the default configuration, and thus, inherits all those settings.
 
-- **default**: The standard configuration, which must always be present. Additional modes override individual keys in the standard configuration.
-- **preview**: Settings for the view mode of entities. This mode always applies to guest users. Use it to polish the entities view if not in edit mode.
-- **code**: The code mode is activated by clicking the revise button in the articles overview. This always opens the articles in the sidebar in edit mode and, thus, allows for going through a bunch of articles quickly. In addition, by using a specific configuration, you can fix the relevant sections and hide unnecessary fields.
-- **stage**: *To be added*
+- **default**: The standard configuration, which must always be present.
+  Additional modes override individual keys in the standard configuration.
+- **preview**: Settings for the view mode of entities. This mode always applies to guest users.
+  Use it to polish the entities view if not in edit mode.
+- **revise**: The revise mode is activated by clicking the revise button in the articles overview.
+  This always opens the articles in the sidebar in edit mode and, thus, allows for going through a bunch of articles quickly.
+  In addition, by using a specific configuration, you can fix the relevant sections and hide unnecessary fields.
+- **stage**: The stage mode is used to manage the publication status of items in an article.
+  By default, not all publication status fields are always visible in an article.
+  To show all publication status fields, activate the stage mode by adding the query parameter `?mode=stage` to the URL.
+  To show only items with a specific publication status, add an array of publications state numbers to the `published` query parameter.
+  By now, there is no button to activate the stage mode.
 
 Some settings can be found in several types:
 

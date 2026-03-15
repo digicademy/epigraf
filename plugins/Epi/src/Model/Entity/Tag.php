@@ -160,7 +160,7 @@ class Tag extends BaseEntity
             }
 
             // Tags allowed as children of other tags
-            if (Attributes::isTrue($containerField['contrain'] ?? true)) {
+            if (Attributes::isTrue($containerField['constrain'] ?? true)) {
                 if (!empty($this->parent)) {
                     $allowed = $this->parent->type['config']['types'] ?? [];
                 }

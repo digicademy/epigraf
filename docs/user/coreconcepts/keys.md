@@ -13,17 +13,21 @@ Epigraf uses object-relational mapping (ORM) as an established technique for acc
 
 Data is extracted from these objects everywhere in the application. For example, the columns in the articles table get their values by extracting them from entity objects. For extracting data, different kinds of extraction keys are used, for example in the types configuration:
 
-- **Path keys** dive into an object by chaining the fields separated by a dot.
-    -   A simple path key contains just the name of the data field or relation. Example: `signature`.
-    -   A compound path key extracts nested data separated by a dot.
-        Example, starting from an article object: `project.signature`.
-    -   A compound path key can also go up the object hierarchy. Example to get the article IRI starting from an item: `root.iri`.
-    -   The path can contain an asterisk * as a placeholder to address a list of objects. This allows values to be extracted from hasMany relations. Example, starting from a section: `items.*.content`.
-    -   You can also filter when using placeholders. The filter condition is specified in square brackets. Example: `items.*[itemtype=images].file_name`.
-- **Aggregation keys**: If the values need post-processing, several processing steps can be appended to a path key with pipes `|` . Additional processing parameters are added after a colon, multiple parameters are separated by commas. Example:
-    `items.*[itemtype=images].file_name|collapse:;`
-- **Placeholder keys** are character strings that contain aggregation keys in curly brackets. This allows complex values to be composed of literals and database content. Example: `Source {project.description.source} - {article.created}`. Multiple aggregation keys can be placed in square brackets separated by commas. In this case, the first value that is not empty is returned. Example: `{[project.name,project.signature]}`.
-- **Named keys** are aggregation keys prefixed with a name and an equal sign. For example, columns in a table can be named: `Signature=article.signature`.
+## Path keys
+Path keys dive into an object by chaining the fields separated by a dot.
+
+-   A simple path key contains just the name of the data field or relation. Example: `signature`.
+-   A compound path key extracts nested data separated by a dot.
+    Example, starting from an article object: `project.signature`.
+-   A compound path key can also go up the object hierarchy. Example to get the article IRI starting from an item: `root.iri`.
+-   The path can contain an asterisk * as a placeholder to address a list of objects. This allows values to be extracted from hasMany relations. Example, starting from a section: `items.*.content`.
+-   You can also filter when using placeholders. The filter condition is specified in square brackets. Example: `items.*[itemtype=images].file_name`.
+
+## Aggregation keys
+
+If the values need post-processing, several processing steps can be appended to a path key with pipes `|` .
+Additional processing parameters are added after a colon, multiple parameters are separated by commas.
+Example:  `items.*[itemtype=images].file_name|collapse:;`
 
 The following path functions are currently available in aggregation keys:
 - collapse: Combines several values into one string
@@ -31,10 +35,24 @@ The following path functions are currently available in aggregation keys:
 - min: Returns the smallest element of a list
 - max: Returns the largest element of a list
 - count: Returns the number of elements in a list
-- split: Split a string at new lines and return the result as an array (that can be processed in further steps, e.g. to select the first value)
+- split: Split a string at new lines and return the result as an array
+  (that can be processed in further steps, e.g. to select the first value)
 - filter: Return elements of an array matching a given pattern. The pattern is provided as regular expression.
 - strip: Remove all HTML tags from a string or an array of string
 - trim: Remove whitespace from both ends of a string.  You can provide other characters to be trimmed as parameter.
 - ltrunc: Remove a prefix from a string.
 - json: Extract a json value or a value from a nested array by the extraction key provided as first parameter
 - padzero: Pad a number with zeros. The number of digits should be passed as parameter.
+
+## Placeholder keys
+
+Placeholder keys are character strings that contain aggregation keys in curly brackets.
+This allows complex values to be composed of literals and database content.
+Example: `Source {project.description.source} - {article.created}`.
+Multiple aggregation keys can be placed in square brackets separated by commas.
+In this case, the first value that is not empty is returned. Example: `{[project.name,project.signature]}`.
+
+## Named keys
+
+Named keys are aggregation keys prefixed with a name and an equal sign.
+For example, columns in a table can be named: `Signature=article.signature`.

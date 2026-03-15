@@ -82,6 +82,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $this->addPlugin('Rest');
         $this->addPlugin('Files');
         $this->addPlugin('Widgets');
+        $this->addPlugin('Batch');
         $this->addPlugin('Epi', ['bootstrap' => false, 'routes' => true, 'autoload' => true]);
     }
 

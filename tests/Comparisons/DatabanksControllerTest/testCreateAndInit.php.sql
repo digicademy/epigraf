@@ -192,7 +192,7 @@ CREATE TABLE `grains` (
   `modified_by` int(11) DEFAULT NULL,
   `sortno` int(11) DEFAULT NULL,
   `graintype` varchar(500) DEFAULT NULL,
-  `content` text DEFAULT NULL,
+  `content` mediumtext DEFAULT NULL,
   `file_name` varchar(1500) DEFAULT NULL,
   `file_type` varchar(10) DEFAULT NULL,
   `file_path` varchar(1500) DEFAULT NULL,
@@ -245,7 +245,7 @@ CREATE TABLE `items` (
   `properties_id` int(11) DEFAULT NULL,
   `value` varchar(1500) DEFAULT NULL,
   `content` mediumtext DEFAULT NULL,
-  `translation` text DEFAULT NULL,
+  `translation` mediumtext DEFAULT NULL,
   `flagged` tinyint(1) DEFAULT NULL,
   `links_id` int(11) DEFAULT NULL,
   `links_tab` varchar(500) DEFAULT NULL,
@@ -424,8 +424,8 @@ LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `meta` VALUES
-(1,0,'0000-00-00 00:00:00','2026-02-23 13:43:08',NULL,NULL,'db_version','4.5'),
-(2,0,'0000-00-00 00:00:00','2026-02-23 13:43:08',NULL,NULL,'db_name','Epigraf');
+(1,0,'0000-00-00 00:00:00','2026-03-08 12:03:01',NULL,NULL,'db_version','4.5'),
+(2,0,'0000-00-00 00:00:00','2026-03-08 12:03:01',NULL,NULL,'db_name','Epigraf');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -543,7 +543,7 @@ CREATE TABLE `properties` (
   `unit` varchar(500) DEFAULT NULL,
   `comment` mediumtext DEFAULT NULL,
   `content` mediumtext DEFAULT NULL,
-  `elements` text DEFAULT NULL,
+  `elements` mediumtext DEFAULT NULL,
   `keywords` varchar(1500) DEFAULT NULL,
   `source_from` text DEFAULT NULL,
   `ishidden` tinyint(4) DEFAULT NULL,
@@ -768,4 +768,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-02-23 14:43:09
+-- Dump completed on 2026-03-08 13:03:01

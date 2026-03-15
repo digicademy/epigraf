@@ -56,6 +56,13 @@ class UsersTable extends BaseTable
 
     public $captionField = 'username';
 
+    /**
+     * Type field for scoped queries and IRI paths
+     *
+     * @var null|string
+     */
+    public $typeField = 'role';
+
     public static $states = [
         USER_ACCOUNT_PENDING => 'Pending',
         USER_ACCOUNT_ACTIVE => 'Active',

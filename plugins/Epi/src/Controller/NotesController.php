@@ -73,7 +73,7 @@ class NotesController extends AppController
     {
         parent::beforeFilter($event);
         $this->sidemenu = $this->Notes->getMenu();
-        $this->loadComponent('Epi.Transfer', ['model' => 'Epi.Notes']);
+        $this->loadComponent('Batch.Batch', ['model' => 'Epi.Notes']);
     }
 
     /**
@@ -189,7 +189,7 @@ class NotesController extends AppController
      */
     public function import()
     {
-        $this->Transfer->import();
+        $this->Batch->import();
     }
 
 }

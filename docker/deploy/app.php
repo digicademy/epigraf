@@ -238,6 +238,9 @@ return [
             'interval' => env('APP_RATE_LIMIT_INTERVAL', 60),
         ],
 
+        // Allowed origins, passed as JSON array in environment variables
+        'cors' => json_decode(env('APP_CORS', '[]'), true),
+
         'base' => false,
         'dir' => 'src',
         'webroot' => 'htdocs',

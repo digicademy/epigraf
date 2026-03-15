@@ -269,10 +269,9 @@ define('PUBLICATION_BINARY_PUBLISHED',1);
  * View modes
  */
 
-// TODO: replace 'code' by 'revise' in modes
 define('MODE_DEFAULT', 'default');
 define('MODE_PREVIEW', 'preview');
-define('MODE_REVISE', 'code');
+define('MODE_REVISE', 'revise');
 define('MODE_STAGE', 'stage');
 
 /**
@@ -304,6 +303,9 @@ define('VALUE_INVALID_ID', -1);
  * Type definitions
  */
 define('ITEMTYPE_FULLTEXT', 'search');
+define('FULLTEXT_INDEX_DEFAULT', 'Content');
+define('FULLTEXT_INDEX_NOTES', 'Notes');
+
 define('ITEMTYPE_COLLECTION', 'collections');
 define('ITEMTYPE_SIGNATURES', 'signatures');
 define('SECTIONTYPE_COLLECTION', 'collections');

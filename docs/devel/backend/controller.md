@@ -220,7 +220,7 @@ that are attached to the controllers:
 - **ApiPaginationComponent** (Rest plugin): Injects pagination information into serialized API responses.
 - **LockComponent** (Rest plugin): Manages the locking of entities for editing so that users don't interfere.
 - **FilesRequestComponent** (Files plugin): Handles file uploads, downloads, and displaying files.
-- **TransferComponent** (Epi plugin): Import entities, transfer entities between databases, and mutate entities by batch operations.
+- **BatchComponent** (Batch plugin): Import entities, transfer entities between databases, and mutate entities by batch operations.
 
 Note that UserControllers and FilesControllers are implemented on both levels,
 as they are used for managing different data in the application and in the project databases.

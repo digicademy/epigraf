@@ -215,7 +215,7 @@ class Type extends RootEntity
      * Loads the subtypes if not already loaded
      *
      * Subtypes are types with a mode different from 'default',
-     * e.g. 'code' or 'preview' (see the MODE-constants defined in bootstrap.php)
+     * e.g. 'revise' or 'preview' (see the MODE-constants defined in bootstrap.php)
      *
      * @return Type[]
      */
@@ -374,6 +374,18 @@ class Type extends RootEntity
     }
 
     /**
+     * Skip xml field cleaning for types
+     *
+     * @param array $tags An array of element names
+     * @param array $steps An array of processing steps
+     * @param bool $recurse Whether to recurse into child entities
+     */
+    public function cleanXmlTags($tags, $steps = [], $recurse = false)
+    {
+        return;
+    }
+
+    /**
      * Generate an array holding expected counts for child entities, e.g. items or sections, based on the type configuration.
      *
      * @param string $key The key containing the child configuration, e.g. 'items' or 'sections'.
@@ -392,12 +404,14 @@ class Type extends RootEntity
                 $shouldConfig['count'] = '1';
             }
 
-            if (isset($shouldConfig['default']) && ($shouldConfig['default'] === false)) {
-                if ($shouldConfig['count'] === '1') {
-                    $shouldConfig['count'] = '?';
-                }
-                if ($shouldConfig['count'] === '+') {
-                    $shouldConfig['count'] = '*';
+            if (isset($shouldConfig['default'])) {
+                if ($shouldConfig['default'] === false) {
+                    if ($shouldConfig['count'] === '1') {
+                        $shouldConfig['count'] = '?';
+                    }
+                    if ($shouldConfig['count'] === '+') {
+                        $shouldConfig['count'] = '*';
+                    }
                 }
             }
 

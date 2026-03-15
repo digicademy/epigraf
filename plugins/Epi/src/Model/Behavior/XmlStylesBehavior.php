@@ -244,7 +244,7 @@ class XmlStylesBehavior extends Behavior
 
                 // Repeat renderer
                 if (isset($attrConfig['repeat'])) {
-                    $num = (int)$element['attributes'][$attrName] ?? 0;
+                    $num = (int)($element['attributes'][$attrName] ?? 0);
                     if (!empty($num)) {
                         $attrValue = str_repeat($attrConfig['repeat'] , $num);
                     } else {

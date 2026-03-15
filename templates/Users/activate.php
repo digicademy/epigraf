@@ -22,7 +22,7 @@
 ?>
 
 <!-- Content area -->
-<div class="content-extratight">
+<div class="content-tight">
     <?php $formId = 'form-password-users-' . $entity->id; ?>
     <?= $this->Form->create($entity, ['id'=> $formId]) ?>
         <fieldset>

@@ -20,6 +20,9 @@ use App\Model\Table\BaseTable;
 
 /**
  * Tree command class
+ *
+ * TODO: Move to Jobs plugin
+ *
  */
 class TreeCommand extends Command
 {

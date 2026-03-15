@@ -11,14 +11,12 @@
 namespace Epi\Model\Table;
 
 use App\Model\Behavior\ImportBehavior;
-use App\Model\Entity\InvalidTaskException;
-use App\Model\Entity\Jobs\JobMutate;
-use App\Model\Interfaces\MutateTableInterface;
 use App\Utilities\Converters\Objects;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
+use Cake\I18n\I18n;
 use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 use Epi\Model\Behavior\XmlStylesBehavior;
@@ -32,7 +30,7 @@ use Exception;
  * @mixin XmlStylesBehavior //only for some child classes (articles, items...)
  * @mixin ImportBehavior
  */
-class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterface
+class BaseTable extends \App\Model\Table\BaseTable
 {
     /**
      * Default database connection
@@ -415,6 +413,39 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
     }
 
     /**
+     * Get a list of search indexes from the types configuration
+     *
+     * @return string[] Labels indexed by search keys
+     */
+    public function getSearchIndexes()
+    {
+        $types = $this->getDatabase()->types[$this->getTable()] ?? [];
+        $indexKeys = [];
+        foreach ($types as $typeName => $typeData) {
+            if (!empty($typeData['merged']['fulltext'])) {
+                $indexKeys = array_merge(
+                    $indexKeys,
+                    array_map(
+                        fn($x) => is_array($x) ?
+                            ($x['index'] ?? __('Content')) :
+                            $x ,Objects::extract($typeData, 'merged.fields.*.fulltext') ?? []
+                    )
+                );
+            }
+        }
+
+        $indexValues = [];
+        foreach ($indexKeys as $indexValue) {
+            $indexKey = 'text.' . $indexValue;
+            if (!isset($indexValues[$indexKey])) {
+                $indexValues[$indexKey] = '- ' . I18n::getTranslator()->translate(Inflector::humanize($indexValue));
+            }
+        }
+
+        return $indexValues;
+    }
+
+    /**
      * Find entities by publication state
      *
      * @param \Cake\ORM\Query $query
@@ -459,54 +490,4 @@ class BaseTable extends \App\Model\Table\BaseTable implements MutateTableInterfa
     }
 
 
-    /**
-     * Get the list of supported tasks
-     *
-     * @return string[]
-     */
-    public function mutateGetTasks(): array
-    {
-        return [];
-    }
-
-    /**
-     * Called from the mutate job
-     *
-     * @implements MutateTableInterface
-     *
-     * @param array $params
-     * @param JobMutate $job
-     * @return int Number of articles for calculating the progress bar.
-     */
-    public function mutateGetCount($params, $job): int
-    {
-        $params = $this->parseRequestParameters($params);
-
-        return $this
-            ->find('hasParams', $params)
-            ->count();
-    }
-
-    /**
-     * Mutate all entities matched by the params
-     *
-     * @param array $taskParams
-     * @param array $dataParams
-     * @param int $offset
-     * @param int $limit
-     * @return array The mutated entities
-     */
-    public function mutateEntities($taskParams, $dataParams, $offset, $limit): array
-    {
-        $tasks = $this->mutateGetTasks();
-        if (!isset($tasks[$taskParams['task']])) {
-            throw new InvalidTaskException('Task not found');
-        }
-
-        $method = 'mutateEntities' . Inflector::camelize($taskParams['task']);
-        if (!method_exists($this, $method)) {
-            throw new InvalidTaskException('Task not implemented');
-        }
-        return $this->{$method}($taskParams, $dataParams, ['offset' => $offset, 'limit' => $limit]);
-    }
 }

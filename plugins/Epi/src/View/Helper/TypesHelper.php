@@ -82,6 +82,7 @@ class TypesHelper extends Helper
         $fields = $this->getTypes()[$scope][$type]['merged']['fields'] ?? $default;
         $result = [];
 
+        // TODO: Better provide a default configuration elsewhere?
         if (($mode === MODE_STAGE) && empty($fields['published'])) {
             $fields['published'] = [
                 'caption' => __('Progress'),

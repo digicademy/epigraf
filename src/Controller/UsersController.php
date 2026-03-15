@@ -720,7 +720,7 @@ class UsersController extends AppController
         if (!in_array($user['role'] ?? '', ['admin', 'devel'])) {
 
             $action = $this->request->getParam('action');
-            if (!in_array($action, ['start', 'login', 'logout', 'settings', 'track', 'stop'])) {
+            if (!in_array($action, ['start', 'login', 'logout', 'settings', 'track', 'stop', 'activate'])) {
 
                 $passedParams = $this->request->getParam('pass', []);
                 $entityId = $passedParams[0] ?? null;

@@ -12,7 +12,6 @@ namespace Epi\Model\Table;
 
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
-use App\Utilities\Converters\Objects;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
 use Cake\Datasource\EntityInterface;
@@ -738,35 +737,6 @@ class ItemsTable extends BaseTable
                 );
                 return $results;
             });
-    }
-
-    /**
-     * Get a list of search indexes from the types configuration
-     *
-     * @return string[] Labels indexed by search keys
-     */
-    public function getSearchIndexes()
-    {
-        $types = $this->getDatabase()->types[$this->getTable()] ?? [];
-        $indexKeys = [];
-        foreach ($types as $typeName => $typeData) {
-            if (!empty($typeData['merged']['fulltext'])) {
-                $indexKeys = array_merge(
-                    $indexKeys,
-                    array_map(fn($x) => is_array($x) ? ($x['index'] ?? __('Content')) : $x ,Objects::extract($typeData, 'merged.fields.*.fulltext') ?? [])
-                );
-            }
-        }
-
-        $indexValues = [];
-        foreach ($indexKeys as $indexValue) {
-            $indexKey = 'text.' . $indexValue;
-            if (!isset($indexValues[$indexKey])) {
-                $indexValues[$indexKey] = '- ' . I18n::getTranslator()->translate(Inflector::humanize($indexValue));
-            }
-        }
-
-        return $indexValues;
     }
 
     /**

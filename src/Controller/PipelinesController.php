@@ -114,7 +114,7 @@ class PipelinesController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             //Reorder tasks and options
-            $tasks = $this->request->getData('Tasks');
+            $tasks = $this->request->getData('Tasks', []);
             $tasks = $entity->arrangeTasks($tasks);
 
             //Save data

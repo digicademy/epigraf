@@ -11,9 +11,9 @@
 namespace Epi\Model\Entity;
 
 use App\Model\Behavior\TreeCorruptException;
-use App\Model\Entity\BaseTask;
 use App\Model\Entity\Databank;
 use App\Model\Entity\Job;
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
 use App\Utilities\Files\Files;
@@ -22,7 +22,7 @@ use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Epi\Model\Behavior\PositionBehavior;
 use Epi\Model\Table\ArticlesTable;
-use App\Utilities\Converters\Arrays;
+use Batch\Model\Tasks\BaseTask;
 
 /**
  *Article Entity

@@ -533,6 +533,7 @@ class HistoricDates
     static function normalizeDateString(string $date): string
     {
         $nDash = "\u{2013}"; // Halbgeviertstrich
+
         // Normalise
         $date = mb_strtolower($date);
         $date = str_replace(' ', '', $date);

@@ -11,12 +11,8 @@
 namespace Epi\Model\Table;
 
 use App\Model\Behavior\VersionedTreeBehavior;
-use App\Model\Entity\Jobs\JobMutate;
 use App\Model\Interfaces\ExportTableInterface;
-use App\Model\Interfaces\MutateTableInterface;
 use App\Model\Interfaces\ScopedTableInterface;
-use App\Model\Table\BaseTable as AppBaseTable;
-use App\Model\Table\SaveManyException;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use Cake\Collection\Collection;
@@ -24,8 +20,6 @@ use Cake\Collection\CollectionInterface;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
-use Cake\Http\Exception\BadRequestException;
-use Cake\Http\Exception\MethodNotAllowedException;
 use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\Association\HasMany;
 use Cake\ORM\Association\HasOne;
@@ -49,7 +43,7 @@ use const SORT_ASC;
  * @mixin \Epi\Model\Behavior\PositionBehavior
  * @mixin VersionedTreeBehavior
  */
-class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateTableInterface, ExportTableInterface
+class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportTableInterface
 {
 
     use TransferTrait;
@@ -2330,219 +2324,4 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, MutateT
         return parent::getColumns($selected, $default, $options);
     }
 
-    /**
-     * Get the list of supported tasks
-     *
-     * @return string[]
-     */
-    public function mutateGetTasks(): array
-    {
-        $tasks = [
-//            'delete' => 'Delete properties',
-//            'fix_iris' => 'Clean IRIs',
-            'rebuild_sortkeys' => 'Rebuild sort keys',
-            'batch_sort' => 'Sort properties',
-            'batch_merge' => 'Merge properties',
-            'batch_reconcile' => 'Reconcile properties'
-        ];
-
-        if (in_array(AppBaseTable::$userRole, ['author', 'editor'])) {
-            $tasks = array_intersect_key($tasks, ['batch_sort' => true,'rebuild_sortkeys' => true]);
-        }
-        elseif (!in_array(AppBaseTable::$userRole, ['admin', 'devel'])) {
-            $tasks = [];
-        }
-
-        return $tasks;
-    }
-
-    /**
-     * Called from mutate job
-     *
-     * @param array $params
-     * @param JobMutate $job
-     * @return int Number of records to process.
-     *             For operations that work on the whole dataset (e.g. sort), the number of property types.
-     */
-    public function mutateGetCount($params, $job): int
-    {
-        if (($job->config['task'] ?? '') === 'batch_sort') {
-            $params = ['propertytype' => $params['propertytype'] ?? $params['scope'] ?? ''];
-//            return 1;
-        }
-
-        $params['ancestors'] = false;
-        $params['treePositions'] = false;
-        return parent::mutateGetCount($params, $job);
-    }
-
-    /**
-     * Sort all properties of a type
-     *
-     * @param array $taskParams
-     * @param array $dataParams
-     * @param array $paging Not used
-     * @return array The mutated entities
-     */
-    public function mutateEntitiesBatchSort($taskParams, $dataParams, $paging): array
-    {
-        $dataParams = $this->parseRequestParameters($dataParams);
-        $propertytype = $dataParams['propertytype'] ?? $dataParams['scope'] ?? '';
-
-        // Sort / recover a single propertytype
-        $sortBy = $taskParams['sortby'] ?? 'sortkey';
-
-        if (!in_array(AppBaseTable::$userRole, ['admin', 'devel']) && !in_array($sortBy, ['sortkey', 'lemma'])) {
-            throw new MethodNotAllowedException('You have no permission for using the selected sort field.');
-        }
-
-        $this->setSortField($sortBy);
-        $this->setScope($propertytype);
-        $this->recover();
-
-        return [$propertytype];
-    }
-
-    /**
-     * Merge all properties with the same lemma path
-     *
-     * @param array $taskParams
-     * @param array $dataParams
-     * @param array $paging Array with the key 'limit'
-     * @return array The mutated entities
-     */
-    public function mutateEntitiesBatchMerge($taskParams, $dataParams, $paging): array
-    {
-        if (($taskParams['cursor'] ?? 0) < 0) {
-            throw new BadRequestException('Invalid cursor for merge task');
-        }
-        $limit = $paging['limit'] ?? 1;
-
-        $dataParams = $this->parseRequestParameters($dataParams);
-
-        // Use cursor based pagination instead of offset
-        if (($taskParams['cursor'] ?? 0) > 0) {
-            $cursorNode = $this->find('all', ['deleted'=>[0,1]])
-                ->where(['id' => $taskParams['cursor']])
-                ->firstOrFail();
-//            $cursorNode = $this->get($taskParams['cursor']);
-            $cursorConditions = [
-                'OR' => [
-                    ['Properties.level' => $cursorNode->level, 'Properties.id >' => $taskParams['cursor'] ?? 0],
-                    'Properties.level >' => $cursorNode->level
-                ]
-            ];
-        } else {
-            $cursorConditions = ['1=1'];
-        }
-
-        $dataParams['articleCount'] = false;
-        $dataParams['treePositions'] = false;
-        $dataParams['ancestors'] = false;
-        $dataParams['treePositions'] = false;
-
-        $entities = $this
-            ->find('hasParams', $dataParams)
-            ->where($cursorConditions)
-            ->orderAsc('Properties.level')
-            ->orderAsc('Properties.id')
-            ->limit($limit)
-            ->toArray();
-
-        /** @var Property $entity */
-        foreach ($entities as $entity) {
-
-            // Skip already merged entities
-            if (!$this->exists(['id' => $entity->id, 'deleted' => 0])) {
-                continue;
-            }
-
-            $sourceEntities = $entity->duplicates;
-            $sourceIds = $sourceEntities->all()->extract('id')->toArray();
-            if (!empty($sourceIds)) {
-                $this->merge($entity->id, $sourceIds, ['concat' => true]);
-            }
-        }
-
-        return $entities;
-    }
-
-    /**
-     * Reconcile all properties using external services configured in the property type
-     *
-     * @param array $taskParams
-     * @param array $dataParams
-     * @param array $paging Array with the key 'limit'
-     * @return array The mutated entities
-     */
-    public function mutateEntitiesBatchReconcile($taskParams, $dataParams, $paging): array
-    {
-        if (($taskParams['cursor'] ?? 0) < 0) {
-            throw new BadRequestException('Invalid cursor for task');
-        }
-        $limit = $paging['limit'] ?? 1;
-        $dataParams = $this->parseRequestParameters($dataParams);
-        $dataParams['ancestors'] = false;
-        $dataParams['treePositions'] = false;
-
-        // Use cursor based pagination instead of offset
-        if (($taskParams['cursor'] ?? 0) > 0) {
-            $cursorConditions = ['Properties.id >' => $taskParams['cursor'] ?? 0];
-        } else {
-            $cursorConditions = ['1=1'];
-        }
-
-        $entities = $this
-            ->find('hasParams', $dataParams)
-            ->contain(['Types'])
-            ->where($cursorConditions)
-            ->orderAsc('Properties.id')
-            ->limit($limit)
-            ->toArray();
-
-        $targetField = $taskParams['targetfield'] ?? 'norm_data';
-        $reconcileOptions = ['onlyempty' => !empty($taskParams['onlyempty'])];
-
-        /** @var Property $entity */
-        foreach ($entities as $entity) {
-            $entity->reconcile($targetField, $reconcileOptions);
-        }
-
-        if (!$this->saveMany($entities, [])) {
-            throw new SaveManyException('Could save entities.');
-        }
-
-        return $entities;
-    }
-
-    /**
-     * Mutate: Rebuild date fields
-     *
-     * @param array $taskParams
-     * @param array $dataParams
-     * @param array $paging Array with the keys 'offset' and 'limit'
-     * @return array The mutated entities
-     */
-    public function mutateEntitiesRebuildSortkeys($taskParams, $dataParams, $paging): array
-    {
-        $dataParams = $this->parseRequestParameters($dataParams);
-        $dataParams['ancestors'] = false;
-        $dataParams['treePositions'] = false;
-
-        $entities = $this
-            ->find('hasParams', $dataParams)
-            //->find('containAll', $dataParams)
-            ->contain(['Types'])
-            ->limit( $paging['limit'] ?? 100)
-            ->offset($paging['offset'] ?? 0)
-            ->toArray();
-
-        foreach ($entities as $entity) {
-            /** @var Property $entity */
-            $entity->updateSortKey();
-        }
-        $this->saveMany($entities);
-
-        return $entities;
-    }
 }

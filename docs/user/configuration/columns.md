@@ -74,13 +74,16 @@ Column configuration objects support the following keys:
             <tr>
                 <td>key</td>
                 <td>Path key to extract the data from the entity.
-                 <a href="../coreconcepts/model">Path extraction keys</a> consist of simple entity fields (e.g., `signature`) or nested fields with dot notation (e.g., `project.signature`). To multiple values in a list, use the asterisk placeholder (e.g., `items.*.value`). Lists can be filtered with conditions in square brackets (e.g. `items.*[itemtype=conditions].date`).
+                 <a href="../coreconcepts/keys">Path extraction keys</a> consist of simple entity fields (e.g., `signature`)
+                 or nested fields with dot notation (e.g., `project.signature`).
+                 Use the asterisk placeholder to adress multiple values (e.g., `items.*.value`).
+                 Values can be filtered with conditions in square brackets (e.g. `items.*[itemtype=conditions].date`).
                 <br>
                 By default, path extraction keys result in the raw field value. For example, if the content field of a property contains JSON, a JSON string is returned. To format such nested data, use an array with at least two elements. The first elements contain the extraction key, and the last element contains the field name to be formatted, for example: `["project","description"]`.</td>
             </tr>
             <tr>
                 <td>value</td>
-                <td>Alternatively, a <a href="../coreconcepts/model">placeholder extraction key</a> instead of a path extraction key. Placeholder extraction keys support constructing a value from multiple fields and fixed strings.</td>
+                <td>Alternatively, a <a href="../coreconcepts/keys">placeholder extraction key</a> instead of a path extraction key. Placeholder extraction keys support constructing a value from multiple fields and fixed strings.</td>
             </tr>
             <tr>
                 <td>aggregate</td>

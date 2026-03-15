@@ -54,7 +54,7 @@ class PermissionsTable extends BaseTable
 
     static $permissionTypes = ['access' => 'Access', 'lock' => 'Lock'];
     static $requestTypes = ['web' => 'Web-Zugriff', 'api' => 'API-Zugriff'];
-    static $requestModes = [MODE_DEFAULT => 'Default', MODE_PREVIEW => 'Preview', MODE_REVISE => 'Code', MODE_STAGE => 'Stage'];
+    static $requestModes = [MODE_DEFAULT => 'Default', MODE_PREVIEW => 'Preview', MODE_REVISE => 'Revise', MODE_STAGE => 'Stage'];
     static $entityTypes = ['databank' => 'Databank', 'record' => 'Record', 'view' => 'View'];
 
     static $_endpoints = null;
@@ -158,13 +158,12 @@ class PermissionsTable extends BaseTable
      */
     static public function getControllers($plugins = [])
     {
-        $results = Files::getClassesInPath(ROOT . DS . 'src/Controller' . DS, 'App\Controller');
+        $results = Files::getClassesInPath([ROOT . DS . 'src/Controller' . DS  => 'App\Controller']);
         foreach ($plugins as $plugin) {
             $results = array_merge(
                 $results,
                 Files::getClassesInPath(
-                    ROOT . DS . 'plugins' . DS . $plugin . DS . 'src/Controller' . DS,
-                    $plugin . '\Controller'
+                    [ROOT . DS . 'plugins' . DS . $plugin . DS . 'src/Controller' . DS =>  $plugin . '\Controller']
                 )
             );
         }

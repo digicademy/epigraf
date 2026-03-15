@@ -226,8 +226,8 @@ class User extends RootEntity
 
             'iri_path' => [
                 'caption' => __('IRI path'),
-                'action' => ['view'],
-                'format' => 'iri'
+                'format' => 'iri',
+                'action' => ['view']
             ],
 
             'created' => [

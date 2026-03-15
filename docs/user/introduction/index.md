@@ -15,12 +15,23 @@ The main entry page when working with Epigraf is the articles table. It lists th
     Each row corresponds to a category selected in the filter facets of the left sidebar.
     To activate the lanes view, add a facet using the plus button, select at least one category, and check the details checkbox.
 
-Table views are used throughout Epigraf for all kinds of entity collections such as projects or categories. A **single mouse click** on a row usually opens the entity in the right sidebar. **Double-clicking** opens the entity in the same window. **Ctrl+click** a row to open the entity in a new window. You will find buttons in the sidebar and in popups that also open entities in a new tabsheet.
+Table views are used throughout Epigraf for all kinds of entity collections such as projects or categories.
+A **single mouse click** on a row usually opens the entity in the right sidebar.
+**Double-clicking** opens the entity in the same window. **Ctrl+click** a row to open the entity in a new window.
+You will find buttons in the sidebar and in popups that also open entities in a new tabsheet.
 
 Single articles can be opened in two modes. This applies to all other entities such as projects or categories as well:
 
-- The *view mode* is read-only.  This is the default mode when an article is opened in the sidebar. It may deviate from the real data structure of an article since sections and fields may be rearranged or toggled for presentation purposes using a specific database configuration.
-- The *edit mode* is used to change article data. An article goes into edit mode by double-clicking on a table row or using the open button in the sidebar. For quickly revising articles (or properties) from the table view, you can switch to the `Revise` mode using the respective footer button. This results in articles being opened in edit mode instead of view mode in the sidebar. The article layout may deviate from the usual edit mode, if a specific configuration for revising entities exists in the database. Further, not all publication status fields are always visible in an article. To show all publication status fields, from the table view, select at least one publication status in the filter options (left sidebar). This activates the so-called "stage" configuration.
+- The *view mode* is read-only.  This is the default mode when an article is opened in the sidebar.
+  It may deviate from the real data structure of an article since sections and fields may be rearranged
+  or toggled for presentation purposes using a specific database configuration.
+- The *edit mode* is used to change article data.
+  An article goes into edit mode by double-clicking on a table row or using the open button in the sidebar.
+
+For quickly revising articles (or properties) from the table view,
+you can switch to the `Revise` mode using the respective footer button.
+This results in articles being opened in edit mode instead of view mode in the sidebar.
+The article layout may deviate from the usual edit mode, if a specific configuration for revising entities exists in the database.
 
 Throughout the application, some standard functions are implemented:
 - Plus buttons (+) are used for adding sections or items to an article as well as filter facets in the table view.

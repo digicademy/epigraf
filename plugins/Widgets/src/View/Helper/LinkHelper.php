@@ -1660,7 +1660,7 @@ class LinkHelper extends Helper
     }
 
     /**
-     * Get a URL to view or code the entity
+     * Get a URL to view or revise the entity
      *
      * @param array $url Provide at least the entity ID
      * @return array
@@ -1810,24 +1810,23 @@ class LinkHelper extends Helper
     public function getActions($mode = MODE_DEFAULT, $params=[])
     {
         $action = $this->User->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
+
+        // TODO: Stick to the edit mode if possible (needs close & unlock in the sidebar on double click and right click)
         if ($mode === MODE_REVISE) {
-            $viewAction = ['action' => $action, '{id}','?' => ['mode' => MODE_REVISE]];
-            $openAction =  ['action' => 'view', '{id}'];
-            $tabAction = ['action' => 'view', '{id}'];
+            $viewAction = ['action' => $action, '{id}','?' => ['mode' => $mode]];
+            $action = 'view';
+        }
+        // TODO: Clarify how to handle the stage mode
+        elseif ($mode === MODE_STAGE) {
+            $published = $params['published'] ?? [];
+            $viewAction = ['action' => 'view', '{id}','?' => ['mode' => $mode, 'published' => implode(',', $published)]];
         }
         else {
-            $published = $params['published'] ?? null;
-            if (!empty($published)) {
-                $viewAction = ['action' => 'view', '{id}','?' => ['published' => implode(',', $published)]];
-                $openAction =  ['action' => $action, '{id}', '?' => ['mode' => MODE_STAGE]];
-                $tabAction = ['action' => $action, '{id}', '?' => ['mode' => MODE_STAGE]];
-            } else {
-                $viewAction = true;
-                $openAction =  ['action' => $action, '{id}'];
-                $tabAction = ['action' => $action, '{id}'];
-
-            }
+            $viewAction = ['action' => 'view', '{id}'];
         }
+
+        $openAction =  ['action' => $action, '{id}'];
+        $tabAction = ['action' => $action, '{id}'];
 
         return [
             'view' => $viewAction,

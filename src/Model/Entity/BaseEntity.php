@@ -60,6 +60,7 @@ use Rest\Entity\LockTrait;
  *
  * @property null|string $iriIdentifier
  * @property null|string $iriFragment
+ * @property null|string $iriUrl
  * @property null|string $iriPath
  * @property null|string $iri
  *
@@ -1327,7 +1328,7 @@ class BaseEntity extends Entity
      */
     protected function _getIri()
     {
-        return $this->iri_path;
+        return $this->iriPath;
     }
 
     /**

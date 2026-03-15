@@ -188,9 +188,6 @@ use App\Utilities\Converters\Attributes;
         if ($this->request->is('ajax') && !in_array($mode, [MODE_REVISE])) {
             $action = $this->User->hasPermission(['action' => 'edit']) ? 'edit' : 'view';
             $url = ['action' => $action, $entity->id];
-            if (!empty($params['published'])) {
-                $url['?'] = ['mode' => MODE_STAGE];
-            }
             $this->Link->addAction(
                 __('Open article'),
                 $url,

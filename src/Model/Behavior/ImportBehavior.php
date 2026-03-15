@@ -625,10 +625,10 @@ class ImportBehavior extends Behavior
      *
      * @param BaseEntity[] $entities
      * @param array $config Configuration for the Import behavior
-     *
+     * @param array $options Options passed to saveMany
      * @return mixed
      */
-    public function saveManyFast($entities, $config = [])
+    public function saveManyFast($entities, $config = [], $options = [])
     {
         if (!empty($config)) {
             $this->setConfig($config);
@@ -657,7 +657,7 @@ class ImportBehavior extends Behavior
         }
 
         // Save
-        $options = ['checkExisting' => false, 'checkRules' => false];
+        $options = array_merge($options, ['checkExisting' => false, 'checkRules' => false]);
         $result = $model->saveMany($entities, $options);
 
         // Enable behaviors

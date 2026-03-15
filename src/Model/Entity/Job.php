@@ -10,30 +10,38 @@
 
 namespace App\Model\Entity;
 
-use App\Model\Interfaces\MutateTableInterface;
+use App\Cache\Cache;
 use App\Model\Table\BaseTable;
 use App\Model\Table\JobsTable;
 use App\Utilities\Converters\Arrays;
 use App\Utilities\Files\Files;
-use App\Cache\Cache;
+use Batch\Model\Jobs\JobExport;
+use Batch\Model\Jobs\JobImport;
+use Batch\Model\Jobs\JobMutate;
+use Batch\Model\Jobs\JobTransfer;
 use Cake\Core\Configure;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Error\Debugger;
 use Cake\Error\ErrorLogger;
 use Cake\Http\Exception\BadRequestException;
-use Cake\Http\Exception\InternalErrorException;
 use Cake\I18n\FrozenTime;
 use Cake\Log\Engine\FileLog;
 use Cake\Log\Log;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cron\CronExpression;
-use Throwable;
+use Batch\Model\Tasks\BaseTask;
 use Predis\Client;
+use Throwable;
 
 /**
  * Job Entity
+ *
+ * This is a factory class for the different job types,
+ * which are implemented as subclasses of Job in the Batch plugin.
+ * Typed jobs are instantiated in the virtual typedJob property
+ * (see _getTypedJob() method).
  *
  * # Database fields (without inherited fields)
  * @property string name A job name for persistent jobs
@@ -111,22 +119,23 @@ class Job extends BaseEntity
     protected $_pipeline = null;
 
     /**
-     * Current job classes
-     *
-     * Map job type to entity
+     * Map job type to typed job entity
      *
      * @var array
      */
-    public $jobClasses = [];
+    public $jobClasses = [
+        'import' => JobImport::class,
+        'export' => JobExport::class,
+        'mutate' => JobMutate::class,
+        'transfer' => JobTransfer::class
+    ];
 
     /**
-     * Current task classes
-     *
-     * Map job type to entity
+     * Cache task classes
      *
      * @var array
      */
-    public $taskClasses = [];
+    protected $_taskClasses = null;
 
     /**
      * Catches task errors
@@ -192,7 +201,6 @@ class Job extends BaseEntity
             $content['status'] = 'init';
         }
 
-        $this->_initClasses();
         $this->setSource('Jobs');
         parent::__construct($content, $options);
     }
@@ -285,40 +293,37 @@ class Job extends BaseEntity
     /**
      * Initialize classes
      *
+     * TODO: Implement tasks registry, without needing to scan the folders for classes on every job instantiation.
+     *
      * @return void
      */
-    protected function _initClasses()
+    protected function _getTaskClasses()
     {
-        // Create job classes list
-        $job_classes = Files::getClassesInPath(
-            APP . 'Model' . DS . 'Entity' . DS . 'Jobs' . DS,
-            'App\Model\Entity\Jobs'
-        );
+        if ($this->_taskClasses === null) {
 
-        $job_names = array_map(function ($x) {
-            $x = explode('\\', $x);
-            $x = array_pop($x);
-            $x = str_replace('Job', '', $x);
-            return Inflector::underscore($x);
-        }, $job_classes);
+            // Create task classes list
+            $basePath = ROOT . DS . 'plugins' . DS . 'Batch' . DS . 'src' . DS . 'Model' . DS . 'Tasks' . DS;
+            $task_classes = Files::getClassesInPath(
+                [
+                    $basePath . 'Export' => 'Batch\Model\Tasks\Export',
+                    $basePath . 'Import' => 'Batch\Model\Tasks\Import',
+                    $basePath . 'Mutate' => 'Batch\Model\Tasks\Mutate',
+                    $basePath . 'Transfer' => 'Batch\Model\Tasks\Transfer'
+                ]
+            );
 
-        $this->jobClasses = array_combine($job_names, $job_classes);
+            // TODO: filter out BaseTasks
+            $task_names = array_map(function ($x) {
+                $x = explode('\\', $x);
+                $x = array_pop($x);
+                $x = str_replace('Task', '', $x);
+                return Inflector::underscore($x);
+            }, $task_classes);
 
-        // Create task classes list
-        $task_classes = Files::getClassesInPath(
-            APP . 'Model' . DS . 'Entity' . DS . 'Tasks' . DS,
-            'App\Model\Entity\Tasks'
-        );
+            $this->_taskClasses = array_combine($task_names, $task_classes);
+        }
 
-        // TODO: filter out BaseTasks
-        $task_names = array_map(function ($x) {
-            $x = explode('\\', $x);
-            $x = array_pop($x);
-            $x = str_replace('Task', '', $x);
-            return Inflector::underscore($x);
-        }, $task_classes);
-
-        $this->taskClasses = array_combine($task_names, $task_classes);
+        return $this->_taskClasses;
     }
 
     /**
@@ -1012,6 +1017,42 @@ class Job extends BaseEntity
     }
 
     /**
+     * Called from the mutate job
+     *
+     * @param array $dataParams Params passed to the find method of the model to get the entities to mutate.
+     * @return int Number of articles for calculating the progress bar.
+     */
+    protected function getEntitiesCount($dataParams): int
+    {
+        $model = $this->getModel($this->config['table'], 'Epi');
+        $dataParams = $model->parseRequestParameters($dataParams);
+
+        // TODO: Implement somewhere else, this violates separation of concerns?
+        if ($model->getAlias() === 'Epi.Properties') {
+            $dataParams['ancestors'] = false;
+            $dataParams['treePositions'] = false;
+        }
+
+        return $model
+            ->find('hasParams', $dataParams)
+            ->count();
+    }
+
+
+    /**
+     * Get the maximum number of steps one task needs
+     *
+     * Called by the mutate tasks
+     *
+     * @return float|int
+     */
+    protected function _getBatchCount()
+    {
+        $count = $this->getEntitiesCount($this->dataParams);
+        return ceil($count / $this->limit) + 1;
+    }
+
+    /**
      * Get the progress bar maximum from all job tasks
      *
      * @return void
@@ -1348,21 +1389,17 @@ class Job extends BaseEntity
      */
     protected function _getSelectionOptions()
     {
-        $model = $this->getModel($this->config['table'], 'Epi');
-        if (!($model instanceof MutateTableInterface)) {
-            throw new InternalErrorException('The model does not support entity mutation.');
-        }
         $options = [];
 
         $selectedParams = $this->_getDataParams('selected');
         if (!empty($selectedParams)) {
-            $countSelected = $model->mutateGetCount($selectedParams, $this);
+            $countSelected = $this->getEntitiesCount($selectedParams);
             $options['selected'] = __('Selected records ({0})', $countSelected);
         }
 
         $filteredParams = $this->_getDataParams('filtered');
         if (!empty(array_diff($selectedParams, $filteredParams)) ||empty($filteredParams)) {
-            $countAll = $model->mutateGetCount($filteredParams, $this);
+            $countAll = $this->getEntitiesCount($filteredParams);
             $options['filtered'] = __('All records ({0})', $countAll);
         }
 
@@ -1371,8 +1408,6 @@ class Job extends BaseEntity
 
     /**
      * Return parameters used to retrieve entities
-     *
-     * TODO: implement common base class for JobExport and JobMutate, move function there?
      *
      * @param string $selection 'selected', 'filtered' or null to use the config
      * @return array[]
@@ -1431,8 +1466,8 @@ class Job extends BaseEntity
         $fields = [
             'name' => ['caption' => __('Job name')],
             'jobtype' => ['caption' => __('Job type')],
-            'iri_path' => ['caption' => __('IRI path'), 'action' => 'view'],
-            'norm_iri' => ['caption' => __('IRI fragment'), 'action' => 'edit'],
+            'iri_path' => ['caption' => __('IRI path'), 'format' => 'iri', 'action' => 'view'],
+            'norm_iri' => ['caption' => __('IRI fragment'), 'action' => ['edit', 'add']],
             'status' => ['caption' => __('Status')],
             'delay' => ['caption' => __('Delayed')],
             'schedule' => [

@@ -14,13 +14,14 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\BadRequestException;
 use Rest\Controller\Component\LockTrait;
+use Batch\Controller\Component\BatchComponent;
 
 /**
  * Types Controller
  *
  * Administration of notes
  *
- * @property \Epi\Controller\Component\TransferComponent $Transfer
+ * @property BatchComponent $Batch
  */
 class TypesController extends AppController
 {
@@ -79,7 +80,7 @@ class TypesController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->loadComponent('Epi.Transfer', ['model' => 'Epi.Types']);
+        $this->loadComponent('Batch.Batch', ['model' => 'Epi.Types']);
 
         $this->_activateMainMenuItem([
             'plugin' => $this->activeDatabase->plugin,
@@ -164,7 +165,7 @@ class TypesController extends AppController
      */
     public function import($scope = null)
     {
-        $this->Transfer->import($scope);
+        $this->Batch->import($scope);
     }
 
     /**
@@ -176,7 +177,7 @@ class TypesController extends AppController
     public function transfer()
     {
         $requestParams = $this->request->getQueryParams();
-        $this->Transfer->transfer(null, $requestParams);
+        $this->Batch->transfer(null, $requestParams);
     }
 
     /**
@@ -186,6 +187,6 @@ class TypesController extends AppController
      */
     public function export()
     {
-        $this->Transfer->export();
+        $this->Batch->export();
     }
 }

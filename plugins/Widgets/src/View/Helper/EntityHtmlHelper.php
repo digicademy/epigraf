@@ -163,8 +163,10 @@ class EntityHtmlHelper extends BaseEntityHelper
                 $moreItem = $moreItem || ((($mergedConfig['display'] ?? true) === 'more') && ($options['buttons'] ?? true));
 
 //                $itemCount = $itemConfig['count'] ?? '1';
-                $itemsFields = $this->Types->getFields('items', $itemType,
-                    ['unnest' => true, 'edit' => false] + $options);
+                $itemsFields = $this->Types->getFields(
+                    'items', $itemType,
+                    ['unnest' => true, 'edit' => false] + $options
+                );
 
                 $i = 0;
                 foreach ($itemsFields as $fieldName => $fieldConfig) {

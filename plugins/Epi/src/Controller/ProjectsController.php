@@ -10,16 +10,16 @@
 
 namespace Epi\Controller;
 
-use Cake\Event\EventInterface;
-use Epi\Controller\Component\TransferComponent;
-use Rest\Controller\Component\LockTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Event\EventInterface;
 use Cake\Http\Exception\BadRequestException;
+use Batch\Controller\Component\BatchComponent;
+use Rest\Controller\Component\LockTrait;
 
 /**
  * Manage projects
  *
- * @property TransferComponent $Transfer
+ * @property BatchComponent $Batch
  */
 class ProjectsController extends AppController
 {
@@ -71,7 +71,7 @@ class ProjectsController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->loadComponent('Epi.Transfer', ['model' => 'Epi.Projects']);
+        $this->loadComponent('Batch.Batch', ['model' => 'Epi.Projects']);
     }
 
     /**
@@ -144,7 +144,7 @@ class ProjectsController extends AppController
             );
         }
 
-        return $this->Transfer->import();
+        return $this->Batch->import();
     }
 
     /**
@@ -163,6 +163,6 @@ class ProjectsController extends AppController
         }
 
         $requestParams = $this->request->getQueryParams();
-        $this->Transfer->transfer(null, $requestParams);
+        $this->Batch->transfer(null, $requestParams);
     }
 }

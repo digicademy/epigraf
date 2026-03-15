@@ -498,7 +498,7 @@ class Section extends BaseEntity
 
         $itemTypes = $this->type['merged']['items'] ?? array_keys($groupedItems);
         $itemTypes = array_filter($itemTypes, fn($x) => is_string($x) || is_array($x));
-        $itemTypes = array_combine(array_map(fn($x) => is_string($x) ? $x : $x['type'], $itemTypes), $itemTypes);
+        $itemTypes = array_combine(array_map(fn($x) => is_string($x) ? $x : $x['type'] ?? null, $itemTypes), $itemTypes);
         $itemTypes = array_filter($itemTypes, fn($x) => ($x['display'] ?? true));
 
         return [$groupedItems, $itemTypes];
@@ -964,21 +964,23 @@ class Section extends BaseEntity
     }
 
     /**
-     * Get the cleaned notes content for fulltext indexing
+     * Return the default full text fields
      *
-     * @return \Generator
+     * @return string[]|array[] Keys are field names, values are index keys or configuration arrays
+     *                  with the keys `index`, `fulltext` and `process`.
      */
-    public function getSearchText()
+    public function getFulltextFields()
     {
-        $text = trim($this->getValueFormatted('comment', ['format' => 'txt']) ?? '');
+        $fields = parent::getFulltextFields();
 
-        if ($text !== '') {
-            yield [
-                'index' => 'notes',
-                'text' => $text,
-                'published' => $this->published
+        if (empty($fields) && (($this->type['merged']['fulltext'] ?? true) !== false)) {
+            $fields['comment'] = [
+                'index' => FULLTEXT_INDEX_NOTES,
+                'footnotes' => false
             ];
         }
+
+        return $fields;
     }
 
     /**
@@ -1012,7 +1014,7 @@ class Section extends BaseEntity
 
             // Cache search items
             if ($item->itemtype === ITEMTYPE_FULLTEXT) {
-                $indexKey = $item->value ?? 'text';
+                $indexKey = $item->value ?? FULLTEXT_INDEX_DEFAULT;
                 if (isset($searchItems[$indexKey])) {
                     $deleteItems[] = $item;
                 }

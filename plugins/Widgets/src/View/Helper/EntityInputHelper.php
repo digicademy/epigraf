@@ -56,6 +56,8 @@ class EntityInputHelper extends BaseEntityHelper
     /**
      * Render section content as stack
      *
+     *  TODO: Make DRY with regard to sectionContentTables()
+     *
      * @param array $options
      * @return string
      */
@@ -67,8 +69,8 @@ class EntityInputHelper extends BaseEntityHelper
         $article = $section->container;
 
         $mode = $options['mode'] ?? 'view';
-        $template_section = $options['template_section'] ?? [];
-        $template_article = $options['template_article'] ?? [];
+        $sectionTemplate = $options['template_section'] ?? [];
+        $articleTemplate = $options['template_article'] ?? [];
 
         $groupClasses = [$options['view'] ?? 'doc-section-stack'];
         $out = '<div class="' . implode(' ', $groupClasses) . '">';
@@ -85,9 +87,24 @@ class EntityInputHelper extends BaseEntityHelper
 
             // May items be edited, added or deleted?
             $itemCount = $itemConfig['count'] ?? '1';
-            $itemEdit = $itemTemplate['edit'] ?? $template_section['edit'] ?? $template_article['edit'] ?? true;
-            $itemCreate = $itemEdit && ($itemCount === '1') && (count($items) === 0);
-            $itemAdd = $itemDelete = $itemEdit && ($itemCount === '*');
+            $itemEdit = $itemTemplate['edit'] ?? $sectionTemplate['edit'] ?? $articleTemplate['edit'] ?? true;
+
+            $itemCreate = $itemAdd = $itemDelete = false;
+            if ($itemEdit) {
+                if ($itemCount === '1') {
+                    $itemCreate = count($items) === 0;
+                    $itemAdd = count($items) === 0;
+                    $itemDelete = count($items) > 1;
+                }
+                elseif ($itemCount === '?') {
+                    $itemAdd = count($items) === 0;
+                    $itemDelete = count($items) > 0;
+                }
+                else {
+                    $itemAdd = true;
+                    $itemDelete = true;
+                }
+            }
 
             $itemOptions = [
                 'edit' => true,
@@ -105,8 +122,8 @@ class EntityInputHelper extends BaseEntityHelper
                 ],
                 'templates' => [
                     'template_item' => $itemTemplate,
-                    'template_section' => $template_section,
-                    'template_article' => $template_article
+                    'template_section' => $sectionTemplate,
+                    'template_article' => $articleTemplate
                 ]
             ];
 
@@ -156,6 +173,8 @@ class EntityInputHelper extends BaseEntityHelper
     /**
      * Render section content as table
      *
+     * TODO: Make DRY with regard to sectionContentStacks()
+     *
      * @param array $options
      * @return string
      */
@@ -164,14 +183,14 @@ class EntityInputHelper extends BaseEntityHelper
         $article = $section->container;
 
         $mode = $options['mode'] ?? 'view';
-        $template_section = $options['template_section'] ?? [];
-        $template_article = $options['template_article'] ?? [];
+        $sectionTemplate = $options['template_section'] ?? [];
+        $articleTemplate = $options['template_article'] ?? [];
 
         list($groupedItems, $itemTypes) = $section->getGroupedItems($options);
 
-        $tables = ($template_section['view']['grouped'] ?? false) ? [$itemTypes] : array_map(fn($x) => [$x], $itemTypes);
-        $moreSection = ($template_section['view']['more'] ?? false) && ($options['buttons'] ?? true);
-        $fileUpload = ($template_section['view']['widgets']['upload'] ?? false) && ($options['buttons'] ?? true);
+        $tables = ($sectionTemplate['view']['grouped'] ?? false) ? [$itemTypes] : array_map(fn($x) => [$x], $itemTypes);
+        $moreSection = ($sectionTemplate['view']['more'] ?? false) && ($options['buttons'] ?? true);
+        $fileUpload = ($sectionTemplate['view']['widgets']['upload'] ?? false) && ($options['buttons'] ?? true);
 
         $out = '';
 
@@ -212,7 +231,7 @@ class EntityInputHelper extends BaseEntityHelper
             }
 
             // Output table headers
-            $groupClasses = ($template_section['view']['grouped'] ?? false) ? ['doc-section-groups doc-section-groups-isgrouped'] : ['doc-section-groups'];
+            $groupClasses = ($sectionTemplate['view']['grouped'] ?? false) ? ['doc-section-groups doc-section-groups-isgrouped'] : ['doc-section-groups'];
             $groupClasses[] = (count($table) < 2) ? 'doc-section-groups-one' : 'doc-section-groups-multi';
             $groupClasses[] = (count($groupHeaders) < 2) ? 'doc-section-headers-one' : 'doc-section-headers-multi';
             $groupClasses[] = ($groupItemCount > 0) ? '' : 'doc-section-groups-empty';
@@ -245,12 +264,27 @@ class EntityInputHelper extends BaseEntityHelper
                 $itemType = $itemConfig['type'] ?? 'undefined';
 
                 $items = $groupedItems[$itemType] ?? [];
-                $template_item = $database->types['items'][$itemType]['merged'] ?? [];
+                $itemTemplate = $database->types['items'][$itemType]['merged'] ?? [];
 
                 $itemCount = $itemConfig['count'] ?? '1';
-                $itemEdit = $template_item['edit'] ?? $template_section['edit'] ?? $template_article['edit'] ?? true;
-                $itemCreate = $itemEdit && (count($items) === 0);
-                $itemAdd = $itemDelete = $itemEdit && ($itemCount === '*');
+                $itemEdit = $itemTemplate['edit'] ?? $sectionTemplate['edit'] ?? $articleTemplate['edit'] ?? true;
+
+                $itemCreate = $itemAdd = $itemDelete = false;
+                if ($itemEdit) {
+                    if ($itemCount === '1') {
+                        $itemCreate = count($items) === 0;
+                        $itemAdd = count($items) === 0;
+                        $itemDelete = count($items) > 1;
+                    }
+                    elseif ($itemCount === '?') {
+                        $itemAdd = count($items) === 0;
+                        $itemDelete = count($items) > 0;
+                    }
+                    else {
+                        $itemAdd = true;
+                        $itemDelete = true;
+                    }
+                }
 
                 foreach ($items as $idx => $item) {
                     $itemClasses = [];
@@ -263,9 +297,9 @@ class EntityInputHelper extends BaseEntityHelper
                         ['edit' => true, 'class' => $itemClasses],
                         [
                             'mode' => $mode,
-                            'template_item' => $template_item,
-                            'template_section' => $template_section,
-                            'template_article' => $template_article
+                            'template_item' => $itemTemplate,
+                            'template_section' => $sectionTemplate,
+                            'template_article' => $articleTemplate
                         ],
                          [
                              'more' => $moreItem,

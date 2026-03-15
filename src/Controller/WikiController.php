@@ -91,7 +91,7 @@ class WikiController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->loadComponent('Epi.Transfer', ['model' => 'Docs']);
+        $this->loadComponent('Batch.Batch', ['model' => 'Docs']);
 
         $this->Docs->setScope($this->segment);
 
@@ -225,6 +225,6 @@ class WikiController extends AppController
      */
     public function import($scope = null)
     {
-        $this->Transfer->import($scope);
+        $this->Batch->import($scope);
     }
 }

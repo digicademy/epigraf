@@ -112,9 +112,9 @@ class XmlFilter
     }
 
     /**
-     *  Remove tags method from XML-String
+     *  Remove tags
      *
-     * @param string $input XML-String
+     * @param string $input XML string
      * @param boolean|array $tags Either true to remove all tags or a list of tag conditions to remove.
      *                            Array of array, e.g.
      *                            [
@@ -154,7 +154,6 @@ class XmlFilter
         $filter = new XmlFilter();
         return $filter->doRemoveTags($input, $tags);
     }
-
 
 }
 

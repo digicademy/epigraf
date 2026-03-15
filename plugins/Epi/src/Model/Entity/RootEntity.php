@@ -279,4 +279,26 @@ class RootEntity extends BaseEntity
         // $result = Files::copyFile($filename, $sourceFolder, $targetFolder);
         return [];
     }
+
+    /**
+     * After removing XML tags, remove all respective link entities
+     *
+     * @param array $tags An array of element names
+     * @param array $steps An array of processing steps
+     * @param bool $recurse Whether to recurse into child entities
+     * @return void
+     */
+    public function cleanXmlTags($tags, $steps = [], $recurse = false)
+    {
+        parent::cleanXmlTags($tags, $steps, $recurse);
+        
+        if (in_array('remove', $steps)) {
+            foreach ($this->links as $link) {
+                if (in_array($link->from_tagname, $tags)) {
+                    $link['deleted'] = 1;
+                }
+            }
+        }
+    }
+
 }

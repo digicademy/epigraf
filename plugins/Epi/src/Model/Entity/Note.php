@@ -15,6 +15,8 @@ use App\Model\Entity\Doc;
 /**
  * Note Entity
  *
+ * TODO: Implement types / scope, needed for IRIs
+ *
  * # Database fields (without inherited fields)
  * @property string $menu
  * @property string $notetype

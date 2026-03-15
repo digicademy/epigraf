@@ -19,8 +19,8 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
-use Epi\Controller\Component\TransferComponent;
 use Epi\Model\Entity\Article;
+use Batch\Controller\Component\BatchComponent;
 use Rest\Controller\Component\LockTrait;
 
 /**
@@ -30,7 +30,7 @@ use Rest\Controller\Component\LockTrait;
  *
  * @property \Epi\Model\Table\ArticlesTable $Articles
  * @property JobsTable $Jobs
- * @property TransferComponent $Transfer
+ * @property BatchComponent $Batch
  */
 class ArticlesController extends AppController
 {
@@ -80,7 +80,7 @@ class ArticlesController extends AppController
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->loadComponent('Epi.Transfer', ['model' => 'Epi.Articles']);
+        $this->loadComponent('Batch.Batch', ['model' => 'Epi.Articles']);
     }
 
     /**
@@ -404,9 +404,7 @@ class ArticlesController extends AppController
     }
 
     /**
-     * Transfer method
-     *
-     * Transfer article to another database.
+     * Transfer article to another database
      *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
@@ -424,7 +422,7 @@ class ArticlesController extends AppController
             unset($requestParams['field']);
         }
 
-        $this->Transfer->transfer(null, $requestParams);
+        $this->Batch->transfer(null, $requestParams);
     }
 
     /**
@@ -443,7 +441,7 @@ class ArticlesController extends AppController
             );
         }
 
-        return $this->Transfer->import();
+        return $this->Batch->import();
     }
 
     /**
@@ -479,7 +477,7 @@ class ArticlesController extends AppController
         }
         unset($params['scope']);
 
-        return $this->Transfer->export(null, $params);
+        return $this->Batch->export(null, $params);
     }
 
     /**
@@ -489,7 +487,7 @@ class ArticlesController extends AppController
      */
     public function mutate()
     {
-        return $this->Transfer->mutate();
+        return $this->Batch->mutate();
     }
 
 }

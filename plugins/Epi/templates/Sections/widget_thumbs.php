@@ -27,7 +27,7 @@ use Cake\Routing\Router;
     $linkImage = $template_section['view']['widgets']['thumbs']['link'] ?? false;
 
     $items = collection($section->items)
-        ->filter(fn($item) => $item->itemtype === $itemtype )
+        ->filter(fn($item) => $item->itemtype === $itemtype)
         ->filter(
             fn($item) => $propertyImage ?
                 (!empty($item->property) && ($item->property->file_properties['preview'] ?? false)):

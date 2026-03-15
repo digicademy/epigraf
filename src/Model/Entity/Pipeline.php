@@ -41,8 +41,9 @@ class Pipeline extends BaseEntity
 
     /**
      * Tasks that can be added to a pipelines
-     * // TODO move to model, use the caption in Pipeline->getMenu()
-     * // TODO: translate captions
+     *
+     * // TODO move to batch plugin
+     * // TODO: translate captions, use the caption in Pipeline->getMenu()
      *
      * @var string[]
      */
@@ -226,8 +227,14 @@ class Pipeline extends BaseEntity
                 'layout' => 'stacked',
                 'caption' => __('Description')
             ],
+            'iri_path' => [
+                'caption' => __('IRI path'),
+                'format' => 'iri',
+                'action' => 'view'
+            ],
             'norm_iri' => [
-                'caption' => __('IRI-Fragment')
+                'caption' => __('IRI fragment'),
+                'action' => ['edit', 'add']
             ]
         ];
 

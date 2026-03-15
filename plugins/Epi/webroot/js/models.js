@@ -1797,6 +1797,7 @@ export class AnnotationsModel extends BaseDocumentModel {
         }
 
         const tags = section.querySelectorAll('[data-tagid]');
+        const tagIds = Array.from(tags).map(tag => tag.dataset.tagid);
 
         const marginLeft = 2;
         const marginTop = 2;
@@ -1808,33 +1809,47 @@ export class AnnotationsModel extends BaseDocumentModel {
         let currentLeft = 0;
         let currentRight = 0;
         let targetRight = 0;
+
+        const allAnnos = Array.from(annoContainer.querySelectorAll('[data-from-tagid]'));
+
+        // Collect annotations with 'data-from-tagid' that does not match any tagId
+        const nonMatchingAnnos = allAnnos.filter(anno => !tagIds.includes(anno.dataset.fromTagid));
+        let tagAnnos = nonMatchingAnnos.map(a => [null, a]);
+
+        // Collect annotations that do match a tagId
         tags.forEach((tag) => {
-            const annos = annoContainer.querySelectorAll('[data-from-tagid="' + tag.dataset.tagid + '"]');
-            if (annos.length) {
-                let targetTop = Math.max(tag.getBoundingClientRect().top - zeroTop, minTop);
-                targetTop = deltaTop * Math.floor(targetTop / deltaTop);
-                annos.forEach((anno) => {
-                    if (Utils.isElementVisible(anno)) {
-                        if (targetTop < currentBottom) {
-                            currentLeft = currentRight + marginLeft;
-                            targetRight = currentLeft + marginLeft + anno.scrollWidth;
-                            if (targetRight > annoContainer.clientWidth) {
-                                currentTop = currentBottom + marginTop;
-                                currentLeft = 0;
-                            }
-                        } else {
-                            currentTop = targetTop;
-                            currentLeft = 0;
-                        }
-                        anno.style.position = 'absolute';
-                        anno.style.top = currentTop + 'px';
-                        anno.style.left = currentLeft + 'px';
-                        currentRight = anno.getBoundingClientRect().right - zeroLeft;
-                        currentBottom = anno.getBoundingClientRect().bottom - zeroTop;
+            const annos = allAnnos.filter(anno => anno.dataset.fromTagid === tag.dataset.tagid);
+            tagAnnos.push(...annos.map(a => [tag, a]));
+        });
+
+        let targetTop = minTop;
+        tagAnnos.forEach((tagAnno) => {
+            const tag = tagAnno[0];
+            const anno = tagAnno[1];
+            if (tag){
+                targetTop = Math.max(tag.getBoundingClientRect().top - zeroTop, minTop);
+            }
+            targetTop = deltaTop * Math.floor(targetTop / deltaTop);
+            if (Utils.isElementVisible(anno)) {
+                if (targetTop < currentBottom) {
+                    currentLeft = currentRight + marginLeft;
+                    targetRight = currentLeft + marginLeft + anno.scrollWidth;
+                    if (targetRight > annoContainer.clientWidth) {
+                        currentTop = currentBottom + marginTop;
+                        currentLeft = 0;
                     }
-                });
+                } else {
+                    currentTop = targetTop;
+                    currentLeft = 0;
+                }
+                anno.style.position = 'absolute';
+                anno.style.top = currentTop + 'px';
+                anno.style.left = currentLeft + 'px';
+                currentRight = anno.getBoundingClientRect().right - zeroLeft;
+                currentBottom = anno.getBoundingClientRect().bottom - zeroTop;
             }
         });
+
     }
 
     /**

@@ -140,7 +140,7 @@ trait FilesRequestTrait
      */
     public function newfolder()
     {
-        $path = $this->FilesRequest->newfolder();
+        $this->FilesRequest->newfolder();
     }
 
     /**

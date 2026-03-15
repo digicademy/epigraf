@@ -3,12 +3,21 @@ title: Annotations
 permalink: '/user/configuration/annotations/'
 ---
 
-**Links** are used to link text segments to properties or other entities. The text segment is marked with a tag.
-Use links for structured annotations such as references to persons, places,
-content analysis categories or simple text highlighting.
+Annotations connect text content with controlled vocabularies, apparatus, categories or memos.
+Epigraf implements two types of annotations to be used in XML fields:
 
-**Footnotes** are standalone tags or tags around a text segment that refer to a footnotes entity containing
-a comment relating to the text passage. Use footnotes for critical apparatus, comments, or memos.
+- **Links** are used to link text segments to properties or other entities. The text segment is marked with a tag.
+  Use links for structured annotations such as references to persons, places,
+  content analysis categories or simple text highlighting.
+- **Footnotes** are standalone tags or tags around a text segment that refer to a footnotes entity containing
+  a comment relating to the text passage. Use footnotes for critical apparatus, comments, or memos.
+
+The configuration defines the toolbar to add annotations, how annotations are rendered and how they are stored in the database.
+
+<p class="infobox">
+    🚀 See the <a href="/user/configuration/annotations-howto">step-by-step guide</a>
+    to get started with annotation configuration in an example database.
+</p>
 
 # Rendering options
 Both annotation types can be rendered as formatting (e.g. italic text),
@@ -65,9 +74,11 @@ The options are determined by the <a href="https://ckeditor.com/docs/ckeditor5/l
 <td>tag_type</td>
 <td>Defines how the annotation is rendered.
 <ul>
-<li><strong>text</strong>: A standalone tag, for example, a dedicated symbol for word separators in transcriptions. In the output, the values of the keys html_prefix, html_content, and html_postfix are concatenated.  Alternatively, the value of an attribute can be used, for example, to output URLs, see the attributes configuration below.</li>
+<li><strong>text</strong>: A standalone tag, for example, a dedicated symbol for word separators in transcriptions.
+    In the output, the values of the keys `prefix`, `content`, and `postfix` are concatenated.
+    Alternatively, the value of an attribute can be used, for example, to generate URLs, see the attributes configuration below.</li>
 <li><strong>format</strong>: The text is formatted, for example in italics or as bold text.</li>
-<li><strong>bracket</strong>: The text is placed in brackets. The html_prefix value is used as opening bracket, the html_postfix value as closing bracket.</li>
+<li><strong>bracket</strong>: The text is placed in brackets. The prefix value is used as opening bracket, the postfix value as closing bracket.</li>
 <li><strong>attribute</strong>: A configuration used in the attributes key of molecular annotations, without a tag on its own.</li>
 <li><strong>group</strong>: A configuration used exclusively for grouping (drop-down tool button, colours of annotation groups).</li>
 <li><strong>break</strong>: A line break rendered as br tag.</li>
@@ -76,38 +87,40 @@ The options are determined by the <a href="https://ckeditor.com/docs/ckeditor5/l
 </tr>
 <tr>
 <td>attributes</td>
-<td>Optional. An attributes list object. Each key is an attribute name, and the value contains an attribute configuration object with the following keys:
-<ul>
-<li>caption: A label for input fields in edit mode.</li>
-<li>default (optional): The default value in input fields and for rendering when the attribute is empty.</li>
-<li>render (optional): Attribute values can be rendered as brackets or standalone elements, based on the following values:
+<td>
+  Optional. An attributes list object.
+  Each key is an attribute name, and the value contains an attribute configuration object with the following keys:
     <ul>
-        <li><code>text</code>: For standalone elements with the tag type `text`, the attribute value is used instead of html_content.</li>
-        <li>With the specification <code>attribute</code>, the attribute is output as an attribute.</li>
-        <li><code>prefix</code> or <code>postfix</code>: For brackets, the attribute value is used as opening or closing bracket.</li>
+    <li>caption: A label for input fields in edit mode.</li>
+    <li>default (optional): The default value in input fields and for rendering when the attribute is empty.</li>
+    <li>render (optional): Attribute values can be rendered as brackets or standalone elements, based on the following values:
+        <ul>
+            <li><code>text</code>: For standalone elements with the tag type `text`, the attribute value is used instead of `content`.</li>
+            <li><code>attribute</code>: The attribute is stored in the element attributes.</li>
+            <li><code>prefix</code> or <code>postfix</code>: For brackets, the attribute value is used as opening or closing bracket.</li>
+        </ul>
+    </li>
+    <li>repeat (optional): If the attribute contains a number, you can define a value in the repeat key. For rendering, the repeat value will be output the times given in the attribute. If the attribute is empty or contains the number 0, the value given in <code>default</code> is rendered one time.</li>
+    <li>values (optional): Either a regular expression or a list or an object, depending on the input key setting.
+        <ul>
+          <li>A regular expression is used to restrict the permitted values in text fields. For example, <code>[0-9]+</code> restricts the values to numbers.</li>
+          <li>For select inputs, a list of available values can be used, for example <code>["lost", "omitted", "ellipsis"]</code>.</li>
+          <li>For select inputs, an object with keys to be used as values in the XML attribute and values used as labels in the input, for example: <code>{"lost": "Lost","ellipsis": "omission"}</code></li>
+          <li>For checkbox inputs, an object with two states. The first key is used when the checkbox is not activated, the second key when it is activated. The checkbox label is taken from the first value.</li>
+        </ul>
+    </li>
+    <li>input (optional):
+        <ul>
+          <li><code>text</code> (default): A text input field.</li>
+          <li><code>select</code>: A combobox input based on the values key.</li>
+          <li><code>checkbox</code>: A checkbox input based on the values key.</li>
+          <li><code>link</code>: For molecular annotations, a select input used to choose from property entities. Must be used in combination with the type key to determine the target property type.</li>
+        </ul>
+    </li>
+    <li>type (optional): Used in conjunction with link inputs to create molecular annotations. Provide the name of the links configuration that defines a target property type in its `to` field configuration.</li>
+    <li>title (optional): A brief help text.</li>
     </ul>
-</li>
-<li>repeat (optional): If the attribute contains a number, you can define a value in the repeat key. For rendering, the repeat value will be output the times given in the attribute. If the attribute is empty or contains the number 0, the value given in <code>default</code> is rendered one time.</li>
-<li>values (optional): Either a regular expression or a list or an object, depending on the input key setting.
-    <ul>
-      <li>A regular expression is used to restrict the permitted values in text fields. For example, <code>[0-9]+</code> restricts the values to numbers.</li>
-      <li>For select inputs, a list of available values can be used, for example <code>["lost", "omitted", "ellipsis"]</code>.</li>
-      <li>For select inputs, an object with keys to be used as values in the XML attribute and values used as labels in the input, for example: <code>{"lost": "Lost","ellipsis": "omission"}</code></li>
-      <li>For checkbox inputs, an object with two states. The first key is used when the checkbox is not activated, the second key when it is activated. The checkbox label is taken from the first value.</li>
-    </ul>
-</li>
-<li>input (optional):
-    <ul>
-      <li><code>text</code> (default): A text input field.</li>
-      <li><code>select</code>: A combobox input based on the values key.</li>
-      <li><code>checkbox</code>: A checkbox input based on the values key.</li>
-      <li><code>link</code>: For molecular annotations, a select input used to choose from property entities. Must be used in combination with the type key to determine the target property type.</li>
-    </ul>
-</li>
-<li>type (optional): Used in conjunction with link inputs to create molecular annotations. Provide the name of the links configuration that defines a target property type in its `to` field configuration.</li>
-<li>title (optional): A brief help text.</li>
-</ul>
-The attributes <code>id</code>, <code>value</code>, <code>class</code> and attributes with an <code>data</code> prefix are reserved and must not be used.</td>
+    The attributes <code>id</code>, <code>value</code>, <code>class</code> and attributes with an <code>data</code> prefix are reserved and must not be used.</td>
 </tr>
 <tr>
 <td>types</td>
@@ -152,7 +165,7 @@ The target value can be rendered in standalone tags as well as opening or closin
 <tr>
 <td>prefix</td>
 <td><p>For <strong>bracket tags</strong>, the value used for the opening bracket.</p>
-<p>For <strong>text tags</strong>, this value is prefixed to the value given in the `html_content` key.</p>
+<p>For <strong>text tags</strong>, this value is prefixed to the value provided in the `content` key.</p>
 For <strong>format tags</strong>, this value is inserted as text at the beginning of the selected range.</td>
 </tr>
 <tr>
@@ -162,7 +175,7 @@ For <strong>format tags</strong>, this value is inserted as text at the beginnin
 <tr>
 <td>postfix</td>
 <td><p>For <strong>bracket tags</strong>, the value used for the closing bracket.</p>
-<p>For <strong>text tags</strong>, the value is appended to the `html_content` value.</p>
+<p>For <strong>text tags</strong>, the value is appended to the `content` value.</p>
 For <strong>format tags</strong>, this value is inserted as text at the end of the selected range.</td>
 </tr>
 <tr>

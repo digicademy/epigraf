@@ -102,7 +102,12 @@ class XmlMunge
         $callback_ids = static function (&$element, &$parser) use (&$tags, $options, $spawnCallback) {
             if ($element['position'] === 'open') {
 
-                $tagId = $element['attributes']['id'] ?? ('no-' . (count($tags) + 1));
+                if (isset($element['attributes']['id'])) {
+                    $tagId = $element['attributes']['id'];
+                } else {
+                    $tagId = 'no-' . (count($tags) + 1);
+                    $element['attributes']['id'] = $tagId;
+                }
 
                 // TODO: Throw an error if the same id occurs more than once under different element names
                 if (empty($tags[$tagId])) {
@@ -132,9 +137,130 @@ class XmlMunge
         return $tags;
     }
 
-    /*
-     *  bubbleTags
+
+    /**
+     * Build an XPath query for a given tag condition array
      *
+     * The supported conditions are:
+     * - name: The tag name (required)
+     * - classes: An array of classes that the tag must have (optional)
+     * - empty: A boolean indicating whether the tag must be empty (optional)
+     *
+     * @param array $tag
+     * @return string
+     */
+    static protected function buildXpathQuery($tag)
+    {
+        $query = '//' . $tag['name'];
+        $contains = array();
+        if (!empty ($tag['classes'])) {
+            foreach ($tag['classes'] as $class) {
+                $contains[] = 'contains(concat(" ",@class," ")," ' . $class . ' ")';
+            }
+        }
+        if (!empty($tag['empty'])) {
+            $contains[] = 'not(node())';
+        }
+        if (!empty($contains)) {
+            $query .= '[' . implode(' and ', $contains) . ']';
+        }
+        return $query;
+    }
+
+    /**
+     * Check if an element is a stop element for bubbling
+     *
+     * @param $element
+     * @param array $tags Array of tag conditions, e.g. [ ['name'=>'span','classes'=> ['line']] ]
+     * @return bool
+     */
+    static protected function isStop($element, $tags = [])
+    {
+        if (empty($tags)) {
+            return false;
+        }
+
+        $parentClasses = '';
+        if ($element->parentNode->attributes->getNamedItem('class') !== null) {
+            $parentClasses = $element->parentNode->attributes->getNamedItem('class')->value;
+        };
+        $parentClasses = explode(' ', $parentClasses);
+
+        foreach ($tags as $tag) {
+            if (($tag['name'] == $element->parentNode->nodeName) &&
+                (count(array_intersect($tag['classes'], $parentClasses)) == count($tag['classes']))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static protected function hasValidParent($element) : bool
+    {
+        return ($element->parentNode != null) &&
+               ($element->parentNode->parentNode != null) &&
+               ($element->parentNode->parentNode->nodeName != '#document');
+    }
+
+    /**
+     * Unnest tags
+     *
+     *
+     * Move tags up if they are the last child of their parent
+     * and the parent has the same tag name.
+     *
+     * Remove all empty tags.
+     *
+     * @param string $content xml string
+     * @param array $tags An array of tag conditions, e.g.
+     *                     [
+     *                       ['name'=>'span', 'classes'=> ['wrapper']]
+     *                     ]
+     * @return string Cleaned xml string
+     */
+    static function unnestTags($content, $tags)
+    {
+        if ($content == '') {
+            return $content;
+        }
+
+        $doc = new DOMDocument();
+        $doc->preserveWhiteSpace = true;
+
+        if ($doc->loadXML('<body>' . $content . '</body>')) {
+            $xp = new DomXPath($doc);
+            foreach ($tags as $tag) {
+
+                $query = self::buildXpathQuery($tag);
+                $elements = $xp->query($query);
+
+                /** @var \DOMNode $element */
+                foreach ($elements as $element) {
+                    if (self::hasValidParent($element)
+                    ) {
+                        // Remove empty elements
+                        if (!$element->hasChildNodes()) {
+                            $element->parentNode->removeChild($element);
+                        }
+
+                        // Move nested elements up
+                        elseif (($element->nextSibling == null) && ($element->parentNode->nodeName === $element->nodeName)) {
+                            $element->parentNode->parentNode->insertBefore($element, $element->parentNode->nextSibling);
+                            if (!$element->parentNode->hasChildNodes()) {
+                                $element->parentNode->parentNode->removeChild($element->parentNode);
+                            }
+                        }
+                    }
+                }
+            }
+            $content = substr($doc->saveXML($doc->documentElement), 6, -7);
+            // , LIBXML_NOEMPTYTAG
+            //$content = substr($doc->saveXML($doc->documentElement),6,-7);
+        }
+        return $content;
+    }
+
+    /*
      *  Bubble tags up
      *
      *  @param  string  $content  XML-String
@@ -158,30 +284,20 @@ class XmlMunge
         if ($doc->loadXML('<body>' . $content . '</body>')) {
             $xp = new DomXPath($doc);
             foreach ($tags['bubble'] as $tag) {
-                $query = '//' . $tag['name'];
-                $contains = array();
-                if (!empty ($tag['classes'])) {
-                    foreach ($tag['classes'] as $class) {
-                        $contains[] = 'contains(concat(" ",@class," ")," ' . $class . ' ")';
-                    }
-                }
-                if (!empty($tag['empty'])) {
-                    $contains[] = 'not(node())';
-                }
-                if (!empty($contains)) {
-                    $query .= '[' . implode(' and ', $contains) . ']';
-                }
+
+                $query = self::buildXpathQuery($tag);
                 $elements = $xp->query($query);
+
                 foreach ($elements as $element) {
-                    if (($element->parentNode != null) && ($element->parentNode->parentNode != null) && ($element->parentNode->parentNode->nodeName != '#document') && ($element->nextSibling == null)) {
-                        $parentclasses = ($element->parentNode->attributes->getNamedItem('class') != null) ? $element->parentNode->attributes->getNamedItem('class')->value : '';
-                        $parentclasses = explode(' ', $parentclasses);
-                        foreach ($tags['stops'] as $stop) {
-                            if (($stop['name'] == $element->parentNode->nodeName) &&
-                                (count(array_intersect($stop['classes'], $parentclasses)) == count($stop['classes']))) {
-                                continue 2;
-                            }
+                    if (
+                        self::hasValidParent($element) &&
+                        ($element->nextSibling == null)
+                    ) {
+
+                        if (self::isStop($element, $tags['stops'] ?? [])) {
+                            continue;
                         }
+
                         $element->parentNode->parentNode->insertBefore($element, $element->parentNode->nextSibling);
                     }
                 }
@@ -193,8 +309,6 @@ class XmlMunge
     }
 
     /*
-     *  bubbleWrapperTag
-     *
      *  Bubble tags up
      *
      *  @param  string  $content  XML-String
@@ -219,32 +333,20 @@ class XmlMunge
             $xp = new DomXPath($doc);
 
             foreach ($tags['bubble'] as $tag) {
-                $query = '//' . $tag['name'];
-                $contains = array();
-                if (!empty ($tag['classes'])) {
-                    foreach ($tag['classes'] as $class) {
-                        $contains[] = 'contains(concat(" ",@class," ")," ' . $class . ' ")';
-                    }
-                }
-                if (!empty($tag['empty'])) {
-                    $contains[] = 'not(node())';
-                }
-                if (!empty($contains)) {
-                    $query .= '[' . implode(' and ', $contains) . ']';
-                }
-                $elements = $xp->query($query);
-                foreach ($elements as $element) {
-                    if (($element->parentNode != null) && ($element->parentNode->parentNode != null) && ($element->parentNode->parentNode->nodeName != '#document') && ($element->nextSibling == null) && ($element->previousSibling == null)) {
 
-                        //Move
-                        $parentclasses = ($element->parentNode->attributes->getNamedItem('class') != null) ? $element->parentNode->attributes->getNamedItem('class')->value : '';
-                        $parentclasses = explode(' ', $parentclasses);
-                        foreach ($tags['stops'] as $stop) {
-                            if (($stop['name'] == $element->parentNode->nodeName) &&
-                                (count(array_intersect($stop['classes'], $parentclasses)) == count($stop['classes']))) {
-                                continue 2;
-                            }
+                $query = self::buildXpathQuery($tag);
+                $elements = $xp->query($query);
+
+                foreach ($elements as $element) {
+                    if (
+                        self::hasValidParent($element) &&
+                        ($element->nextSibling === null) && ($element->previousSibling === null)
+                    ) {
+
+                        if (self::isStop($element, $tags['stops'] ?? [])) {
+                            continue;
                         }
+
                         $childnodes = $element->childNodes;
                         $outerwrap = $element->parentNode;
 

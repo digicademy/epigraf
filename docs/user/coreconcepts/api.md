@@ -379,7 +379,7 @@ A snippet is a predefined compilation of content:
 <ul><li><em>paths</em>: The result contains detailed information on the
 hierarchical structure of sections and lemmas.</li>
 <li><em>search</em>: Return the full text index content.</li>
-<li><em>indexes</em>: Category indexes are generated.</li>
+<li><em>indexes</em>:  Category indexes are generated.</li>
 <li><em>iris</em>: Return IRIs.</li>
 <li><em>published</em>: Include the publication status field.</li>
 <li><em>tags</em>: Extract tags from XML fields.</li>

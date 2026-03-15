@@ -11,6 +11,7 @@
 namespace App\Model\Entity;
 
 use App\Utilities\Converters\Strings;
+use App\Utilities\Exceptions\CatchWarnings;
 use Cake\ORM\Entity;
 use Epi\Model\Behavior\PositionBehavior;
 use Michelf\MarkdownExtra;
@@ -48,6 +49,10 @@ class Help extends Entity
                     $content = substr($content, $headerEnd + 3);
                 }
 
+                // Adjust href and src attributes
+                $content = preg_replace('/href="\/user\//', 'href="/help/', $content);
+                $content = preg_replace('/src="\/user\//', 'src="/help/', $content);
+
                 // Parse Markdown
                 $parser = new MarkdownExtra();
 
@@ -69,7 +74,8 @@ class Help extends Entity
                     return $url;
                 };
 
-                $this->_fields['html'] = $parser->transform($content);
+                // @deprecated: MarkdownExtra throws deprecations in v2.0, remove CatchWarnings when fixed
+                $this->_fields['html'] = CatchWarnings::mute(fn() => $parser->transform($content));
 
                 if ($this->_fields['header']['toc'] ?? true) {
                     $toc = Strings::getToc($this->_fields['html']);
