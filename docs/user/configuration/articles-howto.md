@@ -261,7 +261,7 @@ The `manage` option on the other hand introduces a shortcut that upon clicking o
 right away and jumps to the currently selected property.
 
  <figure style="max-width: 500px;margin-bottom: 2em;">
-    <img src="/user/assets/img/properties_manage.png" alt="Append and manage buttons in the article edit view">
+    <img src="/epigraf/user/assets/img/properties_manage.png" alt="Append and manage buttons in the article edit view">
 </figure>
 
 Come back anytime for reference!

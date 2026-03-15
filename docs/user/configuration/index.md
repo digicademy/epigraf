@@ -12,8 +12,8 @@ and configure which fields are displayed, how they are labelled and the data for
 
 <p class="infobox">
     🚀 To get started with an example database, take a look at the step-by-step guides
-    for <a href="/user/configuration/articles-howto">article configuration</a>
-    and <a href="/user/configuration/annotations-howto">annotation configuration</a>.
+    for <a href="/epigraf/user/configuration/articles-howto">article configuration</a>
+    and <a href="/epigraf/user/configuration/annotations-howto">annotation configuration</a>.
 </p>
 
 The configuration is accessible for administrators via the `Types` menu. This is where you define how articles are composed, which category systems are available and which annotations, footnotes or other apparatuses are possible. A complete configuration consists of types for the following components:
