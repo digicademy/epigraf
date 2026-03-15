@@ -25,7 +25,7 @@ and how to display data in a column of the articles table.
 Let's put off configuring a new column for a moment and, diving through the [RAM](/epigraf/user/coreconcepts/model),
 consider what type configurations are needed step-by-step:
 
-![RAM outline](/epigraf/user/assets/img/ram_annos.png)
+![RAM outline](/epigraf/user/assets/img/coreconcepts_ram.png)
 
 Well, think about what we are trying to achieve here: we want to display a property of a movie in the articles index,
 in our case the movie's director. As we can see above, in the RAM, properties list last, with all other elements

@@ -13,7 +13,7 @@ for learning how to configure Epigraf. To create a database from one of the exam
 
 1. Click `Create database` in the footer
 3. Name your database, e.g. `movies`
-4. Select a preset, we recomment the `Example movie database` for getting started.
+4. Select a preset, we recommend the `Example movie database` for getting started.
 5. Save
 
 The example movies database is now available in the database list.
