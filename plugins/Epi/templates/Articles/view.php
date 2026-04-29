@@ -31,8 +31,5 @@ use App\View\AppView;
     ];
 ?>
 
-<?php if ($this->request->getQuery('template') === 'tree'): ?>
-    <?= $this->element('../Articles/view_tree', $options) ?>
-<?php else: ?>
-    <?= $this->element('../Articles/view_document', $options) ?>
-<?php endif; ?>
+<?php $template = $this->getContentTemplate('document', ['tree', 'document']); ?>
+<?= $this->element('../Articles/view_' . $template, $options) ?>

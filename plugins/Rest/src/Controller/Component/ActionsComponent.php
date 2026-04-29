@@ -153,12 +153,14 @@ class ActionsComponent extends Component
         else {
 
             $userIdentity = $this->getController()->getRequest()->getAttribute('identity');
+            if (!empty($userIdentity)) {
 
-            $userEntity = TableRegistry::getTableLocator()
-                ->get('Users')
-                ->updateSettings($userIdentity, $scope, $key, $value);
+                $userEntity = TableRegistry::getTableLocator()
+                    ->get('Users')
+                    ->updateSettings($userIdentity, $scope, $key, $value);
 
-            $this->updateUserIdentity($userEntity);
+                $this->updateUserIdentity($userEntity);
+            }
         }
     }
 

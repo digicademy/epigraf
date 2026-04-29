@@ -82,6 +82,11 @@
                             'category' => __('Fields'),
                             'checked' => $job->config['expand'] ?? false
                         ],
+                        'iris' => [
+                            'type' => 'checkbox',
+                            'label' => __('IRI paths'),
+                            'category' => __('ID format')
+                        ],
                         'snippets' => [
                             'type' => 'text',
                             'label' => __('Snippets'),

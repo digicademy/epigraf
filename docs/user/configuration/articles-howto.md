@@ -5,7 +5,7 @@ permalink: '/user/configuration/articles-howto/'
 
 # Adjust and create configuration types
 
-The articles index is the first view greeting us when accessing a database.
+The articles collection is the first view greeting us when accessing a database.
 It shows selected content in a tabular form and allows us to quickly get
 an overview of the articles contained in the database.
 By default, the table shows the article's name and the date it was last modified.
@@ -212,9 +212,9 @@ To add a director, hit `Create property` in the footer and add "George Lucas" in
 Add as many categories as you see fit.
 Each will be available to select in the drop-down field from within our articles.
 
-## 6. Adjust columns in the articles index
+## 6. Adjust columns in the articles collection table
 
-Now that we do have our director property, we can finally add a column to the articles index that started
+Now that we do have our director property, we can finally add a column to the articles collection table that started
 this journey.
 
 Head back to the _Types menu_ of the database and edit the default [article configuration](/epigraf/user/configuration/articles/#article-type-configuration).
@@ -228,7 +228,7 @@ the columns key and paste
   },
 ```
 
-The default key makes the column appear on default upon reloading the articles index.
+The default key makes the column appear on default upon reloading the articles collection table.
 
 You did it! By now, you are practically a configuration connoisseur. Jokes aside, hopefully you have gained a better
 understanding of what configuring Epigraf looks and feels in practice and already have some ideas how your project

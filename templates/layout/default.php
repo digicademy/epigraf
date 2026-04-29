@@ -283,12 +283,8 @@ use Cake\Core\Configure;
         <?php endif; ?>
     </div>
 
+    <!-- Footer -->
     <?php if ($this->getShowBlock('footer')): ?>
-        <?php
-            if (!$this->User->hasRole(['guest'])) {
-                $this->Link->addHelpAction($pagehelp);
-            }
-        ?>
         <?= $this->renderFooter() ?>
     <?php endif; ?>
 

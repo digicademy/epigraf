@@ -72,6 +72,10 @@ Column configuration objects support the following keys:
             <td>By default (value `true`), all configured columns are visible. If you hide a column (value `false`) it will be visible if the user selects it using the column settings button.</td>
             </tr>
             <tr>
+            <td>select</td>
+            <td>Nodes in the select dropdowns can show additional data next to the lemma. To show the value of a column, set the `select` key to `true`.</td>
+            </tr>
+            <tr>
                 <td>key</td>
                 <td>Path key to extract the data from the entity.
                  <a href="../coreconcepts/keys">Path extraction keys</a> consist of simple entity fields (e.g., `signature`)

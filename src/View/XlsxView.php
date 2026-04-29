@@ -44,7 +44,7 @@ class XlsxView extends CsvView
      */
     public function postProcess($filename)
     {
-        Csv::csvToxlsx($filename, $filename, ';', '"');
+        Csv::csvToXlsx($filename, $filename, ';', '"');
         return true;
     }
 

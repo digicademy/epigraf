@@ -94,6 +94,7 @@ class ImportBehavior extends Behavior
      * Convert array to entities
      *
      * The entity type is determined from the id, the field `table` or the job option `table`.
+     *
      * IDs are resolved:
      * 1. Qualified IRIs in all ID fields and in fields referencing records are looked up in the database.
      *    IRI-Fragments in the norm_iri-field are resolved to Qualified IRIs.

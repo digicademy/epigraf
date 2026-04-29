@@ -79,7 +79,7 @@ class EpiApp {
 
         // Popup links
         // TODO: create a widget
-        Utils.listenEvent(document, 'click', (ev) => this.onOpenLinkClick(ev), 'a.popup, a.popup *, a.tab, a.tab *, a.frame, a.frame *');
+        Utils.listenEvent(document, 'click', (ev) => this.onOpenLinkClick(ev), 'a.popup, a.popup *, a.tab, a.tab *, a.frame, a.frame *, a.main, a.main *');
 
         // Listen to messages
         Utils.listenEvent(document,'app:show:message', (ev) => this.showMessage(ev));
@@ -542,7 +542,10 @@ class EpiApp {
 
         const data = {...a.dataset} || {};
         data['url'] = url;
-        if (a.classList.contains('popup')) {
+        if (a.classList.contains('main')) {
+            data['target'] = 'main';
+        }
+        else if (a.classList.contains('popup')) {
             data['target'] = 'popup';
         }
         else if (a.classList.contains('tab')) {

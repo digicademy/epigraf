@@ -42,6 +42,11 @@ class ServicesController extends AppController
     /**
      * Retrieve the result of a service
      *
+     * The route /services/{service}/* leads to this method,
+     * where {service} is passed as first parameter of the method
+     * and the rest of the URL (e.g. for the LLM service the task ID)
+     * is passed as the second parameter.
+     *
      * @param string $service The service to be called
      * @param string|null $path The endpoint or task id passed to the service
      * @return void

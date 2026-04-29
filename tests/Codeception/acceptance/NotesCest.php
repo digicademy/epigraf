@@ -86,8 +86,8 @@ class NotesCest
         if ($I->shouldOverwriteSnapshots) {
             $snapshot->shouldRefreshSnapshot(true);
         }
-        $snapshot->assert();
 
+        $snapshot->assert();
         $I->dontSeeVisualChanges('note', '.sidebar-right');
     }
 

@@ -641,8 +641,9 @@ class LinkHelper extends Helper
             ],
             [
                 'class' => 'frame help-button',
+                'group' => 'help',
                 'data-frame-target'=>'help',
-                'data-frame-caption' => __('Help'),
+                'data-frame-title' => __('Help'),
                 'title' => __('Help'),
                 'aria-label' => __('Help')
             ]);
@@ -1013,7 +1014,7 @@ class LinkHelper extends Helper
                 [
                     'class' => 'frame help-button',
                     'data-frame-target'=>'help',
-                    'data-frame-caption' => __('Help'),
+                    'data-frame-title' => __('Help'),
                     'title' => __('Help'),
                     'aria-label' => __('Help')
                 ]

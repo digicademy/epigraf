@@ -218,6 +218,7 @@ export class SandwichButton extends BaseWidget {
     }
 
     /**
+     * Update sandwich button after snippets were replaced from AJAX calls.
      *
      * @param event
      * @listens epi:replace:content
@@ -409,7 +410,7 @@ export class ChooseButtons extends BaseWidget {
      * @param element
      * @param name
      * @param parent
-     * @listens epi:select
+     * @listens epi:select:item
      */
     constructor(element, name, parent) {
         super(element, name, parent);
@@ -462,7 +463,7 @@ export class ChooseButtons extends BaseWidget {
         });
 
         // Listen select events
-        this.listenEvent(document, 'epi:select',(event) => {
+        this.listenEvent(document, 'epi:select:item',(event) => {
             let options = {
                 title: "Select " + event.detail.data.itemtype,
                 height: 600,

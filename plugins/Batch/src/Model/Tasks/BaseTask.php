@@ -130,7 +130,7 @@ abstract class BaseTask
      *
      * The full path to the input file is stored in 'inputpath'.
      * The path relative to the job folder is stored in 'inputfile'.
-     *  In case both are empty, a default file name based on the job id is generated.
+     * In case both are empty, a default file name based on the job id is generated.
      *
      * @return string
      */
@@ -158,7 +158,9 @@ abstract class BaseTask
     /**
      * Import modes depend on the source: csv file, xml file or folder (with xml files)
      *
-     * @return string
+     * @return string If the input is a file, the file extension.
+     *                If the input is a path, returns 'folder'.
+     *                If the path does not exist, returns an empty string.
      * @throws Exception
      */
     protected function getCurrentInputMode()
@@ -171,7 +173,7 @@ abstract class BaseTask
 
         $ext = strtolower(pathinfo($inputFile, PATHINFO_EXTENSION));
 
-        // xml, csv
+        // xml, csv, ...
         if (is_file($inputFile)) {
             return $ext;
         }

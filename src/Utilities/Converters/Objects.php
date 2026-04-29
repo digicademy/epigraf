@@ -349,7 +349,7 @@ class Objects extends Hash
      * Split a path list into an array of paths
      *
      * A path list starts with a [ and ends with a ].
-     * Each path is separated by a comma.
+     * Commas separate paths.
      *
      * @param string $path
      * @return string[]

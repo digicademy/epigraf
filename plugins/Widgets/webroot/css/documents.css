@@ -813,8 +813,8 @@ div.doc-section-link.tag-hover[data-to-id=''] a:hover {
 
 
 /* Links to properties */
-.content-content .doc-fieldname-property .doc-field-content,
-.content-content .doc-fieldname-link .doc-field-content {
+ .doc-fieldname-property .doc-field-content,
+ .doc-fieldname-link .doc-field-content {
     cursor: pointer;
     color: var(--link-font-color);
 }
@@ -1205,6 +1205,7 @@ span.xml_tag_nl {
 
 .doc-fieldname-content {
     font-family: var(--content-font-family), sans-serif;
+    line-height: 1.7em;
 }
 
 .doc-article:not(.widget-document-edit) .doc-field-content {
@@ -1384,6 +1385,7 @@ table.doc-section-grid-table .doc-section-item-group {
 
 .doc-content-content {
     width:100%;
+    word-wrap: break-word;
 }
 
 /* Tags */

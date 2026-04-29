@@ -291,9 +291,9 @@ class RootEntity extends BaseEntity
     public function cleanXmlTags($tags, $steps = [], $recurse = false)
     {
         parent::cleanXmlTags($tags, $steps, $recurse);
-        
+
         if (in_array('remove', $steps)) {
-            foreach ($this->links as $link) {
+            foreach ($this->links ?? [] as $link) {
                 if (in_array($link->from_tagname, $tags)) {
                     $link['deleted'] = 1;
                 }

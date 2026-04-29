@@ -96,6 +96,9 @@ class BaseTaskData extends BaseTask
         if (!empty($this->config['iris'])) {
             $options['params']['idents'] = 'iri';
         }
+        else if (!empty($this->config['idents'])) {
+            $options['params']['idents'] = $this->config['idents'];
+        }
 
         if (!empty($this->config['snippets'])) {
             $options['params']['snippets'] = Attributes::commaListToStringArray($this->config['snippets']);

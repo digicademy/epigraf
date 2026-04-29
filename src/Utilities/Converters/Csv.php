@@ -18,7 +18,7 @@ class Csv
 {
 
     /**
-     * Convert a csv to xlsx
+     * Convert a csv file to a xlsx file
      *
      * @param string $csvPath CSV file name.
      * @param string $xlsxPath The output filename.
@@ -26,7 +26,7 @@ class Csv
      * @param string $csvEnclosure The enclosure used in the csv file.
      * @return false|string
      */
-    static public function csvToxlsx($csvPath , $xlsxPath, $csvDelim = ',', $csvEnclosure = '"')
+    static public function csvToXlsx($csvPath , $xlsxPath, $csvDelim = ',', $csvEnclosure = '"')
     {
         $tmpPath = tempnam(dirname($xlsxPath), 'tmp_xlsx_');
 
@@ -76,7 +76,7 @@ class Csv
     }
 
     /**
-     * Convert CSV content (string) to XLSX content (string) using existing csvToxlsx method.
+     * Convert CSV content (string) to XLSX content (string).
      *
      * @param string $csvContent CSV formatted string.
      * @param string $csvDelim CSV delimiter.
@@ -98,7 +98,7 @@ class Csv
             return false;
         }
 
-        $result = self::csvToxlsx($tempCsvFile, $tempXlsxFile, $csvDelim, $csvEnclosure);
+        $result = self::csvToXlsx($tempCsvFile, $tempXlsxFile, $csvDelim, $csvEnclosure);
 
         if (!$result) {
             @unlink($tempCsvFile);

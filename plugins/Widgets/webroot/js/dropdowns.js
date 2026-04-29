@@ -475,6 +475,7 @@ export class DropdownWidget extends DropdownWidgetBase {
  * - Button mode: Clicking the toggle opens or closes the pane.
  *
  * There are three types of panes from which you can choose:
+ *
  * - Static pane: The pane is generated outside the dropdown selector
  *                 and contains the items.
  * - Dynamic pane: An empty pane is generated outside or by the dropdown selector
@@ -534,7 +535,7 @@ export class DropdownWidget extends DropdownWidgetBase {
  *
  * - Pane: A div containing the items from which to choose.
  *
- *         The PHP reference widget will automatically create the pane div when
+ *         The CakePHP ReferenceWidget will automatically create the pane div when
  *         used with the URL parameter. Otherwise, create the div yourself.
  *
  *         If the div has an ID (optional), the pane will be moved to the body element,
@@ -561,6 +562,8 @@ export class DropdownWidget extends DropdownWidgetBase {
  *
  *  The widget (=wrapper) emits a changed event when items are selected that,
  *  for example, is observed in the FilterSelector (filter.js)
+ *
+ *  @listens epi:select:open Close the dropdown when a select popup is opened
  *
  * @param wrapper
  * @constructor
@@ -600,6 +603,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         // Find attribute value definition
         if (this.pane) {
             this.valueAttribute = this.pane.dataset.listValue || this.valueAttribute;
+            this.listenEvent(this.pane, 'epi:select:entity', event => this.selectValue(event.detail.data));
         }
 
         // Init text input
@@ -619,6 +623,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         // - outside the widget (close)
         // - reset option (uncheck items)
         this.listenEvent(document,'click', event => this.onDocumentClick(event));
+        this.listenEvent(this.pane,'epi:select:open', event => this.onSelectOpen(event));
 
         // Position dropdown
         this.listenEvent(window,'resize', event => this.positionDropdown());
@@ -687,10 +692,23 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
     }
 
     /**
-     * Close the dropwdown if clicked outside
-     * Select the value if clicked on an item. Ignore tree indents.
+     * Handle the event fired when a popup is opened
      *
-     * @param event Click
+     * @param {CustomEvent} event
+     */
+    onSelectOpen(event) {
+        this.resetValue();
+    }
+
+    /**
+     * Handle clicks
+     *
+     * If clicked outside the dropdown, close the pane and reset the value.
+     * If clicked on an item, select the value.
+     *
+     * Ignore tree indents.
+     *
+     * @param event Click event
      */
     onDocumentClick(event) {
         if (!this.widgetElement || !this.pane) {
@@ -734,7 +752,6 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         if (this.pane.classList.contains('widget-dropdown-pane-frame')) {
             return;
         }
-
 
         if (this.isOpen()) {
             this.resetValue();
@@ -1073,8 +1090,8 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
      * Single values: Set the value and close the dropdown
      * Checkbox values: Assemble comma separated list (dropdown stays open)
      *
-     * @param current Selected value
-     * @param toggle True if selection is made via enter key. Toggles selection
+     * @param {HTMLElement} current Selected element
+     * @param {boolean} toggle True if selection is made via enter key. Toggles the selection.
      * @emits epi:change:dropdown
      */
     selectValue(current, toggle = false) {

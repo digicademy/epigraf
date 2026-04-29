@@ -622,9 +622,7 @@ class EntityInputHelper extends BaseEntityHelper
             return $this->EntityHtml->itemFieldRecord($item, $fieldNameParts, $edit, $options);
         }
 
-        // TODO: output name and create chooser
-        // TODO: rename 'links' to 'to' in the database and everywhere
-        // TODO: output class field-warning for missing targets as in itemFieldProperty()
+        // TODO: rename 'links' to 'to' in the database and everywhere (be aware of EpiDesktop!)
 
         $content = $item->getValueFormatted($fieldNameParts);
 
@@ -738,7 +736,7 @@ class EntityInputHelper extends BaseEntityHelper
             [
                 'class' => 'frame button tiny doc-item-folder',
                 'data-frame-target' => 'folder',
-                'data-frame-caption' => 'Files',
+                'data-frame-title' => __('Files'),
                 'data-frame-external' => $manageUrl,
             ]
         );

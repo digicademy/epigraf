@@ -581,6 +581,7 @@ class Item extends BaseEntity
             if (!empty($this->properties_id) && empty($this->property)) {
 
                 $warning = [
+                    'type' => 'missing-property',
                     'to_tab' => 'properties',
                     'to_id' => $this->properties_id,
                     'from_tab' => 'items',
@@ -593,12 +594,13 @@ class Item extends BaseEntity
                     $warning
                 );
 
-                $warnings['missing-property'][] = $warning;
+                $warnings['items-property'][] = $warning;
             }
 
             if (!empty($this->links_id) || !empty($this->links_tab)) {
                 if (empty($this->links_article) && empty($this->links_section)) {
                     $warning = [
+                        'type' => 'missing-target',
                         'to_tab' => $this->links_tab,
                         'to_id' => $this->links_id,
                         'from_tab' => 'items',
@@ -611,7 +613,7 @@ class Item extends BaseEntity
                         $warning
                     );
 
-                    $warnings['missing-target'][] = $warning;
+                    $warnings['items-links'][] = $warning;
                 }
             }
 

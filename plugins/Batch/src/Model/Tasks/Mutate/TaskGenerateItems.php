@@ -22,7 +22,7 @@ use Epi\Model\Entity\Article;
 class TaskGenerateItems extends BaseTaskMutate
 {
 
-    static public $caption = 'Generate items from LLM output';
+    static public $caption = 'Generate items (LLM)';
 
     public static $taskModels = ['Epi.Articles'];
 

@@ -42,7 +42,7 @@ class TaskXlsx extends BaseTask
         $outputfile = $this->getCurrentOutputFilePath();
 
         try {
-            Csv::csvToxlsx($source, $outputfile);
+            Csv::csvToXlsx($source, $outputfile);
         } catch (Exception $e) {
             return false;
         }

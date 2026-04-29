@@ -171,4 +171,4 @@ The publication status of sections and items may remain empty - in this case, th
 
 Within project databases, you will find a distinction between "published" and "searchable". While published entities can be accessed by guests if they know how to find them, such entities are only listed in the article table (and thus findable) if their status is set to "searchable", which includes that an entity is published. It is advised to update the publication status of the entities before transferring them to a public database. This keeps the databases in sync and avoids manually updating data in the public database.
 
-Visibility of some **fields** is restricted. Guest users can't see the names of editors (modified_by, created_by), the creation date (created),the article'S editing status field (status) and the section notes.
+Visibility of some **fields** is restricted. Guest users can't see the names of editors (modified_by, created_by), the creation date (created),the article's editing status field (status) and the section notes.

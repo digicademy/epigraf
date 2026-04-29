@@ -25,11 +25,12 @@ import {SelectWindow} from "/widgets/js/frames.js";
  *
  * Usually, the service name and service data is derived from the service configuration in a property or item.
  * The configuration includes the following fields:
+ *
  * - task: The task name, e.g. 'summarize'
- * - prompts: Optionally, the prompt template name to be used for the task. Empty by default.
+ * - prompts: Optionally, a prompt object template name to be used for the task. Empty by default.
  * - database: Database name
- * - input: The input type, either 'article' (the article id will be send to the service)
- *          or 'item' (the item content will be send).
+ * - input: The input type, either 'article' (the article id will be sent to the service)
+ *          or 'item' (the item's content field data will be sent).
  * - tagname: Optionally, for annotation tasks, the tag name. This should be a tag that is configured as links record.
  *            If you send a tag name to the services endpoint, the property type will be looked up from the configuration
  *            to assemble coding rules from the properties.
@@ -182,6 +183,7 @@ export class ServiceButtonWidget extends ServiceWidget {
         data['tagname'] =  Utils.getValue(taskConfig, 'target.tagname', '');
         data['itemtype'] = Utils.getValue(taskConfig, 'target.itemtype', '');
         data['multinomial'] = taskConfig.multinomial || '';
+        data['format'] = 'html';
 
         if (input) {
             if (taskConfig.input === 'article') {

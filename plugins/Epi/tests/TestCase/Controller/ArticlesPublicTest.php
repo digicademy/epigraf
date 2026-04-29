@@ -2,6 +2,7 @@
 
 namespace Epi\Test\TestCase\Controller;
 
+use Authorization\Exception\ForbiddenException;
 use Epi\Test\TestCase\EpiTestCase;
 
 /**
@@ -56,15 +57,37 @@ class ArticlesPublicTest extends EpiTestCase
     }
 
     /**
-     * Test public lanes
+     * Test index method as guest user
      *
      * @return void
      */
-    public function testIndexPublicLanes()
+    public function testIndexLanes()
     {
-        $this->markTestIncomplete('This test has not been implemented yet.');
-        //        $this->get('/epi/projects/articles/?properties.objecttypes=32&template=lanes&lanes=objecttypes');
-        //        $this->assertHtmlEqualsComparison();
+        // No access without permission
+        $this->expectException(ForbiddenException::class);
+        $this->get('/epi/public/articles/');
+
+        $this->expectException(ForbiddenException::class);
+        $this->get('/epi/public/articles/?properties.objecttypes=32&template=lanes&lanes=objecttypes');
+
+        // Add permission
+        $data = [
+            'user_role' => 'guest',
+            'user_request' => 'web',
+            'entity_type' => 'databank',
+            'entity_name' => 'epi_public',
+            'permission_type' => 'access',
+            'permission_name' => 'epi/types/index'
+        ];
+        $this->post('permissions/add', $data);
+        $this->assertResponseCode(302);
+
+        // Access granted
+        $this->get('/epi/public/articles/?properties.objecttypes=32&template=lanes&lanes=objecttypes');
+        $this->assertResponseOk();
+        $this->assertHtmlEqualsComparison();
+
     }
+
 
 }

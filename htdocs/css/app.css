@@ -950,7 +950,6 @@ nav.actions-content li button {
 
 /* Bottom actions */
 
-
 footer nav ul.action-menu {
     display: flex;
     margin: 0;
@@ -1005,6 +1004,10 @@ footer nav {
 
 footer nav.actions-bottom-right ul {
     float: right;
+}
+
+.sidebar footer {
+    display: none;
 }
 
 .sidebar footer nav.actions-bottom-right ul {
@@ -1368,6 +1371,8 @@ pre {
 code {
     border:0;
     font-size: 1.2em;
+    color: var(--primary-900);
+    letter-spacing: -0.05em;
 }
 
 #content p,
@@ -2145,10 +2150,6 @@ td.actions a.toggle-active
     color: var(--button-font-color);
 }
 
-.sidebar .action-group {
-    display: none;
-}
-
 /* Compact table */
 .compact-table {
     width: inherit;
@@ -2765,6 +2766,10 @@ table.recordlist td.table-id-solved {
     color: var(--status-font-color-checked);
 }
 
+table.recordlist tr.row-selected td.table-id-solved {
+    color: var(--table-font-color-selected);
+}
+
 table.recordlist td.table-id-solved:before {
     content: "✓";
     background: var(--msg-success-bg);
@@ -2778,6 +2783,13 @@ table.recordlist td.table-id-solved:before {
     text-align: center;
     vertical-align: middle;
 }
+
+
+table.recordlist tr.row-selected td.table-id-solved:before {
+    background: white;
+    color: var(--msg-success-bg);
+}
+
 
 table.recordlist tr.hit td {
     border-top: 1px solid var(--table-thead-border-color);

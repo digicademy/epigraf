@@ -40,12 +40,12 @@ An access token is required to access non-public data and for write access. This
 
 To use the access token, [API permissions](/epigraf/user/administration/users) must be granted both for accessing the relevant database and for accessing the endpoint. For example, to use the articles/index endpoint with a token, the following permissions are required:
 
-- User: \<username\>
+- User: {username}
 - Role: *remains empty*
 - Requested by: "api"
 - Permission type = "access"
 - Entity Type: "databank"
-- Entity name: \<databank name\>
+- Entity name: {databank name}
 - Entity ID: *can remain empty, optionally the ID of the databank*
 - Permission name = "epi/articles/index"
 
@@ -156,14 +156,14 @@ The **index endpoints** support selecting columns to be returned by using the `c
 - If the columns parameter is empty, the default fields will be returned.
 - Additional columns are configured in the [types configuration](/epigraf/user/configuration/articles) by the `columns` key.
 - Registered users can also request ad hoc columns using extraction keys. An ad hoc column consists of the caption, followed by an equal sign and the extraction key. The parameter must be URL-encoded because it contains an equal sign.
-- Settings the columns parameter to `false` (or `0`) on the index endpoints will result in
+- Setting the columns parameter to `false` (or `0`) on the index endpoints will result in
   full entity data (e.g. articles and all contained data) being returned instead of just the flat table.
 
 The extraction key can adress simple fields of the article object (e.g. `title`)
 or nested fields using dot notation (e.g. `project.shortname`).
 This follows the conventions of the types configuration. To access lists,
-an asterisk placeholder can be used (e.g. `items.{\*}.value`).
-Lists can be filtered with conditions in square brackets (e.g. `items.{\*}[itemtype=conditions].date`).
+an asterisk placeholder can be used (e.g. `items.*.value`).
+Lists can be filtered with conditions in square brackets (e.g. `items.*[itemtype=conditions].date`).
 For further details, see the [CakePHP documentation on hash syntax](https://book.cakephp.org/4/en/core-libraries/hash.html#Cake\Utility\Hash::extract).
 
 By default, all ID fields contain IRI paths. To request IDs, use the idents parameter.
@@ -211,58 +211,59 @@ Typically, a controller provides the following actions
 
 ## Projects
 
-### GET /epi/\<db\>/projects/index
+### GET /epi/{db}/projects/index
 
-A list of all projects. Example: `/epi/public/projects?term=greifswald`.
+Get a collection of projects.
 
 <figure class="table">
-<table>
-<thead>
-<tr>
-<th>Query Parameter</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>term</td>
-<td>Optional. Only projects whose name, description or IRI contain the search term are returned.</td>
-</tr>
-<tr>
-<td>projecttypes</td>
-<td>Optional. A comma-separated list, restricts the result to projects with the specific types.</td>
-</tr>
-</tbody>
-</table>
+    <table>
+        <thead>
+            <tr>
+                <th>Query Parameter</th>
+                <th>Explanation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>term</td>
+                <td>Optional. Only projects whose name, description or IRI contain the search term are returned.</td>
+            </tr>
+            <tr>
+                <td>projecttypes</td>
+                <td>Optional. A comma-separated list, restricts the result to projects with the specific types.</td>
+            </tr>
+        </tbody>
+    </table>
 </figure>
 
-### GET /epi/\<db\>/projects/view/\<id\>
+Example: `/epi/public/projects?term=greifswald`.
+
+### GET /epi/{db}/projects/view/{id}
 
 The content of a single project entity.
 
-
 <figure class="table">
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&lt;id&gt;</td>
-<td>Mandatory. The ID of the project.</td>
-</tr>
-</tbody>
-</table>
+    <table>
+        <thead>
+            <tr>
+                <th>Parameter</th>
+                <th>Explanation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>&lt;id&gt;</td>
+                <td>Mandatory. The ID of the project.</td>
+            </tr>
+        </tbody>
+    </table>
 </figure>
 
 ## Articles
 
-### GET /epi/\<db\>/articles/index
+### GET /epi/{db}/articles/index
 
-A paginated list of articles. Identical to the short form `GET /epi/<db>/articles`.
+A paginated collection of articles. Identical to the short form `GET /epi/<db>/articles`.
 
 <figure class="table">
 <table>
@@ -403,7 +404,7 @@ hierarchical structure of sections and lemmas.</li>
 </figure>
 
 
-### GET /epi/\<db\>/articles/view/\<id\>
+### GET /epi/{db}/articles/view/{id}
 
 The content of a single article entity.
 
@@ -426,7 +427,7 @@ The content of a single article entity.
 </figure>
 
 
-### POST /epi/\<db\>/articles/import
+### POST /epi/{db}/articles/import
 
 Import articles including all associated data. The data structure must correspond to the Relational Article Model. Three variants are supported: 1. Provide a file to be uploaded and imported. 2. Provide the name of a file available on the server. 3. Provide JSON data.
 
@@ -470,7 +471,7 @@ The files must contain XML or CSV. Folders can contain multiple XML files.</td>
 </table>
 </figure>
 
-### DELETE /epi/\<db\>/articles/delete/<id>
+### DELETE /epi/{db}/articles/delete/<id>
 
 Delete an article, including its sections, items, footnotes and links.
 
@@ -493,7 +494,7 @@ Delete an article, including its sections, items, footnotes and links.
 
 ## Sections
 
-### POST /epi/\<db\>/sections/move/\<id\>
+### POST /epi/{db}/sections/move/{id}
 
 Move sections within an article after or before a reference section.
 
@@ -524,9 +525,9 @@ Move sections within an article after or before a reference section.
 
 ## Properties
 
-### GET /epi/\<db\>/properties/\<propertytype\>/index
+### GET /epi/{db}/properties/{propertytype}/index
 
-List of categories of a category type.
+A collection of categories of a category type.
 
 <figure class="table">
 <table>
@@ -546,7 +547,7 @@ List of categories of a category type.
 </figure>
 
 
-### GET /epi/\<db\>/properties/view/\<id\>
+### GET /epi/{db}/properties/view/{id}
 
 The content of a single property entity.
 
@@ -568,7 +569,7 @@ The content of a single property entity.
 </figure>
 
 
-### GET /epi/\<db\>/properties/merge
+### GET /epi/{db}/properties/merge
 
 
 A GET request results in a preview of how the target category would look after merging with source categories.
@@ -602,7 +603,7 @@ If set to '1', content from text fields (lemma, sortkey) is concatenated, if the
 </table>
 </figure>
 
-### POST /epi/\<db\>/properties/merge
+### POST /epi/{db}/properties/merge
 
 Merges multiple categories by transferring the contents of one or more source categories to a target category. If the `concat` parameter is set to '1', contents from text fields is merged. All references to the source categories (e.g. from articles) are rewired to the target category. The source categories are then deleted.
 
@@ -641,7 +642,7 @@ If set to '1', content from text fields (lemma, sortkey) is concatenated, if the
 </table>
 </figure>
 
-### POST /epi/\<db\>/properties/mutate/\<propertytype\>
+### POST /epi/{db}/properties/mutate/{propertytype}
 
 The mutate endpoint can be used to perform batch processing tasks.
 
@@ -696,9 +697,9 @@ For categories, the sort task can be used  to reorder the category tree. It is f
 
 ## Types
 
-### GET /epi/\<db\>/types/\<scope\>/index
+### GET /epi/{db}/types/{scope}/index
 
-The types endpoint returns the database configuration.
+The types endpoint returns the database configuration, the index action returns the collection of types.
 Each type defines what kind of projects, articles, sections, items, annotations (links and footnotes) and categories occur in a database.
 
 <figure class="table">
@@ -723,7 +724,7 @@ Each type defines what kind of projects, articles, sections, items, annotations 
 </figure>
 
 
-### GET /epi/\<db\>/types/view/\<id\>
+### GET /epi/{db}/types/view/{id}
 
 The content of a single type entity.
 

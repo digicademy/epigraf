@@ -1527,6 +1527,27 @@ class Utils {
     }
 
     /**
+     * Split a string into a prefix and an ID.
+     *
+     * @param {string} value The table prefixed ID, e.g. 'properties-123'.
+     * @return {*[]} Returns an array with two elements, first the table, second the ID, e.g. ['properties', '123'].
+     */
+    static splitTablePrefixedId(value) {
+        let toTab;
+        let toId;
+
+        value = value.split('-', 2);
+        if (value.length === 1) {
+            toTab = '';
+            toId = value[0] || '';
+        } else if (value.length > 1) {
+            toTab = value[0] || '';
+            toId = value[1] || '';
+        }
+
+        return [toTab, toId];
+    }
+    /**
      * Get map of checkbox states in a container.
      *
      * @param {HTMLElement} container

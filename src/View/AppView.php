@@ -11,6 +11,7 @@
 namespace App\View;
 
 use App\Model\Entity\Databank;
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
@@ -43,7 +44,7 @@ class AppView extends View
      * Blocks that should be rendered
      * (top, bottom, left, right, bottom-right, content, searchbar)
      *
-     * By default, in AJAX calls only the content will be rendered,
+     * By default, in AJAX calls only the content block will be rendered,
      * in other calls all blocks will be rendered.
      *
      * Use setShowBlock to override the default.
@@ -127,6 +128,11 @@ class AppView extends View
      */
     public function renderFooter()
     {
+
+        if (!$this->User->hasRole(['guest'])) {
+            $this->Link->addHelpAction($this->viewVars['pagehelp'] ?? null);
+        }
+
         $footer = '';
         if ($this->Link->hasActions('bottom')) {
             $footer .= $this->Link->renderSandwichActions(
@@ -142,38 +148,16 @@ class AppView extends View
             );
         }
 
-        $footer .= $this->Link->renderSandwichButton(
-            'widget-sandwich-items-footer widget-sandwich-items-bottom',
-            ['dropdown' => 'topright', 'icon' => "\u{f0e7}", 'align-y' => 'footer', 'title' => __('Actions')]
-        );
-
-        $footer = '<footer>' . trim($footer) . '</footer>';
-        return $footer;
-
-    }
-
-    public function renderAjaxFooter()
-    {
-        $footer = '';
-        if ($this->Link->hasActions('bottom')) {
-            $footer .= $this->Link->renderSandwichActions(
-                'widget-sandwich-items-footer',
-                'bottom'
-            );
-        }
-
-        if ($this->Link->hasActions('bottom-right')) {
-            $footer .= $this->Link->renderSandwichActions(
-                'widget-sandwich-items-footer',
-                'bottom-right'
-            );
-        }
-
         $footer = trim($footer);
 
-        if (!empty($footer)) {
-            $footer = '<footer>' . $footer . '</footer>';
+        if (!empty($footer) && !$this->request->is('ajax')) {
+            $footer .= $this->Link->renderSandwichButton(
+                'widget-sandwich-items-footer widget-sandwich-items-bottom',
+                ['dropdown' => 'topright', 'icon' => "\u{f0e7}", 'align-y' => 'footer', 'title' => __('Actions')]
+            );
         }
+
+        $footer = '<footer>' . trim($footer) . '</footer>';
         return $footer;
 
     }
@@ -578,10 +562,15 @@ class AppView extends View
     /**
      * Enable block output in AJAX calls.
      *
+     * TODO: In many locations, the footer is added. Include the footer in the defaults?
+     * TODO: Maybe rename to setAjaxShowBlocks or similar, to clarify that this is only relevant for AJAX calls.
+     *       Simplify handling the interplay of $showBlock, the template query param, the request type (AJAX or not),
+     *       any chance to omit one of the options?
+     *
      * By default, only the content is rendered in AJAX calls,
      * see getShowBlock.
      *
-     * @param array $blocks E.g. ['footer', 'bottom', 'bottom-right']
+     * @param array $blocks A list of blocks, e.g. ['content','footer']
      */
     public function setShowBlock($blocks)
     {
@@ -612,6 +601,45 @@ class AppView extends View
         }
 
         return empty($blocks) || in_array($name, $blocks);
+    }
+
+    /**
+     * Get the template name from the query parameter.
+     *
+     * @param string $default The default template name.
+     * @param array $options An array of allowed template names.
+     *                       You can provide a mapping of source templates (keys)
+     *                       to target templates (values), e.g. ['select' => 'table'].
+     * @return string
+     */
+    public function getContentTemplate($default, $options) : string
+    {
+        if (Arrays::array_is_numeric($options)) {
+            $options = array_combine($options, $options);
+            $optionNames = $options;
+        } else {
+            $optionNames = array_keys($options);
+        }
+
+        $template = Attributes::cleanOption(
+            $this->request->getQuery('template', $default),
+            $optionNames,
+            $default
+        );
+
+        return $options[$template] ?? $default;
+    }
+
+    /**
+     * Check whether the template from the query parameter matches the given template.
+     *
+     * @param string $template The template name to check.
+     * @param string $default The default template name, used if the query parameter is not set.
+     * @return bool
+     */
+    public function isContentTemplate($template, $default = '') : bool
+    {
+        return $template === $this->request->getQuery('template', $default);
     }
 
     /**

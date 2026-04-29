@@ -102,6 +102,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
      */
     public $parameters = [
         'id' => 'list-integer',
+        'idents' => 'string',
         'properties' => 'list-integer',
 
         'append' => 'raw',
@@ -119,7 +120,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         'cursor' => 'raw',
         'direction' => 'raw',
         'collapsed' => 'raw',
-//        'level' => 'raw',
+//        'level' => 'raw','
 
         'selected' => 'list',
         'selection' => 'raw',

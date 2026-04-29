@@ -29,7 +29,7 @@ Routes for project databases are configured in `plugin/Epi/config/routes.php` an
 - **Controller**: Determines which controller handles the request.
   Controller classes are located in `src/Controller` and `plugins/Epi/src/Controller`.
 - **Action**: Specifies the method to invoke in the controller. The most common actions include:
-  - index: List entities. CakePHP conventions allow omitting `index` in the URL. For example, `/users` is equivalent to `/users/index`.
+  - index: Display a collection of entities. CakePHP conventions allow omitting `index` in the URL. For example, `/users` is equivalent to `/users/index`.
   - view: Display a single entity. The entity ID is passed as a path parameter.
   - add: Create a new entity. Get requests render a form, while post requests create the entity.
   - edit: Update an existing entity. Get requests render a form, while post requests update the entity.

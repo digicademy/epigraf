@@ -672,7 +672,7 @@ class TableHelper extends Helper
                         $link = $this->Link->fillPlaceholders($fieldOptions['link'], $entity);
                     }
 
-                    $content = $this->Html->link($content, $link);
+                    $content = $this->Html->link($content, $link, ['class' => 'main']);
                 }
             }
 
@@ -1335,10 +1335,14 @@ class TableHelper extends Helper
     {
         // Wrapper
         $out = '';
-        $classes = array_filter([
-            'content-searchbar-item widget-filter-item widget-filter-item-searchbar',
-            $options['class'] ?? ''
-        ]);
+        $classes = 'content-searchbar-item widget-filter-item widget-filter-item-searchbar';
+        if (!empty($searchFields)) {
+            $classes .= ' content-searchbar-item-combined';
+        }
+        if (!empty($options['class'])) {
+            $classes .= ' ' . $options['class'];
+        }
+
         $data = [
             'data-filter-group' => $group,
             'data-filter-param' => $param,
@@ -1346,7 +1350,7 @@ class TableHelper extends Helper
         ];
         $data = array_merge($data, $options['data'] ?? []);
 
-        $out .= '<div class="' . implode(' ',$classes) . '" ' . Attributes::toHtml($data) . '>';
+        $out .= '<div class="' . $classes . '" ' . Attributes::toHtml($data) . '>';
 
         if ($options['form'] ?? false) {
             $out .= $this->filterFormStart($group, $options['form']);

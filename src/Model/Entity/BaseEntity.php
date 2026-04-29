@@ -510,36 +510,55 @@ class BaseEntity extends Entity
      * See Objects::parsePlaceholder() for examples.
      *
      * ### Options
-     * - collapse By default, an array is returned. Provide a separator if you want to collapse the value to a single string.
+     * - collapse By default, an array is returned.
+     *   Provide a separator if you want to collapse the value to a single string.
      *
      * All other options are passed to getValueNested()
      * with aggregate set to false if not otherwise defined in a placeholder.
      *
-     * @param string|array $key
+     * @param string|array $key The placeholder string or an array of placeholder strings.
      * @param array $options Options passed to getValueNested(),
      *                       with aggregate set to false if not otherwise defined in a placeholder.
-     * @return array
+     * @return string|array
      */
     public function getValuePlaceholder($key, $options= [])
     {
-        if (!str_contains($key, '{')) {
-            return $key;
-        }
 
-        $value = Objects::parsePlaceholder($key, function ($pathList) use ($options) {
-            $pathList = Objects::parsePathList($pathList);
-            $result = null;
-            foreach ($pathList as $path) {
-                $path = Objects::parseFieldKey($path, [], ['aggregate' => false]);
-                $options['aggregate'] = $path['aggregate']; // TODO: do we need to unset collapse here?
-                $options['format'] = $path['format'] ?? $options['format'] ?? false;
-                $result = $this->getValueNested($path['key'], $options);
-                if (!is_null($result) && ($result !== []) && ($result !== '')) {
-                    break;
+        $value = [];
+        if (is_array($key)) {
+            foreach ($key as $part) {
+                $loopValue = $this->getValuePlaceholder($part, $options);
+                if (is_array($loopValue)) {
+                    $value = array_merge($value, $loopValue);
+                }
+                else {
+                    if ($loopValue ?? false) {
+                        $value[] = $loopValue;
+                    }
                 }
             }
-            return $result;
-        });
+        }
+        else
+        {
+            if (!str_contains($key, '{')) {
+                return $key;
+            }
+
+            $value = Objects::parsePlaceholder($key, function ($pathList) use ($options) {
+                $pathList = Objects::parsePathList($pathList);
+                $result = null;
+                foreach ($pathList as $path) {
+                    $path = Objects::parseFieldKey($path, [], ['aggregate' => false]);
+                    $options['aggregate'] = $path['aggregate']; // TODO: do we need to unset collapse here?
+                    $options['format'] = $path['format'] ?? $options['format'] ?? false;
+                    $result = $this->getValueNested($path['key'], $options);
+                    if (!is_null($result) && ($result !== []) && ($result !== '')) {
+                        break;
+                    }
+                }
+                return $result;
+            });
+        }
 
         if (isset($options['collapse'])) {
             $value = is_array($value) ? array_map(fn($x) => strval($x), $value) : $value;
@@ -756,9 +775,11 @@ class BaseEntity extends Entity
      */
     public function getIdFormatted($fieldName, $options)
     {
-        $prefix = $options['prefixIds'] ?? false;
-        if ($prefix !== false) {
+        $prefixIds = $options['prefixIds'] ?? false;
+        if ($prefixIds !== false) {
             $table = static::$_fields_ids[$fieldName[0]] ?? $this->_tablename ?? $this->table->getTable();
+
+            $prefix = is_bool($prefixIds) ? '' : $prefixIds;
 
             // Only copy entities that belong to the root
             if (($options['copy'] ?? false) && !$this->hasRoot($options['root'])) {
@@ -802,7 +823,7 @@ class BaseEntity extends Entity
     {
         if (($fieldFormat === 'xml') && ($this->root !== null)) {
             try {
-                $raw = $this->injectXmlAttributes($raw ?? '', $options, $fieldName);
+                $raw = $this->injectXmlAttributes($raw ?? '', $options + ['prefixIds' => true], $fieldName);
                 return $this->root->table->renderXmlFields($raw, $outputFormat);
             } catch (Exception $e) {
                 $this->setParsingError($fieldName[0], __('Error parsing XML: {0}', [$e->getMessage()]));

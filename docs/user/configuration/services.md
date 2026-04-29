@@ -139,19 +139,19 @@ The configuration object for items contains the following keys:
         </tr>
         <tr>
             <td>service</td>
-            <td>Service name. At the moment only <code>llm</code> is supported. This uses the [Databoard Service](https://databoard.uni-muenster.de/) at the University of Münster.</td>
+            <td>Service name. At the moment only <code>llm</code> is supported. This uses the <a href="https://databoard.uni-muenster.de">Databoard Service</a> at the University of Münster.</td>
         </tr>
         <tr>
             <td>task</td>
-            <td>The task to be performed by the LLM service, one of <code>summarize</code>, <code>coding</code> or <code>annotate</code>. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
+            <td>The task to be performed by the LLM service, one of <code>summarize</code>, <code>coding</code> or <code>annotate</code>. See the <a href="https://databoard.uni-muenster.de">Databoard documentation</a> for details.</td>
         </tr>
         <tr>
             <td>prompts</td>
-            <td>Optional. A prompt template supported by the service. Defaults to an empty string for default prompts. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
+            <td>Optional. A prompt template supported by the service. Defaults to an empty string for default prompts. See the <a href="https://databoard.uni-muenster.de">Databoard documentation</a> for details.</td>
         </tr>
         <tr>
             <td>multinomial</td>
-            <td>Optional. Whether to perform the task in single or in multi mode. Coding tasks return the best matching property in single mode and a value for each property in multi mode. See the [databoard documentation](https://databoard.uni-muenster.de/) for details.</td>
+            <td>Optional. Whether to perform the task in single or in multi mode. Coding tasks return the best matching property in single mode and a value for each property in multi mode. See the <a href="https://databoard.uni-muenster.de">Databoard documentation</a> for details.</td>
         </tr>
         <tr>
             <td>input</td>
@@ -176,8 +176,8 @@ The configuration object for items contains the following keys:
                     <li>tagname: Used for annote tasks. The name of a link type configuration.
                         The target tag and the property type are derived from the link type configuration.
                         Make sure the link configures a property type in its `to` field configuration.
-                        Each property must have a name in the `lemma` field and an example in the `content` field.
-                        The lemma field is used as category description, the content field should contain a short text segment (e.g. a word) that might be annotated.
+                        Each property must have at least a `norm_iri` value that identifies the category, and a name in the `lemma` field. A rule definition can be added in the `comment` field. Further, it is advised to add at least one example in the `content` field.
+                         The content field should contain a short text segment (e.g. a word) as an example that should be annotated with the category.
                     </li>
                 </ul>
             </td>
@@ -258,7 +258,10 @@ Otherwise the first matching item is updated.
 
 You need to configure a link type named "anno" that is configured for manual annotation.
 The link type must refer to a property type in its `to` configuration field.
-You need to add at least one property with the name in the `lemma` field and an example text in the `content` field.
+
+You need to add at least one property with a `norm_iri` value that identifies the category
+and a  name in the `lemma` field. Optionally, add a rule definition in the `comment` field
+and an example text in the `content` field.
 
 # How to make a service available in Epigraf?
 

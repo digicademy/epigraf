@@ -172,6 +172,10 @@ class Tag extends BaseEntity
                     $allowed = [];
                 }
 
+                if (!is_array($allowed)) {
+                    $allowed = [$allowed];
+                }
+
                 if (!$this->isAllowed($allowed)) {
                     $warnings[$fieldKey][] = [
                         'msg' => __('Child tag {tagname}#{tagid} not allowed in this position.', $this->_fields)

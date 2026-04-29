@@ -7,28 +7,28 @@
 
     <title>Categories [projects]</title>
 
-    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">
+    <link href="/img/favicon_petrol.png" type="image/x-icon" rel="icon"><link href="/img/favicon_petrol.png" type="image/x-icon" rel="shortcut icon">    <meta name="description" content="A research platform for multimodal text data">    <meta name="author" content="Epigraf Team">    
     <!-- CSS frameworks -->
     <link rel="stylesheet" href="/js/driver.js/driver.css">    <link rel="stylesheet" href="/js/jqueryui/jquery-ui.min.css">
     <!-- CSS app -->
     <link rel="stylesheet" href="/css/app.css">
     <!-- CSS widgets and plugins -->
-            <link rel="stylesheet" href="/widgets/css/widgets.min.css">
+            <link rel="stylesheet" href="/widgets/css/widgets.min.css">    
     <!-- Theme -->
-            <link rel="stylesheet" href="/css/theme_default.css">
+            <link rel="stylesheet" href="/css/theme_default.css">    
     <!-- JS -->
 
     <!-- JS frameworks -->
     <script src="/js/driver.js/driver.js.iife.js"></script>    <script src="/js/jquery/jquery.min.js"></script>    <script src="/js/jqueryui/jquery-ui.min.js"></script>
     <!-- JS app -->
-            <script src="/js/app.min.js" type="module"></script>
+            <script src="/js/app.min.js" type="module"></script>    
     <script type="module">if (window.App) {window.App.baseUrl = "http://localhost/";window.App.databaseUrl = "http://localhost/epi/projects/";window.App.debug = false;window.App.user.load({"role":"admin","scope":"web"});}</script>
     <!-- JS widgets -->
         <script src="/widgets/js/leaflet/leaflet.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.js"></script>    <script src="/widgets/js/leaflet/leaflet.markercluster.layersupport.js"></script>    <script src="/widgets/js/leaflet/easy-button.js"></script>    <script src="/widgets/js/leaflet/leaflet-gesture-handling.min.js"></script>    <script src="/widgets/js/leaflet/leaflet-control-geocoder/control.geocoder.js"></script>    <link rel="stylesheet" href="/widgets/css/leaflet/leaflet-control-geocoder/control.geocoder.css">    <script src="/widgets/js/mark/mark.min.js"></script>    <script src="/widgets/js/d3/d3.v6.min.js"></script>
-            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>
+            <script src="/widgets/js/epieditor.min.js"></script>        <script src="/widgets/js/widgets.min.js" type="module"></script>    
 
     <!-- Additional CSS -->
-
+    
     <!-- Additional JS -->
         </head>
 
@@ -48,17 +48,17 @@
             <div class="topmenu-right">
                 <div id="loader" style="display:none;"></div>
 
-
-                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/2?database=projects" class="btn btn-icon" title="admin"></a>                                                    <a href="/settings/show/vars?database=projects" class="btn btn-icon" title="System settings"></a>                            </div>
+                
+                    <a href="/users/logout" class="btn" title="Logout">Logout</a>                    <a href="/users/view/me?database=projects" class="btn btn-icon" title="admin"></a>                                                    <a href="/settings/show/vars?database=projects" class="btn btn-icon" title="System settings"></a>                            </div>
 
         </nav>
-
+    
     <div class="content-wrapper">
 
         <!-- Left sidebar -->
-
-
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>
+        
+            
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>        
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
@@ -67,7 +67,7 @@
 
                                                 <nav class="breadcrumbs"><ul class="breadcrumbs-trail"><li><span>Transfer</span></li></ul></nav>                    </div>
 
-
+                    
                                     </div>
 
                 <div class="content-toolbar empty"></div>
@@ -75,12 +75,12 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-
+                    
 <!-- Breadcrumbs -->
-
+    
 <!-- Content area -->
 
-    <form method="get" accept-charset="utf-8" id="form-transfer" action="/epi/projects/properties/transfer/datakeys">
+    <form method="get" accept-charset="utf-8" id="form-transfer" action="/epi/projects/properties/transfer/datakeys">                            
     <div class="transfer-databases content-tight">
 
         <table class="vertical-table">
@@ -103,7 +103,7 @@
                     <th scope="row">Scope</th>
                     <td>datakeys</td>
                 </tr>
-
+            
 
             <tr><th scope="row">Options</th><td><div class="input checkbox"><input type="hidden" name="versions" value="0"><label for="versions"><input type="checkbox" name="versions" value="1" id="versions">Init versioning</label></div><div class="input checkbox"><input type="hidden" name="tree" value="0"><label for="tree"><input type="checkbox" name="tree" value="1" id="tree">Recover trees</label></div><div class="input checkbox"><input type="hidden" name="files" value="0"><label for="files"><input type="checkbox" name="files" value="1" id="files">Copy files</label></div></td></tr><tr><th scope="row">Snippets</th><td><div class="input checkbox"><input type="hidden" name="snippets[iris]" value="0"><label for="snippets-iris"><input type="checkbox" name="snippets[iris]" value="1" checked="checked" id="snippets-iris">iris</label></div><div class="input checkbox"><input type="hidden" name="snippets[published]" value="0"><label for="snippets-published"><input type="checkbox" name="snippets[published]" value="1" checked="checked" id="snippets-published">published</label></div><div class="input checkbox"><input type="hidden" name="snippets[search]" value="0"><label for="snippets-search"><input type="checkbox" name="snippets[search]" value="1" id="snippets-search">search</label></div><div class="input checkbox"><input type="hidden" name="snippets[editors]" value="0"><label for="snippets-editors"><input type="checkbox" name="snippets[editors]" value="1" id="snippets-editors">editors</label></div><div class="input checkbox"><input type="hidden" name="snippets[comments]" value="0"><label for="snippets-comments"><input type="checkbox" name="snippets[comments]" value="1" id="snippets-comments">comments</label></div></td></tr><tr><th scope="row">Publication states</th><td><div class="input checkbox"><input type="hidden" name="published[val_0]" value="0"><label for="published-val-0"><input type="checkbox" name="published[val_0]" value="1" id="published-val-0">Drafted</label></div><div class="input checkbox"><input type="hidden" name="published[val_1]" value="0"><label for="published-val-1"><input type="checkbox" name="published[val_1]" value="1" id="published-val-1">In progress</label></div><div class="input checkbox"><input type="hidden" name="published[val_2]" value="0"><label for="published-val-2"><input type="checkbox" name="published[val_2]" value="1" id="published-val-2">Complete</label></div><div class="input checkbox"><input type="hidden" name="published[val_3]" value="0"><label for="published-val-3"><input type="checkbox" name="published[val_3]" value="1" id="published-val-3">Published</label></div><div class="input checkbox"><input type="hidden" name="published[val_4]" value="0"><label for="published-val-4"><input type="checkbox" name="published[val_4]" value="1" id="published-val-4">Searchable</label></div></td></tr>
             <tr>
@@ -116,7 +116,7 @@
 
     </div>
     </form>
-
+    
 
                                             <nav class="actions-content" data-snippet="actions-content">
                             <ul class="action-menu"><li><a href="/epi/projects/properties/index/datakeys" data-shortcuts="Ctrl+Q" title="Cancel (Ctrl+Q)" aria-label="Cancel" aria-keyshortcuts="Ctrl+Q" class="button button_cancel widget-shortcut" data-role="cancel">Cancel</a></li><li><button data-shortcuts="Ctrl+S F10" title="Preview (Ctrl+S F10)" aria-label="Preview" aria-keyshortcuts="Ctrl+S F10" class="widget-shortcut" autofocus="autofocus" form="form-transfer" data-role="submit" type="submit">Preview</button></li></ul>                        </nav>
@@ -125,10 +125,11 @@
                 <div class="content-footer"></div>
 
             </div>
-
+        
         <!-- Right sidebar -->
                     <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-collapsed accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
-            <footer><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/help/introduction/properties?database=projects" class="frame help-button" data-frame-target="help" data-frame-caption="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>
+    <!-- Footer -->
+            <footer><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-help"><a href="/help/introduction/properties?database=projects" class="frame help-button" data-frame-target="help" data-frame-title="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
 </div>
 </body></html>

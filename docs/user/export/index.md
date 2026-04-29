@@ -10,6 +10,7 @@ Epigraf supports to retrieve raw data from the Relational Article Model and to g
 **Pipelines**: Use the pipeline system to generate camera-ready word documents, TEI-files, RDF-triples, Websites
 or other documents for archiving and publication purposes. In a pipeline, data is assebled and transformed to arbitrary target formats.
 You can also export images using a pipeline.
+The default data pipeline supports export of the collection pages or full entity data in common formats such as CSV, XLSX, JSON, or XML.
 
 **API access**: You can directly access all data visible on the web interface in structured formats such as JSON.
 Distilling data from the API is simplified using the [rpigraf package](https://github.com/datavana/rpigraf).
@@ -22,5 +23,5 @@ you can directly work with the live database tables. Nevertheless, when working 
 it is recommended to ingest it into a local database. You can generate a backup from the database management page.
 The backup dumps all data into an SQL file that can be imported with common SQL management tools such as DBeaver.
 You can also import a backup into another (local or productive) Epgraf server using the database management page.
-The [rpigraf package](https://github.com/datavana/rpigraf) implements an interface that can be used both,
+The [rpigraf package](https://github.com/datavana/rpigraf) implements an interface that can be used on both,
 on direct SQL connections or the API.

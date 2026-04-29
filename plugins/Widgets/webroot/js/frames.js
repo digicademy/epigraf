@@ -20,10 +20,12 @@ import {BaseForm, BaseModel} from '/js/base.js';
  *    - add -> on success, redirected to view by the controller
  *    - edit -> on success, redirected to view by the controller
  *    - delete -> on success, no redirect, empty page
+ *
  * 2) Open entity in the sidebar
  *    - add -> on success, redirected to view by the controller
  *    - edit -> on success, redirected to view by the controller
  *    - delete -> on success, no redirect, empty page
+ *
  * 3) Open entity in a popup
  *    - add -> on success, close the popup (redirected to view by the controller)
  *    - edit -> on success, close the popup (redirected to view by the controller)
@@ -37,8 +39,8 @@ import {BaseForm, BaseModel} from '/js/base.js';
  * - this.footerPane
  * (- this.dialog @deprecated)
  *
- * The widget element holds this.contentPane. The other elements
- * may be placed elsewhere on the page.
+ * The widget element holds this.contentPane.
+ * The other elements may be placed elsewhere on the page.
  *
  * Use the following methods to interact with the frame:
  *
@@ -82,27 +84,24 @@ export class BaseFrame extends BaseForm {
      * Show content
      *
      * ### Options
-     *  - width The width of the popup window or the sidebar in pixels, defaults to 800
-     *  - height The window height in pixels, defaults to 600 (only for popups)
-     *  - url The page to load. Either provide a URL or an element.
-     *  - element The element to show. Either provide a URL or an element.
-     *  - clone true|false In case you provide an element,
-     *          determine whether it will be cloned before it is inserted
-     *          into the popup or frame window. Defaults to false.
-     *  - modal true|false (only for popups)
-     *  - ajaxButtons true|false Whether to extract action buttons from AJAX responses.
-     *                           Defaults to true.
-     *  - dialogButtons array. Standard buttons to create.
-     *           Allowed values: "cancel", "remove", "apply"
-     *  - external true|false Create a button to open the current URL in a new tab
-     *  - selected The selected value
-     *  - input A callback with parameters id and caption,or an input element for choosing values.
-     *    Clicks onto tr.choose.value trigger the input callback.
-     *    Clicks onto the remove button trigger the input callback with a null value.
-     *  - frameTarget
-     * - focus true|false Whether to focus the first input element
-     * - force true|false By default, the window is forced to open, regardless of the user settings. Set to false to respect the user settings.
-     * - title string The title of the frame or window
+     *
+     * - width (int) The width of the popup window or the sidebar in pixels, defaults to 800
+     * - height (int) The window height in pixels, defaults to 600 (only for popups)
+     * - url The page to load. Either provide a URL or an element.
+     * - element The element to show. Either provide a URL or an element.
+     * - clone (true|false) In case you provide an element,
+     *         determine whether it will be cloned before it is inserted
+     *         into the popup or frame window. Defaults to false.
+     * - modal (true|false) Whether to create a modal frame, only valid for popups.
+     * - ajaxButtons (true|false) Whether to extract action buttons from AJAX responses.
+     *         Defaults to true.
+     * - dialogButtons (array). Default buttons to create.
+     *         Allowed values: "cancel", "remove", "apply"
+     * - external (true|false) Create a button to open the current URL in a new tab
+     * - frameTarget
+     * - focus (true|false) Whether to focus the first input element
+     * - force (true|false) By default, the window is forced to open, regardless of the user settings. Set to false to respect the user settings.
+     * - title(string) The title of the frame or window
      *
      * @param options Options object
      * @param {BaseFrame} parentFrame The frame that issued the request or undefined
@@ -116,7 +115,6 @@ export class BaseFrame extends BaseForm {
 
         // Init and open window
         this.openWindow(options.frameTarget || 'details', options.force);
-
 
         // Load URL or show element
         if (options.url !== undefined) {
@@ -525,7 +523,7 @@ export class BaseFrame extends BaseForm {
     }
 
     /**
-     * Open a detail frame: popup, sidebar, new browser tab
+     * Open a frame: popup, sidebar, new browser tab, main window
      *
      * @param {CustomEvent} event
      * @return {boolean}
@@ -540,7 +538,10 @@ export class BaseFrame extends BaseForm {
 
         if (data.url) {
 
-            if (data.target === 'tab') {
+            if (data.target === 'main') {
+                App.openMain(data.url);
+            }
+            else if (data.target === 'tab') {
                 App.openTab(data.url);
             }
             else if (data.target === 'sidebar') {
@@ -549,7 +550,7 @@ export class BaseFrame extends BaseForm {
                 const linkOptions = {
                     external: data.frameExternal || true,
                     frameTarget: data.frameTarget || 'details',
-                    frameCaption: data.frameCaption || 'Details',
+                    frameTitle: data.frameTitle || 'Details',
                     force: false
                 };
 
@@ -558,13 +559,23 @@ export class BaseFrame extends BaseForm {
             else {
                 // TODO: Refactor so that we can directly pass the data object to openPopup()
                 const isUpdateLink = data.role === 'update';
+
                 const linkOptions = {
-                    external: true,
-                    modal: Utils.isTrue(data.popupModal),
-                    focus: Utils.isTrue(data.popupModal),
+                    title: data.frameTitle || 'Details',
+                    external: data.frameExternal || true,
+                    modal: Utils.isTrue(data.popupModal || data.frameSelect),
+                    focus: Utils.isTrue(data.popupModal || data.frameSelect),
+                    select: Utils.isTrue(data.frameSelect),
                     size: data.popupSize,
                     onClose: (popup, isCanceled) => { if (!isCanceled && isUpdateLink) { this.reloadUrl(); } }
                 };
+
+                if (linkOptions.select) {
+                    linkOptions.onSelect = (item) => {
+                        Utils.emitEvent(event.target, 'epi:select:entity', item, this, false);
+                    }
+                    Utils.emitEvent(event.target, 'epi:select:open', null, this, false);
+                }
 
                 App.openPopup(data.url, linkOptions, this);
             }
@@ -577,6 +588,10 @@ export class BaseFrame extends BaseForm {
 
     /**
      * After loading new data, update title and buttons
+     *
+     * Handles the following options:
+     * - title: The title of the frame or window. Will be overwritten by the breadcrumbs in the response if they exist.
+     * - ajaxButtons: Whether to create buttons from the AJAX content:
      *
      * @param {string|HTMLElement} data Data containing title and button elements
      * @param {Object} options
@@ -618,6 +633,10 @@ export class BaseFrame extends BaseForm {
 
         // Remove footer if empty
         const footer = data.querySelector('footer');
+        const sandwich = footer ? footer.querySelector('.widget-sandwich') : null;
+        if (sandwich && footer.childElementCount === 1) {
+            sandwich.remove();
+        }
         if (footer && footer.innerHTML.trim() === '') {
             footer.remove();
         }
@@ -1241,22 +1260,25 @@ export class TabFrame extends BaseFrame {
  * Buttons in the response are moved into the dialog footer.
  *
  * When loading ajax content, the popup flow depends on the buttons and the response URL:
+ *
  * - Close popup & open new tab:
  *   a) The response contains an 'a' element with the role "download" and a valid URL in the href attribute.
  *   b) The response URL contains a query parameter "open" with a valid URL.
+ *
  * - Close popup and proceed in the current window:
  *   The response contains an 'a' element with the role "proceed",
  *   the target "main" and a valid URL in the href attribute.
+ *
  * - Close the popup:
  *   a) The response URL contains a query parameter "close" with the value "1".
  *   b) The response contains no submit buttons and no proceed buttons,
  *      i.e. no 'a' elements with role "proceed" and target "main".
+ *
  * - Show response in the popup: If the popup is not closed by any of the previous conditions.
- *
- *
  *
  * ### Options
  * - closeIcon The icon to use for the close button (e.g. "ui-icon-closethick")
+ * - modal (boolean) Whether the popup should be modal or not. Default: true.
  *
  * @param {Object} options
  */
@@ -1277,6 +1299,7 @@ export class PopupWindow extends BaseFrame {
             modal: true,
             ajaxButtons: true,
             external: false,
+            select: false,
             valueKey: 'id',
             dialogButtons: {},
             focus: true
@@ -1552,8 +1575,12 @@ export class PopupWindow extends BaseFrame {
             return false;
         }
 
-        // Always open in popups
-        event.detail.data.target = 'popup';
+        // Redirect main to tab, others to popups
+        if (event.detail.data.target === 'main') {
+            event.detail.data.target = 'tab';
+        } else if (event.detail.data.target !== 'tab') {
+            event.detail.data.target = 'popup';
+        }
 
         // Call parent method
         return super.onOpenDetails(event);
@@ -1890,7 +1917,7 @@ export class SelectWindow extends PopupWindow {
     onClick(event) {
         const selected = event.target.closest('[data-list-itemof]');
         const itemtypes = Utils.splitString(this.options.itemtype);
-        const matches = (this.options.selectItem ||true) && selected && (!itemtypes.length || (itemtypes.includes(selected.dataset.listItemtype)));
+        const matches = (this.options.selectItem || true) && selected && (!itemtypes.length || (itemtypes.includes(selected.dataset.listItemtype)));
 
         // Select on click and dblclick
         if (matches && (this.options.selectOnClick || (event.detail === 2))) {
@@ -1949,6 +1976,7 @@ export class SelectWindow extends PopupWindow {
         }
         dialog.closeWindow();
     }
+
     /**
      * Change event handler for dropdown-selector
      *
@@ -1958,6 +1986,14 @@ export class SelectWindow extends PopupWindow {
      */
     onChange(event) {
         if (!event.target.classList.contains('widget-dropdown-selector')) {
+            return;
+        }
+
+        if (!this.widgetElement.contains(event.target)) {
+            return;
+        }
+
+        if (!this.widgetElement.contains(event.target.closest('.content-main'))) {
             return;
         }
 
@@ -1983,13 +2019,16 @@ export class SelectWindow extends PopupWindow {
 
 }
 
+/**
+ * Show an element in a detached popup window
+ */
 export class DetachedWindow extends PopupWindow {
 
     /**
-     * Create a popup showing an element
+     * Constructor
      *
-     * @param {HTMLElement} element
-     * @param {Object} options
+     * @param {HTMLElement} element The element to detach.
+     * @param {Object} options Options passed to showData().
      * @param {BaseFrame} parentFrame The frame that issued the request or undefined
      */
     constructor(element, options, parentFrame) {
@@ -2052,15 +2091,18 @@ export class DetachedWindow extends PopupWindow {
     }
 }
 
+/**
+ * Show an element in a detached tab in the more tabsheet
+ */
 export class DetachedTab extends TabFrame {
 
     /**
-     *
      * Constructor
-     * @param {HTMLElement} element The element to detach
-     * @param {Tabsheets} tabsheetsWidget The tabsheets widget where a tab will be created
-     * @param {Object} options Options with the tab title. Passed to showData().
-     * @param {BaseFrame} parentFrame The frame that issued the request
+     *
+     * @param {HTMLElement} element The element to detach.
+     * @param {Tabsheets} tabsheetsWidget The tabsheets widget where a tab will be created.
+     * @param {Object} options Options containing the tab title. Passed to showData().
+     * @param {BaseFrame} parentFrame The frame that issued the request.
      * @listens epi:remove:tabsheet
      */
     constructor(element, tabsheetsWidget, options, parentFrame) {
@@ -2105,7 +2147,7 @@ export class DetachedTab extends TabFrame {
 
         options.frameTarget = options.frameTarget || 'more';
         delete options.title;
-        delete options.frameCaption;
+        delete options.frameTitle;
 
         super.showData(options, parentFrame);
     }

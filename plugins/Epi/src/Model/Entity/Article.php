@@ -23,6 +23,7 @@ use Cake\Utility\Hash;
 use Epi\Model\Behavior\PositionBehavior;
 use Epi\Model\Table\ArticlesTable;
 use Batch\Model\Tasks\BaseTask;
+use Exception;
 
 /**
  *Article Entity

@@ -215,28 +215,31 @@ ul.widget-tree li.item-meta[data-role="manage"] {
 ul.widget-tree li.item-meta[data-role="manage"]:hover {
     background-color: var(--nav-bg-color-hover-light);
     color: var(--button-font-color);
-
 }
 
 ul.widget-tree li.item-meta[data-role="manage"] .tree-content a {
-    width: 100%;
-}
-ul.widget-tree li.item-meta[data-role="manage"] .tree-content::before
-{
-    content: '';
-    display: block;
-    height: 1em;
-    width: 1em;
-    background-image: url('../img/new_tab.svg');
-    background-position: initial;
-    background-size: 1em;
-    background-repeat:no-repeat;
-    margin-right: 0.5em;
-    filter: brightness(0.5);
-
+    padding-right: 1em;
 }
 
-ul.widget-tree li.item-meta[data-role="manage"]:hover .tree-content::before {
+ul.widget-tree li.item-meta[data-role="manage"] .tree-content a:last-child {
+    flex-grow: 1;
+}
+
+ul.widget-tree li.item-meta[data-role="manage"] .tree-content a::before {
+    content: "\f08e";
+    font-family: var(--icon-fontfamily), fantasy;
+    font-style: normal;
+    padding-right:0.5em;
+}
+
+ul.widget-tree li.item-meta[data-role="manage"] .tree-content a.popup::before {
+    content: "\e80b";
+    font-family: var(--icon-fontfamily), fantasy;
+    font-style: normal;
+    padding-right:0.5em;
+}
+
+ul.widget-tree li.item-meta[data-role="manage"]:hover .tree-content a::before {
     filter: brightness(1);
 }
 
@@ -250,7 +253,6 @@ ul.widget-tree li.item input[type=checkbox] {
     display: inline-block;
     line-height: 1em;
 }
-
 
 ul.widget-tree li.item label {
     margin:0;

@@ -1004,6 +1004,7 @@ export class TableWidget extends BaseWidget {
         });
 
         this.lastInCurrentSelection = selectUntil;
+        this.updateSelectLinks();
 
         return selectUntil;
     }
@@ -1053,6 +1054,7 @@ export class TableWidget extends BaseWidget {
         this.lastSelected = selectRow;
         this.lastInCurrentSelection = selectRow;
 
+        this.updateSelectLinks();
         return selectRow;
     }
 
@@ -1138,7 +1140,6 @@ export class TableWidget extends BaseWidget {
         // Set IDs
         document.querySelectorAll('[data-list-select="' + listName + '"]').forEach((elm) => {
             const param = elm.dataset.listParam;
-
             const url = new URL(elm.getAttribute('href'), App.baseUrl);
             url.searchParams.set(param, ids);
             elm.setAttribute('href', url.toString());

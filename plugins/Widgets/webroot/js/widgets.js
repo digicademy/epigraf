@@ -24,7 +24,7 @@ import {TreeWidget} from './trees.js';
 import {DragAndDrop} from './dragdrop.js';
 import {ScrollPaginator} from './paginator.js';
 import {ResizableSidebar, Accordion, Tabsheets, ScrollSync, ContentLoader} from './layout.js';
-import {ConfirmWindow, MessageWindow, PopupWindow, MainFrame, TabFrame} from './frames.js';
+import {ConfirmWindow, MessageWindow, PopupWindow, MainFrame, TabFrame, SelectWindow} from './frames.js';
 import {HighlightText} from './highlight.js';
 import {JsonEditor} from './editors.js';
 import {MapWidget} from './map.js';
@@ -225,6 +225,15 @@ window.App.hideDialog = function(event) {
 };
 
 /**
+ * Open a URL in the current window
+ *
+ * @param {String} url
+ */
+window.App.openMain = function(url) {
+    window.location.href = url;
+}
+
+/**
  * Open a URL in a new browser tab
  *
  * @param {String} url
@@ -270,12 +279,20 @@ window.App.openPopup = function(data, options, parentFrame) {
     }
 
     // Create new popup
-    const popup = new PopupWindow();
-    if (options.name) {
-        App.addWidget(options.name, popup);
+    let popup;
+    if (options.select) {
+        options.modal = true;
+        options.buttonSelect = true;
+        options.selectOnClick = false;
+        popup = new SelectWindow(options, parentFrame);
+    } else {
+        popup = new PopupWindow();
+        if (options.name) {
+            App.addWidget(options.name, popup);
+        }
+        popup.showData(options, parentFrame);
     }
 
-    popup.showData(options, parentFrame);
 
     return popup;
 }
@@ -294,9 +311,15 @@ window.App.hidePopup = function(name) {
  * @param data URL or element to be loaded.
  *             Can be skipped if the URL or an element is provided in the options
  * @param options Object with the following keys
+ *                - frameTarget: The name of the frame to be used in the sidebar (default: 'details')
+ *                - frameTitle: The caption of the frame (default: 'Details')
+ *
+ *                Other options are passed to showData():
  *                - url
  *                - element
  *                - actions
+ *                - ajaxButtons
+ *
  * @param {BaseFrame} parentFrame The frame that issued the request or undefined
  */
 window.App.openSidebar = function (data, options, parentFrame) {
@@ -328,8 +351,8 @@ window.App.openSidebar = function (data, options, parentFrame) {
         // }
 
         options.frameTarget = options.frameTarget || 'details';
-        options.frameCaption = options.frameCaption || 'Details';
-        const tabsheet = tabsheetsWidget.createTab(options.frameTarget, options.frameCaption);
+        options.frameTitle = options.frameTitle || 'Details';
+        const tabsheet = tabsheetsWidget.createTab(options.frameTarget, options.frameTitle);
         const detailWidget = App.createWidget(tabsheet,'frame');
         detailWidget.showData(options, parentFrame);
 

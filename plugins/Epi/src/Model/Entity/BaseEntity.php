@@ -406,6 +406,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         if (!empty($typeField)) {
             if (empty($this->_fields[$typeField])) {
                 $warning = [
+                    'type' => 'empty-type',
                     'table' => $this->tableName,
                     'field' => $typeField,
                     'id' => $this->id
@@ -415,6 +416,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             }
             elseif (empty($this->type)) {
                 $warning = [
+                    'type' => 'missing-type',
                     'table' => $this->tableName,
                     'field' => $typeField,
                     'id' => $this->id
@@ -452,20 +454,21 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 //                        continue;
 //                    }
 
-                    // Field names to config keys
+                    // Map field names to config keys
                     // TODO: Ugly, how to make it better?
-                    $fieldKey = $fieldName;
-                    if ($fieldName === 'date_value') {
-                        $fieldKey = 'date';
-                    }
-                    elseif ($fieldName === 'properties_id') {
-                        $fieldKey = 'property';
-                    }
-                    elseif ($fieldName === 'file_name') {
-                        $fieldKey = 'file';
+
+                    $aliasedFields = ['date', 'property', 'file'];
+                    if (in_array($fieldName, $aliasedFields)) {
+                        continue;
                     }
 
+                    $fieldAliases = [
+                        'date_value' => 'date',
+                        'properties_id' => 'property',
+                        'file_name' => 'file'
+                    ];
 
+                    $fieldKey = $fieldAliases[$fieldName] ?? $fieldName;
                     $fieldConfig = $fieldsConfig[$fieldKey] ?? [];
 
                     // Unconfigured fields with values
@@ -2622,7 +2625,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * Clean xml fields
      *
      * ## Steps
-     * - remove: Remove the tags
+     * - remove: Remove the tags, but keep the content
      * - unnest: Remove nested tags, for example if a 'quot' tag contains a child 'quot' tag, remove the child element.
      *
      * @param array $tags An array of element names
@@ -2674,31 +2677,13 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     public function injectXmlAttributes($value = null, $options = [], $fieldName = '')
     {
         $links = $this->root->links_by_tagid ?? [];
-        $footnotes = $this->root->footnotes_by_tagid ?? [];
 
-        $entity = $this;
-        $callback_ids = static function (&$element, &$parser) use ($links, $footnotes, $options, $entity, $fieldName) {
+        $callback_ids = static function (&$element, &$parser) use ($links, $options,  $fieldName) {
             if ($element['position'] == 'open') {
 
                 if (!empty($element['attributes']['id'])) {
 
                     $matchingLinks = $links[$element['attributes']['id']] ?? [];
-
-//                    $matchingFootnotes = $footnotes[$element['attributes']['id']] ?? [];
-//
-//                    if (empty($matchingLinks) && empty($matchingFootnotes)) {
-//                        $entity->setLinkError(
-//                            is_array($fieldName) ? implode('.', $fieldName) : $fieldName,
-//                            __(
-//                                'Missing annotation for tag {name}#{id}. ',
-//                                [
-//                                    'name' => $element['name'],
-//                                    'id' => $element['attributes']['id']
-//                                ]
-//                            )
-//                        );
-//                    }
-//                    elseif (count($matchingLinks) === 1) {
 
                     // Atomic annotations have exactly one link record
                     // pointing to exactly one target.
@@ -2807,7 +2792,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             unset($metadata['filename']);
 
             $result = Files::updateXmp(Files::joinPath([$targetFolder, $filename]), $metadata, true);
-            if ($result && ($newFilename !== $filename)) {
+            if ($newFilename !== $filename) {
                 $result = Files::renameFile($targetFolder, $filename, $newFilename);
             }
         }

@@ -90,22 +90,34 @@
 <?php endif; ?>
 
 <!-- Content area -->
-<?php if ($this->request->getQuery('template') === 'select'): ?>
-    <?= $this->element('../Properties/index_select') ?>
-<?php elseif ($this->request->getQuery('template') === 'choose'): ?>
-    <?= $this->element('../Properties/index_select') ?>
-<?php elseif ($this->request->getQuery('template') === 'input'): ?>
-    <?= $this->element('../Properties/index_input') ?>
-<?php else: ?>
-    <?= $this->element('../Properties/index_table') ?>
-<?php endif; ?>
+
+<?php
+    $template =$this->getContentTemplate(
+        'table',
+         [
+            'select' => 'select',
+            'choose'=> 'select',
+            'input' => 'input',
+            'table' => 'table'
+        ]
+    );
+?>
+
+<?= $this->element('../Properties/index_' . $template) ?>
 
 <!-- Actions -->
 <?php
+    //TODO what else to filter out?
+    $queryparams = Attributes::paramsToQueryString(
+        $this->getConfig('options')['params'],
+        ['selected', 'template', 'action']
+    );
+
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup('bottom');
     $this->Link->addCounter();
     $this->Link->addActionGroupLabel(__('Context Actions'));
+
     $this->Link->addCreateAction(
         __('Create property'),
         [
@@ -122,12 +134,6 @@
             'class' => 'popup actions-set-default',
             'data-popup-modal' => true
         ]
-    );
-
-    //TODO what else to filter out?
-    $queryparams = Attributes::paramsToQueryString(
-        $this->getConfig('options')['params'],
-        ['selected', 'template', 'action']
     );
 
     $this->Link->addAction(
@@ -161,7 +167,7 @@
             'data-switch-class' => 'hide',
             'data-switch-element' => '.actions-set-default, .actions-set-move',
             'data-target-model' => 'epi.properties',
-            'roles' => ['admin','editor','author']
+            'roles' => ['admin', 'editor', 'author']
         ]
     );
 
@@ -172,7 +178,7 @@
         [
             'linktype' => 'button',
             'class' => 'actions-set-move hide',
-            'data-switch-reverse'  => '1',
+            'data-switch-reverse' => '1',
             'data-role' => 'save'
             // TODO: Add shortcuts without conflicting the entity save action in the sidebar
             //'shortcuts' => ['Ctrl+S', 'F10']
@@ -184,7 +190,7 @@
         $this->request->getUri(),
         [
             'data-role' => 'cancel',
-            'data-switch-reverse'  => '1',
+            'data-switch-reverse' => '1',
             'class' => 'actions-set-move hide'
         ]
     );

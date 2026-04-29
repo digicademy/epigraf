@@ -7,9 +7,11 @@ toc: false
 Epigraf stores data according to the [Relational Article Model](/epigraf/user/coreconcepts/model).
 You can retrieve it directly from the database, if you have direct access to the database server.
 However, usually, it is more convenient to use the [Epigraf API](/epigraf/user/coreconcepts/api) for exporting data.
-Once you have retrieved the data, you can convert it into tidy tables for further analysis.
+The whole Epigraf application is built on top of a REST API.
+You simply add the desired output format extension (e.g. `.json`) to the URLs visible in the browser.
 
-The most straightforward method for mapping data to simple tables is using the [rpigraf-package](https://github.com/datavana/rpigraf/).
+Once you have retrieved the data, you can convert it into tidy tables for further analysis.
+The most straightforward method for retrieving data and mapping it to simple tables is using the [rpigraf-package](https://github.com/datavana/rpigraf/).
 In the [example vignettes](https://github.com/datavana/rpigraf/blob/main/vignettes/),
 you find code chunks for importing data and for getting it back from Epigraf.
 Further, the package implements some useful features for data analysis such as showing annotated text segments.

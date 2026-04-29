@@ -30,8 +30,11 @@ return [
      */
     'test' => filter_var(env('TEST', false), FILTER_VALIDATE_BOOLEAN),
 
-
     'snow' => false,
+
+    'DebugKit' => [
+        'ignoreAuthorization' => true,
+    ],
 
     /**
      * Configure basic information about the application.

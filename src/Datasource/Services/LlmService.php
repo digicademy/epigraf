@@ -41,7 +41,8 @@ class LlmService extends BaseService
         'itemtype',
         'propertytype',
         'sectiontypes',
-        'tagname'
+        'tagname',
+        'format'
     ];
 
     public $client = null;
@@ -165,13 +166,13 @@ class LlmService extends BaseService
         $codebook = [];
         foreach ($properties as $row) {
 
+            if (empty($row['norm_iri']) || empty($row['path'])) {
+                continue;
+            }
+
             $description = $row['path'];
             if (!empty($row['comment'])) {
                 $description .= ': ' . $row['comment'];
-            }
-
-            if (empty($row['norm_iri']) || empty($row['path'])) {
-                continue;
             }
 
             $rule = [
@@ -197,10 +198,12 @@ class LlmService extends BaseService
      * TODO: Think about how to make it dry with BaseTaskData
      *
      * ### Options
-     * record (string): A table id in the format database.table.id
+     * - database (string): The database name
+     * - record (string): A table-prefixed article id (e.g. articles-1).
+     * - sectiontypes (string) Optional, a list of sectiontypes for sections to include in the rendered result
      *
      * @param array $options
-     * @return string
+     * @return string The article rendered in Markdown format.
      */
     public function getInputText($options) {
 
@@ -233,6 +236,24 @@ class LlmService extends BaseService
         return $rendered;
     }
 
+    /**
+     * Lookup task data
+     *
+     * ### Options
+     * - task (string): The task (e.g. 'annotate'), mandatory.
+     * - database (string): The database name.
+     * - input (string): The input text. One of input or record is mandatory.
+     * - record (string): A table-prefixed article ID. The article is retrieved from the database and rendered as markdown.
+     * - sectiontypes (array): Used in combination with the record option. A list of section types that determines the sections to be rendered.
+     *                         Leave empty to render all sections.
+     * - tagname (string): The annotation type, mandatory for annotation tasks.
+     * - itemtype (string): The item type, mandatory for coding tasks.
+     * - multinomial (boolean): Whether the coding task is multinomial, i.e. multiple properties can be assigned to one item.
+     * - prompts (array): An array with the keys 'user' and 'system' for the respective prompts to be provided to the LLM.
+     *
+     * @param array $options
+     * @return array
+     */
     public function preProcess($options) {
         if (!empty($options['record'])) {
            $options['input'] = $this->getInputText($options);
@@ -269,7 +290,7 @@ class LlmService extends BaseService
      * For coding tasks, translates results to properties.
      * For annotation tasks, replaces anno tags with span tags,
      * maps results to properties, and adds the attributes
-     * data-link-id, data-link-value, data-target-tab, data-target-id.
+     * data-link-target, data-link-value, data-target-tab, data-target-id.
      *
      * @param array $response
      * @param array $options
@@ -284,7 +305,7 @@ class LlmService extends BaseService
         //       and transport the parameters with the response.
         $response['params'] = array_intersect_key(
             $options,
-            ['task' => 1, 'database' => 1, 'tagname' => 1, 'multinomial' => 1, 'itemtype' => 1]
+            ['task' => 1, 'database' => 1, 'tagname' => 1, 'multinomial' => 1, 'itemtype' => 1, 'format' => 1]
         );
 
         if (($response['state'] ?? 'FAILURE') !== 'SUCCESS') {
@@ -293,26 +314,22 @@ class LlmService extends BaseService
 
         $task = $options['task'] ?? '';
 
-        // Map LLM annotations to HTML span tags
+        // Map LLM annotations to XML tags or HTML span tags
         if (($task === 'annotate') && !empty($options['tagname']) ) {
 
             $tagName = $options['tagname'];
             $xmlText = $response['result']['answers'][0]['llm_result'] ?? '';
 
-            $xmlText = $this->withTable(
+            $xmlAnnotations = $this->withTable(
                 $options['database'] ?? '',
                 'Epi.Properties',
-                function($databank, $table) use ($tagName, $xmlText) {
-                    $propertyType = $databank->types['links'][$tagName]['merged']['fields']['to']['targets']['properties'][0] ?? '';
-                    if (!empty($propertyType)) {
-                        return $table->renderAnnotations($xmlText, $tagName, $propertyType);
-
-                    }
-                    return [];
+                function($databank, $table) use ($tagName, $xmlText, $options) {
+                    return $table->renderAnnotations($xmlText, $tagName, $options);
                 }
             );
 
-            $response['result']['answers'][0]['llm_result'] = $xmlText;
+            $response['result']['answers'][0]['llm_result'] = $xmlAnnotations['text'];
+            $response['result']['answers'][0]['llm_links'] = $xmlAnnotations['links'];
         }
 
         // Map LLM answer to properties
@@ -461,7 +478,7 @@ class LlmService extends BaseService
                     $finished++;
                 }
                 else {
-                    $task = $this->query($task['task_id'] ?? null, $task);
+                    $task = $this->query($task['task_id'] ?? null, $task['params'] ?? []);
                     if (($task['state'] ?? '') !== 'PENDING') {
                         $finished++;
                     }

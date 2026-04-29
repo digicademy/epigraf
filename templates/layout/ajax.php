@@ -118,6 +118,7 @@
     <?= $this->renderSidebar('right', ['close'=>true]) ?>
 <?php endif; ?>
 
+<!-- Footer -->
 <?php if ($this->getShowBlock('footer')): ?>
-    <?= $this->renderAjaxFooter() ?>
+    <?= $this->renderFooter() ?>
 <?php endif; ?>

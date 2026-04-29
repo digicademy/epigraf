@@ -55,6 +55,11 @@ class TaskImport extends BaseTask
     /**
      * Load csv or xml data and convert to array
      *
+     * ### Options
+     * - offset
+     * - limit
+     * - page
+     *
      * @param array $options
      * @param boolean $preview Set to true to reduce the number of loaded rows in preview mode
      *
@@ -73,6 +78,13 @@ class TaskImport extends BaseTask
         // CSV
         if ($inputMode === 'csv') {
             $rows = Files::loadCsv($inputFile, $options);
+            $this->_loadedRows += count($rows);
+            return($rows);
+        }
+
+        // CSV
+        elseif ($inputMode === 'xlsx') {
+            $rows = Files::loadXlsx($inputFile, $options);
             $this->_loadedRows += count($rows);
             return($rows);
         }
@@ -251,8 +263,10 @@ class TaskImport extends BaseTask
     }
 
     /**
-     * Get count of csv rows or xml files for the progress bar
-     * @return int
+     * Get the number of rows in the input csv or xlsx file
+     * or the number of xml files in the input folder.
+     *
+     * @return int The number of rows, without the header row.
      */
     protected function _getCount()
     {
@@ -267,6 +281,11 @@ class TaskImport extends BaseTask
         // CSV file
         if ($inputMode === 'csv') {
             return Files::countCsv($inputFile);
+        }
+
+        // XLSX file
+        elseif ($inputMode === 'xlsx') {
+            return Files::countXlsx($inputFile);
         }
 
         // XML file

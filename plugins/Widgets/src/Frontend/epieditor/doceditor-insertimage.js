@@ -15,7 +15,7 @@ import Utils from '/js/utils.js';
 /**
  * Select an image
  *
- * The plugin emits the 'epi:select' event on the editor element.
+ * The plugin emits the 'epi:select:item' event on the editor element.
  * You need to listen to the event and open a modal popup to choose a value.
  *
  * The event carries options for the SelectWindow widget,
@@ -24,7 +24,7 @@ import Utils from '/js/utils.js';
  */
 export default class InsertImage extends Plugin {
     /**
-     * @fires epi:select
+     * @fires epi:select:item
      */
     init() {
         const editor = this.editor;
@@ -82,7 +82,7 @@ export default class InsertImage extends Plugin {
                     }
                 };
 
-                Utils.emitEvent(editor.sourceElement, 'epi:select', windowOptions, this.editor, true);
+                Utils.emitEvent(editor.sourceElement, 'epi:select:item', windowOptions, this.editor, true);
             } );
 
             return view;

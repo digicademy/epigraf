@@ -1036,7 +1036,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         if (in_array('sections', $snippets)) {
             $containSections = function ($q) use ($options) {
                 $q = $q
-                    ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name', 'lft', 'rght']);
+                    ->select(['id', 'parent_id', 'articles_id', 'sectiontype', 'name', 'comment', 'lft', 'rght']);
 
                 $types = $options['sectiontypes'] ?? [];
                 if (!empty($types)) {
@@ -1074,6 +1074,11 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $contain['Items'] = $containItems;
             $contain[] = 'Items.Properties';
             $contain[] = 'Items.Types';
+
+            if (in_array('targets', $snippets)) {
+                $contain[] = 'Items.LinkedArticle';
+                $contain[] = 'Items.LinkedSection';
+            }
         }
 
         if (in_array('links', $snippets)) {
@@ -1083,15 +1088,15 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
             if (in_array('targets', $snippets)) {
                 $contain[] = 'Links.Articles';
-                $contain[] ='Links.Articles.Projects';
+                $contain[] = 'Links.Articles.Projects';
 
-                $contain[] ='Links.SectionsWithAncestors';
-                $contain[] ='Links.SectionsWithAncestors.SectionArticles';
-                $contain[] ='Links.SectionsWithAncestors.SectionArticles.Projects';
+                $contain[] = 'Links.SectionsWithAncestors';
+                $contain[] = 'Links.SectionsWithAncestors.SectionArticles';
+                $contain[] = 'Links.SectionsWithAncestors.SectionArticles.Projects';
 
-                $contain[] ='Links.Footnotes';
-                $contain[] ='Links.Footnotes.FootnoteArticles';
-                $contain[] ='Links.Footnotes.FootnoteArticles.Projects';
+                $contain[] = 'Links.Footnotes';
+                $contain[] = 'Links.Footnotes.FootnoteArticles';
+                $contain[] = 'Links.Footnotes.FootnoteArticles.Projects';
             }
 
         }

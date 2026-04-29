@@ -406,24 +406,6 @@ Particularly frequently used special characters can be [added to](/epigraf/user/
 
 Batch processing enables you to process multiple items automatically. It is primarily used for maintenance work and can be accessed via the Mutate button. After selecting the items, choose a task.
 
--   **Move to Project**: The selected articles are moved to another project.
--   **Delete articles**: The selected articles will be deleted.
--   **Copy articles**: The selected articles are duplicated.
--   **Assign collection**: All selected articles are assigned to a category.
-     You can use this feature to group articles and use the faceted search to select articles from different groups.
-     Within each article, a "Collections" section (sectiontype=collections) is created if it does not already exist.
-     Within the collection section, a collection item (itemtype=collections) is created and linked to the selected property.
--   **Assign article number**: A new signature entity is inserted at the first position in the "Signatures" section (sectiontype=signatures).
-    The feature is used to number articles for publication.
-     The new signature is a consecutive number, according to the order of the selected articles.
-     At the same time, a reference to a selected literature title (propertytype=literature) is created.
--   **Summarize Text:** An automatic summary is generated or an existing summary is updated in the summary section (sectiontype=summary).
-     This features requires to configure an LLM service (usually [https://databoard.uni-muenster.de](https://databoard.uni-muenster.de/)).
--   **Rebuild section order**: In case the section hierarchy is corrupt, you can repair it by rebulding the section order.
--   **Rebuild fulltext index**: The full text index for the selected articles is updated.
-     You should update the index after the configuration for the full-text search has been changed.
--   **Rebuild dates index**: The date key is updated for the selected articles.
-     The date key is used to sort articles according to natural language and fuzzy dating (e.g. 15th century, 1433).
 -   **Assign IRIs**: Each Epigraf entity is identified by a unique IRI.
     Epigraf IRIs contain a table name, the entity type and an IRI fragment identifying the entity.
     For articles, the IRI fragment should contain the database name and the article ID.
@@ -431,4 +413,29 @@ Batch processing enables you to process multiple items automatically. It is prim
     By default, after new articles have been created, the IRI fragment field (`norm_iri`) is empty.
     When accessing (or transferring) an article without an IRI fragment, a virtual IRI is generated from the database name and the article ID.
     In the rare case that you need fixed IRI fragments in the database, you can permanently store them by the "Assign IRIs" task.
-
+-   **Assign article number**: A new signature entity is inserted at the first position in the "Signatures" section (sectiontype=signatures).
+    The feature is used to number articles for publication.
+    The new signature is a consecutive number, according to the order of the selected articles.
+    At the same time, a reference to a selected literature title (propertytype=literature) is created.
+-   **Assign project**: The selected articles are moved to another project.
+-   **Assign category**: All selected articles are assigned to a category.
+    You can use this feature to group articles and use the faceted search to select articles from different groups.
+    Within each article, a "Collections" section (sectiontype=collections) is created if it does not already exist.
+    Within the collection section, a collection item (itemtype=collections) is created and linked to the selected property.
+-   **Copy articles**: The selected articles are duplicated.
+-   **Delete articles**: The selected articles will be deleted.
+-   **Publish articles**: The publication state of selected articles will be set to a given value.
+-   **Clean XML content**: All xml fields are parsed and revised. You explicitly define a list of tags
+    (tags must correspond to links or footnotes configuration types) to be revised.
+    The step "Remove empty and nested child tags" first removes tags that are contained in the same tag type.
+    For example, if a 'quot' tag contains a child 'quot' tag, the child element is removed, but the content is kept.
+    Thus, the content is still annotated with the parent tag. Second, all empty tags of the given type are removed.
+    For example, if 'quot' tags are used to mark quotated text, empty tags don't make sense as they mark nothing.
+    The step "Remove tags, keep content" removes the annotation without deleting its content.
+-   **Generate items:** Automatic summaries, classification and annotations are generated using an LLM.
+     This features requires to configure an LLM service (usually [https://databoard.uni-muenster.de](https://databoard.uni-muenster.de/)).
+-   **Rebuild dates index**: The date key is updated for the selected articles.
+    The date key is used to sort articles according to natural language and fuzzy dating (e.g. 15th century, 1433).
+-   **Rebuild fulltext index**: The full text index for the selected articles is updated.
+     You should update the index after the configuration for the full-text search has been changed.
+-   **Rebuild section order**: In case the section hierarchy is corrupt, you can repair it by rebulding the section order.

@@ -372,9 +372,9 @@ export class XmlEditor extends BaseDocument {
      *
      * @param {string|HTMLElement} tag The tag element or its ID
      * @param {Object|string|null} value The value, either null or an object with the keys
-     *              - label The text that will be displayed in the annotation and as textContent of the tag
-     *              - tab Set the to_tab property of the link (table name, e.g. properties)
-     *              - id Set the to_id property of the link (ID)
+     *              - label: The text that will be displayed as textContent of the tag
+     *              - link-target: The table prefixed ID of the target entity (to_tab and to_id property).
+     *              - link-label: The annotation box text.
      *              - further attributes will be added as data-attr-* attributes
      *              If the value is a string, it will be parsed as JSON and converted to an object.
      *              If the value is null, the tag will be removed.
@@ -393,8 +393,6 @@ export class XmlEditor extends BaseDocument {
                 if (value === null) {
                     editor.plugins.get('XmlTagEditing').removeTag(editor, tag);
                 } else {
-                    delete value.tab;
-                    delete value.id;
                     editor.plugins.get('XmlTagEditing').updateTag(editor, tag, value);
                 }
 

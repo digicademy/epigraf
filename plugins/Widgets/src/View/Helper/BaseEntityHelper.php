@@ -581,7 +581,7 @@ class BaseEntityHelper extends Helper
                     'sections[' . $sectionId . '][properties_id]',
                     [
                         'type' => 'select',
-                        'empty' => false,
+                        'empty' => true,
                         'class' => 'doc-section-property',
                         'value' => $section->properties_id,
                         'data-row-field' => 'properties_id',
@@ -1592,10 +1592,8 @@ class BaseEntityHelper extends Helper
                     ]
                 ],
                 'param' => 'find',
-                //'paneId' => 'pane_' . Attributes::cleanIdentifier($inputField),
                 'paneSnippet' => 'rows',
                 'listValue' => 'id',
-                //<- which attribute do the items carry? data-id (for trees) or data-value (everything else)
                 'value' => $value,
                 'text' => $content,
                 'error' => $error,
@@ -2966,6 +2964,15 @@ class BaseEntityHelper extends Helper
                     else {
                         $inputOptions['value'] = $entity->getValueRaw($fieldName);
                     }
+                }
+
+                // Clean up inputOptions
+                if (($inputOptions['type'] ?? 'input') === 'checkbox') {
+                    unset($inputOptions['levels']);
+                }
+
+                if ((($inputOptions['height'] ?? 1) > 1) && ($inputType === 'text')) {
+                    $inputOptions['type'] = 'textarea';
                 }
 
                 $out = $this->Form->control($fieldName, $inputOptions);

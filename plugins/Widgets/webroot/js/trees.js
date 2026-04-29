@@ -272,8 +272,11 @@ export class TreeWidget extends BaseWidget {
 
     /**
      * Get the label of a node including all path segments.
+     *
      * Each node needs a label element (e.g. in select trees)
-     * @param node
+     * or an element with the `tree-content` class.
+     *
+     * @param {HTMLElement} node
      * @returns {string}
      */
     treeGetPath(node) {
@@ -283,7 +286,7 @@ export class TreeWidget extends BaseWidget {
         }
 
         path = path.map(x => {
-            let label = x.querySelector('label');
+            let label = x.querySelector('label, .tree-content');
             label = label ? (label.dataset.label ?? label.textContent) : (x.dataset.label ?? x.textContent);
             return label.trim();
         });

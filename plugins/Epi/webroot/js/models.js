@@ -1472,7 +1472,7 @@ export class PropertiesModel extends BaseDocumentModel {
         const frame = event.target.closest('.frame-content');
         const dropdown = field ? field.querySelector('.widget-dropdown-selector') : undefined;
 
-        if (field && !frame && !dropdown) {
+        if (field && !dropdown) {
             event.preventDefault();
             event.stopPropagation();
 
@@ -1481,7 +1481,7 @@ export class PropertiesModel extends BaseDocumentModel {
             const propertiesId = elmContent ? elmContent.dataset.rowValue : undefined;
 
             if (fieldData.field && propertiesId) {
-                this.view(propertiesId);
+                this.view(propertiesId, frame);
             }
         }
     }
@@ -1491,17 +1491,22 @@ export class PropertiesModel extends BaseDocumentModel {
      *
      * @param {String} id The property ID as string
      */
-    view(id) {
+    view(id, popup = false) {
         if (!id) {
             return;
         }
 
         const url = App.databaseUrl + 'properties/view/' + id;
-        App.openSidebar(url, {
-            title: "Property",
-            ajaxButtons: ['submit'],
-            external: true
-        });
+
+        if (popup) {
+            App.openPopup(url, {ajaxButtons: false});
+        } else {
+            App.openSidebar(url, {
+                title: "Property",
+                ajaxButtons: ['submit'],
+                external: true
+            });
+        }
     }
 }
 
@@ -2282,6 +2287,7 @@ export class FootnotesModel extends BaseDocumentModel {
      *                               - data-tagid The tag id
      *                               - data-type The link or footnote type
      *                               - data-new Whether the element was created by the user using the toolbar
+     *                               - data-selected The selected text in the editor, used for prefilling the footnote content if configured.
      * @param {Object} tagSet
      * @return {HTMLElement}
      */
@@ -2585,15 +2591,15 @@ export class LinksModel extends BaseDocumentModel {
     }
 
     /**
-     * Add an annotation next to the content field
-     *
-     * May be a links or a footnotes annotation.
+     * Add an annotation box (links or footnote annotation) next to the content field
      *
      * @param {String} annoType
      * @param {object} tagAttributes The attributes of the created element, including:
      *                               - data-tagid The tag id
      *                               - data-type The link or footnote type
      *                               - data-new Whether the element was created by the user using the toolbar
+     *                               - data-anno-target The target entity's table-prefixed ID for prefilling new annotation targets.
+     *                               - data-anno-label The annotation box content for prefilling new annotation targets.
      * @param {Object} tagSet
      * @param {Object} fieldData
      * @returns The new link element
@@ -2610,25 +2616,23 @@ export class LinksModel extends BaseDocumentModel {
         // Molecular annotations have attributes prefixed with the property type
         let toType = Utils.getValue(linkConfig,'fields.to.targets.properties.0');
 
+        let toTarget;
         let toValue;
         let toTab;
         let toId;
+        let attrPrefix;
 
-        if (toType) {
-            const attrPrefix = 'data-link-' + toType;
-            toValue = Utils.getValue(tagAttributes, attrPrefix + '-value', '');
-            toTab = Utils.getValue(tagAttributes, attrPrefix + '-tab', '');
-            toId = Utils.getValue(tagAttributes, attrPrefix + '-id', '');
-        }
+        // Atomic annotations have attributes prefixed with 'data-anno-';
+        // if (toType) {
+        //     attrPrefix = 'data-anno-' + toType;
+        // } else {
+            attrPrefix = 'data-link';
+        // }
 
-        // Atomic annotations have attributes prefixed with 'data-target-';
-        else {
-            const attrPrefix = 'data-target';
-            toValue = Utils.getValue(tagAttributes, attrPrefix + '-value', '');
-            toTab = Utils.getValue(tagAttributes, attrPrefix + '-tab', '');
-            toId = Utils.getValue(tagAttributes, attrPrefix + '-id', '');
-            toType = Utils.getValue(tagAttributes, attrPrefix + '-type', '');
-        }
+        toValue = Utils.getValue(tagAttributes, attrPrefix + '-label', '');
+        toTarget = Utils.getValue(tagAttributes, attrPrefix + '-target', '');
+        [toTab, toId] = Utils.splitTablePrefixedId(toTarget);
+
 
         // Fallback
         if (!toValue) {
@@ -2686,7 +2690,8 @@ export class TagsModel extends BaseDocumentModel {
      *
      * @param {HTMLElement} linkContainer
      * @param {string} tagId
-     * @return {Object}
+     * @return {Object} An array of annotation attributes indexed by 'data-links-{rowtype}'.
+     *                  The annotation attributes are an object with the keys id, tab, type, label, new.
      */
     getLinkAttributes(linkContainer, tagId, tagConfig) {
         const self = this;
@@ -2770,6 +2775,9 @@ export class TagsModel extends BaseDocumentModel {
      *                               - data-tagid The tag id
      *                               - data-type The link or footnote type
      *                               - data-new Whether the element was created by the user using the toolbar
+     *                               - data-selected The selected text in the editor, used for prefilling the footnote content if configured.
+     *                               - data-anno-target The target entity's table-prefixed ID for prefilling new annotation targets.
+     *                               - data-anno-label The annotation box content for prefilling new annotation targets.
      * @returns Promise
      */
     onCreateTag(widget, tagAttributes) {
@@ -2820,7 +2828,7 @@ export class TagsModel extends BaseDocumentModel {
                         const propertyType =  Utils.getValue(tagSet, annoType + '.config.fields.to.targets.properties.0');
                         annoElement = Utils.getValue(annoElements, propertyType + '.0');
 
-                        // Recylce annos
+                        // Recycle annos
                         if ((!annoElement) && (leftoverElements.length > 0)) {
                             annoElement = leftoverElements.pop();
                             annoElement.dataset.toType = propertyType;
@@ -2852,7 +2860,7 @@ export class TagsModel extends BaseDocumentModel {
                 // Show editor
                 const isNew = tagAttributes['data-new'];
                 const tagElement = this.getTagByTagId(tagId, widget);
-                if (isNew && (tagElement)) {
+                if (isNew && tagElement) {
                     annoModel.updatePositions(annoContainer);
                     this.editAnnoOrTag(tagElement, isNew);
                 }
@@ -2949,17 +2957,15 @@ export class TagsModel extends BaseDocumentModel {
      *
      * @param {HTMLElement} tagOrAnno The tag (inside ckeditor) or annotation element (div.doc-section-link inside div.doc-section-links)
      * @param {Object|string|null} values The values object (to update the annotation and tag) or null (to remove the annotation and tag).
-     *              In the values object,  keys starting with 'attr-' will be set on the tag.
+     *              In the values object, keys starting with 'attr-' will be set on the tag.
      *              All other keys will be treated as link values.
      *              Each link value is an object with the following keys:
      *              - label The text that will be displayed in the annotation and as text content of the tag
      *                      All labels from the link values will be joined.
-     *              - tab The target tab of the link (e.g. properties)
-     *              - type The to_type property of the link
-     *              - id The target ID of the link
-
+     *              - tab The to_tab property of the link (e.g. properties)
+     *              - type The to_type property of the link (e.g. the property type or the section type)
+     *              - id The to_id property of the link (a number)
      *              If the values object is a string, it will be parsed as JSON and converted to an object.
-
      * @param {boolean} focus Whether the element should get focus
      * @param {Object} typeData The type entity data
      */
@@ -3003,6 +3009,9 @@ export class TagsModel extends BaseDocumentModel {
 
             let annoIdx = 0;
             let labels = [];
+            let annoTargets = [];
+            let annoLabels = [];
+
             for (const [key, value] of Object.entries(values)) {
 
                 if (key.startsWith('attr-')) {
@@ -3025,6 +3034,7 @@ export class TagsModel extends BaseDocumentModel {
 
                             anno.querySelector('span').textContent = label;
                             anno.title = label;
+                            annoLabels.push(labels);
                         }
 
                         if (value.tab !== undefined) {
@@ -3042,9 +3052,17 @@ export class TagsModel extends BaseDocumentModel {
                             Utils.setInputValue(anno.querySelector('input[data-row-field=to_id]'), value.id);
                         }
 
-                        this.doc.models.annotations.reviveAnno(anno);
+                        if ((value.tab !== undefined) && (value.id !== undefined)) {
+                            annoTargets.push(value.tab + '-' + value.id);
+                        } else {
+                            annoTargets.push('');
+                        }
 
+                        this.doc.models.annotations.reviveAnno(anno);
                         this.modelParent.models.annotations.addProperty(anno, value);
+
+
+
                         annoIdx += 1;
                     }
                 }
@@ -3059,6 +3077,12 @@ export class TagsModel extends BaseDocumentModel {
             // Set tag title
             if (labels.length > 0) {
                 tagAttributes['label'] = labels.join(' / ');
+            }
+            if (annoLabels.length > 0) {
+                tagAttributes['link-label'] = annoLabels.join(',');
+            }
+            if (annoTargets.length > 0) {
+                tagAttributes['link-target'] = annoTargets.join(',');
             }
         }
 

@@ -581,7 +581,6 @@ class BatchComponent extends Component
      *
      * With pipeline ID, the tasks configuration will be added at job execution time.
      *
-     *
      * @param string $scope
      * @param array $params The query parameters. A timeout parameter greater than 0 immediately starts the job.
      * @return void
@@ -665,6 +664,7 @@ class BatchComponent extends Component
                     'snippets' => $job->config['snippets'] ?? '',
                     'wrap' => true,
                     'expand' => Attributes::isTrue($job->config['expand'] ?? true),
+                    'idents' => Attributes::cleanOption($job->config['idents'] ?? 'id', ['id', 'iri', 'tmp'], 'id'),
                     'columns' => $job->config['params']['columns'] ?? ''
                 ],
                 [

@@ -169,13 +169,16 @@ class XmlStylesBehavior extends Behavior
      * @param array $element The element attributes will be updated
      * @param array $style The style definition determines which attributes will be processed
      * @param string $format Output format to get the correct style configuration (html|txt|md|rdf|ttl|jsonld)
+     * @param boolean $keepAttributes Whether to keep all existing element attributes (necessary for rendering LLM results)
      * @return array The result array contains the following values
      *               -  keys 'open' or 'close': the bracket content
      *               - 'content' key: the text content
      *               - 'attributes' key: the data-attributes.
      */
-    protected static function renderAttributes(&$element, $style, $format = 'html')
+    protected static function renderAttributes(&$element, $style, $format = 'html', $keepAttributes = false)
     {
+
+        $reservedAttributes = ['id'=>false, 'data-type'=>false, 'data-tagid'=>false, 'class'=>false];
 
         // Unstyled tags
         if (empty($style)) {
@@ -184,10 +187,7 @@ class XmlStylesBehavior extends Behavior
                 'merged' => [
                     'prefix' => $format === 'html' ? ('<' . $element['name'] . '>') : '',
                     'postfix' => $format === 'html' ? ('</' . $element['name'] . '>') : '',
-                    'attributes' => array_diff_key(
-                        $element['attributes'] ?? [],
-                        ['id'=>false, 'data-type'=>false, 'data-tagid'=>false, 'class'=>false]
-                    )
+                    'attributes' => array_diff_key($element['attributes'] ?? [], $reservedAttributes)
                 ]
             ];
         }
@@ -199,6 +199,16 @@ class XmlStylesBehavior extends Behavior
             'text' =>  $style['merged'][$format]['content'] ?? $style['merged']['content'] ?? $style['merged']['html_content'] ?? '',
             'postfix' =>  $style['merged'][$format]['postfix'] ?? $style['merged']['postfix']  ?? $style['merged']['html_postfix'] ?? ''
         ];
+
+        if (!empty($keepAttributes)) {
+            $content['attributes'] = array_diff_key($element['attributes'] ?? [], $reservedAttributes);
+        }
+
+        // Link targets
+        if (!empty($element['attributes']['data-link-target'])) {
+            $content['attributes']['data-link-target'] = $element['attributes']['data-link-target'];
+            $content['attributes']['data-link-label'] = $element['attributes']['data-link-value'] ?? '';
+        }
 
         // Fields
         $tagContent = [];
@@ -277,17 +287,18 @@ class XmlStylesBehavior extends Behavior
      *
      * TODO:refactor, move to entity or to trait
      *
-     * @param array $data
+     * @param string|array $data XML string or array of XML strings.
      * @param string $format See RENDERED_FORMATS constant
+     * @param boolean $keepAttributes Whether to keep all existing element attributes (necessary for rendering LLM results)
      * @return array|false|mixed|string
      */
-    public function renderXmlFields($data = [], $format='html')
+    public function renderXmlFields($data = [], $format='html', $keepAttributes = false)
     {
 
         $counters = &$this->counters;
         $xmlstyles = $this->loadStyles();
 
-        $callback_tags = static function (&$element, &$parser) use (&$counters, $xmlstyles, $format) {
+        $callback_tags = static function (&$element, &$parser) use (&$counters, $xmlstyles, $format, $keepAttributes) {
 
             $style = $xmlstyles[$element['name']] ?? [];
             $tagid = $element['attributes']['id'] ?? '';
@@ -341,7 +352,7 @@ class XmlStylesBehavior extends Behavior
             elseif ($tagtype === 'format') {
 
                 // Render attributes
-                $content = XmlStylesBehavior::renderAttributes($element, $style);
+                $content = XmlStylesBehavior::renderAttributes($element, $style, $format, $keepAttributes);
                 $element['attributes'] = array_merge(
                     $element['attributes'],
                     $content['attributes'] ?? []
@@ -362,7 +373,7 @@ class XmlStylesBehavior extends Behavior
             // Text
             elseif (($tagtype === 'text') && ($element['position'] === 'open')) {
                 // Attribute content
-                $content = XmlStylesBehavior::renderAttributes($element, $style, $format);
+                $content = XmlStylesBehavior::renderAttributes($element, $style, $format, $keepAttributes);
                 $elementContent = $parser->parseCurrentElement();
                 if ($content['text'] === '') {
                     $content['text'] = $elementContent;
@@ -390,7 +401,7 @@ class XmlStylesBehavior extends Behavior
             // Brackets
             elseif (($tagtype === 'bracket') && ($element['position'] == 'open')) {
                 // Render attributes
-                $content = XmlStylesBehavior::renderAttributes($element, $style, $format);
+                $content = XmlStylesBehavior::renderAttributes($element, $style, $format, $keepAttributes);
 
                 // Common bracket attributes
                 $bracketAttributes = array_merge(
@@ -429,6 +440,8 @@ class XmlStylesBehavior extends Behavior
             $data = XmlMunge::parseXmlString($data, $callback_tags);
             if (in_array($format, PLAINTEXT_FORMATS)) {
                 $data = html_entity_decode($data);
+            } elseif ($format === 'html') {
+                $data = preg_replace("/[\r\n ]+/", ' ', $data);
             }
         }
         elseif (is_array($data)) {
@@ -441,44 +454,63 @@ class XmlStylesBehavior extends Behavior
     }
 
     /**
-     * Replace <anno> tags with <span> tags and match IRIs to IDs
+     * Replace <anno> tags with rendered tags and match IRIs to IDs
      *
      * Used to post process the LLM annotations.
      *
+     * ### Options
+     * - format Set to 'html' for HTML rendering.
+     *          Set to 'xml' to replace the tags and in addition creation link entities.
+     *
      * @param string $value XML input text
      * @param string $annoType The annotation type (i.e. the link type as configured in the types table)
-     * @param string $scope The scope of the linked data (i.e. the property type)
-     * @return string XML text with replaced tags
+     * @param array $options Annotation options.
+     * @return array An array with two keys: 'llm_text' contains the XML text with replaced tags, 'llm_links' contains new link entity data
      */
-    public function renderAnnotations($value, $annoType, $scope) : string
+    public function renderAnnotations($value, $annoType, $options = []) : array
     {
-        $properties = $this->table()->getExportData(['scope' => $scope]);
+        $propertyType = $this->table()->getDatabase()->types['links'][$annoType]['merged']['fields']['to']['targets']['properties'][0] ?? '';
+        if (empty($propertyType)) {
+            return ['text' => $value];
+        }
+
+        $properties = $this->table()->getExportData(['scope' => $propertyType]);
         $properties = Arrays::array_group($properties,'norm_iri', true);
+        $links = [];
 
         // Replace opening tags
         $regexOpen = '/<anno\s+value="([^"]*)"\s*>/';
         $value = preg_replace_callback(
             $regexOpen,
-            function ($matches) use ($annoType, $properties){
+            function ($matches) use ($annoType, $properties, $options, &$links) {
                 $annoValue = $matches[1];
-
                 $propertyId = $properties[$annoValue]['id'] ?? '';
-                $propertyCaption = $properties[$annoValue]['path'] ?? $annoValue;
 
-                $attributes = " data-link-id=\"{$propertyId}\"";
-                $attributes .= " data-link-value=\"{$propertyCaption}\"";
-                $attributes .= " data-target-tab=\"properties\"";
-                $attributes .= " data-target-id=\"{$propertyId}\"";
+                if (($options['format'] ?? 'xml') === 'html') {
+                    $propertyCaption = $properties[$annoValue]['path'] ?? $annoValue;
 
-                return "<span class=\"xml_format xml_tag_{$annoType}\" data-type=\"{$annoType}\"{$attributes}>";
+                    $attributes = " data-link-target=\"properties-{$propertyId}\"";
+                    $attributes .= " data-link-value=\"{$propertyCaption}\"";
+                } else {
+                    $tagId = Attributes::uuid();
+                    $attributes = " id=\"{$tagId}\"";
+                    $links[] = ['from_tagname' => $annoType, 'from_tagid' => $tagId, 'to_id' => 'properties-' . $propertyId];
+                }
+
+                return "<{$annoType}{$attributes}>";
             },
             $value
         );
 
         // Replace closing tags
-        $value = str_replace('</anno>', '</span>', $value);
+        $value = str_replace('</anno>', "</{$annoType}>", $value);
 
-        return $value;
+        // Render
+        if (($options['format'] ?? 'xml') === 'html') {
+            $value = $this->renderXmlFields($value, $options['format'], true);
+        }
+
+        return ['text' => $value, 'links' => $links];
     }
 
     /**

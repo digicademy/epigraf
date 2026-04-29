@@ -37,6 +37,7 @@
                     'tree' => $type['merged']['type'] ?? 'tree',
                     'collapsed' => $this->getConfig('options')['params']['collapsed'] ?? (($type['merged']['type'] ?? 'tree') === 'collapsed'),
                     'scope' => $scope,
+                    'columns' => array_filter($type['merged']['columns'] ?? [], fn($x) => !empty($x['select'] ?? false)),
                     'paginate' => 'cursor'
                 ]
             )

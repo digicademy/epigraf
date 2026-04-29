@@ -29,6 +29,7 @@ use ZipArchive;
 use GMagick;
 use IMagick;
 use XMLReader;
+use OpenSpout\Reader\XLSX\Reader as XLSXReader;
 
 class Files
 {
@@ -1039,14 +1040,22 @@ class Files
     /**
      * Load CSV function
      *
-     * @param string $filename filename
-     * @param array $options to set
-     *  - offset: the line number counting from 0, where 0 is the first row after the header line
-     *  - limit: the maximum number of lines to read
-     *  - fields: Array of fields to import. If empty, will be taken from first line.
-     *  - rownumbers (default '#'): Column where rownumber should be stored or empty to omit rownumbers.
+     * ### Options
+     * - offset: The line number to start.
+     *           Counting from 0, where 0 is the first row after the header line.
+     * - page: The page number. If provided, the offset will be calculated from limit and page.
+     * - limit: The maximum number of lines to read.
+     * - fields: Array of fields to import. If empty, will be taken from first line.
+     * - rownumbers (default '#'): Column where row numbers should be stored.
+     *                             Set to false or an empty string to omit row numbers.
+     * - alias: If field names follow the pattern 'model.fieldname' and an alias is provided,
+     *          the model alias will be stripped from the resulting array keys.
+     * - fields: Leave empty to extract field names from the first row.
+     *           Alternatively, an array of field names to use in the output.
      *
-     * @return array of all data from the csv file in [Model][field] format
+     * @param string $filename The name of the csv file.
+     * @param array $options Loading options.
+     * @return array An array with rows indexed by field names.
      * @author Dean Sofer, Jakob Jünger
      */
     static public function loadCsv($filename, $options = [])
@@ -1108,23 +1117,23 @@ class Files
         // read each data row in the file
         while ($row = $file->fgetcsv()) {
             // for each header field
-            foreach ($fields as $f => $field) {
-                $row[$f] = trim($row[$f] ?? '');
+            foreach ($fields as $fieldNumber => $fieldName) {
+                $row[$fieldNumber] = trim($row[$fieldNumber] ?? '');
 
                 // get the data field from Model.field
-                if (strpos($field, '.')) {
-                    $keys = explode('.', $field);
-                    if ($keys[0] == $options['alias']) {
-                        $field = $keys[1];
+                if (strpos($fieldName, '.')) {
+                    $keys = explode('.', $fieldName);
+                    if ($keys[0] === $options['alias']) {
+                        $fieldName = $keys[1];
                     }
                     if (!isset($data[$r])) {
                         $data[$r] = [];
                     }
-                    $data[$r] = Hash::insert($data[$r], $field, $row[$f]);
+                    $data[$r] = Hash::insert($data[$r], $fieldName, $row[$fieldNumber]);
 
                 }
                 else {
-                    $data[$r][$field] = $row[$f];
+                    $data[$r][$fieldName] = $row[$fieldNumber];
                 }
 
             }
@@ -1148,8 +1157,9 @@ class Files
     /**
      * Get the number of rows in a csv file
      *
-     * @param $filename
-     * @return int
+     * @param string $filename The csv file name
+     * @param boolean $includeHeader Whether to include counting the header row.
+     * @return int The row numbers
      */
     static public function countCsv($filename, $includeHeader = false)
     {
@@ -1165,16 +1175,166 @@ class Files
             SplFileObject::DROP_NEW_LINE
         );
 
-        //$file->seek(PHP_INT_MAX);
-
-        //return $file->key() + (int)$includeHeader;
-
         $count = 0;
         foreach ($file as $row) {
             $count++;
         }
 
         return $count + (int)$includeHeader;
+    }
+
+    /**
+     * Load XLSX function
+     *
+     * ### Options
+     * - offset: The line number to start.
+     *           Counting from 0, where 0 is the first row after the header line.
+     * - page: The page number. If provided, the offset will be calculated from limit and page.
+     * - limit: The maximum number of lines to read.
+     * - fields: Array of fields to import. If empty, will be taken from first line.
+     * - rownumbers (default '#'): Column where row numbers should be stored.
+     *                             Set to false or an empty string to omit row numbers.
+     * - sheet: Index of the sheet to load, defaults to 0.
+     * - alias: If field names follow the pattern 'model.fieldname' and an alias is provided,
+     *          the model alias will be stripped from the resulting array keys.
+     * - fields: Leave empty to extract field names from the first row.
+     *            Alternatively, an array of field names to use in the output.
+     *
+     * @param string $filename The name of the csv file.
+     * @param array $options Loading options.
+     * @return array An array with rows indexed by field names.
+     * @author Dean Sofer, Jakob Jünger
+     */
+    static public function loadXlsx($filename, $options = [])
+    {
+        if (!is_file($filename)) {
+            throw new Exception('No valid xlsx file');
+        }
+
+        $default = [
+            'alias' => '',
+            'rownumbers' => '#',
+            'limit' => 100,
+            'offset' => 0,
+            'fields' => [],
+            'sheet' => 0
+        ];
+
+        $options = array_merge($default, $options);
+
+        if (isset($options['page'])) {
+            $options['offset'] = $options['limit'] * ((int)$options['page'] - 1);
+        }
+
+        $data = [];
+        $r = 0;
+        $currentRowIndex = -1; // includes header
+
+        $reader = new XLSXReader();
+        $reader->open($filename);
+
+        $sheetIndex = 0;
+
+        foreach ($reader->getSheetIterator() as $sheet) {
+            if ($sheetIndex++ !== $options['sheet']) {
+                continue;
+            }
+
+            $fields = $options['fields'];
+
+            foreach ($sheet->getRowIterator() as $row) {
+                $currentRowIndex++;
+
+                $cells = $row->getCells();
+                $values = array_map(fn($cell) => trim((string)$cell->getValue()), $cells);
+
+                // Header row
+                if ($currentRowIndex === 0 && empty($fields)) {
+                    $fields = array_map(function ($field) {
+                        return mb_strtolower(trim($field));
+                    }, $values);
+                    continue;
+                }
+
+                // Skip until offset
+                if (($currentRowIndex - 1) < $options['offset']) {
+                    continue;
+                }
+
+                $rowData = [];
+
+                foreach ($fields as $fieldNumber => $fieldName) {
+                    $value = $values[$fieldNumber] ?? '';
+
+                    if (strpos($fieldName, '.')) {
+                        $keys = explode('.', $fieldName);
+                        if ($keys[0] === $options['alias']) {
+                            $fieldName = $keys[1];
+                        }
+                        $rowData = Hash::insert($rowData, $fieldName, $value);
+                    } else {
+                        $rowData[$fieldName] = $value;
+                    }
+                }
+
+                if (!empty($options['rownumbers'])) {
+                    $rowData[$options['rownumbers']] = $options['offset'] + $r + 1;
+                }
+
+                $data[$r] = $rowData;
+                $r++;
+
+                if ($r >= $options['limit']) {
+                    break 2; // exit both loops
+                }
+            }
+        }
+
+        $reader->close();
+        return $data;
+    }
+
+    /**
+     * Get the number of rows in a xlsx file
+     *
+     * @param string $filename The xlsx file name
+     * @param boolean $includeHeader Whether to include counting the header row.
+     * @param int $sheetIndex The sheet to load.
+     * @return int The row numbers, excluding the header row
+     */
+    static public function countXlsx($filename, $includeHeader = false, $sheetIndex = 0)
+    {
+        if (!is_file($filename)) {
+            throw new Exception('No valid xlsx file');
+        }
+
+
+        $reader = new XLSXReader();
+        $reader->open($filename);
+
+        $sheetCount = 0;
+        $rowCount = 0;
+
+        foreach ($reader->getSheetIterator() as $sheet) {
+            if ($sheetCount++ !== $sheetIndex) {
+                continue;
+            }
+
+            foreach ($sheet->getRowIterator() as $row) {
+                $rowCount++;
+            }
+
+            break; // only one sheet
+        }
+
+        $reader->close();
+
+        // subtract header if needed
+        if ($includeHeader && $rowCount > 0) {
+            $rowCount--;
+        }
+
+        return $rowCount;
     }
 
     /**
@@ -1955,7 +2115,7 @@ class Files
 
         $command = 'exiftool';
         if ($overwrite) {
-            $command .= ' -overwrite_original';
+            $command .= ' -overwrite_original -m';
         }
         foreach ($metadata as $key => $value) {
             $command .= ' -' . $key . '=' . escapeshellarg($value ?? '');

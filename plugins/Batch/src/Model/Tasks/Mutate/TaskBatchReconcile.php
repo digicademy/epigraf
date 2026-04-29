@@ -10,6 +10,7 @@
 
 namespace Batch\Model\Tasks\Mutate;
 
+use App\Model\Table\BaseTable;
 use App\Model\Table\SaveManyException;
 use Epi\Model\Entity\Property;
 use InvalidArgumentException;
@@ -75,8 +76,9 @@ class TaskBatchReconcile extends BaseTaskMutate
     }
 
     /**
-     * Reconcile all properties using external services configured in the property type
+     * Reconcile all entities using external services configured in the entity type
      *
+     * @param BaseTable $model
      * @param array $taskParams
      * @param array $dataParams
      * @param int $offset First entity to mutate
@@ -85,6 +87,8 @@ class TaskBatchReconcile extends BaseTaskMutate
      */
     protected function mutate($model, $taskParams, $dataParams, $offset = 0, $limit = 1)
     {
+        $modelAlias = $model->getAlias();
+
         if (($taskParams['cursor'] ?? 0) < 0) {
             throw new InvalidArgumentException('Invalid cursor for task');
         }
@@ -94,7 +98,7 @@ class TaskBatchReconcile extends BaseTaskMutate
 
         // Use cursor based pagination instead of offset
         if (($taskParams['cursor'] ?? 0) > 0) {
-            $cursorConditions = ['Properties.id >' => $taskParams['cursor'] ?? 0];
+            $cursorConditions = [$modelAlias . '.id >' => $taskParams['cursor'] ?? 0];
         } else {
             $cursorConditions = ['1=1'];
         }
@@ -103,7 +107,7 @@ class TaskBatchReconcile extends BaseTaskMutate
             ->find('hasParams', $dataParams)
             ->contain(['Types'])
             ->where($cursorConditions)
-            ->orderAsc('Properties.id')
+            ->orderAsc($modelAlias . '.id')
             ->limit($limit)
             ->toArray();
 
@@ -116,7 +120,7 @@ class TaskBatchReconcile extends BaseTaskMutate
         }
 
         if (!$model->saveMany($entities, [])) {
-            throw new SaveManyException('Could save entities.');
+            throw new SaveManyException('Could not save entities.');
         }
 
         return $entities;

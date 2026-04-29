@@ -1,19 +1,45 @@
 ---
-title: Core Concepts - Data Fields and Extraction Keys
+title: Core Concepts - Path Extraction Language
 permalink: '/user/coreconcepts/keys/'
 ---
 
-Entities such as projects, articles, sections, items, or categories are represented within the application objects.
-Epigraf uses object-relational mapping (ORM) as an established technique for accessing the data. Each object has:
+The Path Extraction Language (PEL) was developed to extract flat tables from nested data structures.
+In Epigraf, documents are represented using the Relational Article Model,
+which organizes content as a hierarchy of nested objects.
 
-- **Database fields**: Fields that exist in the database. The fields are listed in the [development documentation](https://digicademy.github.io/epigraf/database/datamodel/) and include names, annotated texts, dates, items or references to properties. For example, an article object contains the data field `signature`.
-- **Virtual fields:** Some objects have properties that return formatted values. For example, an article object has the virtual field `iri_path`. Although this field does not exist in the database, it returns the IRI path consisting of table name, article type and IRI fragment.
-- **Relations**: Two types of relations to other entities can occur. A belongsTo relationship refers to a single other object. For example, an article object contains the relation `project`, which contains the project entity object. In contrast, hasMany relationships contain a list of related objects. For example, an article object contains the list of sections in the `sections` relation.
-- **Ancestors** Articles contain sections, which in turn contain items that can refer to properties. The article is the root entity object for all contained objects. From contained objects such as an item, it can be accessed via the `root´ property. The respective parent object can be accessed via the `container` property. In hierarchical tables such as sections, the parent section can be accessed via the `parent` property.
+Put simply, an article’s content is structured into sections and items,
+and items as well as annotation in text fields are linked to properties.
+Epigraf uses object-relational mapping (ORM) to load database records
+into root objects that provide access to nested child objects and their data fields.
+Extraction keys are then used to address specific fields within this structure.
 
-Data is extracted from these objects everywhere in the application. For example, the columns in the articles table get their values by extracting them from entity objects. For extracting data, different kinds of extraction keys are used, for example in the types configuration:
+The entities of the Relational Database Model include different types of data fields:
+
+- **Database fields**: Fields that exist in the database.
+  The fields are documented in the [development documentation](https://digicademy.github.io/epigraf/database/datamodel/) and include names,
+  annotated texts, dates, items or references to properties.
+  For example, an article object contains the field `signature`.
+- **Virtual fields:** Some objects expose computed properties that return formatted values.
+  For instance, each article object provides the virtual field `iri_path`.
+  Although this field is not stored in the database, it generates an IRI path
+  composed of the table name, article type, and IRI fragment.
+- **Relations**: Entities can be connected through two types of relationships.
+  A belongsTo relationship refers to a single related object.
+  For example, an article object contains the `project` relation,  which links to a project entity.
+  In contrast, hasMany relationships represent collections of related objects.
+  For example, an article object contains a list of sections in the `sections` relation.
+- **Ancestors** Articles contain sections, which in turn contain items that may reference properties.
+  An article serves as the root entity for all nested objects.
+  From any contained object (e.g., an item), the root article can be accessed via the `root` property.
+  The immediate parent object is available through the `container` relation.
+  In hierarchical structures such as sections, the parent section can additionally be accessed via the `parent` relation.
+
+Data extraction in Epigraf operates across this entire object hierarchy.
+For example, the columns in the articles collection table are populated
+by extracting values from sections and items nested within each article object.
 
 ## Path keys
+
 Path keys dive into an object by chaining the fields separated by a dot.
 
 -   A simple path key contains just the name of the data field or relation. Example: `signature`.

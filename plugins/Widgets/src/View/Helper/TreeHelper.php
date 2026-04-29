@@ -15,6 +15,7 @@ namespace Widgets\View\Helper;
 use App\Utilities\Converters\Attributes;
 use Cake\ORM\Entity;
 use Cake\ORM\ResultSet;
+use Cake\Routing\Router;
 use Cake\View\Helper;
 use Epi\Model\Entity\Type;
 
@@ -73,7 +74,24 @@ class TreeHelper extends Helper
         $options['selected'] = $options['selected'] ?? $this->_View->getConfig('options')['params']['selected'] ?? (!empty($options['seek']) ? [$options['seek']] : []);
         $options['direction'] = $this->_View->getConfig('options')['params']['direction'] ?? 'asc';
 
-        $options['template'] = $this->_View->getRequest()->getQuery('template', 'select');
+        $template = $this->_View->getRequest()->getQuery('template', 'select');
+        $options['template'] = $template;
+
+        // Default columns
+        if (empty($options['columns'])) {
+            if ($template === 'choose') {
+                $options['columns'] = [
+                    'keywords' => ['key' => 'keywords'],
+                    'count' => ['key' => 'articles_count']
+                ];
+            }
+            else {
+                $options['columns'] = [
+                    'count' => ['key' => 'articles_count']
+                ];
+            }
+        }
+
         $ulAttributes = [
            'class' => 'widget-tree',
            'data-snippet' => 'rows',
@@ -90,6 +108,8 @@ class TreeHelper extends Helper
     }
 
     /**
+     * Get nodes with special roles such as manage, empty and append
+     *
      * @param string $model The model name with plugin notation, lower case, for example "epi.properties"
      * @param array $options An array of optional options
      * @return string
@@ -109,13 +129,31 @@ class TreeHelper extends Helper
 
         // Manage item
         if (!empty($manage)) {
+            $links = [];
+            $externalUrl = ['action'=>'index', $options['scope'] ?? '','?' => ['seek' => $options['seek'] ?? '']];
+            $links['popup'] = $this->Html->link(
+                __('Browse'),
+                [
+                    'action'=>'index', $options['scope'] ?? '',
+                    '?' => ['seek' => $options['seek'] ?? '',  'show'=>'content,searchbar']
+                ],
+                [
+                    'target'=>'_blank',
+                    'class' => 'popup' ,
+                    'data-frame-select' => true,
+                    'data-frame-title' => __('Select category'),
+                    'data-frame-external' => Router::url($externalUrl),
+                ]
+            );
+            $links['tab'] = $this->Html->link(
+                __('Manage'),
+                $externalUrl,
+                ['target'=>'_blank']
+            );
+
             $out .= $this->getTreeMetaNode($model, [
                 'data' => ['data-role' => 'manage'],
-                'content' => $this->Html->link(
-                        __('Manage'),
-                        ['action'=>'index', $options['scope'] ?? '','?' => ['seek' => $options['seek'] ?? '']],
-                        ['target'=>'_blank']
-                    )
+                'content' => implode('', $links)
             ]);
         }
 
@@ -165,6 +203,7 @@ class TreeHelper extends Helper
      * ### Options
      * - selected: Selected IDs
      * - template: select|choose
+     * - columns: Data to show in the meta section of each row
      *
      * @param string $model The model name with plugin notation, lower case, for example "epi.properties"
      * @param Entity $entity
@@ -224,10 +263,10 @@ class TreeHelper extends Helper
         // MEta
         $out .= '<div class="tree-meta">';
         if (empty($cursor)) {
-            if ($template === 'choose') {
-                $out .= '<div class="tree-meta-keywords">' . $entity['keywords'] . '</div>';
+            foreach ($options['columns'] ?? [] as $columnKey => $columnConfig) {
+                $out .= '<div class="tree-meta-'. $columnKey . '">' . $entity->getValueFormatted($columnConfig['key'] ?? $columnKey) . '</div>';
             }
-            $out .= '<div class="tree-meta-count">' . $entity['articles_count'] . '</div>';
+
         }
         $out .= '</div>';
 

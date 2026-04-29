@@ -35,7 +35,10 @@ The tag_type key of the configuration determines the behavior (work in progress)
   Rendering is determined by the tag_type key: `text` (render a standalone value),
   `format` (format a text segment), `bracket` (the text segment is enclosed in brackets).
   Each tag can have attributes and link to one single entity, such as a property or an article.
-- **Attributes**: Annotations that link to multiple categories are called molecules. The molecule itself is a standard tag configruation. It refers to other link types in their attributes key. The configuration entitities need to have the tag type `attribute` and their toolbutton must be disabled.
+- **Attributes**: Annotations that link to multiple categories are called molecules.
+  The molecule itself is a standard tag configuration.
+  It refers to other link types - the atoms - in its attributes key.
+  The other link type need to have the tag type `attribute` and their toolbutton must be disabled.
 - **Dropdowns**: Annotations can be grouped to create drop-down buttons. To create such a tool button, configure a simple links annotation but omit the tag_type key. In the toolbutton configuration object, set the dropdown key to `true` and set a value in the group key. All other links types to be subsumed under this dropdown must have the same group key value in their toolbutton configuration and no other toolbutton keys.
 - **Line breaks**: Line breaks need to be configured using a links annotation with tag type `break`.
 - **Special characters**: Configuration entities with the tag_type `character` are considered special characters and are inserted via the special characters button in the toolbar.
@@ -236,7 +239,10 @@ If possible, it is advised to set the default rendering to plain outputs without
 
 **Example of a molecular annotation configuration:**
 
-If an annotation should link to multiple properties, a corresponding link configuration without a tool button is first created for each target property type. The molecular annotation itself uses them in its attributes configuration. In the following example defines a moleculear annotation with two input fields:
+If an annotation should link to multiple properties, a corresponding link configuration
+without a tool button is first created for each target property type.
+The molecular annotation itself uses them in its attributes configuration.
+In the following example defines a moleculear annotation with two input fields:
 
 ``` plaintext
 {
@@ -254,8 +260,9 @@ If an annotation should link to multiple properties, a corresponding link config
 }
 ```
 
-The configuration refers to other link configurations in the type keys. The respective `annotations` and `categories` annotation
-are configured without tool button. The `tag_type` key must be set to `attribute`:
+The configuration refers to other link configurations in the type keys.
+The respective `annotations` and `categories` annotation are configured without tool button.
+The `tag_type` key must be set to `attribute`:
 
 ``` plaintext
 {

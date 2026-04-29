@@ -13,6 +13,8 @@ namespace Batch\Model\Tasks\Mutate;
 use App\Model\Entity\BaseEntity;
 use App\Model\Table\BaseTable;
 use App\Model\Table\SaveManyException;
+use App\Utilities\Converters\Arrays;
+use App\Utilities\Converters\Attributes;
 use Cake\Http\Exception\InternalErrorException;
 use Exception;
 use Batch\Model\Tasks\BaseTask;
@@ -53,6 +55,26 @@ abstract class BaseTaskMutate extends BaseTask
      */
     public function updateHtmlFields($fields)
     {
+
+        $fields = [];
+
+        foreach ($this->taskParameters as $paramName => $paramConfig) {
+
+            if (is_numeric($paramName)) {
+                $paramName = $paramConfig;
+                $paramConfig = ['caption' => ucfirst($paramName)];
+            } else {
+                $paramConfig = Arrays::valueToArray($paramConfig, 'caption');
+            }
+
+            $fields['config.params.' . $paramName] =
+                [
+                    'caption' => __($paramConfig['caption'] ?? ucfirst($paramName)),
+                    'type' => $paramConfig['input'] ?? 'text',
+                    'value' => $this->job->config['params'][$paramName] ?? ''
+                ];
+        }
+
         return $fields;
     }
 
@@ -72,7 +94,11 @@ abstract class BaseTaskMutate extends BaseTask
             $params['cursor'] = $this->config['cursor'] ?? null;
         }
 
-        foreach ($this->taskParameters as $paramName) {
+        foreach ($this->taskParameters as $paramName => $paramConfig) {
+            if (is_numeric($paramName)) {
+                $paramName = $paramConfig;
+            }
+
             $params[$paramName] = $this->job->config['params'][$paramName] ?? null;
         }
 

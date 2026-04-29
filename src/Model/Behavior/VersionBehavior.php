@@ -526,7 +526,7 @@ class VersionBehavior extends Behavior
     }
 
     /**
-     * Enables filtering out soft deleted records,
+     * Enables filtering out soft deleted records
      *
      * @return void
      */

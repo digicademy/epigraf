@@ -3,8 +3,47 @@ title: Export Data Using Pipelines
 permalink: '/user/export/pipelines/'
 ---
 
+# Default data export
 
-Pipelines are used to transform data from the relational article model into other data formats
+The export button visible in the footer of collection pages (i.e. the article or property tables) is used to retrieve data
+in common formats such as CSV, XLSX, JSON, or XML. After selecting the entities,
+click the button, select the data pipeline and, optionally, check the options:
+
+- Records: Either export the records manually selected in the collection view
+  or all records that match the current filter criteria.
+- Pipeline: Choose the default Data pipeline or switch to a custom pipeline (see below).
+- Output format: XML, JSON, CSV and XLSX are directly serialised from the RAM and contain all data of the selected entities.
+  The output can be used to revise the data and then re-import it into Epigraf.
+  Markdown and HTML are based on the rendering configuration of the respective database.
+  Turtle, RDF and Json-LD are based on the triple configuration of the respective database.
+  GeoJSON is based on the geodata configuration of the respective database.
+- Full entity export: By default, the result contains what is visible in the table columns.
+  By checking the option, the column configuration is ignored and
+  all data of the selected entities is exported in RAM format.
+  For articles, the result contains rows for articles, sections, items and all other RAM entities
+  used in the articles.
+- ID format: By default, the result contains table prefixed IDs such as `properties-123` in the ID
+  fields. This is the recommended setting if you later want to import the result into the same database,
+   because it makes sure that the IDs are correctly matched to existing entities.
+  Select the IRI paths option to export IRIs instead of IDs.
+  This option is only effective in combination with the full entity export option.
+  It is the recommended setting if you want to transfer data to other databases,
+  because it makes sure that entities are matched by their IRIs and not by their internal IDs,
+  which can differ between databases.
+- Snippets: Snippets define a set of fields to be exported.
+  The default set, for example, does not include date and time of modifications
+  and the names of users who created or modified the entities.
+  Depending on the endpoint (e.g. articles, properties, projects), different snippets are available.
+  See the snippets parameter of the [API endpoints](/epigraf/user/coreconcepts/api) for available options.
+  By selecting a snippet, only the fields defined in the snippet are exported.
+- Preset: The database configuration supports multiple types with different settings.
+  For example, you can create a configuration for exporting articles into a specific knowledge graph format.
+  By selecting a preset, the respective settings are used instead of the default preset.
+- Job name: If you name the export job, you can find it later in the job history and, for example,
+  re-run it with the same settings or use it as a template for other export jobs.
+
+# Custom export formats
+Pipelines are also used to transform data from the Relational Article Model into custom data formats.
 For example, they are used to create Word files, TEI documents or HTML content for a website.
 
 After constructing a pipeline, you apply it to an article selection by clicking the export button.
@@ -13,7 +52,10 @@ To export an entire project, select the respective articles using filters in the
 
 Pipelines usually start with RAM data in XML format that is transformed by XSLT stylesheets.
 For complex output formats - such as DOC or ODT files - several transformation steps can be processed in succession.
-To inspect the initial RAM data, a) open a single article as XML, b) use the default data pipline with the full entity export option, or c) construct a simple pipeline that generates an XML document without any transformation.
+To inspect the initial RAM data,
+a) open a single article as XML,
+b) use the default data pipline with the full entity export option, or
+c) construct a simple pipeline that generates an XML document without any transformation.
 XSLT stylesheets required to transform the raw data are usually stored in the pipelines folder.
 
 # Construction of pipelines
@@ -274,12 +316,12 @@ The *attribute* column refers to the [Extensible Metadata Platform](https://en.w
 
 To transfer metadata into image files, you need to create an export pipeline
 that puts all images into a ZIP-archive.
-In the item type configuration for images you can explicitly define metadata input fields.
-In the export pipeline you use placeholder strings to map article data (including image items)
-and project data to specific metadata attributes.
-to images when exporting.
+In the [item type configuration](/epigraf/user/configuration/articles#item-type-configuration) for images you can explicitly define metadata input fields.
+In the article export task, contained in a pipeline, you use placeholder strings to map article data (including image items
+and project data) to specific metadata attributes.
+
 To store image metadata, usually the content field of an image item type is configured
-to hold several metadata values as JSON.
+to hold multiple metadata values as JSON.
 
 The following table shows typical image metadata fields.
 The *attribute* column refers to the [Extensible Metadata Platform](https://en.wikipedia.org/wiki/Extensible_Metadata_Platform)
@@ -339,8 +381,3 @@ The *attribute* column refers to the [Extensible Metadata Platform](https://en.w
   </table>
 </figure>
 
-To transfer metadata into image files, you need to create an export pipeline
-that puts all images into a ZIP-archive.
-In the [item type configuration](/epigraf/user/configuration/articles) for images you can explicitly define metadata input fields.
-In the article export task, contained in a pipeline, you use placeholder strings to map article data (including image items
-and project data) to specific metadata attributes.

@@ -530,7 +530,9 @@ export class XmleditorXmltagEditing extends Plugin {
      *  A text tag supports the following attributes:
      *  - data-type The type name
      *  - data-tagid The ID matching the from_tagid annotation field
-     *  - data-link-value The content of linked values, to be rendered
+     *  - data-value The text content to be rendered
+     *  - data-link-target The table-prefixed entity ID of link targets (e.g. "properties-1234")
+     *  - data-link-value The display value of the link target (e.g. "John Doe")
      *  - Additional data-attr-* attributes as configured in the type config
      */
     tagUpcast() {
@@ -641,6 +643,10 @@ export class XmleditorXmltagEditing extends Plugin {
             'class': modelElement.name + ' xml_tag_' + typeName,
         };
 
+        // 2. Annotation attributes (for copy & paste)
+        elementAttributes['data-link-target'] = modelElement.getAttribute('data-link-target') || '';
+        elementAttributes['data-link-label'] = modelElement.getAttribute('data-link-label') || '';
+
         if (typeData === undefined) {
             // const msg = 'Missing config for ' + typeName + '. Please check the types table.';
             // this.editor.emitEvent('app:show:message', {'msg' : msg});
@@ -734,7 +740,7 @@ export class XmleditorXmltagEditing extends Plugin {
      */
     tagCreateAttributes(modelElement, data, conversionApi) {
         let attrKey = data.attributeKey;
-        if (!attrKey.startsWith('data-value') && !attrKey.startsWith('data-attr-') && !attrKey.startsWith('data-target')) {
+        if (!attrKey.startsWith('data-value') && !attrKey.startsWith('data-attr-') && !attrKey.startsWith('data-link-')) {
             return false;
         }
 
@@ -743,11 +749,7 @@ export class XmleditorXmltagEditing extends Plugin {
 
         // Set attributes
         let newAttributes = {};
-        if (attrKey === 'data-target') {
-            attrKey = 'data-link-target';
-        }
         newAttributes[attrKey] = data.attributeNewValue || '';
-
 
         this.tagSetAttributes(
             viewElement,
@@ -1023,7 +1025,24 @@ export class XmleditorXmltagEditing extends Plugin {
                 return this.tagCreateElement(modelElement, writer);
                 // 'class': 'xml_format xml_tag_' + typeName,
             }
-        });
+        })
+            // Convert attribute "data-*" to content
+            .add(dispatcher => dispatcher.on('attribute',
+                (evt, data, conversionApi) => {
+                    const modelElement = data.item;
+                    if (modelElement.name !== XML_FORMAT) {
+                        return false;
+                    }
+
+                    // Create tag attributes
+                    if (!self.tagCreateAttributes(modelElement, data, conversionApi)) {
+                        return false;
+                    }
+
+                    // Mark element as consumed by conversion.
+                    conversionApi.consumable.consume(data.item, evt.name);
+                })
+            );
     }
 
     /**
@@ -1102,13 +1121,15 @@ export class XmleditorXmltagEditing extends Plugin {
     /**
      * Update the tag (and the text)
      *
+     * TODO: What about multiple tags with the same ID? Update all!
+     *
      * @param editor The editor instance
      * @param tag The ID of the tag
      * @param attributes The new value, an object with the keys
      *              - label: text content of the tag or annotation
+     *              - link-target: For links, table-prefixed ID of the target entity.
+     *              - link-label: The annotation box text.
      *              - further attributes will be added as data-attr-values
-     *              Other attributes such as the target tab and target id
-     *              of annotations should be removed from the value.
      */
     updateTag(editor, tag, attributes) {
 
@@ -1133,7 +1154,11 @@ export class XmleditorXmltagEditing extends Plugin {
             for (const [key, value] of Object.entries(attributes)) {
                 if (key === 'label') {
                     writer.setAttribute('data-value', value, tag);
-                } else {
+                }
+                else  if (key.startsWith('link-')) {
+                    writer.setAttribute('data-' + key, value, tag);
+                }
+                else {
                     writer.setAttribute('data-attr-' + key, value, tag);
                 }
 
@@ -1148,45 +1173,45 @@ export class XmleditorXmltagEditing extends Plugin {
      * @return {object} An object with the attributes to be passed to the model element
      */
     viewToModelAttributes(viewElement) {
-        // Base attributes
-        let typeName = viewElement.getAttribute('data-type') || '';
+        // 1. Base attributes
         let tagId = viewElement.getAttribute('data-tagid') || generateUUID();
-        let linkValue = viewElement.getAttribute('data-link-value') || '';
-
+        let typeName = viewElement.getAttribute('data-type') || '';
         let typeData = this.editor.config.get('tagSet')[typeName];
+        let tagValue = viewElement.getAttribute('data-value') || '';
 
-        if (!linkValue) {
-            // Get the text content and remove prefix and postfix
-            linkValue = viewElement.childCount > 0 ? viewElement.getChild(0).data : '';
+        // ...if the tag value attribute is empty, use the text content and remove prefix and postfix
+        if (!tagValue) {
+            tagValue = viewElement.childCount > 0 ? viewElement.getChild(0).data : '';
 
-            if (linkValue && typeData) {
+            if (tagValue && typeData) {
                 const prefix = Utils.getValue(typeData,['config.prefix','config.html.prefix'], '');
-                if (prefix && (typeof linkValue === "string") && linkValue.startsWith(prefix)) {
-                    linkValue = linkValue.slice(prefix.length);
+                if (prefix && (typeof tagValue === "string") && tagValue.startsWith(prefix)) {
+                    tagValue = tagValue.slice(prefix.length);
                 }
 
                 const postfix = Utils.getValue(typeData,['config.postfix','config.html.postfix'], '');
-                if (postfix && (typeof linkValue === "string") && linkValue.endsWith(postfix)) {
-                    linkValue = linkValue.slice(0, -postfix.length);
+                if (postfix && (typeof tagValue === "string") && tagValue.endsWith(postfix)) {
+                    tagValue = tagValue.slice(0, -postfix.length);
                 }
-
             }
         }
 
         let tagData = {
             'data-type': typeName,
             'data-tagid': tagId,
-            'data-value': linkValue,
-            'data-target': viewElement.getAttribute('data-link-target') || '', // TODO: What for, is this still necessary?
-            'data-target-tab': viewElement.getAttribute('data-target-tab') || '',
-            'data-target-id': viewElement.getAttribute('data-target-id') || ''
+            'data-value': tagValue
         };
 
-        // Default: use all attributes
+        // 2. Annotation attributes (for copy & paste)
+        tagData['data-link-target'] = viewElement.getAttribute('data-link-target') || '';
+        tagData['data-link-label'] = viewElement.getAttribute('data-link-label') || '';
+
+        // 3. Custom attributes
+
+        // ...keep all attributes for unconfigured tags
         // TODO: make dry, see tagCreateElement()
         if (!typeData) {
             tagData['data-unstyled'] = true;
-
             const typeAttributes = Array.from(viewElement.getAttributeKeys()).reduce(function(carry, attrKey) {
                 if (attrKey.startsWith('data-attr-')) {
                     attrKey =  attrKey.substring('data-attr-'.length);
@@ -1197,9 +1222,6 @@ export class XmleditorXmltagEditing extends Plugin {
             typeData = {'config' : {'attributes': typeAttributes}};
         }
 
-
-        // Additional attributes
-        // TODO: Make dry, see tagCreateElement
         const tagAttributes = Utils.getValue(typeData, 'config.attributes');
         if (tagAttributes) {
             for (const [attrKey, attrConfig] of Object.entries(tagAttributes)) {
