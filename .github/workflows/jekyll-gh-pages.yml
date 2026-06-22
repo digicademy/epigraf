@@ -28,13 +28,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Rewrite documentation paths
+        run: |
+          cd docs
+          find . -type f -name '*.md' -exec sed -i \
+            -e 's@(/user/@(/epigraf/user/@g' \
+            -e 's@(/devel/@(/epigraf/devel/@g' \
+            -e 's@"/user/@"/epigraf/user/@g' \
+            -e 's@"/devel/@"/epigraf/devel/@g' \
+            {} +
+
+      - name: Update base URL
+        run: |
+          cd docs
+          sed -i 's@baseurl: ""@baseurl: "/epigraf"@g' _config.yml
+          sed -i 's@url: ""@url: "https://digicademy.github.io"@g' _config.yml
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./docs/
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
