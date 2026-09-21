@@ -23,34 +23,12 @@ Look out for the flowers that are in bloom and help nurture the garden.
 
 ## How to run Epigraf
 
-1. Fire up the Apache Webserver, the PHP container, and the database container:
+1. Fire up the containers:
    ```
    docker compose up -d
    ```
 
-2. Install Epigraf:
-   ```
-   docker exec epi_php composer install
-   ```
-
-3. Init the main database and add an admin user
-   (with username, role, password, and access token set to `admin`):
-   ```
-   docker exec epi_php bin/cake database init
-   docker exec epi_php bin/cake user add admin admin admin admin
-   ```
-
-4. Create an example project database from a preset:
-   ```
-   docker exec epi_php bin/cake database init --database epi_example --preset movies
-   ```
-
-5. Adjust file permissions:
-   ```
-   docker exec epi_php chown -R www-data /var/www/html
-   ```
-
-6. Login to Epigraf at http://localhost with username and password `admin`.
+2. Login to Epigraf at http://localhost:8080 with username and password `admin`.
 
 What's next? Get familiar with the [Epigraf configuration](https://epigraf.inschriften.net/help) to adapt it to your use case.
 Have a look at the [docker](docker) folder for more options for running Epigraf.

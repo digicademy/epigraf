@@ -1,0 +1,65 @@
+name: epigraf
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: docker/standalone/Dockerfile
+            platforms: [linux/amd64]        # SaxonC is only available as x86_64 binary
+        image: epigraf:standalone
+        container_name: epi_app
+        restart: unless-stopped
+        environment:
+            TZ: Europe/Berlin
+            APP_FULL_BASE_URL: "http://localhost:${HTTP_PORT:-8080}"
+            DEBUG: "${DEBUG:-false}"
+            SECURITY_SALT: "local_development_salt_not_for_production_0123456789"
+            MYSQL_HOST: sql
+            MYSQL_USER: epigraf
+            MYSQL_PASS: epigraf
+            MYSQL_ROOT_PASSWORD: root
+            INIT_DATABASE: "${INIT_DATABASE:-true}"
+            ADMIN_USER: admin
+            ADMIN_PASS: admin
+            INIT_DEMO: "${INIT_DEMO:-true}"
+            DEMO_DATABASE: epi_movies
+            DEMO_PRESET: movies
+
+        volumes:
+            - epi_data:/var/www/data
+            - epi_tmp:/var/www/html/tmp
+            - epi_logs:/var/www/html/logs
+        ports:
+            - "${HTTP_PORT:-8080}:80"
+        depends_on:
+            sql:
+                condition: service_healthy
+
+    sql:
+        image: mariadb:10.11.6
+        container_name: epi_sql
+        restart: unless-stopped
+        environment:
+            TZ: Europe/Berlin
+            MARIADB_ROOT_PASSWORD: root
+            MARIADB_USER: epigraf
+            MARIADB_PASSWORD: epigraf
+        command: >
+            --sql_mode=NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,STRICT_ALL_TABLES
+            --character-set-server=utf8mb4
+            --collation-server=utf8mb4_unicode_ci
+            --max_allowed_packet=256M
+        volumes:
+            - epi_sqldata:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+            interval: 5s
+            timeout: 5s
+            retries: 30
+            start_period: 40s
+
+volumes:
+    epi_data:
+    epi_tmp:
+    epi_logs:
+    epi_sqldata:

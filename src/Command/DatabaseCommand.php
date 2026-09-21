@@ -107,9 +107,9 @@ class DatabaseCommand extends Command
                 $this->createDatabase($connectionname, $databasename, $drop);
                 $this->importSql($connectionname, $databasename, $filename);
 
-                $this->createDatabase('test');
-                $this->createDatabase('test_projects');
-                $this->createDatabase('test_public');
+//                $this->createDatabase('test');
+//                $this->createDatabase('test_projects');
+//                $this->createDatabase('test_public');
 
                 $this->createFolders();
 
