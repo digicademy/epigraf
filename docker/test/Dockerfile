@@ -38,7 +38,6 @@ RUN apt-get update \
     icu-devtools \
     libxslt1-dev \
     libonig-dev \
-    graphicsmagick \
     zip \
     unzip \
     librsvg2-bin \
@@ -69,18 +68,6 @@ RUN curl -O http://www.xmailserver.org/libxdiff-0.23.tar.gz \
     && make install
 
 RUN pecl install xdiff-2.1.1 && docker-php-ext-enable xdiff
-
-# Install Gmagick
-#RUN apt-get update \
-#    && apt-get install -y --force-yes --no-install-recommends \
-#    libgraphicsmagick1-dev \
-#    libpng16-16 \
-#    libjpeg-dev \
-#    subversion
-
-#RUN pecl install gmagick-2.0.6RC1 \
-#    && docker-php-ext-enable gmagick \
-#    && rm -rf /tmp/pear
 
 # Install ImageMagick
 RUN apt-get update && apt-get install -y --no-install-recommends \

@@ -24,6 +24,7 @@
         "ext-curl": "*",
         "ext-posix": "*",
         "ext-fileinfo": "*",
+        "ext-imagick": "*",
         "lampager/lampager-cakephp": "^2.0",
         "masterminds/html5": "^2.7",
         "ivopetkov/html5-dom-document-php": "2.*",
