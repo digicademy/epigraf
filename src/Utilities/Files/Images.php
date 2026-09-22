@@ -28,7 +28,7 @@ class Images
      * @param $size
      *
      * @return string
-     * @throws \GmagickException
+     * @throws \ImagickException
      */
     static public function base64Image($filename = '', $size = 300)
     {
@@ -55,7 +55,7 @@ class Images
      * @param $size
      *
      * @return string
-     * @throws \GmagickException
+     * @throws \ImagickException
      */
     static public function base64URI($filename = '', $size = 300)
     {

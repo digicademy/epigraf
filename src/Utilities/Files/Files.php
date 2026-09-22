@@ -26,7 +26,6 @@ use Exception;
 use SplFileInfo;
 use SplFileObject;
 use ZipArchive;
-use GMagick;
 use IMagick;
 use XMLReader;
 use OpenSpout\Reader\XLSX\Reader as XLSXReader;
@@ -1870,7 +1869,7 @@ class Files
      * @param boolean $placeholder Whether a placeholder image should be created if the image file does not exist.
      *
      * @return mixed|string
-     * @throws \GmagickException
+     * @throws \ImagickException
      */
     static public function getThumb($imagefile, $size = 100, $placeholder = false)
     {
@@ -1882,13 +1881,8 @@ class Files
                 mkdir(dirname($thumbname), 0755, true);
             }
 
-            if (extension_loaded('imagick')) {
-                $image = new IMagick();
-            }
-            else {
-                $image = new GMagick();
-            }
-            $image->newimage($size, $size, 'red'); //new GMagickPixel('red')
+            $image = new IMagick();
+            $image->newimage($size, $size, 'red');
             $image->setImageFormat("png24");
             $image->writeImage($thumbname);
             $image->clear();
@@ -1911,12 +1905,7 @@ class Files
                             exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . $imagefile . ' > ' . $thumbname);
                         }
                         else {
-                            if (extension_loaded('imagick')) {
-                                $image = new IMagick($imagefile);
-                            }
-                            else {
-                                $image = new GMagick($imagefile);
-                            }
+                            $image = new IMagick($imagefile);
 
                             $image->thumbnailimage($size, $size, true);
                             $image->setImageFormat("png24");
@@ -1960,7 +1949,7 @@ class Files
      * @param string $targetFormat Output format ('jpg', 'png', etc.)*
      * @params boolean $removeOriginal Whether to delete the original file after conversion
      * @return string|false New file path or false on failure
-     * @throws \GmagickException
+     * @throws \ImagickException
      */
     static public function convertImage($imagefile, $targetFormat = 'jpg', $removeOriginal = false)
     {
@@ -1979,12 +1968,7 @@ class Files
 //                return $newFile;
 //            }
 
-            if (extension_loaded('imagick')) {
-                $gm = new IMagick($imagefile);
-            }
-            else {
-                $gm = new GMagick($imagefile);
-            }
+            $gm = new IMagick($imagefile);
 
             // Read TIFF frames — only use first page unless multi-page processing is needed
             if ($gm->getnumberimages() > 1) {
@@ -2023,7 +2007,7 @@ class Files
      * @param string $megapixels Megapixel maximum (e.g. 10)
      * @param int $megabytes Maximum file size in megabytes (e.g. 5)
      * @return boolean Whether the image was resized.
-     * @throws \GmagickException
+     * @throws \ImagickException
      */
     static public function resizeImage($imagefile, $megapixels = 10, $megabytes = 5)
     {
@@ -2040,18 +2024,9 @@ class Files
             }
 
             // Load image
-            if (extension_loaded('imagick')) {
-                $gm = new \Imagick($imagefile);
-                $width = $gm->getImageWidth();
-                $height = $gm->getImageHeight();
-            } elseif (extension_loaded('gmagick')) {
-                $gm = new \Gmagick($imagefile);
-                $geometry = $gm->getimagegeometry();
-                $width = $geometry['width'];
-                $height = $geometry['height'];
-            } else {
-                return false;
-            }
+            $gm = new \Imagick($imagefile);
+            $width = $gm->getImageWidth();
+            $height = $gm->getImageHeight();
 
             // Resize if necessary
             $currentMP = ($width * $height) / 1e6;
@@ -2060,11 +2035,7 @@ class Files
                 $newWidth = (int) round($width * $scale);
                 $newHeight = (int) round($height * $scale);
 
-                if (extension_loaded('imagick')) {
-                    $gm->resizeImage($newWidth, $newHeight, \Imagick::FILTER_LANCZOS, 1);
-                } else {
-                    $gm->resizeImage($newWidth, $newHeight);
-                }
+                $gm->resizeImage($newWidth, $newHeight, \Imagick::FILTER_LANCZOS, 1);
 
                 $gm->writeimage($imagefile);
             }
