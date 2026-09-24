@@ -20,6 +20,28 @@ class AcceptanceTester extends \Codeception\Actor
 
     public $shouldOverwriteScreenshots = false;
 
+    public function setViewportSize($width = 1280, $height = 715) {
+        $this->resizeWindow($width, $height);
+        $this->wait(0.1);
+        $delta = $this->executeJS("return [
+            window.outerWidth - window.innerWidth,
+            window.outerHeight - window.innerHeight
+        ]");
+        $this->resizeWindow($width + $delta[0], $height + $delta[1]);
+        $this->wait(0.1);
+    }
+
+    public function dumpDiag(string $name, $data): void {
+        $dir = codecept_output_dir() . 'diag/';
+        if (!is_dir($dir)) mkdir($dir, 0777, true);
+
+        if (!is_string($data)) {
+            $data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        }
+
+        file_put_contents($dir . $name . '.json',$data);
+    }
+
     /**
      * Log the tester in
      *
@@ -33,6 +55,7 @@ class AcceptanceTester extends \Codeception\Actor
     public function login($username, $password, $fromSession = false)
     {
         $I = $this;
+        $I->setViewportSize();
 
         // Skip login if snapshot exists
         if ($fromSession) {
@@ -192,9 +215,10 @@ class AcceptanceTester extends \Codeception\Actor
      * @param string $selector A CSS selector
      * @return void
      */
-    public function scrollIntoView($selector)
+    public function scrollIntoView($selector, $alignToTop = true)
     {
-        $this->executeJS('document.querySelector("' . addslashes($selector) . '").scrollIntoView();');
+        $alignToTop = $alignToTop ? 'true' : 'false';
+        $this->executeJS('document.querySelector("' . addslashes($selector) . '").scrollIntoView('. $alignToTop .');');
     }
 
     /**

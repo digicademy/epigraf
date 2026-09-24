@@ -1,0 +1,58 @@
+   
+ 
+  
+ 
+S\. 
+S. 
+i\. d\. R\.
+i. d. R.
+L\. 
+L. 
+Br\. 
+Br. 
+H\. 
+H. 
+Du\. 
+Du. 
+Bu\. 
+Bu. 
+\. Jh\.
+. Jh.
+\. Jahrhundert
+. Jahrhundert
+d\. i\.
+d. i.
+z\. B\.
+z. B.
+ cm
+ cm
+Sp\. 
+Sp. 
+Abb\. 
+Abb. 
+Nr\. 
+Nr. 
+([0-9])-([0-9])
+$1–$2
+ d\. Ä\.
+ d. Ä.
+ d\. J\.
+ d. J.
+ d\. M\.
+ d. M.
+ %
+ %
+d\. h\.
+d. h.
+u\. a\. m\.
+u. a. m.
+u\. a\.
+u. a.
+s\. a\.
+s. a.
+s\. vv\.
+s. vv.
+Dr\. 
+Dr. 
+\]<\/all>\[
+</all>

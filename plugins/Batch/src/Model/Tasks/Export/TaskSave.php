@@ -22,13 +22,14 @@ class TaskSave extends BaseTask
     /**
      * Use the caption as current output file name
      *
+     * @param bool $allowPlaceholders Whether placeholders are stripped or not
      * @return string
      */
-    public function getCurrentOutputFileName()
+    public function getCurrentOutputFileName($allowPlaceholders = false)
     {
         if (empty($this->config['outputfile']) && !empty($this->job->id)) {
             $filename = $this->job->caption. '.' . $this->getCurrentOutputExtension();
-            return Files::cleanFilename($filename);
+            return Files::cleanFilename($filename, true, $allowPlaceholders);
         }
 
         return parent::getCurrentOutputFileName();

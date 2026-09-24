@@ -107,21 +107,34 @@ class DropdownWidgetBase extends BaseWidget {
             referenceOffsetLeft = alignRect.left;
         }
 
-        // Limit the pane size
-        const maxWidth = Math.min(referenceWidth - referenceOffsetLeft, 600);
-        const maxHeight = (window.innerHeight - alignRect.bottom - 50);
+        // Compute limits
         const minHeight = 250;
 
-        this.pane.style.maxHeight = maxHeight + 'px';
-        if (this.pane.offsetHeight > maxHeight || this.paneHeightRestricted) {
-            this.pane.style.height = maxHeight + 'px';
-            // resize the pane again, e.g. if more space is available
-            this.paneHeightRestricted = true;
-        }
+        // Popup, sidebar and main frame content is within div.widget-content-pane
+        const contentWrapper = this.widgetElement.closest('.widget-content-pane');
+        const topOffset = contentWrapper ? contentWrapper.getBoundingClientRect().top : 0;
+
+        let spaceBottom = (window.innerHeight - alignRect.bottom);
+        let spaceTop = alignRect.top - topOffset;
+        const maxHeightBottom = spaceBottom - 50;
+        const maxHeightTop = spaceTop;
+
+        let maxHeight = maxHeightBottom; // default: expand downwards
 
         // Case a) The pane is inside a wrapper that also contains the input:
         if (!this.pane.classList.contains('widget-dropdown-pane-moved')) {
+            // Flip to top if there is not enough space below but more space above
+            if (spaceBottom < minHeight && spaceTop > spaceBottom) {
+                this.pane.style.bottom = '100%';
+                this.pane.style.top = 'auto';
+                maxHeight = maxHeightTop;
+            } else {
+                this.pane.style.bottom = 'auto';
+                this.pane.style.top = '';
+            }
+
             const minWidth = 100;
+            const maxWidth = Math.min(referenceWidth - referenceOffsetLeft, 600);
             this.pane.style.width = Math.min(Math.max(minWidth, targetWidth), maxWidth) + 'px';
         }
 
@@ -146,8 +159,8 @@ class DropdownWidgetBase extends BaseWidget {
 
             let spaceLeft = 0;
             let spaceRight = 0;
-            let spaceTop = 0;
-            let spaceBottom = 0;
+            spaceTop = 0;
+            spaceBottom = 0;
             if (position.startsWith('right')) {
                 spaceRight = window.innerWidth - alignRect.right;
             }
@@ -259,6 +272,14 @@ class DropdownWidgetBase extends BaseWidget {
                 this.pane.style.width = targetWidth + 'px';
                 this.pane.style.top = (alignRect.bottom + 1) + 'px';
             }
+        }
+
+        // Limit the pane size
+        this.pane.style.maxHeight = maxHeight + 'px';
+        if (this.pane.offsetHeight > maxHeight || this.paneHeightRestricted) {
+            this.pane.style.height = maxHeight + 'px';
+            // resize the pane again, e.g. if more space is available
+            this.paneHeightRestricted = true;
         }
 
         if (first) {
@@ -594,6 +615,7 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         this.input_id = this.widgetElement.querySelector('input[type="hidden"]');
         this.input_label = Utils.querySelectorAndSelf(this.widgetElement,'input[type="text"],input[type="button"]');
         this.input_toggle = Utils.querySelectorAndSelf(this.widgetElement,'input[type="text"],input[type="button"],button');
+        this.customText = this.input_label && this.input_label.classList.contains('widget-dropdown-selector-input-free');
 
         this.detachPane();
 
@@ -637,13 +659,6 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         if (scrollable) {
             this.listenEvent(scrollable, 'scroll', (event) => this.onScroll(event));
         }
-    }
-
-    /**
-     * Activate or update dragitems widget.
-     */
-    updateWidget() {
-        //this.listenEvent(document,'click', event => this.onDocumentClick(event));
     }
 
     /**
@@ -859,7 +874,11 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         else if (key === 13) {
             if (current) {
                 this.selectValue(current, true);
-            } else {
+            }
+            else if (this.customText) {
+                this.selectText();
+            }
+            else {
                 this.clearValue();
             }
 
@@ -876,10 +895,15 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
 
     /**
      * Open the dropdown and load the pane without a filter term.
+     *
+     * @returns {boolean} True if the pane could be opened, otherwise false.
      */
     openDropdown() {
+        if (!this.pane) {
+            return false;
+        }
         if (this.isOpen()) {
-            return;
+            return true;
         }
 
         //this.detachPane();
@@ -897,10 +921,12 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         this.positionDropdown();
 
         this.loadResults();
+        return true;
     }
 
     /**
-     * Close the dropdown.
+     * Close the dropdown
+     *
      */
     closeDropdown() {
         if (!this.isOpen()) {
@@ -924,7 +950,9 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
      */
     loadResults(term = '') {
         // Open if not open
-        this.openDropdown();
+        if (!this.openDropdown()) {
+            return false;
+        }
 
         // Load by AJAX...
         if (this.url) {
@@ -1082,6 +1110,24 @@ export class DropdownSelectorWidget extends DropdownWidgetBase {
         });
 
         this.clearValue();
+    }
+
+    /**
+     * Transfer text value to the hidden input
+     */
+    selectText() {
+        if (this.customText) {
+            this.input_id.value = this.input_label.value;
+            this.input_label.dataset.oldvalue = this.input_label.value;
+            this.emitEvent('epi:change:dropdown', {
+                'id': this.input_label.value,
+                'label': this.input_label.value
+            });
+        }
+
+        if (!this.pane.classList.contains('widget-checkboxlist')) {
+            this.closeDropdown();
+        }
     }
 
     /**

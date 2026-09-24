@@ -439,18 +439,59 @@ class Utils {
         return [].some.call(elm.children, e => e.matches(selector));
     };
 
+
     /**
-     * Savely set the value of an input element.
+     * Normalize a value for comparison by decoding HTML entities
+     * so equivalent representations compare as equal.
      *
-     * @param {HTMLElement } element The input element.
-     * @param value
+     * @value {String|Number} The value to normalize.
+     * @return {String} A value with entities converted to Unicode. Numbers are converted to strings.
      */
-    static setInputValue(element, value) {
+    static normalizeValue(value) {
+        if (value == null) return value;
+
+        if (typeof value == "number") {
+            return value.toString();
+        }
+
+        // Decode entities
+        const textarea = document.createElement('textarea');
+        textarea.innerHTML = value;
+        value = textarea.value;
+
+        // Remove NBSP and ZWS because they are reserved characters in CKEditor
+        value = value
+            .replaceAll(/\u00a0/g, " ")
+            .replaceAll(/\u200B/g, "");
+
+        return value;
+
+    }
+
+    /**
+     * Savely set the value of an input element and flag it as dirty
+     *
+     * @param {HTMLElement} element The input element.
+     * @param {String|Number} value The input value.
+     * @param {Boolean} normalize Whether to normalize the value for the comparison, defaults to false.
+     *                            The input will always receive the unnormalized value.
+     */
+    static setInputValue(element, value, normalize = false) {
         if (element) {
-            if (element.value !== value) {
-                element.value = value;
-                element.disabled = false;
-                element.dataset.dirty = true;
+
+            let oldValue = element.value;
+            let newValue = value;
+
+            if (normalize) {
+                oldValue = Utils.normalizeValue(oldValue);
+                newValue = Utils.normalizeValue(newValue);
+            }
+
+            element.value = value;
+            element.disabled = false;
+
+            if (oldValue !== newValue) {
+                Utils.setDirty(element);
             }
         }
     }
@@ -465,6 +506,25 @@ class Utils {
         }
 
         return element.value;
+    }
+
+    /**
+     * Set the dirty flag on an element and emit the epi:change:form event
+     *
+     * @param {HTMLElement} element
+     * @param {boolean} dirty The new dirty state
+     * @fires epi:change:form
+     */
+    static setDirty(element, dirty = true) {
+        const oldDirty = element.dataset.dirty;
+        if (dirty) {
+            element.dataset.dirty = dirty;
+            if (!oldDirty) {
+                Utils.emitEvent(element, 'epi:change:form');
+            }
+        } else {
+            delete element.dataset.dirty;
+        }
     }
 
     /**
@@ -1111,6 +1171,22 @@ class Utils {
     }
 
     /**
+     * Find an element that is directly contained in the current element,
+     * not nested within other elements with a common class
+     *
+     * @param {HTMLElement} elm
+     * @param {String} unnested CSS selector of elm, that is not allowed on another parent
+     * @param {String} selector CSS selector
+     * @returns {HTMLElement} Return undefined if not found
+     */
+    static querySelectorUnnested(elm, unnested, selector) {
+        const elements = elm.querySelectorAll(selector);
+        return  Array.from(elements).find(el =>
+            el.closest(unnested) === elm
+        );
+    }
+
+    /**
      * Get the value of a specific data attribute from an element.
      *
      * @param {HTMLElement} elm The element from which to get the data attribute value.
@@ -1329,6 +1405,28 @@ class Utils {
         return (180 / Math.PI * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n))));
     }
 
+
+    /**
+     * Calculate rolling average for an array of values
+     *
+     * @param {Array} values Array of numeric values
+     * @param {number} windowSize Size of the rolling window
+     * @returns {Array} Array of averaged values
+     */
+    static rollingAverage(values, windowSize = 5) {
+        const result = [];
+        const halfWindow = Math.floor(windowSize / 2);
+
+        for (let i = 0; i < values.length; i++) {
+            const start = Math.max(0, i - halfWindow);
+            const end = Math.min(values.length, i + halfWindow + 1);
+            const window = values.slice(start, end);
+            const avg = window.reduce((sum, val) => sum + val, 0) / window.length;
+            result.push(avg);
+        }
+
+        return result;
+    }
 
     /**
      * Replace multiple whitspaces with a single whitespace
@@ -1566,19 +1664,19 @@ class Utils {
         return [checkList, all];
     }
 
-
     /**
-     * Derive a clean ID from a string.
+     * Derive a clean identifier from a string.
      *
-     * @param {string} text
+     * @param {string} value
      * @return {string}
      */
-    static cleanId(text) {
-        return text.toString().toLowerCase().replace(/\s+/g, '-')    // Replace spaces with -
-            .replace(/[^\w\-]+/g, '')                                // Remove all non-word chars
-            .replace(/\-\-+/g, '-')                                  // Replace multiple - with single -
-            .replace(/^-+/, '')                                      // Trim - from start of text
-            .replace(/-+$/, '');                                     // Trim - from end of text
+    static cleanIdentifier(value) {
+        value = value.toLowerCase().trim();
+        value = Utils.replaceUmlauts(value);
+        value = Utils.removeSpecialCharacters(value);
+        value = Utils.collapseWhitespace(value);
+        value = Utils.replaceSpacesWithHyphens(value);
+        return value;
     }
 
     /**

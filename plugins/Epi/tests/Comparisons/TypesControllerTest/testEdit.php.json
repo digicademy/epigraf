@@ -2,12 +2,12 @@
     "id": 2,
     "deleted": 0,
     "version_id": null,
-    "job_id": 67521,
-    "published": null,
+    "job_id": 84836,
+    "published": 0,
     "created": null,
     "modified": "2020-10-29T13:00:58+01:00",
     "created_by": null,
-    "modified_by": 4,
+    "modified_by": 10,
     "scope": "properties",
     "mode": "default",
     "preset": "default",
@@ -17,33 +17,37 @@
     "caption": "Vermessung",
     "description": "",
     "config": {
-        "type": "flat",
+        "role": "structure",
         "displayfield": "lemma",
+        "sort": "sortkey",
         "fields": {
-            "lemma": "Bezeichnung",
-            "name": "Abk\u00fcrzung",
+            "lemma": {
+                "caption": "Bezeichnung",
+                "required": true,
+                "pattern": "^[A-Z][a-z\u00e4\u00f6\u00fc\u00df]+$"
+            },
+            "name": {
+                "caption": "Abk\u00fcrzung",
+                "required": true,
+                "pattern": "^[A-Z][a-z\u00e4\u00f6\u00fc\u00df]+$"
+            },
             "sortkey": {
                 "caption": "Sortierschl\u00fcssel",
-                "autofill": {
-                    "source": "lemma",
-                    "process": [
-                        "sortkey"
-                    ]
-                }
+                "required": true,
+                "pattern": "^[0-9]{2}$"
             },
-            "unit": "Zeichen",
+            "unit": "Einheit",
+            "ishidden": {
+                "caption": "Im Export ausblenden"
+            },
             "comment": "Bemerkung",
-            "keywords": "Schl\u00fcsselw\u00f6rter",
             "norm_data": "Normdaten",
             "norm_iri": {
                 "caption": "IRI-Fragment",
-                "autofill": {
-                    "source": "name",
-                    "process": [
-                        "irifragment"
-                    ]
-                }
+                "required": true,
+                "pattern": "^[a-z]+$"
             },
+            "published": "Status",
             "created": "Erstellt",
             "modified": "Ge\u00e4ndert",
             "created_by": "Erstellt von",
@@ -55,19 +59,33 @@
                 "caption": "Bezeichnung",
                 "default": true
             },
-            "name": "Abk\u00fcrzung",
-            "comment": "Bemerkung",
-            "keywords": "Schl\u00fcsselw\u00f6rter",
+            "name": {
+                "caption": "Abk\u00fcrzung",
+                "default": true
+            },
             "unit": {
                 "caption": "Einheit",
                 "default": true
             },
+            "ishidden": {
+                "caption": "Im Export ausblenden",
+                "default": true
+            },
+            "sortkey": {
+                "caption": "Sortierschl\u00fcssel",
+                "default": true
+            },
+            "comment": "Bemerkung",
             "norm_data": "Normdaten",
             "norm_iri": {
                 "caption": "IRI-Fragment",
                 "default": true
             },
             "articles_count": "Artikel",
+            "published": {
+                "caption": "Status",
+                "default": true
+            },
             "modified": {
                 "default": false,
                 "caption": "Ver\u00e4ndert"

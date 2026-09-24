@@ -187,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `links` (
                                        `modified` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
                                        `modified_by` int(11) DEFAULT NULL,
                                        `created_by` int(11) DEFAULT NULL,
+                                       `linktype` VARCHAR(500) COLLATE 'utf8mb4_unicode_ci' DEFAULT NULL,
                                        `root_id` int(11) DEFAULT NULL,
                                        `root_tab` varchar(500)  COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                                        `from_id` int(11) DEFAULT NULL,
@@ -663,3 +664,6 @@ ALTER TABLE `types`
 
 ALTER TABLE `users`
 	CHANGE COLUMN `norm_iri` `norm_iri` VARCHAR(1500) NULL DEFAULT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `userrole`;
+
+ALTER TABLE `users`
+	ADD COLUMN `acronym` VARCHAR(50) NULL DEFAULT NULL AFTER `usertype`;

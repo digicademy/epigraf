@@ -40,13 +40,19 @@ class FilesHelper extends Helper
     /**
      * Initialize dropzone
      *
+     * Folder components:
+     *
+     * - root
+     * - path
+     * - database
+     *
      * @param array $folder
      * @return string
      */
-    public function dropzone($folder = ['root'=>null,'path'=>null,'database'=>null], $template = false)
+    public function dropzone($folder = ['root' => null, 'path' => null, 'database' => null], $template = false)
     {
 
-        if (!$this->User->hasPermission(['action' => 'upload'])) {
+        if (!$this->User->hasPermission(['controller' => 'Files', 'action' => 'upload'])) {
             return '';
         }
 
@@ -62,6 +68,7 @@ class FilesHelper extends Helper
             '?' => ['root' => $root, 'path' => $path]
 
         ];
+
         if (!empty($database)) {
             $database = is_string($database) ? $database : $database->name;
             $url['database'] = Databank::removePrefix($database);
@@ -83,7 +90,7 @@ class FilesHelper extends Helper
 
         if ($template) {
             $out = '<script type="text/template" class="widget-upload">'
-                .$out
+                . $out
                 . '</script>';
         }
 

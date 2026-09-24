@@ -35,13 +35,11 @@ class TotalPaginator extends NumericPaginator
         'page' => 1,
         'limit' => 20,
         'maxLimit' => 100,
-        'lft' => 'lft',  // Lft field name TODO: init with null
-        'rght' => 'rght', // Rght field name TODO: init with null
+        'lft' => 'lft',  // Lft field name
+        'rght' => 'rght', // Rght field name
         'level' => 'level', // Level field name
         'seek' => null,
         'cursor' => null,
-//        'sort' => 'id',
-//        'direction' => 'ASC',
         'children' => true,
         'collapsed' => false,
         'sortableFields' => null,
@@ -118,6 +116,8 @@ class TotalPaginator extends NumericPaginator
         $cursorNode = $options['cursornode'] ?? null;
         $seek = $options['seek'] ?? null;
         $seek = is_numeric($seek) ? (int)$seek : null;
+
+        // Note: Cursor/seek tree navigation only supports a single sort direction.
         $dir = strtolower($options['direction'] ?? 'asc') ?: 'asc';
 
 
@@ -230,10 +230,6 @@ class TotalPaginator extends NumericPaginator
             $query = $query->andWhere([$object->getAlias() . '.id' => $seek]);
         }
 
-//        else {
-//            $query = $query->andWhere([$object->getAlias() . '.id' => VALUE_INVALID_ID]);
-//        }
-
         return $query;
     }
 
@@ -337,6 +333,38 @@ class TotalPaginator extends NumericPaginator
     }
 
     /**
+     * Add sorting params for multiple sort fields.
+     *
+     * The parent only stores a single direction. Here we rebuild the
+     * `direction` param so it carries one direction per sort field,
+     * comma-separated, matching the order of `sort`.
+     *
+     * @param array $params
+     * @param array $data
+     * @return array|mixed[]
+     */
+    protected function addSortingParams(array $params, array $data): array
+    {
+        $params = parent::addSortingParams($params, $data);
+
+        $completeSort = $params['completeSort'] ?? [];
+        if (empty($params['sort']) || empty($completeSort)) {
+            return $params;
+        }
+
+        // Normalise sort fields to count them
+        $sortFields = is_array($params['sort'])
+            ? $params['sort']
+            : explode(',', (string)$params['sort']);
+
+        // Take as many directions from completeSort as there are sort fields
+        $directions = array_slice(array_values($completeSort), 0, count($sortFields));
+        $params['direction'] = strtolower(implode(',', $directions));
+
+        return $params;
+    }
+
+    /**
      * Extend the base class to allow multiple sort fields.
      *
      * Each field is separated by a comma in the sort key.
@@ -369,11 +397,7 @@ class TotalPaginator extends NumericPaginator
         else {
             $options['sort'] = null;
         }
-//        unset($options['direction']);
 
-//        if (empty($options['order'])) {
-//            $options['order'] = [];
-//        }
         if (!is_array($options['order'])) {
             return $options;
         }

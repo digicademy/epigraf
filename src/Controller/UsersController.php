@@ -429,8 +429,9 @@ class UsersController extends AppController
         if (($this->request->is('post'))) {
 
             $databankId = $this->request->getData('databank_id', $databankId);
-            $scope = $this->request->getData('scope', $scope);
-            $role = $this->request->getData('role', $role);
+            $scope = $this->request->getData('permission_scope', $scope);
+            $role = $this->request->getData('user_role', $role);
+            $endpoint = $this->request->getData('permission_name');
 
             if ($databankId === '*') {
                 $this->Answer->error(__('Wildcard grants are not yet supported.'), ['action' => 'view', $id]);
@@ -453,7 +454,7 @@ class UsersController extends AppController
                 $scope = Attributes::cleanOption($scope, ['web', 'api', 'desktop']);
                 $role = Attributes::cleanOption($role, array_keys(PermissionsTable::$userRoles));
 
-                if ($databank->grant($user, $scope, $role)) {
+                if ($databank->grant($user, $scope, $role, $endpoint)) {
                     $this->Answer->success(__('Access has been granted.'), ['action' => 'view', $id]);
                 }
                 else {
@@ -462,11 +463,14 @@ class UsersController extends AppController
             }
         }
         else {
-            $entity = $this->Users->get($id, ['contain' => ['Databanks', 'ArticlePipelines', 'BookPipelines']]);
-            $databanks = $this->Users->Databanks->find('list')->toArray();
-            $scopes = ['web' => 'Web', 'api' => 'API', 'desktop' => 'Desktop'];
-            $roles = PermissionsTable::$userRoles;
-            $this->Answer->addOptions(compact('databanks', 'scopes', 'roles'));
+            $entity = $this->Users->PermissionsById->newEntity(
+                [
+                    'user_id' => $id,
+                    'permission_type' => 'access',
+                    'entity_type' => 'databank'
+
+                ]
+            );
             $this->Answer->addAnswer(compact('entity'));
         }
     }

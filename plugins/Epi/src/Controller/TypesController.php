@@ -187,6 +187,7 @@ class TypesController extends AppController
      */
     public function export()
     {
-        $this->Batch->export();
+        $params = $this->request->getQueryParams();
+        $this->Batch->export(null, $params);
     }
 }

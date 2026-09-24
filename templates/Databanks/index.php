@@ -52,5 +52,5 @@
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup('bottom');
     $this->Link->addCreateAction(__('Create database'));
-    $this->Link->downloadButtons (null, 'id', 'databanks');
+    $this->Link->downloadButtons(['parameter' => 'id', 'datalist' => 'databanks']);
 ?>

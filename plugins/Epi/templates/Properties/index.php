@@ -42,7 +42,7 @@
             [
                 "class" => "content-searchbar-item-main small-order-3",
                 "label" => __('Jump'),
-                'placeholder' => __('Jump to letter, e.g. type "me - b" ')
+                'placeholder' => __('Jump to letter, e.g. type "me - b"')
             ]
         ) ?>
 

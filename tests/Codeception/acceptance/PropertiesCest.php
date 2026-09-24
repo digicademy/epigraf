@@ -140,13 +140,15 @@ class PropertiesCest
         $I->waitForElement('.sidebar-right #form-edit-properties-44');
 
         // Add annotation to "Schild"
-        $I->focusXmlInput('.sidebar-right .doc-fieldname-content .widget-xmleditor');
+        $selector = '.sidebar-right .doc-fieldname-source_from .widget-xmleditor';
+        $I->focusXmlInput($selector);
+        $I->pressKey($selector, WebDriverKeys::HOME);
         $I->click('.ck-dropdown', '.ck-toolbar__items');
-        $I->useToolbutton('Verweis auf Literatur [Alt+Shift+L]', '7');
+        $I->useToolbutton('Verweis auf Literatur [Alt+Shift+L]', '11');
 
         $I->click('.button-links-toggle');
-        $I->see('Autor 1  (Einheit Autor 1) › Kurztitel Unterautor 2 mit \' (Unterautor2 Einheit)', '.doc-fieldname-content');
-        $I->see('Autor 1', '.doc-section-links [data-from-field=content]');
+        $I->see('Autor 1  › Unterautor 1 mit \'', '.doc-fieldname-source_from');
+        $I->see('Autor 1', '.doc-section-links [data-from-field=source_from]');
 
         // Save
         $I->click('Save', '.sidebar-right');
@@ -157,8 +159,11 @@ class PropertiesCest
         $I->waitForElementVisible('.widget-document');
 
         $I->click('.button-links-toggle');
-        $I->see('Unterautor 2', '.doc-fieldname-content');
-        $I->see('Unterautor 2', '.doc-section-links [data-from-field=content]');
+        $I->scrollIntoView('.sidebar-right .doc-fieldname-source_from');
+        $I->wait(1);
+
+        $I->see('Unterautor 1', '.doc-fieldname-source_from');
+        $I->see('Unterautor 1', '.doc-section-links [data-from-field=source_from]');
         $I->dontSeeVisualChanges('sidebar', '.sidebar-right');
     }
 
@@ -179,7 +184,7 @@ class PropertiesCest
 
         // Check if 2 root properties exist
         $I->dontSee('Testträger');
-        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 2);
+        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 4);
 
         // Create new property
         $I->click("Create property");
@@ -195,8 +200,8 @@ class PropertiesCest
         $I->waitForElementVisible('.recordlist [data-list-name="epi_properties"]');
 
         // Check if the new property exists
-        $I->see('Testträger', '.recordlist [data-id="650"][data-tree-parent=""]');
-        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 3);
+        $I->see('Testträger', '.recordlist [data-id="1712"][data-tree-parent=""]');
+        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 5);
 
         // Ensure visual appearance
         $I->wait(1);
@@ -279,7 +284,7 @@ class PropertiesCest
         $I->waitForElementVisible('.recordlist [data-list-name="epi_properties"]');
 
         // Check if the new property exists and has content in the XML field
-        $I->testOpensInSidebar('epi_properties', 650);
+        $I->testOpensInSidebar('epi_properties', 1712);
         $I->see('Mein Wappen', '.sidebar-right');
         $I->see('Mein Schild', '.sidebar-right');
 
@@ -304,7 +309,7 @@ class PropertiesCest
 
         // Check if 2 root properties exist
         $I->dontSee('Testträger');
-        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 2);
+        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 4);
 
         // Create new property
         $I->click("Create property");
@@ -319,8 +324,8 @@ class PropertiesCest
         $I->waitForElementVisible('.recordlist [data-list-name="epi_properties"]');
 
         // Check if the new property exists
-        $I->see('Testträger', '.recordlist [data-id="650"][data-tree-parent="36"]');
-        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 2);
+        $I->see('Testträger', '.recordlist [data-id="1712"][data-tree-parent="36"]');
+        $I->seeNumberOfElements('.content-main tr[data-tree-parent=""]', 4);
 
         // Ensure visual appearance
         $I->wait(1);
@@ -386,7 +391,7 @@ class PropertiesCest
         $I->amOnPage('/epi/projects/properties/index/objecttypes');
         $I->wait(1);
 
-        $I->seeNumberOfElements('.widget-table [data-list-itemof=epi_properties]', 7);
+        $I->seeNumberOfElements('.widget-table [data-list-itemof=epi_properties]', 25);
         $I->dontSeeVisualChanges('beforefilter', '.recordlist [data-list-name="epi_properties"]');
 
         $I->click('[data-filter-param="articles.projects"] .widget-dropdown-selector');
@@ -395,7 +400,7 @@ class PropertiesCest
         $I->click('#select-pane-articles-projects #select-pane-articles-projects__1');
         $I->waitForTheAjaxResponse();
 
-        $I->seeNumberOfElements('.widget-table [data-list-itemof=epi_properties]', 3);
+        $I->seeNumberOfElements('.widget-table [data-list-itemof=epi_properties]', 17);
         $I->dontSeeVisualChanges('afterfilter', '.recordlist [data-list-name="epi_properties"]');
     }
 

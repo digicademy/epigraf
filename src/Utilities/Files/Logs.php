@@ -10,20 +10,6 @@
 
 namespace App\Utilities\Files;
 
-use App\Utilities\XmlParser\XmlMunge;
-use App\View\CsvView;
-use Cake\Filesystem\Folder;
-use Cake\Http\Exception\BadRequestException;
-use Cake\I18n\FrozenTime;
-use Cake\Utility\Hash;
-use Psr\Http\Message\UploadedFileInterface;
-use RecursiveIteratorIterator;
-use RecursiveDirectoryIterator;
-use Exception;
-use SplFileInfo;
-use SplFileObject;
-use ZipArchive;
-
 /**
  * Parse error logs
  */

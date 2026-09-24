@@ -1,11 +1,13 @@
-<?php /**
+<?php
+/**
  * Epigraf 5.0
  *
  * @author     Epigraf Team
  * @contact    jakob.juenger@adwmainz.de
  * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
  *
- */ ?>
+ */
+?>
 
 <?php
 use App\Model\Entity\Databank;
@@ -22,6 +24,7 @@ use App\Utilities\Converters\Attributes;
  * @var array $template_article
  */
 ?>
+
 <?php
     $params = $this->getConfig('options')['params'];
     $options = ['edit' => $edit, 'mode' => $mode, 'template_article' => $template_article, 'buttons' => true];

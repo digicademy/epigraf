@@ -1,0 +1,87 @@
+<?php
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+
+namespace Batch\Model\Tasks\Mutate;
+
+use InvalidArgumentException;
+
+/**
+ * Generate sort keys from lemma paths
+ *
+ */
+class TaskBatchVersion extends BaseTaskMutate
+{
+
+    static public $caption = 'Init versions';
+    static public $allowed = ['admin' , 'devel'];
+
+    public static $taskModels = ['Epi.Properties'];
+
+    /**
+     * Create a version for all properties
+     *
+     * TODO: Make dry, see TaskBatchMerge.php and BaseTaskMutate->mutateMany()
+     *
+     * Proceeds level by level, starting with the lowest level.
+     * Within each level, follows the order of IDs.
+     * The task parameters include `cursor`, the ID of a cursor node.
+     * Proceeds on the cursor node's level with nodes having a higher ID,
+     * followed by nodes on higher levels. Set `cursor` to 0 to start from the beginning.
+     *
+     * @param array $taskParams
+     * @param array $dataParams
+     * @param int $offset First entity to mutate
+     * @param int $limit Number of entities to mutate
+     * @return array The mutated entities
+     */
+    protected function mutate($model, $taskParams, $dataParams, $offset = 0, $limit = 1)
+    {
+        if (($taskParams['cursor'] ?? 0) < 0) {
+            throw new InvalidArgumentException('Invalid cursor for merge task');
+        }
+
+        $dataParams = $model->parseRequestParameters($dataParams);
+
+        // Use cursor-based pagination
+        if (($taskParams['cursor'] ?? 0) > 0) {
+            $cursorNode = $model->find('all', ['deleted'=>[0,1]])
+                ->where(['id' => $taskParams['cursor']])
+                ->firstOrFail();
+
+            $cursorConditions = [
+                'OR' => [
+                    ['Properties.level' => $cursorNode->level, 'Properties.id >' => $taskParams['cursor'] ?? 0],
+                    'Properties.level >' => $cursorNode->level
+                ]
+            ];
+        } else {
+            $cursorConditions = ['1=1'];
+        }
+
+        $dataParams['articleCount'] = false;
+        $dataParams['ancestors'] = false;
+
+        $entities = $model
+            ->find('hasParams', $dataParams)
+            ->where($cursorConditions)
+            ->orderAsc('Properties.level')
+            ->orderAsc('Properties.id')
+            ->limit($limit)
+            ->toArray();
+
+        foreach ($entities as $entity) {
+            $entity->modified = $entity->modified;
+            $entity->setDirty('modified');
+        }
+        $model->saveManyFast($entities, ['versions' => true, 'timestamps' => true]);
+
+        return $entities;
+    }
+}

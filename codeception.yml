@@ -8,10 +8,14 @@ coverage:
   enabled: true
   include:
     - src/*
+    - plugins/*/src/*
     - htdocs/*
     - templates/*
     - plugins/*
-
+  exclude:
+    - src/Console/*
+    - vendor/*
+  show_only_summary: false
 actor_suffix: Tester
 extensions:
     enabled:

@@ -272,8 +272,8 @@ export class SectionsModel extends BaseDocumentModel {
      * @returns {null|*|undefined}
      */
     getActiveSection() {
-        if (App.scrollsync) {
-            return App.scrollsync.activeSection;
+        if (App.scrollSync) {
+            return App.scrollSync.activeSection;
         }
         return undefined;
     }
@@ -464,10 +464,10 @@ export class SectionsModel extends BaseDocumentModel {
         });
         this.updateNames();
 
-        if (App.scrollsync) {
-            App.scrollsync.updateWidget();
+        if (App.scrollSync) {
+            App.scrollSync.updateWidget();
             // restore the focus, which may have moved due to scroll sync operations
-            App.scrollsync.scrollToSection(this.getActiveSection(), true);
+            App.scrollSync.scrollToSection(this.getActiveSection(), true);
         }
     }
 
@@ -567,10 +567,10 @@ export class SectionsModel extends BaseDocumentModel {
     }
 
     view(id) {
-        if (id && App.scrollsync) {
+        if (id && App.scrollSync) {
             const section = document.getElementById('sections-' + id);
-            App.switchbuttons.switchButton(section.querySelector('.doc-section-head'), true);
-            App.scrollsync.scrollToSection(section, true);
+            App.switchButtons.switchButton(section.querySelector('.doc-section-head'), true);
+            App.scrollSync.scrollToSection(section, true);
         }
     }
 
@@ -728,8 +728,8 @@ export class SectionsModel extends BaseDocumentModel {
                 });
 
 
-                if (firstNewMenuItem && App.scrollsync) {
-                    App.scrollsync.activateLi(firstNewMenuItem);
+                if (firstNewMenuItem && App.scrollSync) {
+                    App.scrollSync.activateLi(firstNewMenuItem);
                 }
 
                 // Can this be removed as it is called by updatePositions()?
@@ -843,12 +843,15 @@ export class ItemsModel extends BaseDocumentModel {
         this.lastId = 0;
 
         this.listenEvent(document, 'click', event => this.onClick(event), '.doc-item-remove, .doc-item-add');
+        this.listenEvent(document, 'focusin', event => this.onFocusIn(event));
         this.listenEvent(document, 'input', event => this.onInput(event));
         this.listenEvent(document, 'keydown', event => this.onKeyDown(event));
+
         this.listenEvent(document, 'epi:change:dropdown', event => this.onChanged(event));
         this.listenEvent(document, 'epi:upload:files', event => this.onUploadFiles(event));
         this.listenEvent(document, 'epi:update:item', event => this.onUpdateItem(event));
         this.listenEvent(document, 'epi:import:item', event => this.onImportItem(event));
+        this.listenEvent(document, 'epi:patch:item', event => this.onPatchItem(event));
     }
 
     /**
@@ -983,6 +986,21 @@ export class ItemsModel extends BaseDocumentModel {
     }
 
     /**
+     * Handle item focus events
+     *
+     * TODO: Not reliable for detached items (using the detach function e.g. in heraldry)
+     *
+     * @param event
+     */
+    onFocusIn(event) {
+        if (!this.doc.ownedByDocument(event.target)) {
+            return;
+        }
+        const item = event.target.closest('[data-row-table="items"]');
+        this.emitEvent(item, 'epi:focus:item',{}, false);
+    }
+
+    /**
      * Handle input events
      * - For item changes, fire the epi:change:item event
      *
@@ -1021,7 +1039,7 @@ export class ItemsModel extends BaseDocumentModel {
     /**
      * Handle file import events
      *
-     * Item import can be triggered by the epi:import:file event.
+     * Item import can be triggered by the epi:upload:files event.
      *
      * @param event
      */
@@ -1057,19 +1075,21 @@ export class ItemsModel extends BaseDocumentModel {
     }
 
     /**
-     * Handle item import events
+     * Handle item import triggered by epi:import:item events.
      *
      * TODO: merge with onUploadFiles()
      *
-     * Item import can be triggered by the epi:import:item event.
      * Used for automated coding by the LLM service.
-     *
      * The event data has to contain the following properties:
-     * - sectiontype
-     * - itemtype
-     * - items
      *
-     * @param event
+     * - sectiontype Items will be added to the first section of this type.
+     * - itemtype The itemtype of the items to add or update.
+     *            If the section contains an add button for this itemtype, new items will be added.
+     *            Otherwise, the first existing item of this type will be updated.
+     * - items An array of objects with fieldname: value pairs for the new or updated items.
+     *         For updates, only the first item is processed by passing the data to an epi:update:item event.
+     *
+     * @param {CustomEvent} event Event of type epi:import:item
      * @fires epi:update:item
      */
     onImportItem(event) {
@@ -1093,16 +1113,8 @@ export class ItemsModel extends BaseDocumentModel {
         // Add multiple non-existing items
         const addButton= sectionElement.querySelector('.doc-section-item .doc-field-add-' + eventData.itemtype);
         if (addButton) {
-
             const templateItem = addButton.closest('.doc-section-item');
-            if (!templateItem) {
-                return;
-            }
-
-            eventData.items.forEach(item => {
-                this.add(templateItem, item, false);
-            });
-
+            this.craft(templateItem, eventData.items);
             return;
         }
 
@@ -1118,6 +1130,25 @@ export class ItemsModel extends BaseDocumentModel {
 
     }
 
+    /**
+     * Handle item updates triggered by epi:update:item events.
+     *
+     * The event data has to contain the following properties:
+     *
+     * - table
+     * - id
+     * - content (object with fieldname: value pairs)
+     *
+     * All elements with a matching data-row-table and data-row-id will be updated
+     * by getting child elements with a matching data-row-field and
+     * setting their value or content to the value in the content object.
+     * The content object can contain multiple fields to update at once.
+     *
+     * To update references to properties, include values for
+     * properties_id and properties_label.
+     *
+     * @param {CustomEvent} event Event of type epi:update:item
+     */
     onUpdateItem(event) {
         const eventData = event.detail.data;
         if (!eventData || !eventData.table || !eventData.id || !eventData.content) {
@@ -1135,13 +1166,95 @@ export class ItemsModel extends BaseDocumentModel {
                 else if (!fieldElement && (fieldName === 'properties_label')) {
                     fieldElement = item.querySelector( `[data-row-field="property"] input.input-reference-text`);
                 }
+                else if (fieldName === 'file') {
+                    fieldElement = item.querySelector(`[data-row-field="file"] input[type='text']`);
+                }
+                // TODO: handle links fields
                 this.setContent(fieldElement, eventData.content[fieldName]);
             }
         }
-
-
     }
 
+    /**
+     * Update or add an item
+     *
+     * The event data has to contain the following properties:
+     *
+     * - handler: Object with the key itemtype to identify the target section that should handle the event.
+     *            Target sections match if they either contain items of the itemtype or contain an add button for the itemtype.
+     * - selector: Object with key-value pairs to identify the target item by matching data attributes (e.g. file name).
+     *             If no existing item matches the selector,
+     *             a new item will be created using the template associated with the add button for the itemtype.
+     * - content: Object with fieldname: value pairs to update the item or create a new item with the given content.
+     *
+     * Example event data:
+     *
+     * eventData = {
+     *   handler: {itemtype: 'annotorious'},
+     *   selector: {file: 'hst/035/hst.nikolai.uhr.crw_8220_jfr.jpg'},
+     *   content: {content: 'SOME WEB ANNO DATA'}
+     * }
+     *
+     * @param {CustomEvent} event Event of type epi:patch:item
+     */
+    onPatchItem(event) {
+        const eventData = event.detail.data;
+        if (!eventData || !eventData.handler || !eventData.selector || !eventData.content) return;
+
+        const itemType = eventData.handler.itemtype;
+        let targetItem;
+
+        const targetCandidates = this.doc.findAllInDocument('[data-row-table="items"][data-row-type="' + itemType  + '"]');
+        if (targetCandidates) {
+            for (const item of targetCandidates) {
+                let isMatch = true;
+                for (const key in eventData.selector) {
+
+                    let inputSelector = `[data-row-field="${key}"] input`;
+                    if (key === 'file') {
+                        inputSelector = `[data-row-field="${key}"] input[type='text']`;
+                    }
+
+                    const fieldInput = item.querySelector(inputSelector);
+                    if (!fieldInput) {
+                        isMatch = false;
+                        break;
+                    }
+
+                    const itemValue = Utils.getInputValue(fieldInput);
+                    if (itemValue !== eventData.selector[key]) {
+                        isMatch = false;
+                        break;
+                    }
+                }
+                if (isMatch) {
+                    targetItem = item;
+                    break;
+                }
+            }
+        }
+
+        const itemData = {...eventData.content, ...eventData.selector, ...eventData.handler};
+
+
+        if (!targetItem) {
+            const addButton = this.doc.findInDocument('.doc-field-add-' + itemType);
+            if (addButton) {
+                const templateItem = addButton.closest('.doc-section-item');
+                targetItem = this.add(templateItem, itemData, false);
+            }
+        }
+
+        if (targetItem) {
+            const data = {};
+            data['table'] = targetItem.dataset.rowTable;
+            data['id'] = targetItem.dataset.rowId;
+            data['content'] = itemData;
+            this.emitEvent(targetItem, 'epi:update:item', data);
+        }
+
+        return targetItem;
+    }
 
     /**
      * Delete an item
@@ -1274,12 +1387,13 @@ export class ItemsModel extends BaseDocumentModel {
     /**
      * Create a new item based on a template
      *
-     * Fires the itemAdded event.
+     * After adding the item, fires the epi:add:item event.
      *
      * @param {HTMLElement} templateItem An item element with curly bracket placeholders
      *                                   for id, itemsId and sectionsId
      * @param {Object} itemData The new data, including the fields fileName, property and content
      * @param {boolean} focusItem If true, the first input of the new item will be focused
+     * @return {HTMLElement} The new item element
      * @fires epi:add:item
      */
     add(templateItem, itemData, focusItem = true) {
@@ -1376,6 +1490,23 @@ export class ItemsModel extends BaseDocumentModel {
 
         // Fire event (and observe it for example in the map widget)
         Utils.emitEvent(newItem, 'epi:add:item',{}, false);
+        return newItem;
+    }
+
+    /**
+     * Craft multiple items based on a template and a list of data objects.
+     *
+     * @param {HTMLTemplateElement} templateItem An item template element with curly bracket placeholders for id, itemsId and sectionsId.
+     * @param {Array} itemsData An array of objects with fieldname: value pairs for the new items.
+     */
+    craft(templateItem, itemsData) {
+        if (!templateItem) {
+            return;
+        }
+
+        itemsData.forEach((itemData, index) => {
+            this.add(templateItem, itemData, false);
+        });
     }
 
     _createId() {
@@ -1396,7 +1527,7 @@ export class FilesModel extends BaseDocumentModel {
     constructor(modelParent) {
         super(modelParent);
 
-        this.listenEvent(document, 'click', event => this.click(event));
+        this.listenEvent(document, 'click', event => this.clickFile(event));
     }
 
     /**
@@ -1404,14 +1535,14 @@ export class FilesModel extends BaseDocumentModel {
      *
      * @param event
      */
-    click(event) {
+    clickFile(event) {
         const field = event.target.closest('.doc-fieldname-file');
         const frame = event.target.closest('.frame-content');
-        if (!frame && field) {
+        if (field) {
             event.preventDefault();
             event.stopPropagation();
 
-            this.show(field);
+            this.show(field, frame);
         }
     }
 
@@ -1419,19 +1550,27 @@ export class FilesModel extends BaseDocumentModel {
     /**
      * Show the file
      *
-     * @param elm A property field
+     * @param {HTMLElement} elm A property field
+     * @param {boolean} download Whether to trigger a download or show the entity
      */
-    show(elm) {
+    show(elm, download) {
         const elmContent = elm.querySelector('.doc-field-content');
-        if (elmContent) {
-            this.view(elmContent.dataset.path, elmContent.dataset.fileName);
+        if (!elmContent) {
+            return;
         }
+        if (!download) {
+            this.view(elmContent.dataset.path, elmContent.dataset.fileName);
+        } else {
+            this.download(elmContent.dataset.path, elmContent.dataset.fileName);
+        }
+
     }
 
     /**
-     * Open a property view window
+     * Show the file entity in the sidebar
      *
-     * @param id
+     * @param {String} filepath The file path
+     * @param {String} filename The file name
      */
     view(filepath, filename) {
         if (!filepath || !filename) {
@@ -1446,6 +1585,21 @@ export class FilesModel extends BaseDocumentModel {
             external: true
         });
     }
+
+    /**
+     * Trigger a download of the file
+     *
+     * @param {String} filepath The file path
+     * @param {String} filename The file name
+     */
+    download(filepath, filename) {
+        if (!filepath || !filename) {
+            return;
+        }
+        let url = App.databaseUrl + 'files/download?root=root&path=' + filepath + '&filename=' + filename;
+        Utils.sendDownload(url);
+    }
+
 }
 
 /**
@@ -1798,7 +1952,7 @@ export class AnnotationsModel extends BaseDocumentModel {
         let minTop = 0;
         if (buttons.length > 0) {
             const lastButton  = buttons[buttons.length - 1];
-            minTop = lastButton.getBoundingClientRect().bottom - zeroTop;
+            minTop = lastButton.getBoundingClientRect().bottom - zeroTop + 9;
         }
 
         const tags = section.querySelectorAll('[data-tagid]');
@@ -1854,6 +2008,8 @@ export class AnnotationsModel extends BaseDocumentModel {
                 currentBottom = anno.getBoundingClientRect().bottom - zeroTop;
             }
         });
+
+        annoContainer.style.minHeight = (currentBottom + marginTop) + 'px';
 
     }
 
@@ -1938,7 +2094,7 @@ export class AnnotationsModel extends BaseDocumentModel {
      */
     removeAnno(annoElement) {
         if (annoElement && (annoElement.dataset.deleted !== '1')) {
-            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), 1);
+            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), "1");
             annoElement.dataset.deleted = '1';
             if (annoElement.dataset.new) {
                 this.disableInputs(annoElement);
@@ -1957,7 +2113,7 @@ export class AnnotationsModel extends BaseDocumentModel {
      */
     reviveAnno(annoElement) {
         if (annoElement && (annoElement.dataset.deleted === '1')) {
-            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), 0);
+            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), "0");
             annoElement.dataset.deleted = '0';
             if (annoElement.dataset.new) {
                 this.enableInputs(annoElement);
@@ -2253,7 +2409,7 @@ export class FootnotesModel extends BaseDocumentModel {
         const footnote = this.getFootnoteElement(tagId);
         if (footnote) {
             const section = footnote.closest('.doc-section');
-            App.switchbuttons.switchButton(section.querySelector('.doc-section-head'), true);
+            App.switchButtons.switchButton(section.querySelector('.doc-section-head'), true);
             // Utils.emitEvent(section, 'epi:focus:section', {}, this);
 
             const container = footnote.closest('.widget-tabsheets-sheets');
@@ -2266,7 +2422,7 @@ export class FootnotesModel extends BaseDocumentModel {
         const footnote = this.getFootnoteElement(tagId);
         if (footnote) {
             const section = footnote.closest('.doc-section');
-            App.switchbuttons.switchButton(section.querySelector('.doc-section-head'), true);
+            App.switchButtons.switchButton(section.querySelector('.doc-section-head'), true);
 
             const container = footnote.closest('.widget-tabsheets-sheets');
             Utils.scrollIntoViewIfNeeded(footnote, container);
@@ -2393,7 +2549,7 @@ export class FootnotesModel extends BaseDocumentModel {
             App.initWidgets(footnoteElement);
 
         } else if (footnoteElement) {
-            Utils.setInputValue(footnoteElement.querySelector('input[data-row-field=deleted]'), 0);
+            Utils.setInputValue(footnoteElement.querySelector('input[data-row-field=deleted]'), "0");
             footnoteElement.dataset.deleted = '0';
             this.enableInputs(footnoteElement);
         }
@@ -2495,7 +2651,7 @@ export class FootnotesModel extends BaseDocumentModel {
                 const section = footnoteTag.closest('.doc-section');
 
                 // TODO: use events or sections model?
-                App.switchbuttons.switchButton(section.querySelector('.doc-section-head'), true);
+                App.switchButtons.switchButton(section.querySelector('.doc-section-head'), true);
                 Utils.scrollIntoViewIfNeeded(footnoteTag, container);
             }
         }
@@ -2622,12 +2778,13 @@ export class LinksModel extends BaseDocumentModel {
         let toId;
         let attrPrefix;
 
-        // Atomic annotations have attributes prefixed with 'data-anno-';
-        // if (toType) {
-        //     attrPrefix = 'data-anno-' + toType;
-        // } else {
+        // Molecular annotations need to have attributes prefixed with 'data-anno-'
+        // to not confuse them.
+        if (toType) {
+            attrPrefix = 'data-anno-' + toType;
+        } else {
             attrPrefix = 'data-link';
-        // }
+        }
 
         toValue = Utils.getValue(tagAttributes, attrPrefix + '-label', '');
         toTarget = Utils.getValue(tagAttributes, attrPrefix + '-target', '');
@@ -2845,7 +3002,7 @@ export class TagsModel extends BaseDocumentModel {
                         }
                     } else {
                         if (fieldData.deleted !== '1') {
-                            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), 0);
+                            Utils.setInputValue(annoElement.querySelector('input[data-row-field=deleted]'), "0");
                             annoElement.dataset.deleted = '0';
                             this.enableInputs(annoElement);
                         }
@@ -3139,11 +3296,15 @@ export class TagsModel extends BaseDocumentModel {
                         });
                 }
 
-                // Why? Broken annotations with missing tags?
+                // Annotations without tags
                 else if (annoOrTag.dataset.rowType) {
                     const annoType = annoOrTag.dataset.rowType;
                     const annoConfig = types.links[annoType] || types.footnotes[annoType];
                     self.openAttributesDialog(annoConfig,  setValue, isNew);
+                }
+                // Broken annotations with missing tags: allow to remove
+                else {
+                    self.openAttributesDialog({},  setValue, isNew);
                 }
             });
     }
@@ -3291,13 +3452,14 @@ export class TagsModel extends BaseDocumentModel {
 
         const targets = this.modelParent.models.links.getTargets(anno);
 
-        // TODO: do not transfer JSON, convert to explicit keys,
-        //       e.g. targets_articles=epi-articles&targets_sections=inscription,inscriptionpart
         let url = App.databaseUrl
             + 'articles/index'
             + '?template=choose&show=content,searchbar'
-            + '&columns=signature,name, project_signature'
-            + '&targets='+ JSON.stringify(targets);
+            + '&columns=signature,name, project_signature';
+
+        for (const key in targets) {
+            url += '&targets_' + key + '=' + String(targets[key]);
+        }
 
         const project_id = this.modelParent.models.articles.getProjectId();
         if (project_id) {
@@ -3513,6 +3675,10 @@ export class TagsModel extends BaseDocumentModel {
 
         for (const [attrKey, attrConfig] of Object.entries(tagConfig)) {
 
+            if (attrKey === '*') {
+                continue;
+            }
+
             const fieldWrapper = Utils.spawnFromString('<div class="doc-content-element"></div>');
             content.append(fieldWrapper);
 
@@ -3655,7 +3821,92 @@ export class TagsModel extends BaseDocumentModel {
 
                 inputWrapper.appendChild(inputLabel);
 
-            } else {
+            }
+            else if (inputType === 'datalist') {
+
+                // TODO: Make dry. There are already different alternative ways to create such widgets,
+                //  for example the widget-dropdown-selector-template.
+                //  Suggestion: implement a factory class with static methods that creates
+                //  such widget markup, or use the DropdownWidget class directly.
+
+
+                // Container for the DropdownSelectorWidget
+                const container = document.createElement('div');
+                container.classList.add('widget-dropdown-selector');
+
+                // Hidden input
+                input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', 'attr-' + attrKey);
+
+                // Visible text field
+                const textInput = document.createElement('input');
+                textInput.setAttribute('type', 'text');
+                textInput.setAttribute('name', 'attr-' + attrKey);
+                textInput.classList.add('widget-dropdown-selector-input');
+                // Free text
+                textInput.classList.add('widget-dropdown-selector-input-free');
+                // Dropdown-pane
+                const pane = document.createElement('div');
+                pane.classList.add('widget-dropdown-pane');
+
+                const paneId = 'datalist-pane-' + tagAttributes['data-type'] + '-' + attrKey;
+                pane.id = paneId;
+
+                // Add options
+                const list = document.createElement('ul');
+                for (const [inputKey, optionValue] of Object.entries(inputOptions)) {
+                    const item = document.createElement('li');
+                    item.setAttribute('data-value', optionValue);
+                    item.textContent = optionValue;
+                    list.appendChild(item);
+                }
+                pane.appendChild(list);
+
+                // Assemble container
+                container.appendChild(input);
+                container.appendChild(textInput);
+                container.appendChild(pane);
+                container.dataset.paneId = paneId;
+
+                // Set Default
+                const defaultValue = attrConfig['default'] || (attrConfig['values'] ? attrConfig['values'][0] : '');
+                const attrValue = tagAttributes['data-attr-' + attrKey] || defaultValue;
+                if (attrValue) {
+                    input.value = attrValue;
+                    textInput.value = attrValue;
+                }
+
+                inputWrapper.appendChild(container);
+
+                // Add free text if not already present
+                this.listenEvent(container, 'epi:load:dropdown', (event) => {
+                    const term = event.detail?.data?.term;
+                    if (!term || term.trim() === '') {
+                        return;
+                    }
+
+                    const list = pane.querySelector('ul');
+                    if (!list) {
+                        return;
+                    }
+
+                    // Already there?
+                    const exists = Array.from(list.children).some(
+                        item => item.textContent.trim() === term
+                    );
+                    if (!exists) {
+                        const item = document.createElement('li');
+                        item.setAttribute('data-value', term);
+                        item.textContent = term;
+                        list.appendChild(item);
+                    }
+                });
+
+                // Initialize widget
+                setTimeout(() => App.initWidgets(container), 0);
+            }
+            else {
                 input = document.createElement('input');
                 input.setAttribute('type', 'text');
                 input.setAttribute('name', 'attr-' + attrKey);

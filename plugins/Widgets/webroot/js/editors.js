@@ -87,7 +87,8 @@ export class JsonEditor extends BaseWidget {
         // Pretty print
         try {
             inputData = JSON.parse(inputElement.value);
-            inputData = JSON.stringify(inputData, null, '  ');
+            inputData = JSON.stringify(inputData, null, "  ");
+            inputElement.value = inputData;
         } catch {
             inputData = inputElement.value;
         }
@@ -101,7 +102,7 @@ export class JsonEditor extends BaseWidget {
      */
     onBeforeSave(event) {
         const inputElement = this.getInputElement();
-        inputElement.value = this.editor.getValue() ?? '';
+        Utils.setInputValue(inputElement, this.editor.getValue() ?? '');
     }
 
 }
@@ -132,8 +133,12 @@ export class HtmlEditor extends BaseWidget {
      */
     onBeforeSave(event) {
         if (this.editor && this.widgetElement) {
-            this.widgetElement.textContent = this.editor.getData();
-            // this.widgetElement.ckeditorInstance.updateSourceElement();
+            const value = this.editor.getData();
+
+            if (this.widgetElement.textContent !== value) {
+                Utils.setDirty(this.widgetElement);
+            }
+            this.widgetElement.textContent = value;
         }
     }
 }
@@ -163,6 +168,7 @@ export class XmlEditor extends BaseDocument {
         // Whether allowed root and nested elements should be contrained
         this.doConstrain = Utils.isTrue(this.widgetElement.dataset.constrain, true);
 
+        this.listenEvent(this.widgetElement, 'epi:focus:widgets', event => this.onBeforeSave(event));
         this.listenEvent(document, 'epi:save:form', event => this.onBeforeSave(event));
     }
 
@@ -183,6 +189,10 @@ export class XmlEditor extends BaseDocument {
                 );
                 this.widgetElement.addEventListener('focusin', function (event) {
                         self.activateEditor();
+                    }
+                );
+                this.widgetElement.addEventListener('focusout', function (event) {
+                        self.updateInput();
                     }
                 );
             }
@@ -414,36 +424,60 @@ export class XmlEditor extends BaseDocument {
     }
 
     /**
+     * Get the editor content
+     *
+     * @param {boolean} asXml Whether to return XML or the rendered text content
+     * @returns {string}
+     */
+    getContent(asXml = true) {
+
+        if (!asXml) {
+            return this.widgetElement.textContent;
+        }
+
+        let value;
+        if (this.widgetElement.ckeditorInstance) {
+            value = this.widgetElement.ckeditorInstance.getData();
+        } else {
+            value = this.widgetElement.innerHTML;
+        }
+
+        // Convert to XML and remove all NBSP and ZWS
+        try {
+            value = new XMLSerializer().serializeToString(
+                document
+                    .createRange()
+                    .createContextualFragment(value)
+            )
+                .replaceAll(/ xmlns="[^"]+"/g, '')
+                .replaceAll(/\u00a0/g, " ")
+                .replaceAll(/\u200B/g, "");
+
+        } catch (error) {
+            console.log(error);
+        }
+
+        return value;
+    }
+
+    /**
+     * Update the hidden input element
+     *
+     */
+    updateInput() {
+        const input = this.widgetElement.parentElement.querySelector('input[type=hidden]');
+        if (input && !input.disabled) {
+            Utils.setInputValue(input, this.getContent(), true);
+            Utils.emitEvent(input, 'input', {value: input.value}, this);
+        }
+    }
+
+    /**
      * Handle form submission by updating the hidden input element
      *
      */
     onBeforeSave(event) {
-        const input = this.widgetElement.parentElement.querySelector('input[type=hidden]');
-        let value;
-        if (input && !input.disabled) {
-            //console.log(input.name);
-            if (this.widgetElement.ckeditorInstance) {
-                value = this.widgetElement.ckeditorInstance.getData();
-            } else {
-                value = this.widgetElement.innerHTML;
-            }
-
-            // Convert to XML
-            try {
-                value = new XMLSerializer().serializeToString(
-                    document
-                        .createRange()
-                        .createContextualFragment(value)
-                )
-                    .replaceAll(/ xmlns="[^"]+"/g, '')
-                    .replaceAll(/\u00a0/g, " ");
-
-            } catch (error) {
-                console.log(error);
-            }
-
-            input.value = value;
-        }
+        this.updateInput();
     }
 }
 
@@ -467,6 +501,7 @@ export class DatesEditor extends BaseWidget {
 
     async onInput(event) {
         this.widgetElement.classList.add('dirty');
+        Utils.setDirty(this.widgetElement);
     }
 
     async onKeyDown(event) {

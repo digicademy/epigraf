@@ -142,7 +142,7 @@ class ArticlesTransferTest extends EpiTestCase
             $polling = ($this->_response->getHeader('location')) ? false : $polling - 1;
         }
 
-        $this->assertRedirect('/epi/import/articles/index');
+        $this->assertRedirect('/epi/import/articles/index?load=1');
 
         // Get result
         $article = $this->Articles->find('all')->orderDesc('created')->first();
@@ -199,6 +199,7 @@ class ArticlesTransferTest extends EpiTestCase
 
             // Not used in EpiWeb (@deprecated)
             'fntype','sortno', // Only used in EpiDesktop footnotes
+            'acronym',
             'book_number','book_name', // TODO: remove from test data
             'lastopen_id', 'lastopen_tab','lastopen_field','lastopen_tagid',
         ];
@@ -317,7 +318,7 @@ class ArticlesTransferTest extends EpiTestCase
 
         // Assert new rows all belong to the new article
         $newRootIds = array_map(fn($x) => empty($x['root_id']) ? ($x['articles_id'] ?? null) : ($x['root_tab']. '-' . $x['root_id']), $rowsNew);
-        $this->assertEquals(array_values(array_filter(array_unique($newRootIds))), [10, 'articles-10']);
+        $this->assertEquals(array_values(array_filter(array_unique($newRootIds))), [208, 'articles-208']);
 
         // Assert copy rows are identical to old rows (except ids, modified/created fields and norm_iri)
         $unsetCols = [

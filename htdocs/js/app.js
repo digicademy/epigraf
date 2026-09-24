@@ -567,8 +567,8 @@ class EpiApp {
      * @return {HTMLElement} The tabsheet element
      */
     activateTabsheet(frame) {
-        App.sidebarright.showSidebar();
-        const tabsheetsWidget = App.findWidget(App.sidebarright.widgetElement,'tabsheets');
+        App.sidebarRight.showSidebar();
+        const tabsheetsWidget = App.findWidget(App.sidebarRight.widgetElement,'tabsheets');
         return tabsheetsWidget.showTab(frame);
     }
 }

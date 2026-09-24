@@ -40,5 +40,47 @@
         "lft": 1,
         "rght": 10,
         "level": 0
+    },
+    {
+        "id": 1385,
+        "parent_id": null,
+        "lft": 15,
+        "rght": 18,
+        "level": 0
+    },
+    {
+        "id": 1387,
+        "parent_id": null,
+        "lft": 19,
+        "rght": 20,
+        "level": 0
+    },
+    {
+        "id": 1389,
+        "parent_id": 1385,
+        "lft": 16,
+        "rght": 17,
+        "level": 1
+    },
+    {
+        "id": 1392,
+        "parent_id": null,
+        "lft": 23,
+        "rght": 26,
+        "level": 0
+    },
+    {
+        "id": 1394,
+        "parent_id": 1392,
+        "lft": 24,
+        "rght": 25,
+        "level": 1
+    },
+    {
+        "id": 1397,
+        "parent_id": null,
+        "lft": 21,
+        "rght": 22,
+        "level": 0
     }
 ]

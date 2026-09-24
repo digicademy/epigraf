@@ -98,4 +98,4 @@
 <?php $this->Link->addLabel($summary); ?>
 
 <?php $params = $this->request->getQueryParams(); ?>
-<?php $this->Link->downloadButtons ([$table,'?' => $params]); ?>
+<?php $this->Link->downloadButtons(['url' => [$table,'?' => $params]]); ?>

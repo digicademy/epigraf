@@ -8,6 +8,7 @@
  */
 
 import {BaseWidget} from '/js/base.js';
+import {i18n}  from '/js/lingui.js';
 import Utils from '/js/utils.js';
 
 /**
@@ -82,7 +83,7 @@ export class MapWidget extends BaseWidget {
             }
         };
 
-        this.facets = {};
+        this.facets = undefined;
 
         // Data for user location / GPS
         this.userMarker = undefined;
@@ -169,9 +170,12 @@ export class MapWidget extends BaseWidget {
 
         this.legend.onAdd = (map) => {
             const div = L.DomUtil.create('div', 'legend');
-            div.innerHTML += '<span class="data-quality data-quality-2" data-quality-content="">geprüft</span>';
-            div.innerHTML += '<span class="data-quality data-quality-1" data-quality-content="?">vermutet</span>';
-            div.innerHTML += '<span class="data-quality data-quality-0" data-quality-content="?">ungeprüft</span>';
+            div.innerHTML += '<span class="data-quality data-quality-2" data-quality-content="">'
+                + i18n.t('verified') + '</span>';
+            div.innerHTML += '<span class="data-quality data-quality-1" data-quality-content="?">'
+                + i18n.t('presumed') + '</span>';
+            div.innerHTML += '<span class="data-quality data-quality-0" data-quality-content="?">'
+                + i18n.t('unverified') + '</span>';
 
             if (this.segments.length > 1) {
                 for (let i = 0; i < this.segments.length; i++) {
@@ -294,11 +298,6 @@ export class MapWidget extends BaseWidget {
         if (entity) {
             entity.addEventListener('epi:change:entity', event => this.onItemChanged(event));
         }
-
-        // Facet events
-        this.listenEvent(document,'epi:load:facets', event => this.onLoadFacets(event));
-        this.listenEvent(document,'epi:close:facets', event => this.onCloseFacets(event));
-
     }
 
     /**
@@ -360,9 +359,11 @@ export class MapWidget extends BaseWidget {
      * Start loading the markers.
      * Called after parameters have changed and on first loading.
      */
-    updateMarkers() {
+    async updateMarkers() {
         this.resetMarkers();
+        this.updateFacets();
         this.loadMarkers();
+
     }
 
     /**
@@ -390,8 +391,29 @@ export class MapWidget extends BaseWidget {
         const parsedUrl = new URL(this.apiUrl, App.baseUrl);
         this.requestMode =  parsedUrl.searchParams.get('mode');
         this.mapReady = true;
+    }
 
+    async updateFacets() {
+        this.facets = await this.getFacets();
+        if (this.facets) {
+            this.legend.remove();
+        } else {
+            this.legend.addTo(this.map);
+        }
+    }
 
+    /**
+     * Get the facet data from the filter widget
+     *
+     * @return {*}
+     */
+    async getFacets() {
+        const filter = App.findWidget(document, 'filter');
+        if (!filter) {
+            return;
+        }
+
+        return filter.getFacets();
     }
 
     /**
@@ -786,7 +808,7 @@ export class MapWidget extends BaseWidget {
         let counts = {};
         let colors = {};
         markers.forEach(marker => {
-            if (marker.customData.properties) {
+            if (this.facets && marker.customData.properties) {
                 for (const [propertyType, propertyIds] of Object.entries(marker.customData.properties)) {
                     for (let propertyId of propertyIds) {
                         let item = this.facets[propertyId];
@@ -1345,9 +1367,12 @@ export class MapWidget extends BaseWidget {
     /**
      * Update a row after the marker has been dragged
      *
-     * @param rowId Shared id of marker and item.
-     * @param coords New coordinates of marker.
-     * @param radius The new radius of the marker.
+     * TODO: Use the epi:update:item event instead of directly updating the row here.
+     *       Make sure this works for properties as well, not only for articles.
+     *
+     * @param {string} rowId Shared id of marker and item.
+     * @param {Object} coords New coordinates of marker, containing lat and lng values.
+     * @param {number} radius The new radius of the marker. Can be undefined to skip radius update.
      */
     updateRow(rowId, coords, radius) {
         const row = document.querySelector(`[data-row-table='${this.rowTable}'][data-row-id='${rowId}']`);
@@ -1446,11 +1471,17 @@ export class MapWidget extends BaseWidget {
         let markerId = Object.keys(this.markersLoaded).pop();
         if (!markerId) {
 
+            const entity = this.widgetElement.closest(`[data-row-table='${this.rowTable}'][data-row-id]`);
+            if (!entity) {
+                return;
+            }
+            markerId = entity.dataset.rowId;
+
             const newMarkerData = [{
                 'type': 'Feature',
                 'data': {
                     'number': 0,
-                    'id': -1,
+                    'id': markerId,
                     'rootId': null,
                     'quality': 0,
                     'radius': 0
@@ -1458,7 +1489,6 @@ export class MapWidget extends BaseWidget {
                 'geometry': {'type': 'Point', 'coordinates': [0, 0]}
             }];
             this.addMarkers(newMarkerData);
-            markerId = -1;
         }
 
         const currentMarker = this.markersLoaded[markerId];
@@ -1484,72 +1514,6 @@ export class MapWidget extends BaseWidget {
         this.updateRow(markerId, center, distance);
     }
 
-    /**
-     * Use facet colors for the markers
-     *
-     * @param {CustomEvent} event
-     */
-    onLoadFacets(event) {
-        if (!event.detail.sender) {
-            return;
-        }
-
-        const facetWidget = event.detail.sender;
-        if (!facetWidget.hasFlag('grp')) {
-            return;
-        }
-
-        //if (facetWidget.widgetElement.classList.contains('widget-filter-item-properties')) {
-        const data = facetWidget.getFacets();
-        this.updateColors(data);
-        //}
-    }
-
-    /**
-     * Clear facet colors for the markers
-     *
-     * @param {CustomEvent} event
-     */
-    onCloseFacets(event) {
-        if (!event.detail.sender) {
-            return;
-        }
-        this.updateColors();
-    }
-
-    /**
-     * Set colors for the markers
-     *
-     * @param {Object} data An object with property ids as keys and legend items as values.
-     *                      Each legend item must contain a 'color' and 'title' property.
-     */
-    updateColors(data) {
-        this.facets = data;
-
-        if (this.facets) {
-            this.legend.remove();
-        } else {
-            this.legend.addTo(this.map);
-        }
-
-        const bounds = this.map.getBounds();
-        for (const marker in this.markersLoaded) {
-            const inMapBounds = bounds.contains(this.markersLoaded[marker].getLatLng());
-            if (inMapBounds) {
-                this.renderMarker(this.markersLoaded[marker]);
-            }
-        }
-
-        if (this.clusterMarkers) {
-            this.map.eachLayer(layer => {
-                if (layer instanceof L.MarkerCluster) {
-                    // const inMapBounds = bounds.contains(layer.getLatLng());
-                    layer.setIcon(this.renderCluster(layer));
-                }
-            });
-        }
-
-    }
 
 }
 

@@ -3,11 +3,11 @@ title: Widgets
 permalink: 'devel/frontend/widgets/'
 ---
 
-Epigraf uses a widget system to connect HTML elements with JavaScript classes.
-The widget HTML elements are generated in the [backend](/epigraf/devel/backend/view) by helper classes derived from CakePHP helpers.
+Epigraf uses a widget system to attach with JavaScript classes to HTML elements.
+The HTML elements are generated in the [backend](/devel/backend/view) by helper classes derived from CakePHP helpers.
 
-Each JavaScript widget class registers a CSS class and the framework instantiates and attaches the widget classes
-to the found elements. For example, a table with the class `widget-table` is supplemented by a `TableWidget` class.
+Each JavaScript widget class registers a CSS class and the framework instantiates and attaches one widget
+to each element matching the CSS class. For example, a table with the class `widget-table` is supplemented by a `TableWidget` class.
 Widgets do not exclude each other, one HTML element can be attached to multiple widget instances of different classes.
 
 *Note:* The widget system is in an early experimental development stage.
@@ -18,7 +18,9 @@ The documentation does not cover all aspects yet and is subject to change.
 The base classes of the framework are defined in `htdocs/js/base.js`:
 - **BaseModel**: The `BaseModel` class provides lifecycle functions and methods to attach event listeners.
   Model class instances are not necessarily connected to the DOM.
-  They are used to create a frontend model layer as a complement to the backend model layer.
+  They are also used to create a frontend model layer that complements the backend model layer.
+  For example, the JavaScript ArticlesModel class provides methods to interact with article data on the frontend,
+  as the PHP ArticlesTable class does on the backend.
   A model can have a parent and multiple children, the first constructor parameter is the parent model
   (which may be undefined for top level models).
 - **BaseWidget**: All widgets derive from the `BaseWidget` class, which itself derives from `BaseModel`.
@@ -31,7 +33,7 @@ The base classes of the framework are defined in `htdocs/js/base.js`:
   A document consists of several parts such as sections, footnotes and notes.
   Document classes hold together the different parts and manage the interaction between them.
 
-![Inheritance hierarchy](/epigraf/devel/assets/img/classes-widget-basemodel.png)
+![Inheritance hierarchy](/devel/assets/img/classes-widget-basemodel.png)
 
 ### Developing and building the widgets
 
@@ -53,7 +55,7 @@ There are two types of widgets: global and scoped. Global widgets include widget
 for the entire page and usually occur only once per page, such as `MainFrame` (main content of the page),
 `ResizableSidebar` (for the two main sidebars) or `ScrollSync` (for synchronizing scrollable main content of
 pages and the table of contents). Scoped widgets are usually attached to specific HTML elements, for example
-to a table widget, and can occur multiple times on a page. The majority of widgets belong to the second category.
+to a table widget, and can occur multiple times on a page. The majority of widgets belongs to the second category.
 
 All widgets are initialized in the `widgets.js` file.
 The global widgets are initialized first in `initApp()`, followed by the scoped widgets in `initWidgets()`.
@@ -83,9 +85,10 @@ The lifecyle methods are triggered by two key events:
 - The `epi:init:widgets` event triggers the `onInitWidgets()` method
   after all widgets connected to a DOM element or its descendants were instantiated,
   whether on the first page load or on later page updates by AJAX calls.
-  It calls `initWidget()` if the widget was not already initialized.
+  It calls `initWidget()` for every widget inside the respective DOM hierarchy, if not already initialized .
 - The `epi:clear:widgets` event triggers the `onClearWidgets()` method when DOM element are about to be removed,
-  for example when replacing a table after an AJAX call. It calls `clearWidget()`.
+  for example when replacing a table after an AJAX call.
+  It calls `clearWidget()` for every widget inside the respective DOM hierarchy.
 
 ### The Event System
 
@@ -141,7 +144,7 @@ Frames are HTML elements attached to derivates of the `BaseFrame` class that han
 - `TabFrame`: Responsible for tab sheets within in sidebars.
 - `PopupWindow`: Responsible for popups and dialogs.
 
-![Inheritance hierarchy](/epigraf/devel/assets/img/classes-widget-baseframe.png)
+![Inheritance hierarchy](/devel/assets/img/classes-widget-baseframe.png)
 
 The frame classes handle dynamic content loading and trigger the respective widget lifecycle methods:
 - `loadElement()` displays a DOM element already constructed on the page.
@@ -176,7 +179,7 @@ Layout widgets provide extended functionality for the page layout (see `layout.j
 ## Collections: Tables, Trees And Their Supplemental Widgets
 
 Collections are used to display lists of items, for example in tables or trees.
-The HTML elements are generated by the collection views in the [backend](/epigraf/devel/backend/view)
+The HTML elements are generated by the collection views in the [backend](/devel/backend/view)
 and are supplemented by JavaScript widgets.
 
 ### TableWidget
@@ -229,7 +232,7 @@ Both are descendants of the `BaseForm` class supporting features for saving data
 - Handle form validation and the form submission lifecycle.
 - Emit events for other widgets reacting to content updates.
 
-![Inheritance hierarchy](/epigraf/devel/assets/img/classes-widget-basedocumentmodel.png)
+![Inheritance hierarchy](/devel/assets/img/classes-widget-basedocumentmodel.png)
 
 The `EntityWidget` is used for simple entities, usually displayed in a vertical table.
 It inherits all methods and properties from `BaseForm`
@@ -271,7 +274,7 @@ Parts of a document may be distributed on the page. Two cases are distinguished 
   The main document and the satellites both derive from `BaseDocumentPart`
   that provides some basic common methods on the frontend view layer.
 - **Subordinate** data contained within the main document widget or its satellite widgets
-  comprise, for example, sections and items (see the [model layer in the backend](/epigraf/devel/backend/model)).
+  comprise, for example, sections and items (see the [model layer in the backend](/devel/backend/model)).
   Both data types have model classes and a corresponding widget class that directly derive
   from `BaseDocument` which mainly allows accessing their parent documents, table names and ID attributes.
 
@@ -316,6 +319,70 @@ For those fields, wysiwyg editors are used to edit the content:
 - `HtmlEditor`: A CKEditor instance for editing HTML in the wiki, help and public pages.
 - `XmlEditor`: A CKEditor instance that renders XML to HTML and back, used for annotations.
 - `JsonEditor`: An AceEditor instance for editing JSON content.
+
+### Flow of the PlotWidget
+
+ **Page load**
+
+1. When the HTML page is loaded:
+   - the main pane contains a search bar containing a form with class widget-filter.
+     Additionally, below the search bar, there is a div with content-legend class and properties rendered as pills.
+   - the sidebar contains divs with class widget-filter-item-properties,
+     within tabsheets, containing empty containers for the property trees.
+   - the main pane contains an empty div with widget-plot class
+     and attributes such as data-api-url
+
+2. Widget creation:
+   App.initWidgets iterates all elements with widget css classes
+   and instantiates the widgets, including
+   - FilterWidget (elements with class filter-widget),
+   - FilterProperties (elements with class widget-filter-item-properties)
+   - PlotWidget (elements with class widget-plot).
+   After alle widgets were created, App.initWidgets emits the epi:init:widgets event.
+
+3. FilterWidget (because it extends BaseWidget) reacts to epi:init:widgets event in initWidget().
+   The initWidget() method calls registerFilter().
+   The registerFilter() method instantiates FilterPlot
+   (i.e. elements with the css class widget-filter-item-plot, on the same element as the plot widget).
+
+4. FilterProperties (because it extends BaseWidget) reacts to the epi:init:widgets event in initWidget().
+  The initWidget() method calls loadFacets() to load the property tree from the properties endpoint.
+  If successfull, the result will be pasted into the property container by App.replaceDataSnippets().
+  The property tree appears.
+
+5. PlotWidget (because it extends BaseWidget) reacts to epi:init:widgets event in initWidget().
+   The initWidget() method calls loadData() to load the plot data from the items endpoint.
+   If successful, loadData() triggers showData(). First, the plot class is instantiated, second,
+   the plot is rendered by calling renderPlot(). Within renderPlot(), the facets are awaited from
+   the FilterWidget (which in turn awaits them from FilterProperties).
+
+
+**Facets changed**
+
+1. The FilterProperties widget listens to changes.
+   If "Show details was clicked", updateResults() of its coordinator is called, which is the FilterWidget.
+   If a node was clicked, updateResults() is called with a debouncing timer.
+
+2. The FilterWidget calls loadData() within updateResults().
+    The loadData() method loads data from the articles endpoint and replaces existing data by
+    calling replaceDataSnippets().
+
+   The PlotWidget is recreated within replaceDataSnippets().
+   Because replaceDataSnippets() emits epi:init:widgets, the plot widget calls loadData() in initWidget()
+   and after loading the data recreates the plot.
+
+   After replacing snippets, the filter widget calls updateWidget()
+   which calls updateWidget() of all filter items, including FilterPlot.updateWidget().
+   FilterPlot.updateWidget() calls its initWidgets() method and recovers the widget element.
+
+**Zoom button clicked**
+
+1. The PlotControls widget calls paramsChanged which emits 'epi:plot:load'.
+
+2. The FilterPlot() widget reacts to 'epi:plot:load'
+   and calls updateResults() of its coordinator, which is the FilterWidget.
+
+3. In consequence, the same steps as described in "Facets changed" are executed.
 
 ## The Job System
 

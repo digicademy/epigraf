@@ -1,32 +1,120 @@
 {
     "properties": [
         {
-            "lemma": "Schriftart 1",
-            "articles_count": 1
+            "lemma": "gotische Minuskel",
+            "articles_count": 0,
+            "norm_iri": "gotische-minuskel",
+            "keywords": "gotisch,minuskel"
         },
         {
-            "lemma": "Schriftart 1a",
-            "articles_count": 1
+            "lemma": "mit Versalien in gotischer Majuskel und Versalschrift",
+            "articles_count": 1,
+            "norm_iri": "mit-versalien-in-gotischer-majuskel-und-versalschrift",
+            "keywords": "versalien, majuskel, versalschrift"
+        },
+        {
+            "lemma": "mit Versal in gotischer Majuskel",
+            "articles_count": 1,
+            "norm_iri": "mit-versal-in-gotischer-majuskel"
+        },
+        {
+            "lemma": "mit Versalien in gotischer Majuskel",
+            "articles_count": 1,
+            "norm_iri": "mit-versalien-in-gotischer-majuskel"
         },
         {
             "lemma": "siehe",
-            "articles_count": 0
+            "articles_count": 0,
+            "keywords": "Schriftart"
         },
         {
             "lemma": "Schriftart 2",
-            "articles_count": 1
+            "articles_count": 1,
+            "keywords": "Schriftart,Font"
         },
         {
             "lemma": "Schriftart 2a",
-            "articles_count": 1
+            "articles_count": 1,
+            "keywords": "Font"
         },
         {
             "lemma": "siehe",
-            "articles_count": 0
+            "articles_count": 0,
+            "keywords": "Font"
+        },
+        {
+            "lemma": "Majuskel",
+            "articles_count": 0,
+            "norm_iri": "majuskel"
+        },
+        {
+            "lemma": "k\u00f6hlersche Majuskel",
+            "articles_count": 1,
+            "norm_iri": "kohlersche-majuskel-ohne"
+        },
+        {
+            "lemma": "k\u00f6hlersche Majuskel",
+            "articles_count": 1,
+            "norm_iri": "kohlersche-majuskel-mit"
+        },
+        {
+            "lemma": "kohlersche Majuskel",
+            "articles_count": 1,
+            "norm_iri": "kohlersche-majuskel"
+        },
+        {
+            "lemma": "lampesche Majuskel",
+            "articles_count": 0,
+            "norm_iri": "lampesche-majuskel"
+        },
+        {
+            "lemma": "mit Versal",
+            "articles_count": 1,
+            "norm_iri": "mit-versal"
+        },
+        {
+            "lemma": "(18.Jh.)",
+            "articles_count": 1,
+            "norm_iri": "18jh"
+        },
+        {
+            "lemma": "mit Versalien",
+            "articles_count": 1,
+            "norm_iri": "mit-versalien"
+        },
+        {
+            "lemma": "(19. Jh)",
+            "articles_count": 1,
+            "norm_iri": "19-jh"
+        },
+        {
+            "lemma": "hallersche Majuskel",
+            "articles_count": 1,
+            "norm_iri": "hallersche-majuskel"
+        },
+        {
+            "lemma": "Minuskel",
+            "articles_count": 0,
+            "norm_iri": "minuskel"
+        },
+        {
+            "lemma": "gotische Minuskel",
+            "articles_count": 1,
+            "norm_iri": "gotische-minuskel"
+        },
+        {
+            "lemma": "lampesche Minuskel",
+            "articles_count": 1,
+            "norm_iri": "lampesche-minuskel"
+        },
+        {
+            "lemma": "hallersche Minuskel",
+            "articles_count": 1,
+            "norm_iri": "hallersche-minuskel"
         }
     ],
     "pagination": {
-        "count": 6,
+        "count": 22,
         "page": 1,
         "page_prev": false,
         "page_next": false,

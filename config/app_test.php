@@ -43,7 +43,7 @@ return [
     ],
 
     /**
-     * No delayed jobs in test system
+     * No queued jobs in test system
      *
      */
     'Jobs' => [

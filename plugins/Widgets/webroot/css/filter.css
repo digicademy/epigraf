@@ -77,7 +77,7 @@ button.button-settings {
 }
 
 th button.button-settings {
-      width:1.5em;
+    width: var(--widget-tree-toc-height);
     height:1.5em;
     line-height: inherit;
     font-size: inherit;
@@ -90,10 +90,12 @@ button.button-settings:hover {
     border: 1px solid var(--widgets-border-color);
 }
 
+.content-main button.button-settings.active,
 button.button-settings.active {
+    animation: none;
     color: var(--nav-bg-color-active);
     background-color: var(--widgets-bg-color);
-      border: 1px solid var(--widgets-border-color);
+    border: 1px solid var(--widgets-border-color);
 }
 
 /* Checkbox selector */
@@ -241,6 +243,37 @@ button.button-settings.active {
     background-color: var(--top-menu-button-bg-color-active);
     color: var(--button-font-color);
 }
+
+/* Legend */
+
+.content-legend {
+    margin: -0.5em 0 1em 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.content-legend:not(:has(*)) {
+    display: none;
+}
+
+.content-legend-item {
+    display:inline-block;
+    padding: 4px 10px;
+    font-size: 0.75em;
+    line-height: 1;
+    color: var(--legend-text-color);
+    background-color:var(--legend-bg-color);
+
+    border-radius: 9999px;
+    margin: 0 0.25em 0.25em 0;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: default;
+}
+
+
 
 /* Filter items in facet container (tabsheet) */
 .widget-filter-item-facets-container .content-searchbar-item {

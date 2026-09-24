@@ -56,7 +56,14 @@ class JsonWidget implements WidgetInterface
         ];
 
         //Hidden input with encoded JSON
-        $value = !is_null($data['val']) && !is_string($data['val']) ? json_encode($data['val'], JSON_PRETTY_PRINT) : ($data['val'] ?? '');
+        if (!is_null($data['val']) && !is_string($data['val'])) {
+            $value =  json_encode($data['val'], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+            // Replace four spaces indentation by two spaces indentation
+            $value = preg_replace('/^(  +?)\\1(?=[^ ])/m', '$1', $value);
+        } else {
+            $value = $data['val'] ?? '';
+        }
+
         $out = $this->_templates->format('input', [
             'type'=>'hidden',
             'name' =>$data['name'],

@@ -40,6 +40,30 @@ class Pipeline extends BaseEntity
     ];
 
     /**
+     * Fields used for data import
+     *
+     * @var string[]
+     */
+    protected $_fields_import = [
+        'id',
+        'created',
+        'modified',
+
+        'name',
+        'iri' => 'norm_iri', //TODO: rename in database
+        'tasks',
+        'content' => 'description',
+        'type'
+    ];
+
+    protected $_fields_formats = [
+        'id' => 'id',
+        'created_by' => 'id',
+        'modified_by' => 'id',
+        'tasks' => 'array'
+    ];
+
+    /**
      * Tasks that can be added to a pipelines
      *
      * // TODO move to batch plugin
@@ -110,6 +134,10 @@ class Pipeline extends BaseEntity
             'caption' => 'Search and replace',
             'type' => 'transform'
         ],
+        'replace_dates' => [
+            'caption' => 'Replace date tags',
+            'type' => 'transform'
+        ],
         'export_extract' => [
             'caption' => 'Extract content',
             'type' => 'export_extract',
@@ -135,6 +163,14 @@ class Pipeline extends BaseEntity
         ],
         'import' => [
             'caption' => 'Import into database',
+            'type' => 'import',
+            'inputfile' => true,
+            'outputfile' => false,
+            'canskip' => false,
+            'customcaption' => false
+        ],
+        'create_article' => [
+            'caption' => 'Create article with file',
             'type' => 'import',
             'inputfile' => true,
             'outputfile' => false,
@@ -250,6 +286,8 @@ class Pipeline extends BaseEntity
     {
         if (empty($this->_fields['tasks'])) {
             $this->_fields['tasks'] = [];
+        } elseif (is_string($this->_fields['tasks'])) {
+            $this->_fields['tasks'] = json_decode($this->_fields['tasks'], true);
         }
         return $this->_fields['tasks'];
     }

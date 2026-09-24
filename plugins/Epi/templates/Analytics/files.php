@@ -21,9 +21,9 @@
      */
 ?>
 
-<?php $this->Breadcrumbs->add('Vollständigkeit der Dateidatensätze'); ?>
+<?php $this->Breadcrumbs->add(__('Missing files')); ?>
 
-    <h2>Abgleich: Items- und Files-Tabelle </h2>
+    <h2><?= __('Expected files by item type') ?></h2>
 
     <?php $itemsFiles = $data['items']; ?>
     <?=
@@ -31,7 +31,7 @@
             [
                 'itemtype' => __('Item type'),
                 'file_type' => __('File type'),
-                'wanted' => __('Wanted'),
+                'wanted' => __('Expected'),
                 'file_online' => __('Online'),
                 'n_available' => __('Available'),
                 'n_missing' => __('Missing')
@@ -43,16 +43,14 @@
         )
     ?>
 
-    <p class="content-notice"> Wie viele der Einträge aus der Items-Tabelle sind in der Files-Tabelle vorhanden?</p>
-
-    <h2> Abgleich: Files- und Items-Tabelle </h2>
+    <h2><?= __('Expected items by file type') ?></h2>
 
     <?php $filesItems = $data['files']; ?>
     <?=
       $this->Table->simpleTable($filesItems,
           [
               'type' => __('File type'),
-              'wanted' => __('Wanted'),
+              'wanted' => __('Expected'),
               'n_missing' => __('Missing')
           ],
           [
@@ -61,6 +59,3 @@
           ]
       )
     ?>
-    <p class="content-notice">Wie viele der Einträge aus der Files-Tabelle sind in der Items-Tabelle vorhanden?</p>
-
-

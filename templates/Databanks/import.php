@@ -62,7 +62,7 @@ use App\Model\Entity\Databank;
 ?>
 <?php
 $this->Link->addAction(
-    __('Importieren'),
+    __('Import'),
     [],
     [
         'linktype' => 'submit',

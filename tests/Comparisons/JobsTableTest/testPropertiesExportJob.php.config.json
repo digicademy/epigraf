@@ -1,0 +1,20 @@
+{
+    "database": "test_projects",
+    "table": "properties",
+    "selection": "filtered",
+    "pipeline_tasks": [
+        {
+            "number": "1",
+            "type": "data_properties",
+            "scope": "epithets",
+            "format": "xml",
+            "expand": true,
+            "offset": 31,
+            "outputfile": "job-3.xml"
+        }
+    ],
+    "user_role": "devel",
+    "user_id": 1,
+    "pipeline_name": "",
+    "pipeline_progress": 1
+}

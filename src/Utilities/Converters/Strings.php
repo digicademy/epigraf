@@ -299,19 +299,21 @@ class Strings
     /**
      * Tokenize string with escaping mechanism. Keep together words that are enclosed in quotation marks.
      *
+     * TODO: use Search::tokenize() ?
+     *
      * @param string $value
      * @param string $separator The separator used to split the string into tokens (default: ` `).
      * @param string $escaper The character used to escape reserved characters (default: `\`).
-     * @param string $startGroupChar
-     * @param string $endGroupChar
+     * @param string $quoteStartChar
+     * @param string $quoteEndChar
      * @return string[] An array of tokens
      */
-    public static function tokenize($value, $separator = ' ', $escaper = '\\', $startGroupChar = '"', $endGroupChar = '"')
+    public static function tokenize($value, $separator = ' ', $escaper = '\\', $quoteStartChar = '"', $quoteEndChar = '"')
     {
         $resultTokens = [];
         $token = '';
         $escaped = false;
-        $groupMode = false;
+        $inQuote = false;
         $reserved = $separator . $escaper;
 
         for ($i = 0; $i < strlen($value); $i++) {
@@ -326,13 +328,13 @@ class Strings
             elseif (($char === $escaper) && (strpbrk($value[$i+1] ?? '', $reserved))) {
                 $escaped = true;
             }
-            // Set groupmode
-            elseif ($char == $endGroupChar && $groupMode) {
-                $groupMode = false;
-            } elseif ($char == $startGroupChar && !$groupMode) {
-                $groupMode = true;
+            // Set quote mode
+            elseif ($char == $quoteEndChar && $inQuote) {
+                $inQuote = false;
+            } elseif ($char == $quoteStartChar && !$inQuote) {
+                $inQuote = true;
             }
-            elseif ($char === $separator && !$groupMode) {
+            elseif ($char === $separator && !$inQuote) {
                 $resultTokens[] = $token;
                 $token = '';
             }

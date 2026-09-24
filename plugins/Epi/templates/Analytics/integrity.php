@@ -16,7 +16,7 @@
  */
 ?>
 
-<?php $this->Breadcrumbs->add('Verweise zwischen Datensätzen'); ?>
+<?php $this->Breadcrumbs->add(__('Integrity checks')); ?>
 
 <!-- Actions -->
 <?php $this->Link->beginActionGroup ('bottom'); ?>

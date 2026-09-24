@@ -30,6 +30,7 @@ Thanks to all of you who contribute to the Epigraf ecosystem.
 Epigraf is developed using third-party software under open source licenses.
 
 - [Ace editor](https://ace.c9.io/), BSD License
+- [Annotorious](https://annotorious.dev/), BSD-3-Clause License
 - [CakePHP](https://cakephp.org/), MIT License
 - [CKEditor](https://ckeditor.com/), GNU General Public License 2 or later
 - [Codeception](https://codeception.com/), MIT License

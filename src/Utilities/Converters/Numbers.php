@@ -141,5 +141,39 @@ class Numbers
         return $lower ? strtolower($str) : $str;
     }
 
+    /**
+     * Generate a human-readable string (days, hours, minutes, seconds) from seconds
+     *
+     * @param integer $value Seconds
+     * @return string
+     */
+    static function secondsToText($value)
+    {
+        if ($value === null || $value === '') {
+            return '';
+        }
+
+        $start = new \DateTime('@0');
+        $end = new \DateTime('@' . (int)$value);
+        $interval = $start->diff($end);
+
+        $parts = [];
+
+        if ($interval->days > 0) {
+            $parts[] = $interval->days . 'd';
+        }
+        if ($interval->h > 0) {
+            $parts[] = $interval->h . 'h';
+        }
+        if ($interval->i > 0) {
+            $parts[] = $interval->i . 'm';
+        }
+        if ($interval->s > 0 || empty($parts)) {
+            $parts[] = $interval->s . 's';
+        }
+
+        return implode(' ', $parts);
+    }
+
 }
 

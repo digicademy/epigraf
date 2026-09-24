@@ -29,6 +29,7 @@ use App\Utilities\Converters\Attributes;
 
 <!-- Search -->
 <?php $this->setShowBlock(['searchbar']); ?>
+<?php $this->setShowBlock(['legend']); ?>
 <?= $this->element('../Articles/index_search') ?>
 
 <!-- Content area -->

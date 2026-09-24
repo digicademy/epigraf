@@ -17,6 +17,7 @@ use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Geo;
 use App\Utilities\Converters\HistoricDates;
 use App\Utilities\Converters\Objects;
+use App\Utilities\Converters\Search;
 use App\Utilities\Converters\Strings;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
@@ -57,7 +58,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
     public $parameters = [
         'id' => 'list-integer', // For updating stale rows in paginator.js
-        'articles' => 'list-integer', // Replace by id? Used in transfers
+        'articles' => 'list-integer', // Alias for id
 
         'deleted' => 'string',
         'published' => 'list-integer',
@@ -68,7 +69,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         'itemtypes' => 'list',
         'propertytypes' => 'list',
 
-        'targets' => 'json',
+        'targets' => 'nested-list',
 
         'items' => [
             'published' => 'list-integer'
@@ -76,13 +77,15 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         'field' => 'string',
         'term' => 'string',
-        'date' => 'string',
         'highlight' => 'string',
         'projects' => 'list-integer',
         'properties' => 'nested-list', // Example: properties.objecttypes.selected=1,2,3.
         'lane' => 'list-integer',      // In the lanes template, specific lanes must be selected one by one
 
         'references' => 'list-integer',
+
+        'date' => 'string',
+        'datestart' => 'string',
 
         'lat' => 'float',
         'lng' => 'float',
@@ -124,53 +127,6 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * @var array $index
      */
     public array $index = [];
-
-    /**
-     * Search fields, overrides BaseTable->searchFields
-     *
-     * // TODO: Configure in types
-     *
-     * @var array[]
-     */
-    public $searchFields = [
-        'captions' => [
-            'caption' => 'Bezeichner',
-            'scopes' => [
-                'Articles.signature',
-                'Articles.id' => ['type' => 'integer', 'operator' => '='],
-                'Articles.name',
-                'Articles.norm_iri',
-                'Articles.norm_data',
-                'Articles.status'
-            ]
-        ],
-        FIELD_ARTICLES_SIGNATURE => [
-            'caption' => '- Signatur',
-            'scopes' => ['Articles.signature']
-        ],
-        'id' => [
-            'caption' => '- ID',
-            'scopes' => ['Articles.id'],
-            'type' => 'integer',
-            'operator' => '='
-        ],
-        'name' => [
-            'caption' => '- Titel',
-            'scopes' => ['Articles.name']
-        ],
-        'norm_iri' => [
-            'caption' => '- IRI',
-            'scopes' => ['Articles.norm_iri']
-        ],
-        'norm_data' => [
-            'caption' => '- Normdaten',
-            'scopes' => ['Articles.norm_data']
-        ],
-        'status' => [
-            'caption' => '- Status',
-            'scopes' => ['Articles.status']
-        ]
-    ];
 
     /**
      * Initialize hook
@@ -323,6 +279,60 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     }
 
     /**
+     * Get the search fields
+     *
+     * @param string|null $fieldName Leave empty to get all, or select a specific field.
+     * @param string|null $typeName The type name to look up in the types configuration for the current table.
+     * @return array[]
+     */
+    protected function getSearchFields($fieldName = null, $typeName = null): array {
+        if (empty($this->searchFields)) {
+
+            $this->searchFields = [
+                'captions' => [
+                    'caption' => __('Identifiers'),
+                    'scopes' => [
+                        'Articles.signature',
+                        'Articles.id' => ['type' => 'integer', 'operator' => '='],
+                        'Articles.name',
+                        'Articles.norm_iri',
+                        'Articles.norm_data',
+                        'Articles.status'
+                    ]
+                ],
+                FIELD_ARTICLES_SIGNATURE => [
+                    'caption' => '- ' . __('Signature'),
+                    'scopes' => ['Articles.signature']
+                ],
+                'id' => [
+                    'caption' => '- ID',
+                    'scopes' => ['Articles.id'],
+                    'type' => 'integer',
+                    'operator' => '='
+                ],
+                'name' => [
+                    'caption' => '- ' . __('Title'),
+                    'scopes' => ['Articles.name']
+                ],
+                'norm_iri' => [
+                    'caption' => '- IRI',
+                    'scopes' => ['Articles.norm_iri']
+                ],
+                'norm_data' => [
+                    'caption' => '- ' . __('Authority data'),
+                    'scopes' => ['Articles.norm_data']
+                ],
+                'status' => [
+                    'caption' => '- ' . __('Status'),
+                    'scopes' => ['Articles.status']
+                ]
+            ];
+        }
+
+        return parent::getSearchFields($fieldName);
+    }
+
+    /**
      * Default validation rules
      *
      * @param Validator $validator Validator instance
@@ -433,7 +443,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         // Other fields
         elseif (!empty($term) && !empty($field)) {
-            $searchConfig = $this->searchFields[$field] ?? [];
+            $searchConfig = $this->getSearchFields($field);
 
             $query = $query->find('term', [
                 'term' => $term,
@@ -459,24 +469,43 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      */
     public function findHasDate(Query $query, array $options)
     {
-        if (!empty($options['date'])) {
-
+        if (!empty($options['date']) || !empty($options['datestart'])) {
             $itemtypes = $this->getDateItemTypes();
+        } else {
+            $itemtypes = [];
+        }
 
-            if (!empty($itemtypes)) {
-                $parsedDate = HistoricDates::years($options['date']);
-                if (!empty($parsedDate)) {
-                    $conditions = [
-                        'ItemsDates.date_start <=' => max($parsedDate),
-                        'ItemsDates.date_end >=' => min($parsedDate),
-                        'ItemsDates.itemtype IN' => $itemtypes
-                    ];
+        // Range
+        if (!empty($options['date']) && !empty($itemtypes)) {
+            $parsedDate = HistoricDates::years($options['date']);
+            if (!empty($parsedDate)) {
+                $conditions = [
+                    'ItemsDates.date_start <=' => max($parsedDate),
+                    'ItemsDates.date_end >=' => min($parsedDate),
+                    'ItemsDates.itemtype IN' => $itemtypes
+                ];
 
-                    $query = $query->innerJoinWith('ItemsDates',
-                        function ($q) use ($conditions) {
-                            return $q->where(['AND' => $conditions]);
-                        });
-                }
+                $query = $query->innerJoinWith('ItemsDates',
+                    function ($q) use ($conditions) {
+                        return $q->where(['AND' => $conditions]);
+                    });
+            }
+        }
+
+        // Datestart
+        elseif (!empty($options['datestart']) && !empty($itemtypes)) {
+            $parsedDate = HistoricDates::years($options['datestart']);
+            if (!empty($parsedDate)) {
+                $conditions = [
+                    'ItemsDates.date_start <=' => max($parsedDate),
+                    'ItemsDates.date_start >=' => min($parsedDate),
+                    'ItemsDates.itemtype IN' => $itemtypes
+                ];
+
+                $query = $query->innerJoinWith('ItemsDates',
+                    function ($q) use ($conditions) {
+                        return $q->where(['AND' => $conditions]);
+                    });
             }
         }
 
@@ -578,9 +607,8 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      */
     public function findHasArticleType(Query $query, array $options)
     {
-        //TODO: can this be removed (parsed in parseRequestParameters)?
-        $articletypes = Attributes::commaListToStringArray($options['articletypes'] ?? []);
 
+        $articletypes = $options['articletypes'] ?? [];
         if (!empty($articletypes)) {
             $query = $query
                 ->where([
@@ -746,7 +774,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      *
      * ### Options
      * - properties (array) Either an array with property IDs or a nested list.
-     *                      The nested list contains the propertytype on the first levem,
+     *                      The nested list contains the propertytype on the first level,
      *                      and the following keys on the second:
      *                      - selected with a list of the IDs
      *                      - flags: an enum list with the values
@@ -907,7 +935,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $filter = [];
         }
 
-        $conditions = Arrays::termConditions($term, $fields, $operator, $type, $filter);
+        $conditions = Search::termConditions($term, $fields, $operator, $type, $filter);
         $terms =  preg_split('/[ |]/', $term, -1, PREG_SPLIT_NO_EMPTY);
 
         $query = $query
@@ -941,7 +969,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Find articles by request parameters
+     * Find articles based on parsed request parameters
      *
      * @param Query $query
      * @param array $options request parameters
@@ -958,6 +986,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'term' => '',
             'field' => '',
             'date' => null,
+            'datestart' => null,
             'projects' => '',
             'articletypes' => '',
             'published' => null,
@@ -969,7 +998,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         // Generate query
         $query = $query->find('hasIds', $params);
         $query = $query->find('hasTerm', ['field' => $params['field'], 'term' => $params['term']]);
-        $query = $query->find('hasDate', ['date' => $params['date']]);
+        $query = $query->find('hasDate', ['date' => $params['date'], 'datestart' => $params['datestart']]);
         $query = $query->find('hasProject', ['projects' => $params['projects']]);
         $query = $query->find('hasReferences', $params);
 
@@ -1821,9 +1850,23 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
 
         // Geodata
         if (!isset($requestParameters['lat']) || !isset($requestParameters['lng'])) {
-            unset($params['zoom']);
             unset($params['lat']);
             unset($params['lng']);
+        }
+
+        // Plots
+        $template = $requestParameters['template'] ?? '';
+        if (!in_array($template, ['timeline','map'])) {
+            unset($params['zoom']);
+        }
+
+        // Record or relation
+        if (!isset($params['articletypes']) && isset($params['targets']['articles'])) {
+            $params['articletypes'] = $params['targets']['articles'];
+        }
+
+        if (!isset($params['sectiontypes']) && isset($params['targets']['sections'])) {
+            $params['sectiontypes'] = $params['targets']['sections'] === true ? [] : $params['targets']['sections'];
         }
 
         $params['action'] = $requestAction;
@@ -1872,7 +1915,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $typeConfig = Objects::extract($typeData, 'merged.dates') ?? [];
             $itemtypes = array_merge($itemtypes, $typeConfig);
         }
-        return $itemtypes;
+        return array_unique($itemtypes);
     }
 
     /**
@@ -1884,6 +1927,13 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
      * - date: An array with the item types that contain dates in the `itemtypes` key
      *         and the normalized date value of the current date search term in the `normalized` key.
      * - geodata: The merged geodata configuration of the article types
+     *
+     * ### Return keys
+     * - search: Search fields and captions.
+     * - date: Date configuration and normalized date.
+     * - lanes: Lane configuration.
+     * - geodata: Geodata configuration.
+     * - facets: Selected facets.
      *
      *              The geodata configuration in the article type is a dict with
      *              itemtypes as keys and extraction paths as values, example:
@@ -1943,6 +1993,10 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
                 $filter['geodata'] = array_merge($filter['geodata'], $typeConfig);
             }
         }
+
+        // Facets
+        $filter['facets'] = $this->Items->Properties->find('legend', $params);
+
         return $filter;
     }
 

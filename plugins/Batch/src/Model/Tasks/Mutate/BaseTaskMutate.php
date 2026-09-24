@@ -67,9 +67,10 @@ abstract class BaseTaskMutate extends BaseTask
                 $paramConfig = Arrays::valueToArray($paramConfig, 'caption');
             }
 
+            $caption = $paramConfig['caption'] ?? ucfirst($paramName);
             $fields['config.params.' . $paramName] =
                 [
-                    'caption' => __($paramConfig['caption'] ?? ucfirst($paramName)),
+                    'caption' => __($caption),
                     'type' => $paramConfig['input'] ?? 'text',
                     'value' => $this->job->config['params'][$paramName] ?? ''
                 ];
@@ -130,7 +131,8 @@ abstract class BaseTaskMutate extends BaseTask
         $databankName = empty($this->config['database']) ? $this->job->config['database'] : $this->config['database'];
         $this->job->activateDatabank($databankName);
 
-        return $this->job->batchCount;
+        $count = $this->job->getEntitiesCount($this->job->dataParams);
+        return ceil($count / $this->getLimit()) + 1;
     }
 
     /**
@@ -157,8 +159,8 @@ abstract class BaseTaskMutate extends BaseTask
         $model = $this->job->getModel($this->job->config['table'], 'Epi');
 
         $this->config['offset'] = $this->config['offset'] ?? 0;
-        $limit = $this->job->limit;
-        $offset = $this->config['offset'];
+        $limit = $this->getLimit();
+        $offset = $this->getOffset();
 
         // TODO: keep sort/order parameter
         $taskParams = $this->getTaskParams();
@@ -190,7 +192,7 @@ abstract class BaseTaskMutate extends BaseTask
         $this->job->updateCurrentTaskConfig($this->config);
 
         // Is the task finished?
-        return (count($entities) < $this->job->limit);
+        return (count($entities) < $this->getLimit());
     }
 
     /**

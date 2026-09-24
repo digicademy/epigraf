@@ -797,46 +797,46 @@ class LinkHelper extends Helper
      * filter widgets of a datalist are changed.
      *
      * ### Options
+     * - parameter The URL parameter handling selected IDs (e.g. "articles")
+     * - datalist Name of the datalist, e.g. "epi_articles"
+     * - url URL array. If not set, the URL is derived from the current request. TODO: deprecated, remove $url option, pass $entity as in addEditButtons()?
      * - triples Boolean value to indicate if triple buttons should be displayed.
      *           By default, triple buttons are displayed if the entity has a type with triple configuration.
+     * - actions An array of allowed actions, e.g. `['logs']`. Defaults to `['index', 'view']`.
      *
-     * @param array|null $url The URL. If empty, query parameters will be retrieved from the config.
-     *                        TODO: deprecated, remove $url parameter, pass $entity as in addEditButtons()
-     * @param string $parameter The URL parameter handling selected IDs (e.g. "articles")
-     * @param string $datalist Name of the datalist, e.g. "epi_articles"
      * @param array $options
      * @return void
      */
-    public function downloadButtons($url = null, $parameter= '', $datalist='', $options=[])
+    public function downloadButtons($options=[])
     {
-        if (empty($url)) {
-            $action = $this->getView()->getRequest()->getParam('action');
-            $url = ['action' => Attributes::cleanOption($action,['index', 'view'], 'view')];
+        $parameter = $options['parameter'] ?? '';
+        $datalist = $options['datalist'] ?? '';
+        $action = $this->getView()->getRequest()->getParam('action');
+        $url = $options['url'] ?? ['action' => Attributes::cleanOption($action, $options['actions'] ?? ['index', 'view'], 'view')];
 
-            // Scope
-            $scopeField = $this->_View->getConfig('options')['scopefield'] ?? null;
-            $scope = isset($scopeField) ? $this->_View->getConfig('options')['params'][$scopeField] ?? null : null;
-            if (isset($scope)) {
-               $url[] = $scope;
-            }
-
-            // Entity ID
-            $entity = $this->_View->get('entity');
-            if (!empty($entity)) {
-                $url[] = $entity->id;
-
-                // Skip download links in right sidebar
-                if  ($this->_View->getRequest()->is('ajax')) {
-                    return;
-                }
-            }
-
-            // Query parameters
-            $url['?'] = Attributes::paramsToQueryString(
-                $this->_View->getConfig('options')['params'] ?? [],
-                ['collapsed', 'selected', 'template', 'action', $scopeField]
-            );
+        // Scope
+        $scopeField = $this->_View->getConfig('options')['scopefield'] ?? null;
+        $scope = isset($scopeField) ? $this->_View->getConfig('options')['params'][$scopeField] ?? null : null;
+        if (isset($scope)) {
+           $url[] = $scope;
         }
+
+        // Entity ID
+        $entity = $this->_View->get('entity');
+        if (!empty($entity)) {
+            $url[] = $entity->id;
+
+            // Skip download links in right sidebar
+            if  ($this->_View->getRequest()->is('ajax')) {
+                return;
+            }
+        }
+
+        // Query parameters
+        $url['?'] = Attributes::paramsToQueryString(
+            $this->_View->getConfig('options')['params'] ?? [],
+            ['collapsed', 'selected', 'template', 'action', $scopeField]
+        );
 
         $this->beginActionGroup('bottom-right');
 
@@ -1067,7 +1067,7 @@ class LinkHelper extends Helper
     public function addCounter()
     {
         $this->addLabel(
-            $this->_View->Paginator->counter('{{count}}') . __(' records'),
+            $this->_View->Paginator->counter('{{count}} ') . __('records'),
             ['class' => 'actions-set-default sandwich-exclude']
         );
     }

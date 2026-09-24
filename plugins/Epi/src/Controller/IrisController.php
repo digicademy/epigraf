@@ -90,6 +90,14 @@ class IrisController extends AppController
             'controller' => 'Items',
             'scopeField' => 'itemtype',
         ],
+        'footnotes' => [
+            'controller' => 'Footnotes',
+            'scopeField' => 'from_tagname',
+        ],
+        'links' => [
+            'controller' => 'Links',
+            'scopeField' => 'from_tagname',
+        ],
         'notes' => [
             'controller' => 'Notes',
             'scopeField' => 'notetype'
@@ -101,15 +109,15 @@ class IrisController extends AppController
      *
      * TODO: Handle renamed types / IRIs
      * TODO: Handle IRIs of merged properties
-     * TODO: Resolve footnotes and links IRIs
      * TODO: Resolve IRIs for files and notes
      *
      * Resolves different types of IRIs:
      * - Typed public IRIs: articles/epi-article/mv~168
-     * - Typed database IRIs: articles/epi-article/mv~168?database=epi_mv
+     * - Typed database IRIs: articles/epi-article/mv~168?database=mv
      * - Prefixed public IRIs: articles-168
-     * - Prefixed database IRIs: articles-168?database?epi_mv
+     * - Prefixed database IRIs: articles-168?database=mv
      * - Typed ad hoc IRIs: articles/epi-article/mv~168
+     *
      *   If no article with the iri fragment exists, first,
      *   splits the IRI path into table, type and IRI fragment,
      *   then splits the IRI fragment into ID and source.
@@ -165,7 +173,8 @@ class IrisController extends AppController
             $type = 'epi-article';
         }
 
-        // For global entities
+        // For global entities, lookup the entity by its IRI fragment and type.
+        // If no entity is found, assume the IRI fragment is an entity ID.
         if (empty($plugin) && !empty($model) && !empty($scopeField)) {
 
             $modelTable = $this->fetchTable($model);
@@ -183,6 +192,9 @@ class IrisController extends AppController
 
             $dbDefault = false;
         }
+
+        // Project database IRIs and ad hoc IRIs are resolved by looking up the IRI fragment
+        // in the IRI fragment field of the corresponding table.
         elseif (empty($id) && !empty($model) && !empty($scopeField)) {
             $modelTable = $this->fetchTable('Epi.'. $model);
             $item = $modelTable

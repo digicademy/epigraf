@@ -249,6 +249,7 @@ TypeFactory::map('negbool', 'App\Database\Type\NegBoolType');
  * Default database names and version
  */
 
+define('DATABASE_MAIN', 'epigraf');
 define('DATABASE_STAGE', 'stage');
 define('DATABASE_PUBLIC', 'public');
 define('DATABASE_CURRENT_VERSION', '4.5');

@@ -94,7 +94,6 @@ class TaskBatchReconcile extends BaseTaskMutate
         }
         $dataParams = $model->parseRequestParameters($dataParams);
         $dataParams['ancestors'] = false;
-        $dataParams['treePositions'] = false;
 
         // Use cursor based pagination instead of offset
         if (($taskParams['cursor'] ?? 0) > 0) {

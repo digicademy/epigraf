@@ -217,6 +217,8 @@
 
     /* Messages */
     --message-bg-color: var(--primary-300);
+
+
     --msg-success-bg: var(--accent-open-normal);
     --msg-error-color: var(--neutral-100);
     --msg-info-font-color: var(--primary-300);
@@ -260,6 +262,10 @@
 
     /* Marker */
     --marker-bg-color: var(--neutral-700);
+
+    /* Legend */
+    --legend-bg-color: var(--nav-bg-color);
+    --legend-text-color: var(--button-font-color);
 }
 
 /** Fonts  */
@@ -1447,11 +1453,28 @@ a[data-linkwrapper] {
     color: rgba(0, 0 ,0 , 0.54);
 }
 
-.asc:after {
+/* direction arrows */
+.asc::after  {
     content: " \2193";
 }
-.desc:after {
+
+.desc::after {
     content: " \2191";
+}
+
+/* order number */
+.asc[data-sort-order]::after {
+    content: " \2193 " attr(data-sort-order);
+    vertical-align: super;
+    font-size: 0.7em;
+    margin-left: 0.1em;
+}
+
+.desc[data-sort-order]::after {
+    content: " \2191 " attr(data-sort-order);
+    vertical-align: super;
+    font-size: 0.7em;
+    margin-left: 0.1em;
 }
 
 /* Confirmation buttons container */
@@ -1575,6 +1598,16 @@ button.icon {
 
 button.icon:hover {
     color: var(--button-bg-color-hover);
+}
+
+button .icon.fontawesome {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    font-size: 1.1em;
+    line-height: 1;
 }
 
 button[type=submit],
@@ -1710,7 +1743,7 @@ select, textarea, .widget-xmleditor {
     margin: 0 0 1rem;
     border: 1px solid var(--input-border-color);
     border-radius: 3px;
-    background-color: var(--neutral-150);
+    background-color: var(--content-bg-color);
     -webkit-box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
     box-shadow: inset 0 1px 2px rgba(10,10,10,.1);
     font-family: inherit;
@@ -2010,7 +2043,11 @@ span.norecords {
     display: block;
 }
 
-form table select, form table input[type="text"],
+form table select,
+form table input[type="text"],
+form table input[type="email"],
+form table input[type="password"],
+form table textarea,
 form table .widget-xmleditor {
     margin-bottom: 0;
 }
@@ -2589,7 +2626,7 @@ form.search {
     padding: 0.5em 0;
 }
 
-.row-supplement .tree-cell {
+.row-supplement-parts .tree-cell {
     vertical-align: top;
     padding: 1em 0;
 }

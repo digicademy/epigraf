@@ -280,6 +280,16 @@ class ApiView extends SerializedView
         if (is_object($data) && method_exists($data, 'toArray') && is_callable([$data, 'toArray'])) {
             $data = $data->toArray();
         }
+
+        // Generators
+        if ($data instanceof \Generator) {
+            $result = [];
+            foreach ($data as $key => $value) {
+                $result[$key] = $value;
+            }
+            $data = $result;
+        }
+
         return $data;
     }
 

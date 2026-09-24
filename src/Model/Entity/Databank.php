@@ -603,9 +603,10 @@ class Databank extends BaseEntity
      * @param User $user The user entity
      * @param string $scope One of 'desktop', 'web' or 'api'
      * @param string $role For web and api permissions, the role for the permission.
+     * @param string $endpoint The endpoint for the permission. Leave empty to grant access to default endpoints for the selected role and scope.
      * @return bool Whether the operation could be completed.
      */
-    public function grant($user, $scope, $role)
+    public function grant($user, $scope, $role, $endpoint)
     {
         $result = true;
         if (empty($scope) || ($scope === 'desktop')) {
@@ -613,11 +614,11 @@ class Databank extends BaseEntity
         }
 
         if (empty($scope) || ($scope === 'web')) {
-            $result = $result && $this->grantWebAccess($user['id'], $role);
+            $result = $result && $this->grantWebAccess($user['id'], $role, $endpoint);
         }
 
         if (empty($scope) || ($scope === 'api')) {
-            $result = $result && $this->grantApiAccess($user['id'], $role);
+            $result = $result && $this->grantApiAccess($user['id'], $role, $endpoint);
         }
 
         return $result;
@@ -702,9 +703,10 @@ class Databank extends BaseEntity
      *
      * @param integer $user_id The user ID
      * @param string $user_role The user role.
+     * @param string $permission_name The endpoint for web and api access.
      * @return mixed
      */
-    public function grantWebAccess($user_id, $user_role = null)
+    public function grantWebAccess($user_id, $user_role = null, $permission_name = null)
     {
         $permissionTable = $this->fetchTable('Permissions');
         $permission = [
@@ -714,7 +716,8 @@ class Databank extends BaseEntity
             'entity_type' => 'databank',
             'entity_name' => $this->name,
             'entity_id' => $this->id,
-            'permission_type' => 'access'
+            'permission_type' => 'access',
+            'permission_name' => $permission_name
         ];
         return ($permissionTable->addPermission($permission));
     }
@@ -759,9 +762,10 @@ class Databank extends BaseEntity
      *
      * @param integer $user_id The user ID
      * @param string $user_role The user role.
+     * @param string $permission_name The endpoint for web and api access.
      * @return mixed
      */
-    public function grantApiAccess($user_id, $user_role = null)
+    public function grantApiAccess($user_id, $user_role = null, string $permission_name = null)
     {
         $permissionTable = $this->fetchTable('Permissions');
         $permission = [
@@ -771,7 +775,8 @@ class Databank extends BaseEntity
             'entity_type' => 'databank',
             'entity_name' => $this->name,
             'entity_id' => $this->id,
-            'permission_type' => 'access'
+            'permission_type' => 'access',
+            'permission_name' => $permission_name
         ];
         return ($permissionTable->addPermission($permission));
     }
@@ -941,7 +946,7 @@ class Databank extends BaseEntity
             $missing += 1;
         }
 
-        foreach (['articles', 'properties', 'notes', 'backup'] as $folder) {
+        foreach (['articles', 'properties', 'notes', 'backup', 'jobs'] as $folder) {
             if (!is_dir($root . $folder . DS)) {
                 $created += mkdir($root . $folder . DS, 0777, true);
                 $missing += 1;
@@ -973,7 +978,20 @@ class Databank extends BaseEntity
             ]);
         }
 
-        return EpiBaseTable::loadSql($filename, $this->name, 'projects');
+        $result = EpiBaseTable::loadSql($filename, $this->name);
+        $this->clearCache();
+        return $result;
+    }
+
+    public function clearCache()
+    {
+        if (!$this->activateDatabase()) {
+            return;
+        }
+
+        /** @var BaseTable $table */
+        $table = $this->fetchTable($this->plugin . '.Articles');
+        $table->clearCache();
     }
 
     /**
@@ -983,49 +1001,75 @@ class Databank extends BaseEntity
      */
     public function backupDatabase()
     {
-        //Check folders
+        // Check folders
         $this->createFolders();
         $path = Configure::read('Data.databases') . $this->name . DS . 'backup' . DS;
         if (!is_dir($path)) {
             throw new NotFoundException('The backup path does not exist. Please check your configuration.');
         }
 
-        //Check exec function
+        // Check exec function
         if (!function_exists('exec')) {
             throw new NotFoundException('The exec function is disabled. Please check your PHP configuration.');
         }
 
-        //Database connection
+        // Database connection
         $db = EpiBaseTable::setDatabase($this->name);
         $dsc = $db->config();
-        $database = '--user=' . $dsc['username'] . ' --password=' . $dsc['password'] . ' --host=' . $dsc['host'] . ' ' . Databank::addPrefix($dsc['database']);
 
-        //Backup
-        $mysqldump = 'mysqldump';
-
+        // File names
         $time = Chronos::now();
-        $timestring = strtolower(preg_replace('/[+]/','p', $time->toIso8601String()));
-        $timestring = preg_replace('/[^0-9a-zA-Z-]/','_', $timestring . $time->getTimestamp());
+        $timestring = strtolower(str_replace('+', 'p', $time->toIso8601String()));
+        $timestring = preg_replace('/[^0-9a-zA-Z-]/', '_', $timestring . $time->getTimestamp());
 
         $filename = 'backup_' . $this->name . '_' . $timestring;
-        $output = '> "' . $path . $filename . '.sql"';
-        $errors = '2> "' . $path . $filename . '.err"';
-        $where = '';
-        $options = '--skip-ssl --extended-insert --net-buffer-length=100000';
-        $tablename = '';
+        $sqlFile = $path . $filename . '.sql';
+        $errFile = $path . $filename . '.err';
 
-        $command = implode(' ', array($mysqldump, $where, $options, $database, $tablename, $errors, $output));
-        exec($command, $out, $status);
-        exec("gzip " . $path . $filename . '.sql');
+        // Arguments (each one is escaped individually)
+        $args = [
+            '--skip-ssl',
+            '--extended-insert',
+            '--net-buffer-length=100000',
+            '--user=' . $dsc['username'],
+            '--password=' . $dsc['password'],
+            '--host=' . $dsc['host'],
+        ];
 
-        //delete files
-        //if (file_exists($path.$filename.'.sql.gz'))
-        //  unlink($path.$filename.'.sql');
-        if (filesize($path . $filename . '.err') == 0) {
-            unlink($path . $filename . '.err');
+        if (!empty($dsc['port'])) {
+            $args[] = '--port=' . $dsc['port'];
         }
 
-        return empty($status);
+        $args[] = '--result-file=' . $sqlFile;
+        $args[] = '--log-error=' . $errFile;
+        $args[] = Databank::addPrefix($dsc['database']);
+
+        $command = 'mysqldump ' . implode(' ', array_map('escapeshellarg', $args)) . ' 2>&1';
+
+        // Backup
+        $out = [];
+        $status = 1;
+        exec($command, $out, $status);
+
+        // Compress
+        $gzipStatus = 1;
+        if ($status === 0 && file_exists($sqlFile)) {
+            $gzipOut = [];
+            exec('gzip -f ' . escapeshellarg($sqlFile) . ' 2>&1', $gzipOut, $gzipStatus);
+            $out = array_merge($out, $gzipOut);
+        }
+
+        // Keep the shell output if something went wrong
+        if (!empty($out)) {
+            file_put_contents($errFile, implode(PHP_EOL, $out) . PHP_EOL, FILE_APPEND);
+        }
+
+        // Delete empty error file
+        if (file_exists($errFile) && filesize($errFile) === 0) {
+            unlink($errFile);
+        }
+
+        return $status === 0 && $gzipStatus === 0;
     }
 
     /**

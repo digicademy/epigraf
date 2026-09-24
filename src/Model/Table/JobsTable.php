@@ -184,7 +184,7 @@ class JobsTable extends BaseTable
     }
 
     /**
-     * Put delayed jobs into the queue after saving
+     * Put queued jobs into the queue after saving
      *
      * @param EventInterface $event
      * @param EntityInterface $entity
@@ -264,7 +264,7 @@ class JobsTable extends BaseTable
                 'default' => true
             ],
             'delay' => [
-                'caption' => __('Delay'),
+                'caption' => __('Async'),
                 'default' => true
             ],
             'pipeline' => [

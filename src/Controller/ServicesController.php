@@ -81,6 +81,10 @@ class ServicesController extends AppController
             $task = $apiService->query($path, $data);
         }
 
+        if (($task['state'] ?? '') === 'ERROR') {
+            $this->Answer->error(__( 'An error occurred while processing the request: {0}', [$task['message'] ?? '']));
+        }
+
         // In proxy mode, pass the response as is
         if ($apiService->proxyMode === 'file') {
             $this->response = $this->response

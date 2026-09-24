@@ -111,8 +111,6 @@ class BaseEntityHelper extends Helper
             $out_headers .= '<div class="' . implode(" ", array_filter($classes)) . '">';
             $out_headers .= $header['caption'] ?? '';
 
-//            $header['aggregate'] = false;
-//            $items = $entity->getValueNested($header['key'], ['format' => 'html'] + $header);
             $items = $entity->getValuePlaceholder($header['key'], ['format' => 'html'] + $header);
             $items = is_array($items) ? implode("<br> ", $items) : $items;
 
@@ -1087,6 +1085,11 @@ class BaseEntityHelper extends Helper
             $out .= $this->itemFieldXml($item, $fieldNameParts, $edit, $options);
         }
 
+        // CSV
+        elseif ($format === 'csv') {
+            $out .= $this->itemFieldCsv($item, $fieldNameParts, $edit, $options);
+        }
+
         // Property
         elseif ($format === 'property') {
             $out .= $this->itemFieldProperty($item, $fieldNameParts, $edit, $options);
@@ -1179,10 +1182,13 @@ class BaseEntityHelper extends Helper
      */
     public function itemFieldRaw($item, $fieldNameParts, $edit, $options = [])
     {
-        $content = $item->getValueFormatted($fieldNameParts);
         if ($edit) {
+            $content = $item->getValueFormatted($fieldNameParts, ['format' => 'input']);
             $content = $this->Form->input($options['inputField'], ['value' => $content]);
+        } else {
+            $content = $item->getValueFormatted($fieldNameParts, ['format' => 'html']);
         }
+
         if (is_array($content)) {
             $content = json_encode($content, JSON_PRETTY_PRINT);
         }
@@ -1271,6 +1277,10 @@ class BaseEntityHelper extends Helper
                 $attributes['style'] = $styles;
             }
 
+            if (!empty($options['fieldConfig']['autofocus'])) {
+                $attributes['autofocus'] = 'true';
+            }
+
             if (Attributes::isFalse($options['fieldConfig']['constrain'] ?? true) ) {
                 $attributes['data-constrain'] = 'false';
             }
@@ -1285,6 +1295,21 @@ class BaseEntityHelper extends Helper
             $out .= "<div class=\"doc-field-content\">{$content}</div>";
         }
         return $out;
+    }
+
+    /**
+     * Output a CSV field
+     *
+     * @param Item $item
+     * @param array $fieldNameParts
+     * @param boolean $edit
+     * @param array $options
+     * @return string
+     */
+    public function itemFieldCsv($item, $fieldNameParts, $edit, $options = [])
+    {
+        $value = $item->getValueFormatted($fieldNameParts);
+        return "<div class=\"doc-field-content\">{$value}</div>";
     }
 
     /**
@@ -1522,8 +1547,9 @@ class BaseEntityHelper extends Helper
         $value = $item[$fieldName . '_name'] ?? '';
         $path = $item[$fieldName . '_path'] ?? '';
 
-        $url = ($options['fieldConfig']['baseurl'] ?? '') . $path . '/' . $value;
-        $content = "<a href=\"$url\" target=\"_blank\">$value</a>";
+        $fullpath = $path . '/' . $value;
+        $url = ($options['fieldConfig']['baseurl'] ?? '') . $fullpath;
+        $content = "<a href=\"$url\" target=\"_blank\">$fullpath</a>";
 
         return "<div class=\"doc-field-content\">{$content}</div>";
     }
@@ -1814,7 +1840,7 @@ class BaseEntityHelper extends Helper
      *
      * @param BaseEntity $entity
      * @param string $paneId ID of the filter pane
-     * @param string $annoListId Id of the ???
+     * @param string $annoListId ID of the ???
      * @return string
      */
     public function annoSelector($entity, $paneId, $annoListId): string
@@ -2630,7 +2656,11 @@ class BaseEntityHelper extends Helper
                 if (!$this->_View->getRequest()->is('ajax')) {
 
                     $proceedUrl = ['action' => 'index'];
-                    if (!empty($entity->fieldsScope)) {
+                    // TODO: The plugin check is a workaround because in wiki routes the segment
+                    //       is a static part of the route. We should find a more robust solution for this.
+                    //       The problem occured after moving _getFieldsScope() from the Epi plugin's BaseEntity
+                    //       to the main BaseEntity.
+                    if (!empty($entity->fieldsScope) && !empty($this->_View->getRequest()->getParam('plugin'))) {
                         $proceedUrl[] = $entity[$entity->fieldsScope] ?? null;
                     }
                     $options['data-proceed-url'] = $this->Url->build($proceedUrl);
@@ -2819,12 +2849,12 @@ class BaseEntityHelper extends Helper
         $type = $fieldOptions['type'] ?? 'text';
 
         $rowClasses = [];
-        $rowClasses[] = in_array($action, ['edit', 'add', 'move']) ? ('table-input-' . $type) : '';
+        $rowClasses[] = in_array($action, ['edit', 'add', 'move', 'grant']) ? ('table-input-' . $type) : '';
         $rowClasses = array_filter($rowClasses);
 
         $cellClass = empty($fieldOptions['cellClass']) ? '' : (' class="' . $fieldOptions['cellClass'] . '"');
 
-        $edit = in_array($action, ['edit', 'add', 'move']);
+        $edit = in_array($action, ['edit', 'add', 'move', 'grant']);
 
         $fieldLayout = $fieldOptions['layout'] ?? 'row';
         unset($fieldOptions['layout']);
@@ -2896,12 +2926,13 @@ class BaseEntityHelper extends Helper
         $fieldFormat = is_object($entity) ? $entity->getFieldFormat($fieldName) : 'raw';
         $inputType = $fieldOptions['type'] ?? 'text';
 
-        $edit = $fieldOptions['edit'] ?? in_array($action, ['edit', 'add', 'move']);
+        $edit = $fieldOptions['edit'] ?? in_array($action, ['edit', 'add', 'move', 'grant']);
         $services = $fieldOptions['services'] ?? [];
         unset($fieldOptions['services']);
 
 
         // Edit fields
+        // TODO: Refactor, move edit branch of the condition toe the InputHelper
         if ($edit) {
             // Restrict to accessible fields
             $fieldNameParts = explode('.', $fieldName);
@@ -2914,6 +2945,7 @@ class BaseEntityHelper extends Helper
             }
 
             // XML fields
+            // TODO: Derive a widget from WidgetInterface (see JsonWidget.php)
             elseif ($fieldFormat === 'xml') {
                 $out = $this->itemField($entity, $fieldName, ['edit' => true, 'mode' => $enabled ? $action : 'view']);
             }
@@ -2938,6 +2970,14 @@ class BaseEntityHelper extends Helper
                     $inputOptions['data-autofill'] = '1';
                     if (!empty($autofill['force'])) {
                         $inputOptions['readonly'] = true;
+                    }
+                }
+
+                // Regex patterns
+                if (isset($inputOptions['pattern'])) {
+                    $inputOptions['pattern'] = Attributes::regexToInputPattern($inputOptions['pattern']);
+                    if (!isset($fieldOptions['help'])) {
+                        $fieldOptions['help'] = __('The value must match the pattern: {0}', $inputOptions['pattern']);
                     }
                 }
 
@@ -2967,9 +3007,7 @@ class BaseEntityHelper extends Helper
                 }
 
                 // Clean up inputOptions
-                if (($inputOptions['type'] ?? 'input') === 'checkbox') {
-                    unset($inputOptions['levels']);
-                }
+                unset($inputOptions['levels']);
 
                 if ((($inputOptions['height'] ?? 1) > 1) && ($inputType === 'text')) {
                     $inputOptions['type'] = 'textarea';
@@ -3054,6 +3092,10 @@ class BaseEntityHelper extends Helper
             // Time
             elseif ($inputFormat === 'time') {
                 $out = $this->entityFieldTime($entity, $fieldName, $edit, $fieldOptions, $value);
+            }
+            // Time
+            elseif ($inputFormat === 'seconds') {
+                $out = $this->entityFieldSeconds($entity, $fieldName, $edit, $fieldOptions, $value);
             }
             // Select
             elseif ($inputType === 'select') {
@@ -3257,6 +3299,21 @@ class BaseEntityHelper extends Helper
     public function entityFieldTime($entity, $fieldName, $edit, $fieldOptions, $value)
     {
         return $value->i18nFormat(null, 'Europe/Paris');
+    }
+
+    /**
+     * A time field for entities
+     *
+     * @param BaseEntity $entity
+     * @param string $fieldName
+     * @param boolean $edit
+     * @param array $fieldOptions
+     * @param mixed $value
+     * @return string
+     */
+    public function entityFieldSeconds($entity, $fieldName, $edit, $fieldOptions, $value)
+    {
+        return Numbers::secondsToText($value);
     }
 
     /**

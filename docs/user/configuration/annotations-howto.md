@@ -3,21 +3,21 @@ title: Step by step - How to configure the annotation toolbar?
 permalink: '/user/configuration/annotations-howto/'
 ---
 
-The [annotation](/epigraf/user/configuration/annotations) toolbar is the bread and butter of working with Epigraf.
+The [annotation](/user/configuration/annotations) toolbar is the bread and butter of working with Epigraf.
 Annotations allow editors to link text passages with controlled vocabularies, format text, or add footnotes and memos.
 
-![Epigraf Toolbar](/epigraf/user/assets/img/annotation_toolbar.png)
+![Epigraf Toolbar](/user/assets/img/annotation_toolbar.png)
 
 The following guide walks you through configuring the annotation toolbar that appears when editing text items in Epigraf.
 By the end you will know how to add, remove or reorder buttons.
 The examples refer to the movies database that ships with Epigraf.
-You need admin permissions to [create the movies database](/epigraf/user/administration/databases) and to modify its configuration.
+You need admin permissions to [create the movies database](/user/administration/databases) and to modify its configuration.
 But you can use the same techniques on other databases of your choice.
 
 That being said, let's consider what implementing an annotation requires from the perspective of the
-[Relational Article Model (RAM)](/epigraf/user/coreconcepts/model):
+[Relational Article Model (RAM)](/user/coreconcepts/model):
 
-![Graph of the Relational Article Model](/epigraf/user/assets/img/coreconcepts_ram.png)
+![Graph of the Relational Article Model](/user/assets/img/coreconcepts_ram.png)
 
 Looking at the diagram above there, there are three routes from articles to properties.
 You can reference properties directly in an item, you can annotate text with properties via the links route,
@@ -60,9 +60,9 @@ The item type configuration contains the following field configuration:
 
 
 What does the configuration tell us? Well, checking the [items configuration
-documentation](/epigraf/user/configuration/articles#item-type-configuration) we see that
+documentation](/user/configuration/articles#item-type-configuration) we see that
 the available fields of an item are defined in the `fields` key and that the
-`content` field is the default field for text data. Looking at the [fields configuration documentation](/epigraf/user/configuration/fields),
+`content` field is the default field for text data. Looking at the [fields configuration documentation](/user/configuration/fields),
 we can see that the `format` key marks the content as being XML, in which case available annotations are defined in the `types` key.
 
 In XML fields the `types` key indicates which annotations are permitted by either directly listing link type
@@ -131,7 +131,7 @@ As made clear above, this grouping value controls what annotations will be avail
 On the other end we configure the **`to`** field of the links entity to accept targets of the "places" property type.
 The field configuration is somewhat verbose because it is quite flexible and allows for a wide range of annotations.
 When learning how to configure Epigraf, we recommend to copy&paste settings from existing databases
-or from examples in [link type configuration documentation](/epigraf/user/configuration/annotations).
+or from examples in [link type configuration documentation](/user/configuration/annotations).
 
 All other settings in the configuration define how the annotation will look and behave in the toolbar and in the text.
 We are using a symbol from [Font Awesome](https://fontawesome.com/search?m=free) for our toolbutton and give it a yellow color.
@@ -162,7 +162,7 @@ The name must match the property type added to the fields configuration of the l
 Note the plural form. Although you are free to choose any name or caption you like,
 we recommend the plural for property types as the captions are used in the categories menu.
 
-Paste the following JSON configuration that [defines the lemma field](/epigraf/user/configuration/categories) of the new property type:
+Paste the following JSON configuration that [defines the lemma field](/user/configuration/categories) of the new property type:
 
 ```json
 {
@@ -204,7 +204,7 @@ That’s it! You now have a fully customised annotation toolbar ready for everyd
 
 ## What's next?
 
-- Experiment with the [different tag types](/epigraf/user/configuration/annotations/) available for annotations. For example,
+- Experiment with the [different tag types](/user/configuration/annotations/) available for annotations. For example,
   set the tag_type to `bracket` and set `prefix` to "[" and `postfix` to "]" to enclose annotated text with square brackets.
   You will find many more examples in the inscription databases that ship with Epigraf.
 - Configure a footnote type and add it to the toolbar. Footnotes are a great way to add comments or text-critical apparatus to your articles.

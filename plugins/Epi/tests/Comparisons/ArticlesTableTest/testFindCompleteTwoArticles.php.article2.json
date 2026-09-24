@@ -2,7 +2,7 @@
     "id": 3,
     "projects_id": 1,
     "deleted": 0,
-    "created": "2022-04-01T10:04:46+02:00",
+    "created": "2022-04-01T12:04:46+02:00",
     "modified_by": 2,
     "created_by": 1,
     "articletype": "epi-article",
@@ -14,7 +14,7 @@
     "type": {
         "id": 161,
         "deleted": 0,
-        "job_id": 69592,
+        "job_id": 85171,
         "published": 1,
         "modified_by": 2,
         "scope": "articles",
@@ -64,13 +64,20 @@
                 "signature": {
                     "caption": "Signatur",
                     "help": "Wird automatisch aus der ersten Signatur \u00fcbernommen",
+                    "required": true,
                     "autofill": {
                         "source": "items[signatures].value",
                         "force": true
                     }
                 },
-                "name": "Titel",
-                "projects_id": "Projekt"
+                "name": {
+                    "caption": "Titel",
+                    "required": true
+                },
+                "projects_id": {
+                    "caption": "Projekt",
+                    "required": true
+                }
             },
             "header": [
                 {
@@ -84,7 +91,7 @@
                     "key": "{sections.*.items.*[itemtype=locations].property.path|first}"
                 },
                 {
-                    "key": "{sections.*.items.*[itemtype=conditions].date_value|first}"
+                    "key": "{sections.*.items.*.date_value|filter|distinct|collapse}"
                 }
             ],
             "columns": {
@@ -92,6 +99,10 @@
                     "caption": "Signatur",
                     "default": true,
                     "public": true
+                },
+                "items_signatures": {
+                    "caption": "Alle Signaturen",
+                    "key": "items.*[itemtype=signatures].value|collapse"
                 },
                 "name": {
                     "caption": "Titel",
@@ -109,6 +120,12 @@
                     "key": "items.*[itemtype=conditions].date_value|collapse",
                     "sort": "items.*[itemtype=conditions,dio-conditions-raw].date_sort|min",
                     "default": true
+                },
+                "items_date_day": {
+                    "caption": "Tagesdatierung",
+                    "key": "items.*[itemtype=dates].date_value|collapse",
+                    "sort": "items.*[itemtype=dates].date_sort",
+                    "default": false
                 },
                 "inscriptions_date": {
                     "caption": "Inschriftendatierungen",
@@ -272,6 +289,10 @@
                     "caption": "Summary State",
                     "key": "items.*[itemtype=summary].value",
                     "selectable": true
+                },
+                "warnings": {
+                    "caption": "Warnungen",
+                    "key": "warnings.*.*.msg"
                 }
             },
             "sections": {
@@ -362,7 +383,7 @@
                 "summary": {
                     "type": "summary",
                     "caption": "Zusammenfassung",
-                    "count": "1",
+                    "count": "?",
                     "default": false
                 }
             },
@@ -496,7 +517,7 @@
         {
             "id": 66,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
+            "created": "2022-06-18T12:33:18+02:00",
             "modified_by": 1,
             "created_by": 1,
             "root_id": 3,
@@ -514,7 +535,7 @@
                 "id": 1,
                 "projects_id": 1,
                 "deleted": 0,
-                "created": "2021-06-13T16:10:25+02:00",
+                "created": "2021-06-13T18:10:25+02:00",
                 "modified_by": 2,
                 "created_by": 1,
                 "articletype": "epi-article",
@@ -531,13 +552,14 @@
                     "id": 1,
                     "deleted": 0,
                     "published": 0,
-                    "created": "2021-06-14T22:42:26+02:00",
-                    "modified_by": 1,
+                    "created": "2021-06-15T00:42:26+02:00",
+                    "modified_by": 2,
                     "created_by": 1,
                     "projecttype": "epi",
                     "name": "Testprojekt 1",
                     "signature": "TP1",
-                    "description": "",
+                    "description": "{\n  \"di_prefix\": \"di\",\n  \"di_number\": \"999\",\n  \"di_signature\": \"DI 999\",\n  \"di_path\": \"testprojekt1\",\n  \"urn\": \"di999g022k0\",\n  \"author\": \"Test Tator\",\n  \"year\": 2025,\n  \"title\": \"Die Inschriften von Testates\",\n  \"images\": {\n    \"creator\": \"Tina Toner\",\n    \"source\": \"Bildarchiv\",\n    \"rights\": \"Tackademie\",\n    \"usageterms\": \"CC BY 4.0\",\n    \"credit\": \"Tacka\",\n    \"marked\": \"True\"\n  }\n}",
+                    "norm_data": "",
                     "norm_iri": "bookiri",
                     "database": "projects"
                 },
@@ -547,7 +569,7 @@
         {
             "id": 67,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
+            "created": "2022-06-18T12:33:18+02:00",
             "modified_by": 1,
             "created_by": 1,
             "root_id": 3,
@@ -564,7 +586,7 @@
             "section": {
                 "id": 19,
                 "deleted": 0,
-                "created": "2021-06-14T14:42:15+02:00",
+                "created": "2021-06-14T16:42:15+02:00",
                 "modified_by": 2,
                 "created_by": 1,
                 "sortno": 46,
@@ -585,7 +607,7 @@
                     "id": 1,
                     "projects_id": 1,
                     "deleted": 0,
-                    "created": "2021-06-13T16:10:25+02:00",
+                    "created": "2021-06-13T18:10:25+02:00",
                     "modified_by": 2,
                     "created_by": 1,
                     "articletype": "epi-article",
@@ -602,13 +624,14 @@
                         "id": 1,
                         "deleted": 0,
                         "published": 0,
-                        "created": "2021-06-14T22:42:26+02:00",
-                        "modified_by": 1,
+                        "created": "2021-06-15T00:42:26+02:00",
+                        "modified_by": 2,
                         "created_by": 1,
                         "projecttype": "epi",
                         "name": "Testprojekt 1",
                         "signature": "TP1",
-                        "description": "",
+                        "description": "{\n  \"di_prefix\": \"di\",\n  \"di_number\": \"999\",\n  \"di_signature\": \"DI 999\",\n  \"di_path\": \"testprojekt1\",\n  \"urn\": \"di999g022k0\",\n  \"author\": \"Test Tator\",\n  \"year\": 2025,\n  \"title\": \"Die Inschriften von Testates\",\n  \"images\": {\n    \"creator\": \"Tina Toner\",\n    \"source\": \"Bildarchiv\",\n    \"rights\": \"Tackademie\",\n    \"usageterms\": \"CC BY 4.0\",\n    \"credit\": \"Tacka\",\n    \"marked\": \"True\"\n  }\n}",
+                        "norm_data": "",
                         "norm_iri": "bookiri",
                         "database": "projects"
                     },
@@ -618,7 +641,7 @@
                     {
                         "id": 22,
                         "deleted": 0,
-                        "created": "2021-06-14T14:42:16+02:00",
+                        "created": "2021-06-14T16:42:16+02:00",
                         "modified_by": 2,
                         "created_by": 1,
                         "sortno": 39,
@@ -641,7 +664,7 @@
         {
             "id": 68,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
+            "created": "2022-06-18T12:33:18+02:00",
             "modified_by": 1,
             "created_by": 1,
             "root_id": 3,
@@ -658,7 +681,7 @@
             "footnote": {
                 "id": 1,
                 "deleted": 0,
-                "created": "2022-03-15T19:50:04+01:00",
+                "created": "2022-03-15T21:50:04+01:00",
                 "modified_by": 1,
                 "created_by": 1,
                 "sortno": 13,
@@ -677,7 +700,7 @@
                     "id": 1,
                     "projects_id": 1,
                     "deleted": 0,
-                    "created": "2021-06-13T16:10:25+02:00",
+                    "created": "2021-06-13T18:10:25+02:00",
                     "modified_by": 2,
                     "created_by": 1,
                     "articletype": "epi-article",
@@ -694,13 +717,14 @@
                         "id": 1,
                         "deleted": 0,
                         "published": 0,
-                        "created": "2021-06-14T22:42:26+02:00",
-                        "modified_by": 1,
+                        "created": "2021-06-15T00:42:26+02:00",
+                        "modified_by": 2,
                         "created_by": 1,
                         "projecttype": "epi",
                         "name": "Testprojekt 1",
                         "signature": "TP1",
-                        "description": "",
+                        "description": "{\n  \"di_prefix\": \"di\",\n  \"di_number\": \"999\",\n  \"di_signature\": \"DI 999\",\n  \"di_path\": \"testprojekt1\",\n  \"urn\": \"di999g022k0\",\n  \"author\": \"Test Tator\",\n  \"year\": 2025,\n  \"title\": \"Die Inschriften von Testates\",\n  \"images\": {\n    \"creator\": \"Tina Toner\",\n    \"source\": \"Bildarchiv\",\n    \"rights\": \"Tackademie\",\n    \"usageterms\": \"CC BY 4.0\",\n    \"credit\": \"Tacka\",\n    \"marked\": \"True\"\n  }\n}",
+                        "norm_data": "",
                         "norm_iri": "bookiri",
                         "database": "projects"
                     },
@@ -711,7 +735,7 @@
         {
             "id": 69,
             "deleted": 0,
-            "created": "2022-06-18T10:37:47+02:00",
+            "created": "2022-06-18T12:37:47+02:00",
             "modified_by": 1,
             "created_by": 1,
             "root_id": 3,
@@ -728,12 +752,12 @@
             "footnote": {
                 "id": 4,
                 "deleted": 0,
-                "created": "2022-06-18T10:33:18+02:00",
+                "created": "2022-06-18T12:33:18+02:00",
                 "modified_by": 2,
                 "created_by": 1,
                 "fntype": true,
                 "name": "1",
-                "content": "Verweis auf anderen Artikel: <rec_extern id=\"000004473043968245370370449713\" \/><nl \/>Verweis auf Fu\u00dfnote in anderem Artikel: <rec_extern id=\"000004473043911023148148167183\" \/><nl \/>Verweis auf Inschriftenteil in anderem Artikel: <rec_extern id=\"000004473043941553240740720340\" \/><nl \/>",
+                "content": "Verweis auf anderen Artikel: <rec_extern id=\"000004473043968245370370449713\" \/><nl \/>Verweis auf Fu\u00dfnote in anderem Artikel: <rec_extern id=\"000004473043911023148148167183\" \/><nl \/>Verweis auf Inschriftenteil in anderem Artikel: <rec_extern id=\"000004473043941553240740720340\" \/><nl \/>Weblink mit Bindestrichen: <a id=\"7cce804163634a0dee73356f7eca9dfb\" value=\"https:\/\/example.com\/asd12-34asd\" href=\"https:\/\/example.com\/asd12-34asd\" \/><nl \/>",
                 "root_id": 3,
                 "root_tab": "articles",
                 "from_id": 369,
@@ -746,7 +770,7 @@
                     "id": 3,
                     "projects_id": 1,
                     "deleted": 0,
-                    "created": "2022-04-01T10:04:46+02:00",
+                    "created": "2022-04-01T12:04:46+02:00",
                     "modified_by": 2,
                     "created_by": 1,
                     "articletype": "epi-article",
@@ -759,13 +783,14 @@
                         "id": 1,
                         "deleted": 0,
                         "published": 0,
-                        "created": "2021-06-14T22:42:26+02:00",
-                        "modified_by": 1,
+                        "created": "2021-06-15T00:42:26+02:00",
+                        "modified_by": 2,
                         "created_by": 1,
                         "projecttype": "epi",
                         "name": "Testprojekt 1",
                         "signature": "TP1",
-                        "description": "",
+                        "description": "{\n  \"di_prefix\": \"di\",\n  \"di_number\": \"999\",\n  \"di_signature\": \"DI 999\",\n  \"di_path\": \"testprojekt1\",\n  \"urn\": \"di999g022k0\",\n  \"author\": \"Test Tator\",\n  \"year\": 2025,\n  \"title\": \"Die Inschriften von Testates\",\n  \"images\": {\n    \"creator\": \"Tina Toner\",\n    \"source\": \"Bildarchiv\",\n    \"rights\": \"Tackademie\",\n    \"usageterms\": \"CC BY 4.0\",\n    \"credit\": \"Tacka\",\n    \"marked\": \"True\"\n  }\n}",
+                        "norm_data": "",
                         "norm_iri": "bookiri",
                         "database": "projects"
                     },
@@ -776,7 +801,7 @@
         {
             "id": 70,
             "deleted": 0,
-            "created": "2022-06-18T10:37:47+02:00",
+            "created": "2022-06-18T12:37:47+02:00",
             "modified_by": 1,
             "created_by": 1,
             "root_id": 3,
@@ -793,10 +818,10 @@
             "section": {
                 "id": 145,
                 "deleted": 0,
-                "created": "2022-06-18T10:33:17+02:00",
+                "created": "2022-06-18T12:33:17+02:00",
                 "modified_by": 2,
                 "created_by": 1,
-                "sortno": 29,
+                "sortno": 15,
                 "layout_cols": 0,
                 "layout_rows": 0,
                 "sectiontype": "inscription",
@@ -807,13 +832,13 @@
                 "status": 0,
                 "level": 0,
                 "lft": 29,
-                "rght": 34,
+                "rght": 38,
                 "articles_id": 3,
                 "article": {
                     "id": 3,
                     "projects_id": 1,
                     "deleted": 0,
-                    "created": "2022-04-01T10:04:46+02:00",
+                    "created": "2022-04-01T12:04:46+02:00",
                     "modified_by": 2,
                     "created_by": 1,
                     "articletype": "epi-article",
@@ -826,13 +851,14 @@
                         "id": 1,
                         "deleted": 0,
                         "published": 0,
-                        "created": "2021-06-14T22:42:26+02:00",
-                        "modified_by": 1,
+                        "created": "2021-06-15T00:42:26+02:00",
+                        "modified_by": 2,
                         "created_by": 1,
                         "projecttype": "epi",
                         "name": "Testprojekt 1",
                         "signature": "TP1",
-                        "description": "",
+                        "description": "{\n  \"di_prefix\": \"di\",\n  \"di_number\": \"999\",\n  \"di_signature\": \"DI 999\",\n  \"di_path\": \"testprojekt1\",\n  \"urn\": \"di999g022k0\",\n  \"author\": \"Test Tator\",\n  \"year\": 2025,\n  \"title\": \"Die Inschriften von Testates\",\n  \"images\": {\n    \"creator\": \"Tina Toner\",\n    \"source\": \"Bildarchiv\",\n    \"rights\": \"Tackademie\",\n    \"usageterms\": \"CC BY 4.0\",\n    \"credit\": \"Tacka\",\n    \"marked\": \"True\"\n  }\n}",
+                        "norm_data": "",
                         "norm_iri": "bookiri",
                         "database": "projects"
                     },
@@ -844,7 +870,7 @@
         {
             "id": 71,
             "deleted": 0,
-            "created": "2022-06-18T10:37:47+02:00",
+            "created": "2022-06-18T12:37:47+02:00",
             "modified_by": 2,
             "created_by": 1,
             "root_id": 3,
@@ -859,7 +885,7 @@
         {
             "id": 166,
             "deleted": 0,
-            "created": "2025-03-27T09:46:28+01:00",
+            "created": "2025-03-27T11:46:28+01:00",
             "modified_by": 2,
             "created_by": 2,
             "root_id": 3,
@@ -874,7 +900,7 @@
             "property": {
                 "id": 11,
                 "deleted": 0,
-                "created": "2021-06-12T14:12:52+02:00",
+                "created": "2021-06-12T16:12:52+02:00",
                 "created_by": 1,
                 "modified_by": 2,
                 "sortno": 3,
@@ -892,13 +918,15 @@
                 "import_db": "Externe Unterautordatenbank",
                 "import_id": "EX DB UAut1",
                 "parent_id": 12,
-                "level": 2,
-                "lft": 3,
-                "rght": 4,
+                "level": 1,
+                "lft": 2,
+                "rght": 3,
                 "type": {
                     "id": 33,
                     "deleted": 0,
-                    "job_id": 67521,
+                    "job_id": 85633,
+                    "published": 0,
+                    "modified_by": 2,
                     "scope": "properties",
                     "mode": "default",
                     "preset": "default",
@@ -921,11 +949,15 @@
                                 "Fig.",
                                 "Figur",
                                 "fol.",
+                                "unpag.",
+                                "o. fol.",
                                 "Jg.",
                                 "Kap.",
-                                "Kap.",
+                                "Kapitel",
                                 "Kat.-Nr.",
                                 "Nr.",
+                                "p.",
+                                "o. P.",
                                 "S.",
                                 "Seite",
                                 "Sp.",
@@ -933,21 +965,31 @@
                                 "Taf.",
                                 "Tafel",
                                 "Tf.",
-                                "Teil"
+                                "Teil",
+                                "loses Blatt"
                             ]
                         },
                         "displayfield": "name",
                         "mergefield": "lemma",
+                        "used": "leaves",
                         "level": "2",
                         "sort": "sortkey",
                         "fields": {
                             "parent_id": "Obereintrag",
                             "ancestors": "Obereintrag",
-                            "lemma": "Langtitel",
-                            "name": "Kurztitel",
+                            "lemma": {
+                                "caption": "Langtitel",
+                                "required": true,
+                                "height": 4
+                            },
+                            "name": {
+                                "caption": "Kurztitel",
+                                "required": true
+                            },
                             "related_id": "Siehe",
                             "sortkey": {
                                 "caption": "Sortierschl\u00fcssel",
+                                "required": true,
                                 "autofill": {
                                     "source": "name",
                                     "process": [
@@ -956,9 +998,22 @@
                                 }
                             },
                             "ishidden": "Bezeichnung ausblenden",
-                            "iscategory": "Gruppierung",
+                            "iscategory": {
+                                "caption": "Gruppierung",
+                                "levels": {
+                                    "0": {
+                                        "value": true
+                                    },
+                                    "*": {
+                                        "value": false
+                                    }
+                                }
+                            },
                             "comment": "Bemerkung",
-                            "keywords": "Schl\u00fcsselw\u00f6rter",
+                            "keywords": {
+                                "caption": "Schl\u00fcsselw\u00f6rter",
+                                "searchfield": true
+                            },
                             "norm_data": "Normdaten",
                             "norm_iri": {
                                 "caption": "IRI-Fragment",
@@ -977,12 +1032,21 @@
                         "columns": {
                             "lemma": "Lemma",
                             "name": "Kurztitel",
+                            "iscategory": {
+                                "caption": "Kategorie",
+                                "default": true
+                            },
+                            "ishidden": {
+                                "caption": "Ausblenden",
+                                "default": true
+                            },
                             "sortkey": "Sortierschl\u00fcssel",
-                            "ishidden": "Bezeichnung ausblenden",
-                            "iscategory": "Gruppierung",
                             "comment": "Bemerkung",
                             "articles_count": "Artikel",
-                            "keywords": "Schl\u00fcsselw\u00f6rter",
+                            "keywords": {
+                                "caption": "Schl\u00fcsselw\u00f6rter",
+                                "default": true
+                            },
                             "norm_data": "Normdaten",
                             "norm_iri": "IRI-Fragment",
                             "created": {
@@ -1008,7 +1072,7 @@
                     {
                         "id": 12,
                         "deleted": 0,
-                        "created": "2021-06-12T14:12:52+02:00",
+                        "created": "2021-06-12T16:12:52+02:00",
                         "created_by": 1,
                         "modified_by": 1,
                         "sortno": 2,
@@ -1026,24 +1090,251 @@
                         "norm_data": "Autor 1 Normdaten",
                         "import_db": "Ext DB Aut 1",
                         "import_id": "ID EX DB Aut 1",
-                        "level": 1,
-                        "lft": 2,
-                        "rght": 7
+                        "level": 0,
+                        "lft": 1,
+                        "rght": 6
                     }
                 ]
             }
+        },
+        {
+            "id": 290,
+            "deleted": 0,
+            "created": "2025-10-30T16:49:45+01:00",
+            "modified_by": 6,
+            "created_by": 6,
+            "root_id": 3,
+            "root_tab": "articles",
+            "from_id": 363,
+            "from_tab": "items",
+            "from_field": "content",
+            "from_tagname": "bl",
+            "from_tagid": "7dc1866a71314120bdc4ad16c201134d",
+            "to_id": 676,
+            "to_tab": "properties",
+            "property": {
+                "id": 676,
+                "deleted": 0,
+                "created": "2025-10-24T15:36:43+02:00",
+                "created_by": 4,
+                "modified_by": 4,
+                "sortkey": "linksb\u00fcndig",
+                "propertytype": "alignments",
+                "lemma": "Linksb\u00fcndig",
+                "comment": "Umlaut im Sortierschl\u00fcssel",
+                "keywords": "",
+                "norm_data": "",
+                "norm_iri": "linksbundig-mit",
+                "level": 0,
+                "lft": 17,
+                "rght": 18,
+                "type": {
+                    "id": 5,
+                    "deleted": 0,
+                    "job_id": 84815,
+                    "scope": "properties",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "alignments",
+                    "sortno": 3,
+                    "category": "Markup",
+                    "caption": "Bereichsausrichtungen",
+                    "description": "",
+                    "config": {
+                        "displayfield": "lemma",
+                        "fields": {
+                            "lemma": {
+                                "caption": "Bezeichnung",
+                                "required": true,
+                                "default": true
+                            },
+                            "sortkey": {
+                                "caption": "Sortierschl\u00fcssel",
+                                "required": true,
+                                "autofill": {
+                                    "source": "lemma",
+                                    "process": [
+                                        "sortkey"
+                                    ]
+                                }
+                            },
+                            "comment": "Bemerkung",
+                            "norm_data": "Normdaten",
+                            "norm_iri": {
+                                "caption": "IRI-Fragment",
+                                "required": true,
+                                "pattern": "^di_[a-z_]+$"
+                            },
+                            "published": "Status",
+                            "created": "Erstellt",
+                            "created_by": "Erstellt von",
+                            "modified_by": "Bearbeitet von",
+                            "id": "ID"
+                        },
+                        "columns": {
+                            "lemma": "Bezeichnung",
+                            "sortkey": {
+                                "caption": "Sortierschl\u00fcssel",
+                                "default": true
+                            },
+                            "articles_count": "Artikel",
+                            "norm_data": "Normdaten",
+                            "norm_iri": "IRI-Fragment",
+                            "published": "Status",
+                            "created": {
+                                "default": false,
+                                "caption": "Angelegt"
+                            },
+                            "modifier_name": {
+                                "default": false,
+                                "key": "modifier.name",
+                                "caption": "Ver\u00e4ndert von"
+                            },
+                            "creator_name": {
+                                "default": false,
+                                "key": "creator.name",
+                                "caption": "Angelegt von"
+                            },
+                            "id": "ID"
+                        }
+                    },
+                    "norm_iri": "alignments"
+                },
+                "ancestors": []
+            }
+        },
+        {
+            "id": 292,
+            "deleted": 0,
+            "created": "2025-10-30T16:49:45+01:00",
+            "modified_by": 6,
+            "created_by": 6,
+            "root_id": 3,
+            "root_tab": "articles",
+            "from_id": 5378,
+            "from_tab": "items",
+            "from_field": "content",
+            "from_tagname": "bl",
+            "from_tagid": "b0193d087a8448db9a55e0b68e3cb71d",
+            "to_id": 676,
+            "to_tab": "properties",
+            "property": {
+                "id": 676,
+                "deleted": 0,
+                "created": "2025-10-24T15:36:43+02:00",
+                "created_by": 4,
+                "modified_by": 4,
+                "sortkey": "linksb\u00fcndig",
+                "propertytype": "alignments",
+                "lemma": "Linksb\u00fcndig",
+                "comment": "Umlaut im Sortierschl\u00fcssel",
+                "keywords": "",
+                "norm_data": "",
+                "norm_iri": "linksbundig-mit",
+                "level": 0,
+                "lft": 17,
+                "rght": 18,
+                "type": {
+                    "id": 5,
+                    "deleted": 0,
+                    "job_id": 84815,
+                    "scope": "properties",
+                    "mode": "default",
+                    "preset": "default",
+                    "name": "alignments",
+                    "sortno": 3,
+                    "category": "Markup",
+                    "caption": "Bereichsausrichtungen",
+                    "description": "",
+                    "config": {
+                        "displayfield": "lemma",
+                        "fields": {
+                            "lemma": {
+                                "caption": "Bezeichnung",
+                                "required": true,
+                                "default": true
+                            },
+                            "sortkey": {
+                                "caption": "Sortierschl\u00fcssel",
+                                "required": true,
+                                "autofill": {
+                                    "source": "lemma",
+                                    "process": [
+                                        "sortkey"
+                                    ]
+                                }
+                            },
+                            "comment": "Bemerkung",
+                            "norm_data": "Normdaten",
+                            "norm_iri": {
+                                "caption": "IRI-Fragment",
+                                "required": true,
+                                "pattern": "^di_[a-z_]+$"
+                            },
+                            "published": "Status",
+                            "created": "Erstellt",
+                            "created_by": "Erstellt von",
+                            "modified_by": "Bearbeitet von",
+                            "id": "ID"
+                        },
+                        "columns": {
+                            "lemma": "Bezeichnung",
+                            "sortkey": {
+                                "caption": "Sortierschl\u00fcssel",
+                                "default": true
+                            },
+                            "articles_count": "Artikel",
+                            "norm_data": "Normdaten",
+                            "norm_iri": "IRI-Fragment",
+                            "published": "Status",
+                            "created": {
+                                "default": false,
+                                "caption": "Angelegt"
+                            },
+                            "modifier_name": {
+                                "default": false,
+                                "key": "modifier.name",
+                                "caption": "Ver\u00e4ndert von"
+                            },
+                            "creator_name": {
+                                "default": false,
+                                "key": "creator.name",
+                                "caption": "Angelegt von"
+                            },
+                            "id": "ID"
+                        }
+                    },
+                    "norm_iri": "alignments"
+                },
+                "ancestors": []
+            }
+        },
+        {
+            "id": 438,
+            "deleted": 0,
+            "created": "2025-12-13T02:21:57+01:00",
+            "modified_by": 2,
+            "created_by": 2,
+            "root_id": 3,
+            "root_tab": "articles",
+            "from_id": 8197,
+            "from_tab": "items",
+            "from_field": "content",
+            "from_tagname": "bl",
+            "from_tagid": "59df8e6018a545ccdea53f8422929e8b",
+            "to_tab": ""
         }
     ],
     "footnotes": [
         {
             "id": 4,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
+            "created": "2022-06-18T12:33:18+02:00",
             "modified_by": 2,
             "created_by": 1,
             "fntype": true,
             "name": "1",
-            "content": "Verweis auf anderen Artikel: <rec_extern id=\"000004473043968245370370449713\" \/><nl \/>Verweis auf Fu\u00dfnote in anderem Artikel: <rec_extern id=\"000004473043911023148148167183\" \/><nl \/>Verweis auf Inschriftenteil in anderem Artikel: <rec_extern id=\"000004473043941553240740720340\" \/><nl \/>",
+            "content": "Verweis auf anderen Artikel: <rec_extern id=\"000004473043968245370370449713\" \/><nl \/>Verweis auf Fu\u00dfnote in anderem Artikel: <rec_extern id=\"000004473043911023148148167183\" \/><nl \/>Verweis auf Inschriftenteil in anderem Artikel: <rec_extern id=\"000004473043941553240740720340\" \/><nl \/>Weblink mit Bindestrichen: <a id=\"7cce804163634a0dee73356f7eca9dfb\" value=\"https:\/\/example.com\/asd12-34asd\" href=\"https:\/\/example.com\/asd12-34asd\" \/><nl \/>",
             "root_id": 3,
             "root_tab": "articles",
             "from_id": 369,
@@ -1058,7 +1349,7 @@
         {
             "id": 159,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
+            "created": "2022-06-18T12:33:18+02:00",
             "modified_by": 2,
             "created_by": 1,
             "sortno": 1,
@@ -1076,7 +1367,7 @@
             "type": {
                 "id": 142,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "scope": "sections",
                 "mode": "default",
                 "preset": "default",
@@ -1102,6 +1393,12 @@
                         {
                             "type": "outputoptions",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": "table"
@@ -1115,7 +1412,7 @@
                     "lft": 1,
                     "rght": 2,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
                     "sortno": 1,
                     "number": 1,
@@ -1128,14 +1425,14 @@
         {
             "id": 158,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:18+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 3,
+            "sortno": 2,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "signatures",
-            "number": 1,
+            "number": 2,
             "name": "Signaturen",
             "comment": "",
             "level": 1,
@@ -1145,7 +1442,7 @@
             "type": {
                 "id": 144,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1171,7 +1468,13 @@
                     "items": [
                         {
                             "type": "signatures",
-                            "count": "*"
+                            "count": "+"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": "table",
@@ -1193,10 +1496,10 @@
                     "lft": 3,
                     "rght": 4,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 3,
-                    "number": 1,
+                    "sortno": 2,
+                    "number": 2,
                     "sectiontype": "signatures",
                     "name": "Signaturen"
                 }
@@ -1206,14 +1509,14 @@
         {
             "id": 157,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
+            "created": "2022-06-18T12:33:18+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 5,
+            "sortno": 3,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "locations",
-            "number": 1,
+            "number": 3,
             "name": "Standorte",
             "comment": "",
             "level": 1,
@@ -1223,7 +1526,7 @@
             "type": {
                 "id": 138,
                 "deleted": 0,
-                "job_id": 64002,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1255,6 +1558,12 @@
                             "type": "geolocations",
                             "count": "*",
                             "display": true
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": {
@@ -1286,27 +1595,508 @@
                     "lft": 5,
                     "rght": 6,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 5,
-                    "number": 1,
+                    "sortno": 3,
+                    "number": 3,
                     "sectiontype": "locations",
                     "name": "Standorte"
                 }
             ],
-            "items": []
+            "items": [
+                {
+                    "id": 4859,
+                    "deleted": 0,
+                    "created": "2025-10-30T14:53:33+01:00",
+                    "created_by": 6,
+                    "modified_by": 6,
+                    "sortno": 1,
+                    "itemtype": "locations",
+                    "properties_id": 903,
+                    "value": "0",
+                    "content": "",
+                    "articles_id": 3,
+                    "sections_id": 157,
+                    "property": {
+                        "id": 903,
+                        "deleted": 0,
+                        "created": "2025-10-27T10:21:56+01:00",
+                        "created_by": 4,
+                        "modified_by": 4,
+                        "sortkey": "standort b00003",
+                        "propertytype": "locations",
+                        "lemma": "Standort B3",
+                        "name": "Standort B3",
+                        "comment": "",
+                        "content": "{\"lat\":\"\",\"lng\":\"\",\"radius\":\"\"}",
+                        "keywords": "",
+                        "norm_data": "",
+                        "norm_iri": "standort-b3",
+                        "parent_id": 15,
+                        "level": 1,
+                        "lft": 14,
+                        "rght": 15,
+                        "links": [],
+                        "type": {
+                            "id": 26,
+                            "deleted": 0,
+                            "job_id": 82573,
+                            "scope": "properties",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "locations",
+                            "sortno": 11,
+                            "category": "Entit\u00e4ten",
+                            "caption": "Standorte",
+                            "description": "1. Standorte",
+                            "config": {
+                                "role": "index",
+                                "export": {
+                                    "group": "initials",
+                                    "snr": "1",
+                                    "title": "Standorte"
+                                },
+                                "displayfield": "path",
+                                "sort": "sortkey",
+                                "level": "1",
+                                "used": "leaves",
+                                "fields": {
+                                    "parent_id": "Obereintrag",
+                                    "ancestors": "Obereintrag",
+                                    "lemma": {
+                                        "caption": "Lemma",
+                                        "required": true
+                                    },
+                                    "name": {
+                                        "caption": "Langform",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "path"
+                                            ]
+                                        }
+                                    },
+                                    "related_id": "Siehe",
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "sortkey"
+                                            ]
+                                        }
+                                    },
+                                    "comment": "Bemerkung",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "searchfield": true
+                                    },
+                                    "content": {
+                                        "caption": "Geokoordinaten",
+                                        "showcaption": false,
+                                        "format": "geodata",
+                                        "widgets": {
+                                            "map": true
+                                        },
+                                        "keys": {
+                                            "lat": "Latitude",
+                                            "lng": "Longitude",
+                                            "radius": "Radius"
+                                        },
+                                        "template": "list"
+                                    },
+                                    "published": "Ver\u00f6ffentlicht",
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "autofill": {
+                                            "source": "name",
+                                            "process": [
+                                                "irifragment"
+                                            ]
+                                        }
+                                    },
+                                    "created": "Erstellt",
+                                    "created_by": "Erstellt von",
+                                    "modified_by": "Bearbeitet von",
+                                    "id": "ID"
+                                },
+                                "columns": {
+                                    "lemma": "Lemma",
+                                    "sortkey": "Sortierschl\u00fcssel",
+                                    "articles_count": "Artikel",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "default": true
+                                    },
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": "IRI-Fragment",
+                                    "created": {
+                                        "default": false,
+                                        "caption": "Angelegt"
+                                    },
+                                    "modifier_name": {
+                                        "default": false,
+                                        "key": "modifier.name",
+                                        "caption": "Ver\u00e4ndert von"
+                                    },
+                                    "creator_name": {
+                                        "default": false,
+                                        "key": "creator.name",
+                                        "caption": "Angelegt von"
+                                    },
+                                    "id": "ID"
+                                },
+                                "namespaces": {
+                                    "geo": {
+                                        "baseurl": "https:\/\/sws.geonames.org\/"
+                                    },
+                                    "gnd": {
+                                        "baseurl": "https:\/\/d-nb.info\/gnd\/"
+                                    }
+                                }
+                            },
+                            "norm_iri": "locations"
+                        },
+                        "ancestors": [
+                            {
+                                "id": 15,
+                                "deleted": 0,
+                                "created": "2021-06-12T16:18:22+02:00",
+                                "created_by": 1,
+                                "modified_by": 1,
+                                "sortno": 7,
+                                "sortkey": "Standort B",
+                                "propertytype": "locations",
+                                "lemma": "Standort B",
+                                "name": "Standort B ",
+                                "unit": "Standort B Einheit",
+                                "comment": "Standort B Bemerk",
+                                "keywords": "Standort,Provenienz,Herkunft",
+                                "ishidden": 0,
+                                "iscategory": 0,
+                                "norm_data": "Standort B Norm",
+                                "import_db": "extern DB Standort B",
+                                "import_id": "Standort B ID ",
+                                "level": 0,
+                                "lft": 7,
+                                "rght": 16
+                            }
+                        ]
+                    },
+                    "type": {
+                        "id": 187,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "locations",
+                        "sortno": 4,
+                        "category": "Artikel (epi)",
+                        "caption": "Standorte",
+                        "description": "",
+                        "config": {
+                            "geodata": "property.content",
+                            "fields": {
+                                "sortno": "Nr",
+                                "property": {
+                                    "caption": "Standort",
+                                    "format": "property",
+                                    "types": "locations",
+                                    "manage": true
+                                },
+                                "content": {
+                                    "caption": "Erg\u00e4nzung",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "references",
+                                        "text",
+                                        "h",
+                                        "character"
+                                    ]
+                                },
+                                "value": {
+                                    "caption": "Letztbekannter Standort",
+                                    "format": "check"
+                                }
+                            }
+                        },
+                        "norm_iri": "locations"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 157,
+                            "articles_id": 3,
+                            "lft": 5,
+                            "rght": 6,
+                            "children": 0,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 3,
+                            "number": 3,
+                            "sectiontype": "locations",
+                            "name": "Standorte"
+                        }
+                    ]
+                },
+                {
+                    "id": 4861,
+                    "deleted": 0,
+                    "created": "2025-10-30T14:53:33+01:00",
+                    "created_by": 6,
+                    "modified_by": 6,
+                    "sortno": 2,
+                    "itemtype": "locations",
+                    "properties_id": 898,
+                    "value": "0",
+                    "content": "",
+                    "articles_id": 3,
+                    "sections_id": 157,
+                    "property": {
+                        "id": 898,
+                        "deleted": 0,
+                        "created": "2025-10-27T10:20:53+01:00",
+                        "created_by": 4,
+                        "modified_by": 4,
+                        "sortkey": "standort b00004",
+                        "propertytype": "locations",
+                        "lemma": "Standort B4",
+                        "name": "Standort B4",
+                        "comment": "",
+                        "content": "{\"lat\":\"\",\"lng\":\"\",\"radius\":\"\"}",
+                        "keywords": "",
+                        "norm_data": "",
+                        "norm_iri": "standort-b4",
+                        "parent_id": 15,
+                        "level": 1,
+                        "lft": 12,
+                        "rght": 13,
+                        "links": [],
+                        "type": {
+                            "id": 26,
+                            "deleted": 0,
+                            "job_id": 82573,
+                            "scope": "properties",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "locations",
+                            "sortno": 11,
+                            "category": "Entit\u00e4ten",
+                            "caption": "Standorte",
+                            "description": "1. Standorte",
+                            "config": {
+                                "role": "index",
+                                "export": {
+                                    "group": "initials",
+                                    "snr": "1",
+                                    "title": "Standorte"
+                                },
+                                "displayfield": "path",
+                                "sort": "sortkey",
+                                "level": "1",
+                                "used": "leaves",
+                                "fields": {
+                                    "parent_id": "Obereintrag",
+                                    "ancestors": "Obereintrag",
+                                    "lemma": {
+                                        "caption": "Lemma",
+                                        "required": true
+                                    },
+                                    "name": {
+                                        "caption": "Langform",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "path"
+                                            ]
+                                        }
+                                    },
+                                    "related_id": "Siehe",
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "sortkey"
+                                            ]
+                                        }
+                                    },
+                                    "comment": "Bemerkung",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "searchfield": true
+                                    },
+                                    "content": {
+                                        "caption": "Geokoordinaten",
+                                        "showcaption": false,
+                                        "format": "geodata",
+                                        "widgets": {
+                                            "map": true
+                                        },
+                                        "keys": {
+                                            "lat": "Latitude",
+                                            "lng": "Longitude",
+                                            "radius": "Radius"
+                                        },
+                                        "template": "list"
+                                    },
+                                    "published": "Ver\u00f6ffentlicht",
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "autofill": {
+                                            "source": "name",
+                                            "process": [
+                                                "irifragment"
+                                            ]
+                                        }
+                                    },
+                                    "created": "Erstellt",
+                                    "created_by": "Erstellt von",
+                                    "modified_by": "Bearbeitet von",
+                                    "id": "ID"
+                                },
+                                "columns": {
+                                    "lemma": "Lemma",
+                                    "sortkey": "Sortierschl\u00fcssel",
+                                    "articles_count": "Artikel",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "default": true
+                                    },
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": "IRI-Fragment",
+                                    "created": {
+                                        "default": false,
+                                        "caption": "Angelegt"
+                                    },
+                                    "modifier_name": {
+                                        "default": false,
+                                        "key": "modifier.name",
+                                        "caption": "Ver\u00e4ndert von"
+                                    },
+                                    "creator_name": {
+                                        "default": false,
+                                        "key": "creator.name",
+                                        "caption": "Angelegt von"
+                                    },
+                                    "id": "ID"
+                                },
+                                "namespaces": {
+                                    "geo": {
+                                        "baseurl": "https:\/\/sws.geonames.org\/"
+                                    },
+                                    "gnd": {
+                                        "baseurl": "https:\/\/d-nb.info\/gnd\/"
+                                    }
+                                }
+                            },
+                            "norm_iri": "locations"
+                        },
+                        "ancestors": [
+                            {
+                                "id": 15,
+                                "deleted": 0,
+                                "created": "2021-06-12T16:18:22+02:00",
+                                "created_by": 1,
+                                "modified_by": 1,
+                                "sortno": 7,
+                                "sortkey": "Standort B",
+                                "propertytype": "locations",
+                                "lemma": "Standort B",
+                                "name": "Standort B ",
+                                "unit": "Standort B Einheit",
+                                "comment": "Standort B Bemerk",
+                                "keywords": "Standort,Provenienz,Herkunft",
+                                "ishidden": 0,
+                                "iscategory": 0,
+                                "norm_data": "Standort B Norm",
+                                "import_db": "extern DB Standort B",
+                                "import_id": "Standort B ID ",
+                                "level": 0,
+                                "lft": 7,
+                                "rght": 16
+                            }
+                        ]
+                    },
+                    "type": {
+                        "id": 187,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "locations",
+                        "sortno": 4,
+                        "category": "Artikel (epi)",
+                        "caption": "Standorte",
+                        "description": "",
+                        "config": {
+                            "geodata": "property.content",
+                            "fields": {
+                                "sortno": "Nr",
+                                "property": {
+                                    "caption": "Standort",
+                                    "format": "property",
+                                    "types": "locations",
+                                    "manage": true
+                                },
+                                "content": {
+                                    "caption": "Erg\u00e4nzung",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "references",
+                                        "text",
+                                        "h",
+                                        "character"
+                                    ]
+                                },
+                                "value": {
+                                    "caption": "Letztbekannter Standort",
+                                    "format": "check"
+                                }
+                            }
+                        },
+                        "norm_iri": "locations"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 157,
+                            "articles_id": 3,
+                            "lft": 5,
+                            "rght": 6,
+                            "children": 0,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 3,
+                            "number": 3,
+                            "sectiontype": "locations",
+                            "name": "Standorte"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": 156,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:18+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 7,
+            "sortno": 4,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "references",
-            "number": 1,
+            "number": 4,
             "name": "Nachweise",
             "comment": "",
             "level": 1,
@@ -1316,7 +2106,7 @@
             "type": {
                 "id": 143,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1343,6 +2133,12 @@
                         {
                             "type": "literature",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "default": false,
+                            "display": false
                         }
                     ],
                     "view": "table"
@@ -1356,10 +2152,10 @@
                     "lft": 7,
                     "rght": 8,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 7,
-                    "number": 1,
+                    "sortno": 4,
+                    "number": 4,
                     "sectiontype": "references",
                     "name": "Nachweise"
                 }
@@ -1369,14 +2165,14 @@
         {
             "id": 155,
             "deleted": 0,
-            "created": "2022-06-18T10:33:18+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:18+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 9,
+            "sortno": 5,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "conditions",
-            "number": 1,
+            "number": 5,
             "name": "Beschaffenheit",
             "comment": "",
             "level": 1,
@@ -1386,7 +2182,7 @@
             "type": {
                 "id": 131,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1411,9 +2207,18 @@
                     },
                     "items": [
                         "conditions",
-                        "dates"
+                        {
+                            "type": "dates",
+                            "count": "?"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
+                        }
                     ],
-                    "view": "table"
+                    "view": "stack"
                 },
                 "norm_iri": "conditions"
             },
@@ -1424,10 +2229,10 @@
                     "lft": 9,
                     "rght": 10,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 9,
-                    "number": 1,
+                    "sortno": 5,
+                    "number": 5,
                     "sectiontype": "conditions",
                     "name": "Beschaffenheit"
                 }
@@ -1437,14 +2242,14 @@
         {
             "id": 154,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:17+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 11,
+            "sortno": 6,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "materials",
-            "number": 1,
+            "number": 6,
             "name": "Material",
             "comment": "",
             "level": 1,
@@ -1454,7 +2259,7 @@
             "type": {
                 "id": 139,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1481,6 +2286,12 @@
                         {
                             "type": "materials",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": "table"
@@ -1494,10 +2305,10 @@
                     "lft": 11,
                     "rght": 12,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 11,
-                    "number": 1,
+                    "sortno": 6,
+                    "number": 6,
                     "sectiontype": "materials",
                     "name": "Material"
                 }
@@ -1507,14 +2318,14 @@
         {
             "id": 153,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:17+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 13,
+            "sortno": 7,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "objecttypes",
-            "number": 1,
+            "number": 7,
             "name": "Inschriftentr\u00e4ger",
             "comment": "",
             "level": 1,
@@ -1524,7 +2335,7 @@
             "type": {
                 "id": 141,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1550,7 +2361,13 @@
                     "items": [
                         {
                             "type": "objecttypes",
-                            "count": "*"
+                            "count": "+"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": "table"
@@ -1564,10 +2381,10 @@
                     "lft": 13,
                     "rght": 14,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 13,
-                    "number": 1,
+                    "sortno": 7,
+                    "number": 7,
                     "sectiontype": "objecttypes",
                     "name": "Inschriftentr\u00e4ger"
                 }
@@ -1577,14 +2394,14 @@
         {
             "id": 152,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
+            "created": "2022-06-18T12:33:17+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 15,
+            "sortno": 8,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "measures",
-            "number": 1,
+            "number": 8,
             "name": "Ma\u00dfangaben",
             "comment": "",
             "level": 1,
@@ -1594,7 +2411,7 @@
             "type": {
                 "id": 140,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1621,6 +2438,12 @@
                         {
                             "type": "measures",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": "table"
@@ -1634,27 +2457,238 @@
                     "lft": 15,
                     "rght": 16,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 15,
-                    "number": 1,
+                    "sortno": 8,
+                    "number": 8,
                     "sectiontype": "measures",
                     "name": "Ma\u00dfangaben"
                 }
             ],
-            "items": []
+            "items": [
+                {
+                    "id": 1230,
+                    "deleted": 0,
+                    "created": "2025-08-14T16:28:03+02:00",
+                    "created_by": 2,
+                    "modified_by": 2,
+                    "sortno": 1,
+                    "itemtype": "measures",
+                    "properties_id": 42,
+                    "value": "12",
+                    "content": "",
+                    "file_name": "",
+                    "file_path": "",
+                    "articles_id": 3,
+                    "sections_id": 152,
+                    "property": {
+                        "id": 42,
+                        "deleted": 0,
+                        "created": "2021-06-13T18:27:22+02:00",
+                        "created_by": 1,
+                        "modified_by": 2,
+                        "sortno": 1,
+                        "sortkey": "hoehe",
+                        "propertytype": "measures",
+                        "lemma": "H\u00f6he",
+                        "name": "H.",
+                        "unit": "m",
+                        "comment": "H\u00f6he in Metern",
+                        "keywords": "Meter,Kilometer,Hektoliter",
+                        "ishidden": 0,
+                        "iscategory": 0,
+                        "norm_data": "wd:Q208826",
+                        "norm_iri": "hoehe",
+                        "import_db": "Ex DB Ma\u00df 1",
+                        "import_id": "Ma\u00df 1 ID",
+                        "level": 0,
+                        "lft": 1,
+                        "rght": 6,
+                        "links": [],
+                        "type": {
+                            "id": 2,
+                            "deleted": 0,
+                            "job_id": 84836,
+                            "published": 0,
+                            "modified_by": 8,
+                            "scope": "properties",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "measures",
+                            "sortno": 2,
+                            "category": "Vokabulare",
+                            "caption": "Abmessungen",
+                            "description": "",
+                            "config": {
+                                "role": "structure",
+                                "displayfield": "lemma",
+                                "sort": "sortkey",
+                                "fields": {
+                                    "lemma": {
+                                        "caption": "Bezeichnung",
+                                        "required": true,
+                                        "pattern": "^[A-Z][a-z\u00e4\u00f6\u00fc\u00df]+$"
+                                    },
+                                    "name": {
+                                        "caption": "Abk\u00fcrzung",
+                                        "required": true,
+                                        "pattern": "^[A-Z][a-z\u00e4\u00f6\u00fc\u00df]+$"
+                                    },
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "required": true,
+                                        "pattern": "^[0-9]{2}$"
+                                    },
+                                    "unit": "Einheit",
+                                    "ishidden": {
+                                        "caption": "Im Export ausblenden"
+                                    },
+                                    "comment": "Bemerkung",
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "required": true,
+                                        "pattern": "^[a-z]+$"
+                                    },
+                                    "published": "Status",
+                                    "created": "Erstellt",
+                                    "created_by": "Erstellt von",
+                                    "modified_by": "Bearbeitet von",
+                                    "id": "ID"
+                                },
+                                "columns": {
+                                    "lemma": {
+                                        "caption": "Bezeichnung",
+                                        "default": true
+                                    },
+                                    "name": {
+                                        "caption": "Abk\u00fcrzung",
+                                        "default": true
+                                    },
+                                    "unit": {
+                                        "caption": "Einheit",
+                                        "default": true
+                                    },
+                                    "ishidden": {
+                                        "caption": "Im Export ausblenden",
+                                        "default": true
+                                    },
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "default": true
+                                    },
+                                    "comment": "Bemerkung",
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "default": true
+                                    },
+                                    "articles_count": "Artikel",
+                                    "published": {
+                                        "caption": "Status",
+                                        "default": true
+                                    },
+                                    "created": {
+                                        "default": false,
+                                        "caption": "Angelegt"
+                                    },
+                                    "modifier_name": {
+                                        "default": false,
+                                        "key": "modifier.name",
+                                        "caption": "Ver\u00e4ndert von"
+                                    },
+                                    "creator_name": {
+                                        "default": false,
+                                        "key": "creator.name",
+                                        "caption": "Angelegt von"
+                                    },
+                                    "id": "ID"
+                                }
+                            },
+                            "norm_iri": "measures"
+                        },
+                        "ancestors": []
+                    },
+                    "type": {
+                        "id": 164,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "measures",
+                        "sortno": 6,
+                        "category": "Artikel (epi)",
+                        "caption": "Abmessungen",
+                        "description": "",
+                        "config": {
+                            "fields": {
+                                "sortno": {
+                                    "caption": "Nr",
+                                    "required": "true"
+                                },
+                                "property": {
+                                    "caption": "Ma\u00dfangabe",
+                                    "format": "property",
+                                    "types": "measures",
+                                    "required": "true",
+                                    "manage": true
+                                },
+                                "value": {
+                                    "caption": "Wert",
+                                    "required": "true",
+                                    "format": "xml"
+                                },
+                                "unit": {
+                                    "caption": "Einheit",
+                                    "format": "unit"
+                                },
+                                "content": {
+                                    "caption": "Erg\u00e4nzung",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "references",
+                                        "text",
+                                        "h",
+                                        "character"
+                                    ]
+                                }
+                            }
+                        },
+                        "norm_iri": "measures"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 152,
+                            "articles_id": 3,
+                            "lft": 15,
+                            "rght": 16,
+                            "children": 0,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 8,
+                            "number": 8,
+                            "sectiontype": "measures",
+                            "name": "Ma\u00dfangaben"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": 151,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:17+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 17,
+            "sortno": 9,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "heraldry",
-            "number": 1,
+            "number": 9,
             "name": "Wappen",
             "comment": "",
             "level": 1,
@@ -1664,7 +2698,7 @@
             "type": {
                 "id": 132,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "scope": "sections",
                 "mode": "default",
                 "preset": "default",
@@ -1691,6 +2725,12 @@
                             "type": "heraldry",
                             "count": "*",
                             "default": false
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": {
@@ -1715,10 +2755,10 @@
                     "lft": 17,
                     "rght": 18,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 17,
-                    "number": 1,
+                    "sortno": 9,
+                    "number": 9,
                     "sectiontype": "heraldry",
                     "name": "Wappen"
                 }
@@ -1728,14 +2768,14 @@
         {
             "id": 150,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:17+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 19,
+            "sortno": 10,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "brands",
-            "number": 1,
+            "number": 10,
             "name": "Marken",
             "comment": "",
             "level": 1,
@@ -1745,7 +2785,7 @@
             "type": {
                 "id": 130,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80393,
                 "scope": "sections",
                 "mode": "default",
                 "preset": "default",
@@ -1771,6 +2811,12 @@
                         {
                             "type": "brands",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "display": false,
+                            "count": "?",
+                            "default": false
                         }
                     ],
                     "view": {
@@ -1798,10 +2844,10 @@
                     "lft": 19,
                     "rght": 20,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 19,
-                    "number": 1,
+                    "sortno": 10,
+                    "number": 10,
                     "sectiontype": "brands",
                     "name": "Marken"
                 }
@@ -1811,14 +2857,14 @@
         {
             "id": 149,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:17+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 21,
+            "sortno": 11,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "images",
-            "number": 1,
+            "number": 11,
             "name": "Abbildungen",
             "comment": "",
             "status": 0,
@@ -1829,7 +2875,7 @@
             "type": {
                 "id": 133,
                 "deleted": 0,
-                "job_id": 64244,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1856,6 +2902,12 @@
                         {
                             "type": "images",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": {
@@ -1882,10 +2934,10 @@
                     "lft": 21,
                     "rght": 22,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 21,
-                    "number": 1,
+                    "sortno": 11,
+                    "number": 11,
                     "sectiontype": "images",
                     "name": "Abbildungen"
                 }
@@ -1895,14 +2947,14 @@
         {
             "id": 148,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
-            "modified_by": 2,
+            "created": "2022-06-18T12:33:17+02:00",
+            "modified_by": 6,
             "created_by": 1,
-            "sortno": 23,
+            "sortno": 12,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "index",
-            "number": 1,
+            "number": 12,
             "name": "Register",
             "comment": "",
             "status": 0,
@@ -1913,7 +2965,7 @@
             "type": {
                 "id": 134,
                 "deleted": 0,
-                "job_id": 68871,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -1972,6 +3024,12 @@
                         {
                             "type": "terms",
                             "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "?",
+                            "display": false,
+                            "default": false
                         }
                     ],
                     "view": {
@@ -1988,10 +3046,10 @@
                     "lft": 23,
                     "rght": 24,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 23,
-                    "number": 1,
+                    "sortno": 12,
+                    "number": 12,
                     "sectiontype": "index",
                     "name": "Register"
                 }
@@ -2001,14 +3059,14 @@
         {
             "id": 147,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
+            "created": "2022-06-18T12:33:17+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 25,
+            "sortno": 13,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "text",
-            "number": 1,
+            "number": 13,
             "name": "Beschreibung",
             "alias": "",
             "comment": "",
@@ -2020,7 +3078,7 @@
             "type": {
                 "id": 146,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80778,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2035,6 +3093,7 @@
                         "name": {
                             "caption": "Bezeichnung",
                             "edit": true,
+                            "required": true,
                             "options": "captions"
                         },
                         "alias": {
@@ -2043,6 +3102,7 @@
                         },
                         "published": "Ver\u00f6ffentlicht",
                         "comment": {
+                            "fulltext": "Notes",
                             "types": [
                                 "links",
                                 "transcription",
@@ -2056,13 +3116,18 @@
                         "text",
                         {
                             "type": "search",
+                            "count": "*",
                             "display": false,
                             "default": false
                         }
                     ],
                     "sections": [
-                        "text"
+                        {
+                            "type": "text",
+                            "count": "*"
+                        }
                     ],
+                    "fulltext": true,
                     "view": "stack"
                 },
                 "norm_iri": "text"
@@ -2074,10 +3139,10 @@
                     "lft": 25,
                     "rght": 26,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 25,
-                    "number": 1,
+                    "sortno": 13,
+                    "number": 13,
                     "sectiontype": "text",
                     "name": "Beschreibung",
                     "alias": ""
@@ -2087,7 +3152,7 @@
                 {
                     "id": 369,
                     "deleted": 0,
-                    "created": "2022-06-18T10:33:17+02:00",
+                    "created": "2022-06-18T12:33:17+02:00",
                     "created_by": 1,
                     "modified_by": 2,
                     "itemtype": "text",
@@ -2099,9 +3164,9 @@
                     "type": {
                         "id": 204,
                         "deleted": 0,
-                        "job_id": 66763,
+                        "job_id": 80017,
                         "published": 1,
-                        "created": "2022-01-15T22:40:26+01:00",
+                        "created": "2022-01-16T00:40:26+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2122,7 +3187,8 @@
                                 "content": {
                                     "caption": "Inhalt",
                                     "showcaption": false,
-                                    "fulltext": "text",
+                                    "fulltext": "Inhalt",
+                                    "required": false,
                                     "format": "xml",
                                     "height": 10,
                                     "types": [
@@ -2147,10 +3213,10 @@
                             "lft": 25,
                             "rght": 26,
                             "children": 0,
-                            "siblings": 15,
+                            "siblings": 16,
                             "level": 1,
-                            "sortno": 25,
-                            "number": 1,
+                            "sortno": 13,
+                            "number": 13,
                             "sectiontype": "text",
                             "name": "Beschreibung",
                             "alias": ""
@@ -2162,14 +3228,14 @@
         {
             "id": 146,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
+            "created": "2022-06-18T12:33:17+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 27,
+            "sortno": 14,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "text",
-            "number": 2,
+            "number": 14,
             "name": "Kommentar",
             "alias": "",
             "comment": "",
@@ -2180,7 +3246,7 @@
             "type": {
                 "id": 146,
                 "deleted": 0,
-                "job_id": 61777,
+                "job_id": 80778,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2195,6 +3261,7 @@
                         "name": {
                             "caption": "Bezeichnung",
                             "edit": true,
+                            "required": true,
                             "options": "captions"
                         },
                         "alias": {
@@ -2203,6 +3270,7 @@
                         },
                         "published": "Ver\u00f6ffentlicht",
                         "comment": {
+                            "fulltext": "Notes",
                             "types": [
                                 "links",
                                 "transcription",
@@ -2216,13 +3284,18 @@
                         "text",
                         {
                             "type": "search",
+                            "count": "*",
                             "display": false,
                             "default": false
                         }
                     ],
                     "sections": [
-                        "text"
+                        {
+                            "type": "text",
+                            "count": "*"
+                        }
                     ],
+                    "fulltext": true,
                     "view": "stack"
                 },
                 "norm_iri": "text"
@@ -2234,10 +3307,10 @@
                     "lft": 27,
                     "rght": 28,
                     "children": 0,
-                    "siblings": 15,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 27,
-                    "number": 2,
+                    "sortno": 14,
+                    "number": 14,
                     "sectiontype": "text",
                     "name": "Kommentar",
                     "alias": ""
@@ -2247,7 +3320,7 @@
                 {
                     "id": 367,
                     "deleted": 0,
-                    "created": "2022-06-18T10:33:17+02:00",
+                    "created": "2022-06-18T12:33:17+02:00",
                     "created_by": 1,
                     "modified_by": 2,
                     "itemtype": "text",
@@ -2259,9 +3332,9 @@
                     "type": {
                         "id": 204,
                         "deleted": 0,
-                        "job_id": 66763,
+                        "job_id": 80017,
                         "published": 1,
-                        "created": "2022-01-15T22:40:26+01:00",
+                        "created": "2022-01-16T00:40:26+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2282,7 +3355,8 @@
                                 "content": {
                                     "caption": "Inhalt",
                                     "showcaption": false,
-                                    "fulltext": "text",
+                                    "fulltext": "Inhalt",
+                                    "required": false,
                                     "format": "xml",
                                     "height": 10,
                                     "types": [
@@ -2307,10 +3381,10 @@
                             "lft": 27,
                             "rght": 28,
                             "children": 0,
-                            "siblings": 15,
+                            "siblings": 16,
                             "level": 1,
-                            "sortno": 27,
-                            "number": 2,
+                            "sortno": 14,
+                            "number": 14,
                             "sectiontype": "text",
                             "name": "Kommentar",
                             "alias": ""
@@ -2322,10 +3396,10 @@
         {
             "id": 145,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
+            "created": "2022-06-18T12:33:17+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 29,
+            "sortno": 15,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "inscription",
@@ -2336,12 +3410,12 @@
             "status": 0,
             "level": 1,
             "lft": 29,
-            "rght": 34,
+            "rght": 38,
             "articles_id": 3,
             "type": {
                 "id": 135,
                 "deleted": 0,
-                "job_id": 68758,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2421,7 +3495,10 @@
                         }
                     ],
                     "sections": [
-                        "inscriptionpart"
+                        {
+                            "type": "inscriptionpart",
+                            "count": "+"
+                        }
                     ],
                     "name": {
                         "prefix": "Inschrift ",
@@ -2468,26 +3545,256 @@
                     "id": 145,
                     "articles_id": 3,
                     "lft": 29,
-                    "rght": 34,
-                    "children": 1,
-                    "siblings": 15,
+                    "rght": 38,
+                    "children": 2,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 29,
+                    "sortno": 15,
                     "number": 1,
                     "sectiontype": "inscription",
                     "name": "A",
                     "alias": ""
                 }
             ],
-            "items": []
+            "items": [
+                {
+                    "id": 5369,
+                    "deleted": 0,
+                    "created": "2025-10-30T16:49:45+01:00",
+                    "created_by": 6,
+                    "modified_by": 6,
+                    "sortno": 1,
+                    "itemtype": "fonttypes",
+                    "properties_id": 1452,
+                    "content": "",
+                    "articles_id": 3,
+                    "sections_id": 145,
+                    "property": {
+                        "id": 1452,
+                        "deleted": 0,
+                        "created": "2025-10-30T16:45:35+01:00",
+                        "created_by": 6,
+                        "modified_by": 6,
+                        "sortkey": "mit versal",
+                        "propertytype": "fonttypes",
+                        "lemma": "mit Versal",
+                        "name": "mit Versal",
+                        "comment": "",
+                        "keywords": "",
+                        "norm_data": "",
+                        "norm_iri": "mit-versal",
+                        "parent_id": 1293,
+                        "level": 2,
+                        "lft": 25,
+                        "rght": 28,
+                        "links": [],
+                        "type": {
+                            "id": 16,
+                            "deleted": 0,
+                            "job_id": 82573,
+                            "scope": "properties",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "fonttypes",
+                            "sortno": 13,
+                            "category": "Vokabulare",
+                            "caption": "Schriftarten",
+                            "description": "9a. Schriftarten",
+                            "config": {
+                                "role": "index",
+                                "export": {
+                                    "group": "initials",
+                                    "snr": "9",
+                                    "title": "Schriftarten"
+                                },
+                                "displayfield": "path",
+                                "level": "1",
+                                "sort": "sortkey",
+                                "fields": {
+                                    "parent_id": "Obereintrag",
+                                    "ancestors": "Obereintrag",
+                                    "lemma": {
+                                        "caption": "Lemma",
+                                        "required": true
+                                    },
+                                    "name": {
+                                        "caption": "Langform",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "path",
+                                            "process": [
+                                                "path"
+                                            ]
+                                        }
+                                    },
+                                    "related_id": "Siehe",
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "sortkey"
+                                            ]
+                                        }
+                                    },
+                                    "comment": "Bemerkung",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "searchfield": true
+                                    },
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "autofill": {
+                                            "source": "name",
+                                            "process": [
+                                                "irifragment"
+                                            ]
+                                        }
+                                    },
+                                    "created": "Erstellt",
+                                    "created_by": "Erstellt von",
+                                    "modified_by": "Bearbeitet von",
+                                    "id": "ID"
+                                },
+                                "columns": {
+                                    "lemma": "Lemma",
+                                    "sortkey": "Sortierschl\u00fcssel",
+                                    "articles_count": "Artikel",
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": "IRI-Fragment",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "default": true
+                                    },
+                                    "created": {
+                                        "default": false,
+                                        "caption": "Angelegt"
+                                    },
+                                    "modifier_name": {
+                                        "default": false,
+                                        "key": "modifier.name",
+                                        "caption": "Ver\u00e4ndert von"
+                                    },
+                                    "creator_name": {
+                                        "default": false,
+                                        "key": "creator.name",
+                                        "caption": "Angelegt von"
+                                    },
+                                    "id": "ID"
+                                }
+                            },
+                            "norm_iri": "fonttypes"
+                        },
+                        "ancestors": [
+                            {
+                                "id": 1293,
+                                "deleted": 0,
+                                "created": "2025-10-28T10:10:45+01:00",
+                                "created_by": 4,
+                                "modified_by": 4,
+                                "sortkey": "lampesche majuskel",
+                                "propertytype": "fonttypes",
+                                "lemma": "lampesche Majuskel",
+                                "name": "lampesche Majuskel",
+                                "comment": "",
+                                "keywords": "",
+                                "norm_data": "",
+                                "norm_iri": "lampesche-majuskel",
+                                "parent_id": 1280,
+                                "level": 1,
+                                "lft": 24,
+                                "rght": 33
+                            },
+                            {
+                                "id": 1280,
+                                "deleted": 0,
+                                "created": "2025-10-28T10:08:54+01:00",
+                                "created_by": 4,
+                                "modified_by": 4,
+                                "sortkey": "majuskel",
+                                "propertytype": "fonttypes",
+                                "lemma": "Majuskel",
+                                "name": "Majuskel",
+                                "comment": "",
+                                "keywords": "",
+                                "norm_data": "",
+                                "norm_iri": "majuskel",
+                                "level": 0,
+                                "lft": 17,
+                                "rght": 36
+                            }
+                        ]
+                    },
+                    "type": {
+                        "id": 177,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "fonttypes",
+                        "sortno": 11,
+                        "category": "Artikel (epi)",
+                        "caption": "Schriftarten",
+                        "description": "",
+                        "config": {
+                            "fields": {
+                                "sortno": {
+                                    "caption": "Nr",
+                                    "required": true
+                                },
+                                "property": {
+                                    "caption": "Wert",
+                                    "format": "property",
+                                    "types": "fonttypes",
+                                    "required": true,
+                                    "manage": true
+                                },
+                                "content": {
+                                    "caption": "Erg\u00e4nzung",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "references",
+                                        "text",
+                                        "h",
+                                        "character"
+                                    ]
+                                }
+                            }
+                        },
+                        "norm_iri": "fonttypes"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 145,
+                            "articles_id": 3,
+                            "lft": 29,
+                            "rght": 38,
+                            "children": 2,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 15,
+                            "number": 1,
+                            "sectiontype": "inscription",
+                            "name": "A",
+                            "alias": ""
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": 144,
             "deleted": 0,
-            "created": "2022-06-18T10:33:17+02:00",
+            "created": "2022-06-18T12:33:17+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 30,
+            "sortno": 16,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "inscriptionpart",
@@ -2504,7 +3811,7 @@
             "type": {
                 "id": 136,
                 "deleted": 0,
-                "job_id": 68758,
+                "job_id": 80393,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2528,10 +3835,19 @@
                         }
                     },
                     "items": [
-                        "lost"
+                        "lost",
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
                     ],
                     "sections": [
-                        "inscriptiontext"
+                        {
+                            "type": "inscriptiontext",
+                            "count": "+"
+                        }
                     ],
                     "name": {
                         "prefix": "Teil ",
@@ -2549,11 +3865,11 @@
                     "id": 145,
                     "articles_id": 3,
                     "lft": 29,
-                    "rght": 34,
-                    "children": 1,
-                    "siblings": 15,
+                    "rght": 38,
+                    "children": 2,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 29,
+                    "sortno": 15,
                     "number": 1,
                     "sectiontype": "inscription",
                     "name": "A",
@@ -2566,9 +3882,9 @@
                     "lft": 30,
                     "rght": 33,
                     "children": 1,
-                    "siblings": 1,
+                    "siblings": 2,
                     "level": 2,
-                    "sortno": 30,
+                    "sortno": 16,
                     "number": 1,
                     "sectiontype": "inscriptionpart",
                     "name": "1",
@@ -2579,7 +3895,7 @@
                 {
                     "id": 365,
                     "deleted": 0,
-                    "created": "2022-06-18T10:33:17+02:00",
+                    "created": "2022-06-18T12:33:17+02:00",
                     "created_by": 1,
                     "modified_by": 2,
                     "itemtype": "lost",
@@ -2591,9 +3907,9 @@
                     "type": {
                         "id": 202,
                         "deleted": 0,
-                        "job_id": 66763,
+                        "job_id": 79807,
                         "published": 1,
-                        "created": "2022-01-15T22:36:06+01:00",
+                        "created": "2022-01-16T00:36:06+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2606,7 +3922,8 @@
                             "fields": {
                                 "value": {
                                     "caption": "Original verloren",
-                                    "format": "check"
+                                    "format": "check",
+                                    "required": true
                                 }
                             }
                         },
@@ -2617,11 +3934,11 @@
                             "id": 145,
                             "articles_id": 3,
                             "lft": 29,
-                            "rght": 34,
-                            "children": 1,
-                            "siblings": 15,
+                            "rght": 38,
+                            "children": 2,
+                            "siblings": 16,
                             "level": 1,
-                            "sortno": 29,
+                            "sortno": 15,
                             "number": 1,
                             "sectiontype": "inscription",
                             "name": "A",
@@ -2634,9 +3951,9 @@
                             "lft": 30,
                             "rght": 33,
                             "children": 1,
-                            "siblings": 1,
+                            "siblings": 2,
                             "level": 2,
-                            "sortno": 30,
+                            "sortno": 16,
                             "number": 1,
                             "sectiontype": "inscriptionpart",
                             "name": "1",
@@ -2649,10 +3966,10 @@
         {
             "id": 143,
             "deleted": 0,
-            "created": "2022-06-18T10:33:16+02:00",
+            "created": "2022-06-18T12:33:16+02:00",
             "modified_by": 2,
             "created_by": 1,
-            "sortno": 31,
+            "sortno": 17,
             "layout_cols": 0,
             "layout_rows": 0,
             "sectiontype": "inscriptiontext",
@@ -2669,7 +3986,7 @@
             "type": {
                 "id": 137,
                 "deleted": 0,
-                "job_id": 68758,
+                "job_id": 80778,
                 "published": 1,
                 "scope": "sections",
                 "mode": "default",
@@ -2694,7 +4011,13 @@
                         }
                     },
                     "items": [
-                        "transcriptions"
+                        "transcriptions",
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
                     ],
                     "name": {
                         "prefix": "Bearbeitung ",
@@ -2728,11 +4051,11 @@
                     "id": 145,
                     "articles_id": 3,
                     "lft": 29,
-                    "rght": 34,
-                    "children": 1,
-                    "siblings": 15,
+                    "rght": 38,
+                    "children": 2,
+                    "siblings": 16,
                     "level": 1,
-                    "sortno": 29,
+                    "sortno": 15,
                     "number": 1,
                     "sectiontype": "inscription",
                     "name": "A",
@@ -2745,9 +4068,9 @@
                     "lft": 30,
                     "rght": 33,
                     "children": 1,
-                    "siblings": 1,
+                    "siblings": 2,
                     "level": 2,
-                    "sortno": 30,
+                    "sortno": 16,
                     "number": 1,
                     "sectiontype": "inscriptionpart",
                     "name": "1",
@@ -2762,7 +4085,7 @@
                     "children": 0,
                     "siblings": 1,
                     "level": 3,
-                    "sortno": 31,
+                    "sortno": 17,
                     "number": 1,
                     "sectiontype": "inscriptiontext",
                     "name": "1",
@@ -2773,11 +4096,11 @@
                 {
                     "id": 363,
                     "deleted": 0,
-                    "created": "2022-06-18T10:33:17+02:00",
+                    "created": "2022-06-18T12:33:17+02:00",
                     "created_by": 1,
                     "modified_by": 2,
                     "itemtype": "transcriptions",
-                    "content": "",
+                    "content": "<bl id=\"7dc1866a71314120bdc4ad16c201134d\">Text in lampescher Majuskel mit Versal<\/bl>",
                     "translation": "",
                     "file_name": "",
                     "file_path": "",
@@ -2791,9 +4114,9 @@
                     "type": {
                         "id": 201,
                         "deleted": 0,
-                        "job_id": 66763,
+                        "job_id": 80316,
                         "published": 1,
-                        "created": "2022-01-15T22:34:54+01:00",
+                        "created": "2022-01-16T00:34:54+01:00",
                         "scope": "items",
                         "mode": "default",
                         "preset": "default",
@@ -2807,22 +4130,19 @@
                             "fields": {
                                 "content": {
                                     "caption": "Transkription",
-                                    "fulltext": "transcription",
+                                    "fulltext": "Transkription",
                                     "format": "xml",
                                     "height": 10,
+                                    "required": true,
                                     "types": [
-                                        "app1",
-                                        "app2",
-                                        "links",
-                                        "transcription",
-                                        "references",
+                                        "bl",
                                         "nl",
                                         "character"
                                     ]
                                 },
                                 "translation": {
                                     "caption": "\u00dcbersetzung",
-                                    "fulltext": "translation",
+                                    "fulltext": "\u00dcbersetzung",
                                     "format": "xml",
                                     "height": 10,
                                     "types": [
@@ -2830,6 +4150,7 @@
                                         "app2",
                                         "links",
                                         "transcription",
+                                        "text",
                                         "references",
                                         "character"
                                     ]
@@ -2840,9 +4161,12 @@
                                     "format": "date"
                                 },
                                 "date_add": {
-                                    "caption": "Erg\u00e4nzung zur Datierung",
+                                    "caption": "Grundlage der Datierung",
                                     "group": "date",
-                                    "format": "text"
+                                    "format": "xml",
+                                    "types": [
+                                        "rec_lit"
+                                    ]
                                 },
                                 "source_from": {
                                     "caption": "Quelle",
@@ -2873,6 +4197,7 @@
                                 "source_autopsy": {
                                     "caption": "Autopsie",
                                     "group": "source",
+                                    "required": true,
                                     "format": "check"
                                 }
                             }
@@ -2884,11 +4209,11 @@
                             "id": 145,
                             "articles_id": 3,
                             "lft": 29,
-                            "rght": 34,
-                            "children": 1,
-                            "siblings": 15,
+                            "rght": 38,
+                            "children": 2,
+                            "siblings": 16,
                             "level": 1,
-                            "sortno": 29,
+                            "sortno": 15,
                             "number": 1,
                             "sectiontype": "inscription",
                             "name": "A",
@@ -2901,9 +4226,9 @@
                             "lft": 30,
                             "rght": 33,
                             "children": 1,
-                            "siblings": 1,
+                            "siblings": 2,
                             "level": 2,
-                            "sortno": 30,
+                            "sortno": 16,
                             "number": 1,
                             "sectiontype": "inscriptionpart",
                             "name": "1",
@@ -2918,11 +4243,1556 @@
                             "children": 0,
                             "siblings": 1,
                             "level": 3,
-                            "sortno": 31,
+                            "sortno": 17,
                             "number": 1,
                             "sectiontype": "inscriptiontext",
                             "name": "1",
                             "alias": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2352,
+            "deleted": 0,
+            "created": "2025-10-30T16:49:45+01:00",
+            "modified_by": 2,
+            "created_by": 6,
+            "sortno": 18,
+            "layout_cols": 0,
+            "layout_rows": 0,
+            "sectiontype": "inscriptionpart",
+            "number": 2,
+            "name": "2",
+            "comment": "",
+            "parent_id": 145,
+            "level": 2,
+            "lft": 34,
+            "rght": 37,
+            "articles_id": 3,
+            "type": {
+                "id": 136,
+                "deleted": 0,
+                "job_id": 80393,
+                "published": 1,
+                "scope": "sections",
+                "mode": "default",
+                "preset": "default",
+                "name": "inscriptionpart",
+                "sortno": 8,
+                "category": "Artikel (epi)",
+                "caption": "Inschriftenteil",
+                "description": "",
+                "config": {
+                    "fields": {
+                        "published": "Ver\u00f6ffentlicht",
+                        "comment": {
+                            "types": [
+                                "links",
+                                "transcription",
+                                "references",
+                                "text",
+                                "character"
+                            ]
+                        }
+                    },
+                    "items": [
+                        "lost",
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
+                    ],
+                    "sections": [
+                        {
+                            "type": "inscriptiontext",
+                            "count": "+"
+                        }
+                    ],
+                    "name": {
+                        "prefix": "Teil ",
+                        "number": "numeric",
+                        "path": true,
+                        "scoped": true
+                    },
+                    "showpath": true,
+                    "view": "stack"
+                },
+                "norm_iri": "inscriptionpart"
+            },
+            "path": [
+                {
+                    "id": 145,
+                    "articles_id": 3,
+                    "lft": 29,
+                    "rght": 38,
+                    "children": 2,
+                    "siblings": 16,
+                    "level": 1,
+                    "sortno": 15,
+                    "number": 1,
+                    "sectiontype": "inscription",
+                    "name": "A",
+                    "alias": ""
+                },
+                {
+                    "id": 2352,
+                    "parent_id": 145,
+                    "articles_id": 3,
+                    "lft": 34,
+                    "rght": 37,
+                    "children": 1,
+                    "siblings": 2,
+                    "level": 2,
+                    "sortno": 18,
+                    "number": 2,
+                    "sectiontype": "inscriptionpart",
+                    "name": "2"
+                }
+            ],
+            "items": [
+                {
+                    "id": 5376,
+                    "deleted": 0,
+                    "created": "2025-10-30T16:49:45+01:00",
+                    "created_by": 6,
+                    "modified_by": 6,
+                    "itemtype": "lost",
+                    "value": "0",
+                    "articles_id": 3,
+                    "sections_id": 2352,
+                    "type": {
+                        "id": 202,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "created": "2022-01-16T00:36:06+01:00",
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "lost",
+                        "sortno": 20,
+                        "category": "Artikel (epi)",
+                        "caption": "Original verloren",
+                        "description": "",
+                        "config": {
+                            "fields": {
+                                "value": {
+                                    "caption": "Original verloren",
+                                    "format": "check",
+                                    "required": true
+                                }
+                            }
+                        },
+                        "norm_iri": "lost"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 145,
+                            "articles_id": 3,
+                            "lft": 29,
+                            "rght": 38,
+                            "children": 2,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 15,
+                            "number": 1,
+                            "sectiontype": "inscription",
+                            "name": "A",
+                            "alias": ""
+                        },
+                        {
+                            "id": 2352,
+                            "parent_id": 145,
+                            "articles_id": 3,
+                            "lft": 34,
+                            "rght": 37,
+                            "children": 1,
+                            "siblings": 2,
+                            "level": 2,
+                            "sortno": 18,
+                            "number": 2,
+                            "sectiontype": "inscriptionpart",
+                            "name": "2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2354,
+            "deleted": 0,
+            "created": "2025-10-30T16:49:45+01:00",
+            "modified_by": 2,
+            "created_by": 6,
+            "sortno": 19,
+            "layout_cols": 0,
+            "layout_rows": 0,
+            "sectiontype": "inscriptiontext",
+            "number": 1,
+            "name": "1",
+            "comment": "",
+            "parent_id": 2352,
+            "level": 3,
+            "lft": 35,
+            "rght": 36,
+            "articles_id": 3,
+            "type": {
+                "id": 137,
+                "deleted": 0,
+                "job_id": 80778,
+                "published": 1,
+                "scope": "sections",
+                "mode": "default",
+                "preset": "default",
+                "name": "inscriptiontext",
+                "sortno": 9,
+                "category": "Artikel (epi)",
+                "caption": "Inschriftenbearbeitung",
+                "description": "",
+                "config": {
+                    "help": "usecases-di-toolbar",
+                    "fields": {
+                        "published": "Ver\u00f6ffentlicht",
+                        "comment": {
+                            "types": [
+                                "links",
+                                "transcription",
+                                "references",
+                                "text",
+                                "character"
+                            ]
+                        }
+                    },
+                    "items": [
+                        "transcriptions",
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
+                    ],
+                    "name": {
+                        "prefix": "Bearbeitung ",
+                        "number": "numeric",
+                        "path": true,
+                        "scoped": true
+                    },
+                    "showpath": true,
+                    "view": "stack",
+                    "display": "highlight",
+                    "triples": {
+                        "namespaces": {
+                            "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                            "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                            "schema": "https:\/\/schema.org\/"
+                        },
+                        "templates": [
+                            {
+                                "comment": "An inscription has text",
+                                "subject": "epi:{parent.parent.iri}#",
+                                "predicate": "schema:text",
+                                "object": "{items.*[itemtype=transcriptions].content}"
+                            }
+                        ]
+                    }
+                },
+                "norm_iri": "inscriptiontext"
+            },
+            "path": [
+                {
+                    "id": 145,
+                    "articles_id": 3,
+                    "lft": 29,
+                    "rght": 38,
+                    "children": 2,
+                    "siblings": 16,
+                    "level": 1,
+                    "sortno": 15,
+                    "number": 1,
+                    "sectiontype": "inscription",
+                    "name": "A",
+                    "alias": ""
+                },
+                {
+                    "id": 2352,
+                    "parent_id": 145,
+                    "articles_id": 3,
+                    "lft": 34,
+                    "rght": 37,
+                    "children": 1,
+                    "siblings": 2,
+                    "level": 2,
+                    "sortno": 18,
+                    "number": 2,
+                    "sectiontype": "inscriptionpart",
+                    "name": "2"
+                },
+                {
+                    "id": 2354,
+                    "parent_id": 2352,
+                    "articles_id": 3,
+                    "lft": 35,
+                    "rght": 36,
+                    "children": 0,
+                    "siblings": 1,
+                    "level": 3,
+                    "sortno": 19,
+                    "number": 1,
+                    "sectiontype": "inscriptiontext",
+                    "name": "1"
+                }
+            ],
+            "items": [
+                {
+                    "id": 5378,
+                    "deleted": 0,
+                    "created": "2025-10-30T16:49:45+01:00",
+                    "created_by": 6,
+                    "modified_by": 2,
+                    "itemtype": "transcriptions",
+                    "content": "<bl id=\"b0193d087a8448db9a55e0b68e3cb71d\">Text in lampescher Majuskel mit Versalien<\/bl>",
+                    "translation": "",
+                    "date_value": "",
+                    "date_add": "",
+                    "source_autopsy": false,
+                    "source_from": "",
+                    "source_addition": "",
+                    "articles_id": 3,
+                    "sections_id": 2354,
+                    "type": {
+                        "id": 201,
+                        "deleted": 0,
+                        "job_id": 80316,
+                        "published": 1,
+                        "created": "2022-01-16T00:34:54+01:00",
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "transcriptions",
+                        "sortno": 21,
+                        "category": "Artikel (epi)",
+                        "caption": "Transkription",
+                        "description": "",
+                        "config": {
+                            "fulltext": true,
+                            "fields": {
+                                "content": {
+                                    "caption": "Transkription",
+                                    "fulltext": "Transkription",
+                                    "format": "xml",
+                                    "height": 10,
+                                    "required": true,
+                                    "types": [
+                                        "bl",
+                                        "nl",
+                                        "character"
+                                    ]
+                                },
+                                "translation": {
+                                    "caption": "\u00dcbersetzung",
+                                    "fulltext": "\u00dcbersetzung",
+                                    "format": "xml",
+                                    "height": 10,
+                                    "types": [
+                                        "app1",
+                                        "app2",
+                                        "links",
+                                        "transcription",
+                                        "text",
+                                        "references",
+                                        "character"
+                                    ]
+                                },
+                                "date": {
+                                    "caption": "Datierung",
+                                    "group": "date",
+                                    "format": "date"
+                                },
+                                "date_add": {
+                                    "caption": "Grundlage der Datierung",
+                                    "group": "date",
+                                    "format": "xml",
+                                    "types": [
+                                        "rec_lit"
+                                    ]
+                                },
+                                "source_from": {
+                                    "caption": "Quelle",
+                                    "group": "source",
+                                    "format": "xml",
+                                    "types": [
+                                        "references",
+                                        "links",
+                                        "text",
+                                        "app2",
+                                        "h",
+                                        "character"
+                                    ]
+                                },
+                                "source_addition": {
+                                    "caption": "Erg\u00e4nzungen nach",
+                                    "group": "source",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "text",
+                                        "h",
+                                        "references",
+                                        "character"
+                                    ]
+                                },
+                                "source_autopsy": {
+                                    "caption": "Autopsie",
+                                    "group": "source",
+                                    "required": true,
+                                    "format": "check"
+                                }
+                            }
+                        },
+                        "norm_iri": "transcriptions"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 145,
+                            "articles_id": 3,
+                            "lft": 29,
+                            "rght": 38,
+                            "children": 2,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 15,
+                            "number": 1,
+                            "sectiontype": "inscription",
+                            "name": "A",
+                            "alias": ""
+                        },
+                        {
+                            "id": 2352,
+                            "parent_id": 145,
+                            "articles_id": 3,
+                            "lft": 34,
+                            "rght": 37,
+                            "children": 1,
+                            "siblings": 2,
+                            "level": 2,
+                            "sortno": 18,
+                            "number": 2,
+                            "sectiontype": "inscriptionpart",
+                            "name": "2"
+                        },
+                        {
+                            "id": 2354,
+                            "parent_id": 2352,
+                            "articles_id": 3,
+                            "lft": 35,
+                            "rght": 36,
+                            "children": 0,
+                            "siblings": 1,
+                            "level": 3,
+                            "sortno": 19,
+                            "number": 1,
+                            "sectiontype": "inscriptiontext",
+                            "name": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4070,
+            "deleted": 0,
+            "created": "2025-12-13T02:21:57+01:00",
+            "modified_by": 2,
+            "created_by": 2,
+            "sortno": 20,
+            "layout_cols": 0,
+            "layout_rows": 0,
+            "sectiontype": "inscription",
+            "number": 2,
+            "name": "B",
+            "comment": "",
+            "level": 1,
+            "lft": 39,
+            "rght": 44,
+            "articles_id": 3,
+            "type": {
+                "id": 135,
+                "deleted": 0,
+                "job_id": 80393,
+                "published": 1,
+                "scope": "sections",
+                "mode": "default",
+                "preset": "default",
+                "name": "inscription",
+                "sortno": 7,
+                "category": "Artikel (epi)",
+                "caption": "Inschrift",
+                "description": "",
+                "config": {
+                    "fields": {
+                        "published": "Ver\u00f6ffentlicht",
+                        "comment": {
+                            "types": [
+                                "links",
+                                "transcription",
+                                "references",
+                                "text",
+                                "character"
+                            ]
+                        }
+                    },
+                    "items": [
+                        {
+                            "type": "epithets",
+                            "count": "*"
+                        },
+                        {
+                            "type": "roles",
+                            "count": "*"
+                        },
+                        {
+                            "type": "fontheights",
+                            "count": "*"
+                        },
+                        {
+                            "type": "fonttypes",
+                            "count": "*"
+                        },
+                        {
+                            "type": "formulas",
+                            "count": "*"
+                        },
+                        {
+                            "type": "incipits",
+                            "count": "*"
+                        },
+                        {
+                            "type": "initials",
+                            "count": "*"
+                        },
+                        {
+                            "type": "sources",
+                            "count": "*"
+                        },
+                        {
+                            "type": "techniques",
+                            "count": "*"
+                        },
+                        {
+                            "type": "texttypes",
+                            "count": "*"
+                        },
+                        {
+                            "type": "languages",
+                            "count": "*"
+                        },
+                        {
+                            "type": "metres",
+                            "count": "*"
+                        },
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
+                    ],
+                    "sections": [
+                        {
+                            "type": "inscriptionpart",
+                            "count": "+"
+                        }
+                    ],
+                    "name": {
+                        "prefix": "Inschrift ",
+                        "number": "alphabetic",
+                        "scoped": true
+                    },
+                    "view": {
+                        "name": "table",
+                        "grouped": true,
+                        "collapsed": true
+                    },
+                    "triples": {
+                        "namespaces": {
+                            "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                            "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                            "schema": "https:\/\/schema.org\/"
+                        },
+                        "templates": [
+                            {
+                                "comment": "The inscription is an inscription.",
+                                "subject": "epi:{iri}#",
+                                "predicate": "rdf:type",
+                                "object": "crm:E34_Inscription"
+                            },
+                            {
+                                "comment": "An inscription uses one or several languages.",
+                                "subject": "epi:{iri}#",
+                                "predicate": "schema:inLanguage",
+                                "object": "{items.*[itemtype=languages].property.path}"
+                            },
+                            {
+                                "comment": "An inscription uses a font.",
+                                "subject": "epi:{iri}#",
+                                "predicate": "schema:pattern",
+                                "object": "{items.*[itemtype=fonttypes].property.path}"
+                            }
+                        ]
+                    }
+                },
+                "norm_iri": "inscription"
+            },
+            "path": [
+                {
+                    "id": 4070,
+                    "articles_id": 3,
+                    "lft": 39,
+                    "rght": 44,
+                    "children": 1,
+                    "siblings": 16,
+                    "level": 1,
+                    "sortno": 20,
+                    "number": 2,
+                    "sectiontype": "inscription",
+                    "name": "B"
+                }
+            ],
+            "items": [
+                {
+                    "id": 9065,
+                    "deleted": 0,
+                    "created": "2025-12-18T11:33:45+01:00",
+                    "created_by": 2,
+                    "modified_by": 2,
+                    "sortno": 1,
+                    "itemtype": "fonttypes",
+                    "properties_id": 1666,
+                    "content": "",
+                    "articles_id": 3,
+                    "sections_id": 4070,
+                    "property": {
+                        "id": 1666,
+                        "deleted": 0,
+                        "created": "2025-12-18T11:32:48+01:00",
+                        "created_by": 2,
+                        "modified_by": 2,
+                        "sortkey": "(00019. jh)",
+                        "propertytype": "fonttypes",
+                        "lemma": "(19. Jh)",
+                        "name": "(19. Jh)",
+                        "comment": "",
+                        "keywords": "",
+                        "norm_data": "",
+                        "norm_iri": "19-jh",
+                        "parent_id": 1455,
+                        "level": 3,
+                        "lft": 30,
+                        "rght": 31,
+                        "links": [],
+                        "type": {
+                            "id": 16,
+                            "deleted": 0,
+                            "job_id": 82573,
+                            "scope": "properties",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "fonttypes",
+                            "sortno": 13,
+                            "category": "Vokabulare",
+                            "caption": "Schriftarten",
+                            "description": "9a. Schriftarten",
+                            "config": {
+                                "role": "index",
+                                "export": {
+                                    "group": "initials",
+                                    "snr": "9",
+                                    "title": "Schriftarten"
+                                },
+                                "displayfield": "path",
+                                "level": "1",
+                                "sort": "sortkey",
+                                "fields": {
+                                    "parent_id": "Obereintrag",
+                                    "ancestors": "Obereintrag",
+                                    "lemma": {
+                                        "caption": "Lemma",
+                                        "required": true
+                                    },
+                                    "name": {
+                                        "caption": "Langform",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "path",
+                                            "process": [
+                                                "path"
+                                            ]
+                                        }
+                                    },
+                                    "related_id": "Siehe",
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "sortkey"
+                                            ]
+                                        }
+                                    },
+                                    "comment": "Bemerkung",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "searchfield": true
+                                    },
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "autofill": {
+                                            "source": "name",
+                                            "process": [
+                                                "irifragment"
+                                            ]
+                                        }
+                                    },
+                                    "created": "Erstellt",
+                                    "created_by": "Erstellt von",
+                                    "modified_by": "Bearbeitet von",
+                                    "id": "ID"
+                                },
+                                "columns": {
+                                    "lemma": "Lemma",
+                                    "sortkey": "Sortierschl\u00fcssel",
+                                    "articles_count": "Artikel",
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": "IRI-Fragment",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "default": true
+                                    },
+                                    "created": {
+                                        "default": false,
+                                        "caption": "Angelegt"
+                                    },
+                                    "modifier_name": {
+                                        "default": false,
+                                        "key": "modifier.name",
+                                        "caption": "Ver\u00e4ndert von"
+                                    },
+                                    "creator_name": {
+                                        "default": false,
+                                        "key": "creator.name",
+                                        "caption": "Angelegt von"
+                                    },
+                                    "id": "ID"
+                                }
+                            },
+                            "norm_iri": "fonttypes"
+                        },
+                        "ancestors": [
+                            {
+                                "id": 1455,
+                                "deleted": 0,
+                                "created": "2025-10-30T16:45:44+01:00",
+                                "created_by": 6,
+                                "modified_by": 6,
+                                "sortkey": "mit versalien",
+                                "propertytype": "fonttypes",
+                                "lemma": "mit Versalien",
+                                "name": "mit Versalien",
+                                "comment": "",
+                                "keywords": "",
+                                "norm_data": "",
+                                "norm_iri": "mit-versalien",
+                                "parent_id": 1293,
+                                "level": 2,
+                                "lft": 29,
+                                "rght": 32
+                            },
+                            {
+                                "id": 1293,
+                                "deleted": 0,
+                                "created": "2025-10-28T10:10:45+01:00",
+                                "created_by": 4,
+                                "modified_by": 4,
+                                "sortkey": "lampesche majuskel",
+                                "propertytype": "fonttypes",
+                                "lemma": "lampesche Majuskel",
+                                "name": "lampesche Majuskel",
+                                "comment": "",
+                                "keywords": "",
+                                "norm_data": "",
+                                "norm_iri": "lampesche-majuskel",
+                                "parent_id": 1280,
+                                "level": 1,
+                                "lft": 24,
+                                "rght": 33
+                            },
+                            {
+                                "id": 1280,
+                                "deleted": 0,
+                                "created": "2025-10-28T10:08:54+01:00",
+                                "created_by": 4,
+                                "modified_by": 4,
+                                "sortkey": "majuskel",
+                                "propertytype": "fonttypes",
+                                "lemma": "Majuskel",
+                                "name": "Majuskel",
+                                "comment": "",
+                                "keywords": "",
+                                "norm_data": "",
+                                "norm_iri": "majuskel",
+                                "level": 0,
+                                "lft": 17,
+                                "rght": 36
+                            }
+                        ]
+                    },
+                    "type": {
+                        "id": 177,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "fonttypes",
+                        "sortno": 11,
+                        "category": "Artikel (epi)",
+                        "caption": "Schriftarten",
+                        "description": "",
+                        "config": {
+                            "fields": {
+                                "sortno": {
+                                    "caption": "Nr",
+                                    "required": true
+                                },
+                                "property": {
+                                    "caption": "Wert",
+                                    "format": "property",
+                                    "types": "fonttypes",
+                                    "required": true,
+                                    "manage": true
+                                },
+                                "content": {
+                                    "caption": "Erg\u00e4nzung",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "references",
+                                        "text",
+                                        "h",
+                                        "character"
+                                    ]
+                                }
+                            }
+                        },
+                        "norm_iri": "fonttypes"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 4070,
+                            "articles_id": 3,
+                            "lft": 39,
+                            "rght": 44,
+                            "children": 1,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 20,
+                            "number": 2,
+                            "sectiontype": "inscription",
+                            "name": "B"
+                        }
+                    ]
+                },
+                {
+                    "id": 8193,
+                    "deleted": 0,
+                    "created": "2025-12-13T02:21:57+01:00",
+                    "created_by": 2,
+                    "modified_by": 2,
+                    "sortno": 2,
+                    "itemtype": "sources",
+                    "properties_id": 1578,
+                    "content": "",
+                    "articles_id": 3,
+                    "sections_id": 4070,
+                    "property": {
+                        "id": 1578,
+                        "deleted": 0,
+                        "created": "2025-12-13T02:14:50+01:00",
+                        "created_by": 2,
+                        "modified_by": 2,
+                        "sortkey": "ave maria",
+                        "propertytype": "sources",
+                        "lemma": "Ave Maria",
+                        "name": "Ave Maria",
+                        "comment": "",
+                        "keywords": "",
+                        "ishidden": 0,
+                        "iscategory": 0,
+                        "norm_data": "",
+                        "norm_iri": "ave-maria",
+                        "parent_id": 1576,
+                        "level": 1,
+                        "lft": 42,
+                        "rght": 45,
+                        "links": [],
+                        "type": {
+                            "id": 20,
+                            "deleted": 0,
+                            "job_id": 82573,
+                            "scope": "properties",
+                            "mode": "default",
+                            "preset": "default",
+                            "name": "sources",
+                            "sortno": 13,
+                            "category": "Entit\u00e4ten",
+                            "caption": "Zitate",
+                            "description": "7b. Nachweise von Zitaten und Paraphrasen",
+                            "config": {
+                                "role": "index",
+                                "export": {
+                                    "group": false,
+                                    "snr": "7b",
+                                    "title": "Nachweise von Zitaten und Paraphrasen"
+                                },
+                                "displayfield": "path",
+                                "level": "1",
+                                "used": "leaves",
+                                "fields": {
+                                    "parent_id": "Obereintrag",
+                                    "ancestors": "Obereintrag",
+                                    "lemma": {
+                                        "caption": "Lemma",
+                                        "required": true,
+                                        "levels": {
+                                            "0": {
+                                                "pattern": "^[A-Z"
+                                            },
+                                            "*": []
+                                        }
+                                    },
+                                    "name": {
+                                        "caption": "Langform",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "path"
+                                            ]
+                                        }
+                                    },
+                                    "related_id": "Siehe",
+                                    "sortkey": {
+                                        "caption": "Sortierschl\u00fcssel",
+                                        "required": true,
+                                        "autofill": {
+                                            "source": "lemma",
+                                            "process": [
+                                                "sortkey"
+                                            ]
+                                        }
+                                    },
+                                    "ishidden": "Bezeichnung ausblenden",
+                                    "iscategory": {
+                                        "caption": "Gruppierung",
+                                        "levels": {
+                                            "0": {
+                                                "value": true
+                                            },
+                                            "*": []
+                                        }
+                                    },
+                                    "comment": "Bemerkung",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "searchfield": true
+                                    },
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": {
+                                        "caption": "IRI-Fragment",
+                                        "autofill": {
+                                            "source": "name",
+                                            "process": [
+                                                "irifragment"
+                                            ]
+                                        }
+                                    },
+                                    "created": "Erstellt",
+                                    "created_by": "Erstellt von",
+                                    "modified_by": "Bearbeitet von",
+                                    "id": "ID"
+                                },
+                                "columns": {
+                                    "lemma": "Lemma",
+                                    "iscategory": {
+                                        "caption": "Kategorie",
+                                        "default": true
+                                    },
+                                    "ishidden": {
+                                        "caption": "Ausblenden",
+                                        "default": true
+                                    },
+                                    "sortkey": "Sortierschl\u00fcssel",
+                                    "articles_count": "Artikel",
+                                    "keywords": {
+                                        "caption": "Schl\u00fcsselw\u00f6rter",
+                                        "default": true
+                                    },
+                                    "norm_data": "Normdaten",
+                                    "norm_iri": "IRI-Fragment",
+                                    "created": {
+                                        "default": false,
+                                        "caption": "Angelegt"
+                                    },
+                                    "modifier_name": {
+                                        "default": false,
+                                        "key": "modifier.name",
+                                        "caption": "Ver\u00e4ndert von"
+                                    },
+                                    "creator_name": {
+                                        "default": false,
+                                        "key": "creator.name",
+                                        "caption": "Angelegt von"
+                                    },
+                                    "id": "ID"
+                                }
+                            },
+                            "norm_iri": "sources"
+                        },
+                        "ancestors": [
+                            {
+                                "id": 1576,
+                                "deleted": 0,
+                                "created": "2025-12-13T02:14:40+01:00",
+                                "created_by": 2,
+                                "modified_by": 2,
+                                "sortkey": "religi\u00f6se texte",
+                                "propertytype": "sources",
+                                "lemma": "Religi\u00f6se Texte",
+                                "name": "Religi\u00f6se Texte",
+                                "comment": "",
+                                "keywords": "",
+                                "ishidden": 0,
+                                "iscategory": 1,
+                                "norm_data": "",
+                                "norm_iri": "religioese-texte",
+                                "level": 0,
+                                "lft": 41,
+                                "rght": 46
+                            }
+                        ]
+                    },
+                    "type": {
+                        "id": 181,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "sources",
+                        "sortno": 17,
+                        "category": "Artikel (epi)",
+                        "caption": "Zitate",
+                        "description": "",
+                        "config": {
+                            "fields": {
+                                "sortno": {
+                                    "caption": "Nr",
+                                    "required": true
+                                },
+                                "property": {
+                                    "caption": "Wert",
+                                    "format": "property",
+                                    "types": "sources",
+                                    "required": true,
+                                    "manage": true
+                                },
+                                "content": {
+                                    "caption": "Erg\u00e4nzung",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "references",
+                                        "text",
+                                        "h",
+                                        "character"
+                                    ]
+                                }
+                            }
+                        },
+                        "norm_iri": "sources"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 4070,
+                            "articles_id": 3,
+                            "lft": 39,
+                            "rght": 44,
+                            "children": 1,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 20,
+                            "number": 2,
+                            "sectiontype": "inscription",
+                            "name": "B"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4072,
+            "deleted": 0,
+            "created": "2025-12-13T02:21:57+01:00",
+            "modified_by": 2,
+            "created_by": 2,
+            "sortno": 21,
+            "layout_cols": 0,
+            "layout_rows": 0,
+            "sectiontype": "inscriptionpart",
+            "number": 1,
+            "name": "1",
+            "comment": "",
+            "parent_id": 4070,
+            "level": 2,
+            "lft": 40,
+            "rght": 43,
+            "articles_id": 3,
+            "type": {
+                "id": 136,
+                "deleted": 0,
+                "job_id": 80393,
+                "published": 1,
+                "scope": "sections",
+                "mode": "default",
+                "preset": "default",
+                "name": "inscriptionpart",
+                "sortno": 8,
+                "category": "Artikel (epi)",
+                "caption": "Inschriftenteil",
+                "description": "",
+                "config": {
+                    "fields": {
+                        "published": "Ver\u00f6ffentlicht",
+                        "comment": {
+                            "types": [
+                                "links",
+                                "transcription",
+                                "references",
+                                "text",
+                                "character"
+                            ]
+                        }
+                    },
+                    "items": [
+                        "lost",
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
+                    ],
+                    "sections": [
+                        {
+                            "type": "inscriptiontext",
+                            "count": "+"
+                        }
+                    ],
+                    "name": {
+                        "prefix": "Teil ",
+                        "number": "numeric",
+                        "path": true,
+                        "scoped": true
+                    },
+                    "showpath": true,
+                    "view": "stack"
+                },
+                "norm_iri": "inscriptionpart"
+            },
+            "path": [
+                {
+                    "id": 4070,
+                    "articles_id": 3,
+                    "lft": 39,
+                    "rght": 44,
+                    "children": 1,
+                    "siblings": 16,
+                    "level": 1,
+                    "sortno": 20,
+                    "number": 2,
+                    "sectiontype": "inscription",
+                    "name": "B"
+                },
+                {
+                    "id": 4072,
+                    "parent_id": 4070,
+                    "articles_id": 3,
+                    "lft": 40,
+                    "rght": 43,
+                    "children": 1,
+                    "siblings": 1,
+                    "level": 2,
+                    "sortno": 21,
+                    "number": 1,
+                    "sectiontype": "inscriptionpart",
+                    "name": "1"
+                }
+            ],
+            "items": [
+                {
+                    "id": 8195,
+                    "deleted": 0,
+                    "created": "2025-12-13T02:21:57+01:00",
+                    "created_by": 2,
+                    "modified_by": 2,
+                    "itemtype": "lost",
+                    "value": "0",
+                    "articles_id": 3,
+                    "sections_id": 4072,
+                    "type": {
+                        "id": 202,
+                        "deleted": 0,
+                        "job_id": 79807,
+                        "published": 1,
+                        "created": "2022-01-16T00:36:06+01:00",
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "lost",
+                        "sortno": 20,
+                        "category": "Artikel (epi)",
+                        "caption": "Original verloren",
+                        "description": "",
+                        "config": {
+                            "fields": {
+                                "value": {
+                                    "caption": "Original verloren",
+                                    "format": "check",
+                                    "required": true
+                                }
+                            }
+                        },
+                        "norm_iri": "lost"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 4070,
+                            "articles_id": 3,
+                            "lft": 39,
+                            "rght": 44,
+                            "children": 1,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 20,
+                            "number": 2,
+                            "sectiontype": "inscription",
+                            "name": "B"
+                        },
+                        {
+                            "id": 4072,
+                            "parent_id": 4070,
+                            "articles_id": 3,
+                            "lft": 40,
+                            "rght": 43,
+                            "children": 1,
+                            "siblings": 1,
+                            "level": 2,
+                            "sortno": 21,
+                            "number": 1,
+                            "sectiontype": "inscriptionpart",
+                            "name": "1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4074,
+            "deleted": 0,
+            "created": "2025-12-13T02:21:57+01:00",
+            "modified_by": 2,
+            "created_by": 2,
+            "sortno": 22,
+            "layout_cols": 0,
+            "layout_rows": 0,
+            "sectiontype": "inscriptiontext",
+            "number": 1,
+            "name": "1",
+            "comment": "",
+            "parent_id": 4072,
+            "level": 3,
+            "lft": 41,
+            "rght": 42,
+            "articles_id": 3,
+            "type": {
+                "id": 137,
+                "deleted": 0,
+                "job_id": 80778,
+                "published": 1,
+                "scope": "sections",
+                "mode": "default",
+                "preset": "default",
+                "name": "inscriptiontext",
+                "sortno": 9,
+                "category": "Artikel (epi)",
+                "caption": "Inschriftenbearbeitung",
+                "description": "",
+                "config": {
+                    "help": "usecases-di-toolbar",
+                    "fields": {
+                        "published": "Ver\u00f6ffentlicht",
+                        "comment": {
+                            "types": [
+                                "links",
+                                "transcription",
+                                "references",
+                                "text",
+                                "character"
+                            ]
+                        }
+                    },
+                    "items": [
+                        "transcriptions",
+                        {
+                            "type": "search",
+                            "count": "*",
+                            "default": false,
+                            "display": false
+                        }
+                    ],
+                    "name": {
+                        "prefix": "Bearbeitung ",
+                        "number": "numeric",
+                        "path": true,
+                        "scoped": true
+                    },
+                    "showpath": true,
+                    "view": "stack",
+                    "display": "highlight",
+                    "triples": {
+                        "namespaces": {
+                            "epi": "https:\/\/epigraf.inschriften.net\/iri\/",
+                            "rdf": "http:\/\/www.w3.org\/1999\/02\/22-rdf-syntax-ns#",
+                            "schema": "https:\/\/schema.org\/"
+                        },
+                        "templates": [
+                            {
+                                "comment": "An inscription has text",
+                                "subject": "epi:{parent.parent.iri}#",
+                                "predicate": "schema:text",
+                                "object": "{items.*[itemtype=transcriptions].content}"
+                            }
+                        ]
+                    }
+                },
+                "norm_iri": "inscriptiontext"
+            },
+            "path": [
+                {
+                    "id": 4070,
+                    "articles_id": 3,
+                    "lft": 39,
+                    "rght": 44,
+                    "children": 1,
+                    "siblings": 16,
+                    "level": 1,
+                    "sortno": 20,
+                    "number": 2,
+                    "sectiontype": "inscription",
+                    "name": "B"
+                },
+                {
+                    "id": 4072,
+                    "parent_id": 4070,
+                    "articles_id": 3,
+                    "lft": 40,
+                    "rght": 43,
+                    "children": 1,
+                    "siblings": 1,
+                    "level": 2,
+                    "sortno": 21,
+                    "number": 1,
+                    "sectiontype": "inscriptionpart",
+                    "name": "1"
+                },
+                {
+                    "id": 4074,
+                    "parent_id": 4072,
+                    "articles_id": 3,
+                    "lft": 41,
+                    "rght": 42,
+                    "children": 0,
+                    "siblings": 1,
+                    "level": 3,
+                    "sortno": 22,
+                    "number": 1,
+                    "sectiontype": "inscriptiontext",
+                    "name": "1"
+                }
+            ],
+            "items": [
+                {
+                    "id": 8197,
+                    "deleted": 0,
+                    "created": "2025-12-13T02:21:57+01:00",
+                    "created_by": 2,
+                    "modified_by": 2,
+                    "itemtype": "transcriptions",
+                    "content": "<bl id=\"59df8e6018a545ccdea53f8422929e8b\">Ave maria<\/bl>",
+                    "translation": "",
+                    "date_value": "",
+                    "date_add": "",
+                    "source_autopsy": false,
+                    "source_from": "",
+                    "source_addition": "",
+                    "articles_id": 3,
+                    "sections_id": 4074,
+                    "type": {
+                        "id": 201,
+                        "deleted": 0,
+                        "job_id": 80316,
+                        "published": 1,
+                        "created": "2022-01-16T00:34:54+01:00",
+                        "scope": "items",
+                        "mode": "default",
+                        "preset": "default",
+                        "name": "transcriptions",
+                        "sortno": 21,
+                        "category": "Artikel (epi)",
+                        "caption": "Transkription",
+                        "description": "",
+                        "config": {
+                            "fulltext": true,
+                            "fields": {
+                                "content": {
+                                    "caption": "Transkription",
+                                    "fulltext": "Transkription",
+                                    "format": "xml",
+                                    "height": 10,
+                                    "required": true,
+                                    "types": [
+                                        "bl",
+                                        "nl",
+                                        "character"
+                                    ]
+                                },
+                                "translation": {
+                                    "caption": "\u00dcbersetzung",
+                                    "fulltext": "\u00dcbersetzung",
+                                    "format": "xml",
+                                    "height": 10,
+                                    "types": [
+                                        "app1",
+                                        "app2",
+                                        "links",
+                                        "transcription",
+                                        "text",
+                                        "references",
+                                        "character"
+                                    ]
+                                },
+                                "date": {
+                                    "caption": "Datierung",
+                                    "group": "date",
+                                    "format": "date"
+                                },
+                                "date_add": {
+                                    "caption": "Grundlage der Datierung",
+                                    "group": "date",
+                                    "format": "xml",
+                                    "types": [
+                                        "rec_lit"
+                                    ]
+                                },
+                                "source_from": {
+                                    "caption": "Quelle",
+                                    "group": "source",
+                                    "format": "xml",
+                                    "types": [
+                                        "references",
+                                        "links",
+                                        "text",
+                                        "app2",
+                                        "h",
+                                        "character"
+                                    ]
+                                },
+                                "source_addition": {
+                                    "caption": "Erg\u00e4nzungen nach",
+                                    "group": "source",
+                                    "format": "xml",
+                                    "types": [
+                                        "app2",
+                                        "links",
+                                        "text",
+                                        "h",
+                                        "references",
+                                        "character"
+                                    ]
+                                },
+                                "source_autopsy": {
+                                    "caption": "Autopsie",
+                                    "group": "source",
+                                    "required": true,
+                                    "format": "check"
+                                }
+                            }
+                        },
+                        "norm_iri": "transcriptions"
+                    },
+                    "sectionpath": [
+                        {
+                            "id": 4070,
+                            "articles_id": 3,
+                            "lft": 39,
+                            "rght": 44,
+                            "children": 1,
+                            "siblings": 16,
+                            "level": 1,
+                            "sortno": 20,
+                            "number": 2,
+                            "sectiontype": "inscription",
+                            "name": "B"
+                        },
+                        {
+                            "id": 4072,
+                            "parent_id": 4070,
+                            "articles_id": 3,
+                            "lft": 40,
+                            "rght": 43,
+                            "children": 1,
+                            "siblings": 1,
+                            "level": 2,
+                            "sortno": 21,
+                            "number": 1,
+                            "sectiontype": "inscriptionpart",
+                            "name": "1"
+                        },
+                        {
+                            "id": 4074,
+                            "parent_id": 4072,
+                            "articles_id": 3,
+                            "lft": 41,
+                            "rght": 42,
+                            "children": 0,
+                            "siblings": 1,
+                            "level": 3,
+                            "sortno": 22,
+                            "number": 1,
+                            "sectiontype": "inscriptiontext",
+                            "name": "1"
                         }
                     ]
                 }
@@ -2933,20 +5803,21 @@
         "id": 1,
         "deleted": 0,
         "published": 0,
-        "created": "2021-06-14T22:42:26+02:00",
-        "modified_by": 1,
+        "created": "2021-06-15T00:42:26+02:00",
+        "modified_by": 2,
         "created_by": 1,
         "projecttype": "epi",
         "name": "Testprojekt 1",
         "signature": "TP1",
-        "description": "",
+        "description": "{\n  \"di_prefix\": \"di\",\n  \"di_number\": \"999\",\n  \"di_signature\": \"DI 999\",\n  \"di_path\": \"testprojekt1\",\n  \"urn\": \"di999g022k0\",\n  \"author\": \"Test Tator\",\n  \"year\": 2025,\n  \"title\": \"Die Inschriften von Testates\",\n  \"images\": {\n    \"creator\": \"Tina Toner\",\n    \"source\": \"Bildarchiv\",\n    \"rights\": \"Tackademie\",\n    \"usageterms\": \"CC BY 4.0\",\n    \"credit\": \"Tacka\",\n    \"marked\": \"True\"\n  }\n}",
+        "norm_data": "",
         "norm_iri": "bookiri",
         "type": {
             "id": 895,
             "deleted": 0,
-            "job_id": 61777,
+            "job_id": 79807,
             "published": 0,
-            "created": "2022-12-03T09:01:24+01:00",
+            "created": "2022-12-03T11:01:24+01:00",
             "scope": "projects",
             "mode": "default",
             "preset": "default",
@@ -2990,17 +5861,19 @@
     "modifier": {
         "id": 2,
         "deleted": 0,
-        "created": "2024-11-09T12:06:13+01:00",
+        "created": "2024-11-09T14:06:13+01:00",
         "name": "Jakob J\u00fcnger",
+        "acronym": "jj",
         "userrole": 0,
         "norm_iri": "juenger"
     },
     "creator": {
         "id": 1,
         "deleted": 0,
-        "created": "2022-04-01T08:45:59+02:00",
+        "created": "2022-04-01T10:45:59+02:00",
         "usertype": "human",
         "name": "Testuser",
+        "acronym": "TU",
         "userrole": 1
     },
     "database": "projects"

@@ -13,6 +13,7 @@ namespace App\Model\Entity;
 use App\Datasource\Services\ServiceFactory;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
+use App\Utilities\Converters\Strings;
 use App\Utilities\Files\Files;
 use ArrayAccess;
 use Cake\Datasource\EntityTrait;
@@ -54,6 +55,11 @@ use Rest\Entity\LockTrait;
  * @property null|\Cake\ORM\Query $versions
  * @property array $warnings
  *
+ * @property string $importTable The table name in the imported source
+ * @property mixed $rowNumber The row number in the imported source table
+ * @property array $fieldsImport The fields used for data import
+ * @property string $fieldsScope The scope field name
+ *
  * @property string $fileBasepath
  * @property string $fileDownloadpath
  * @property string $fileDownloadname
@@ -92,8 +98,11 @@ class BaseEntity extends Entity
     protected $fixedType = true;
 
     /**
-     * The field used to create an IRI
-     * @var string
+     * The field used to create an IRI.
+     * Optionally, IRIs can be prefixed by the database name.
+     *
+     * @var string $_field_iri
+     * @var boolean $_prefix_iri
      */
     protected $_field_iri = 'id';
     protected $_prefix_iri = false;
@@ -127,6 +136,27 @@ class BaseEntity extends Entity
         'file_name' => 'file'
     ];
 
+
+    /**
+     * Fields used for data import
+     *
+     * @var string[]
+     */
+    protected $_fields_import = [];
+
+
+    /**
+     * Imported IDs, table name and row number
+     */
+    public $_import_ids = [];
+    protected $_import_table = null;
+    protected $_import_id = null;
+    protected $_import_row = null;
+    protected $_import_values = null;
+    public $_import_action = null;
+    public $_import_copyfile = null;
+    public $_import_irimatched = null;
+
     /**
      * Current table
      *
@@ -149,6 +179,239 @@ class BaseEntity extends Entity
      * @var null|array
      */
     protected $_warnings = null;
+
+    /**
+     * Constructor
+     *
+     * @param array $content
+     * @param array $options
+     */
+    public function __construct(array $content = [], array $options = [])
+    {
+        if ($options['import'] ?? false) {
+            $content = $this->importData($content, $options);
+            $options['useSetters'] = false;
+            $options['markNew'] = empty($content['id']);
+        }
+
+        parent::__construct($content, $options);
+    }
+
+    /**
+     * Convert imported raw data to the formats expected by the entity.
+     * Overwrite in entity classes for type conversions.
+     *
+     * Remove ids from $content and populate import properties
+     * (_import_table, _import_row, _import_id, _import_ids, _import_action)
+     *
+     * @param $content
+     * @param $options
+     * @return array
+     */
+    public function importData($content, $options)
+    {
+        // Keep import options
+        $this->_import_values = $content;
+        $this->_import_table = $options['table_name'] ?? null;
+        $this->_import_id = $content['id'] ?? null;
+        $this->_import_row = $options['table_row'] ?? null;
+        $this->_import_action = $options['action'] ?? null;
+        $this->_import_copyfile = $content['file_copyfrom'] ?? null;
+
+        // Ignore fields
+        if (!empty($options['fields'])) {
+            $content = array_intersect_key($content, array_flip($options['fields']));
+        }
+
+        foreach ($this->_fields_import as $old => $new) {
+
+            // Rename fields
+            if (is_numeric($old) || ($old === $new) || !isset($content[$old]) || (!is_array($new) && isset($content[$new]))) {
+                continue;
+            }
+
+            //  Split id fields (IRI paths, polymorphic relations)
+            if (is_array($new)) {
+                // IRI path (e.g. properties/languages/de)
+                $value = explode('/', $content[$old]);
+                if (sizeof($value) === 3) {
+                    $content[$new[0]] = $value[0];
+                    $content[$new[1]] = $content[$old];
+                }
+
+                // Polymorphic and combined IDs (e.g. properties-123)
+                else {
+                    $value = explode('-', $content[$old], 2);
+                    $content[$new[0]] = $value[0] ?? null;
+                    $content[$new[1]] = $content[$old];
+                }
+
+            } // Raw value
+            else {
+                $content[$new] = $content[$old];
+                unset($content[$old]);
+            }
+        }
+
+        // Separate ID and content fields
+        $fields_id = static::getIdFields();
+        $fields_content = array_diff($this->fields_import, $fields_id);
+
+        $ids = array_intersect_key($content, array_flip($fields_id));
+        $content = array_intersect_key($content, array_flip($fields_content));
+
+        // Add explicit ID matching the pattern <tablename>-<id> to the index
+        $explicit = array_filter($ids, fn($id) => preg_match('/^[a-z]+-[0-9]+$/', $id ?? ''));
+        foreach ($explicit as $importid) {
+            if (empty($options['index']['targets'][$importid])) {
+                $solvedId = explode('-', $importid);
+                $savedId = [
+                    'model' => $solvedId[0],
+                    'id' => (int)$solvedId[1]
+                ];
+
+                $options['index']['targets'][$importid] = $savedId;
+            }
+        }
+
+        // Clear empty IDs
+        $empty = array_filter($ids, fn($id) => $id === '');
+        foreach ($empty as $fieldId => $fieldEmpty) {
+            $content[$fieldId] = null;
+            unset($ids[$fieldId]);
+        }
+
+
+        $index = $options['index']['targets'] ?? [];
+
+        // Solve norm_iri
+        if ($index && !empty($content['norm_iri'])) {
+
+            $typeField = $options['type_field'] ?? null;
+            $typeName = ($typeField !== null) ? ($content[$typeField] ?? null) : null;
+
+            $qualifiedIri = implode('/', array_filter([
+                $this->_import_table,
+                $typeName,
+                $content['norm_iri']
+            ]));
+
+            $solvedId = !empty($qualifiedIri) ? ($index[$qualifiedIri] ?? null) : null;
+            if (!empty($solvedId)) {
+                $content['id'] = $solvedId['id'];
+                $this->_import_irimatched = true;
+            }
+
+            if (!empty($solvedId) && !empty($this->_import_id) && empty($options['index']['targets'][$this->_import_id])) {
+                $options['index']['targets'][$this->_import_id] = [
+                    'model' => $solvedId['model'],
+                    'id' => (int)$solvedId['id']
+                ];
+            }
+        }
+
+        // Solve IDs if possible from index (move from ids to content)
+        $this->_import_ids = $ids;
+        $this->solveIds($content, $index);
+
+        // Handle JSON fields
+        // TODO: Implement option to merge the new config instead of replacing it?
+        foreach ($this->_fields_formats as $fieldName => $fieldFormat) {
+            if (!isset($content[$fieldName])) {
+                continue;
+            }
+            if (($fieldFormat === 'array') && (is_string($content[$fieldName] ?? null)) ) {
+                try {
+                    $content[$fieldName] = json_decode($content[$fieldName], true);
+                } catch (Exception $e) {
+                    return ['error' => __('Error parsing JSON: {0}', [$e->getMessage()])];
+                }
+            }
+        }
+
+        // Parse date and time fields
+        // e.g. '2016-02-04T12:58:47+01:00'
+        if (isset($content['created'])) {
+            $content['created'] = new FrozenTime($content['created']);
+        }
+        if (isset($content['modified'])) {
+            $content['modified'] = new FrozenTime($content['modified']);
+        }
+
+        // Add job id
+        if (isset($options['job_id'])) {
+            $content['job_id'] = $options['job_id'];
+        }
+
+        // Fix timestamps
+        if (isset($content['modified']) && empty($content['modified'])) {
+            unset($content['modified']);
+        }
+
+        if (isset($content['created']) && empty($content['created'])) {
+            unset($content['created']);
+        }
+
+        return $content;
+    }
+
+    /**
+     * @param array|Entity $data
+     * @param array $index
+     */
+    public function solveIds(&$data, &$index)
+    {
+        if ($index) {
+            $solved = array_keys(
+                array_intersect_key(
+                    array_flip(
+                        array_filter(
+                            array_unique(
+                                $this->_import_ids
+                            )
+                        )
+                    ),
+                    $index
+                )
+            );
+            $solved = array_intersect($this->_import_ids, $solved);
+            $this->_import_ids = array_diff_key($this->_import_ids, $solved);
+            foreach ($solved as $field => $importid) {
+                $data[$field] = $index[$importid]['id'];
+            }
+        }
+    }
+
+    /**
+     * Extract saved ID and add to index
+     *
+     * @param $index
+     */
+    public function indexIds(&$index)
+    {
+
+        foreach ($this->_import_ids as $field => $importedId) {
+            if (empty($importedId)) {
+                continue;
+            }
+
+            // Add the saved entity to targets index, others to sources
+            if ($field === 'id') {
+                $index['targets'][$importedId] = [
+                    'model' => $this->getSource(),
+                    'id' => $this->id
+                ];
+            }
+            else {
+                $index['sources'][$importedId][] = [
+                    'model' => $this->getSource(),
+                    'id' => $this->id,
+                    'field' => $field,
+                    'scope_field' => $this->fieldsScope
+                ];
+            }
+        }
+    }
 
     /**
      * By default, entities outside the Epi plugin are visible to authenticated users.
@@ -191,6 +454,50 @@ class BaseEntity extends Entity
     {
         return $this->table->getTable();
     }
+
+    /**
+     * Get the scope field of current table
+     *
+     * @return string
+     */
+    protected function _getFieldsScope()
+    {
+        return $this->table->scopeField;
+    }
+
+    /**
+     * Get import fields
+     *
+     * @return array
+     */
+    protected function _getFieldsImport()
+    {
+        $fields = array_values(array_map(fn($x) => is_array($x) ? $x : [$x], $this->_fields_import));
+        $fields = array_merge(...$fields);
+        return $fields;
+    }
+
+
+    /**
+     * Get current number of current import row
+     *
+     * @return mixed|null
+     */
+    protected function _getRowNumber()
+    {
+        return $this->_import_row ?? null;
+    }
+
+    /**
+     * Get name of current import table
+     *
+     * @return string
+     */
+    protected function _getImportTable()
+    {
+        return $this->_import_table;
+    }
+
 
     /**
      * Get the base folder for file uploads
@@ -346,18 +653,22 @@ class BaseEntity extends Entity
      */
     public static function getIdFields()
     {
-        $fields = array_map(function ($field_key, $field_value) {
-            if (is_array($field_value)) {
-                return $field_value[1] ?? null;
-            }
-            elseif (is_numeric($field_key)) {
-                return $field_value;
-            }
-            else {
-                return $field_key;
-            }
+        $fields = array_map(
+            function ($field_key, $field_value) {
+                if (is_array($field_value)) {
+                    return $field_value[1] ?? null;
+                }
+                elseif (is_numeric($field_key)) {
+                    return $field_value;
+                }
+                else {
+                    return $field_key;
+                }
 
-        }, array_keys(static::$_fields_ids), static::$_fields_ids);
+            },
+            array_keys(static::$_fields_ids),
+            static::$_fields_ids
+        );
 
         return $fields;
     }
@@ -581,7 +892,7 @@ class BaseEntity extends Entity
      *           If the format is set and the extracted value is a BaseEntity,,
      *           the value is formatted using getValueFormatted().
      *           Otherwise the function falls back to Objects::extract().
-     *           The extracton key in a field path may be prefixed with a format key, seperated by colon.
+     *           The extraction key in a field path may be prefixed with a format key, seperated by colon.
      *           This overrides the format in the options.
      * - aggregate: Aggregation procedure, defaults to false, i.e. no aggregation.
      *              Can be a pipe separated string list or an array of processing steps.
@@ -597,8 +908,17 @@ class BaseEntity extends Entity
      */
     public function getValueNested($fieldPath, $options = [])
     {
+
+        // Extract the value without formatting
+        // TODO: can the method be refactored to get rid of this special condition?
+        //       In one of the last revisions, I moved calls of getValueFormatted() to Objects::extract(),
+        //       this, this differentiation should not be necessary any more?
+        if (empty($options['format'])) {
+            $value = Objects::extract($this, $fieldPath, false, $options);
+        }
+
         // Format the value extracted by the last path component
-        if (!empty($options['format'])) {
+        else {
 
             $fieldPath = is_array($fieldPath) ? $fieldPath : explode('.', $fieldPath);
             $keyExtract = implode('.', array_slice($fieldPath, 0, -1));
@@ -609,39 +929,40 @@ class BaseEntity extends Entity
                 $keyField = 'id';
             }
 
-            if (!empty($keyExtract)) {
-                $value = Objects::extract($this, $keyExtract, false, $options);
-
-                // Direct path to entity fields (e.g. project.name)
-                if ($value instanceof BaseEntity) {
-                    $value = $value->getValueFormatted($keyField, $options);
-                }
-
-                // Numeric arrays followed by an entity field (e.g. items.*.content)
-                elseif ((is_array($value) && array_is_list($value))) {
-                    foreach ($value as $valueKey => $valueItem) {
-                        if ($valueItem instanceof BaseEntity) {
-                            $value[$valueKey] = $valueItem->getValueFormatted($keyField, $options);
-                        }
-                        elseif (is_array($valueItem) || $valueItem instanceof ArrayAccess) {
-                            $value[$valueKey] = Objects::extract($valueItem, $keyField, false, $options);
-                        }
-                    }
-                }
-
-                // Direct path to nested values (e.g. value.lat)
-                elseif (is_array($value) || ($value instanceof ArrayAccess)) {
-                    $value = Objects::extract($value, $keyField, false, $options);
-                }
+            // Get everything up to the last component without formatting
+            if (empty($keyExtract)) {
+                $value = $this;
             }
             else {
-                $value = $this->getValueFormatted($keyField, $options);
+                $published = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
+                $value = Objects::extract($this, $keyExtract, false, ['published' => $published]);
             }
-        }
 
-        // Extract the value without formatting
-        else {
-            $value = Objects::extract($this, $fieldPath, false, $options);
+            // Numeric arrays followed by an entity field (e.g. items.*.content)
+            if ((is_array($value) && array_is_list($value))) {
+                foreach ($value as $valueKey => $valueItem) {
+                  if (is_array($valueItem) || $valueItem instanceof ArrayAccess) {
+                      $value[$valueKey] = Objects::extract($valueItem, $keyField, false, $options);
+                  }
+                }
+            }
+
+            // Direct path to field (e.g. projects.name) or nested values (e.g. value.lat)
+            elseif (is_array($value) || ($value instanceof ArrayAccess)) {
+                $value = Objects::extract($value, $keyField, false, $options);
+            }
+
+            // Try to extract value from JSON
+            elseif (is_string($value) && !empty($keyField)) {
+                try {
+                    $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+                    if (is_array($value) || ($value instanceof ArrayAccess)) {
+                        $value = Objects::extract($value, $keyField, false, $options);
+                    }
+                } catch (Exception $e) {
+                    // Not a JSON string, return as is
+                }
+            }
         }
 
         // TODO: implement default (check $value array)
@@ -810,7 +1131,7 @@ class BaseEntity extends Entity
      *
      * ### Options
      * - geodata: For geodata fields, an array of values to be added to the rendered GeoJSON value
-     * - default: For geodata fields, an array with default lat and lng values  to be used if the field is empty. Set to true to use ['lat' => 0, 'lng'=>0].
+     * - default: For geodata fields, an array with default lat and lng values to be used if the coordinates are missing.
      *
      * @param mixed $raw The value that should be formatted
      * @param array $fieldName
@@ -831,6 +1152,7 @@ class BaseEntity extends Entity
             }
 
         }
+
         elseif ($fieldFormat === 'json') {
             try {
                 if (is_string($raw)) {
@@ -841,6 +1163,23 @@ class BaseEntity extends Entity
                 return '';
             } catch (Exception $e) {
                 $this->setParsingError($fieldName[0], __('Error parsing JSON: {0}', [$e->getMessage()]));
+                return $raw;
+            }
+        }
+
+        elseif ($fieldFormat === 'csv') {
+            try {
+                if ($outputFormat === 'html') {
+                    return \App\Utilities\Converters\Csv::csvToHtml($raw);
+                }
+                else if (is_string($raw)) {
+                    $value = str_getcsv($raw);
+                } else {
+                    $value = $raw;
+                }
+                return $value;
+            } catch (Exception $e) {
+                $this->setParsingError($fieldName[0], __('Error parsing CSV: {0}', [$e->getMessage()]));
                 return $raw;
             }
         }
@@ -856,8 +1195,8 @@ class BaseEntity extends Entity
                 }
             }
 
-            if (is_null($value['lng'] ?? null) || is_null($value['lat'] ?? null)) {
-                if (!empty($options['default'])) {
+            if (Attributes::isBlank($value['lng'] ?? null) || Attributes::isBlank($value['lat'] ?? null)) {
+                if (!empty($options['default']) && is_array($options['default'])) {
                     $value['lng'] = $options['default']['lng'] ?? 0;
                     $value['lat'] = $options['default']['lat'] ?? 0;
                 } else {
@@ -867,16 +1206,6 @@ class BaseEntity extends Entity
 
             // Root: The article or the property
             $root = empty($this->container) ?  $this->root : ($this->container->root ?? $this->container);
-
-//            $url = $root->internalUrl;
-//            if ((BaseTable::$requestMode ?? MODE_DEFAULT) !== MODE_DEFAULT) {
-//                if (is_array($url)) {
-//                    $url['?'] = ['mode' => BaseTable::$requestMode];
-//                }
-//                elseif (is_string($url)) {
-//                    $url .= '?mode=' . BaseTable::$requestMode;
-//                }
-//            }
 
             $geometry = [
                 "type" => "Point",
@@ -976,6 +1305,8 @@ class BaseEntity extends Entity
      * Returns the raw field values, except for arrays.
      * Arrays are converted to JSON.
      *
+     * TODO: Do we still need this? Since array fields (e.g. for types) are not automatically decoded anymore, this should be obsolete?
+     *
      * @param mixed $raw The value that should be formatted
      * @param array $fieldName The field name
      * @param string $outputFormat The output format
@@ -985,7 +1316,7 @@ class BaseEntity extends Entity
      */
     public function formatForTransfer($raw, $fieldName, $outputFormat, $fieldFormat, $options = [])
     {
-        if ($fieldFormat === 'array') {
+        if (($fieldFormat === 'array') && is_array($raw)) {
             try {
                 $jsonOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_PARTIAL_OUTPUT_ON_ERROR;
                 return json_encode($raw, $jsonOptions);
@@ -1139,11 +1470,106 @@ class BaseEntity extends Entity
         $this[$field] = $value;
     }
 
-    public function setIri()
-    {
-        if ($this->hasDatabaseField('norm_iri')) {
-            $this->norm_iri = $this->iriFragment;
+    /**
+     * Autofill a field based on the type configuration
+     *
+     * @return $this
+     */
+    public function autofill($field = 'sortkey') {
+
+        $sortKeyConfig = $this->type['config']['fields'][$field]['autofill'] ?? [];
+        if (!empty($sortKeyConfig['source'])) {
+            $sourceField = $sortKeyConfig['source'];
+            $value = $this->{$sourceField} ?? '';
+
+            $process = $sortKeyConfig['process'] ?? [];
+            foreach ($process as $step) {
+                $stepConfig =  is_array($step) ? $step : [];
+                $step = $stepConfig['method'] ?? $step;
+
+                if ($step === 'path') {
+                    $path = $this->parentPath;
+                    if (!Attributes::isBlank($path)) {
+                        $value = $path . $this->_path_separator . $value;
+                    }
+                }
+                else if ($step === 'number') {
+                    $value = Attributes::extractNumber($value);
+                }
+                else if ($step === 'sortkey') {
+                    $value = trim(mb_strtolower($value));
+                    $value = Strings::prefixNumbersWithZero($value, $stepConfig['width'] ?? 5);
+                    $value = Strings::collapseWhitespace($value);
+                }
+                else if ($step === 'irifragment') {
+                    $value =  Attributes::cleanIdentifier($value);
+
+                }
+                else if ($step === 'prefix') {
+                    // TODO: the prefix key is deprecated, use value
+                    $value = ($stepConfig['value'] ?? $stepConfig['prefix'] ?? '') . $value;
+                }
+                else if ($step === 'postfix') {
+                    // TODO: the postfix key is deprecated, use value
+                    $value = ($stepConfig['value'] ?? $stepConfig['postfix'] ?? '') . $value;
+                }
+            }
+
+            $this[$field] = $value;
         }
+
+        return $this;
+    }
+
+    /**
+     * Update the norm_iri field
+     *
+     * See _getIriFragment() for details.
+     *
+     * TODO: make dry, see autofill().
+     *
+     * @param boolean $overwrite Whether to overwrite existing values.
+     * @param boolean $typed Whether to use the source field from the types configuration (if available).
+     * @return void
+     */
+    public function setIri($overwrite = false, $typed = false)
+    {
+        $field = 'norm_iri';
+        if (!$this->hasDatabaseField($field)) {
+            return;
+        }
+
+        if (!empty($this->{$field}) && !$overwrite) {
+            return;
+        }
+
+        if ($typed) {
+            $sourceField = $this->type['merged']['fields'][$field]['autofill']['source'] ?? null;
+            if (!empty($sourceField)) {
+                $value = Attributes::cleanIdentifier($this->{$sourceField} ?? '');
+            } else {
+                $value = '';
+            }
+
+            if (!empty($value)) {
+                $this->{$field} = $value;
+                return;
+            }
+        }
+
+        $this->{$field} = $this->iriIdentifier;
+    }
+
+    /**
+     * Clear contained entities
+     *
+     * To be implemented in subclasses.
+     *
+     * @return boolean
+     */
+    public function clear()
+    {
+        return true;
     }
 
     /**
@@ -1258,44 +1684,55 @@ class BaseEntity extends Entity
         return $this->_newId;
     }
 
+    protected function _getIriField() {
+        return $this->_field_iri;
+    }
+
     /**
      * Return a clean identifier build from the IRI field
+     *
+     * Falls back to an IRI derived from the entity ID,
+     * optionally prefixed by the database name.
      *
      * @return string
      */
     protected function _getIriIdentifier()
     {
-        return mb_strtolower(Attributes::cleanIdentifier($this->{$this->_field_iri}));
+        $iri = '';
+
+        $iriField = $this->iriField;
+        if (!empty($iriField)) {
+            $iri = Attributes::cleanIdentifier($this->{$iriField} ?? '');
+        }
+
+        if (empty($iri)) {
+            $iri = (string)$this->id;
+            $iriField = 'id';
+        }
+
+        // TODO: do we need a configurable _prefix_iri property or should we always prefix IDs in project databases?
+        if (($iriField === 'id') && !empty($iri) && $this->_prefix_iri) {
+            $tableName = $this->getSource();
+            if ($tableName <> '') {
+                $source = $this->fetchTable($tableName);
+                $iri = $source->getDatabaseIri() . '~' . $iri;
+            }
+        }
+
+        return $iri;
     }
 
     /**
-     * If missing, creates an IRI from the database name, table name and the row ID
+     * If missing, creates an ad hoc IRI fragment
+     * from the database name, table name and the row ID
      *
      * @return null|string
      */
     protected function _getIriFragment()
     {
         if (empty($this->norm_iri)) {
-            $tableName = $this->getSource();
-            if ($tableName <> '') {
-                $source = $this->fetchTable($tableName);
-
-                $iri = empty($this->_field_iri) ?
-                    $this->id :
-                    mb_strtolower(Attributes::cleanIdentifier($this->{$this->_field_iri} ?? ''));
-
-                $iri = empty($iri) ? $this->id : $iri;
-
-                if (!empty($iri) && $this->_prefix_iri) {
-                    $iri = $source->getDatabaseIri() . '~' . $iri;
-                }
-                return $iri;
-            }
-            else {
-                return null;
-            }
-        }
-        else {
+            return $this->iriIdentifier;
+        } else {
             return Attributes::cleanIdentifier($this->norm_iri);
         }
     }
@@ -1376,7 +1813,6 @@ class BaseEntity extends Entity
      */
     protected function _getCaption()
     {
-        //if ($this->hasDatabaseField('caption')) {
         if (isset($this->_fields['caption'])) {
             return $this->_fields['caption'] ?? $this->{$this->table->captionField};
         }

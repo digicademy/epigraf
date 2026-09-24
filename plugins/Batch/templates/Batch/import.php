@@ -16,7 +16,7 @@ use Cake\Routing\Router;
 /**
  * @var App\View\AppView $this
  * @var \Batch\Model\Jobs\JobImport $job
- * @var App\Model\Entity\Databank $database
+ * @var App\Model\Entity\Databank|false $database
  * @var array $pipelines
  * @var string $scope
  * @var string $stage
@@ -26,7 +26,7 @@ use Cake\Routing\Router;
 
 <!-- Breadcrumbs -->
 <?php if( !empty($source)): ?>
-    <?php $this->Breadcrumbs->add(__('Import {0} into {1}' , [$source, $database->caption])) ?>
+    <?php $this->Breadcrumbs->add(__('Import {0} into {1}' , [$source, empty($database) ? DATABASE_MAIN : $database->caption])) ?>
 <?php else: ?>
     <?php $this->Breadcrumbs->add(__('Import')); ?>
 <?php endif; ?>
@@ -64,6 +64,8 @@ use Cake\Routing\Router;
                 <th scope="row"><?= __('Pipeline') ?></th>
                 <td><?= $this->Form->select('pipeline_id', $pipelines, ['empty' => true]) ?></td>
             </tr>
+
+            <?= $this->Table->getOptionRows($job->options ?? [], $job->config) ?>
         </table>
 
         <?= $this->Form->end() ?>

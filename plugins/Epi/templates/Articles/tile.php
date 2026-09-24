@@ -1,8 +1,20 @@
 <?php
-// Layout: numbers or content (configure e.g. in the articletype 'di-article'
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+?>
+
+<?php
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
+?>
 
+<?php
 /**
  * @var \Epi\Model\Entity\Article $entity
  * @var string $datalist If called from a lane template, set the data list name

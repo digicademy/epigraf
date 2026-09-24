@@ -23,8 +23,21 @@ use Cake\Routing\Router;
     $itemFields = $this->Types->getFields('items', $itemtype);
 
     $tileSize = $template_section['view']['widgets']['thumbs']['size'] ?? 'medium';
-    $propertyImage = $template_section['view']['widgets']['thumbs']['property'] ?? false;
     $linkImage = $template_section['view']['widgets']['thumbs']['link'] ?? false;
+
+    // Whether the image is retrieved from a property
+    $propertyImage = $template_section['view']['widgets']['thumbs']['property'] ?? false;
+
+    // The annotation type to use for image annotations, or empty to disable annotations
+//    $annoType = $edit ? ($template_section['view']['widgets']['thumbs']['annotype'] ?? false) : false;
+    $annoType = $template_section['view']['widgets']['thumbs']['annotype'] ?? false;
+    $annos = [];
+    if ($annoType) {
+        $annos = collection($section->items)
+            ->filter(fn($item) => $item->itemtype === $annoType)
+            ->groupBy(fn($item) => $item->file_path . '/' . $item->file_name)
+            ->toArray();
+    }
 
     $items = collection($section->items)
         ->filter(fn($item) => $item->itemtype === $itemtype)
@@ -48,6 +61,7 @@ use Cake\Routing\Router;
         'class' => [
             'widget-image-viewer',
             empty($items) ? 'widget-image-viewer-empty' : null,
+            $edit ? 'widget-image-viewer-edit' : null,
             'doc-imagelist',
             'doc-imagelist-' . $tileSize
         ]
@@ -62,6 +76,10 @@ use Cake\Routing\Router;
                     'data-row-id' => $item->id,
                     'data-row-type' => $item->itemtype,
                 ];
+
+                if ($annoType) {
+                    $divAttributes['data-anno-type'] = $annoType;
+                }
 
                 if ($linkImage) {
                     $url = Router::url(['plugin'=> 'Epi','database' => $article->database, 'controller'=>'Articles', 'action'=>'view', $article->id,'#'=>'items-' .  $item->id]);
@@ -125,6 +143,16 @@ use Cake\Routing\Router;
                         <?php endforeach; ?>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="doc-image-annotations">
+                    <?php if ($annoType): ?>
+                        <?php foreach ($annos[$item->file_path . '/' . $item->file_name] ?? [] as $anno): ?>
+                            <script class="doc-image-annotation" type="application/json">
+                                <?= $anno['content'] ?? '' ?>
+                            </script>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
 
             <?= $this->Element->closeHtmlElement('div') ?>

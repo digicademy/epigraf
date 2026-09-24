@@ -39,7 +39,7 @@ use App\Utilities\Converters\Arrays;
     }
 
     $find = empty($append) ? '' : $find;
-    $find = $selectedNode ? $selectedNode->shortname : $find;
+    $find = $selectedNode ? $selectedNode->caption : $find;
 
     $queryParams =  [
         'template' => 'choose',

@@ -4,9 +4,9 @@ permalink: '/user/export/api/'
 toc: false
 ---
 
-Epigraf stores data according to the [Relational Article Model](/epigraf/user/coreconcepts/model).
+Epigraf stores data according to the [Relational Article Model](/user/coreconcepts/model).
 You can retrieve it directly from the database, if you have direct access to the database server.
-However, usually, it is more convenient to use the [Epigraf API](/epigraf/user/coreconcepts/api) for exporting data.
+However, usually, it is more convenient to use the [Epigraf API](/user/coreconcepts/api) for exporting data.
 The whole Epigraf application is built on top of a REST API.
 You simply add the desired output format extension (e.g. `.json`) to the URLs visible in the browser.
 

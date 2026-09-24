@@ -215,7 +215,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                 'identifiers' => ['Authentication.Token'],
                 'queryParam' => 'token',
                 'header' => 'Authorization',
-                'tokenPrefix' => 'Token'
+                'tokenPrefix' => 'Bearer'
             ]);
         }
 

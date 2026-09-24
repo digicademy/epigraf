@@ -29,7 +29,7 @@
     position: relative;
 }
 
-.image-container img {
+.image-container:not(.annotation-active) img {
     cursor: move;
     max-width: none;
     height: 100%;
@@ -137,7 +137,12 @@ img.animate-zoom {
 }
 
 button.button-svg,
-footer .action-menu button.button-svg,
+footer .action-menu button.button-svg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 50%;
+}
+
 .ui-dialog .ui-dialog-buttonpane button.button-svg {
     background-repeat: no-repeat;
     background-position: center;
@@ -209,4 +214,96 @@ button.button-next,
 .overlay-inline-arrows .image-container:hover .overlay-image-next,
 .overlay-inline-arrows .image-container:hover .overlay-image-prev {
     display: block;
+}
+
+/* ── Annotation mode ── */
+
+/* In annotation mode, disable the drag cursor */
+.overlay.annotation-mode .image-container img {
+    cursor: crosshair;
+}
+
+.overlay.annotation-mode .btn-annotate {
+    background: var(--color-primary, #2563eb);
+    color: #fff;
+}
+
+/* Delete buttons — subtle by default, red on hover */
+.btn-delete-annotation,
+.btn-delete-all-annotations {
+    opacity: 0.7;
+}
+
+.btn-delete-annotation:hover,
+.btn-delete-all-annotations:hover {
+    opacity: 1;
+    color: var(--color-danger, #dc2626);
+}
+
+/* Visual separator before delete tools */
+.btn-delete-annotation {
+    margin-left: 0.5em;
+    border-left: 1px solid var(--border-color, #ccc);
+    padding-left: 0.8em;
+}
+
+.overlay .annotation-tool      {
+    display: none;
+}
+
+.overlay.annotation-mode .annotation-tool  {
+    display: inline-flex;
+}
+
+.overlay.annotation-mode .navigation-tool,
+.overlay.annotation-show .navigation-tool {
+    display: none;
+}
+
+.overlay.annotation-mode .image-viewport {
+    cursor: crosshair;
+}
+
+/* Base state: all annotation tool buttons */
+.overlay:not(.annotation-allowed) .annotation-tool,
+.overlay:not(.annotation-allowed) .btn-annotate {
+    display: none;
+}
+
+/* Active tool gets highlighted */
+.overlay button.tool-active {
+    background-color: var(--color-primary, #2563eb);
+    color: #fff;
+    outline: 2px solid var(--color-primary, #2563eb);
+    outline-offset: -2px;
+}
+
+.overlay button.tool-active:hover {
+    background-color: var(--color-primary-dark, #1d4ed8);
+}
+
+/* Inactive tools stay dimmed in annotation mode */
+.overlay.annotation-mode .annotation-tool:not(.tool-active) {
+    opacity: 0.6;
+}
+
+.overlay.annotation-mode .annotation-tool:not(.tool-active):hover {
+    opacity: 1;
+}
+
+/* Wrapper must be positioned within the viewport */
+.image-viewport .a9s-annotationlayer {
+    overflow: visible;
+}
+
+/* Annotation shapes */
+.a9s-annotation .a9s-outer {
+    stroke: rgba(255, 255, 0, 0.8);
+    stroke-width: 2;
+    fill: rgba(255, 255, 0, 0.15);
+}
+.a9s-annotation .a9s-inner {
+    stroke: rgba(255, 255, 0, 1);
+    stroke-width: 1;
+    fill: transparent;
 }

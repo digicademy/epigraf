@@ -10,6 +10,8 @@
 
 namespace Batch\Model\Tasks\Mutate;
 
+use App\Utilities\Converters\Attributes;
+
 /**
  * Set IRI or remove not allowed characters from the IRI
  */
@@ -18,7 +20,10 @@ class TaskAssignIris extends BaseTaskMutate
 
     static public $caption = 'Assign IRIs';
 
-    public static $taskModels = ['Epi.Articles'];
+    public static $taskModels = ['Epi.Articles', 'Epi.Properties'];
+
+    protected $taskParameters = ['overwrite' => ['caption'=>'Overwrite existing IRI fragments','input'=>'checkbox']];
+
 
     /**
      * @var array|string[] A list of finders that are used to find the entities to mutate.
@@ -41,10 +46,13 @@ class TaskAssignIris extends BaseTaskMutate
      */
     protected function mutate($model, $taskParams, $dataParams, $offset = 0, $limit = 1)
     {
+        $dataParams['ancestors'] = false;
+        $overwrite = Attributes::isTrue($taskParams['overwrite'] ?? false);
+
         return $this->mutateMany(
 
-            function($entity) {
-                $entity->callRecursively('setIri', true);
+            function($entity) use ($overwrite) {
+                $entity->callRecursively('setIri', true, false, $overwrite, true);
             },
 
             $model,

@@ -1,666 +1,1052 @@
-# LANGUAGE translation of CakePHP Application
-# Copyright YEAR NAME <EMAIL@ADDRESS>
+# LANGUAGE translation of Epigraf
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: EpigrafWeb 4.0\n"
-"POT-Creation-Date: 2024-09-17 16:59+0200\n"
-"PO-Revision-Date: 2024-11-15 12:01+0100\n"
-"Last-Translator: Jakob Jünger <jakobjuenger@freenet.de>\n"
-"Language-Team: Deutsch <jakobjuenger@freenet.de>\n"
+"Project-Id-Version: Epigraf 5\n"
+"POT-Creation-Date: 2026-09-20 21:22+0200\n"
+"PO-Revision-Date: 2026-09-20 23:05+0200\n"
+"Last-Translator: Jakob Jünger <jakob.juenger@adwmainz.de>\n"
+"Language-Team: Epigraf Team\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.9\n"
 
-#: src/Command/PermissionCommand.php:161
+#: src/Command/JobsCommand.php:315 src/Controller/JobsController.php:241
+msgid "The job could not be saved. Please try again."
+msgstr ""
+"Der Job konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: src/Command/PermissionCommand.php:168
 msgid "The permission {0} has been granted to {1}."
 msgstr "Die Berechtigung {0} wurde {1} erteilt."
 
-#: src/Command/PermissionCommand.php:164
+#: src/Command/PermissionCommand.php:171
 msgid "The permission {0} could not granted to {1}."
 msgstr "Die Berechtigung {0} konnte {1} nicht erteilt werden."
 
-#: src/Command/PermissionCommand.php:185 src/Command/UserCommand.php:176
+#: src/Command/PermissionCommand.php:192 src/Command/UserCommand.php:193
 msgid "The user does not exist."
 msgstr "Der Benutzer existiert nicht."
 
-#: src/Command/PermissionCommand.php:188 src/Command/UserCommand.php:179
+#: src/Command/PermissionCommand.php:195 src/Command/UserCommand.php:196
 msgid "The user has been removed."
 msgstr "Der Benutzer wurde entfernt."
 
-#: src/Command/PermissionCommand.php:191 src/Command/UserCommand.php:182
+#: src/Command/PermissionCommand.php:198 src/Command/UserCommand.php:199
 msgid "The user could not be removed. Please, try again."
 msgstr ""
 "Der Benutzer konnte nicht entfernt werden. Bitte versuchen Sie es erneut."
 
-#: src/Command/UserCommand.php:152
+#: src/Command/UserCommand.php:155
 msgid "The user {0} has been created."
 msgstr "Der Nutzer {0} wurde erstellt."
 
-#: src/Command/UserCommand.php:155
+#: src/Command/UserCommand.php:161
+msgid "The user {0} could not be created: {1}."
+msgstr "Der Benutzer {0} konnte nicht angelegt werden: {1}."
+
+#: src/Command/UserCommand.php:169
 msgid ""
 "The user {0} could not be created. Maybe the user is already present in the "
 "database."
 msgstr ""
 "Der Benutzer {0} konnte nicht erstellt werden. Vielleicht existiert der "
-"Benutzer bereits in der Datenbank. "
+"Benutzer bereits in der Datenbank."
 
-#: src/Controller/AppController.php:432
+#: src/Controller/AppController.php:518
 msgid "Documentation"
 msgstr "Dokumentation"
 
-#: src/Controller/AppController.php:475
+#: src/Controller/AppController.php:564
 msgid "Manage databases"
 msgstr "Datenbanken verwalten"
 
-#: src/Controller/AppController.php:496
+#: src/Controller/AppController.php:602 templates/Databanks/edit.php:19
+#: templates/Users/view.php:106
+#: plugins/Widgets/src/View/Helper/MenuHelper.php:183
 msgid "Databases"
 msgstr "Datenbanken"
 
-#: src/Controller/AppController.php:507 src/Model/Table/DatabanksTable.php:260
+#: src/Controller/AppController.php:610 src/Model/Table/DatabanksTable.php:344
+#: plugins/Epi/templates/Articles/index_facets.php:33
+#: plugins/Epi/templates/Articles/index_facets.php:43
+#: plugins/Epi/templates/Projects/add.php:21
+#: plugins/Epi/templates/Projects/edit.php:21
+#: plugins/Epi/templates/Projects/view.php:20
+#: plugins/Epi/templates/Properties/index.php:72
 msgid "Projects"
 msgstr "Projekte"
 
-#: src/Controller/AppController.php:518 src/Model/Table/DatabanksTable.php:270
+#: src/Controller/AppController.php:621 src/Model/Table/DatabanksTable.php:360
+#: plugins/Epi/src/Model/Entity/Property.php:692
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:203
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2360
 msgid "Articles"
 msgstr "Artikel"
 
-#: src/Controller/AppController.php:529 src/Model/Table/DatabanksTable.php:278
-#: src/Model/Table/DocsTable.php:224
+#: src/Controller/AppController.php:632 src/Model/Table/DatabanksTable.php:374
+#: plugins/Epi/templates/Properties/add.php:27
+#: plugins/Epi/templates/Properties/edit.php:19
+#: plugins/Epi/templates/Properties/index_input.php:63
+#: plugins/Epi/templates/Properties/index_select.php:27
+#: plugins/Epi/templates/Properties/merge.php:23
+#: plugins/Epi/templates/Properties/move.php:19
+#: plugins/Epi/templates/Properties/view.php:22
+#: plugins/Epi/templates/Types/index.php:83
+#: plugins/Batch/templates/element/Tasks/Export/task_data_types.php:28
 msgid "Categories"
 msgstr "Kategorien"
 
-#: src/Controller/AppController.php:540 src/Model/Table/DatabanksTable.php:286
+#: src/Controller/AppController.php:643 src/Model/Table/DatabanksTable.php:388
+#: plugins/Files/templates/Files/delete.php:19
+#: plugins/Files/templates/Files/edit.php:27
+#: plugins/Files/templates/Files/fetch.php:25
+#: plugins/Files/templates/Files/index.php:29
+#: plugins/Files/templates/Files/move.php:18
+#: plugins/Files/templates/Files/newfolder.php:26
+#: plugins/Files/templates/Files/select.php:22
+#: plugins/Files/templates/Files/view.php:23
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:22
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:740
 msgid "Files"
 msgstr "Dateien"
 
-#: src/Controller/AppController.php:551 src/Model/Table/DatabanksTable.php:294
+#: src/Controller/AppController.php:654 src/Model/Table/DatabanksTable.php:402
+#: plugins/Epi/src/Controller/NotesController.php:88
+#: plugins/Epi/templates/Articles/view_document.php:136
 msgid "Notes"
 msgstr "Notizen"
 
-#: src/Controller/AppController.php:562 src/Model/Table/DatabanksTable.php:310
+#: src/Controller/AppController.php:665 src/Model/Table/DatabanksTable.php:430
+#: plugins/Epi/templates/Types/add.php:21
+#: plugins/Epi/templates/Types/edit.php:24
+#: plugins/Epi/templates/Types/view.php:23
 msgid "Types"
 msgstr "Typen"
 
-#: src/Controller/AppController.php:574 src/Controller/AppController.php:608
-#: src/Model/Table/DatabanksTable.php:302
+#: src/Controller/AppController.php:677 src/Controller/AppController.php:711
+#: src/Model/Table/DatabanksTable.php:416
+#: templates/Permissions/endpoints.php:27 templates/Permissions/index.php:35
+#: templates/Users/activate.php:20 templates/Users/add.php:19
+#: templates/Users/delete.php:21 templates/Users/edit.php:20
+#: templates/Users/grant.php:19 templates/Users/invite.php:21
+#: templates/Users/mail.php:22 templates/Users/view.php:21
+#: plugins/Epi/templates/Users/add.php:21
+#: plugins/Epi/templates/Users/edit.php:20
+#: plugins/Epi/templates/Users/index.php:18
+#: plugins/Epi/templates/Users/view.php:18
 msgid "Users"
 msgstr "Benutzer"
 
-#: src/Controller/AppController.php:586
+#: src/Controller/AppController.php:689
 msgid "Analytics"
 msgstr "Analytics"
 
-#: src/Controller/AppController.php:603
+#: src/Controller/AppController.php:706 templates/Pipelines/add.php:21
+#: templates/Pipelines/delete.php:21 templates/Pipelines/edit.php:19
+#: templates/Pipelines/index.php:22 templates/Pipelines/view.php:21
 msgid "Pipelines"
 msgstr "Pipelines"
 
-#: src/Controller/AppController.php:613
+#: src/Controller/AppController.php:716
 msgid "Repository"
 msgstr "Repositorium"
 
-#: src/Controller/AppController.php:620
+#: src/Controller/AppController.php:723 src/Controller/HelpController.php:80
+#: src/Model/Entity/Help.php:191 templates/Help/show.php:23
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:646
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:647
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:648
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1017
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1018
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1019
 msgid "Help"
 msgstr "Hilfe"
 
-#: src/Controller/AppController.php:625
+#: src/Controller/AppController.php:728
 msgid "Wiki"
 msgstr "Wiki"
 
-#: src/Controller/AppController.php:630
+#: src/Controller/AppController.php:733 templates/Docs/add.php:20
+#: templates/Docs/delete.php:20 templates/Docs/edit.php:20
+#: templates/Docs/index.php:22 templates/Docs/view.php:24
 msgid "Pages"
 msgstr "Seiten"
 
-#: src/Controller/AppController.php:1111
+#: src/Controller/AppController.php:1141 src/Controller/JobsController.php:211
+#: src/Controller/JobsController.php:292
 msgid "You are not allowed to access the selected database."
 msgstr "Sie haben keinen Zugang zur ausgewählten Datenbank."
 
-#: src/Controller/AppController.php:1310
-msgid "The job was created"
+#: src/Controller/AppController.php:1213
+msgid "You are not authorized to access that location."
+msgstr "Sie haben keine Berechtigung, auf diesen Ort zuzugreifen."
+
+#: src/Controller/AppController.php:1303
+msgid "The job was created."
 msgstr "Der Job wurde erstellt."
 
-#: src/Controller/AppController.php:1323 src/Controller/JobsController.php:198
+#: src/Controller/AppController.php:1316
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:396
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:557
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:717
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:813
 msgid "The job could not be created. Please, try again."
 msgstr "Der Job konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/DatabanksController.php:115
-msgid "The database has been saved."
-msgstr "Die Datenbank wurde gespeichert."
+#: src/Controller/DatabanksController.php:110
+msgid "Examples"
+msgstr "Beispiele"
 
 #: src/Controller/DatabanksController.php:120
-msgid "The database could not be saved. Please, try again."
-msgstr ""
-"Die Datenbank konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+msgid "The database name is invalid."
+msgstr "Der Datenbankname ist ungültig."
 
-#: src/Controller/DatabanksController.php:142
+#: src/Controller/DatabanksController.php:125
 msgid "The database connection has been saved."
 msgstr "Die Datenbankverbindung wurde gespeichert."
 
-#: src/Controller/DatabanksController.php:147
+#: src/Controller/DatabanksController.php:130
 msgid "The database folders have been created."
-msgstr "Die Datenbankenordner wurden erstellt."
+msgstr "Die Datenbankordner wurden erstellt."
 
-#: src/Controller/DatabanksController.php:151
+#: src/Controller/DatabanksController.php:134
 msgid "The database folders could not be created. Please, try again."
 msgstr ""
 "Die Datenbankordner konnten nicht erstellt werden. Bitte versuchen Sie es "
 "erneut."
 
-#: src/Controller/DatabanksController.php:158
+#: src/Controller/DatabanksController.php:141
 msgid "The database has been created."
 msgstr "Die Datenbank wurde erstellt."
 
-#: src/Controller/DatabanksController.php:161
+#: src/Controller/DatabanksController.php:144
 msgid "The database could not be created. Please, check your permissions."
 msgstr ""
 "Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie die "
 "Zugriffsrechte."
 
-#: src/Controller/DatabanksController.php:168
-#: src/Controller/DatabanksController.php:265
+#: src/Controller/DatabanksController.php:151
+#: src/Controller/DatabanksController.php:249
 msgid "The database has been initialized."
 msgstr "Die Datenbank wurde initialisiert."
 
-#: src/Controller/DatabanksController.php:171
+#: src/Controller/DatabanksController.php:154
 msgid "The database could not be initialized. Please, check your permissions."
 msgstr ""
 "Die Datenbank konnte nicht initialisiert werden. Bitte überprüfen Sie die "
-"Rechte und den Namen der Datenbank."
+"Zugriffsrechte."
 
-#: src/Controller/DatabanksController.php:188
+#: src/Controller/DatabanksController.php:168
 msgid "The database connection could not be saved. Please, try again."
 msgstr ""
 "Die Datenbankverbindung konnte nicht gespeichert werden. Bitte versuchen Sie "
 "es erneut."
 
-#: src/Controller/DatabanksController.php:211
+#: src/Controller/DatabanksController.php:196
 msgid "The database has been backed up."
 msgstr "Die Datenbank wurde gesichert."
 
-#: src/Controller/DatabanksController.php:215
+#: src/Controller/DatabanksController.php:199
 msgid "The database could not be backed up. Please, try again."
 msgstr ""
 "Die Datenbank konnte nicht gesichert werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/DatabanksController.php:239
+#: src/Controller/DatabanksController.php:223
 msgid "The file has been imported."
 msgstr "Die Datei wurde importiert."
 
-#: src/Controller/DatabanksController.php:244
+#: src/Controller/DatabanksController.php:228
 msgid "The file could not be imported. Please, try again."
 msgstr ""
 "Die Datei konnte nicht importiert werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/DatabanksController.php:269
-#: src/Controller/DatabanksController.php:306
+#: src/Controller/DatabanksController.php:252
+#: src/Controller/DatabanksController.php:289
 msgid "The database could not be initialized. Please, try again."
 msgstr ""
 "Die Datenbank konnte nicht initialisiert werden. Bitte versuchen Sie es "
 "erneut."
 
-#: src/Controller/DatabanksController.php:302
+#: src/Controller/DatabanksController.php:285
 msgid ""
 "The database could not be created. Please, check your permissions and check "
 "the database name."
 msgstr ""
-"Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie Ihre Rechte "
-"und den Namen der Datenbank."
+"Die Datenbank konnte nicht erstellt werden. Bitte überprüfen Sie Ihre "
+"Zugriffsrechte und den Namen der Datenbank."
 
-#: src/Controller/DatabanksController.php:309
+#: src/Controller/DatabanksController.php:292
 msgid "The database has been created and initialized."
 msgstr "Die Datenbank wurde erstellt und initialisiert."
 
-#: src/Controller/DatabanksController.php:331
+#: src/Controller/DatabanksController.php:313
 msgid "The database has been dropped."
 msgstr "Die Datenbank wurde gelöscht."
 
-#: src/Controller/DatabanksController.php:335
+#: src/Controller/DatabanksController.php:316
 msgid "The database could not be dropped. Please, try again."
 msgstr ""
 "Die Datenbank konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/DatabanksController.php:354
+#: src/Controller/DatabanksController.php:335
 msgid "The database connection has been deleted."
-msgstr "Die Datenbankverbindung wurde gelöscht."
+msgstr "Die Datenbankverbindung wurde entfernt."
 
-#: src/Controller/DatabanksController.php:356
+#: src/Controller/DatabanksController.php:338
 msgid "The database connection could not be deleted. Please, try again."
 msgstr ""
-"Die Datenbankverbindung konnte nicht gelöscht werden. Bitte versuchen Sie es "
+"Die Datenbankverbindung konnte nicht entfernt werden. Bitte versuchen Sie es "
 "erneut."
 
-#: src/Controller/JobsController.php:253
-msgid "The export job could not be created. Please, try again."
-msgstr "Der Export-Job konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+#: src/Controller/JobsController.php:216 src/Controller/JobsController.php:297
+msgid "You are not allowed to access the selected job."
+msgstr "Sie haben keine Berechtigung, auf den ausgewählten Job zuzugreifen."
 
-#: src/Controller/JobsController.php:308
-msgid "The job could not be saved. Please try again."
-msgstr ""
-"Der Job konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+#: src/Controller/JobsController.php:244
+msgid "The job worker failed."
+msgstr "Der Worker ist gescheitert."
 
-#: src/Controller/JobsController.php:326
+#: src/Controller/JobsController.php:264
 msgid "The job has been finished."
 msgstr "Der Job wurde beendet."
 
-#: src/Controller/PermissionsController.php:60
-#: src/Model/Entity/Databank.php:848
+#: src/Controller/PermissionsController.php:62
+#: src/Model/Entity/Databank.php:1119 templates/Permissions/endpoints.php:28
+#: templates/Permissions/index.php:17 templates/Permissions/view.php:18
+#: templates/Users/index.php:47 templates/Users/view.php:119
+#: plugins/Files/templates/Files/index.php:84
 msgid "Permissions"
 msgstr "Berechtigungen"
 
-#: src/Controller/PipelinesController.php:88
-#: src/Controller/PipelinesController.php:137
+#: src/Controller/PipelinesController.php:103
+#: src/Controller/PipelinesController.php:138
 msgid "The pipeline has been saved."
 msgstr "Die Pipeline wurde gespeichert."
 
-#: src/Controller/PipelinesController.php:93
-#: src/Controller/PipelinesController.php:140
+#: src/Controller/PipelinesController.php:108
+#: src/Controller/PipelinesController.php:141
 msgid "The pipeline could not be saved. Please, try again."
 msgstr ""
 "Die Pipeline konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/PipelinesController.php:167
+#: src/Controller/PipelinesController.php:169
 msgid "The pipeline has been deleted."
 msgstr "Die Pipeline wurde gelöscht."
 
-#: src/Controller/PipelinesController.php:169
+#: src/Controller/PipelinesController.php:172
 msgid "The pipeline could not be deleted. Please, try again."
 msgstr ""
 "Die Pipeline konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/UsersController.php:71
-msgid "Invalid username or password, try again"
-msgstr ""
-"Ungültiger Benutzername oder ungültiges Passwort, versuchen Sie es erneut"
+#: src/Controller/ServicesController.php:85
+msgid "An error occurred while processing the request: {0}"
+msgstr "Bei der Bearbeitung der Anfrage ist ein Fehler aufgetreten: {0}"
 
-#: src/Controller/UsersController.php:226
+#: src/Controller/SettingsController.php:107 templates/layout/default.php:172
+msgid "System settings"
+msgstr "Systemeinstellungen"
+
+#: src/Controller/SettingsController.php:132
+#: src/Controller/SettingsController.php:192
+msgid "You are not allowed to access this page."
+msgstr "Sie haben keine Berechtigung, auf diese Seite zuzugreifen."
+
+#: src/Controller/SettingsController.php:157 src/Model/Entity/Pipeline.php:257
+#: src/Model/Table/JobsTable.php:245 src/Model/Table/PipelinesTable.php:131
+#: templates/Jobs/view.php:59 templates/Settings/logs.php:31
+#: plugins/Epi/templates/Analytics/integrity.php:43
+#: plugins/Epi/templates/Analytics/types.php:44
+#: plugins/Files/src/Model/Entity/FileRecord.php:517
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:28
+#: plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:213
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:242
+msgid "Type"
+msgstr "Typ"
+
+#: src/Controller/SettingsController.php:167 templates/Settings/logs.php:32
+msgid "Exception"
+msgstr "Ausnahme"
+
+#: src/Controller/SettingsController.php:175 templates/Permissions/index.php:36
+#: templates/Users/index.php:48
+msgid "Endpoints"
+msgstr "Endpunkte"
+
+#: src/Controller/SettingsController.php:197
+msgid "No cache name provided"
+msgstr "Es wurde kein Cachename angegeben"
+
+#: src/Controller/SettingsController.php:202
+msgid "Cache cleared for {0}"
+msgstr "Cache für {0} wurde geleert."
+
+#: src/Controller/SettingsController.php:204
+msgid "Could not clear the cache for {0}"
+msgstr "Der Cache für {0} konnte nicht geleert werden."
+
+#: src/Controller/UsersController.php:123
+msgid "Invalid username or password."
+msgstr "Ungültiger Benutzername oder ungültiges Passwort."
+
+#: src/Controller/UsersController.php:242
+msgid "The user settings have been cleared."
+msgstr "Die Nutzereinstellungen wurden zurückgesetzt."
+
+#: src/Controller/UsersController.php:314
 msgid "{0} active user(s)."
 msgstr "{0} aktive Nutzer."
 
-#: src/Controller/UsersController.php:307
-msgid "The password has been changed."
-msgstr "Das Passwort wurde geändert."
+#: src/Controller/UsersController.php:376 src/Model/Entity/Permission.php:90
+#: src/Model/Table/JobsTable.php:276 src/Model/Table/UsersTable.php:595
+#: templates/Jobs/execute.php:86 templates/Services/get_llm.php:78
+#: templates/Users/view.php:78
+#: plugins/Batch/templates/element/Tasks/Export/task_data_properties.php:22
+msgid "Database"
+msgstr "Datenbank"
 
-#: src/Controller/UsersController.php:311
-msgid "The password could not be changed."
-msgstr "Das Passwort konnte nicht geändert werden."
+#: src/Controller/UsersController.php:404
+msgid "Your access token has been recreated."
+msgstr "Ihr Zugriffstoken wurde neu generiert."
 
-#: src/Controller/UsersController.php:338
-msgid "Your new access token is {0}"
-msgstr "Ihr neues Zugangstoken ist {0}"
-
-#: src/Controller/UsersController.php:341
-#: src/Controller/UsersController.php:458
-#: src/Controller/UsersController.php:494
+#: src/Controller/UsersController.php:407
+#: src/Controller/UsersController.php:554
+#: src/Controller/UsersController.php:683
 msgid "The user could not be saved. Please, try again."
 msgstr ""
 "Der Benutzer konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/UsersController.php:345
-#: src/Controller/UsersController.php:393
-#: src/Controller/UsersController.php:431
+#: src/Controller/UsersController.php:411
 msgid "This operation needs a post request."
 msgstr "Diese Operation benötigt eine Post-Anfrage."
 
-#: src/Controller/UsersController.php:374
+#: src/Controller/UsersController.php:437
+#: src/Controller/UsersController.php:502
+msgid "Wildcard grants are not yet supported."
+msgstr "Platzhalter werden in Berechtigungen noch nicht unterstützt."
+
+#: src/Controller/UsersController.php:451
 msgid "No database selected."
 msgstr "Keine Datenbank ausgewählt."
 
-#: src/Controller/UsersController.php:380
+#: src/Controller/UsersController.php:458
 msgid "Access has been granted."
 msgstr "Zugriff gewährt."
 
-#: src/Controller/UsersController.php:383
+#: src/Controller/UsersController.php:461
 msgid "Access could not be granted."
 msgstr "Zugriff konnte nicht gewährt werden."
 
-#: src/Controller/UsersController.php:414
-#: src/Controller/UsersController.php:422
+#: src/Controller/UsersController.php:522
 msgid "Access has been revoked."
 msgstr "Zugriff wurde widerrufen."
 
-#: src/Controller/UsersController.php:417
-#: src/Controller/UsersController.php:425
+#: src/Controller/UsersController.php:525
 msgid "Access could not be revoked."
 msgstr "Zugriff konnte nicht widerrufen werden."
 
-#: src/Controller/UsersController.php:455
-#: src/Controller/UsersController.php:491
+#: src/Controller/UsersController.php:551
+#: src/Controller/UsersController.php:680
 msgid "The user has been saved."
 msgstr "Der Benutzer wurde gespeichert."
 
-#: src/Controller/UsersController.php:515
+#: src/Controller/UsersController.php:585
+msgid "The activation link could not be generated."
+msgstr "Der Aktivierungslink konnte nicht generiert werden."
+
+#: src/Controller/UsersController.php:602
+msgid "Email was sent."
+msgstr "Die E-Mail wurde gesendet."
+
+#: src/Controller/UsersController.php:605
+msgid "Error with sending the email."
+msgstr "Beim Versenden der E-Mail ist ein Fehler aufgetreten."
+
+#: src/Controller/UsersController.php:616
+msgid "Invalid token"
+msgstr "Ungültiges Token"
+
+#: src/Controller/UsersController.php:627
+msgid "Token invalid or expired"
+msgstr "Token ungültig oder abgelaufen"
+
+#: src/Controller/UsersController.php:635
+msgid "Please set a safe password."
+msgstr "Bitte wählen Sie ein sicheres Passwort."
+
+#: src/Controller/UsersController.php:638
+msgid "The passwords do not match."
+msgstr "Die Passwörter stimmen nicht überein."
+
+#: src/Controller/UsersController.php:648
+msgid "Password set. You can now log in."
+msgstr "Das Passwort wurde gesetzt. Sie können sich nun anmelden."
+
+#: src/Controller/UsersController.php:704
 msgid "The user has been deleted."
 msgstr "Der Benutzer wurde gelöscht."
 
-#: src/Controller/UsersController.php:518
+#: src/Controller/UsersController.php:707
 msgid "The user could not be deleted. Please, try again."
 msgstr ""
 "Der Benutzer konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
 
-#: src/Controller/UsersController.php:535
-msgid "The user settings have been cleared."
-msgstr "Die Nutzereinstellungen wurden gelöscht."
+#: src/Datasource/Services/LlmService.php:92
+#: src/Datasource/Services/LlmService.php:213
+msgid "Database name is missing."
+msgstr "Der Datenbankname fehlt."
 
-#: src/Model/Behavior/VersionBehavior.php:124
+#: src/Datasource/Services/LlmService.php:109
+msgid "Table does not support data export."
+msgstr "Die Tabelle unterstützt keinen Datenexport."
+
+#: src/Datasource/Services/LlmService.php:136
+msgid "Annotation type is missing."
+msgstr "Der Annotationstyp fehlt."
+
+#: src/Datasource/Services/LlmService.php:190
+msgid ""
+"Codebook is empty (category=norm_iri, description=lemma+comment and "
+"example=content are required)."
+msgstr ""
+"Das Codebuch ist leer (die Felder category=norm_iri, "
+"description=lemma+comment und example=content sind erforderlich)."
+
+#: src/Datasource/Services/LlmService.php:229
+msgid "Record not found"
+msgstr "Datensatz nicht gefunden"
+
+#: src/Model/Behavior/ImportBehavior.php:225
+msgid "Could not find IRIs for records linked in table {table}: {error}."
+msgstr ""
+"Es konnten keine IRIs für die in der Tabelle {table} verknüpften Datensätze "
+"gefunden werden: {error}."
+
+#: src/Model/Behavior/ImportBehavior.php:493
+msgid "Error linking records in model {model}: {error}."
+msgstr "Fehler beim Verknüpfen von Datensätzen im Modell {model}: {error}."
+
+#: src/Model/Behavior/ImportBehavior.php:643
+msgid "Error in commit for table {table}: {error}."
+msgstr "Fehler beim Commit für die Tabelle {table}: {error}."
+
+#: src/Model/Behavior/ImportBehavior.php:658
+msgid "Error importing records into table {table}: {error}."
+msgstr ""
+"Fehler beim Importieren von Datensätzen in die Tabelle {table}: {error}."
+
+#: src/Model/Behavior/VersionBehavior.php:136
 msgid "Versioning failed"
 msgstr "Versionierung fehlgeschlagen"
 
-#: src/Model/Behavior/VersionedTreeBehavior.php:284
+#: src/Model/Behavior/VersionedTreeBehavior.php:324
 msgid "Could not move record: {0}"
 msgstr "Konnte Datensatz {0} nicht verschieben"
 
-#: src/Model/Entity/BaseEntity.php:521 src/Model/Entity/BaseEntity.php:567
-#: src/Model/Entity/BaseEntity.php:579 src/Model/Entity/BaseEntity.php:709
+#: src/Model/Entity/BaseEntity.php:327 src/Model/Entity/BaseEntity.php:1065
+#: src/Model/Entity/BaseEntity.php:1165 src/Model/Entity/BaseEntity.php:1194
+#: src/Model/Entity/BaseEntity.php:1360
 msgid "Error parsing JSON: {0}"
 msgstr "Fehler beim Parsen von JSON: {0}"
 
-#: src/Model/Entity/BaseEntity.php:553
+#: src/Model/Entity/BaseEntity.php:1150
 msgid "Error parsing XML: {0}"
 msgstr "Fehler beim Parsen von XML: {0}"
 
-#: src/Model/Entity/BaseEntity.php:612 src/Model/Entity/BaseEntity.php:630
+#: src/Model/Entity/BaseEntity.php:1182
+msgid "Error parsing CSV: {0}"
+msgstr "Fehler beim Parsen von CSV: {0}"
+
+#: src/Model/Entity/BaseEntity.php:1263
+#: plugins/Epi/src/Model/Entity/Article.php:485
+#: plugins/Epi/src/Model/Entity/Section.php:1114
 msgid "Article"
 msgstr "Artikel"
 
-#: src/Model/Entity/BaseEntity.php:676 src/Model/Entity/BaseEntity.php:719
+#: src/Model/Entity/BaseEntity.php:1324 src/Model/Entity/BaseEntity.php:1370
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:1134
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:1145
 msgid "Error encoding JSON: {0}"
 msgstr "Fehler beim Kodieren von JSON: {0}"
 
-#: src/Model/Entity/BaseEntity.php:701
+#: src/Model/Entity/BaseEntity.php:1350
 msgid "Error injecting IDs: {0}"
 msgstr "Fehler beim Einfügen der IDs: {0}"
 
-#: src/Model/Entity/BaseEntity.php:808
+#: src/Model/Entity/BaseEntity.php:1421
 msgid "Error parsing original JSON value: {0}"
 msgstr "Fehler beim Parsen des ursprünglichen JSON-Werts: {0}"
 
-#: src/Model/Entity/BaseEntity.php:827
+#: src/Model/Entity/BaseEntity.php:1439
 msgid "Error encoding new JSON value: {0}"
 msgstr "Fehler beim Kodieren des neuen JSON-Werts: {0}"
 
-#: src/Model/Entity/BaseEntity.php:1014
+#: src/Model/Entity/BaseEntity.php:1883
 msgid "Drafted"
 msgstr "Angelegt"
 
-#: src/Model/Entity/BaseEntity.php:1015
+#: src/Model/Entity/BaseEntity.php:1884
 msgid "In progress"
 msgstr "In Bearbeitung"
 
-#: src/Model/Entity/BaseEntity.php:1016
+#: src/Model/Entity/BaseEntity.php:1885
 msgid "Complete"
 msgstr "Fertig"
 
-#: src/Model/Entity/BaseEntity.php:1017 src/Model/Entity/Databank.php:820
-#: src/Model/Entity/Doc.php:220 src/Model/Table/DatabanksTable.php:338
+#: src/Model/Entity/BaseEntity.php:1886 src/Model/Entity/Doc.php:204
+#: src/Model/Table/DatabanksTable.php:464
+#: plugins/Epi/src/Model/Entity/Type.php:329
+#: plugins/Epi/src/Model/Table/TypesTable.php:686
+#: plugins/Files/src/Model/Entity/FileRecord.php:491
 msgid "Published"
 msgstr "Veröffentlicht"
 
-#: src/Model/Entity/BaseEntity.php:1018
+#: src/Model/Entity/BaseEntity.php:1887
 msgid "Searchable"
 msgstr "Durchsuchbar"
 
-#: src/Model/Entity/BaseEntity.php:1035
+#: src/Model/Entity/BaseEntity.php:1904
+#: plugins/Widgets/src/View/Helper/TreeHelper.php:173
 msgid "None"
 msgstr "Keine"
 
-#: src/Model/Entity/Databank.php:257
+#: src/Model/Entity/Databank.php:335
 msgid "The database is not available."
 msgstr "Die Datenbank ist nicht verfügbar."
 
-#: src/Model/Entity/Databank.php:261
+#: src/Model/Entity/Databank.php:339
 msgid "The database is empty."
 msgstr "Die Datenbank ist leer."
 
-#: src/Model/Entity/Databank.php:265
+#: src/Model/Entity/Databank.php:343
 msgid "The version of the database is not supported."
 msgstr "Die Version der Datenbank wird nicht unterstützt."
 
-#: src/Model/Entity/Databank.php:269
+#: src/Model/Entity/Databank.php:347
 msgid "The database is ready to use."
 msgstr "Die Datenbank ist einsatzbereit."
 
-#: src/Model/Entity/Databank.php:805 src/Model/Entity/Doc.php:177
-#: src/Model/Entity/Pipeline.php:113 src/Model/Entity/Tasks/TaskSort.php:37
-#: src/Model/Entity/User.php:304 src/Model/Table/DatabanksTable.php:250
-#: src/Model/Table/DocsTable.php:276 src/Model/Table/PipelinesTable.php:118
+#: src/Model/Entity/Databank.php:1076 src/Model/Entity/Databank.php:1083
+#: src/Model/Entity/Doc.php:161 src/Model/Entity/Pipeline.php:253
+#: src/Model/Entity/User.php:397 src/Model/Table/DatabanksTable.php:326
+#: src/Model/Table/DocsTable.php:277 src/Model/Table/JobsTable.php:230
+#: src/Model/Table/PipelinesTable.php:140
+#: plugins/Epi/src/Model/Entity/Project.php:207
+#: plugins/Epi/src/Model/Entity/Property.php:620
+#: plugins/Epi/src/Model/Entity/Section.php:1108
+#: plugins/Epi/src/Model/Entity/Type.php:291
+#: plugins/Epi/src/Model/Entity/User.php:200
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:197
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2353
+#: plugins/Epi/src/Model/Table/TypesTable.php:624
+#: plugins/Epi/src/Model/Table/UsersTable.php:142
+#: plugins/Files/src/Model/Entity/FileRecord.php:457
+#: plugins/Files/templates/Files/index.php:79
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchSort.php:47
 msgid "Name"
 msgstr "Name"
 
-#: src/Model/Entity/Databank.php:812 src/Model/Entity/Pipeline.php:118
-#: src/Model/Table/DatabanksTable.php:360
-#: src/Model/Table/PipelinesTable.php:125
-msgid "Description"
-msgstr "Beschreibung"
-
-#: src/Model/Entity/Databank.php:816 src/Model/Table/DatabanksTable.php:318
-msgid "Version"
-msgstr "Version"
-
-#: src/Model/Entity/Databank.php:827
-msgid "IRI Prefix"
-msgstr "IRI Prefix"
-
-#: src/Model/Entity/Databank.php:831 src/Model/Table/JobsTable.php:144
-msgid "Status"
-msgstr "Status"
-
-#: src/Model/Entity/Databank.php:837
-msgid "Associated Users"
-msgstr "Zugeordnete Benutzer"
-
-#: src/Model/Entity/Databank.php:843
-msgid "Granted SQL-users"
-msgstr "SQL-Nutzer mit Zugriffsrechten"
-
-#: src/Model/Entity/Databank.php:854
-msgid "Backup files"
-msgstr "Backup-Dateien"
-
-#: src/Model/Entity/Doc.php:188 src/Model/Table/DocsTable.php:406
-msgid "Content"
-msgstr "Inhalt"
-
-#: src/Model/Entity/Doc.php:197
-#: src/Model/Entity/Tasks/TaskAssignCollection.php:38
-#: src/Model/Table/DocsTable.php:282
+#: src/Model/Entity/Databank.php:1087 src/Model/Entity/Doc.php:181
+#: src/Model/Table/DatabanksTable.php:336 src/Model/Table/DocsTable.php:283
+#: plugins/Epi/src/Model/Entity/Property.php:656
+#: plugins/Epi/src/Model/Entity/Type.php:325
+#: plugins/Epi/src/Model/Table/TypesTable.php:647
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProperty.php:136
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:24
+#: plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:100
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:119
+#: plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:285
+#: plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:435
 msgid "Category"
 msgstr "Kategorie"
 
-#: src/Model/Entity/Doc.php:201
+#: src/Model/Entity/Databank.php:1090 src/Model/Entity/Pipeline.php:264
+#: src/Model/Table/DatabanksTable.php:486
+#: src/Model/Table/PipelinesTable.php:147
+#: plugins/Epi/src/Model/Entity/Project.php:221
+#: plugins/Epi/src/Model/Entity/Type.php:319
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:231
+#: plugins/Epi/src/Model/Table/TypesTable.php:658
+#: plugins/Files/src/Model/Entity/FileRecord.php:464
+msgid "Description"
+msgstr "Beschreibung"
+
+#: src/Model/Entity/Databank.php:1093 src/Model/Table/DatabanksTable.php:444
+msgid "Version"
+msgstr "Version"
+
+#: src/Model/Entity/Databank.php:1096 src/Model/Entity/Job.php:1552
+#: src/Model/Entity/Job.php:1556 src/Model/Table/JobsTable.php:263
+#: plugins/Epi/src/Model/Entity/Article.php:1421
+#: plugins/Epi/src/Model/Entity/Project.php:254
+#: plugins/Epi/src/Model/Entity/Property.php:685
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:217
+#: plugins/Epi/src/View/Helper/TypesHelper.php:88
+#: plugins/Epi/templates/Sections/view_metrics.php:35
+msgid "Progress"
+msgstr "Fortschritt"
+
+#: src/Model/Entity/Databank.php:1102
+msgid "IRI Prefix"
+msgstr "IRI-Präfix"
+
+#: src/Model/Entity/Databank.php:1105 src/Model/Entity/Job.php:1537
+#: src/Model/Table/JobsTable.php:254
+#: plugins/Epi/src/Model/Entity/Article.php:1407
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:326
+msgid "Status"
+msgstr "Status"
+
+#: src/Model/Entity/Databank.php:1110
+msgid "Associated Users"
+msgstr "Zugeordnete Benutzer"
+
+#: src/Model/Entity/Databank.php:1115
+msgid "Granted SQL-users"
+msgstr "Autorisierte SQL-Nutzer"
+
+#: src/Model/Entity/Databank.php:1124
+msgid "Backup files"
+msgstr "Backup-Dateien"
+
+#: src/Model/Entity/Doc.php:172 src/Model/Table/DocsTable.php:407
+#: templates/Docs/view.php:31 templates/Help/show.php:29
+#: plugins/Epi/src/Model/Entity/Item.php:544
+#: plugins/Epi/src/Model/Table/BaseTable.php:404
+#: plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:96
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:115
+#: plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:431
+msgid "Content"
+msgstr "Inhalt"
+
+#: src/Model/Entity/Doc.php:185
 msgid "Add to menu"
 msgstr "Zum Menü hinzufügen"
 
-#: src/Model/Entity/Doc.php:210
-msgid "Pretty URL (iri)"
+#: src/Model/Entity/Doc.php:194
+msgid "Pretty URL (IRI)"
 msgstr "Sprechende URL (IRI)"
 
-#: src/Model/Entity/Doc.php:215 src/Model/Entity/Tasks/TaskSort.php:35
+#: src/Model/Entity/Doc.php:199
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2354
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchSort.php:45
 msgid "Sort key"
 msgstr "Sortierschlüssel"
 
-#: src/Model/Entity/Job.php:921
-msgid "Error executing task of type {type}: {error}"
-msgstr "Fehler beim Ausführen der Aufgabe vom Typ {type}: {error}"
+#: src/Model/Entity/Help.php:178
+msgid "Preface"
+msgstr "Vorwort"
 
-#: src/Model/Entity/Job.php:1120
+#: src/Model/Entity/Job.php:975
+msgid "No database selected"
+msgstr "Keine Datenbank ausgewählt"
+
+#: src/Model/Entity/Job.php:1054 src/Model/Entity/Job.php:1069
+#: plugins/Batch/src/Model/Tasks/BaseTask.php:246
+msgid "The file {0} is not available for download."
+msgstr "Die Datei {0} steht nicht zum Herunterladen zur Verfügung."
+
+#: src/Model/Entity/Job.php:1073
+msgid "The file name {0} contains invalid characters."
+msgstr "Der Dateiname {0} enthält ungültige Zeichen."
+
+#: src/Model/Entity/Job.php:1374
+msgid "Error executing task of type {type}: {error}"
+msgstr "Fehler beim Ausführen des Tasks vom Typ {type}: {error}"
+
+#: src/Model/Entity/Job.php:1463
 msgid "Selected records ({0})"
 msgstr "Ausgewählte Datensätze ({0})"
 
-#: src/Model/Entity/Job.php:1126
+#: src/Model/Entity/Job.php:1469
 msgid "All records ({0})"
 msgstr "Alle Datensätze ({0})"
 
-#: src/Model/Entity/Jobs/JobImport.php:139
-msgid "Error loading data from source \"{source}\": {error}."
-msgstr "Fehler beim laden der Daten aus der Quelle \"{source}\": {error}."
+#: src/Model/Entity/Job.php:1533 plugins/Batch/templates/Batch/export.php:165
+msgid "Job name"
+msgstr "Jobname"
 
-#: src/Model/Entity/Jobs/JobImport.php:308
-msgid "Could not copy file {0}."
-msgstr "Konnte die Datei {0} nicht kopieren."
+#: src/Model/Entity/Job.php:1534
+msgid "Job type"
+msgstr "Jobtyp"
 
-#: src/Model/Entity/Jobs/JobImport.php:324
-msgid "{0} unsolved references."
-msgstr "{0} unaufgelöste Verweise."
+#: src/Model/Entity/Job.php:1535 src/Model/Entity/Pipeline.php:267
+#: src/Model/Entity/User.php:503 plugins/Epi/src/Model/Entity/Article.php:1399
+#: plugins/Epi/src/Model/Entity/Project.php:239
+#: plugins/Epi/src/Model/Entity/User.php:230
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:1803
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2380
+#: plugins/Epi/src/Model/Table/TypesTable.php:698
+msgid "IRI path"
+msgstr "IRI-Pfad"
 
-#: src/Model/Entity/Jobs/JobTransfer.php:51
-msgid "Recover trees"
-msgstr "Baumstruktur wiederherstellen"
+#: src/Model/Entity/Job.php:1536 src/Model/Entity/Pipeline.php:272
+#: src/Model/Entity/User.php:492 src/Model/Table/PipelinesTable.php:154
+#: plugins/Epi/src/Model/Entity/Project.php:231
+#: plugins/Epi/src/Model/Entity/Property.php:703
+#: plugins/Epi/src/Model/Entity/Type.php:338
+#: plugins/Epi/src/Model/Entity/User.php:219
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:1802
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2373
+#: plugins/Epi/src/Model/Table/TypesTable.php:692
+#: plugins/Epi/src/Model/Table/UsersTable.php:144
+#: plugins/Epi/templates/Properties/merge_select.php:60
+#: plugins/Epi/templates/Properties/view.php:42
+#: plugins/Epi/templates/Properties/view.php:60
+#: plugins/Epi/templates/Properties/view.php:79
+#: plugins/Epi/templates/Properties/view.php:98
+#: plugins/Epi/templates/Properties/view.php:124
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2514
+msgid "IRI fragment"
+msgstr "IRI-Fragment"
 
-#: src/Model/Entity/Jobs/JobTransfer.php:52
-msgid "Init versioning"
-msgstr "Versionierung initialisieren"
+#: src/Model/Entity/Job.php:1538
+msgid "Queued"
+msgstr "Wartet"
 
-#: src/Model/Entity/Jobs/JobTransfer.php:53
-msgid "Transfer comments"
-msgstr "Notizen übertragen"
+#: src/Model/Entity/Job.php:1540 src/Model/Table/JobsTable.php:240
+msgid "Schedule"
+msgstr "Zeitplan"
 
-#: src/Model/Entity/Jobs/JobTransfer.php:54
-msgid "Copy files"
-msgstr "Dateien kopieren"
+#: src/Model/Entity/Job.php:1541
+msgid "Add a crontab expression to schedule the job."
+msgstr "Fügen Sie einen Crontab-Eintrag hinzu, um den Job zu planen."
 
-#: src/Model/Entity/Permission.php:72 src/Model/Table/PermissionsTable.php:735
-#: src/Model/Table/PermissionsTable.php:745
-#, fuzzy
-#| msgid "Users"
+#: src/Model/Entity/Job.php:1544 src/Model/Table/JobsTable.php:235
+msgid "Next run"
+msgstr "Nächste Ausführung"
+
+#: src/Model/Entity/Job.php:1545
+msgid "Current server time is {0}"
+msgstr "Aktuelle Serverzeit ist {0}"
+
+#: src/Model/Entity/Job.php:1548
+msgid "Queue status"
+msgstr "Status der Warteschlange"
+
+#: src/Model/Entity/Job.php:1560
+msgid "Max progress"
+msgstr "Maximaler Fortschritt"
+
+#: src/Model/Entity/Job.php:1564 templates/Jobs/view.php:94
+#: plugins/Epi/src/Model/Entity/Type.php:295
+#: plugins/Epi/src/Model/Table/TypesTable.php:663
+#: plugins/Files/src/Model/Entity/FileRecord.php:472
+msgid "Config"
+msgstr "Konfiguration"
+
+#: src/Model/Entity/Job.php:1571
+msgid "Result"
+msgstr "Ergebnis"
+
+#: src/Model/Entity/Job.php:1578 src/Model/Entity/User.php:509
+#: src/Model/Table/DatabanksTable.php:473
+#: src/Model/Table/PipelinesTable.php:161
+#: plugins/Epi/src/Model/Entity/Project.php:261
+#: plugins/Epi/src/Model/Entity/User.php:236
+#: plugins/Epi/src/Model/Table/TypesTable.php:704
+msgid "Created"
+msgstr "Erstellt"
+
+#: src/Model/Entity/Job.php:1582 src/Model/Entity/User.php:514
+#: src/Model/Table/DatabanksTable.php:479
+#: src/Model/Table/PipelinesTable.php:168
+#: plugins/Epi/src/Model/Entity/Project.php:266
+#: plugins/Epi/src/Model/Entity/User.php:241
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:1801
+#: plugins/Epi/src/Model/Table/TypesTable.php:710
+#: plugins/Epi/templates/Properties/merge_select.php:61
+#: plugins/Epi/templates/Properties/view.php:43
+#: plugins/Epi/templates/Properties/view.php:61
+#: plugins/Epi/templates/Properties/view.php:80
+#: plugins/Epi/templates/Properties/view.php:99
+#: plugins/Epi/templates/Properties/view.php:125
+#: plugins/Files/src/Model/Entity/FileRecord.php:534
+#: plugins/Files/templates/Files/index.php:81
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2515
+msgid "Modified"
+msgstr "Bearbeitet"
+
+#: src/Model/Entity/Job.php:1586
+msgid "Time used"
+msgstr "Verwendete Zeit"
+
+#: src/Model/Entity/Job.php:1591
+msgid "Time remaining"
+msgstr "Verbleibende Zeit"
+
+#: src/Model/Entity/Job.php:1596
+msgid "Stale"
+msgstr "Abgelaufen"
+
+#: src/Model/Entity/Permission.php:96 src/Model/Entity/Permission.php:132
+msgid "Requested via"
+msgstr "Angefragt über"
+
+#: src/Model/Entity/Permission.php:105 src/Model/Table/PermissionsTable.php:884
+#: src/Model/Table/PermissionsTable.php:894
 msgid "User"
 msgstr "Benutzer"
 
-#: src/Model/Entity/Permission.php:80 src/Model/Entity/User.php:299
-#: src/Model/Table/PermissionsTable.php:756 src/Model/Table/UsersTable.php:436
+#: src/Model/Entity/Permission.php:121 src/Model/Entity/User.php:390
+#: src/Model/Table/PermissionsTable.php:905 src/Model/Table/UsersTable.php:571
 msgid "Role"
 msgstr "Rolle"
 
-#: src/Model/Entity/Permission.php:89
-msgid "Requested by"
-msgstr "Angefragt von"
+#: src/Model/Entity/Permission.php:122
+msgid "Leave empty to use the default role of the user."
+msgstr "Leer lassen, um die Standardrolle des Nutzers zu verwenden."
 
-#: src/Model/Entity/Permission.php:97 src/Model/Table/PermissionsTable.php:799
+#: src/Model/Entity/Permission.php:141 src/Model/Table/PermissionsTable.php:948
 msgid "Permission Type"
 msgstr "Typ der Berechtigung"
 
-#: src/Model/Entity/Permission.php:105 src/Model/Table/PermissionsTable.php:807
+#: src/Model/Entity/Permission.php:150 src/Model/Table/PermissionsTable.php:956
 msgid "Endpoint name"
 msgstr "Name des Endpunkts"
 
-#: src/Model/Entity/Permission.php:111 src/Model/Table/PermissionsTable.php:776
+#: src/Model/Entity/Permission.php:158 src/Model/Table/PermissionsTable.php:925
+#: templates/Users/view.php:123
 msgid "Entity Type"
-msgstr "Typ der Entität"
+msgstr "Typ des Datensatzes"
 
-#: src/Model/Entity/Permission.php:119
+#: src/Model/Entity/Permission.php:167 templates/Users/view.php:124
 msgid "Entity Name"
-msgstr "Name der Entität"
+msgstr "Name des Datensatzes"
 
-#: src/Model/Entity/Permission.php:123 src/Model/Table/PermissionsTable.php:793
+#: src/Model/Entity/Permission.php:172 src/Model/Table/PermissionsTable.php:942
+#: templates/Users/view.php:125
 msgid "Entity ID"
-msgstr "ID der Entität"
+msgstr "ID des Datensatzes"
 
-#: src/Model/Entity/Permission.php:128 src/Model/Table/DocsTable.php:304
-#: src/Model/Table/JobsTable.php:172 src/Model/Table/PermissionsTable.php:826
-#: src/Model/Table/UsersTable.php:526
+#: src/Model/Entity/Permission.php:178 src/Model/Table/DocsTable.php:305
+#: src/Model/Table/JobsTable.php:295 src/Model/Table/PermissionsTable.php:975
+#: src/Model/Table/UsersTable.php:666
+#: plugins/Epi/src/Model/Entity/Article.php:1440
+#: plugins/Epi/src/Model/Entity/Property.php:707
 msgid "Created on"
 msgstr "Erstellt am"
 
-#: src/Model/Entity/Permission.php:133 src/Model/Table/DocsTable.php:299
-#: src/Model/Table/JobsTable.php:166 src/Model/Table/PermissionsTable.php:820
-#: src/Model/Table/UsersTable.php:520
+#: src/Model/Entity/Permission.php:183 src/Model/Table/DocsTable.php:300
+#: src/Model/Table/JobsTable.php:289 src/Model/Table/PermissionsTable.php:969
+#: src/Model/Table/UsersTable.php:660
+#: plugins/Epi/src/Model/Entity/Article.php:1453
+#: plugins/Epi/src/Model/Entity/Property.php:720
 msgid "Last modified"
-msgstr "Zuletzt verändert"
+msgstr "Zuletzt bearbeitet"
 
-#: src/Model/Entity/Permission.php:139 src/Model/Table/PermissionsTable.php:814
+#: src/Model/Entity/Permission.php:189 src/Model/Table/PermissionsTable.php:963
+#: templates/Users/view.php:130
 msgid "Expires"
 msgstr "Läuft ab am"
 
-#: src/Model/Entity/Pipeline.php:121 src/Model/Table/DocsTable.php:287
-msgid "IRI-Fragment"
-msgstr "IRI-Fragment"
-
-#: src/Model/Entity/Pipeline.php:144
+#: src/Model/Entity/Pipeline.php:303 templates/Jobs/view.php:53
+#: plugins/Batch/templates/Batch/export.php:108
+#: plugins/Batch/templates/Batch/export.php:125
 msgid "Tasks"
 msgstr "Aufgaben"
 
-#: src/Model/Entity/Tasks/BaseTaskMutate.php:105
-msgid "Error mutating entitites: {error}."
-msgstr "Fehler bei der Stapelverarbeitung:: {error}"
+#: src/Model/Entity/User.php:184
+msgid "Dear {0}!"
+msgstr "Liebe/r {0}!"
 
-#: src/Model/Entity/Tasks/TaskAssignCollection.php:51
-msgid "Property"
-msgstr "Eigenschaft"
+#: src/Model/Entity/User.php:185
+msgid "Welcome to Epigraf. "
+msgstr "Willkommen bei Epigraf. "
 
-#: src/Model/Entity/Tasks/TaskAssignProject.php:35
-msgid "Project"
-msgstr "Projekt"
+#: src/Model/Entity/User.php:186
+msgid ""
+"Open the following link in your browser to set a password and activate your "
+"user account:"
+msgstr ""
+"Öffnen Sie den folgenden Link in Ihrem Browser, um ein Passwort festzulegen "
+"und Ihr Benutzerkonto zu aktivieren:"
 
-#: src/Model/Entity/Tasks/TaskCopyFiles.php:46
-msgid "Empty source path"
-msgstr "Quellpfad fehlt"
+#: src/Model/Entity/User.php:194
+msgid "Your user name is: {0}"
+msgstr "Ihr Benutzername lautet: {0}"
 
-#: src/Model/Entity/Tasks/TaskSort.php:36
-msgid "Lemma"
-msgstr "Lemma"
+#: src/Model/Entity/User.php:195
+msgid "You can then login with the username and your new password."
+msgstr ""
+"Sie können sich dann mit dem Benutzernamen und Ihrem neuen Passwort anmelden."
 
-#: src/Model/Entity/Tasks/TaskSort.php:39
-msgid "Sort number"
-msgstr "Sortiernummer"
+#: src/Model/Entity/User.php:196
+msgid ""
+"As an EpiWeb user, you can access your database via the menu in the top left "
+"corner."
+msgstr ""
+"Als EpiWeb-Benutzer können Sie über das Menü in der oberen linken Ecke auf "
+"Ihre Datenbank zugreifen."
 
-#: src/Model/Entity/Tasks/TaskSort.php:40
-msgid "Tree order"
-msgstr "Reihenfolge in der Baumstruktur"
+#: src/Model/Entity/User.php:197
+msgid ""
+"If you use EpiDesktop, you will find the required settings in your user "
+"profile."
+msgstr ""
+"Wenn Sie EpiDesktop verwenden, finden Sie die erforderlichen Einstellungen "
+"in Ihrem Benutzerprofil."
 
-#: src/Model/Entity/Tasks/TaskSort.php:45
-msgid "Sort field"
-msgstr "Sortierfeld"
+#: src/Model/Entity/User.php:198
+msgid "The link is valid until {0}."
+msgstr "Der Link ist bis zum {0} gültig."
 
-#: src/Model/Entity/User.php:250
+#: src/Model/Entity/User.php:200
+msgid "Sincerely yours"
+msgstr "Mit freundlichen Grüßen"
+
+#: src/Model/Entity/User.php:201
+msgid "The Epigraf Team"
+msgstr "Das Epigraf-Team"
+
+#: src/Model/Entity/User.php:205
+msgid "Your Epigraf account is ready"
+msgstr "Ihr Epigraf-Konto ist eingerichtet"
+
+#: src/Model/Entity/User.php:316
+msgid "Revoke"
+msgstr "Widerrufen"
+
+#: src/Model/Entity/User.php:337
 msgid "The IRI is missing."
-msgstr "Die IRI fehlt"
+msgstr "Die IRI fehlt."
 
-#: src/Model/Entity/User.php:254
-msgid "No default database selected"
-msgstr "Keine voreingestellte Datenbank ausgewählt"
+#: src/Model/Entity/User.php:341
+msgid "No default database selected."
+msgstr "Es wurde keine Standarddatenbank ausgewählt."
 
-#: src/Model/Entity/User.php:263
-msgid "No access to default database. Did you forget to grant access?"
-msgstr "Kein Zugriff auf die voreingestellte Datenbank. Haben Sie die Zuteilung der Berechtigung vergessen?"
-
-#: src/Model/Entity/User.php:294
+#: src/Model/Entity/User.php:384 templates/Users/index.php:30
+#: templates/Users/view.php:70
 msgid "Username"
 msgstr "Benutzername"
 
-#: src/Model/Entity/User.php:295
+#: src/Model/Entity/User.php:386
 msgid ""
-"The username should contain the real name of the person. Only alphanumeric "
-"characters are allowed. Maximum length is 50 characters."
+"The username should contain the real name of the person. Maximum length is "
+"100 characters."
 msgstr ""
-"Der Benutzername sollte den echten Namen der Person enthalten. Erlaubt sind "
-"nur alphanumerische Zeichen. Die maximale Länge beträgt 50 Zeichen."
+"Der Benutzername sollte den richtigen Namen der Person enthalten. Die "
+"maximale Länge beträgt 100 Zeichen."
 
-#: src/Model/Entity/User.php:305
+#: src/Model/Entity/User.php:399
 msgid "First and last name."
-msgstr "Vor- und Nachname"
+msgstr "Vor- und Nachname."
 
-#: src/Model/Entity/User.php:309
-msgid "Acronym"
-msgstr "Akronym"
-
-#: src/Model/Entity/User.php:310
-msgid "First letters of the name."
-msgstr "Erste Buchstaben des Namens."
-
-#: src/Model/Entity/User.php:314
+#: src/Model/Entity/User.php:403
 msgid "Email address"
 msgstr "E-Mail-Adresse"
 
-#: src/Model/Entity/User.php:315
+#: src/Model/Entity/User.php:405
 msgid "Please provide an email address to contact the user."
 msgstr "Bitte geben Sie eine E-Mail-Adresse für den Kontakt zum Nutzer an."
 
-#: src/Model/Entity/User.php:319 src/Model/Table/UsersTable.php:446
+#: src/Model/Entity/User.php:409 src/Model/Table/UsersTable.php:581
 msgid "Contact"
 msgstr "Kontakt"
 
-#: src/Model/Entity/User.php:320
+#: src/Model/Entity/User.php:411
 msgid ""
 "Please provide additional information about how to contact the user, for "
 "example the affiliation."
@@ -668,20 +1054,32 @@ msgstr ""
 "Bitte geben Sie zusätzliche Informationen darüber an, wie der Benutzer "
 "kontaktiert werden kann, zum Beispiel die Organisation."
 
-#: src/Model/Entity/User.php:324
+#: src/Model/Entity/User.php:415
+msgid "Activation"
+msgstr "Aktivierung"
+
+#: src/Model/Entity/User.php:424 templates/Users/view.php:74
 msgid "Password"
 msgstr "Passwort"
 
-#: src/Model/Entity/User.php:328
+#: src/Model/Entity/User.php:428
 msgid ""
 "Please enter a strong password and remember it well. The password can't be "
 "restored. If you loose it, you have to enter a new password."
 msgstr ""
-"Bitte geben Sie ein sicheres Passwort ein und merken Sie es sich gut. "
-"Das Passwort kann nicht wiederhergestellt werden. "
- "Wenn Sie es verlieren, müssen Sie ein neues Passwort eingeben."
+"Bitte geben Sie ein sicheres Passwort ein und merken Sie es sich gut. Das "
+"Passwort kann nicht wiederhergestellt werden. Wenn Sie es verlieren, müssen "
+"Sie ein neues Passwort vergeben."
 
-#: src/Model/Entity/User.php:336
+#: src/Model/Entity/User.php:429 templates/Users/activate.php:30
+msgid ""
+"It must be at least 8 characters long and include an uppercase letter, a "
+"lowercase letter, a number, and a special character."
+msgstr ""
+"Es muss mindestens 8 Zeichen lang sein und einen Großbuchstaben, einen "
+"Kleinbuchstaben, eine Ziffer und ein Sonderzeichen enthalten."
+
+#: src/Model/Entity/User.php:439
 msgid ""
 "The access token is used for API access and for access from EpiDesktop. "
 "Leave empty to automatically create an access token."
@@ -690,656 +1088,3191 @@ msgstr ""
 "verwendet. Lassen Sie dieses Feld leer, um automatisch ein Zugangstoken zu "
 "erstellen."
 
-#: src/Model/Entity/User.php:342
+#: src/Model/Entity/User.php:446
 msgid "Default Database"
 msgstr "Voreingestellte Datenbank"
 
-#: src/Model/Entity/User.php:344
+#: src/Model/Entity/User.php:449
 msgid "Select the database that should open after you login."
-msgstr "Wählen Sie die Datenbank aus, die nach dem Einloggen geöffnet werden soll."
+msgstr ""
+"Wählen Sie die Datenbank aus, die nach dem Einloggen geöffnet werden soll."
 
-#: src/Model/Entity/User.php:350
+#: src/Model/Entity/User.php:457
 msgid "Default Article Pipeline"
 msgstr "Voreingestellte Artikel-Pipeline"
 
-#: src/Model/Entity/User.php:352
+#: src/Model/Entity/User.php:460
 msgid ""
 "Only Epigraf-Desktop users: Select the pipeline that exports single articles."
-msgstr "Nur Epigraf-Desktop-Nutzer: Wählen Sie die Pipeline, die einzelne Artikel exportiert."
+msgstr ""
+"Nur Epigraf-Desktop-Nutzer: Wählen Sie die Pipeline, die einzelne Artikel "
+"exportiert."
 
-#: src/Model/Entity/User.php:358
+#: src/Model/Entity/User.php:466
 msgid "Default Book Pipeline"
 msgstr "Voreingestellte Buch-Pipeline"
 
-#: src/Model/Entity/User.php:360
+#: src/Model/Entity/User.php:469
 msgid ""
 "Only Epigraf-Desktop users: Select the pipeline that exports a complete book."
-msgstr "Nur Epigraf-Desktop-Nutzer: Wählen Sie die Pipeline, die einen kompletten Band exportiert."
+msgstr ""
+"Nur Epigraf-Desktop-Nutzer: Wählen Sie die Pipeline, die einen vollständigen "
+"Band exportiert."
 
-#: src/Model/Entity/User.php:366
+#: src/Model/Entity/User.php:477
 msgid "Language"
 msgstr "Sprache"
 
-#: src/Model/Entity/User.php:368
+#: src/Model/Entity/User.php:480
 msgid "The language in which Epigraf talks to you."
 msgstr "Die Sprache, in der Epigraf mit Ihnen spricht."
 
-#: src/Model/Entity/User.php:372
+#: src/Model/Entity/User.php:484
 msgid "Default"
 msgstr "Voreinstellung"
 
-#: src/Model/Entity/User.php:373
+#: src/Model/Entity/User.php:485
 msgid "Theme"
 msgstr "Theme"
 
-#: src/Model/Entity/User.php:375
+#: src/Model/Entity/User.php:488
 msgid "The user interface appearance."
 msgstr "Das Erscheinungsbild der Benutzeroberfläche."
 
-#: src/Model/Entity/User.php:379 src/Model/Table/PipelinesTable.php:132
-msgid "IRI fragment"
-msgstr "IRI-Fragment"
-
-#: src/Model/Entity/User.php:381
+#: src/Model/Entity/User.php:494
 msgid ""
-" Usually the IRI equals the username. The IRI is used to match users in the "
-"main database to users in the project databases."
+"If empty, the IRI fragment is generated from the username. Only lowercase "
+"alphanumeric characters, underscore, hyphen and tilde are allowed. The IRI "
+"is used to match users in the main database to users in the project "
+"databases."
 msgstr ""
-"Normalerweise entspricht die IRI dem Benutzernamen. "
- "Die IRI wird verwendet, um Benutzer in der Hauptdatenbank mit Benutzern in den Projektdatenbanken abzugleichen."
+"Ist das Feld leer, wird das IRI-Fragment aus dem Benutzernamen generiert. Es "
+"sind nur Kleinbuchstaben, alphanumerische Zeichen, Unterstriche, "
+"Bindestriche und Tilden zulässig. Die IRI dient dazu, Benutzer in der "
+"Hauptdatenbank mit Benutzern in den Projektdatenbanken abzugleichen."
 
-#: src/Model/Entity/User.php:385
-msgid "IRI path"
-msgstr "IRI-Pfad"
-
-#: src/Model/Entity/User.php:391 src/Model/Table/DatabanksTable.php:347
-#: src/Model/Table/PipelinesTable.php:139
-msgid "Created"
-msgstr "Erzeugt"
-
-#: src/Model/Entity/User.php:396 src/Model/Table/DatabanksTable.php:353
-#: src/Model/Table/PipelinesTable.php:146
-msgid "Modified"
-msgstr "Verändert"
-
-#: src/Model/Table/DatabanksTable.php:324
+#: src/Model/Table/DatabanksTable.php:450
+#: plugins/Epi/templates/Analytics/files.php:36
 msgid "Available"
 msgstr "Verfügbar"
 
-#: src/Model/Table/DatabanksTable.php:331
+#: src/Model/Table/DatabanksTable.php:457
 msgid "Valid"
 msgstr "Gültig"
 
-#: src/Model/Table/DatabanksTable.php:367 src/Model/Table/JobsTable.php:136
-#: src/Model/Table/PipelinesTable.php:111
+#: src/Model/Table/DatabanksTable.php:493 src/Model/Table/JobsTable.php:220
+#: src/Model/Table/PipelinesTable.php:125
+#: plugins/Epi/src/Model/Entity/Property.php:731
+#: plugins/Epi/src/Model/Table/TypesTable.php:612
+#: plugins/Epi/templates/Analytics/integrity_cases.php:31
 msgid "ID"
 msgstr "ID"
 
-#: src/Model/Table/DocsTable.php:208
+#: src/Model/Table/DocsTable.php:205
 msgid "Without category"
 msgstr "Ohne Kategorie"
 
-#: src/Model/Table/DocsTable.php:232
+#: src/Model/Table/DocsTable.php:221
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:607
+#: plugins/Epi/templates/Properties/index.php:83
+msgid "Navigation"
+msgstr "Navigation"
+
+#: src/Model/Table/DocsTable.php:229 templates/element/categories.php:21
 msgid "List all"
 msgstr "Alle auflisten"
 
-#: src/Model/Table/DocsTable.php:293
+#: src/Model/Table/DocsTable.php:288
+msgid "IRI-Fragment"
+msgstr "IRI-Fragment"
+
+#: src/Model/Table/DocsTable.php:294
 msgid "Order"
-msgstr "Sortieren"
+msgstr "Sortierung"
 
-#: src/Model/Table/JobsTable.php:140
-msgid "Type"
-msgstr "Typ"
-
-#: src/Model/Table/JobsTable.php:148
-msgid "Progress"
-msgstr "Fortschritt"
-
-#: src/Model/Table/JobsTable.php:152
-msgid "Max progress"
-msgstr "Maximaler Fortschritt"
-
-#: src/Model/Table/JobsTable.php:156
-msgid "Pipeline"
-msgstr "Pipeline"
-
-#: src/Model/Table/JobsTable.php:161 src/Model/Table/UsersTable.php:460
-msgid "Database"
-msgstr "Datenbank"
-
-#: src/Model/Table/PermissionsTable.php:766
-msgid "Request"
-msgstr "Anfrage"
-
-#: src/Model/Table/PermissionsTable.php:786
-msgid "Entity name"
-msgstr "Name der Entität"
-
-#: src/Model/Table/UsersTable.php:429
-msgid "User name"
-msgstr "Benutzername"
-
-#: src/Model/Table/UsersTable.php:453
-msgid "Email"
-msgstr "E-Mail"
-
-#: src/Model/Table/UsersTable.php:470
-msgid "Article pipeline"
-msgstr "Artikel-Pipeline"
-
-#: src/Model/Table/UsersTable.php:481
-msgid "Book pipeline"
-msgstr "Band-Pipeline"
-
-#: src/Model/Table/UsersTable.php:492
-msgid "Active"
-msgstr "Aktiv"
-
-#: src/Model/Table/UsersTable.php:502
-msgid "Last action"
-msgstr "Letzte Aktion"
-
-#: src/Model/Table/UsersTable.php:508
-msgid "SQL connections"
-msgstr "SQL-Verbindungen"
-
-#: src/Model/Table/UsersTable.php:513
+#: src/Model/Table/JobsTable.php:226 src/Model/Table/UsersTable.php:653
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:224
 msgid "IRI"
 msgstr "IRI"
 
-#: src/Utilities/Files/Files.php:148
+#: src/Model/Table/JobsTable.php:267
+msgid "Async"
+msgstr "Async"
+
+#: src/Model/Table/JobsTable.php:271 templates/Jobs/execute.php:81
+#: plugins/Batch/templates/Batch/export.php:52
+#: plugins/Batch/templates/Batch/import.php:64
+msgid "Pipeline"
+msgstr "Pipeline"
+
+#: src/Model/Table/JobsTable.php:282
+msgid "Creator"
+msgstr "Urheber"
+
+#: src/Model/Table/PermissionsTable.php:915 templates/Users/view.php:128
+msgid "Request"
+msgstr "Anfrage"
+
+#: src/Model/Table/PermissionsTable.php:935
+msgid "Entity name"
+msgstr "Name des Datensatzes"
+
+#: src/Model/Table/UsersTable.php:426
+msgid "Email address is missing."
+msgstr "E-Mail-Adresse fehlt."
+
+#: src/Model/Table/UsersTable.php:564
+msgid "User name"
+msgstr "Benutzername"
+
+#: src/Model/Table/UsersTable.php:588
+msgid "Email"
+msgstr "E-Mail"
+
+#: src/Model/Table/UsersTable.php:607
+msgid "Article pipeline"
+msgstr "Artikel-Pipeline"
+
+#: src/Model/Table/UsersTable.php:618
+msgid "Book pipeline"
+msgstr "Band-Pipeline"
+
+#: src/Model/Table/UsersTable.php:632
+msgid "Active"
+msgstr "Aktiv"
+
+#: src/Model/Table/UsersTable.php:642
+msgid "Last action"
+msgstr "Letzte Aktion"
+
+#: src/Model/Table/UsersTable.php:648 templates/Users/index.php:30
+msgid "SQL connections"
+msgstr "SQL-Verbindungen"
+
+#: src/Utilities/Files/Files.php:262
 msgid "The folder already exists, please choose another name."
 msgstr "Der Ordner existiert bereits, bitte wählen Sie einen anderen Namen."
 
-#: src/Utilities/Files/Files.php:173
+#: src/Utilities/Files/Files.php:290
 msgid "The file already exists, please choose another filename."
 msgstr ""
 "Die Datei existiert bereits, bitte wählen Sie einen anderen Dateinamen."
 
-#: src/View/AppView.php:341 src/View/AppView.php:342
+#: src/View/AppView.php:157 plugins/Epi/templates/Analytics/files_cases.php:51
+#: plugins/Epi/templates/Analytics/files_cases.php:77
+#: plugins/Epi/templates/Analytics/integrity.php:44
+#: plugins/Epi/templates/Analytics/integrity_cases.php:36
+#: plugins/Files/templates/Files/index.php:86
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:111
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1302
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1303
+#: plugins/Widgets/src/View/Helper/TableHelper.php:102
+#: plugins/Widgets/src/View/Helper/TableHelper.php:498
+msgid "Actions"
+msgstr "Aktionen"
+
+#: src/View/AppView.php:380 src/View/AppView.php:381
 msgid "Remove tabsheet"
 msgstr "Reiter entfernen"
 
-#: src/View/AppView.php:373 src/View/AppView.php:374
+#: src/View/AppView.php:413 src/View/AppView.php:414 src/View/AppView.php:418
 msgid "Add filter"
 msgstr "Filter hinzufügen"
 
-#: src/View/AppView.php:382 src/View/AppView.php:383
+#: src/View/AppView.php:416
+msgid "More <br> filters"
+msgstr "Weitere <br> Filter"
+
+#: src/View/AppView.php:424 src/View/AppView.php:425 src/View/AppView.php:557
+#: templates/Jobs/execute.php:115 templates/layout/ajax.php:38
+#: templates/layout/ajax.php:39 plugins/Files/templates/Files/index.php:44
+#: plugins/Files/templates/Files/index.php:45
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:435
 msgid "Close"
 msgstr "Schließen"
 
-#: src/View/AppView.php:390 src/View/AppView.php:391
+#: src/View/AppView.php:432 src/View/AppView.php:433
 msgid "Apply filter"
 msgstr "Filter anwenden"
 
-msgid "Logout"
-msgstr "Logout"
+#: src/View/AppView.php:517 plugins/Epi/templates/Properties/index.php:162
+#: plugins/Epi/templates/Properties/move.php:20
+#: plugins/Epi/templates/Properties/view.php:159
+#: plugins/Files/templates/Files/move.php:71
+#: plugins/Files/templates/Files/view.php:75
+msgid "Move"
+msgstr "Verschieben"
 
-msgid "Another user edits the dataset. Please try again later."
-msgstr ""
-"Ein anderer Nutzer bearbeitet gerade den Datensatz. Bitte versuchen Sie "
-"es später erneut."
+#: src/View/AppView.php:530 src/View/AppView.php:531
+msgid "Remove selected section"
+msgstr "Ausgewählten Abschnitt entfernen"
 
-msgid ""
-"One of the databases is not available. Please check the database name."
-msgstr ""
-"Eine der Datenbanken ist nicht verfügbar. Bitte überprüfen Sie den Namen "
-"der Datenbank."
-
-msgid ""
-"One of the databases does not fulfill the version requirement. Please "
-"update the database structure."
-msgstr ""
-"Eine der Datenbanken erfüllt die Versionsanforderung nicht. Bitte "
-"aktualisieren Sie die Datenbankstruktur."
-
-msgid "The doc has been saved."
-msgstr "Die Seite wurde gespeichert."
-
-msgid "The doc could not be saved. Please, try again."
-msgstr ""
-"Die Seite konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
-
-msgid "Another user edits the page. Please try again later."
-msgstr ""
-"Ein anderer Nutzer bearbeitet gerade die Seite. Bitte versuchen Sie es "
-"später erneut."
-
-msgid "The page has been deleted."
-msgstr "Die Seite wurde gelöscht."
-
-msgid "The page could not be deleted. Please, try again."
-msgstr ""
-"Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-msgid "IRI Provider"
-msgstr "IRI-Provider"
-
-msgid "Docs"
-msgstr "Seiten"
-
-msgid "{0} items cleaned."
-msgstr "{0} Objekte bereinigt."
-
-msgid "Items could not be cleaned."
-msgstr "Die Objekte konnten nicht bereinigt werden."
-
-msgid "The doc has been deleted."
-msgstr "Die Seite wurde gelöscht."
-
-msgid "The doc could not be deleted. Please, try again."
-msgstr ""
-"Die Seite konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
-
-msgid "The thumb cache has been cleared."
-msgstr "Der Vorschaucache wurde geleert."
-
-msgid "The thumb cache could not be cleared. Please try again."
-msgstr ""
-"Der Vorschaucache konnte nicht geleert werden. Bitte versuchen Sie es "
-"erneut."
-
-msgid "Search"
-msgstr "Suche"
-
-msgid "Databank"
-msgstr "Datenbank"
-
-msgid "Search term"
-msgstr "Suchausdruck"
-
-msgid "Go"
-msgstr "Go"
-
-msgid "previous"
-msgstr "vorige"
-
-msgid "next"
-msgstr "nächste"
-
-msgid "Desktop"
-msgstr "Desktop"
-
-msgid "View"
-msgstr "Anzeigen"
-
-msgid "Export"
-msgstr "Exportieren"
-
-msgid "Clean search index"
-msgstr "Suchindex bereinigen"
-
-msgid "Clean"
-msgstr "Bereinigen"
-
+#: templates/Databanks/add.php:20 templates/Databanks/backup.php:22
+#: templates/Databanks/create.php:22 templates/Databanks/delete.php:18
+#: templates/Databanks/drop.php:24 templates/Databanks/import.php:27
+#: templates/Databanks/init.php:26 templates/Databanks/view.php:22
 msgid "Databanks"
 msgstr "Datenbanken"
 
+#: templates/Databanks/add.php:21 templates/Databanks/index.php:54
+#: templates/Databanks/view.php:44
 msgid "Create database"
-msgstr "Datenbank erstellen"
+msgstr "Datenbank anlegen"
 
-msgid "A project database consists of a data folder and a SQL database."
+#: templates/Databanks/backup.php:32
+msgid "This will backup the database {0} on the server. Are you sure?"
 msgstr ""
-"Eine Projektdatenbank besteht aus einem Datenordner und einer SQL-"
-"Datenbank."
+"Dadurch wird die Datenbank {0} auf dem Server gesichert. Sind Sie sicher?"
 
-msgid "If the directory does not exist it will be created."
-msgstr "Falls das Verzeichnis nicht existiert, wird es erstellt."
-
-msgid "If the SQL database does not exist it will be created."
-msgstr "Falls die SQL Datenbank nicht existiert, wird sie erstellt."
-
-msgid ""
-"If the SQL database is empty it will be filled with a blank structure."
-msgstr ""
-"Falls die SQL Datenbank leer ist, wird sie mit einer leeren Struktur "
-"gefüllt."
-
-msgid "Save"
-msgstr "Speichern"
-
-msgid "Submit"
-msgstr "Speichern"
-
+#: templates/Databanks/backup.php:41 templates/Databanks/create.php:40
+#: templates/Databanks/drop.php:43 templates/Databanks/import.php:58
+#: templates/Databanks/init.php:45 templates/Jobs/execute.php:115
+#: templates/Jobs/view.php:107
+#: plugins/Epi/templates/Articles/recovertree.php:31
+#: plugins/Epi/templates/Articles/recovertree.php:36
+#: plugins/Epi/templates/Properties/index.php:189
+#: plugins/Files/templates/Files/fetch.php:45
+#: plugins/Files/templates/Files/move.php:64
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:246
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:383
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:435
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:502
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:558
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1603
 msgid "Cancel"
 msgstr "Abbrechen"
 
-msgid "This will backup the database {0} on the server. Are you sure?"
-msgstr ""
-"Dies wird eine Sicherheitskopie der  Datenbank {0} auf dem Server "
-"erstellen. Sind Sie sicher?"
-
+#: templates/Databanks/backup.php:48 templates/Databanks/create.php:47
+#: templates/Databanks/drop.php:50 templates/Databanks/init.php:51
+#: plugins/Epi/templates/Articles/recovertree.php:39
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3349
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:481
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:521
 msgid "Yes"
 msgstr "Ja"
 
-msgid "No"
-msgstr "Nein"
-
+#: templates/Databanks/create.php:31
 msgid "This will create the database {0} on the server. Are you sure?"
 msgstr ""
-"Dies wird die Datenbank {0} auf dem Server erstellen. Sind Sie sicher?"
+"Dadurch wird die Datenbank {0} auf dem Server angelegt. Sind Sie sicher?"
 
+#: templates/Databanks/delete.php:26
 msgid ""
-"Danger zone! Operations on this page may severely damage content. Data "
-"can get lost forever!"
+"Are you sure you want to delete the database connection {0}? This will not "
+"drop the database on the server, if it exists, just the connection record."
 msgstr ""
-"Gefahrenbereich! Operationen auf dieser Seite können Inhalt empfindlich "
-"beschädigen. Daten können für immer verloren gehen!"
+"Sind Sie sicher, dass Sie die Datenbankverbindung {0} löschen möchten? "
+"Dadurch wird die Datenbank auf dem Server, sofern sie existiert, nicht "
+"gelöscht, sondern nur der Verbindungsdatensatz."
 
+#: templates/Databanks/drop.php:20 templates/Databanks/import.php:23
+#: templates/Databanks/init.php:22 plugins/Files/templates/Files/delete.php:26
+msgid ""
+"Danger zone! Operations on this page may severely damage content. Data can "
+"get lost forever!"
+msgstr ""
+"Achtung! Die Aktionen auf dieser Seite können den Inhalt schwer beschädigen. "
+"Daten können unwiederbringlich verloren gehen!"
+
+#: templates/Databanks/drop.php:34
 msgid ""
 "This will drop the database {0} on the server. All data will be deleted "
 "forever. Are you sure? Are you really sure?"
 msgstr ""
-"Dies wird die Datenbank {0} vom Server löschen. Alle Daten werden für "
-"immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
+"Dadurch wird die Datenbank {0} auf dem Server gelöscht. Alle Daten werden "
+"unwiderruflich gelöscht. Sind Sie sicher? Sind Sie sich wirklich sicher?"
 
+#: templates/Databanks/import.php:29
 msgid "Import SQL"
 msgstr "SQL importieren"
 
-msgid ""
-"Are you sure about importing this script? This may alter the database."
+#: templates/Databanks/import.php:65
+#: plugins/Epi/templates/Articles/index.php:70
+#: plugins/Epi/templates/Projects/index.php:80
+#: plugins/Epi/templates/Properties/index.php:131
+#: plugins/Epi/templates/Types/index.php:106
+#: plugins/Batch/templates/Batch/import.php:31
+#: plugins/Batch/templates/element/preview.php:99
+msgid "Import"
+msgstr "Importieren"
+
+#: templates/Databanks/import.php:70
+msgid "Are you sure about importing this script? This may alter the database."
 msgstr ""
-"Sind Sie sicher, dass Sie dieses Script importieren wollen? Dies könnte "
-"ihre Datenbank verändern."
+"Sind Sie sicher, dass Sie dieses Skript importieren möchten? Dies kann die "
+"Datenbank verändern."
 
-msgid "Manage"
-msgstr "Verwalten"
+#: templates/Databanks/index.php:21
+msgid "Project databases"
+msgstr "Projektdatenbanken"
 
+#: templates/Databanks/index.php:37 templates/Databanks/view.php:35
+#: plugins/Epi/templates/Projects/index_table.php:30
+#: plugins/Epi/templates/Projects/view.php:33
+msgid "Show articles"
+msgstr "Artikel anzeigen"
+
+#: templates/Databanks/init.php:35
 msgid ""
-"This will init the database {0} on the server with a blank table "
-"structure. Are you sure?"
+"This will init the database {0} on the server with a blank table structure. "
+"Are you sure?"
 msgstr ""
-"Dies wird die Datenbank {0} auf dem Server mit einer leeren "
-"Tabellenstruktur initialisieren. Sind Sie sicher?"
+"Dadurch wird die Datenbank {0} auf dem Server mit einer leeren "
+"Tabellenstruktur initialisiert . Sind Sie sicher?"
 
-msgid "Remove Connection"
-msgstr "Verbindung entfernen"
-
-msgid "Are you sure you want to delete # {0}?"
-msgstr "Sind Sie sicher, dass Sie # {0} löschen wollen?"
-
-msgid "Create Database"
-msgstr "Datenbank erstellen"
-
+#: templates/Databanks/view.php:51
 msgid "Init Database"
 msgstr "Datenbank initialisieren"
 
+#: templates/Databanks/view.php:59
 msgid "Backup Database"
 msgstr "Datenbank sichern"
 
-msgid "Import Script"
-msgstr "Script importieren"
+#: templates/Databanks/view.php:65
+msgid "Import Backup"
+msgstr "Backup importieren"
 
+#: templates/Databanks/view.php:70
 msgid "Drop Database"
 msgstr "Datenbank löschen"
 
-msgid "Are you sure you want to drop # {0}? All data will be lost, forever!"
+#: templates/Databanks/view.php:75
+msgid "Import Data"
+msgstr "Daten importieren"
+
+#: templates/Docs/add.php:21 templates/Docs/index.php:61
+#: templates/Docs/view.php:62
+msgid "Create page"
+msgstr "Seite anlegen"
+
+#: templates/Docs/add.php:26
+msgid ""
+"There is no page on this topic yet. We would be glad if you could help out."
 msgstr ""
-"Sind Sie sicher, dass Sie # {0} löschen wollen? Alle Daten werden für "
-"immer verloren sein!"
+"Zu diesem Thema gibt es noch keine Seite. Wir würden uns freuen, wenn Sie "
+"mithelfen könnten."
 
-msgid "Create doc"
-msgstr "Seite erstellen"
-
-msgid "List Docs"
-msgstr "Seiten auflisten"
-
+#: templates/Docs/delete.php:22
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:452
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:609
 msgid "Delete"
 msgstr "Löschen"
 
-msgid "Key"
-msgstr "Schlüssel"
+#: templates/Docs/delete.php:28
+msgid "Are you sure you want to delete the page \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie die Seite \"{0}\" löschen wollen?"
 
-msgid "Edit"
-msgstr "Bearbeiten"
+#: templates/Docs/start.php:16 templates/Pages/start.php:19
+msgid "Create the start page"
+msgstr "Startseite anlegen"
 
-msgid "New Doc"
-msgstr "Neue Seite"
+#: templates/Jobs/delete.php:21 templates/Jobs/edit.php:20
+#: templates/Jobs/index.php:20 templates/Jobs/view.php:21
+msgid "Jobs"
+msgstr "Jobs"
 
-msgid "Edit Doc"
-msgstr "Seite bearbeiten"
+#: templates/Jobs/delete.php:22
+msgid "Delete job"
+msgstr "Job löschen"
 
-msgid "Delete Doc"
-msgstr "Seite löschen"
+#: templates/Jobs/delete.php:29
+msgid "Are you sure you want to delete the job \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie den Job \"{0}\" löschen wollen?"
 
-msgid "Data"
-msgstr "Daten"
+#: templates/Jobs/execute.php:44
+msgid "Error. See the logs for error details."
+msgstr "Fehler. Details finden Sie in den Protokollen."
 
-msgid "Objects"
-msgstr "Objekte"
+#: templates/Jobs/execute.php:48
+msgid "Finished"
+msgstr "Abgeschlossen"
 
-msgid "Index"
-msgstr "Index"
+#: templates/Jobs/execute.php:62
+msgid "Results"
+msgstr "Ergebnisse"
 
-msgid "Text"
-msgstr "Text"
+#: templates/Jobs/execute.php:75
+msgid "Queue Status"
+msgstr "Status der Warteschlange"
 
-msgid "Elements"
-msgstr "Elemente"
+#: templates/Jobs/execute.php:92
+#: plugins/Epi/templates/Analytics/integrity_cases.php:30
+#: plugins/Batch/templates/Batch/transfer.php:88
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:691
+msgid "Table"
+msgstr "Tabelle"
 
-msgid "Specify IDs separated by comma. Leave empty to get all articles."
-msgstr ""
-"Geben Sie IDs durch Kommata getrennt an. Lassen Sie das Feld leer, um "
-"alle Artikel zu erhalten."
+#: templates/Jobs/execute.php:99 plugins/Epi/src/Model/Entity/Property.php:650
+msgid "Source"
+msgstr "Quelle"
 
-msgid "Start"
-msgstr "Start"
+#: templates/Jobs/execute.php:106
+#: plugins/Batch/templates/Batch/transfer.php:105
+msgid "Parameters"
+msgstr "Parameter"
 
-msgid "all"
-msgstr "alle"
-
-msgid ""
-"This will delete the file \"{0}\" on the server. All data will be deleted "
-"forever. Are you sure? Are you really sure?"
-msgstr ""
-"Dies wird die Datei \"{0}\" auf dem Server löschen. Alle Daten werden für "
-"immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
-
-msgid ""
-"This will delete the folder \"{0}\" on the server. All data will be "
-"deleted forever. Are you sure? Are you really sure?"
-msgstr ""
-"Dies wird den Ordner \"{0}\" auf dem Server löschen. Alle Daten werden "
-"für immer gelöscht. Sind Sie sicher? Sind Sie wirklich sicher?"
-
-msgid "File"
-msgstr "Datei"
-
-msgid "Mounts"
-msgstr "Mounts"
-
-msgid "Size"
-msgstr "Größe"
-
-msgid "Open"
-msgstr "Öffnen"
-
-msgid "Details"
-msgstr "Details"
-
+#: templates/Jobs/execute.php:128 templates/Settings/logs.php:48
+#: plugins/Files/src/Model/Entity/FileRecord.php:498
+#: plugins/Files/templates/Files/index.php:128
+#: plugins/Files/templates/Files/view.php:76
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:844
 msgid "Download"
 msgstr "Herunterladen"
 
-msgid "Zip"
-msgstr "Zip"
+#: templates/Jobs/execute.php:137
+msgid "Proceed"
+msgstr "Fortfahren"
 
-msgid "Rename"
-msgstr "Umbenennen"
+#: templates/Jobs/view.php:29
+msgid "Downloads"
+msgstr "Download-Dateien"
 
-msgid "Upload File"
-msgstr "Datei hochladen"
+#: templates/Jobs/view.php:33
+msgid "File"
+msgstr "Datei"
 
-msgid "Download latest"
-msgstr "Neueste herunterladen"
+#: templates/Jobs/view.php:57
+msgid "Done"
+msgstr "Erledigt"
 
-msgid "Create Folder"
-msgstr "Ordner erstellen"
+#: templates/Jobs/view.php:58 plugins/Epi/src/Model/Entity/Property.php:680
+#: plugins/Epi/src/Model/Entity/Type.php:334
+#: plugins/Epi/templates/Analytics/integrity.php:40
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:23
+msgid "Number"
+msgstr "Nummer"
 
-msgid "Clear thumbs"
-msgstr "Vorschaubilder bereinigen"
+#: templates/Jobs/view.php:60 plugins/Files/templates/Files/move.php:48
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1864
+msgid "Options"
+msgstr "Optionen"
 
-msgid "URL"
-msgstr "URL"
+#: templates/Jobs/view.php:109
+msgid "Run"
+msgstr "Ausführen"
 
-msgid "Thumbnails"
-msgstr "Vorschaubilder"
+#: templates/Pages/start.php:13
+msgid "Welcome to Epigraf!"
+msgstr "Willkommen bei Epigraf!"
 
-msgid "Id"
-msgstr "Id"
+#: templates/Permissions/add.php:25 templates/Permissions/index.php:34
+msgid "Create permission"
+msgstr "Berechtigung anlegen"
 
-msgid "Goto folder"
-msgstr "Springe zu Ordner"
+#: templates/Permissions/delete.php:21 templates/Permissions/edit.php:20
+#: templates/Users/revoke.php:21 templates/Users/view.php:129
+msgid "Permission"
+msgstr "Berechtigung"
 
-msgid "Create new pipeline"
-msgstr "Neue Pipeline erstellen"
+#: templates/Permissions/delete.php:29
+msgid "Are you sure you want to delete the permission \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie doe Berechtigung \"{0}\" löschen wollen?"
 
-msgid "Add element"
-msgstr "Element hinzufügen"
+#: templates/Permissions/endpoints.php:18
+msgid "Hardwired endpoint permissions by role"
+msgstr "Fest hinterlegte Endpunktberechtigungen nach Rolle"
 
-msgid "Select"
-msgstr "Auswählen"
+#: templates/Pipelines/add.php:22 templates/Pipelines/index.php:39
+msgid "Create pipeline"
+msgstr "Pipeline anlegen"
 
-msgid "Label"
-msgstr "Label"
-
-msgid "Radio"
-msgstr "Radio"
-
-msgid "Value"
-msgstr "Wert"
-
-msgid "Remove option"
-msgstr "Option entfernen"
-
-msgid "New Pipeline"
-msgstr "Neue Pipeline"
-
-msgid "Edit Pipeline"
-msgstr "Pipeline bearbeiten"
-
-msgid "Delete Pipeline"
+#: templates/Pipelines/delete.php:22
+msgid "Delete pipeline"
 msgstr "Pipeline löschen"
 
-msgid "List Pipelines"
-msgstr "Pipelines anzeigen"
+#: templates/Pipelines/delete.php:29
+msgid "Are you sure you want to delete the pipeline \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie die Pipeline \"{0}\" löschen wollen?"
 
+#: templates/Pipelines/index.php:40
+msgid "Show jobs"
+msgstr "Jobs anzeigen"
+
+#: templates/Services/get_geo.php:23
+msgid "Geo service"
+msgstr "Geo-Dienst"
+
+#: templates/Services/get_llm.php:23
+msgid "LLM service"
+msgstr "LLM-Dienst"
+
+#: templates/Services/get_llm.php:47
+msgid "Task type"
+msgstr "Aufgabentyp"
+
+#: templates/Services/get_llm.php:49
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:50
+msgid "Summarize"
+msgstr "Zusammenfassen"
+
+#: templates/Services/get_llm.php:50
+msgid "Extract Triples"
+msgstr "Triple extrahieren"
+
+#: templates/Services/get_llm.php:51
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:51
+msgid "Coding"
+msgstr "Kodierung"
+
+#: templates/Services/get_llm.php:57
+msgid "Prompt template"
+msgstr "Prompt-Vorlage"
+
+#: templates/Services/get_llm.php:63
+msgid "Multinomial coding"
+msgstr "Multinomiale Kodierung"
+
+#: templates/Services/get_llm.php:70
+msgid "Input text"
+msgstr "Texteingabe"
+
+#: templates/Services/get_llm.php:84
+msgid "Article (table-id format)"
+msgstr "Artikel (Tabellen-ID-Format)"
+
+#: templates/Services/get_llm.php:90
+msgid "Section types (comma separated)"
+msgstr "Abschnittstypen (durch Kommas getrennt)"
+
+#: templates/Services/get_llm.php:96
+msgid "Property type for coding tasks"
+msgstr "Kategorientyp für Kodieraufgaben"
+
+#: templates/Services/get_llm.php:106 templates/Services/get_reconcile.php:108
+msgid "Query"
+msgstr "Abfrage"
+
+#: templates/Services/get_llm.php:127
+#: plugins/Batch/templates/Batch/export.php:69
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:67
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:26
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:93
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:855
+msgid "JSON"
+msgstr "JSON"
+
+#: templates/Services/get_llm.php:138
+msgid "New task"
+msgstr "Neue Aufgabe"
+
+#: templates/Services/get_reconcile.php:24
+msgid "Reconciliation service"
+msgstr "Reconcile-Dienst"
+
+#: templates/Services/get_reconcile.php:57
+msgid "AAT"
+msgstr "AAT"
+
+#: templates/Services/get_reconcile.php:58
+msgid "WikiData"
+msgstr "WikiData"
+
+#: templates/Services/get_reconcile.php:87
+msgid "Apply"
+msgstr "Anwenden"
+
+#: templates/Settings/caches.php:15
+msgid "Caches"
+msgstr "Caches"
+
+#: templates/Settings/logs.php:30
+msgid "Time"
+msgstr "Zeit"
+
+#: templates/Settings/logs.php:33 templates/Users/mail.php:32
+msgid "Message"
+msgstr "Meldung"
+
+#: templates/Settings/php.php:12
+msgid "PHP info"
+msgstr "PHP info"
+
+#: templates/Settings/vars.php:16
+msgid "System variables"
+msgstr "System-Variablen"
+
+#: templates/Users/activate.php:21
+msgid "Activate Your Account"
+msgstr "Aktivieren Sie Ihr Konto"
+
+#: templates/Users/activate.php:29
+msgid "Please, set a strong password and keep it safe."
+msgstr "Bitte wählen Sie ein sicheres Passwort und bewahren Sie es sicher auf."
+
+#: templates/Users/activate.php:32
+msgid "Repeat the password."
+msgstr "Wiederholen Sie das Passwort."
+
+#: templates/Users/activate.php:35
+msgid ""
+"Please, carefully read the <a href=\"/pages/privacy\" "
+"target=\"_blank\">usage terms and the privacy policy</a>. By activating your "
+"account, you accept those terms."
+msgstr ""
+"Bitte lesen Sie sorgfältig die <a href=\"/pages/privacy\" "
+"target=\"_blank\">Nutzungsbedingungen und die Datenschutzerklärung</a>. "
+"Durch die Aktivierung Ihres Kontos akzeptieren Sie diese Bedingungen."
+
+#: templates/Users/activate.php:40
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:221
+msgid "Submit"
+msgstr "Absenden"
+
+#: templates/Users/add.php:20 templates/Users/index.php:46
+#: plugins/Epi/templates/Users/add.php:22
+#: plugins/Epi/templates/Users/index.php:34
 msgid "Create user"
-msgstr "Benutzer hinzufügen"
+msgstr "Benutzer anlegen"
 
-msgid "Grant Access"
+#: templates/Users/delete.php:22 plugins/Epi/templates/Users/delete.php:20
+msgid "Delete user"
+msgstr "Benutzer löschen"
+
+#: templates/Users/delete.php:29
+msgid "Are you sure you want to delete the user \"{0}\"?"
+msgstr "Möchten Sie den Benutzer „{0}“ wirklich löschen?"
+
+#: templates/Users/grant.php:31
+msgid "Grant access"
 msgstr "Zugriff gewähren"
 
-msgid "Create User"
-msgstr "Benutzer hinzufügen"
+#: templates/Users/index.php:29
+msgid "Other SQL connections"
+msgstr "Andere SQL-Verbindungen"
 
+#: templates/Users/invite.php:22
+msgid "Invite"
+msgstr "Einladen"
+
+#: templates/Users/invite.php:32
+msgid "Generate invitation for user \"{0}\" ({1})?"
+msgstr "Einladung für Benutzer „{0}“ ({1}) generieren?"
+
+#: templates/Users/invite.php:41 templates/Users/mail.php:28
+msgid "Receiver"
+msgstr "Empfänger"
+
+#: templates/Users/invite.php:42 templates/Users/mail.php:29
+msgid "Subject"
+msgstr "Betreff"
+
+#: templates/Users/invite.php:45
+msgid "Invitation"
+msgstr "Einladung"
+
+#: templates/Users/invite.php:54 templates/Users/mail.php:41
+msgid "Send"
+msgstr "Senden"
+
+#: templates/Users/login.php:11 templates/Users/login.php:27
+#: templates/layout/default.php:151 templates/layout/default.php:153
 msgid "Login"
-msgstr "Login"
+msgstr "Anmelden"
 
-msgid "Set password of SQL-user"
-msgstr "Passwort für SQL-Benutzer setzen"
+#: templates/Users/mail.php:23
+msgid "Mail"
+msgstr "E-Mail"
 
+#: templates/Users/revoke.php:29
+msgid ""
+"Are you sure you want to delete the selected permission for user \"{0}\"?"
+msgstr ""
+"Sind Sie sicher, dass Sie die ausgewählte Berechtigung für den Benutzer "
+"„{0}“ löschen wollen?"
+
+#: templates/Users/view.php:26
+msgid "Profile"
+msgstr "Profil"
+
+#: templates/Users/view.php:32
+msgid "Generate invitation"
+msgstr "Einladung generieren"
+
+#: templates/Users/view.php:45
+msgid "Regenerate access token"
+msgstr "Zugriffstoken neu generieren"
+
+#: templates/Users/view.php:50
+msgid "This will regenerate the access token. Are you ready to proceed?"
+msgstr "Dadurch wird das Zugriffstoken neu generiert. Möchten Sie fortfahren?"
+
+#: templates/Users/view.php:59
+msgid "Epigraf Desktop Settings"
+msgstr "Epigraf-Desktop-Einstellungen"
+
+#: templates/Users/view.php:62
 msgid "Host"
 msgstr "Host"
 
+#: templates/Users/view.php:66
+msgid "Port"
+msgstr "Port"
+
+#: templates/Users/view.php:82
 msgid "SSL CA"
-msgstr "SSL CA"
+msgstr "SSL-CA"
 
+#: templates/Users/view.php:86
 msgid "Online URL"
-msgstr "Online URL"
+msgstr "Online-URL"
 
-msgid "Grant SQL-Access"
-msgstr "SQL-Zugriff gewähren"
+#: templates/Users/view.php:126
+msgid "Endpoint"
+msgstr "Endpunkt"
 
-msgid "Revoke SQL-Access"
-msgstr "SQL-Zugriff widerrufen"
+#: templates/Users/view.php:127 plugins/Epi/src/Model/Entity/User.php:137
+#: plugins/Epi/src/Model/Entity/User.php:205
+msgid "User role"
+msgstr "Benutzerrolle"
 
-msgid "Set SQL-Password"
-msgstr "SQL-Passwort setzen"
+#: templates/Users/view.php:137
+msgid "Grant"
+msgstr "Gewähren"
 
-msgid "Grant access to other database"
-msgstr "Zugriff auf eine andere Datenbank gewähren"
+#: templates/Users/view.php:146
+msgid "User settings"
+msgstr "Nutzereinstellungen"
 
-msgid "Revoke access from all databases"
-msgstr "Zugriff auf alle Datenbanken widerrufen"
+#: templates/Users/view.php:155
+msgid "Clear user settings"
+msgstr "Nutzereinstellungen leeren"
 
-msgid "Edit User"
-msgstr "Benutzer bearbeiten"
-
-msgid "Delete User"
-msgstr "Benutzer löschen"
-
-msgid "Show Users"
-msgstr "Benutzer anzeigen"
-
-msgid "Loading"
-msgstr "Lädt"
-
-msgid "Go back"
-msgstr "Zurück"
-
-msgid "The folder could not be renamed."
-msgstr "Der Ordner konnte nicht umbenannt werden."
-
-msgid "The folder has been saved."
-msgstr "Der Ordner wurde gespeichert."
-
-msgid "The file could not be renamed."
-msgstr "Die Datei konnte nicht umbenannt werden."
-
-msgid "The file could not be uploaded."
-msgstr "Die Datei konnte nicht hochgeladen werden."
-
-msgid "The file has been saved."
-msgstr "Die Datei wurde gespeichert."
-
-msgid "The folder has been deleted."
-msgstr "Der Ordner wurde gelöscht."
-
-msgid "The folder could not be deleted. Please, try again."
+#: templates/Users/view.php:159
+msgid "This will clear the user's settings. Are you ready to proceed?"
 msgstr ""
-"Der Ordner konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+"Dadurch werden die Einstellungen des Benutzers geleert. Möchten Sie "
+"fortfahren?"
 
+#: templates/element/categories.php:25
+msgid "Without Category"
+msgstr "Ohne Kategorie"
+
+#: templates/element/categories.php:39
+#: plugins/Epi/templates/Articles/index_search.php:46
+#: plugins/Epi/templates/Projects/index.php:40
+#: plugins/Epi/templates/Properties/index.php:60
+#: plugins/Epi/templates/Types/index.php:43
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3764
+msgid "Search"
+msgstr "Suchen"
+
+#: templates/layout/ajax.php:32 templates/layout/default.php:142
+#: templates/layout/default.php:187 templates/layout/default.php:249
+msgid "Menu"
+msgstr "Menü"
+
+#: templates/layout/default.php:35
+msgid "A research platform for multimodal text data"
+msgstr "Eine Forschungsplattform für multimodale Textdaten"
+
+#: templates/layout/default.php:158 templates/layout/default.php:160
+msgid "Logout"
+msgstr "Abmelden"
+
+#: plugins/Epi/src/Controller/AnalyticsController.php:216
+msgid "Orphans cleared"
+msgstr "Verwaistes Element gelöscht"
+
+#: plugins/Epi/src/Controller/AnalyticsController.php:218
+msgid "Orphans could not be cleared."
+msgstr "Die verwaisten Elemente konnten nicht gelöscht werden."
+
+#: plugins/Epi/src/Controller/ArticlesController.php:186
+msgid "This article does not exist or is not published."
+msgstr "Dieser Artikel existiert nicht oder wurde nicht veröffentlicht."
+
+#: plugins/Epi/src/Controller/ArticlesController.php:336
+msgid "The article has been saved."
+msgstr "Der Artikel wurde gespeichert."
+
+#: plugins/Epi/src/Controller/ArticlesController.php:341
+msgid "Could not save article, please try again."
+msgstr ""
+"Der Artikel konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: plugins/Epi/src/Controller/ArticlesController.php:440
+#: plugins/Epi/src/Controller/ProjectsController.php:143
+#: plugins/Epi/src/Controller/ProjectsController.php:161
+#: plugins/Epi/src/Controller/PropertiesController.php:221
+#: plugins/Epi/src/Controller/PropertiesController.php:325
+#: plugins/Epi/src/Controller/PropertiesController.php:379
+#: plugins/Epi/src/Controller/PropertiesController.php:407
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:842
+msgid "The table is open in EpiDesktop. Close or unlock in EpiDesktop."
+msgstr ""
+"Die Tabelle ist in EpiDesktop geöffnet. Schließen oder entsperren Sie die "
+"Tabelle in EpiDesktop."
+
+#: plugins/Epi/src/Controller/FootnotesController.php:63
+msgid "Could not resolve footnote: No redirect route configured."
+msgstr ""
+"Die Fußnote konnte nicht aufgelöst werden: Es ist keine Weiterleitungsroute "
+"konfiguriert."
+
+#: plugins/Epi/src/Controller/ItemsController.php:108
+msgid "Invalid scope"
+msgstr "Ungültiger Geltungsbereich"
+
+#: plugins/Epi/src/Controller/LinksController.php:63
+msgid "Could not resolve link: No redirect route configured."
+msgstr ""
+"Der Link konnte nicht aufgelöst werden: Es ist keine Weiterleitungsroute "
+"konfiguriert."
+
+#: plugins/Epi/src/Controller/PropertiesController.php:258
+#: plugins/Epi/src/Controller/PropertiesController.php:287
+msgid "Missing source properties."
+msgstr "Es fehlen Quellkategorien."
+
+#: plugins/Epi/src/Controller/PropertiesController.php:276
+msgid "The properties have been merged."
+msgstr "Die Kategorien wurden zusammengeführt."
+
+#: plugins/Epi/src/Model/Analytics/Analytics.php:168
+#: plugins/Epi/src/Model/Analytics/Analytics.php:173
+msgid "yes"
+msgstr "ja"
+
+#: plugins/Epi/src/Model/Analytics/Analytics.php:168
+#: plugins/Epi/src/Model/Analytics/Analytics.php:173
+msgid "no"
+msgstr "nein"
+
+#: plugins/Epi/src/Model/Analytics/Analytics.php:367
+msgid "{0} articles"
+msgstr "{0} Artikel"
+
+#: plugins/Epi/src/Model/Analytics/Analytics.php:371
+msgid "{0} paths"
+msgstr "{0} Pfade"
+
+#: plugins/Epi/src/Model/Entity/Article.php:306
+msgid "Sections"
+msgstr "Abschnitte"
+
+#: plugins/Epi/src/Model/Entity/Article.php:318
+msgid "Metadata"
+msgstr "Metadaten"
+
+#: plugins/Epi/src/Model/Entity/Article.php:360
+#: plugins/Epi/src/Model/Entity/Article.php:1019
+#: plugins/Epi/src/Model/Entity/Section.php:808
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:605
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:708
+#: plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:503
+msgid "Section"
+msgstr "Abschnitt"
+
+#: plugins/Epi/src/Model/Entity/Article.php:469
+#: plugins/Epi/src/Model/Entity/Footnote.php:225
+#: plugins/Epi/src/Model/Entity/Item.php:491
+#: plugins/Epi/src/Model/Entity/Section.php:748
+msgid "Footnote"
+msgstr "Fußnote"
+
+#: plugins/Epi/src/Model/Entity/Article.php:608
+msgid ""
+"The article contains {0} items outside of a section. Ask your personal SQL "
+"hacker for help."
+msgstr ""
+"Der Artikel enthält {0} Einträge außerhalb eines Abschnitts. Bitten Sie "
+"Ihren persönlichen SQL-Hacker um Hilfe."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1366
+msgid "Article type"
+msgstr "Artikeltyp"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1374
+#: plugins/Epi/templates/Properties/view.php:96
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProject.php:50
+msgid "Project"
+msgstr "Projekt"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1382
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:314
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:1800
+msgid "Title"
+msgstr "Titel"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1388
+msgid "Article number"
+msgstr "Artikelnummer"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1389
+msgid "A number or string used to identify articles, e.g. a signature."
+msgstr ""
+"Eine Zahl oder Zeichenfolge zur Identifizierung von Artikeln, z. B. eine "
+"Signatur."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1400
+msgid "A global identifier, automatically generated from the ID."
+msgstr "Eine globale Kennung, die automatisch aus der ID generiert wird."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1408
+msgid "Your personal status markers for the article."
+msgstr "Ihre persönlichen Statusmarkierungen für den Artikel."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1414
+#: plugins/Epi/src/Model/Entity/Project.php:216
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:183
+msgid "Sorting"
+msgstr "Sortierung"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1415
+msgid "A number used to sort articles."
+msgstr "Eine zum Sortieren von Artikeln verwendete Nummer."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1422
+msgid "Non-published articles are not visible to guest users."
+msgstr "Nicht veröffentlichte Artikel sind für Gastnutzer nicht sichtbar."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1431
+#: plugins/Epi/src/Model/Entity/Project.php:245
+#: plugins/Epi/src/Model/Entity/Property.php:697
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2371
+#: plugins/Epi/templates/Sections/view_normdata.php:19
+msgid "Norm data"
+msgstr "Normdaten"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1432
+msgid "Each line is interpreted as a prefixed identifier, e.g. a URN."
+msgstr ""
+"Jede Zeile wird als Bezeichner mit Präfix interpretiert, z. B. als URN."
+
+#: plugins/Epi/src/Model/Entity/Article.php:1446
+#: plugins/Epi/src/Model/Entity/Property.php:713
+msgid "Created by"
+msgstr "Erstellt von"
+
+#: plugins/Epi/src/Model/Entity/Article.php:1458
+#: plugins/Epi/src/Model/Entity/Property.php:725
+msgid "Modified by"
+msgstr "Bearbeitet von"
+
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:359
+msgid "The type field is empty in {table}-{id}."
+msgstr "Das Typfeld ist in {table}-{id} leer."
+
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:369
+msgid "The type configuration is not available in {table}-{id}."
+msgstr "Die Typkonfiguration ist in {table}-{id} nicht verfügbar."
+
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:442
+msgid "The field {field} must not be empty in {table}-{id}."
+msgstr "Das Feld {field} darf in {table}-{id} nicht leer sein."
+
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:457
+msgid "The field {field} must follow the pattern {pattern} in {table}-{id}."
+msgstr ""
+"Das Feld {field} muss in {table}-{id} dem Muster {pattern} entsprechen."
+
+#: plugins/Epi/src/Model/Entity/BaseEntity.php:1120
+msgid "Error encoding XML: {0}"
+msgstr "Fehler während der XML-Kodierung: {0}"
+
+#: plugins/Epi/src/Model/Entity/Footnote.php:241
+msgid "Missing tag for annotation footnotes-{id}#{from_tagid}."
+msgstr "Für die Annotation footnotes–{id}#{from_tagid} fehlt ein Tag."
+
+#: plugins/Epi/src/Model/Entity/IndexSegment.php:115
+#: plugins/Batch/templates/element/Tasks/Export/task_data_properties.php:29
+msgid "Property type"
+msgstr "Kategorientyp"
+
+#: plugins/Epi/src/Model/Entity/Item.php:513
+#: plugins/Epi/src/Model/Entity/Section.php:770
+msgid "Annotation"
+msgstr "Annotation"
+
+#: plugins/Epi/src/Model/Entity/Item.php:529
+#: plugins/Epi/src/Model/Entity/Section.php:786
+msgid "Tag"
+msgstr "Tag"
+
+#: plugins/Epi/src/Model/Entity/Item.php:530
+#: plugins/Epi/src/Model/Entity/Item.php:531
+#: plugins/Epi/src/Model/Entity/Section.php:787
+#: plugins/Epi/src/Model/Entity/Section.php:788
+msgid "Annotation text"
+msgstr "Annotationstext"
+
+#: plugins/Epi/src/Model/Entity/Item.php:592
+msgid ""
+"Missing property {to_tab}-{to_id} in field {from_tab}-{from_id}.{from_field}."
+msgstr ""
+"Die Kategorie {to_tab}-{to_id} fehlt im Feld {from_tab}-{from_id}."
+"{from_field}."
+
+#: plugins/Epi/src/Model/Entity/Item.php:611
+msgid ""
+"Missing target {to_tab}-{to_id} in field {from_tab}-{from_id}.{from_field}."
+msgstr ""
+"Fehlendes Ziel {to_tab}-{to_id} im Feld {from_tab}-{from_id}.{from_field}."
+
+#: plugins/Epi/src/Model/Entity/Link.php:368
+msgid ""
+"Missing target property in annotation links-{id}. Your personal SQL hacker "
+"can help you."
+msgstr ""
+"Fehlende Zielkategorie in der Annotation links-{id}. Ihr persönlicher SQL-"
+"Hacker kann Ihnen dabei helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:372
+msgid ""
+"Missing target article in annotation links-{id}. Your personal SQL hacker "
+"can help you."
+msgstr ""
+"Fehlender Zielartikel in der Annotation links–{id}. Ihr persönlicher SQL-"
+"Hacker kann Ihnen helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:376
+msgid ""
+"Missing target section in annotation links-{id}. Your personal SQL hacker "
+"can help you."
+msgstr ""
+"Fehlender Zielabschnitt in der Annotation links–{id}. Ihr persönlicher SQL-"
+"Hacker kann Ihnen helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:380
+msgid ""
+"Missing target footnote in annotation links-{id}. Your personal SQL hacker "
+"can help you."
+msgstr ""
+"Fehlende Zielfußnote in der Annotation links-{id}. Ihr persönlicher SQL-"
+"Hacker kann Ihnen helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:385
+msgid ""
+"Missing from data in annotation links-{id}. Your personal SQL hacker can "
+"help you."
+msgstr ""
+"Fehlende Quellangaben in der Annotation links-{id}. Ihr persönlicher SQL-"
+"Experte kann Ihnen helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:390
+msgid ""
+"Missing tag ID in annotation links-{id}. Your personal SQL hacker can help "
+"you."
+msgstr ""
+"Fehlende Tag-ID in der Annotation links–{id}. Ihr persönlicher SQL-Hacker "
+"kann Ihnen helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:396
+msgid ""
+"Duplicate tag ID {tagid} in annotation links-{id}. Your personal SQL hacker "
+"can help you."
+msgstr ""
+"Die Tag-ID {tagid} kommt in der Annotation links-{id} doppelt vor. Ihr "
+"persönlicher SQL-Hacker kann Ihnen helfen."
+
+#: plugins/Epi/src/Model/Entity/Link.php:402
+msgid "Missing tag {from_tagname}#{from_tagid} for annotation links-{id}."
+msgstr ""
+"Fehlender Tag {from_tagname}#{from_tagid} für die Annotation links-{id}."
+
+#: plugins/Epi/src/Model/Entity/Link.php:408
+msgid ""
+"Target property type mismatch in {from_tagname}#{from_tagid} for annotation "
+"links-{id}."
+msgstr ""
+"Typ der Zielkategorie stimmt nicht in {from_tagname}#{from_tagid} für die "
+"Annotation links-{id}."
+
+#: plugins/Epi/src/Model/Entity/Project.php:202
+msgid "Project type"
+msgstr "Projekttyp"
+
+#: plugins/Epi/src/Model/Entity/Project.php:210
+msgid "Shortname"
+msgstr "Kurzname"
+
+#: plugins/Epi/src/Model/Entity/Project.php:211
+msgid ""
+"An abbreviation that only contains letters and numbers, no whitespace or "
+"special characters."
+msgstr ""
+"Eine Abkürzung, die ausschließlich aus Buchstaben und Zahlen besteht, ohne "
+"Leerzeichen oder Sonderzeichen."
+
+#: plugins/Epi/src/Model/Entity/Project.php:217
+msgid "A number used to sort projects."
+msgstr "Eine Nummer, die zum Sortieren von Projekten verwendet wird."
+
+#: plugins/Epi/src/Model/Entity/Project.php:232
+msgid ""
+"In combination with the project type, identifies the project within the "
+"universe and should not be changed later. Usually the same as the signature."
+msgstr ""
+"In Verbindung mit dem Projekttyp identifiziert diese Angabe das Projekt "
+"innerhalb des Universums und sollte später nicht mehr geändert werden. In "
+"der Regel entspricht sie der Signatur."
+
+#: plugins/Epi/src/Model/Entity/Project.php:248
+msgid ""
+"Multiple identifiers or URLs can be entered on multiple lines. Namespaces "
+"can be used if they are configured in the project type."
+msgstr ""
+"Es können mehrere Bezeichner oder URLs in mehreren Zeilen eingegeben werden. "
+"Namensräume können verwendet werden, sofern sie im Projekttyp konfiguriert "
+"sind."
+
+#: plugins/Epi/src/Model/Entity/Property.php:491
+msgid "After node ..."
+msgstr "Nach der Kategorie ..."
+
+#: plugins/Epi/src/Model/Entity/Property.php:492
+msgid "Subnode of ..."
+msgstr "Unterkategorie von ..."
+
+#: plugins/Epi/src/Model/Entity/Property.php:509
+msgid "Image"
+msgstr "Bild"
+
+#: plugins/Epi/src/Model/Entity/Property.php:521
+msgid "Parent"
+msgstr "Elternkategorie"
+
+#: plugins/Epi/src/Model/Entity/Property.php:540
+#: plugins/Epi/src/Model/Entity/Property.php:578
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2352
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchSort.php:46
+msgid "Lemma"
+msgstr "Lemma"
+
+#: plugins/Epi/src/Model/Entity/Property.php:547
+msgid "Position"
+msgstr "Position"
+
+#: plugins/Epi/src/Model/Entity/Property.php:555
+msgid "Reference"
+msgstr "Referenz"
+
+#: plugins/Epi/src/Model/Entity/Property.php:572
+msgid "Ancestors"
+msgstr "Übergeordnete Kategorien"
+
+#: plugins/Epi/src/Model/Entity/Property.php:585
+msgid "Meta property"
+msgstr "Metakategorie"
+
+#: plugins/Epi/src/Model/Entity/Property.php:603
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2388
+msgid "Related"
+msgstr "Verweis"
+
+#: plugins/Epi/src/Model/Entity/Property.php:627
+msgid "Sort Key"
+msgstr "Sortierschlüssel"
+
+#: plugins/Epi/src/Model/Entity/Property.php:632
+msgid "Unit"
+msgstr "Einheit"
+
+#: plugins/Epi/src/Model/Entity/Property.php:644
+msgid "Elements"
+msgstr "Elemente"
+
+#: plugins/Epi/src/Model/Entity/Property.php:662
+msgid "Hidden"
+msgstr "Verborgen"
+
+#: plugins/Epi/src/Model/Entity/Property.php:668
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2357
+msgid "Comment"
+msgstr "Kommentar"
+
+#: plugins/Epi/src/Model/Entity/Property.php:675
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2358
+msgid "Keywords"
+msgstr "Schlüsselwörter"
+
+#: plugins/Epi/src/Model/Entity/Section.php:280
+msgid "Missing tree values in section {0}."
+msgstr "Fehlende Baumstruktur im Abschnitt {0}."
+
+#: plugins/Epi/src/Model/Entity/Section.php:1100
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProperty.php:59
+msgid "Section type"
+msgstr "Abschnittstyp"
+
+#: plugins/Epi/src/Model/Entity/Section.php:1121
+msgid "Parent section"
+msgstr "Übergeordneter Abschnitt"
+
+#: plugins/Epi/src/Model/Entity/Section.php:1128
+msgid "Previous section"
+msgstr "Vorheriger Abschnitt"
+
+#: plugins/Epi/src/Model/Entity/Tag.php:127
+msgid "Missing configuration for tag {tagname}#{tagid} ."
+msgstr "Fehlende Konfiguration für das Tag {tagname}#{tagid}."
+
+#: plugins/Epi/src/Model/Entity/Tag.php:134
+msgid "Missing footnote for tag {tagname}#{tagid} ."
+msgstr "Fehlende Fußnote für das Tag {tagname}#{tagid}."
+
+#: plugins/Epi/src/Model/Entity/Tag.php:145
+msgid "Missing annotation for tag {tagname}#{tagid} ."
+msgstr "Fehlende Annotation für das Tag {tagname}#{tagid}."
+
+#: plugins/Epi/src/Model/Entity/Tag.php:181
+msgid ""
+"Child tag {tagname}#{tagid} in field {field} of {tab}-{id} not allowed as "
+"child of #{parent_id}."
+msgstr ""
+"Das untergeordnete Tag  {tagname}#{tagid} in Feld {field} in {tab}-{id} ist "
+"nicht als Kind von #{parent_id} erlaubt."
+
+#: plugins/Epi/src/Model/Entity/Type.php:284
+#: plugins/Epi/src/Model/Table/TypesTable.php:618
+#: plugins/Batch/templates/Batch/transfer.php:93
+msgid "Scope"
+msgstr "Bereich"
+
+#: plugins/Epi/src/Model/Entity/Type.php:304
+#: plugins/Epi/src/Model/Table/TypesTable.php:629
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:62
+msgid "Mode"
+msgstr "Modus"
+
+#: plugins/Epi/src/Model/Entity/Type.php:311
+#: plugins/Epi/src/Model/Table/TypesTable.php:635
+#: plugins/Batch/templates/Batch/export.php:99
+msgid "Preset"
+msgstr "Voreinstellung"
+
+#: plugins/Epi/src/Model/Entity/Type.php:315
+#: plugins/Epi/src/Model/Table/TypesTable.php:653
+#: plugins/Epi/templates/Properties/view.php:97
+#: plugins/Epi/templates/Properties/view.php:123
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2513
+msgid "Caption"
+msgstr "Überschrift"
+
+#: plugins/Epi/src/Model/Entity/Type.php:418
+msgid "Entity {0} should have no children of type {1}, but has {2}."
+msgstr ""
+"Der Datensatz {0} sollte keine untergeordneten Datensätze vom Typ {1} haben, "
+"hat jedoch {2}."
+
+#: plugins/Epi/src/Model/Entity/Type.php:421
+msgid "Entity {0} should have exactly one child of type {1}, but has {2}."
+msgstr ""
+"Der Datensatz {0} sollte genau einen untergeordneten Datensatz vom Typ {1} "
+"haben, hat jedoch {2}."
+
+#: plugins/Epi/src/Model/Entity/Type.php:424
+msgid "Entity {0} should have at least one child of type {1}, but has {2}."
+msgstr ""
+"Der Datensatz {0} sollte mindestens einen untergeordneten Datensatz vom Typ "
+"{1} haben, hat jedoch {2}."
+
+#: plugins/Epi/src/Model/Entity/Type.php:427
+msgid ""
+"Entity {0} should have no more than one children of type {1}, but has {2}."
+msgstr ""
+"Der Datensatz {0} sollte nicht mehr als einen untergeordneten Datensatz vom "
+"Typ {1} haben, hat jedoch {2}."
+
+#: plugins/Epi/src/Model/Entity/User.php:168
+msgid "Human"
+msgstr "Mensch"
+
+#: plugins/Epi/src/Model/Entity/User.php:201
+msgid "The full name of the user."
+msgstr "Der vollständige Name des Benutzers."
+
+#: plugins/Epi/src/Model/Entity/User.php:212
+msgid "User type"
+msgstr "Benutzertyp"
+
+#: plugins/Epi/src/Model/Entity/User.php:224
+msgid ""
+"The IRI fragment is used to match project users to general Epigraf users.  "
+"The IRI identifies the user within the universe and should not be changed "
+"later."
+msgstr ""
+"Das IRI-Fragment dient dazu, Projektnutzer mit globalen Epigraf-Nutzern "
+"abzugleichen. Die IRI identifiziert den Benutzer innerhalb des Universums "
+"und sollte später nicht mehr geändert werden."
+
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:293
+msgid "Identifier"
+msgstr "Identifikator"
+
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:304
+msgid "Signature"
+msgstr "Signatur"
+
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:322
+msgid "Authority data"
+msgstr "Normdaten"
+
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:2024
+msgid "Skipped {0} not geocoded records."
+msgstr "{0} Einträge ohne Geokodierung ausgelassen."
+
+#: plugins/Epi/src/Model/Table/ArticlesTable.php:2027
+msgid ""
+"Please note that the data may contain non-validated locations guessed by "
+"naive algorithms."
+msgstr ""
+"Bitte beachten Sie, dass die Daten möglicherweise nicht validierte Standorte "
+"enthalten, die von naiven Algorithmen ermittelt wurden."
+
+#: plugins/Epi/src/Model/Table/BaseTable.php:384
+#: plugins/Epi/templates/Sections/widget_grid.php:75
+msgid "Columns"
+msgstr "Spalten"
+
+#: plugins/Epi/src/Model/Table/ProjectsTable.php:190
+msgid "Short name"
+msgstr "Kurzname"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:399
+msgid "Self-links will collapse the universe. Don't."
+msgstr "Selbstbezüge lassen das Universum kollabieren. Bitte nicht."
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:1965
+msgid "All"
+msgstr "Alle"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:1977
+msgid "- Name"
+msgstr "Name"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:1982
+msgid "- Keywords"
+msgstr "Schlüsselwörter"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:1987
+msgid "- IRI fragment"
+msgstr "IRI-Fragment"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:1992
+msgid "- Norm data"
+msgstr "Normdaten"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:1996
+msgid "- ID"
+msgstr "- ID"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2224
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2327
+msgid "Could not merge properties: {0}"
+msgstr "Kategorien konnten nicht zusammengeführt werden: {0}"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2315
+msgid "Could not create merged property"
+msgstr "Konnte keine zusammengeführte Kategorie erstellen"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2355
+msgid "Hide name"
+msgstr "Namen ausblenden"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2356
+msgid "Group"
+msgstr "Gruppe"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2369
+#: plugins/Epi/templates/Articles/items.php:20
+msgid "Items"
+msgstr "Einträge"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2370
+msgid "Links"
+msgstr "Links"
+
+#: plugins/Epi/src/Model/Table/PropertiesTable.php:2387
+msgid "Level"
+msgstr "Ebene"
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:292
+msgid "Could not parse JSON data, please check you syntax"
+msgstr ""
+"Die JSON-Daten konnten nicht prozessiert werden, bitte überprüfen Sie die "
+"Syntax"
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:423
+msgid "For {0}, the {1} configuration is missing."
+msgstr "Für {0} fehlt die Konfiguration {1}."
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:641
+msgid "Sort"
+msgstr "Sortieren"
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:671
+msgid "Shortcut"
+msgstr "Schnellzugriff"
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:678
+msgid "Tag type"
+msgstr "Tagtyp"
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:772
+msgid "Identifiers"
+msgstr "Identifikatoren"
+
+#: plugins/Epi/src/Model/Table/TypesTable.php:781
+msgid "Configuration"
+msgstr "Konfiguration"
+
+#: plugins/Epi/src/Model/Table/UsersTable.php:143
+msgid "Rolle"
+msgstr "Rolle"
+
+#: plugins/Epi/templates/Analytics/files.php:24
+msgid "Missing files"
+msgstr "Fehlende Dateien"
+
+#: plugins/Epi/templates/Analytics/files.php:26
+msgid "Expected files by item type"
+msgstr "Erwartete Dateien nach Itemtyp"
+
+#: plugins/Epi/templates/Analytics/files.php:32
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProperty.php:93
+msgid "Item type"
+msgstr "Itemtyp"
+
+#: plugins/Epi/templates/Analytics/files.php:33
+#: plugins/Epi/templates/Analytics/files.php:52
+msgid "File type"
+msgstr "Dateityp"
+
+#: plugins/Epi/templates/Analytics/files.php:34
+#: plugins/Epi/templates/Analytics/files.php:53
+msgid "Expected"
+msgstr "Erwartet"
+
+#: plugins/Epi/templates/Analytics/files.php:35
+msgid "Online"
+msgstr "Online"
+
+#: plugins/Epi/templates/Analytics/files.php:37
+#: plugins/Epi/templates/Analytics/files.php:54
+msgid "Missing"
+msgstr "Fehlend"
+
+#: plugins/Epi/templates/Analytics/files.php:46
+msgid "Expected items by file type"
+msgstr "Erwartete Einträge nach Dateityp"
+
+#: plugins/Epi/templates/Analytics/files_cases.php:64
+#: plugins/Epi/templates/Analytics/files_cases.php:87
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1703
+#: plugins/Widgets/src/View/Helper/TableHelper.php:762
+#: plugins/Widgets/src/View/Helper/TableHelper.php:949
+msgid "View"
+msgstr "Anzeigen"
+
+#: plugins/Epi/templates/Analytics/integrity.php:19
+msgid "Integrity checks"
+msgstr "Integritätsprüfungen"
+
+#: plugins/Epi/templates/Analytics/integrity.php:25
+msgid "Clear orphans"
+msgstr "Verwaiste Datensätze bereinigen"
+
+#: plugins/Epi/templates/Analytics/integrity.php:27
+msgid "Are you sure you want to clear all orphans?"
+msgstr "Sind Sie sicher, dass Sie alle verwaisten Datensätze löschen wollen?"
+
+#: plugins/Epi/templates/Analytics/integrity.php:32
+msgid ""
+"Danger zone! Operations on this page may severely damage content.<br> Data "
+"can get lost forever!"
+msgstr ""
+"Achtung! Operationen auf dieser Seite können den Inhalt schwer beschädigen."
+"<br> Daten können für immer verloren gehen!"
+
+#: plugins/Epi/templates/Analytics/integrity.php:41
+msgid "Current"
+msgstr "Aktuell"
+
+#: plugins/Epi/templates/Analytics/integrity.php:42
+#: plugins/Epi/templates/Properties/merge_preview.php:42
+msgid "Target"
+msgstr "Ziel"
+
+#: plugins/Epi/templates/Analytics/integrity.php:56
+msgid "Show"
+msgstr "Anzeigen"
+
+#: plugins/Epi/templates/Analytics/integrity.php:59
+msgid "Clear"
+msgstr "Löschen"
+
+#: plugins/Epi/templates/Analytics/integrity.php:60
+msgid "Are you sure you want to clear the selected orphans?"
+msgstr ""
+"Sind Sie sicher, dass Sie die ausgewählten verwaisten Datensätze löschen "
+"wollen?"
+
+#: plugins/Epi/templates/Analytics/integrity_cases.php:33
+msgid "Linked table"
+msgstr "Verknüpfte Tabelle"
+
+#: plugins/Epi/templates/Analytics/integrity_cases.php:34
+msgid "Linked ID"
+msgstr "Verknüpfte ID"
+
+#: plugins/Epi/templates/Analytics/integrity_cases.php:49
+#: plugins/Epi/templates/Articles/view_document.php:223
+#: plugins/Files/templates/Files/index.php:103
+#: plugins/Files/templates/Files/index.php:144
+msgid "Open"
+msgstr "Öffnen"
+
+#: plugins/Epi/templates/Analytics/integrity_cases.php:50
+msgid "Desktop"
+msgstr "Desktop"
+
+#: plugins/Epi/templates/Analytics/types.php:30
+msgid "Type distribution"
+msgstr "Verteilung der Typen"
+
+#: plugins/Epi/templates/Analytics/types.php:60
+msgid "total"
+msgstr "gesamt"
+
+#: plugins/Epi/templates/Articles/add.php:21
+#: plugins/Epi/templates/Articles/index.php:62
+msgid "Create article"
+msgstr "Artikel anlegen"
+
+#: plugins/Epi/templates/Articles/delete.php:20
+msgid "Delete article"
+msgstr "Artikel löschen"
+
+#: plugins/Epi/templates/Articles/delete.php:26
+msgid "Are you sure you want to delete the article \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie den Artikel \"{0}\" löschen wollen?"
+
+#: plugins/Epi/templates/Articles/index.php:59
+#: plugins/Epi/templates/Projects/index.php:77
+#: plugins/Epi/templates/Projects/view.php:31
+#: plugins/Epi/templates/Properties/index.php:119
+#: plugins/Epi/templates/Properties/view.php:146
+#: plugins/Epi/templates/Types/index.php:104
+msgid "Context Actions"
+msgstr "Kontextaktionen"
+
+#: plugins/Epi/templates/Articles/index.php:79
+#: plugins/Epi/templates/Projects/index.php:89
+#: plugins/Epi/templates/Properties/index.php:140
+#: plugins/Epi/templates/Types/index.php:112
+#: plugins/Batch/templates/Batch/transfer.php:48
+msgid "Transfer"
+msgstr "Transferieren"
+
+#: plugins/Epi/templates/Articles/index.php:89
+#: plugins/Epi/templates/Properties/index.php:151
+msgid "Mutate"
+msgstr "Mutieren"
+
+#: plugins/Epi/templates/Articles/index_facets.php:52
+msgid "Filter projects"
+msgstr "Projekte filtern"
+
+#: plugins/Epi/templates/Articles/index_facets.php:53
+#: plugins/Epi/templates/Articles/index_facets.php:137
+#: plugins/Epi/templates/Articles/index_facets.php:216
+msgid "Reset filter"
+msgstr "Filter zurücksetzen"
+
+#: plugins/Epi/templates/Articles/index_facets.php:63
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:22
+msgid "Article types"
+msgstr "Artikeltypen"
+
+#: plugins/Epi/templates/Articles/index_facets.php:78
+msgid "Article state"
+msgstr "Artikelstatus"
+
+#: plugins/Epi/templates/Articles/index_facets.php:136
+#: plugins/Epi/templates/Articles/index_facets.php:215
+msgid "Filter properties"
+msgstr "Kategorien filtern"
+
+#: plugins/Epi/templates/Articles/index_facets.php:141
+#: plugins/Epi/templates/Articles/index_facets.php:220
+msgid "Return articles that are linked to any of the properties ."
+msgstr "Gib alle Artikel zurück, die mit einer der Kategorien verknüpft sind."
+
+#: plugins/Epi/templates/Articles/index_facets.php:144
+#: plugins/Epi/templates/Articles/index_facets.php:221
+msgid "Select all"
+msgstr "Alles auswählen"
+
+#: plugins/Epi/templates/Articles/index_facets.php:153
+#: plugins/Epi/templates/Articles/index_facets.php:223
+msgid "Return articles with the selected properties or their children."
+msgstr ""
+"Gib Artikel mit den ausgewählten Kategorien oder deren Unterkategorien "
+"zurück."
+
+#: plugins/Epi/templates/Articles/index_facets.php:156
+#: plugins/Epi/templates/Articles/index_facets.php:224
+msgid "Include descendants"
+msgstr "Untereinträge einbeziehen"
+
+#: plugins/Epi/templates/Articles/index_facets.php:165
+#: plugins/Epi/templates/Articles/index_facets.php:226
+msgid ""
+"Show only articles without the selected properties. If no properties are "
+"selected, articles without any of the properties are returned."
+msgstr ""
+"Zeige nur Artikel an, welche die ausgewählten Kategorien nicht aufweisen. "
+"Wenn keine Kategorien ausgewählt sind, werden Artikel angezeigt, die keine "
+"der Kategorien aufweisen."
+
+#: plugins/Epi/templates/Articles/index_facets.php:168
+#: plugins/Epi/templates/Articles/index_facets.php:227
+msgid "Invert selection"
+msgstr "Auswahl umkehren"
+
+#: plugins/Epi/templates/Articles/index_facets.php:176
+#: plugins/Epi/templates/Articles/index_facets.php:229
+msgid "Use this property type as grouping for tiles and map colors."
+msgstr "Verwende diese Kategorie als Gruppierung für Kacheln und in Karten."
+
+#: plugins/Epi/templates/Articles/index_facets.php:179
+#: plugins/Epi/templates/Articles/index_facets.php:230
+msgid "Show details"
+msgstr "Details anzeigen"
+
+#: plugins/Epi/templates/Articles/index_search.php:47
+msgid "Search articles, e.g. \"grandin\""
+msgstr "Artikel suchen, z. B. „grandin“"
+
+#: plugins/Epi/templates/Articles/index_search.php:47
+msgid "Search articles"
+msgstr "Artikel suchen"
+
+#: plugins/Epi/templates/Articles/index_search.php:57
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:708
+msgid "Timeline"
+msgstr "Zeitreihe"
+
+#: plugins/Epi/templates/Articles/index_search.php:75
+msgid "Date"
+msgstr "Datum"
+
+#: plugins/Epi/templates/Articles/index_search.php:76
+msgid "Search by date range, e.g. 16. Jh. or 1430-1450"
+msgstr "Suche nach Zeitraum, z. B. 16. Jh. oder 1430–1450"
+
+#: plugins/Epi/templates/Articles/index_search.php:85
+msgid "Filter"
+msgstr "Filter"
+
+#: plugins/Epi/templates/Articles/recovertree.php:22
+msgid "Recover tree"
+msgstr "Baumstruktur wiederherstellen"
+
+#: plugins/Epi/templates/Articles/recovertree.php:29
+msgid "Do you want to recover the tree structure of record {0}?"
+msgstr "Möchten Sie die Baumstruktur von Datensatz {0} wiederherstellen?"
+
+#: plugins/Epi/templates/Articles/recovertree.php:34
+msgid "Do you want to recover the tree structure of all articles?"
+msgstr "Möchten Sie die Baumstruktur aller Artikel wiederherstellen?"
+
+#: plugins/Epi/templates/Articles/view_document.php:127
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2235
+#: plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:1141
+msgid "Footnotes"
+msgstr "Fußnoten"
+
+#: plugins/Epi/templates/Articles/view_document.php:145
+msgid "Backlinks"
+msgstr "Rückverweise"
+
+#: plugins/Epi/templates/Articles/view_document.php:195
+msgid "Open article"
+msgstr "Artikel öffnen"
+
+#: plugins/Epi/templates/Articles/view_document.php:225
+msgid "EpiDesktop"
+msgstr "EpiDesktop"
+
+#: plugins/Epi/templates/Projects/add.php:22
+#: plugins/Epi/templates/Projects/index.php:78
+msgid "Create project"
+msgstr "Projekt anlegen"
+
+#: plugins/Epi/templates/Projects/delete.php:20
+msgid "Delete project"
+msgstr "Projekt löschen"
+
+#: plugins/Epi/templates/Projects/delete.php:26
+msgid ""
+"Are you sure you want to delete the project \"{0}\" and all contained "
+"articles?"
+msgstr ""
+"Sind Sie sicher, dass Sie das Projekt \"{0}\" und alle enthaltenen Artikel "
+"löschen wollen?"
+
+#: plugins/Epi/templates/Projects/index.php:42
+msgid "Search projects"
+msgstr "Projekte suchen"
+
+#: plugins/Epi/templates/Projects/index.php:53
+msgid "Project types"
+msgstr "Projekttypen"
+
+#: plugins/Epi/templates/Properties/delete.php:20
+msgid "Delete property"
+msgstr "Kategorie löschen"
+
+#: plugins/Epi/templates/Properties/delete.php:26
+msgid "Are you sure you want to delete the property \"{0}[#{1}][{2}]\"?"
+msgstr "Möchten Sie die Kategorie „{0}[#{1}][{2}]“ wirklich löschen?"
+
+#: plugins/Epi/templates/Properties/index.php:44
+msgid "Jump"
+msgstr "Springen"
+
+#: plugins/Epi/templates/Properties/index.php:45
+msgid "Jump to letter, e.g. type \"me - b\""
+msgstr "Springe zu Buchstaben, z. B. „me - b“ eingeben"
+
+#: plugins/Epi/templates/Properties/index.php:61
+msgid "Search properties"
+msgstr "Kategorien suchen"
+
+#: plugins/Epi/templates/Properties/index.php:122
+msgid "Create property"
+msgstr "Kategorie anlegen"
+
+#: plugins/Epi/templates/Properties/index.php:176
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:352
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:372
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:420
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:593
+msgid "Save"
+msgstr "Speichern"
+
+#: plugins/Epi/templates/Properties/merge.php:24
+#: plugins/Epi/templates/Properties/view.php:148
+msgid "Merge"
+msgstr "Zusammenführen"
+
+#: plugins/Epi/templates/Properties/merge_preview.php:34
+msgid ""
+"Are you sure you want to merge the two properties? Data of the source "
+"property will be merged into the target and the source property will be "
+"deleted. This is a permanent operation that cannot be reverted!"
+msgstr ""
+"Möchten Sie die beiden Kategorien wirklich zusammenführen? Die Daten der "
+"Quellkategorie werden in die Zielkategorie übernommen, und die "
+"Quellkategorie wird gelöscht. Dies ist ein endgültiger Vorgang, der nicht "
+"rückgängig gemacht werden kann!"
+
+#: plugins/Epi/templates/Properties/merge_preview.php:39
+#: plugins/Files/templates/Files/view.php:42
+#: plugins/Batch/templates/Batch/import.php:80
+#: plugins/Batch/templates/Batch/transfer.php:119
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:549
+msgid "Preview"
+msgstr "Vorschau"
+
+#: plugins/Epi/templates/Properties/merge_preview.php:45
+msgid "Sources"
+msgstr "Quellen"
+
+#: plugins/Epi/templates/Properties/merge_select.php:34
+msgid "Target property"
+msgstr "Zielkategorie"
+
+#: plugins/Epi/templates/Properties/merge_select.php:52
+msgid "Source properties"
+msgstr "Quellkategorien"
+
+#: plugins/Epi/templates/Properties/merge_select.php:59
+#: plugins/Epi/templates/Properties/view.php:41
+#: plugins/Epi/templates/Properties/view.php:59
+#: plugins/Epi/templates/Properties/view.php:78
+msgid "Path"
+msgstr "Pfad"
+
+#: plugins/Epi/templates/Properties/view.php:35
+msgid "Merged from"
+msgstr "Zusammengeführt aus"
+
+#: plugins/Epi/templates/Properties/view.php:53
+msgid "Similar lemmata"
+msgstr "Ähnliche Lemmata"
+
+#: plugins/Epi/templates/Properties/view.php:72
+msgid "Versions"
+msgstr "Versionen"
+
+#: plugins/Epi/templates/Properties/view.php:90
+#: plugins/Files/templates/Files/view.php:57
+msgid "Used in articles"
+msgstr "Verwendet in Artikeln"
+
+#: plugins/Epi/templates/Properties/view.php:117
+msgid "Base properties"
+msgstr "Basiskategorien"
+
+#: plugins/Epi/templates/Sections/view_metrics.php:20
+msgid "Annotations"
+msgstr "Annotationen"
+
+#: plugins/Epi/templates/Sections/view_metrics.php:25
+msgid "Full-text characters"
+msgstr "Volltextzeichen"
+
+#: plugins/Epi/templates/Sections/view_metrics.php:30
+msgid "Mandatory content"
+msgstr "Pflichtinhalte"
+
+#: plugins/Epi/templates/Sections/widget_grid.php:88
+msgid "Rows"
+msgstr "Zeilen"
+
+#: plugins/Epi/templates/Types/add.php:22
+#: plugins/Epi/templates/Types/index.php:105
+msgid "Create type"
+msgstr "Typ anlegen"
+
+#: plugins/Epi/templates/Types/delete.php:20
+msgid "Delete type"
+msgstr "Typ löschen"
+
+#: plugins/Epi/templates/Types/delete.php:26
+msgid "Are you sure you want to delete the type \"{0}\"?"
+msgstr "Sind Sie sicher, dass Sie den Typ \"{0}\" löschen wollen?"
+
+#: plugins/Epi/templates/Types/index.php:45
+msgid "Search by name, caption or IRI fragment"
+msgstr "Suche nach Name, Bildunterschrift oder IRI-Fragment"
+
+#: plugins/Epi/templates/Types/index.php:57
+#: plugins/Batch/templates/element/Tasks/Export/task_data_types.php:22
+msgid "Scopes"
+msgstr "Bereiche"
+
+#: plugins/Epi/templates/Types/index.php:70
+msgid "Modes"
+msgstr "Modi"
+
+#: plugins/Epi/templates/Users/delete.php:26
+msgid "Are you sure you want to delete the user \"{0}\" ?"
+msgstr "Möchten Sie den Benutzer „{0}“ wirklich löschen?"
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:169
+msgid "The folder does not exist yet. Create the folder before adding files."
+msgstr ""
+"Der Ordner existiert noch nicht. Erstellen Sie den Ordner, bevor Sie Dateien "
+"hinzufügen."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:651
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:875
+msgid "File not found"
+msgstr "Datei nicht gefunden"
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:696
+msgid "Invalid file type"
+msgstr "Ungültiger Dateityp"
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:744
+msgid "The files have been uploaded."
+msgstr "Die Dateien wurden hochgeladen."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:748
+msgid ""
+"Some files could not be uploaded. Please check permissions and try again."
+msgstr ""
+"Einige Dateien konnten nicht hochgeladen werden. Bitte prüfen Sie die "
+"Berechtigungen und versuchen Sie es erneut."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:785
+msgid "Folder updated from origin."
+msgstr "Der Ordner wurde aus der Quelle aktualisiert."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:794
+msgid "Pull failed: "
+msgstr "Pull fehlgeschlagen: "
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:802
+msgid "No valid request."
+msgstr "Keine gültige Anfrage."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:830
+msgid "No valid filename, please provide a valid filename."
+msgstr ""
+"Der Dateiname ist ungültig. Bitte geben Sie einen gültigen Dateinamen ein."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:836
+msgid "The file was fetched."
+msgstr "Die Datei wurde abgerufen."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:846
+#: plugins/Files/src/Model/Entity/FileRecord.php:597
+msgid "The file could not be fetched."
+msgstr "Die Datei konnte nicht abgerufen werden."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:879
+msgid "The file is not a zip archive."
+msgstr "Die Datei ist kein ZIP-Archiv."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:883
+msgid "File unzipped."
+msgstr "Datei entpackt."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:886
+msgid "File could not be unzipped."
+msgstr "Die Datei konnte nicht entpackt werden."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:926
+msgid "The folder could not be created, please provide a valid name."
+msgstr ""
+"Der Ordner konnte nicht erstellt werden. Bitte geben Sie einen gültigen "
+"Namen ein."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:942
+msgid "The folder has been created."
+msgstr "Der Ordner wurde erstellt."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:947
 msgid "The folder could not be created. Please, try again."
 msgstr ""
 "Der Ordner konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
 
-msgid "The files have been uploaded."
-msgstr "Die Dateien wurden hochgeladen."
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:970
+msgid "Cleaned file and folder names."
+msgstr "Datei- und Ordnernamen bereinigt."
 
-msgid "Some files could not be uploaded. Please, try again."
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:973
+msgid "Cleaned file and folder names. {0} errors occured."
+msgstr "Datei- und Ordnernamen bereinigt. Es sind {0} Fehler aufgetreten."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1019
+msgid "{0} folders synchronized."
+msgstr "{0} Ordner wurden synchronisiert."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1056
+msgid "The file or folder could not be renamed."
+msgstr "Die Datei oder der Ordner konnte nicht umbenannt werden."
+
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1068
+msgid ""
+"The file type of the uploaded file is not compatible with the file "
+"extension. Please change the filename or the uploaded file."
 msgstr ""
-"Einige Dateien konnten nicht hochgeladen werden. Bitte versuchen Sie es "
-"erneut."
+"Der Dateityp der hochgeladenen Datei ist nicht mit der Dateiendung "
+"kompatibel. Bitte ändern Sie den Dateinamen oder die hochgeladene Datei."
 
-msgid "Create database connection"
-msgstr "Datenbankverbindung erstellen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1076
+msgid "The file could not be uploaded."
+msgstr "Die Datei konnte nicht hochgeladen werden."
 
-msgid "Database Connections"
-msgstr "Datenbankverbindungen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1088
+msgid "The file record could not be saved."
+msgstr "Der Dateidatensatz konnte nicht gespeichert werden."
 
-msgid "Create Connection"
-msgstr "Verbindung erstellen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1097
+msgid "The file or folder has been saved."
+msgstr "Die Datei oder der Ordner wurde gespeichert."
 
-msgid "Edit Connection"
-msgstr "Verbindung bearbeiten"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1133
+msgid "The file or folder has been deleted."
+msgstr "Die Datei oder der Ordner wurde gelöscht."
 
-msgid "Delete Connection"
-msgstr "Verbindung löschen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1139
+msgid "The file or folder could not be deleted. Please, try again."
+msgstr ""
+"Die Datei oder der Ordner konnte nicht gelöscht werden. Bitte versuchen Sie "
+"es erneut."
 
-msgid "Show all Connections"
-msgstr "Alle Verbindungen anzeigen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1194
+msgid "The folder content could not be moved."
+msgstr "Der Inhalt des Ordners konnte nicht verschoben werden."
 
-msgid "Text blocks"
-msgstr "Textblöcke"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1201
+msgid "The folder content has been moved."
+msgstr "Der Inhalt des Ordners wurde verschoben."
 
-msgid "Delete Database"
-msgstr "Datenbank löschen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1216
+msgid "The resource could not be moved."
+msgstr "Die Ressource konnte nicht verschoben werden."
 
-msgid "Show Databases"
-msgstr "Datenbanken anzeigen"
+#: plugins/Files/src/Controller/Component/FilesRequestComponent.php:1223
+msgid "The resource has been moved."
+msgstr "Die Ressource wurde verschoben."
 
-msgid "Preview"
-msgstr "Vorschau"
+#: plugins/Files/src/Controller/Component/FilesRequestTrait.php:226
+msgid "The thumb cache has been cleared."
+msgstr "Der Vorschaucache wurde geleert."
 
-msgid "Please enter your username and password"
-msgstr "Bitte geben Sie Ihren Benutzernamen und Ihr Passwort ein"
+#: plugins/Files/src/Controller/Component/FilesRequestTrait.php:229
+msgid "The thumb cache could not be cleared. Please try again."
+msgstr ""
+"Der Vorschaucache konnte nicht geleert werden. Bitte versuchen Sie es erneut."
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:504
+msgid "Display"
+msgstr "Anzeigen"
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:510
+msgid "Folder"
+msgstr "Ordner"
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:522
+#: plugins/Files/templates/Files/index.php:82
+msgid "Size"
+msgstr "Größe"
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:528
+msgid "Uploaded"
+msgstr "Hochgeladen"
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:540
+msgid "Replace the file"
+msgstr "Datei ersetzen"
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:585
+msgid "No origin URL provided."
+msgstr "Es wurde keine Quell-URL angegeben."
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:590
+msgid "The zip entries are invalid."
+msgstr "Die ZIP-Einträge sind ungültig."
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:605
+msgid "Origin file could not be unzipped."
+msgstr "Die Quelldatei konnte nicht entpackt werden."
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:612
+msgid "Target folder is not ready."
+msgstr "Der Zielordner ist nicht bereit."
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:619
+msgid "The zip entry is invalid."
+msgstr "Der ZIP-Eintreig ist ungültig."
+
+#: plugins/Files/src/Model/Entity/FileRecord.php:624
+msgid "Origin content could not be moved to target."
+msgstr "Der Inhalt der Quelle konnte nicht in das Ziel verschoben werden."
+
+#: plugins/Files/src/View/Helper/FilesHelper.php:116
+msgid "The image {0} is not available on the server."
+msgstr "Das Bild {0} ist auf dem Server nicht verfügbar."
+
+#: plugins/Files/templates/Files/delete.php:32
+msgid ""
+"This will delete the file or folder \"{0}\" on the server. All data will be "
+"deleted forever. Are you sure? Are you really sure?"
+msgstr ""
+"Dadurch wird die Datei oder der Ordner „{0}“ auf dem Server gelöscht. Alle "
+"Daten werden unwiderruflich gelöscht. Sind Sie sicher? Sind Sie sich "
+"wirklich sicher?"
+
+#: plugins/Files/templates/Files/fetch.php:52
+msgid "Fetch"
+msgstr "Holen"
+
+#: plugins/Files/templates/Files/index.php:38
+#: plugins/Files/templates/Files/index.php:41
+msgid "Mounts"
+msgstr "Mounts"
+
+#: plugins/Files/templates/Files/index.php:127
+msgid "Details"
+msgstr "Details"
+
+#: plugins/Files/templates/Files/index.php:159
+msgid "This folder is linked to an external resource: "
+msgstr "Dieser Ordner ist mit einer externen Ressource verknüpft: "
+
+#: plugins/Files/templates/Files/index.php:169
+msgid "Pull from origin"
+msgstr "Von der Quelle abrufen"
+
+#: plugins/Files/templates/Files/index.php:173
+msgid ""
+"This will replace all contents in this folder with the origin content. Are "
+"you ready to proceed?"
+msgstr ""
+"Dadurch wird der gesamte Inhalt dieses Ordners durch den ursprünglichen "
+"Inhalt ersetzt. Möchten Sie fortfahren?"
+
+#: plugins/Files/templates/Files/index.php:184
+msgid "Create folder"
+msgstr "Ordner anlegen"
+
+#: plugins/Files/templates/Files/index.php:187
+#: plugins/Files/templates/Files/view.php:74
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:283
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1699
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: plugins/Files/templates/Files/index.php:188
+msgid "Move folder"
+msgstr "Ordner verschieben"
+
+#: plugins/Files/templates/Files/index.php:189
+msgid "Move content"
+msgstr "Inhalt verschieben"
+
+#: plugins/Files/templates/Files/index.php:190
+msgid "Clear thumbs"
+msgstr "Thumbs löschen"
+
+#: plugins/Files/templates/Files/index.php:191
+msgid "Clean names"
+msgstr "Namen bereinigen"
+
+#: plugins/Files/templates/Files/index.php:192
+msgid "Sync"
+msgstr "Synchronisieren"
+
+#: plugins/Files/templates/Files/index.php:192
+msgid ""
+"This will recurse all files and folders and will stress the server. Are you "
+"ready  to proceed?"
+msgstr ""
+"Dadurch werden alle Dateien und Ordner durchlaufen, was den Server belasten "
+"wird. Möchten Sie fortfahren?"
+
+#: plugins/Files/templates/Files/index.php:193
+msgid "Fetch file"
+msgstr "Datei abrufen"
+
+#: plugins/Files/templates/Files/index.php:197
+msgid "Download latest file"
+msgstr "Aktuellste Datei herunterladen"
+
+#: plugins/Files/templates/Files/index.php:199
+msgid "Zip"
+msgstr "Zip"
+
+#: plugins/Files/templates/Files/move.php:29
+msgid "Move to"
+msgstr "Verschieben nach"
+
+#: plugins/Files/templates/Files/select.php:122
+msgid "Add all to article"
+msgstr "Alle zum Artikel hinzufügen"
+
+#: plugins/Files/templates/Files/view.php:49
+msgid "XMP Metadata"
+msgstr "XMP-Metadaten"
+
+#: plugins/Files/templates/Files/view.php:78
+msgid "Unzip"
+msgstr "Entpacken"
+
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:243
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:427
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:604
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:743
+msgid "Model not configured"
+msgstr "Modell nicht konfiguriert"
+
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:267
+msgid "The file could not be uploaded: {0}"
+msgstr "Die Datei konnte nicht hochgeladen werden: {0}"
+
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:282
+msgid "The data could not be saved: {0}"
+msgstr "Die Daten konnten nicht gespeichert werden: {0}"
+
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:297
+msgid "Data is missing."
+msgstr "Daten fehlen."
+
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:411
+msgid "You need to post data to this endpoint."
+msgstr "Sie müssen Daten an diesen Endpunkt senden."
+
+#: plugins/Batch/src/Controller/Component/BatchComponent.php:792
+msgid ""
+"You have no permission to execute the selected task or the task does not "
+"exist."
+msgstr ""
+"Sie haben keine Berechtigung, die ausgewählte Aufgabe auszuführen, oder die "
+"Aufgabe existiert nicht."
+
+#: plugins/Batch/src/Model/Jobs/JobImport.php:71
+#: plugins/Batch/src/Model/Jobs/JobTransfer.php:38
+msgid "Init versioning"
+msgstr "Versionierung initialisieren"
+
+#: plugins/Batch/src/Model/Jobs/JobImport.php:72
+#: plugins/Batch/src/Model/Jobs/JobTransfer.php:39
+msgid "Recover trees"
+msgstr "Baumstruktur wiederherstellen"
+
+#: plugins/Batch/src/Model/Jobs/JobImport.php:73
+msgid "Create new entities"
+msgstr "Neue Datensätze anlegen"
+
+#: plugins/Batch/src/Model/Jobs/JobTransfer.php:42
+msgid "Copy files"
+msgstr "Dateien kopieren"
+
+#: plugins/Batch/src/Model/Jobs/JobTransfer.php:44
+#: plugins/Batch/templates/Batch/export.php:93
+msgid "Snippets"
+msgstr "Schnippsel"
+
+#: plugins/Batch/src/Model/Jobs/JobTransfer.php:56
+msgid "Publication states"
+msgstr "Bearbeitungsstatus"
+
+#: plugins/Batch/src/Model/Tasks/Export/TaskCopyFiles.php:47
+msgid "Empty source path"
+msgstr "Leerer Quellpfad"
+
+#: plugins/Batch/src/Model/Tasks/Import/TaskImport.php:162
+msgid "Error loading data from source \"{source}\": {error}."
+msgstr "Fehler beim Laden der Daten aus der Quelle \"{source}\": {error}."
+
+#: plugins/Batch/src/Model/Tasks/Import/TaskImport.php:251
+msgid "Could not copy file {0}."
+msgstr "Konnte Datei {0} nicht kopieren."
+
+#: plugins/Batch/src/Model/Tasks/Import/TaskImport.php:267
+msgid "{0} unsolved references."
+msgstr "{0} ungelöste Verweise."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/BaseTaskMutate.php:181
+msgid "Error mutating entitites: {error}."
+msgstr "Fehler beim Mutieren der Datensätze: {error}."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignNumber.php:38
+msgid "Literature"
+msgstr "Literatur"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProperty.php:120
+msgid "Category type"
+msgstr "Kategorientyp"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProperty.php:128
+msgid "Clear section"
+msgstr "Abschnitt leeren"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskAssignProperty.php:217
+msgid "Collection"
+msgstr "Kollektion"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchAnnotate.php:47
+msgid "Item types are missing."
+msgstr "Itemtypen fehlen."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchAnnotate.php:51
+msgid "Service key is missing"
+msgstr "Der Serviceschlüssel fehlt"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchAnnotate.php:59
+msgid "Service configuration not found."
+msgstr "Die Servicekonfiguration wurde nicht gefunden."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchAutofill.php:40
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchReconcile.php:41
+msgid "Target Field"
+msgstr "Zielfeld"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchAutofill.php:46
+msgid "Sort key field"
+msgstr "Sortierschlüsselfeld"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchAutofill.php:47
+msgid "Name field"
+msgstr "Namensfeld"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchPublish.php:55
+msgid "Publication state"
+msgstr "Bearbeitungsstatus"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchReconcile.php:47
+msgid "Norm data field"
+msgstr "Normdatenfeld"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchReconcile.php:48
+msgid "Content field"
+msgstr "Inhaltsfeld"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchReconcile.php:54
+msgid "Only empty fields"
+msgstr "Nur leere Felder"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchSort.php:49
+msgid "Sort number"
+msgstr "Sortiernummer"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchSort.php:50
+msgid "Tree order"
+msgstr "Baumreihenfolge"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskBatchSort.php:60
+msgid "Sort field"
+msgstr "Sortierfeld"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:48
+msgid "Tags"
+msgstr "Tags"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:49
+msgid "comma separated element names, e.g. \"note,ref\""
+msgstr "durch Kommas getrennte Elementnamen, z. B. \"note,ref\""
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:54
+msgid "Cleaning step"
+msgstr "Bereinigungsschritt"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:60
+msgid "Remove empty and nested child tags"
+msgstr "Leere und verschachtelte untergeordnete Tags entfernen"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:61
+msgid "Remove tags, keep content"
+msgstr "Tags entfernen, Inhalt behalten"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:101
+msgid "Tag names are missing."
+msgstr "Tag-Namen nicht angegeben."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskCleanXml.php:105
+msgid "Processing steps missing."
+msgstr "Verarbeitungsschritte nicht angegeben."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:46
+msgid "Workflow"
+msgstr "Workflow"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:52
+msgid "Annotate"
+msgstr "Annotieren"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:66
+msgid "Single value output"
+msgstr "Einzelwerte ausgeben"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:67
+msgid "Multi value output"
+msgstr "Mehrere Werte ausgeben"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:83
+msgid "Rules"
+msgstr "Regeln"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:88
+msgid "The property type used to generate rules."
+msgstr "Der Kategorientyp, der zur Generierung von Regeln verwendet wird."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:93
+msgid "Input value"
+msgstr "Eingabewert"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:95
+msgid ""
+"Define the input using placeholder strings. Placeholder strings can contain "
+"extraction keys to get data from the selected article in curly brackets."
+msgstr ""
+"Definieren Sie die Eingabe mithilfe von Platzhalterzeichenfolgen. "
+"Platzhalterzeichenfolgen können Extraktionsschlüssel in geschweiften "
+"Klammern enthalten, um Daten aus dem ausgewählten Artikel abzurufen."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:101
+msgid "System prompt"
+msgstr "System-Prompt"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:103
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:110
+msgid ""
+"Leave empty to use the default prompt for the workflow. Alternatively, "
+"insert the system prompt. The placeholder {{text}} will be replaced by the "
+"input value. The placeholder {{rules}} will be replaced by the rules "
+"generated from the selected property type."
+msgstr ""
+"Leer lassen, um den Standard-Prompt für den Workflow zu verwenden. "
+"Alternativ können Sie den System-Prompt einfügen. Der Platzhalter {{text}} "
+"wird durch den Eingabewert ersetzt. Der Platzhalter {{rules}} wird durch die "
+"Regeln ersetzt, die aus dem ausgewählten Kategorientyp generiert werden."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:108
+msgid "User prompt"
+msgstr "Nutzer-Prompt"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:121
+msgid "Output section type"
+msgstr "Abschnittstyp der Ausgabe"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:130
+msgid "Output section name"
+msgstr "Abschnittsname der Ausgabe"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:132
+msgid "The section name in case a new section has to be generated."
+msgstr "Der Abschnittsname, falls ein neuer Abschnitt generiert werden muss."
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:133
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:134
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:196
+msgid "Summary"
+msgstr "Zusammenfassung"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:143
+msgid "Output item type"
+msgstr "Itemtyp"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:151
+msgid "Output item identifier"
+msgstr "Item-Identifikator der Ausgabe"
+
+#: plugins/Batch/src/Model/Tasks/Mutate/TaskGenerateItems.php:153
+msgid ""
+"IRI suffix of the new item. Existing items with this suffix will be updated."
+msgstr ""
+"IRI-Suffix des neuen Items. Bestehende Items mit diesem Suffix werden "
+"aktualisiert."
+
+#: plugins/Batch/templates/Batch/export.php:23
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:934
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:936
+msgid "Export"
+msgstr "Exportieren"
+
+#: plugins/Batch/templates/Batch/export.php:27
+#: plugins/Batch/templates/Batch/mutate.php:25
+msgid "Create job"
+msgstr "Job anlegen"
+
+#: plugins/Batch/templates/Batch/export.php:36
+#: plugins/Batch/templates/Batch/mutate.php:29
+msgid "Records"
+msgstr "Datensätze"
+
+#: plugins/Batch/templates/Batch/export.php:55
+msgid "Data"
+msgstr "Daten"
+
+#: plugins/Batch/templates/Batch/export.php:64
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:64
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:23
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:89
+msgid "Output format"
+msgstr "Ausgabeformat"
+
+#: plugins/Batch/templates/Batch/export.php:66
+msgid "Excel (xlsx)"
+msgstr "Excel (xlsx)"
+
+#: plugins/Batch/templates/Batch/export.php:67
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:68
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:27
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:94
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:847
+msgid "CSV"
+msgstr "CSV"
+
+#: plugins/Batch/templates/Batch/export.php:68
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:66
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:25
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:92
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:851
+msgid "XML"
+msgstr "XML"
+
+#: plugins/Batch/templates/Batch/export.php:70
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:70
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:28
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:95
+msgid "Markdown"
+msgstr "Markdown"
+
+#: plugins/Batch/templates/Batch/export.php:71
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:71
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:29
+msgid "HTML"
+msgstr "HTML"
+
+#: plugins/Batch/templates/Batch/export.php:72
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:72
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:30
+msgid "Turtle"
+msgstr "Turtle"
+
+#: plugins/Batch/templates/Batch/export.php:73
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:73
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:31
+msgid "RDF/XML"
+msgstr "RDF/XML"
+
+#: plugins/Batch/templates/Batch/export.php:74
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:74
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:32
+msgid "JsonLd"
+msgstr "JsonLd"
+
+#: plugins/Batch/templates/Batch/export.php:75
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:75
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:33
+msgid "GeoJSON"
+msgstr "GeoJSON"
+
+#: plugins/Batch/templates/Batch/export.php:81
+msgid "Full entity data"
+msgstr "Vollständige Datensätze"
+
+#: plugins/Batch/templates/Batch/export.php:83
+msgid "Fields"
+msgstr "Felder"
+
+#: plugins/Batch/templates/Batch/export.php:88
+msgid "IRI paths"
+msgstr "IRI-Pfade"
+
+#: plugins/Batch/templates/Batch/export.php:89
+msgid "ID format"
+msgstr "ID-Format"
+
+#: plugins/Batch/templates/Batch/export.php:188
+#: plugins/Batch/templates/Batch/mutate.php:79
+msgid "Start"
+msgstr "Starten"
+
+#: plugins/Batch/templates/Batch/import.php:29
+msgid "Import {0} into {1}"
+msgstr "{0} in {1} importieren"
+
+#: plugins/Batch/templates/Batch/import.php:44
+msgid "Filename"
+msgstr "Dateiname"
+
+#: plugins/Batch/templates/Batch/mutate.php:21
+msgid "Mutate records"
+msgstr "Datensätze mutieren"
+
+#: plugins/Batch/templates/Batch/mutate.php:39
+msgid "Task"
+msgstr "Aufgabe"
+
+#: plugins/Batch/templates/Batch/transfer.php:43
+msgid "Transfer from {0} into {1}"
+msgstr "Von {0} nach {1} transferieren"
+
+#: plugins/Batch/templates/Batch/transfer.php:63
+msgid "Source database"
+msgstr "Quelldatenbank"
+
+#: plugins/Batch/templates/Batch/transfer.php:68
+msgid "Target database"
+msgstr "Zieldatenbank"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:22
+msgid "Source folder, relative to the job folder"
+msgstr "Quellordner, relativ zum Jobordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:23
+msgid ""
+"Leave empty to concatenate all default files produced by the current job."
+msgstr ""
+"Leer lassen, um alle Standarddateien, die aus dem aktuellen Job hervorgehen, "
+"zusammenzufügen."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:29
+#: plugins/Batch/templates/element/Tasks/Export/task_export_extract.php:23
+msgid "Prefix"
+msgstr "Präfix"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:30
+msgid ""
+"The start of the output file. You can use placeholder strings to access the "
+"job data."
+msgstr ""
+"Der Anfang der Ausgabedatei. Sie können Platzhalterzeichenfolgen verwenden, "
+"um auf die Jobdaten zuzugreifen."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:36
+#: plugins/Batch/templates/element/Tasks/Export/task_export_extract.php:37
+msgid "Postfix"
+msgstr "Postfix"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:37
+msgid ""
+"The end of the output file. You can use placeholder strings to access the "
+"job data."
+msgstr ""
+"Das Ende der Ausgabedatei. Sie können Platzhalterzeichenfolgen verwenden, um "
+"auf die Jobdaten zuzugreifen."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_bundle.php:42
+msgid "Add indentation"
+msgstr "Einzug hinzufügen"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:24
+msgid "Source root folder"
+msgstr "Wurzelverzeichnis der Quelle"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:25
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:29
+msgid "Shared folder"
+msgstr "Geteilter Ordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:25
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:29
+msgid "Current database folder"
+msgstr "Aktueller Datenbankordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:25
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:29
+msgid "Job folder"
+msgstr "Jobordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:31
+msgid "Source folder or file within the root folder"
+msgstr "Quellordner oder Datei innerhalb des Wurzelverzeichnisses"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:32
+msgid "For example, \"pipelines/templates/odt\""
+msgstr "Zum Beispiel \"pipelines/templates/odt\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:37
+msgid "Text file containing a list of file names relative to the source folder"
+msgstr ""
+"Textdatei mit einer Liste von Dateinamen relativ zum Quellordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:38
+msgid "Leave empty to copy a single file or a complete folder"
+msgstr ""
+"Leer lassen, um eine einzelne Datei oder einen kompletten Ordner zu kopieren"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:43
+msgid "Target folder in the current job folder"
+msgstr "Zielordner innerhalb des aktuellen Jobordners"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_copy_files.php:44
+msgid "For example, \"odt\""
+msgstr "Zum Beispiel \"odt\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:24
+msgid "A comma separated list of article types, e.g. \"object\" or \"text\""
+msgstr ""
+"Eine durch Kommas getrennte Liste von Artikeltypen, z. B. \"object\" oder "
+"\"text\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:28
+msgid "All articles in selected projects"
+msgstr "Alle Artikel in ausgewählten Projekten"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:34
+msgid "Copy images "
+msgstr "Bilder kopieren "
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:35
+msgid "Add metadata to the image files and copy them to the target folder"
+msgstr ""
+"Metadaten zu den Bilddateien hinzufügen und diese in den Zielordner kopieren"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:40
+msgid "Image item types"
+msgstr "Itemtyp der Bilder"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:42
+msgid "A comma separated list of item types, e.g. \"images\""
+msgstr "Eine durch Kommas getrennte Liste von Itemtypen, z. B. \"images\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:47
+msgid "Image metadata configuration"
+msgstr "Konfiguration der Bildmetadaten"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:48
+msgid ""
+"Add the JSON configuration for metadata extraction. Each key is a metadata "
+"field in the file, each value is a placeholder extraction key from the "
+"perspective of an image item. The configuration will be merged with the "
+"types configuration for the image item. Example: {\"licence\":"
+"\"{file_meta.licence}\",\"{copyright\":\"file_copyright}\"}"
+msgstr ""
+"Fügen Sie die JSON-Konfiguration für die Metadatenextraktion hinzu. Jeder "
+"Schlüssel ist ein Metadatenfeld in der Datei, jeder Wert ist ein "
+"Platzhalter-Extraktionsschlüssel aus der Perspektive eines Bild-Items. Die "
+"Konfiguration wird mit der Typenkonfiguration für das Bild-Item "
+"zusammengeführt. Beispiel: {\"licence\":\"{file_meta.licence}\",\"{copyright"
+"\":\"file_copyright}\"}"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:58
+msgid "Image folder in the current job folder"
+msgstr "Bildordner im aktuellen Jobordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:59
+msgid "For example, \"images\""
+msgstr "Zum Beispiel \"images\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:69
+msgid "Excel"
+msgstr "Excel"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:81
+msgid "The preset from the types configuration"
+msgstr "Die Vorlage in der Typenkonfiguration"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:87
+msgid "Data snippets"
+msgstr "Datenschnippsel"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:89
+msgid ""
+"A comma separated list of snippets to retrieve, e.g. \"published,comments\""
+msgstr ""
+"Eine durch Kommas getrennte Liste abzurufender Schnippsel, z. B. "
+"\"published,comments\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:93
+#: plugins/Batch/templates/element/Tasks/Export/task_data_index.php:40
+#: plugins/Batch/templates/element/Tasks/Export/task_data_projects.php:22
+#: plugins/Batch/templates/element/Tasks/Export/task_data_properties.php:35
+#: plugins/Batch/templates/element/Tasks/Export/task_data_types.php:34
+msgid "Output IRIs instead of IDs"
+msgstr "IRIs statt IDs ausgeben"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:98
+msgid "Wrap content (add prolog and epilog)"
+msgstr "Inhalt umschließen (Prolog und Epilog hinzufügen)"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_data_articles.php:99
+msgid ""
+"Add prolog and epilog to the output, e.g. the XML declaration and XML root "
+"tags."
+msgstr ""
+"Fügen Sie der Ausgabe Prolog und Epilog hinzu, z. B. die XML-Deklaration und "
+"die XML-Wurzel-Tags."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:23
+msgid "Add one filename per line."
+msgstr "Fügen Sie einen Dateinamen pro Zeile hinzu."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:28
+msgid "Download root folder"
+msgstr "Wurzelverzeichnis der Downloads"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:35
+msgid "Download folder within the root folder"
+msgstr "Download-Ordner innerhalb des Wurzelverzeichnisses"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_download.php:36
+msgid "For example, \"data/ttl\""
+msgstr "Zum Beispiel \"data/ttl\""
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_extract.php:24
+msgid "The start of the output file."
+msgstr "Der Anfang der Ausgabedatei."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_extract.php:30
+msgid "Extraction path"
+msgstr "Extraktionspfad"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_extract.php:31
+msgid ""
+"The path used to extract the data from the XML file, e.g  \"book/"
+"page[@type='intro']\"."
+msgstr ""
+"Der Pfad, der zum Extrahieren der Daten aus der XML-Datei verwendet wird, z. "
+"B. \"book/page[@type='intro']\"."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_export_extract.php:38
+msgid "The end of the output file."
+msgstr "Ende der Ausgabedatei."
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:25
+msgid "Label"
+msgstr "Bezeichnung"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:26
+#: plugins/Widgets/src/View/Helper/TableHelper.php:223
+msgid "Key"
+msgstr "Schlüssel"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:27
+#: plugins/Widgets/src/View/Helper/TableHelper.php:224
+msgid "Value"
+msgstr "Wert"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:29
+msgid "Select"
+msgstr "Auswählen"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:63
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:64
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:688
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:690
+msgid "Add item"
+msgstr "Item hinzufügen"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options.php:91
+msgid "No output"
+msgstr "Keine Ausgabe"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_options_custom.php:95
+#: plugins/Batch/templates/element/Tasks/Export/task_options_custom.php:97
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:760
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:762
+msgid "Remove item"
+msgstr "Item entfernen"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_replace.php:28
+msgid "Replacement file"
+msgstr "Ersetzungsdatei"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_save.php:20
+msgid "File extension"
+msgstr "Dateityp"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_save.php:21
+msgid "Add UTF-8 BOM"
+msgstr "UTF-8-BOM hinzufügen"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_save.php:22
+msgid "Force download"
+msgstr "Herunterladen erzwingen"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_transformxsl.php:28
+msgid "XSL-T template"
+msgstr "XSL-T-Datei"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_transformxsl.php:33
+msgid "Parser"
+msgstr "Parser"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_zip.php:22
+msgid "Folder or file to be zipped, relative to the job folder"
+msgstr "Ordner oder Datei, die gezippt werden soll, relativ zum Jobordner"
+
+#: plugins/Batch/templates/element/Tasks/Export/task_zip.php:23
+msgid "Leave empty to use the current xml file"
+msgstr "Lassen Sie das Feld leer, um die aktuelle XML-Datei zu verwenden"
+
+#: plugins/Batch/templates/element/preview.php:22
+msgid "{0} records"
+msgstr "{0} Datensätze"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:722
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:723
+msgid "Open in popup"
+msgstr "In einem Popup-Fenster öffnen"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:742
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:743
+msgid "Toggle section"
+msgstr "Abschnitt ein-/ausblenden"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1697
+msgid "{0} {1}"
+msgstr "{0} {1}"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1717
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1718
+msgid "Show more fields"
+msgstr "Weitere Felder anzeigen"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1827
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1828
+msgid "Toggle annotations"
+msgstr "Anmerkungen ein-/ausblenden"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1855
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1856
+msgid "Select annotation groups"
+msgstr "Annotationsgruppen auswählen"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1899
+msgid "Tag number is missing."
+msgstr "Die Tag-Nummer fehlt."
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1963
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2320
+msgid "Tag is missing."
+msgstr "Das Tag fehlt."
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2398
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2399
+msgid "Remove footnote"
+msgstr "Fußnote entfernen"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2753
+msgid "Are you sure to delete the entity?"
+msgstr "Möchten Sie das Objekt wirklich löschen?"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2980
+msgid "The value must match the pattern: {0}"
+msgstr "Der Wert muss folgendem Muster entsprechen: {0}"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3349
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:527
+msgid "No"
+msgstr "Nein"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3586
+msgid "Task caption"
+msgstr "Task-Überschrift"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3599
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3620
+msgid "Task can be skipped by user"
+msgstr "Der Task kann vom Benutzer übersprungen werden"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3608
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3623
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3626
+msgid "Input file"
+msgstr "Eingabedatei"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3613
+msgid "Leave empty to use default"
+msgstr "Lassen Sie das Feld leer, um die Standardeinstellung zu verwenden"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3724
+msgid "Outputfile"
+msgstr "Ausgabedatei"
+
+#: plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3732
+msgid "Leave empty to use the default file name"
+msgstr "Lassen Sie das Feld leer, um den Standarddateinamen zu verwenden"
+
+#: plugins/Widgets/src/View/Helper/EntityInputHelper.php:726
+msgid "Folder {0}"
+msgstr "Ordner {0}"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:281
+msgid "Edit actions"
+msgstr "Aktionen bearbeiten"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:294
+msgid "Unlock"
+msgstr "Entsperren"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:314
+msgid "Copy"
+msgstr "Kopieren"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:695
+msgid "Map"
+msgstr "Karte"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:700
+msgid "Tiles"
+msgstr "Kacheln"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:704
+msgid "Graph"
+msgstr "Netzwerk"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:721
+msgid "Toggle View"
+msgstr "Ansicht umschalten"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:758
+msgid "Read"
+msgstr "Lesen"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:759
+msgid "Revise"
+msgstr "Überarbeiten"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:769
+msgid "Toggle Mode"
+msgstr "Modus umschalten"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:863
+msgid "TTL"
+msgstr "TTL"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:868
+msgid "JSON-LD"
+msgstr "JSON-LD"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:873
+msgid "RDF"
+msgstr "RDF"
+
+#: plugins/Widgets/src/View/Helper/LinkHelper.php:1070
+msgid "records"
+msgstr "Datensätze"
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:517
+msgid "See more..."
+msgstr "Mehr anzeigen..."
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:659
+msgid "See"
+msgstr "Siehe"
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:668
+msgid "Reference from:"
+msgstr "Verweis von:"
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1116
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1117
+msgid "Expand / collapse all"
+msgstr "Alle aus-/einklappen"
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1161
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1162
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1164
+msgid "Select columns"
+msgstr "Spalten auswählen"
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1309
+msgid "Reset filter and columns."
+msgstr "Filter und Spalten zurücksetzen."
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1533
+#: plugins/Widgets/src/View/Widget/ReferenceWidget.php:85
+msgid "selected"
+msgstr "ausgewählt"
+
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1679
+#: plugins/Widgets/src/View/Helper/TableHelper.php:1755
+msgid "Reset selection"
+msgstr "Auswahl zurücksetzen"
+
+#: plugins/Widgets/src/View/Helper/TreeHelper.php:139
+msgid "Browse"
+msgstr "Durchsuchen"
+
+#: plugins/Widgets/src/View/Helper/TreeHelper.php:148
+msgid "Select category"
+msgstr "Kategorie auswählen"
+
+#: plugins/Widgets/src/View/Helper/TreeHelper.php:153
+msgid "Manage"
+msgstr "Verwalten"
+
+#: plugins/Widgets/src/View/Helper/TreeHelper.php:243
+msgid "See {0}"
+msgstr "Siehe {0}"
+
+#: plugins/Widgets/src/View/Helper/TreeHelper.php:246
+msgid "Reference from {0}"
+msgstr "Verweis aus {0}"
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:661
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:726
+msgid "You are not allowed to access this page, please login."
+msgstr ""
+"Sie haben keine Berechtigung, auf diese Seite zuzugreifen. Bitte melden Sie "
+"sich an."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:686
+msgid "Entity not found"
+msgstr "Datensatz nicht gefunden"
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:668
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:735
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:740
+msgid "Page not found"
+msgstr "Seite nicht gefunden"
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:792
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:872
+msgid "The {0} has been saved."
+msgstr "Der {0} wurde gespeichert."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:798
+msgid "The {0} could not be saved, please try again."
+msgstr ""
+"Der {0} konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:875
+msgid "The {0} could not be saved. Please, try again."
+msgstr ""
+"Der {0} konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:915
+msgid "The {0} has dependencies. Please remove the dependencies first."
+msgstr ""
+"Der {0} hat Abhängigkeiten. Bitte lösen Sie zunächst die Abhängigkeiten auf."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:929
+msgid "The {0} has children. Please remove the children first."
+msgstr ""
+"Der {0} hat untergeordnete Datensätze. Bitte entfernen Sie diese zunächst."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:947
+msgid "The {0} has been deleted."
+msgstr "Der {0} wurde gelöscht."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:952
+msgid "The {0} could not be deleted. Please, try again."
+msgstr "Der {0} konnte nicht gelöscht werden. Bitte versuchen Sie es erneut."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:1020
+msgid "The property has been moved."
+msgstr "Die Kategorie wurde verschoben."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:1025
+msgid "The node could not be moved. Please try again."
+msgstr ""
+"Der Knoten konnte nicht verschoben werden. Bitte versuchen Sie es erneut."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:1045
+msgid "Could not move node #{0} to the new target."
+msgstr "Der Knoten #{0} konnte nicht an den neuen Ort verschoben werden."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:1052
+msgid "{0} of {1} nodes could not be moved to their new target."
+msgstr "{0} von {1} Knoten konnten nicht an ihren neuen Ort verschoben werden."
+
+#: plugins/Rest/src/Controller/Component/ActionsComponent.php:1057
+msgid "Moved {0} nodes to new targets."
+msgstr "{0} Knoten wurden an neue Orte verschoben."
+
+#: plugins/Rest/src/Controller/Component/AnswerComponent.php:131
+msgid "You are not allowed to access the requested page."
+msgstr "Sie haben keine Berechtigung, auf die angeforderte Seite zuzugreifen."
+
+#: plugins/Rest/src/Controller/Component/AnswerComponent.php:133
+msgid "Please log in to access this location."
+msgstr "Bitte melden Sie sich an, um auf diesen Bereich zuzugreifen."
+
+#: plugins/Rest/src/Controller/Component/LockComponent.php:62
+msgid ""
+"The dataset is locked by your account. Close it in other windows and try "
+"again."
+msgstr ""
+"Der Datensatz ist durch Ihr Konto gesperrt. Schließen Sie ihn in anderen "
+"Fenstern und versuchen Sie es erneut."
+
+#: plugins/Rest/src/Controller/Component/LockComponent.php:65
+#: plugins/Rest/src/Controller/Component/LockTrait.php:43
+msgid "Another user edits the dataset. Please, try again later."
+msgstr ""
+"Ein anderer Benutzer bearbeitet gerade den Datensatz. Bitte versuchen Sie es "
+"später erneut."
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:40
+msgid "Locked"
+msgstr "Gesperrt"
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:66
+msgid "Unlocked"
+msgstr "Entsperrt"
+
+#: plugins/Rest/src/Controller/Component/LockTrait.php:69
+msgid "Could not unlock the entity."
+msgstr "Der Datensatz konnte nicht entsperrt werden."
+
+#~ msgid "Id"
+#~ msgstr "ID"
+
+#~ msgid "Page not found."
+#~ msgstr "Seite nicht gefunden."
+
+#~ msgid "Delayed"
+#~ msgstr "Verzögert"
+
+#~ msgid "ETC"
+#~ msgstr "ETC"
+
+#~ msgid "Delay"
+#~ msgstr "Verzögerung"
+
+#~ msgid "Wanted"
+#~ msgstr "Erwartet"

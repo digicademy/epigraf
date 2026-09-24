@@ -196,6 +196,7 @@ class EntityHtmlHelper extends BaseEntityHelper
             $groupClasses[] = (count($table) < 2) ? 'doc-section-groups-one' : 'doc-section-groups-multi';
             $groupClasses[] = (count($groupHeaders) < 2) ? 'doc-section-headers-one' : 'doc-section-headers-multi';
             $groupClasses[] = ($groupItemCount > 0) ? '' : 'doc-section-groups-empty';
+            $groupClasses[] = empty($mergedConfig['display'] ?? true) ? 'doc-section-groups-hide' : '';
 
             $out .= '<div class="' . implode(' ', array_filter($groupClasses)) . '">';
 

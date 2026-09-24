@@ -13,11 +13,12 @@
         },
         {
             "signature": "Signatur 2",
-            "name": "Artikel 2 f\u00fcr das Testsystem"
+            "name": "Artikel 2 f\u00fcr das Testsystem",
+            "items_locations": "Standort B3, Standort B4"
         }
     ],
     "pagination": {
-        "count": 4,
+        "count": 9,
         "page": 1,
         "page_prev": false,
         "page_next": true,

@@ -48,6 +48,48 @@ class PropertiesControllerTest extends EpiTestCase
     }
 
     /**
+     * Extract all <tr class="node ..."> elements, returning their
+     * classes and data-* attributes as an array (ready for json/csv).
+     *
+     * @param string $html  Raw HTML (e.g. $this->_response->getBody())
+     * @return array        List of rows keyed by class + data attributes
+     */
+    protected function extractNodes(string $html): array
+    {
+        $dom = new \DOMDocument();
+        // suppress warnings from imperfect HTML fragments
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+
+        $xpath = new \DOMXPath($dom);
+
+        // match <tr> whose class list contains the token "node"
+        $trs = $xpath->query(
+            "//tr[contains(concat(' ', normalize-space(@class), ' '), ' node ')]"
+        );
+
+        $rows = [];
+        foreach ($trs as $tr) {
+            /** @var \DOMElement $tr */
+            $row = [
+                'class' => trim($tr->getAttribute('class')),
+            ];
+
+            // collect every data-* attribute
+            foreach ($tr->attributes as $attr) {
+                if (strpos($attr->name, 'data-') === 0) {
+                    $row[$attr->name] = $attr->value;
+                }
+            }
+
+            $rows[] = $row;
+        }
+
+        return $rows;
+    }
+
+    /**
      * Test index redirect
      *
      * @return void
@@ -99,11 +141,11 @@ class PropertiesControllerTest extends EpiTestCase
     public function testConflictedCursorCondition()
     {
         $this->loginUser('author');
-        $this->get('/epi/projects/properties/index/personnames?find=p&id=99999');
+        $this->get('/epi/projects/properties/index/personnames?find=k&id=99999');
         $this->assertResponseOk();
 
-        $this->get('/epi/projects/properties/index/personnames?find=p');
-        $this->assertResponseContains('Personenname 1');
+        $this->get('/epi/projects/properties/index/personnames?find=k');
+        $this->assertResponseContains('Köhler');
         $this->assertHtmlEqualsComparison();
     }
 
@@ -208,6 +250,42 @@ class PropertiesControllerTest extends EpiTestCase
         file_put_contents($this->comparisonFile . ($this->overwriteComparison ? '.csv' : '.status'),
             $this->_getBodyAsString());
         $this->assertSameAsFile($this->comparisonFile . '.csv', $this->_getBodyAsString());
+    }
+
+    /**
+     * Test that cursor nodes are generated
+     *
+     * @return void
+     */
+    public function testIndexCursors()
+    {
+        $this->loginUser('author');
+
+        $this->get('/epi/projects/properties/index/literature/?limit=50');
+        $this->assertResponseNotRegExp('/node-cursor/');
+
+        $this->get('/epi/projects/properties/index/literature/?limit=5');
+        $this->assertResponseContains('node-cursor');
+
+        $this->assertHtmlEqualsComparison();
+    }
+
+    /**
+     * Test that cursor nodes are generated when seeking a node
+     *
+     * @return void
+     */
+    public function testSeek()
+    {
+        $this->loginUser('author');
+
+        $this->get('/epi/projects/properties/index/literature/?seek=8&limit=2');
+        $this->assertResponseContains('node-cursor');
+
+        $nodes = $this->extractNodes((string)$this->_response->getBody());
+
+        $json = $this->saveComparisonJson($nodes, '.seek');
+        $this->assertJsonStringEqualsComparison($json, '.seek');
     }
 
     /**

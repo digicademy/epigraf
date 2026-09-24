@@ -11,6 +11,7 @@
 namespace Epi\Model\Table;
 
 use App\Model\Behavior\ImportBehavior;
+use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Objects;
 use ArrayObject;
 use Cake\Collection\CollectionInterface;
@@ -50,13 +51,6 @@ class BaseTable extends \App\Model\Table\BaseTable
      * Overwrite in subclasses. Necessary for IRI handling and tree data.
      * Type field: name of the field containing the article type, section type etc. Used as prefix for IRIs.
      */
-
-    /**
-     * Type field for scoped queries and IRI paths
-     *
-     * @var null|string
-     */
-    public $typeField = null;
 
     /**
      * Plugin prefix for the model name
@@ -320,25 +314,6 @@ class BaseTable extends \App\Model\Table\BaseTable
     }
 
     /**
-     * Clear entities (delete section of article, items of section)
-     *
-     * Only entities containing a property `_import_action` with the value "clear" will be processed.
-     * When importing data, the value is passed from the field `_action` in the source data to the `_import_action` field.
-     *
-     * @param array $entities Array of entities.
-     * @return boolean success or failure?
-     */
-    public function clearEntities($entities)
-    {
-        foreach ($entities as $entity) {
-            if ($entity->_import_action === 'clear') {
-                $entity->clear();
-            }
-        }
-        return true;
-    }
-
-    /**
      * Get columns to be rendered in table views
      *
      * See BaseTable->getColumns() for further information.
@@ -443,6 +418,83 @@ class BaseTable extends \App\Model\Table\BaseTable
         }
 
         return $indexValues;
+    }
+
+    /**
+     * Get the search fields
+     *
+     * Merges the configuration into the hard-coded search field configuration.
+     *
+     * @param string|null $fieldName Leave empty to get all, or select a specific field.
+     * @param string|null $typeName The type name to look up in the types configuration for the current table.
+     * @return array[]
+     */
+    protected function getSearchFields($fieldName = null, $typeName = null): array {
+        if (empty($typeName)) {
+            return parent::getSearchFields($fieldName);
+        }
+
+        $fieldsConfig = $this->getDatabase()->types[$this->getTable()][$typeName]['merged']['fields'] ?? [];
+        if (empty($fieldsConfig)) {
+            return parent::getSearchFields($fieldName);
+        }
+
+        // Merge configures search fields
+        $searchFields = [];
+        foreach ($this->searchFields as $field => $spec) {
+            if ($spec['default'] ?? false) {
+                $candidate = array_slice($spec, 0);
+                if ($fieldsConfig[$field]['caption'] ?? false) {
+                    $candidate['caption'] = '- ' . $fieldsConfig[$field]['caption'];
+                    unset($fieldsConfig[$field]);
+                }
+                else {
+                    if ($fieldsConfig[$field] ?? false) {
+                        $candidate['caption'] = '- '. $fieldsConfig[$field];
+                        unset($fieldsConfig[$field]);
+                    }
+                }
+                $searchFields[$field] = $candidate;
+            }
+        }
+
+        // configured search fields
+        $baseScope = ucfirst($this->getTable());
+        $contentSearchFields = [];
+        foreach($fieldsConfig as $field => $config) {
+            if (($config['caption'] ?? false) && ($config['searchfield'] ?? false)) {
+                $caption = $config['caption'];
+                $contentSearchFields[$field] = [
+                    'caption' => '- '. $caption,
+                    'scopes' => [$baseScope . '.' . $field]
+                ];
+            }
+        }
+
+        //  group configured search fields
+        if (!empty($contentSearchFields)) {
+            $scopeElements = array_column($contentSearchFields, 'scopes');
+            $mergedScopes = array_merge(...$scopeElements);
+            $searchFields['groupedContent'] = [
+                'caption' => 'Inhalt', // __('Content'),
+                'scopes' => Arrays::array_unique_mixed($mergedScopes)
+            ];
+        }
+        $searchFields = array_merge($searchFields, $contentSearchFields);
+
+        // set scopes for 'all'
+        if ($searchFields['all'] ?? false) {
+            $scopeElements = array_column($searchFields, 'scopes');
+            $mergedScopes = array_merge(...$scopeElements);
+            $searchFields['all']['scopes'] = Arrays::array_unique_mixed($mergedScopes);
+        }
+
+        if (empty($fieldName)) {
+            return $searchFields;
+
+        } else {
+            return $searchFields[$fieldName] ?? [];
+        }
     }
 
     /**

@@ -100,6 +100,7 @@ export class UploadWidget extends BaseWidget {
     }
 
     /**
+     * Emit file upload event
      *
      * @param fileItems
      * @fires epi:upload:files

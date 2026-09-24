@@ -43,12 +43,45 @@ class Files
     static public $thumbtypes = ['pdf', 'png', 'jpg', 'jpeg', 'tif', 'svg'];
 
     /**
+     * Get a temporary folder name with trailing slash
+     *
+     * @param string $prefix Temporary folder name prefix
+     * @param string|false Provide a root folder. If empty, the system tmp folder is used as root.
+     * @param boolean $create Whether to create the folder. Default true.
+     * @return false|string
+     */
+    static function getTempFoldername($prefix = 'epi-', $rootFolder = false, $create = true)
+    {
+        if (empty($rootFolder)) {
+            $rootFolder = sys_get_temp_dir() .  DIRECTORY_SEPARATOR;
+        }
+
+        if (!is_dir($rootFolder) || !is_writable($rootFolder)) {
+            throw new \RuntimeException(
+                "Temp root folder does not exist or is not writable: {$rootFolder}"
+            );
+        }
+
+        $maxAttempts = 10;
+        for ($i = 0; $i < $maxAttempts; $i++) {
+            $dir = $rootFolder . $prefix . bin2hex(random_bytes(8));
+            if (!$create || (@mkdir($dir, 0700))) {
+                return $dir . DIRECTORY_SEPARATOR;
+            }
+        }
+
+        throw new \RuntimeException(
+            "Failed to create temp directory after {$maxAttempts} attempts in: {$rootFolder}"
+        );
+    }
+
+    /**
      * Get a temporary file name
      *
      * @param string $prefix Temporary filename prefix
      * @return false|string
      */
-    static function getTempFilename($prefix = 'temp', $extension = 'tmp')
+    static function getTempFilename($prefix = 'epi-', $extension = 'tmp')
     {
         return tempnam(sys_get_temp_dir(), $prefix) . '.' . $extension;
     }
@@ -359,7 +392,7 @@ class Files
      * @param bool $lower Convert to lower case
      * @return string A clean filename
      */
-    public static function cleanFilename($filename, $lower = true)
+    public static function cleanFilename($filename, $lower = true, $placeholders = false)
     {
         $filename = trim($filename);
         if ($lower) {
@@ -376,7 +409,11 @@ class Files
         ];
 
         $filename = str_replace(array_keys($replacements), array_values($replacements), $filename);
-        $filename = preg_replace('/[^a-zA-Z0-9+.~_-]/', '-', $filename);
+        if ($placeholders) {
+            $filename = preg_replace('/[^a-zA-Z0-9+.~_{}-]/', '-', $filename);
+        } else {
+            $filename = preg_replace('/[^a-zA-Z0-9+.~_-]/', '-', $filename);
+        }
         $filename = preg_replace('/((\.-)|(-\.))+/', '.', $filename);
         $filename = preg_replace('/\.+/', '.', $filename);
         $filename = preg_replace('/-+/', '-', $filename);
@@ -392,12 +429,13 @@ class Files
      *
      * @param string $path
      * @param bool $lower Convert to lower case
+     * @param bool $placeholders Allow placeholders (curly brackets)
      * @return string A clean path
      */
-    public static function cleanPath($path, $lower = true)
+    public static function cleanPath($path, $lower = true, $placeholders = false)
     {
         $segments = explode('/', $path);
-        $segments = array_map(fn($x) => Files::cleanFilename($x, $lower), $segments);
+        $segments = array_map(fn($x) => Files::cleanFilename($x, $lower, $placeholders), $segments);
         return implode('/', $segments);
     }
 
@@ -1662,7 +1700,20 @@ class Files
      */
     static public function loadXml($filename, $options = [])
     {
-        $recordNames = ['project', 'article', 'section', 'item', 'footnote', 'link', 'property', 'type'];
+        $recordMapping = [
+            'project'  => 'projects',
+            'article'  => 'articles',
+            'section'  => 'sections',
+            'item'     => 'items',
+            'footnote' => 'footnotes',
+            'link'     => 'links',
+            'property' => 'properties',
+            'type'     => 'types',
+        ];
+
+        $recordNames    = array_keys($recordMapping);
+        $containerNames = array_values($recordMapping);
+        $foreignKeys    = array_map(fn($v) => $v . '_id', $recordMapping);
 
         $rows = [];
         $elements = [];
@@ -1672,7 +1723,7 @@ class Files
         $annotations = [];
 
         $convertToRows = static function (&$element, &$parser)
-        use (&$rows, &$elements, &$currentElement, &$currentFieldLevel, &$currentField, &$annotations, &$recordNames) {
+        use (&$rows, &$elements, &$currentElement, &$currentFieldLevel, &$currentField, &$annotations, &$recordNames, &$foreignKeys, &$containerNames) {
 
             // Open records
             if (($element['position'] === 'open') &&
@@ -1686,25 +1737,42 @@ class Files
                 // belongsTo IDs / hasMany IDs
                 foreach ($elements as $name => $value) {
                     if ($name !== $currentElement) {
-                        $idField = $name === 'property' ? 'properties_id' : ($name . 's_id');
+                        // Transfer IDs from parent elements (e.g. items nested in sections)
+                        $idField =  $foreignKeys[$name];
                         $elements[$currentElement][$idField] = $value['id'] ?? '';
-                        $idField = $currentElement === 'property' ? 'properties_id' : ($currentElement . 's_id');
+
+                        // Transfer ID to parent elements (property nested in items)
+                        // TODO: limit to property? What about properties nested in ancestor tags?
+                        $idField =  $foreignKeys[$currentElement];
                         $elements[$name][$idField] = $elements[$currentElement]['id'] ?? '';
                     }
                 }
 
                 // Link project
-//                if (($currentElement === 'project') && !empty($elements['article'])) {
-//                    $elements['article']['projects_id'] = $value['id'];
-//                }
+                // if (($currentElement === 'project') && !empty($elements['article'])) {
+                //    $elements['article']['projects_id'] = $value['id'];
+                //}
 
-                // Link footnote
+                // Link nested footnote
                 if ($currentElement === 'footnote') {
                     $elements[$currentElement] = array_merge(
                         $elements[$currentElement],
                         $annotations[$element['attributes']['from_tagid']] ?? []
                     );
                 }
+
+                // Rename legacy action and fields values
+                if (isset($elements[$currentElement]['action'])) {
+                    $elements[$currentElement]['_action'] = $elements[$currentElement]['action'];
+                    unset($elements[$currentElement]['action']);
+                }
+
+                if (isset($elements[$currentElement]['fields'])) {
+                    $elements[$currentElement]['_fields'] = $elements[$currentElement]['fields'];
+                    unset($elements[$currentElement]['fields']);
+                }
+
+
             }
 
             // Close records
@@ -1723,7 +1791,7 @@ class Files
             }
 
             // Skip containers
-            elseif ((in_array($element['name'], ['sections', 'items', 'footnotes', 'links'])) && empty($currentField)) {
+            elseif ((in_array($element['name'], $containerNames)) && empty($currentField)) {
                 $currentElement = null;
                 $currentField = null;
                 $currentFieldLevel = 0;
@@ -1746,7 +1814,7 @@ class Files
                     $currentFieldLevel = 0;
                 }
 
-                // Collect annotations
+                // Collect annotation context
                 if ($currentField) {
 
                     // Inject ID
@@ -1908,7 +1976,7 @@ class Files
 
                         $file_parts = pathinfo($imagefile);
                         if ($file_parts['extension'] == 'svg') {
-                            exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . $imagefile . ' > ' . $thumbname);
+                            exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . escapeshellarg($imagefile) . ' > ' . escapeshellarg($thumbname));
                         }
                         else {
                             if (extension_loaded('imagick')) {
@@ -2141,7 +2209,7 @@ class Files
         }
 
         //$command = 'exiftool -g0 -json -struct "'. $filename .'"';
-        $command = 'exiftool -g0 -XMP:all -json -struct "' . $filename . '"';
+        $command = 'exiftool -g0 -XMP:all -json -struct "' . escapeshellarg($filename) . '"';
         exec($command, $output, $return);
         $metadata = implode('', $output);
         $metadata = json_decode($metadata, true);

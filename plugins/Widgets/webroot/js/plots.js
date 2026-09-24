@@ -17,11 +17,9 @@ export class PlotWidget extends BaseWidget {
 
     /**
      *
-     * @param element
-     * @param name
-     * @param parent
-     * @listens epi:load:facets
-     * @listens epi:close:facets
+     * @param {HTMLElement} element
+     * @param {String} name
+     * @param {BaseWidget} parent
      */
     constructor(element, name, parent) {
         super(element, name, parent);
@@ -42,28 +40,10 @@ export class PlotWidget extends BaseWidget {
             this.apiUrl = new URL(this.apiUrl, App.baseUrl);
         }
 
-        // Facet events
-        this.listenEvent(document,'epi:load:facets', event => this.onLoadFacets(event));
-        this.listenEvent(document,'epi:close:facets', event => this.onCloseFacets(event));
     }
 
-    /**
-     * Widget initialization: Override in child classes and put all initialization code here.
-     *
-     * The method is called once after all widgets were constructed and are ready to be used.
-     */
     initWidget() {
         this.loadData();
-    }
-
-    /**
-     * Widget initialization: Override in child classes
-     *
-     * The method is called each time, a widget is initialized:
-     * when it was created and when it is updated.
-     */
-    updateWidget() {
-        // this.loadData();
     }
 
     /**
@@ -82,14 +62,11 @@ export class PlotWidget extends BaseWidget {
         this.isUpdating = true;
         const dataElement = this.getDataElement();
         const data = this.extractData(dataElement);
-        const plotType = this.getPlotType();
-        this.showData(data, plotType);
+        this.showData(data);
         this.isUpdating = false;
     }
 
-
     loadApiData() {
-
         App.ajaxQueue.add('plot',
             {
                 type: 'GET',
@@ -101,8 +78,7 @@ export class PlotWidget extends BaseWidget {
                 },
                 success: (data, textStatus, xhr) => {
                     this.isUpdating = true;
-                    const plotType = this.getPlotType();
-                    this.showData(data.groups || [], plotType);
+                    this.showData(data.groups || []);
                     this.isUpdating = false;
                 },
                 error: (xhr, textStatus, errorThrown) => {
@@ -180,39 +156,87 @@ export class PlotWidget extends BaseWidget {
         if (!canvas) {
             canvas = document.createElement('div');
             canvas.classList.add('plot');
-            canvas.style.width = '100%';
-            canvas.style.height = '100%';
+            // canvas.style.width = '100%';
+            // canvas.style.height = '100%';
             this.widgetElement.appendChild(canvas);
         }
         return canvas;
+    }
+
+    getControlsElement() {
+        let elm = this.widgetElement.querySelector('.widget-plot-controls');
+        if (!elm) {
+            elm = document.createElement('div');
+            elm.className = 'widget-plot-controls';
+            this.widgetElement.appendChild(elm);
+        }
+        return elm;
     }
 
     /**
      * Plot the data in values.
      *
      * @param {Array} values A list of items. Each item is an object with the following fields: x, totals.
-     * @param {String} plotType The type of plot to create. One of the following: "map", "timeline", "graph"
+     * @param {String} plotType The type of plot to create. One of the following: "map", "timeline", "graph".
+     *                          If not provided, the plot type will be determined by the getPlotType() method.
      */
     showData(values, plotType) {
 
         const canvas = this.getCanvasElement();
+        const controls = this.getControlsElement();
         const config = {
             onNodeClick: (params) => this.showDetails(params),
             onGroupClick: (params) => this.showList(params),
             imageBaseUrl: this.widgetElement.dataset.imageBaseUrl
         };
 
+        if (!plotType) {
+            plotType = this.getPlotType();
+        }
+
         if (plotType === 'tiles') {
-            this.plot = new TilesPlot(canvas, values, config);
+            this.plot = new TilesPlot(canvas, controls, values, config, this);
         }
         else if (plotType === 'timeline') {
-            this.plot = new TracePlot(canvas, values, config);
+            this.plot = new TracePlot(canvas, controls, values, config, this);
         }
         else if (plotType === 'graph') {
-            this.plot = new NetworkPlot(canvas, values, config);
+            this.plot = new NetworkPlot(canvas, controls, values, config, this);
         }
+
+        this.plot.renderPlot();
     }
 
+    /**
+     * Parameters passed to the filter widget
+     *
+     * @return {{zoom: number}}
+     */
+    getUrlParams() {
+        if (this.plot && this.plot.controls) {
+            return this.plot.controls.getParams();
+        }
+        return {};
+    }
+
+    /**
+     * Update the API and history URLs with the current plot parameters (e.g. zoom level)
+     *
+     */
+    updateUrl() {
+        if (this.apiUrl) {
+            let url = new URL(this.apiUrl, App.baseUrl);
+            url.searchParams.set('zoom', this.plotParams.zoom);
+            this.apiUrl = url.toString();
+        }
+
+        // TODO: update the download links (CSV..)
+        if (window.history.pushState && this.pushHistory) {
+            let url = new URL(window.location.href);
+            url.searchParams.set('zoom', this.plotParams.zoom);
+            window.history.pushState(url.toString(), "Epigraf - search results", url);
+        }
+    }
 
     /**
      * Open the row in the sidebar
@@ -244,49 +268,197 @@ export class PlotWidget extends BaseWidget {
     }
 
     /**
-     * Use facet colors for the plots
+     * Get the facet data from the filter widget
      *
-     * @param {CustomEvent} event
+     * @return {*}
      */
-    onLoadFacets(event) {
-        if (!event.detail.sender) {
+    async getFacets() {
+        const filter = App.findWidget(document, 'filter');
+        if (!filter) {
             return;
         }
 
-        const facetWidget = event.detail.sender;
-        if (!facetWidget.hasFlag('grp')) {
-            return;
-        }
-
-        //if (facetWidget.widgetElement.classList.contains('widget-filter-item-properties')) {
-        const data = facetWidget.getFacets();
-
-        if (this.plot) {
-            this.plot.updateColors(data);
-        }
-        //}
-    }
-
-    /**
-     * Clear facet colors for the plots
-     *
-     * @param {CustomEvent} event
-     */
-    onCloseFacets(event) {
-        if (!event.detail.sender) {
-            return;
-        }
-        if (this.plot) {
-            this.plot.updateColors();
-        }
+        return filter.getFacets();
     }
 
 }
 
 /**
+ * Plot controls widget
+ *
+ * Manages interactive controls for plot visualization (zoom, toggles, etc.).
+ * Extends BaseWidget to use the event system for communication with PlotWidget.
+ */
+class PlotControls extends BaseWidget {
+
+    constructor(element, name, parent) {
+        super(element, name, parent);
+
+        this.params = {
+            zoom: parseInt(this.modelParent.modelParent.widgetElement.dataset.plotZoom || 100),
+            stacked: Utils.isTrue(this.modelParent.modelParent.widgetElement.dataset.plotStacked || false),
+            log: Utils.isTrue(this.modelParent.modelParent.widgetElement.dataset.plotLog || false)
+        };
+
+        // Store references to control elements
+        this.controls = {
+            toggleStacked: null,
+            toggleLog: null,
+            zoomButtons: null
+        };
+
+        // Check if controls already exist to avoid duplication
+        if (this.widgetElement.querySelector('.interactive-controls')) {
+            return;
+        }
+
+        this.createControls();
+        this.bindEvents();
+    }
+
+    /**
+     * Create the control UI elements
+     */
+    createControls() {
+        // Create controls container
+        const controlsContainer = document.createElement('div');
+        controlsContainer.className = 'interactive-controls';
+
+        // Create stack toggle button
+        const toggleStacked = document.createElement('button');
+        toggleStacked.className = 'toggle-stacked toggle';
+        toggleStacked.textContent = 'Stacked';
+        this.controls.toggleStacked = toggleStacked;
+        controlsContainer.appendChild(toggleStacked);
+
+        // Create log toggle button
+        const toggleLog = document.createElement('button');
+        toggleLog.className = 'toggle-log toggle';
+        toggleLog.textContent = 'Log';
+        this.controls.toggleLog = toggleLog;
+        controlsContainer.appendChild(toggleLog);
+
+        // Create zoom button container
+        const zoomContainer = document.createElement('div');
+        this.controls.zoomButtons = zoomContainer;
+        zoomContainer.className = 'zoom-control';
+
+        // Add zoom label
+        const zoomLabel = document.createElement('span');
+        zoomLabel.className = 'zoom-label';
+        zoomLabel.textContent = 'Years resolution:';
+        zoomContainer.appendChild(zoomLabel);
+
+        // Create zoom buttons
+        const zoomLevels = [1, 10, 25, 50, 100];
+        zoomLevels.forEach(level => {
+            const btn = document.createElement('button');
+            btn.className = 'zoom-button toggle';
+            btn.textContent = level.toString();
+            btn.dataset.zoom = level.toString();
+            zoomContainer.appendChild(btn);
+        });
+        controlsContainer.appendChild(zoomContainer);
+
+        // Insert controls into the widget element
+        this.widgetElement.appendChild(controlsContainer);
+
+        // Set button states
+        this.updateButtons();
+    }
+
+    /**
+     * Attach event listeners to all controls
+     */
+    bindEvents() {
+
+        // Listen to stacked toggle
+        this.listenEvent(this.controls.toggleStacked, 'click', () => {
+            this.params.stacked = !this.params.stacked;
+            this.paramsChanged(false);
+        });
+
+        // Listen to log toggle
+        this.listenEvent(this.controls.toggleLog, 'click', () => {
+            this.params.log = !this.params.log;
+            this.paramsChanged(false);
+        });
+
+        // Listen to zoom button clicks
+        this.listenEvent(this.controls.zoomButtons, 'click', (event) => {
+            const btn = event.target.closest('.zoom-button');
+            if (btn) {
+                this.params.zoom = parseInt(btn.dataset.zoom);
+                this.paramsChanged(true);
+            }
+        });
+
+    }
+
+    /**
+     * Update the button states
+     *
+     */
+    updateButtons() {
+
+        let isActive;
+
+        // Update stacked toggle button
+        isActive = this.params.stacked;
+        this.controls.toggleStacked.dataset.active = isActive.toString();
+        this.controls.toggleStacked.classList.toggle('toggle-active', isActive);
+        this.controls.toggleStacked.classList.toggle('toggle-inactive', !isActive);
+
+        // Update log toggle button
+        isActive = this.params.log;
+        this.controls.toggleLog.dataset.active = isActive.toString();
+        this.controls.toggleLog.classList.toggle('toggle-active', isActive);
+        this.controls.toggleLog.classList.toggle('toggle-inactive', !isActive);
+
+        // Zoom buttons
+        this.controls.zoomButtons.dataset.value = this.params.zoom;
+
+        this.controls.zoomButtons.querySelectorAll('.zoom-button')
+            .forEach(b => {
+                b.classList.toggle('toggle-active', false);
+                b.classList.toggle('toggle-inactive', true);
+            });
+
+        const activeBtn = this.controls.zoomButtons.querySelector(`.zoom-button[data-zoom="${this.params.zoom}"]`);
+        activeBtn.classList.toggle('toggle-active', true);
+        activeBtn.classList.toggle('toggle-inactive', false);
+    }
+
+    /**
+     * Get the current control parameters
+     *
+     * @return {*|{stacked: boolean, log: boolean, zoom: number}}
+     */
+    getParams() {
+        return this.params;
+    }
+
+    /**
+     * Update buttons states, render, load data if necessary
+     */
+    paramsChanged(reload = false) {
+        this.updateButtons();
+
+        if (reload) {
+            this.emitEvent('epi:plot:load', this.params);
+        } else {
+            // TODO: implement epi:plot:render event
+            this.modelParent.config.barMode  = this.params.stacked ? 'stack' : 'group';
+            this.modelParent.config.logScale  = this.params.log || false;
+            this.modelParent.renderPlot();
+        }
+    }
+}
+
+/**
  * Base class for plots
  */
-class BasePlot {
+class BasePlot extends BaseWidget {
 
     /**
      * Default configuration options
@@ -305,11 +477,19 @@ class BasePlot {
      * Constructor method
      *
      * @param {HTMLElement} canvas The plot container
+     * @param {HTMLElement} controls The container for the plot controls
      * @param {Array} values The data to plot
      * @param {object} config Configuration options to override defaults
+     * @param {BaseWidget} parent The parent widget (PlotWidget instance)
      */
-    constructor(canvas, values, config = {}) {
-        this.canvas = canvas;
+    constructor(canvas, controls, values, config = {}, parent) {
+        super(canvas,  'plot', parent);
+
+        this.canvasElm = canvas;
+        this.controlsElm = controls;
+        this.values = values;
+
+        this.controls = null;
 
         this.config = {
             ...this.constructor.defaults,
@@ -318,90 +498,256 @@ class BasePlot {
             height: (canvas.clientHeight || this.constructor.defaults.height)
         };
 
-        this.values = values;
     }
 
-    /**
-     * Override in child classes and call it in the constructor to create the plot
-     */
-    initialize() {
-
+    renderPlot() {
+        // To be implemented by subclasses
     }
 
-    /**
-     * Override in child classes to set plot colors
-     *
-     * @param {Object} data An object with property ids as keys and legend items as values.
-     *                      Each legend item must contain a 'color' and 'title' property.
-     */
-    updateColors(data) {
-
-    }
 }
 
 /**
  * Trace plot using Plotly.js
  */
 class TracePlot extends BasePlot {
+
     static defaults = {
-        nozero : false,  // Remove 0 values (This is just a hack. Better set them to null in the data.)
-        plotType: 'bar'  // 'bar' or 'line'
+        noZero : true, // Remove 0 values (This is just a hack. Better set them to null in the data.)
+        plotType: 'bar', // 'bar' or 'line'
+        barMode: 'stack', // 'group' or 'stack' or 'overlay'
+        barOpacity: 0.4,
+        barVisibility: false,
+        logScale: false,
+        zoom: 1
     };
 
-    constructor(canvas, values, config = {}) {
-        super(canvas, values, config);
-        this.initialize();
-    }
+    constructor(canvas, controls, values, config = {}, parent) {
+        super(canvas, controls, values, config, parent);
 
-    initialize() {
-
-        let values = this.values.filter(item => (item.x !== undefined) && ((item.totals !== undefined)));
-
-        // Remove 0
-        if (this.config.nozero) {
-            values = values.filter(item => (item.x !== 0));
-        }
-
-        const xValues = values.map(item => item.x);
-        const yValues = values.map(item => item.totals);
-
-        const trace = {
-            x: xValues,
-            y: yValues,
-            type: this.config.plotType,
-            mode: 'lines+markers',
-            marker: { color: 'blue' },
-            line: { shape: 'linear' },
-        };
-
-        const layout = {
-            title: 'Timeline',
-            xaxis: {
-                title: 'Year',
-                type: 'linear'
-            },
-            yaxis: {
-                title: 'Count'
-            }
-        };
-
-        this.plot = Plotly.newPlot(this.canvas, [trace], layout);
+        this.controls = new PlotControls(this.controlsElm,  'plot-controls', this);
+        this.config.plotType  = 'line';
+        this.config.barMode  = this.controls.params.stacked ? 'stack' : 'overlay';
+        this.config.logScale  = this.controls.params.log || false;
+        this.config.zoom  = this.controls.params.zoom || 1;
     }
 
     /**
-     * Set plot colors
+     * Render the plot using Plotly.js
      *
-     * @param {Object} data An object with property ids as keys and legend items as values.
-     *                      Each legend item must contain a 'color' and 'title' property.
+     * @return {Promise<void>}
      */
-    updateColors(data) {
-        this.facets = data;
+    async renderPlot() {
+        const traces = await this.buildTraces();
+        const layout = this.buildLayout();
+        const config = this.buildConfig();
 
-        // TODO: Update colors
-        console.log(data);
+        Plotly.react(this.canvasElm, traces, layout, config);
+
+        // Attach click handler (remove old one first to avoid duplicates)
+        this.canvasElm.removeAllListeners?.('plotly_click');
+        this.canvasElm.on('plotly_click', (eventData) => {this.onPlotClick(eventData);});
     }
-}
 
+    /**
+     * Handle a click on a plot point
+     *
+     * @param {Object} eventData - Plotly click event data
+     */
+    onPlotClick(eventData) {
+        if (!eventData || !eventData.points || eventData.points.length === 0) {
+            return;
+        }
+
+        // Find the point closest to the click (by y-distance)
+        let point = eventData.points[0];
+
+        if (eventData.points.length > 1 && eventData.event) {
+            const clickY = eventData.event.offsetY;
+
+            // Pick the point whose marker is nearest the cursor
+            point = eventData.points.reduce((closest, p) => {
+                const yPixel = p.yaxis.l2p(p.y) + p.yaxis._offset;
+                const closestPixel = closest.yaxis.l2p(closest.y) + closest.yaxis._offset;
+                return Math.abs(yPixel - clickY) < Math.abs(closestPixel - clickY)
+                    ? p : closest;
+            });
+        }
+
+        // Gather all points sharing the same spot as the closest point
+        const samePoints = eventData.points.filter(
+            (p) => p.x === point.x && p.y === point.y
+        );
+
+        // Merge customdata from all those points, collecting unique values per property
+        const paramSets = {};
+        samePoints.forEach((p) => {
+            if (p.customdata == null) {
+                return;
+            }
+            Object.entries(p.customdata).forEach(([key, value]) => {
+                if (!paramSets[key]) {
+                    paramSets[key] = new Set();
+                }
+                paramSets[key].add(`${value}`);
+            });
+        });
+
+        // Concatenate unique values by comma
+        const params = {};
+        Object.entries(paramSets).forEach(([key, set]) => {
+            params[key] = [...set].join(',');
+        });
+
+
+        if (Object.keys(params).length > 0 && typeof this.config.onGroupClick === 'function') {
+            this.config.onGroupClick(params);
+        }
+    }
+
+    /**
+     * Build the traces passed to plotly
+     *
+     * Builds one trace for each group.
+     *
+     * Runs over this.values which contains a list of items.
+     * Each item is an object with the fields: x and totals.
+     * For grouped data, there is an additional field y_id.
+     *
+     * @return {*[]}
+     */
+    async buildTraces() {
+
+        // Remove undefined
+        let values = this.values.filter(item => (item.x !== undefined) && ((item.totals !== undefined)));
+
+        // Remove 0
+        if (this.config.noZero) {
+            values = values.filter(item => (item.x !== 0));
+        }
+
+        let traces = [];
+
+        // Group data
+        const groupedData = {};
+        values.forEach(item => {
+            let groupId =  `${item.grouptype || ''}-${item.y_id || ''}`;
+            if (!groupedData[groupId]) {
+                groupedData[groupId] = [];
+            }
+            groupedData[groupId][item.x] = item.totals;
+        });
+
+        // Collect all unique x values across all groups
+        let xValues = [...new Set(values.map(item => item.x))].sort((a, b) => a - b);
+        const minX = Math.min(...xValues);
+        const maxX = Math.max(...xValues);
+
+        // Generate ALL buckets from min to max (including empty ones)
+        const zoom = this.controls.params.zoom || 1;
+        xValues = [];
+        for (let x = minX; x <= maxX; x += zoom) {
+            xValues.push(x);
+        }
+
+        const rangeLabels = xValues.map(x => `${x}–${x + zoom - 1}`);
+
+        const facets = await this.modelParent.getFacets();
+        const traceLegend = facets && (Object.keys(facets).length > 0);
+
+        // Create one trace for each group
+        for (const [groupName, groupValues] of Object.entries(groupedData)) {
+
+            // Data for the click callback
+            const [groupType, groupId] = groupName.split('-');
+            const rangeData = xValues.map(x => ({
+                datestart: `${x}-${x + zoom - 1}`,
+                properties: groupId || '',
+                propertytype: groupType || ''
+            }
+            ));
+
+            // Extract y values for this property
+            const fillValue = this.config.logScale ? null : 0;
+            const yValues = xValues.map(x => (x in groupValues ? groupValues[x] : fillValue));
+
+            let traceColor = 'hsl(185, 75%, 36%)';
+            let traceLabel = 'Articles';
+
+            if (facets && facets[groupId]) {
+                const legendItem = facets[groupId];
+                traceColor = legendItem.color;
+                traceLabel = legendItem.label;
+            }
+
+            traces.push({
+                name: traceLabel,
+
+                x: rangeLabels,
+                y: yValues,
+                customdata: rangeData,
+
+                stackgroup: this.config.barMode === 'stack' ? 'one' : undefined,
+                marker: { color: traceColor },
+                line: { shape: 'spline', color: traceColor },
+
+                type: this.config.plotType,
+                mode: 'lines+markers',
+                opacity: 1,
+
+                hovertemplate: `${traceLabel}: %{y}<extra></extra>`,
+                showlegend: traceLegend
+            });
+
+        }
+
+        return traces;
+    }
+
+    /**
+     * Build the layout passed to plotly
+     *
+     * @return {Object}
+     */
+    buildLayout() {
+
+        return {
+            xaxis: {
+                title: 'Year',
+                //type: 'linear',
+                type: 'category',
+                fixedrange: true,
+                autorange: true,
+                // tickvals: rangeLabels,
+                // ticktext: xValues.map(String),
+                unifiedhovertitle: {text:'<b>%{x}</b>'}
+            },
+            yaxis: {
+                title: this.config.logScale ? 'Count (log)' : 'Count',
+                type: this.config.logScale ? 'log' : 'linear',
+                fixedrange: true
+            },
+            barmode: this.config.barMode,
+            showlegend: false,
+            hovermode: 'x unified' // 'closest'
+        };
+    }
+
+    /**
+     * Build the config passed to plotly
+     *
+     * @return {Object}
+     */
+    buildConfig() {
+        return {
+            displayModeBar: false,
+            displaylogo: false,
+            doubleClick: false,
+            editable: false,
+            showTips: false
+        };
+    }
+
+}
 
 /**
  * Tiles plot using Plotly.js
@@ -411,12 +757,11 @@ class TilesPlot extends BasePlot {
         plotType: 'bar'  // 'bar' or 'line'
     };
 
-    constructor(canvas, values, config = {}) {
-        super(canvas, values, config);
-        this.initialize();
+    constructor(canvas, controls, values, config = {}, parent) {
+        super(canvas, controls, values, config, parent);
     }
 
-    initialize() {
+    renderPlot() {
         const values = this.values.filter(item => ((item.x !== undefined) && (item.y !== undefined) && (item.totals !== undefined)));
 
         const xValues = values.map(item => item.x);
@@ -453,7 +798,7 @@ class TilesPlot extends BasePlot {
             yaxis: { title: 'Y Axis' }
         };
 
-        this.plot = Plotly.newPlot(this.canvas, [trace], layout);
+        this.plot = Plotly.newPlot(this.canvasElm, [trace], layout);
     }
 }
 
@@ -510,9 +855,9 @@ class NetworkPlot extends BasePlot {
         fitInterval: 100
     };
 
-    constructor(canvas, values, config = {}) {
+    constructor(canvas, controls, values, config = {}, parent) {
 
-        super(canvas, values, config);
+        super(canvas, controls, values, config, parent);
 
         if (this.config.mode !== "bimodal") {
             this.config.sourceColor  = this.config.targetColor;
@@ -526,11 +871,9 @@ class NetworkPlot extends BasePlot {
         this.zoomInterval = null;
         this.initialized = false;
         this.nodesMap = new Map();
-
-        this.initialize();
     }
 
-    initialize() {
+    renderPlot() {
         this.initCanvas();
         this.initData();
         this.initialLayout();
@@ -540,9 +883,9 @@ class NetworkPlot extends BasePlot {
     }
 
     initCanvas() {
-        this.canvas.innerHTML = '';
+        this.canvasElm.innerHTML = '';
 
-        this.svg = d3.select(this.canvas)
+        this.svg = d3.select(this.canvasElm)
             .append("svg")
             .attr("width", this.config.width)
             .attr("height", this.config.height);
@@ -763,7 +1106,6 @@ class NetworkPlot extends BasePlot {
             this.initialized = true;
         });
     }
-
 
     getNodeOrder(id) {
         const node = this.nodesMap.get(id);

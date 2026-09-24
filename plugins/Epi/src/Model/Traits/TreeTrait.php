@@ -48,15 +48,6 @@ trait TreeTrait
         $path = empty($path) ? [] : $path;
         $path = array_reverse($path);
         $path[] = $this->{$this->_path_field};
-//        $level = $this->type['merged']['level'] ?? 0;
-//        if (!empty($path) && $level > 0) {
-//            $path = array_slice($path, $level);
-//        }
-//
-//        $field = $this->type['merged']['displayfield'] ?? 'lemma';
-//        $field = $field === 'path' ? 'lemma' : $field;
-//
-//        $path[] = $this[$field] ?? $this->lemma;
         return implode($this->_path_separator, $path);
     }
 

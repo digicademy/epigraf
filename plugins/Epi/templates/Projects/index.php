@@ -96,5 +96,5 @@
             ]
         );
 
-    $this->Link->downloadButtons (null, 'projects', 'epi_projects');
+    $this->Link->downloadButtons(['parameter' => 'projects', 'datalist' => 'epi_projects']);
  ?>

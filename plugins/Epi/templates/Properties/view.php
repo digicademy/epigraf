@@ -103,7 +103,10 @@
                 'more' => [
                     'controller' => 'Articles',
                     'action' => 'index',
-                    '?' => ['properties.' . $entity->propertytype . '.selected' => $entity->id]
+                    '?' => [
+                        'properties.' . $entity->propertytype . '.selected' => $entity->id,
+                        'load' => 1
+                    ]
                 ]
             ])
         ?>
@@ -147,7 +150,7 @@
                 'controller' => 'Properties',
                 'action' => 'merge',
                 $entity->id,
-                '?' => ['preview' => true, 'concat' => true]
+                '?' => ['preview' => true, 'concat' => true, 'iri' => true]
             ],
             ['roles' => ['author', 'editor']]
         );

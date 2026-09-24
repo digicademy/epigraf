@@ -150,7 +150,7 @@ class Tag extends BaseEntity
         }
 
         // Wrong hieararchy
-        if (!empty($this->type) && ($tagName !== TAGNAME_NL)) {
+        if (!empty($this->type)) {
 
 
             if (!empty($this->container)) {
@@ -178,7 +178,7 @@ class Tag extends BaseEntity
 
                 if (!$this->isAllowed($allowed)) {
                     $warnings[$fieldKey][] = [
-                        'msg' => __('Child tag {tagname}#{tagid} not allowed in this position.', $this->_fields)
+                        'msg' => __('Child tag {tagname}#{tagid} in field {field} of {tab}-{id} not allowed as child of #{parent_id}.', $this->_fields)
                     ];
                 }
             }

@@ -39,5 +39,5 @@
     $this->Link->addCreateAction(__('Create pipeline'));
     $this->Link->addAction(__('Show jobs'),['controller' => 'Jobs', 'action' => 'index']);
 
-    $this->Link->downloadButtons (null, 'id', 'pipelines');
+    $this->Link->downloadButtons(['parameter' => 'id', 'datalist' => 'pipelines']);
 ?>

@@ -37,7 +37,7 @@ class TaskImport extends BaseTask
      * @return int
      * @throws Exception
      */
-    protected function _getLimit($preview = false)
+    protected function getLimit($preview = false)
     {
 
         if ($this->getCurrentInputMode() === 'folder') {
@@ -46,10 +46,8 @@ class TaskImport extends BaseTask
         elseif ($this->job->config['table'] === 'articles') {
             return $preview ? 1: 100;
         }
-        else {
-            return $this->job->limit;
-        }
 
+        return parent::getLimit();
     }
 
     /**
@@ -104,7 +102,7 @@ class TaskImport extends BaseTask
         // XML folder
         elseif ($inputMode === 'folder') {
             // Recalculate offset from page
-            $options['limit'] = $this->_getLimit($preview);
+            $options['limit'] = $this->getLimit($preview);
             $options['page'] = $options['page'] ?? 1;
             $options['offset'] = ($options['limit']) * ((int)$options['page'] - 1);
 
@@ -137,17 +135,23 @@ class TaskImport extends BaseTask
             $data = $this->_loadData($options, $preview);
 
             $this->activateDatabank($this->job->config['database']);
+            if ($this->job->config['database'] === DATABASE_MAIN) {
+                $plugin = null;
+            } else {
+                $plugin = 'Epi';
+            }
 
             /** @var \Epi\Model\Table\BaseTable $model */
             $tableName = $this->job->config['table'] ?? null;
-            $model = $this->job->getModel($tableName, 'Epi');
+            $model = $this->job->getModel($tableName, $plugin);
 
             $data = $model->toEntities(
                 $data,
                 $this->job->getIndex(),
                 [
                     'job_id' => $this->job->id ?? null,
-                    'skipUpdates' => $this->job->config['skip'] ?? []
+                    'skipUpdates' => $options['skip'] ?? [],
+                    'asNew' => $options['new'] ?? false
                 ]
             );
 
@@ -199,7 +203,12 @@ class TaskImport extends BaseTask
     {
         /** @var \Epi\Model\Table\BaseTable $model */
         $tableName = $this->job->config['table'] ?? null;
-        $model = $this->job->getModel($tableName, 'Epi');
+        if ($this->job->config['database'] === DATABASE_MAIN) {
+            $plugin = null;
+        } else {
+            $plugin = 'Epi';
+        }
+        $model = $this->job->getModel($tableName, $plugin);
 
         $importConfig = [
             'skipUpdates' => $this->job->config['skip'] ?? [],
@@ -336,7 +345,7 @@ class TaskImport extends BaseTask
     public function progressMax()
     {
         $count = $this->_getCount();
-        $calls = max(1, ceil($count / $this->_getLimit()));
+        $calls = max(1, ceil($count / $this->getLimit()));
         return $calls;
     }
 
@@ -370,7 +379,7 @@ class TaskImport extends BaseTask
         $current = $this->config;
         $current['offset'] = $current['offset'] ?? 0;
         $current['page'] = $current['page'] ?? 1;
-        $current['limit'] = $this->_getLimit();
+        $current['limit'] = $this->getLimit();
 
         // Load entities
         $data = $this->_loadEntities([

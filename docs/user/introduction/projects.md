@@ -7,7 +7,7 @@ toc: false
 Articles are grouped into projects.
 A project includes, for example, the inscriptions of a region or a sample of threads on a social media platform.
 
-![Epigraf Projects](/epigraf/user/assets/img/projects_interface.png)
+![Epigraf Projects](/user/assets/img/projects_interface.png)
 
 The following data can be entered for each project.
 Be aware that the field names may be changed by the configuration.

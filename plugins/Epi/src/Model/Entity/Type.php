@@ -126,8 +126,11 @@ class Type extends RootEntity
     ];
 
     /**
-     * The field used to create an IRI
-     * @var string
+     * The field used to create an IRI.
+     * Optionally, IRIs can be prefixed by the database name.
+     *
+     * @var string $_field_iri
+     * @var boolean $_prefix_iri
      */
     protected $_field_iri = 'name';
     protected $_prefix_iri = false;
@@ -154,30 +157,6 @@ class Type extends RootEntity
         'description',
         'config'
     ];
-
-
-    /**
-     * Convert imported data
-     * (parse json)
-     *
-     * @param $content
-     * @param $options
-     * @return array
-     */
-    public function importData($content, $options)
-    {
-
-        // TODO: Implement option to merge the new config instead of replacing it
-        if (is_string($content['config'] ?? null)) {
-            try {
-                $content['config'] = json_decode($content['config'], true);
-            } catch (Exception $e) {
-                return ['error' => __('Error parsing JSON: {0}', [$e->getMessage()])];
-            }
-        }
-
-        return parent::importData($content, $options);
-    }
 
     /**
      * Get the default type for the entity, if no type configuration is available in the types table
@@ -478,7 +457,7 @@ class Type extends RootEntity
             $fields = array_intersect_key($defaultConfig, array_flip($defaultFields));
         }
 
-        // Path the defaults with the config
+        // Patch the defaults with the config
         else {
             $result = [];
 
@@ -504,6 +483,14 @@ class Type extends RootEntity
                 }
                 else {
                     $result[$fieldName] = array_replace_recursive($defaultConfig[$fieldName] ?? [], $fieldConfig);
+                }
+
+                // Align non-text types
+                if (($result[$fieldName]['format'] ?? 'input') === 'select') {
+                    $result[$fieldName]['type'] = 'select';
+                }
+                elseif (($result[$fieldName]['format'] ?? 'input') === 'check') {
+                    $result[$fieldName]['type'] = 'checkbox';
                 }
             }
             $fields = $result;

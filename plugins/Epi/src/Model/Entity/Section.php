@@ -277,7 +277,7 @@ class Section extends BaseEntity
 
             // Check section tree
             if (empty($this->lft) || empty($this->rght)) {
-                $warnings['tree-error'][] = ['msg' => __('Section {0} has no left or right value.', $this->id)];
+                $warnings['tree-error'][] = ['msg' => __('Missing tree values in section {0}.', $this->id)];
             }
 
             $this->_warnings = parent::_getWarnings() ?? [];

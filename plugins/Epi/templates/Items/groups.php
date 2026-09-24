@@ -27,7 +27,7 @@ use Epi\Model\Table\BaseTable;
     <?= $this->Table->simpleTable($groups, $columns) ?>
 <?php else: ?>
 
-    <?php $this->Html->script('Widgets.plotly/plotly-2.8.3.min.js', ['block' => true]); ?>
+    <?php $this->Html->script('Widgets.plotly/plotly-3.6.0.min.js', ['block' => true]); ?>
 
     <?php
       if ((BaseTable::$requestMode ?? MODE_DEFAULT) !== MODE_DEFAULT) {

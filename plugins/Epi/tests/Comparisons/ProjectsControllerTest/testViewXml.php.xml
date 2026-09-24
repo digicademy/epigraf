@@ -1,6 +1,24 @@
-<response>
+<ram>
   <project id="projects-1" projecttype="epi" database="projects" norm_iri="bookiri">
     <name>Testprojekt 1</name>
     <signature>TP1</signature>
+    <description>
+      <di_prefix>di</di_prefix>
+      <di_number>999</di_number>
+      <di_signature>DI 999</di_signature>
+      <di_path>testprojekt1</di_path>
+      <urn>di999g022k0</urn>
+      <author>Test Tator</author>
+      <year>2025</year>
+      <title>Die Inschriften von Testates</title>
+      <images>
+        <creator>Tina Toner</creator>
+        <source>Bildarchiv</source>
+        <rights>Tackademie</rights>
+        <usageterms>CC BY 4.0</usageterms>
+        <credit>Tacka</credit>
+        <marked>True</marked>
+      </images>
+    </description>
   </project>
-</response>
+</ram>

@@ -56,10 +56,14 @@ class DatabaseCommand extends Command
             'help' => 'Database name'
         ]);
         $parser->addOption('connection', [
-            'help' => 'Connection name (default for main database, projects for project databases)'
+            'help' => 'Connection name (default for main database, projects for project databases).'
         ]);
         $parser->addOption('drop', [
-            'help' => 'Whether to drop existing databases. Defaults to false.',
+            'help' => 'Whether to drop existing databases when calling the init command. Defaults to false.',
+            'boolean' => true
+        ]);
+        $parser->addOption('test', [
+            'help' => 'Whether to init test databases. Defaults to false.',
             'boolean' => true
         ]);
         $parser->addOption('preset', [
@@ -107,9 +111,11 @@ class DatabaseCommand extends Command
                 $this->createDatabase($connectionname, $databasename, $drop);
                 $this->importSql($connectionname, $databasename, $filename);
 
-                $this->createDatabase('test');
-                $this->createDatabase('test_projects');
-                $this->createDatabase('test_public');
+                if ($args->getOption('test') ?? false) {
+                    $this->createDatabase('test');
+                    $this->createDatabase('test_projects');
+                    $this->createDatabase('test_public');
+                }
 
                 $this->createFolders();
 

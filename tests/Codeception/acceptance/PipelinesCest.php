@@ -10,6 +10,7 @@ class PipelinesCest
 
     public function _before(AcceptanceTester $I)
     {
+        $I->testClassName = get_class($this);
     }
 
     public function showStart(AcceptanceTester $I)

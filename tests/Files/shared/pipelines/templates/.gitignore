@@ -1,0 +1,7 @@
+tests/private/*
+!tests/private/readme.md
+
+epi_jh.xpr
+epiexport_joerg.xpr
+epiexport_gh.xpr
+epiexport_lh.xpr

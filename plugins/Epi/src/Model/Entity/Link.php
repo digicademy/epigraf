@@ -402,6 +402,13 @@ class Link extends BaseEntity
                 $warnings['missing-tag'][] = ['msg' =>  __('Missing tag {from_tagname}#{from_tagid} for annotation links-{id}.', $this->_fields)];
             }
 
+            elseif (!empty($this->property['propertytype']) && !empty($this->type->config['fields']['to']['targets']['properties'])) {
+                $targetTypes = $this->type->config['fields']['to']['targets']['properties'] ?? [];
+                if (!in_array($this->property['propertytype'], $targetTypes)) {
+                    $warnings['wrong-target'][] = ['msg' =>  __('Target property type mismatch in {from_tagname}#{from_tagid} for annotation links-{id}.', $this->_fields)];
+                }
+            }
+
             $this->_warnings = parent::_getWarnings() ?? [];
             $this->_warnings = Arrays::array_merge_grouped($this->_warnings, $warnings);
         }

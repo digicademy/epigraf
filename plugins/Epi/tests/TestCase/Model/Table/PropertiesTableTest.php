@@ -176,7 +176,8 @@ class PropertiesTableTest extends EpiTestCase
                 'properties' => ['objecttypes' => 36],
                 'field' => 'content',
                 'term' => 'Noregi'
-            ]
+            ],
+            'articleCount' => true
         ];
 
         $properties = $this->Properties

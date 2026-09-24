@@ -152,9 +152,9 @@ Example to build and push the test image:
 ```
 cd docker/test
 
-docker build -t registry.gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epigraf/test:php8 .
+docker build -t registry.gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epigraf/test:latest .
 docker login registry.gitlab.rlp.net
-docker push registry.gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epigraf/test:php8
+docker push registry.gitlab.rlp.net/adwmainz/digicademy/di/epigraf/epigraf/test:latest
 
 ```
 

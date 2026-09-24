@@ -11,21 +11,21 @@ an overview of the articles contained in the database.
 By default, the table shows the article's name and the date it was last modified.
 However, you can easily adjust the columns to display any content of your articles.
 
-![Table view of the movies database](/epigraf/user/assets/img/articles_table.png)
+![Table view of the movies database](/user/assets/img/articles_table.png)
 
 Considering a database about movies, we might want to **include information
 such as a movie's directors** or its release dates.
 The following guide is based on the movies database that ships with Epigraf.
-You need admin permissions to [create the movies database](/epigraf/user/administration/databases) and to modify its configuration.
+You need admin permissions to [create the movies database](/user/administration/databases) and to modify its configuration.
 But you can use the same techniques on other databases of your choice.
 You will see how to add new types of content to your articles,
 how to establish a new vocabulary for annotations,
 and how to display data in a column of the articles table.
 
-Let's put off configuring a new column for a moment and, diving through the [RAM](/epigraf/user/coreconcepts/model),
+Let's put off configuring a new column for a moment and, diving through the [RAM](/user/coreconcepts/model),
 consider what type configurations are needed step-by-step:
 
-![RAM outline](/epigraf/user/assets/img/coreconcepts_ram.png)
+![RAM outline](/user/assets/img/coreconcepts_ram.png)
 
 Well, think about what we are trying to achieve here: we want to display a property of a movie in the articles index,
 in our case the movie's director. As we can see above, in the RAM, properties list last, with all other elements
@@ -49,8 +49,8 @@ Practically, whenever we want to add a new property to an article, we first must
 "in what section", editors would want to specify any given information.
 
 In our case, the existing movies sections do not seem fit, so we will add a new section type.
-Instead of doing so right away, let's mind the flow of our [data model](/epigraf/user/coreconcepts/model/#the-data-model)
-and [configure an existing article type to allow for the new section](/epigraf/user/configuration/articles/#sections-contained-in-an-article) first.
+Instead of doing so right away, let's mind the flow of our [data model](/user/coreconcepts/model/#the-data-model)
+and [configure an existing article type to allow for the new section](/user/configuration/articles/#sections-contained-in-an-article) first.
 
 As a rule of thumb, try to internalise that any higher-level configuration directly influences the next lower-level
 element within the RAM.
@@ -100,7 +100,7 @@ Paste the following JSON configuration:
 }
 ```
 
-This configuration [allows one item](/epigraf/user/configuration/articles/#items-contained-in-a-section)
+This configuration [allows one item](/user/configuration/articles/#items-contained-in-a-section)
 of the type "director"within the "crew" section.
 The name of the new type must match the value "director" of the type-key in our article configuration.
 Usually you choose the same value for caption an IRI fragment.
@@ -154,7 +154,7 @@ You can leave all other fields as they are:
 
 Again, the name must match the value "director" of the type-key in our section configuration.
 Articles featuring a "Crew" section now contain "Director" items.
-Items can have [fields](/epigraf/user/configuration/articles/#fields-available-in-an-item) for text, files, datings, properties and more data types.
+Items can have [fields](/user/configuration/articles/#fields-available-in-an-item) for text, files, datings, properties and more data types.
 We just configured the property field of the item and in the `types` key we are referencing
 the property type "director".
 Yet, editors cannot fill this field because, surprise, we are still missing the matching property configuration.
@@ -180,7 +180,7 @@ The name must match the types value in our item configuration.
 Note the plural of the caption. Although you are free to choose any caption you like,
 we recommend the plural for property types as the captions are used in the categories menu.
 
-Paste the following JSON configuration that [defines the lemma field](/epigraf/user/configuration/categories) of the new property type:
+Paste the following JSON configuration that [defines the lemma field](/user/configuration/categories) of the new property type:
 ```json
 {
   "fields": {
@@ -217,7 +217,7 @@ Each will be available to select in the drop-down field from within our articles
 Now that we do have our director property, we can finally add a column to the articles collection table that started
 this journey.
 
-Head back to the _Types menu_ of the database and edit the default [article configuration](/epigraf/user/configuration/articles/#article-type-configuration).
+Head back to the _Types menu_ of the database and edit the default [article configuration](/user/configuration/articles/#article-type-configuration).
 Recognise the collapsed keys from the beginning ("fields", "sections", "columns", "footnotes"), only this time expand
 the columns key and paste
 
@@ -261,7 +261,7 @@ The `manage` option on the other hand introduces a shortcut that upon clicking o
 right away and jumps to the currently selected property.
 
  <figure style="max-width: 500px;margin-bottom: 2em;">
-    <img src="/epigraf/user/assets/img/properties_manage.png" alt="Append and manage buttons in the article edit view">
+    <img src="/user/assets/img/properties_manage.png" alt="Append and manage buttons in the article edit view">
 </figure>
 
 Come back anytime for reference!
@@ -270,9 +270,9 @@ Come back anytime for reference!
 
 - Familiarise yourself with the [documentation](/configuration/articles) for configuring articles and the related RAM elements.
 - Why don't you try to configure annotations for the movies database or your own project?
-  Follow the [step-by-step guide](/epigraf/user/configuration/annotations-howto) to get started.
+  Follow the [step-by-step guide](/user/configuration/annotations-howto) to get started.
 - Many projects need to keep track of who is responsible for an article.
   Consider adding a workflow section to your articles that assigns researchers.
   The researchers can be stored as any other category, thus, configure a respective property type.
-- To fill the new sections and items with data, you can [import](/epigraf/user/import) CSV or XML files.
+- To fill the new sections and items with data, you can [import](/user/import) CSV or XML files.
 

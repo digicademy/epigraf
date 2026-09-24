@@ -21,21 +21,16 @@
 ?>
 
 <!-- Content area -->
-<div class="content-extratight">
-    <?php $formId = 'form-grant-users-' . $entity->id; ?>
+<div class="content">
+    <?php $formId = 'form-grant-users-' . $entity->user_id; ?>
     <?= $this->Form->create($entity, ['type' => 'post', 'id' => $formId]) ?>
-            <?= $this->Form->control('databank_id',
-                ['options' => $this->getConfig('options')['databanks'] ?? [], 'empty' => false, 'label' => __('Database')]);
-            ?>
-            <?= $this->Form->control('scope',
-                ['options' =>  $this->getConfig('options')['scopes'] ?? [], 'empty' => false, 'label' => __('Scope')]);
-            ?>
-            <?= $this->Form->control('role',
-                ['options' =>  $this->getConfig('options')['roles'] ?? [], 'empty' => true, 'required' => false, 'label' => __('Role')]);
-            ?>
-            <div class="confirm">
-                <?= $this->Form->button(__('Grant access')) ?>
-                <?= $this->Link->cancelLink(['controller'=>'users','action' => 'view', $entity->id], $formId) ?>
-            </div>
+
+        <?= $this->EntityInput->entityTable($entity, 'grant') ?>
+
+        <div class="confirm">
+            <?= $this->Form->button(__('Grant access')) ?>
+            <?= $this->Link->cancelLink(['controller'=>'users','action' => 'view', $entity->user_id], $formId) ?>
+        </div>
+
     <?= $this->Form->end() ?>
 </div>

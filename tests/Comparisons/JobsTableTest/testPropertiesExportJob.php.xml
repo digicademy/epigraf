@@ -1,0 +1,191 @@
+
+  <properties>
+
+  <property id="properties-135" parent_id="properties-137" sortno="12" related_id="properties-136" propertytype="epithets" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+    <lemma>siehe</lemma>
+    <unit>Epithet 2b Einheit</unit>
+    <comment>Epithet 2b Bemer</comment>
+    <keywords>Spitzname</keywords>
+    <norm_data>Epithet 2b Norm</norm_data>
+  </property>
+
+  <property id="properties-136" parent_id="properties-137" sortno="9" sortkey="Epithet 2a" propertytype="epithets" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
+    <lemma>Epithet 2a</lemma>
+    <name>Epithet 2a</name>
+    <unit>Epithet 2a Einheit</unit>
+    <comment>Epithet 2a Bemerk</comment>
+    <keywords>Spitzname</keywords>
+    <norm_data>Epithet 2a Norm</norm_data>
+  </property>
+
+  <property id="properties-137" sortno="8" sortkey="Epithet 2" propertytype="epithets" level="0" lft="8" rght="14" iscategory="0" ishidden="0">
+    <lemma>Epithet 2</lemma>
+    <name>Epithet 2 </name>
+    <unit>Epithet 2 einheit</unit>
+    <comment>Epithet 2 Bemerk</comment>
+    <keywords>Epithet,Spitzname</keywords>
+    <norm_data>Epithet 2 Norm</norm_data>
+  </property>
+
+  <property id="properties-138" parent_id="properties-140" sortno="5" related_id="properties-139" propertytype="epithets" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
+    <lemma>siehe</lemma>
+    <unit>Epithet 1b Einheit</unit>
+    <comment>Epithet 1b Bemerk</comment>
+    <keywords>Epithet</keywords>
+    <norm_data>Epithet 1b Norm</norm_data>
+  </property>
+
+  <property id="properties-139" parent_id="properties-140" sortno="2" sortkey="Epithet 1a" propertytype="epithets" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+    <lemma>Epithet 1a</lemma>
+    <name>Epithet 1a</name>
+    <unit>Epithet 1a Einheit</unit>
+    <comment>Epithet 1a Bemerk</comment>
+    <keywords>Epithet</keywords>
+    <norm_data>Epithet 1a Norm</norm_data>
+  </property>
+
+  <property id="properties-140" sortno="1" sortkey="Epithet 1" propertytype="epithets" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+    <lemma>Epithet 1</lemma>
+    <name>Epithet 1 </name>
+    <unit>Epithet 1 Einheit</unit>
+    <comment>Epithet 1 Bemerk</comment>
+    <keywords>Epithet,Spitzname</keywords>
+    <norm_data>Epithet 1 </norm_data>
+  </property>
+
+  <property id="properties-1057" sortkey="lateinisch" propertytype="epithets" level="0" lft="15" rght="30" iscategory="0" ishidden="0">
+    <lemma>lateinisch</lemma>
+    <name>lateinisch</name>
+    <norm_iri>lateinisch</norm_iri>
+  </property>
+
+  <property id="properties-1059" sortkey="deutsch" propertytype="epithets" level="0" lft="31" rght="64" iscategory="1" ishidden="1">
+    <lemma>deutsch</lemma>
+    <name>deutsch</name>
+    <norm_iri>deutsch</norm_iri>
+  </property>
+
+  <property id="properties-1061" parent_id="properties-1059" sortkey="kohler epitheton" propertytype="epithets" level="1" lft="56" rght="57" iscategory="0" ishidden="0">
+    <lemma>Köhler Epitheton</lemma>
+    <name>Köhler Epitheton</name>
+    <comment>Sortierschlüssel ohne Umlaut</comment>
+    <norm_iri>kohler-epitheton-1</norm_iri>
+  </property>
+
+  <property id="properties-1064" parent_id="properties-1059" sortkey="köhler epitheton" propertytype="epithets" level="1" lft="58" rght="59" iscategory="0" ishidden="0">
+    <lemma>Köhler Epitheton</lemma>
+    <name>Köhler Epitheton</name>
+    <comment>Sortierschlüssel mit Umlaut</comment>
+    <norm_iri>kohler-epitheton-2</norm_iri>
+  </property>
+
+  <property id="properties-1067" parent_id="properties-1059" sortkey="lampe epitheton" propertytype="epithets" level="1" lft="60" rght="61" iscategory="0" ishidden="0">
+    <lemma>Lampe Epitheton</lemma>
+    <name>Lampe Epitheton</name>
+    <norm_iri>lampe-epitheton</norm_iri>
+  </property>
+
+  <property id="properties-1070" parent_id="properties-1059" sortkey="haller epitheton" propertytype="epithets" level="1" lft="62" rght="63" iscategory="0" ishidden="0">
+    <lemma>Haller Epitheton</lemma>
+    <name>Haller Epitheton</name>
+    <norm_iri>haller-epitheton</norm_iri>
+  </property>
+
+  <property id="properties-1073" parent_id="properties-1057" sortkey="ancilla" propertytype="epithets" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+    <lemma>ancilla</lemma>
+    <name>ancilla</name>
+    <norm_iri>ancilla</norm_iri>
+  </property>
+
+  <property id="properties-1076" parent_id="properties-1057" sortkey="amicus" propertytype="epithets" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+    <lemma>amicus</lemma>
+    <name>amicus</name>
+    <norm_iri>amicus</norm_iri>
+  </property>
+
+  <property id="properties-1079" parent_id="properties-1057" sortkey="canonicus" propertytype="epithets" level="1" lft="20" rght="21" iscategory="0" ishidden="0">
+    <lemma>canonicus</lemma>
+    <name>canonicus</name>
+    <norm_iri>canonicus</norm_iri>
+  </property>
+
+  <property id="properties-1082" parent_id="properties-1057" sortkey="baccalaureus" propertytype="epithets" level="1" lft="22" rght="25" iscategory="0" ishidden="0">
+    <lemma>baccalaureus</lemma>
+    <name>baccalaureus</name>
+    <norm_iri>baccalaureus</norm_iri>
+  </property>
+
+  <property id="properties-1085" parent_id="properties-1082" sortkey="decretorum" propertytype="epithets" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+    <lemma>decretorum</lemma>
+    <name>decretorum</name>
+    <norm_iri>decretorum</norm_iri>
+  </property>
+
+  <property id="properties-1088" parent_id="properties-1057" sortkey="cognatus" propertytype="epithets" level="1" lft="26" rght="29" iscategory="0" ishidden="0">
+    <lemma>cognatus</lemma>
+    <name>cognatus</name>
+    <norm_iri>cognatus</norm_iri>
+  </property>
+
+  <property id="properties-1091" parent_id="properties-1088" sortkey="siehe" related_id="properties-1076" propertytype="epithets" level="2" lft="27" rght="28" iscategory="0" ishidden="0">
+    <lemma>siehe</lemma>
+    <name>siehe</name>
+    <norm_iri>siehe-amicus</norm_iri>
+  </property>
+
+  <property id="properties-1614" parent_id="properties-1059" sortkey="ehrenfest" propertytype="epithets" level="1" lft="46" rght="55" iscategory="0" ishidden="0">
+    <lemma>ehrenfest</lemma>
+    <name>ehrenfest</name>
+    <norm_iri>ehrenfest</norm_iri>
+  </property>
+
+  <property id="properties-1617" parent_id="properties-1059" sortkey="edel" propertytype="epithets" level="1" lft="32" rght="45" iscategory="0" ishidden="0">
+    <lemma>edel</lemma>
+    <name>edel</name>
+    <norm_iri>edel</norm_iri>
+  </property>
+
+  <property id="properties-1620" parent_id="properties-1617" sortkey="gestreng" propertytype="epithets" level="2" lft="37" rght="42" iscategory="0" ishidden="0">
+    <lemma>gestreng</lemma>
+    <name>gestreng</name>
+    <norm_iri>gestreng</norm_iri>
+  </property>
+
+  <property id="properties-1623" parent_id="properties-1617" sortkey="und ehrenfest" propertytype="epithets" level="2" lft="43" rght="44" iscategory="0" ishidden="0">
+    <lemma>und ehrenfest</lemma>
+    <name>und ehrenfest</name>
+    <norm_iri>und-ehrenfest</norm_iri>
+  </property>
+
+  <property id="properties-1626" parent_id="properties-1620" sortkey="ehrenfest und mannhaft" propertytype="epithets" level="3" lft="40" rght="41" iscategory="0" ishidden="0">
+    <lemma>ehrenfest und mannhaft</lemma>
+    <name>ehrenfest und mannhaft</name>
+    <norm_iri>ehrenfest-und-mannhaft</norm_iri>
+  </property>
+
+  <property id="properties-1629" parent_id="properties-1620" sortkey="und ehrenfest" propertytype="epithets" level="3" lft="38" rght="39" iscategory="0" ishidden="0">
+    <lemma>und ehrenfest</lemma>
+    <name>und ehrenfest</name>
+    <norm_iri>und-ehrenfest</norm_iri>
+  </property>
+
+  <property id="properties-1632" parent_id="properties-1617" sortkey="ehrbar" propertytype="epithets" level="2" lft="33" rght="36" iscategory="0" ishidden="0">
+    <lemma>ehrbar</lemma>
+    <name>ehrbar</name>
+    <norm_iri>ehrbar</norm_iri>
+  </property>
+
+  <property id="properties-1635" parent_id="properties-1632" sortkey="und ehrenfest" propertytype="epithets" level="3" lft="34" rght="35" iscategory="0" ishidden="0">
+    <lemma>und ehrenfest</lemma>
+    <name>und ehrenfest</name>
+    <norm_iri>und-ehrenfest</norm_iri>
+  </property>
+
+  <property id="properties-1638" parent_id="properties-1614" related_id="properties-1623" propertytype="epithets" level="2" lft="47" rght="48" iscategory="0" ishidden="0" />
+
+  <property id="properties-1641" parent_id="properties-1614" related_id="properties-1629" propertytype="epithets" level="2" lft="49" rght="50" iscategory="0" ishidden="0" />
+
+  <property id="properties-1644" parent_id="properties-1614" related_id="properties-1626" propertytype="epithets" level="2" lft="51" rght="52" iscategory="0" ishidden="0" />
+
+  <property id="properties-1647" parent_id="properties-1614" related_id="properties-1635" propertytype="epithets" level="2" lft="53" rght="54" iscategory="0" ishidden="0" />
+  </properties>

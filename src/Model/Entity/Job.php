@@ -46,7 +46,7 @@ use Throwable;
  * # Database fields (without inherited fields)
  * @property string name A job name for persistent jobs
  * @property string $jobtype
- * @property int $delay If this is a delayed job, a number greater than 0.
+ * @property int $delay If this is a queued job, a number greater than 0.
  * @property string|null $schedule A cron expression for scheduled jobs.
  * @property \DateTime|null $nextrun The next scheduled run time for scheduled jobs.
  * @property string $status
@@ -65,6 +65,7 @@ use Throwable;
  * @property string|null $queueStatus
  * @property bool $isCanceled
  * @property string $progressLabel Progress indicator in the form "2/10".
+ * @property array $taskErrors
  *
  * @property null|string $redirect
  * @property array $redirectParams
@@ -186,7 +187,14 @@ class Job extends BaseEntity
      *
      * @var string[]
      */
-    protected $_virtual = ['nextUrl', 'redirectUrl','downloadUrl','etc'];
+    protected $_virtual = ['nextUrl', 'redirectUrl','downloadUrl','remaining','elapsed'];
+
+    /**
+     * Cache the job folder name
+     *
+     * @var string|null
+     */
+    protected $_jobPath = null;
 
     /**
      * Constructor
@@ -547,7 +555,7 @@ class Job extends BaseEntity
      *
      * @return array
      */
-    protected function getTaskErrors()
+    protected function _getTaskErrors()
     {
         return $this->_taskErrors;
     }
@@ -574,11 +582,13 @@ class Job extends BaseEntity
     }
 
     /**
-     * @return int|void
+     * Get the estimated time left until completion in seconds
+     *
+     * @return float
      */
-    protected function _getEtc()
+    protected function _getRemaining()
     {
-        if ($this->finished) {
+        if ($this->isFinished) {
             return 0;
         }
 
@@ -590,7 +600,53 @@ class Job extends BaseEntity
         if ($diffSeconds < 3) {
             return INF;
         }
-        return max(0, ($diffSeconds / $this->progressmax) * ($this->progressmax - $this->progress));
+        return max(0, ($diffSeconds / $this->progress) * ($this->progressmax - $this->progress));
+    }
+
+    /**
+     * Get the already used time in seconds
+     *
+     * @return float
+     */
+    protected function _getElapsed()
+    {
+        if (empty($this->created) || empty($this->modified)) {
+            return 0;
+        }
+        return $this->modified->getTimestamp() - $this->created->getTimestamp();
+    }
+
+    /**
+     * Check whether the job is stale, i.e. the progress has not changed for a long time
+     *
+     * @return boolean
+     */
+    protected function _getStale()
+    {
+        if ($this->isFinished) {
+            return false;
+        }
+
+        if (empty($this->created) || empty($this->modified)) {
+            return false;
+        }
+
+        $now = time();
+
+        // Job was just created, give it a minute to start
+        $ageSeconds = $now - $this->created->getTimestamp();
+        if ($ageSeconds < 60) {
+            return false;
+        }
+
+        // Stale if we don't see progress after a minute
+        if (empty($this->progress)) {
+            return true;
+        }
+
+        // Stale if time since last modification exceeds the expected interval
+        $timeSinceModified = $now - $this->modified->getTimestamp();
+        return $timeSinceModified > (($this->elapsed / $this->progress) * 2);
     }
 
     /**
@@ -883,11 +939,28 @@ class Job extends BaseEntity
      */
     protected function _getJobPath()
     {
-        $folderpath = Databank::addPrefix($this->config['database']) . DS
-            . 'jobs' . DS .'job-' . $this->id . DS;
-        $folderpath = Configure::read('Data.databases') . $folderpath;
+        if (empty($this->_jobPath)) {
 
-        return $folderpath;
+            $rootFolder = Configure::read('Data.databases')
+                . Databank::addPrefix($this->config['database'])
+                . DS  . 'jobs' . DS;
+
+            // In preview mode, create a temp folder in the job folder
+            if (empty($this->id)) {
+                $folderpath = Files::getTempFoldername(
+                    'tmp-',
+                    $rootFolder,
+                    empty(Configure::read('test'))
+                );
+            }
+            // In execute mode, create a job folder with the job ID
+            else {
+                $folderpath = $rootFolder . 'job-' . $this->id . DS;
+            }
+            $this->_jobPath = $folderpath;
+        }
+
+        return $this->_jobPath;
     }
 
     /**
@@ -987,7 +1060,7 @@ class Job extends BaseEntity
             $current = $this->getCurrentTaskConfig(true);
             $task = $this->_getTypedTask($current);
 
-            $filename = $task->getCurrentOutputFilePath();
+            $filename = $task->getCurrentOutputFileName();
             $target = $current['target'] ?? '';
             $root = $current['root'] ?? null;
         }
@@ -1022,7 +1095,7 @@ class Job extends BaseEntity
      * @param array $dataParams Params passed to the find method of the model to get the entities to mutate.
      * @return int Number of articles for calculating the progress bar.
      */
-    protected function getEntitiesCount($dataParams): int
+    public function getEntitiesCount($dataParams): int
     {
         $model = $this->getModel($this->config['table'], 'Epi');
         $dataParams = $model->parseRequestParameters($dataParams);
@@ -1030,26 +1103,12 @@ class Job extends BaseEntity
         // TODO: Implement somewhere else, this violates separation of concerns?
         if ($model->getAlias() === 'Epi.Properties') {
             $dataParams['ancestors'] = false;
-            $dataParams['treePositions'] = false;
+
         }
 
         return $model
             ->find('hasParams', $dataParams)
             ->count();
-    }
-
-
-    /**
-     * Get the maximum number of steps one task needs
-     *
-     * Called by the mutate tasks
-     *
-     * @return float|int
-     */
-    protected function _getBatchCount()
-    {
-        $count = $this->getEntitiesCount($this->dataParams);
-        return ceil($count / $this->limit) + 1;
     }
 
     /**
@@ -1138,8 +1197,11 @@ class Job extends BaseEntity
     /**
      * Preview the first task or the job itself
      *
-     * @param array $options
+     * The options array contains a page parameter for the preview.
+     * Return an array with the keys cols, rows and count to show data in the preview table.
+     * Return an empty rows key to stop pagination.
      *
+     * @param array $options
      * @return array|Job
      */
     public function preview($options = [])
@@ -1335,14 +1397,18 @@ class Job extends BaseEntity
      * Activate database
      *
      * @param $dbname
-     * @return Databank
+     * @return Databank|null
      */
-    public function activateDatabank($dbname) : Databank
+    public function activateDatabank($dbname): ?Databank
     {
-        BaseTable::setDatabase($dbname);
+        if ($dbname === DATABASE_MAIN) {
+            $this->databank = null;
+        } else {
+            BaseTable::setDatabase($dbname);
 
-        $databanks = $this->fetchTable('Databanks');
-        $this->databank = $databanks->activateDatabase($dbname);
+            $databanks = $this->fetchTable('Databanks');
+            $this->databank = $databanks->activateDatabase($dbname);
+        }
         return $this->databank;
     }
 
@@ -1398,7 +1464,7 @@ class Job extends BaseEntity
         }
 
         $filteredParams = $this->_getDataParams('filtered');
-        if (!empty(array_diff($selectedParams, $filteredParams)) ||empty($filteredParams)) {
+        if (!empty(array_diff($selectedParams, $filteredParams)) || empty($filteredParams)) {
             $countAll = $this->getEntitiesCount($filteredParams);
             $options['filtered'] = __('All records ({0})', $countAll);
         }
@@ -1469,7 +1535,7 @@ class Job extends BaseEntity
             'iri_path' => ['caption' => __('IRI path'), 'format' => 'iri', 'action' => 'view'],
             'norm_iri' => ['caption' => __('IRI fragment'), 'action' => ['edit', 'add']],
             'status' => ['caption' => __('Status')],
-            'delay' => ['caption' => __('Delayed')],
+            'delay' => ['caption' => __('Queued')],
             'schedule' => [
                 'caption' => __('Schedule'),
                 'help' => __('Add a crontab expression to schedule the job.')
@@ -1478,10 +1544,22 @@ class Job extends BaseEntity
                 'caption' => __('Next run'),
                 'help' => __('Current server time is {0}', FrozenTime::now())
             ],
-            'queueStatus' => ['caption' => __('Queue status'), 'action' => 'view'],
-            'progressLabel' => ['caption' => __('Progress'), 'action' => 'view'],
-            'progress' => ['caption' => __('Progress'), 'action' => 'edit'],
-            'progressmax' => ['caption' => __('Max progress'), 'action' => 'edit'],
+            'queueStatus' => [
+                'caption' => __('Queue status'),
+                'action' => 'view'
+            ],
+            'progressLabel' => [
+                'caption' => __('Progress'),
+                'action' => 'view'
+            ],
+            'progress' => [
+                'caption' => __('Progress'),
+                'action' => 'edit'
+            ],
+            'progressmax' => [
+                'caption' => __('Max progress'),
+                'action' => 'edit'
+            ],
             'config' => [
                 'caption' => __('Config'),
                 'rows' => 15,
@@ -1504,7 +1582,20 @@ class Job extends BaseEntity
                 'caption' => __('Modified'),
                 'action' => 'view'
             ],
-            'etc' => ['caption' => __('ETC'), 'action' => 'view']
+            'elapsed' => [
+                'caption' => __('Time used'),
+                'action' => 'view',
+                'format' => 'seconds'
+            ],
+            'remaining' => [
+                'caption' => __('Time remaining'),
+                'action' => 'view',
+                'format' => 'seconds'
+            ],
+            'stale' => [
+                'caption' => __('Stale'),
+                'action' => 'view'
+            ]
         ];
 
         return $fields;

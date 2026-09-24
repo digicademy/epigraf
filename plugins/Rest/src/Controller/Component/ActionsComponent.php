@@ -665,7 +665,7 @@ class ActionsComponent extends Component
                     $this->getController()->sidemenu = [];
                     return $this->getController()->render('/' . $templateFolder . '/' . $iri);
                 } catch (MissingTemplateException $exception) {
-                    throw new NotFoundException(__('Page not found.'));
+                    throw new NotFoundException(__('Page not found'));
                 }
             }
         }
@@ -732,7 +732,7 @@ class ActionsComponent extends Component
                     }
                     return $this->getController()->render('/' . $templateFolder . '/' . $iri);
                 } catch (MissingTemplateException $exception) {
-                    throw new NotFoundException(__('Page not found.'));
+                    throw new NotFoundException(__('Page not found'));
                 }
             }
         }

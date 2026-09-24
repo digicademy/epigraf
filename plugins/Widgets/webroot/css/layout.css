@@ -743,10 +743,30 @@ footer.overlay-footer nav {
     font-size: 0.8em;
 }
 
+.overlay-footer button,
+.overlay-footer-buttons button,
 .overlay-header-buttons button {
+    /* Same box for every button */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Fixed dimensions */
+    width: 2em;
+    height: 2em;
+    padding: 0;
+    margin: 0 0.1em;
+
+    /* Reset text properties */
+    font-size: 1em;
+    line-height: 1;
     vertical-align: middle;
-    background-size: 50%;
-    padding: 0 0.5em;
+
+    /* Common styling */
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: var(--button-bg-color);
 }
 
 .overlay-header-buttons button .icon {
@@ -754,15 +774,17 @@ footer.overlay-footer nav {
     line-height: 1.5em;
 }
 
+.overlay-footer button,
 .overlay-footer-buttons button,
 .overlay-header-buttons button {
     margin:0 0.5em 0 0;
     background-color: var(--button-bg-color);
 }
 
+.overlay-footer button:hover,
 .overlay-footer-buttons button:hover,
 .overlay-header-buttons button:hover {
-    background-color: var(--button-bg-color);
+    background-color: var(--button-bg-color-hover);
 }
 
 .overlay-header-buttons button:first-child {

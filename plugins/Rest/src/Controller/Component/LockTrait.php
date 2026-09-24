@@ -40,7 +40,7 @@ trait LockTrait
             $this->Answer->success(__('Locked'), false, ['lock' => $lock]);
         }
         else {
-            $this->Answer->error(__('Another user edits the dataset. Please try again later.'));
+            $this->Answer->error(__('Another user edits the dataset. Please, try again later.'));
         }
 
         $this->viewBuilder()->setClassName('Json');
@@ -66,7 +66,7 @@ trait LockTrait
             $this->Answer->success(__('Unlocked'), $redirect, ['unlock' => $unlock]);
         }
         else {
-            $this->Answer->error(__('Could not unlock the entity'));
+            $this->Answer->error(__('Could not unlock the entity.'));
         }
 
         $this->viewBuilder()->setClassName('Json');

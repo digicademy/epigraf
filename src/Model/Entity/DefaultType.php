@@ -105,10 +105,13 @@ class DefaultType extends BaseEntity
     ];
 
     /**
-     * The field used to create an IRI
-     * @var string
+     * The field used to create an IRI.
+     * Optionally, IRIs can be prefixed by the database name.
+     *
+     * @var string $_field_iri
      */
     protected $_field_iri = 'name';
+    protected $_prefix_iri = false;
 
     protected $_fields_formats = [
         'id' => 'id',

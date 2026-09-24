@@ -495,7 +495,7 @@ class ItemsTable extends BaseTable
     }
 
     /**
-     * Constructs a database query from request parameters
+     * Find items based on parsed request parameters
      *
      * @param Query $query
      * @param $options
@@ -763,7 +763,9 @@ class ItemsTable extends BaseTable
                 ->select([
                     'x' => $query->newExpr($bucketExpr),
                     'z' => $z,
-                    'totals' => $query->func()->count('Items.id'),
+                    'totals' =>  $query->func()->count(
+                        $query->newExpr('DISTINCT Items.articles_id')
+                    ),
                     'grouptype' => '"period"'
                 ])
                 ->group([$query->newExpr($bucketExpr)])
@@ -797,7 +799,7 @@ class ItemsTable extends BaseTable
                     'y_type' => "'properties'",
                     'z' => $z,
 
-                    'totals' => $query->func()->count('Items.id'),
+                    'totals' => $query->func()->count($query->newExpr('DISTINCT Items.articles_id')),
                     'grouptype' => 'ArticleProperties.propertytype',
                 ])
                 ->group(['ArticleItems.properties_id', $query->newExpr($bucketExpr)])

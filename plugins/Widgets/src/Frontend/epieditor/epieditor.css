@@ -16,7 +16,7 @@
 
 /* copied from app.css */
 .ck.ck-editor__editable_inline {
-    background-color: var(--content-bg-color); /*#fefefe;*/
+    background-color: var(--content-bg-color);
     color: var(--text-font-color);
 
     display: block;

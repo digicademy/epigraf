@@ -76,20 +76,51 @@ class Permission extends BaseEntity
             ->orderAsc('username')
             ->toArray();
 
+        // TODO: For the grant form in the user profile, only show epi endpoints, skip app endpoints.
         $endpoints = array_merge(['*'], PermissionsTable::getEndpointOptions());
         $endpoints = array_combine($endpoints, $endpoints);
 
+        $databanks = $this->fetchTable('Databanks')
+            ->find()
+            ->all()
+            ->combine('id', 'caption');
+
         $fields = [
+            'databank_id' => [
+                'caption' => __('Database'),
+                'action' => ['grant'],
+                'options' => $databanks
+            ],
+
+            'permission_scope' => [
+                'caption' => __('Requested via'),
+                'action' => ['grant'],
+                'id' => 'permission_scope',
+                'type' => 'select',
+                'options' => ['web' => 'Web', 'api' => 'API', 'desktop' => 'Desktop']
+            ],
+
+
             'user_id' => [
                 'caption' => __('User'),
+                'action' => ['view', 'edit', 'add'],
                 'id' => 'user_id',
                 'type' => 'select',
                 'options' => $users,
                 'empty' => true,
             ],
 
+//            'user_name' => [
+//                'caption' => __('User'),
+//                'action' => ['view', 'grant'],
+//                'extract' => 'user.name',
+//                'id' => 'user_name'
+//            ],
+
             'user_role' => [
                 'caption' => __('Role'),
+                'help' =>  __('Leave empty to use the default role of the user.'),
+                'action' => ['view', 'edit', 'add', 'grant'],
                 'id' => 'user_role',
                 'type' => 'select',
                 'empty' => true,
@@ -98,7 +129,8 @@ class Permission extends BaseEntity
 
             // TODO: rename to endpoint_request ?
             'user_request' => [
-                'caption' => __('Requested by'),
+                'caption' => __('Requested via'),
+                'action' => ['view', 'edit', 'add'],
                 'id' => 'user_request',
                 'type' => 'select',
                 'options' => PermissionsTable::$requestTypes
@@ -107,6 +139,7 @@ class Permission extends BaseEntity
             // TODO: rename to permissiontype?
             'permission_type' => [
                 'caption' => __('Permission Type'),
+                'action' => ['view', 'edit', 'add'],
                 'id' => 'permission_type',
                 'type' => 'select',
                 'options' => PermissionsTable::$permissionTypes,
@@ -115,12 +148,15 @@ class Permission extends BaseEntity
             // TODO: rename to endpoint_name ?
             'permission_name' => [
                 'caption' => __('Endpoint name'),
+                'help' => 'Leave empty to grant access to default enpoints for the selected role and scope.',
+                'action' => ['view', 'edit', 'add', 'grant'],
                 'empty' => true,
                 'options' => $endpoints
             ],
 
             'entity_type' => [
                 'caption' => __('Entity Type'),
+                'action' => ['view', 'edit', 'add'],
                 'id' => 'entity_type',
                 'type' => 'select',
                 'empty' => true,
@@ -128,11 +164,13 @@ class Permission extends BaseEntity
             ],
 
             'entity_name' => [
-                'caption' => __('Entity Name')
+                'caption' => __('Entity Name'),
+                'action' => ['view', 'edit', 'add'],
             ],
 
             'entity_id' => [
                 'caption' => __('Entity ID'),
+                'action' => ['view', 'edit', 'add'],
                 'type' => 'text'
             ],
 
@@ -149,6 +187,7 @@ class Permission extends BaseEntity
             // TODO: rename to 'expires'
             'permission_expires' => [
                 'caption' => __('Expires'),
+                'action' => ['view', 'edit', 'add'],
                 'id' => 'permission_expires'
             ]
         ];

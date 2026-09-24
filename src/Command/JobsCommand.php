@@ -26,7 +26,7 @@ use Predis\Connection\ConnectionException;
 /**
  * Commands to process jobs.
  *
- * Used for processing delayed jobs with workers,
+ * Used for processing queued jobs with workers,
  * scheduled jobs, and executing single jobs by ID.
  *
  * When using Epigraf from the CLI,
@@ -45,7 +45,7 @@ use Predis\Connection\ConnectionException;
  * Process a single job by its ID:
  * bin/cake jobs execute --id=JOB_ID
  *
- * # Delayed jobs (=background jobs)
+ * # Queued jobs (=background jobs)
  *
  * Start a worker that processes jobs from the queue:
  * bin/cake jobs process
@@ -183,7 +183,7 @@ class JobsCommand extends Command
 
             while ($retryNo < $retryMax) {
                 try {
-                    list(, $delayedJob) = $redis->blpop($queueName, 0);
+                    list(, $queuedJob) = $redis->blpop($queueName, 0);
 
                     // Reset retry count on successful pop
                     $retryNo = 0;
@@ -202,7 +202,7 @@ class JobsCommand extends Command
                 }
             }
 
-            $jobData = json_decode($delayedJob, true);
+            $jobData = json_decode($queuedJob, true);
             $jobId = $jobData['job_id'] ?? null;
 
             // Track job status

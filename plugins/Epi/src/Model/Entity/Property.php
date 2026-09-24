@@ -10,7 +10,6 @@
 
 namespace Epi\Model\Entity;
 
-use App\Utilities\Converters\Strings;
 use Cake\ORM\Query;
 use Epi\Model\Traits\TreeTrait;
 
@@ -65,9 +64,8 @@ use Epi\Model\Traits\TreeTrait;
  * @property string $leaf
  * @property string $indentation
  *
- * @property string $captionPath
  * @property string $caption
- * @property string $shortname
+ * @property string $captionPath
  *
  * @property int $referenceId
  * @property string $referencePos
@@ -76,7 +74,7 @@ use Epi\Model\Traits\TreeTrait;
  * @property array $positionOptions
  * @property array $htmlFields
  *
- * # From the the TreeTrait
+ * # From the TreeTrait
  * @property string $path
  * @property string $parentPath
  * @property Property $parentNode
@@ -230,12 +228,6 @@ class Property extends RootEntity
     ];
 
     /**
-     * The field used to create an IRI
-     * @var string
-     */
-    protected $_field_iri = 'id';
-
-    /**
      * Field for TreeTrait
      *
      * @var string
@@ -260,7 +252,7 @@ class Property extends RootEntity
         'modified',
         'published',
         'parent_id',
-        'type' => 'propertytype', //TODO: rename in database
+        'type' => 'propertytype',
         'related_id',
         'sortno',
         'sortkey',
@@ -277,10 +269,10 @@ class Property extends RootEntity
         'signature',
         'norm_type',
         'norm_data',
-        'iri' => 'norm_iri', //TODO: rename in database
+        'iri' => 'norm_iri',
 
         'file_name',
-        'file_type', // TODO: extract automatically
+        'file_type', // TODO: extract automatically?
         'file_path',
         'source_from',
 
@@ -397,8 +389,7 @@ class Property extends RootEntity
      */
     protected function _getLeaf()
     {
-        $value = $this->lemma ?? '';
-        return $value === '' ? $this->shortname : $value;
+        return $this->caption;
     }
 
     /**
@@ -419,13 +410,6 @@ class Property extends RootEntity
     protected function _getCaptionPath()
     {
         return $this->path;
-//        $segments = [];
-//
-//        $segments[] = $this->type->caption ?? null;
-//        $segments[] = $this->path ?? null;
-//        $segments[] = $this->lemma;
-//
-//        return implode($this->_path_separator, array_filter($segments));
     }
 
     /**
@@ -435,21 +419,16 @@ class Property extends RootEntity
      */
     protected function _getCaption()
     {
-        return $this[$this->type['merged']['displayfield'] ?? 'path'] ?? $this['name'];
-    }
+        $config = $this->type['merged'] ?? [];
 
-    /**
-     * Get the combination of display name and, optionally, unit
-     *
-     * @return string
-     */
-    protected function _getShortname()
-    {
-        $value = $this[$this->type['merged']['displayfield'] ?? 'path'] ?? $this['name'];
-        $unit = $this->unit ?? '';
-        if ($unit !== '') {
-            $value .= ' (' . $unit . ')';
+        if (!empty($config['caption'])) {
+            $value = $this->getValuePlaceholder($config['caption'], ['format' => 'text', 'collapse' => ', ']);
+        } elseif (!empty($config['displayfield'])) {
+            $value = $this[$config['displayfield']];
+        } else {
+            $value = $this['name'] ?? $this['lemma'];
         }
+
         return $value;
     }
 
@@ -466,8 +445,6 @@ class Property extends RootEntity
     {
         return $this->table_name . DS . $this->propertytype . DS;
     }
-
-
 
     /**
      * Get the preceding sibling
@@ -593,7 +570,6 @@ class Property extends RootEntity
 
             'ancestors' => [
                 'caption' => __('Ancestors'),
-                //'extract' => 'ancestors.{*}.lemma',
                 'extract' => 'parentPath',
                 'action' => ['view', 'merge']
             ],
@@ -785,30 +761,6 @@ class Property extends RootEntity
         }
 
         return $fields;
-    }
-
-    /**
-     * Update the sort key by using the autofill configuration
-     *
-     * @return $this
-     */
-    public function updateSortKey() {
-
-        $sortKeyConfig = $this->type['config']['fields']['sortkey']['autofill'] ?? [];
-        if (!empty($sortKeyConfig['source'])) {
-            $value = $this->_fields[$sortKeyConfig['source']] ?? '';
-
-            // TODO: use config
-            $value = mb_strtolower(trim($value));
-            $value = Strings::prefixNumbersWithZero($value,5);
-//            $value = Strings::replaceUmlauts($value);
-//            $value = Strings::removeSpecialCharacters($value);
-            $value = Strings::collapseWhitespace($value);
-
-            $this['sortkey'] = $value;
-        }
-
-        return $this;
     }
 
     /**

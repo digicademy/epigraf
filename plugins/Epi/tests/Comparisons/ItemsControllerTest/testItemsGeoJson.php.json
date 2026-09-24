@@ -1,25 +1,6 @@
 {
     "type": "FeatureCollection",
-    "features": [
-        {
-            "type": "Feature",
-            "data": {
-                "id": 796,
-                "number": 1,
-                "quality": 0,
-                "radius": 10,
-                "rootId": 4,
-                "segment": "geolocations"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    7.62451954667419,
-                    51.96182703399873
-                ]
-            }
-        }
-    ],
+    "features": [],
     "pagination": {
         "count": 1,
         "page": 1,

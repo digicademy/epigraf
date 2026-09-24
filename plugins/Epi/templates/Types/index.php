@@ -34,7 +34,10 @@ use Cake\Routing\Router;
         "",
         "term",
         $this->getConfig('options')['params']['term'] ?? '',
-        false,
+        [
+            'field'=> $this->getConfig('options')['params']['field'] ?? 'identifiers',
+            'options' => $this->getConfig('options')['filter']['search'] ?? []
+        ],
         [
             'class' => 'content-searchbar-item-main',
             'label' => __('Search'),

@@ -208,12 +208,12 @@ class JobsController extends AppController
 
         //Check if user has database access
         if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
-            throw new ForbiddenException(null, __('You have no access to the selected database'));
+            throw new ForbiddenException(null, __('You are not allowed to access the selected database.'));
         }
 
         //Check if the current user created the job
         if (($job->config['user_id'] ?? '') !== $this->Jobs::$userId) {
-            throw new ForbiddenException(null, __('You have no access to the selected job'));
+            throw new ForbiddenException(null, __('You are not allowed to access the selected job.'));
         }
 
         // Reset
@@ -224,7 +224,7 @@ class JobsController extends AppController
         //Process job
         if ($job->status !== 'finish') {
 
-            // Excecute non-delayed jobs
+            // Excecute non-queued jobs
             if (empty($job['delay'])) {
 
                 // Set time limit in seconds for one request
@@ -289,12 +289,12 @@ class JobsController extends AppController
 
         //Check if user has database access
         if (!$this->isAllowedDatabase($job->config['database'] ?? null)) {
-            throw new ForbiddenException(null, __('You have no access to the selected database'));
+            throw new ForbiddenException(null, __('You are not allowed to access the selected database.'));
         }
 
         //Check if the current user created the job
         if (!$this->userHasRole(['admin', 'devel'])  && (($job->config['user_id'] ?? '') !== $this->Jobs::$userId)) {
-            throw new ForbiddenException(null, __('You have no access to the selected job'));
+            throw new ForbiddenException(null, __('You are not allowed to access the selected job.'));
         }
 
         $job = $job->cancel();

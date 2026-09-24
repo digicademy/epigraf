@@ -12,7 +12,9 @@
 /**
  * Ajax request queue
  *
- * Run ajax requests synchronously in a queue
+ * Run ajax requests synchronously in a queue.
+ *
+ * TODO: Remove jquery
  *
  *  Usage:
  *     let queue = new AjaxQueue();

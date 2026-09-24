@@ -85,6 +85,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         'selected' => 'list',
         'published' => 'list-integer',
         'term' => 'string',
+        'field' => 'string',
         'scopes' => 'list',
         'modes' => 'list',
         'snippets' => 'list',
@@ -96,18 +97,6 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
 
         'load' => 'list',
         'save' => 'list'
-    ];
-
-    public $searchFields = [
-        'identifiers' => [
-            'caption' => 'Identifiers',
-            'scopes' => [
-                'Types.name',
-                'Types.caption',
-                'Types.norm_iri',
-                'Types.id' => ['type' => 'integer', 'operator' => '=']
-            ]
-        ]
     ];
 
     /**
@@ -205,31 +194,6 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         $schema = parent::getSchema();
         $schema->setColumnType('config', 'json');
         return $schema;
-    }
-
-    /**
-     * beforeMarshal callback
-     *
-     * Prepare the config data
-     *
-     * @param EventInterface $event
-     * @param ArrayObject $data
-     * @param ArrayObject $options
-     * @return void
-     */
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
-    {
-        // TODO: Is this the way to go? Add the same logic to Users->settings
-        //      -> better implement JsonType->marshal()
-        // TODO: Does this work after implementing JsonType?
-//        if (isset($data['config']) && !is_array($data['config'])) {
-//            $value = json_decode($data['config'], true);
-//            if ($value !== null) {
-//                $data['config'] = $value;
-//            }
-//        }
-
-        parent::beforeMarshal($event, $data, $options);
     }
 
     /**
@@ -580,6 +544,7 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
             'id' => [],
             'scopes' => [],
             'term' => '',
+            'field' => 'identifiers',
             'published' => null
         ];
 
@@ -602,8 +567,11 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
         // Term
         $term = $params['term'] ?? false;
         if ($term) {
-            $searchConfig = $this->searchFields['identifiers'] ?? [];
-            $query = $query->find('term', [
+            $searchField = $params['field'];
+            $searchConfig = $this->getSearchFields($searchField);
+            $query = $query
+                ->setTypeMap(['Types.config' => 'text'])
+                ->find('term', [
                 'term' => $term,
                 'searchFields' => $searchConfig['scopes'] ?? [],
                 'operator' => $searchConfig['operator'] ?? 'LIKE',
@@ -789,4 +757,36 @@ class TypesTable extends BaseTable implements ScopedTableInterface, ExportTableI
             ] + $pagination;
     }
 
+    /**
+     * Get the search fields
+     *
+     * @param string|null $fieldName Leave empty to get all, or select a specific field.
+     * @param string|null $typeName The type name to look up in the types configuration for the current table.
+     * @return array[]
+     */
+    protected function getSearchFields($fieldName = null, $typeName = null): array {
+        if (empty($this->searchFields)) {
+
+            $this->searchFields =[
+                'identifiers' => [
+                    'caption' => __('Identifiers'),
+                    'scopes' => [
+                        'Types.name',
+                        'Types.caption',
+                        'Types.norm_iri',
+                        'Types.id' => ['type' => 'integer', 'operator' => '=']
+                    ]
+                ],
+                'config' => [
+                    'caption' => __('Configuration'),
+                    'scopes' => [
+                        'Types.config'
+                    ]
+                ]
+            ];
+
+        }
+
+        return parent::getSearchFields($fieldName);
+    }
 }

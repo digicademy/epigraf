@@ -7,20 +7,20 @@ An article describes a research object, such as an object carrying inscriptions,
 The configuration specifies how the data model is used to represent your case.
 You start with article fields and then define the section types contained in an article.
 For each section type, in turn, you define its fields and the available item types.
-For XML fields, you define the allowed annotations, i.e. links and footnotes.
+For XML fields, you can specify which annotations are allowed, such as links and footnotes.
 All of those components are called entities.
 The root entity is the article which contains section, item, link and footnote entities.
 
 <p class="infobox">
-    🚀 See the <a href="/epigraf/user/configuration/articles-howto">step-by-step guide</a>
+    🚀 See the <a href="/user/configuration/articles-howto">step-by-step guide</a>
     to get started with article configuration in an example database.
 </p>
 
 Note, in the documentation below, you can fully customize all fields not marked as reserved or internal.
-For reserved and interal fields you can customize their visiblity and labels. See the <a href="../configuration/fields">field configuration documentation</a> for further details.
+For reserved and internal fields you can customize their visibility and labels. See the <a href="../configuration/fields">field configuration documentation</a> for further details.
 
 Based on the configuration, an article can be displayed in different modes.
-The view mode is a readonly representation of the article and the edit mode is used to modify an article.
+The view mode is a readonly representation of the article, and the edit mode is used to modify an article.
 Collections of articles can be displayed in the table view where each article is a row,
 in lanes and tiles with short previews of an article. Further, maps, timelines and network graphs can be used to place articles in contexts. Those view options are configured in the article type. For example, in the columns key you configure how the columns in the overview table are filled with article fields or with data from the contained sections and items (as well as connected project entities and user entities). See the <a href="../configuration/columns">columns configuration documentation</a> for further details.
 
@@ -69,14 +69,14 @@ in lanes and tiles with short previews of an article. Further, maps, timelines a
       </tr>
       <tr>
         <td>namespaces</td>
-        <td>Namespaces used in the norm_data fields of the article and its contained sections and items. Norm data fields hold authority data by storing a list of identifiers, each separated by a new line. Each identifier can be abbreviated with a namespace prefix instead of storing the full identifier. The namespaces configuration containsa an object keyed by the namespace prefix (e.g. "urn") and a namespace configuration object. The namespace configuration object consist of the keys `baseurl` and `button` for each namespace. The baseurl value contains the full namespace URL (e.g. `https://nbn-resolving.de/urn:`). The button value, if not empty, is used to create a labeled button that leads to the URL derived from the identifier in the norm_data field, with the namespace prefix replaced by the full namespace URL.</td>
+        <td>Namespaces used in the norm_data fields of the article and its contained sections and items. Norm data fields hold authority data by storing a list of identifiers, each separated by a new line. Each identifier can be abbreviated with a namespace prefix instead of storing the full identifier. The namespaces configuration containsa an object keyed by the namespace prefix (e.g. "urn") and a namespace configuration object. The namespace configuration object consists of the keys `baseurl` and `button` for each namespace. The baseurl value contains the full namespace URL (e.g. `https://nbn-resolving.de/urn:`). The button value, if not empty, is used to create a labeled button that leads to the URL derived from the identifier in the norm_data field, with the namespace prefix replaced by the full namespace URL.</td>
       </tr>
       <tr>
         <td>pipelines</td>
-        <td>Pipelines are used to generate documents such as TEI-XML,  Word files or Zip-Archives.
+        <td>Pipelines are used to generate documents such as TEI-XML, Word files, or Zip-Archives.
            Not all pipelines are relevant for all article types. The pipelines list configuration object restricts the pipelines
            visible for authors and provides buttons in the footer area. The keys of the object contain IRI fragments of the pipelines, the values are used as button labels. The first button is always assigned the keyboard shortcut F6.<br>
-            To make a pipeline available without a button, provide a full configuration object instead of simply a button label. The bject consists of a `caption` key for the button label and a 'button' key with a value of either <i>true</i> or <i>false</i> to show or hide the button.<br>
+            To make a pipeline available without a button, provide a full configuration object instead of simply a button label. The object consists of a `caption` key for the button label and a 'button' key with a value of either <i>true</i> or <i>false</i> to show or hide the button.<br>
              In EpiDesktop, exports are triggered using F6 for single articles or F7 for a volume. A scope parameter with the values `article` or `book` is transferred to EpiWeb, the respective pipelines are defined in the user profiles.
              The scope key can also be set in the full pipeline configuration object.<br>
 Example configuration:
@@ -113,8 +113,8 @@ Example configuration:
       </tr>
       <tr>
         <td>toolbar</td>
-        <td>The annotation toolbar by default is initialised when focusing an input field (value `false`). Set the toolbar key to `true`,
-            if it should be initialized at startup.</td>
+        <td>By default, the annotation toolbar is initialized when an input field is focused (value `false`).
+            Set the toolbar key to `true` if you want it to be initialized at startup.</td>
       </tr>
       <tr>
         <td>geodata</td>
@@ -126,6 +126,82 @@ Example configuration:
 }
 </pre>
         </td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+## Fields available in an article
+
+Most article data is stored in the itenms, not directly in the article row.
+Articles have a few fields that are used for identification, sorting and authority data.
+
+The following table provides an overview of the fields available in an article:
+
+<figure class="table">
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Description</th>
+        <th>Formats</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>signature</td>
+        <td>Short name or number of the article.</td>
+        <td>Reserved: text.</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>The title of an article.</td>
+        <td>Reserved: text.</td>
+      </tr>
+      <tr>
+        <td>status</td>
+        <td>Used to store editing progress information.</td>
+        <td>Reserved: text.</td>
+      </tr>
+      <tr>
+        <td>projects_id</td>
+        <td>ID field of the project that contains the article.</td>
+        <td>Reserved: id.</td>
+      </tr>
+      <tr>
+        <td>norm_iri</td>
+        <td>Text field. Contains the IRI fragment of the article.</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
+      </tr>
+      <tr>
+        <td>published</td>
+        <td>Publication status. 0 = drafted, 1= in progress, 2 = complete, 3= published,  4 = searchable.</td>
+        <td>Reserved: select.</td>
+      </tr>
+      <tr>
+        <td>created</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of row creation.</td>
+      </tr>
+      <tr>
+        <td>modified</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of the last modification.</td>
+      </tr>
+      <tr>
+        <td>created_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who created the row.</td>
+      </tr>
+      <tr>
+        <td>modified_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who last modified the row.</td>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>Reserved: id.</td>
+        <td>ID of the row.</td>
       </tr>
     </tbody>
   </table>
@@ -202,8 +278,13 @@ Such keys can also be used in the `parent` key of subordinate sections. In the f
 }
 ```
 
-The order of the sections when creating articles is determined by the order in the configuration. Sections can be moved manually in the editing view. It is also possible to move sections using a weighting. For example, you can move a section to the top when not in editing mode, to make it immediately present for readers. Negative weights move a section up, positive weights move it down. In the following example, when creating an article, the first section will be the locations section, followed by the description section.
-This order will be used in edit mode. Based on the weights, the sections will be displayed in reverse order in view mode.
+When creating articles, the order of the sections is determined by the order in the configuration.
+Sections can be manually moved in the editing view. You can also move sections using a weighting system.
+For example, when not in editing mode, you can move a section to the top to make it immediately visible to readers.
+Negative weights move a section up and positive weights move it down. In the following example, when creating an article,
+the first section will be the locations section, followed by the description section.
+This order will be used in edit mode. However, based on the weights, the sections will be displayed
+in reverse order in view mode.
 
 ``` plaintext
 {
@@ -260,11 +341,12 @@ The following table provides an overview of the keys used in section configurati
       </tr>
       <tr>
         <td>hide</td>
-        <td>Optional. Usually all sections are visible in an article (`true`). You can hide a section completely by setting the hide property to `false`.</td>
+        <td>Optional. By default, all sections are visible in an article ( value `false`). You can hide a section completely by setting the hide property to `true`.</td>
       </tr>
       <tr>
         <td>collapse</td>
-        <td>All sections are expanded by default. The default setting can be overwritten with the collapse key, taking on of `true` or `false`.</td>
+        <td>All sections are expanded by default (value `false`). This setting can be overwritten by setting the collapse key
+            to `true`.</td>
       </tr>
     </tbody>
   </table>
@@ -315,7 +397,12 @@ The following example defines a tile with an image from the item type "images", 
 
 # Section type configuration
 
-A section groups the items of an article. Each section has a name and contains a comment field, but no other fields with content. The content is stored in the items. Sections are arranged hierarchically. Thus, the sections work much like sections in a research paper that provide structure to the propositions within an article. In fact, the Relational Article Model of Epigraf is inspired of how scientist arrange their thinking when presenting insights to other persons.
+A section groups the items of an article. Each section has a name and contains a comment field,
+but no other fields with content.
+The content is stored in the items.
+Sections are arranged hierarchically.
+Thus, the sections work much like sections in a research paper that provide structure to the propositions within an article.
+In fact, the Relational Article Model of Epigraf is inspired of how scientist arrange their thinking when presenting insights to other persons.
 
 <figure class="table">
   <table>
@@ -328,12 +415,7 @@ A section groups the items of an article. Each section has a name and contains a
     <tbody>
       <tr>
             <td>fields</td>
-            <td>A list of field configuration objects, keyed by the field name. The following fields can be configured:
-            <ul>
-                <li>published: You can change the title of the published field</li>
-                <li>comment: You can define the annotations that are allowed in the comment field.</li>
-                <li>layout_cols and layout_rows: Used for grid widgets (see below).</li>
-            </ul>
+            <td>A list of field configuration objects, keyed by the field name. See below for the available fields.
         </td>
       </tr>
       <tr>
@@ -358,10 +440,15 @@ A section groups the items of an article. Each section has a name and contains a
         <td>Optional. Sections can have a fixed name, a name selected from a properties list or a name based on counting the sections in an article. Provide an object with the following keys:
           <ul>
             <li><code>prefix</code>: Prefix of the section name.</li>
-            <li><code>path</code>: To show the full path of ancestor sections in the section label, set the path to `true`. The default value is `false`..</li>
+            <li><code>path</code>: To show the full path of ancestor sections in the section label, set the path to `true`. The default value is `false`.</li>
             <li><code>number</code>: By default, sections have a fixed name (value `false`). Alternatively, you can automatically add a number (value `numeric`) after the prefix or count by letters (value `alphabetic`).</li>
             <li><code>scoped</code>: By default, the number is based on all sections in the article (value `false`). Alternatively, you can limit counting to the sectiontype (value `true`).</li>
-            <li><code>options</code>: You can provide a list of names to select from by setting the `options` key to a propertytype. This will not link the section to the property. In consequence, the section name stays as is even if the property is updated later. To explicitly link a property to the section, configure an item within the section. To use the value of such a property as section name, set the format of the item's property field to `sectionname`.
+            <li><code>options</code>: You can provide a list of names to choose from by setting the `options` key
+                to the name of a property type. To use the value of a property
+                as the section name, set the format of the item's property field to `sectionname`.
+                However, this will not link the section to the property.
+                Consequently, the section name will not change if the property is updated later. To link a property
+                to the section explicitly, configure an item within the section.
             </li>
           </ul>
         </td>
@@ -374,7 +461,7 @@ A section groups the items of an article. Each section has a name and contains a
         <td>display</td>
         <td>Optional. Display options for a section:
           <ul><li>Use `false` to hide a section.</li>
-            <li>Set to `empty`to hide the section content, but keep the section in the visible hierarchy.</li>
+            <li>Set to `empty` to hide the section content but keep the section in the visible hierarchy.</li>
             <li>Put emphasis on a section by setting the display key to `highlight`.</li>
             <li>Dim the section by setting the display key to `addendum`.</li>
           </ul>
@@ -395,6 +482,97 @@ A section groups the items of an article. Each section has a name and contains a
       <tr>
         <td>help</td>
         <td>By default, a help key is made up of the article type and the section type. It is generated for each section according to the following pattern: <code>articletype-&lt;type&gt;-sectiontype-&lt;type&gt;</code>. Example: <code>articletype-epi-article-sectiontype-images</code>. The help key is used to look up pages in the wiki by the IRI fragment of wiki pages. To use a specific wiki page with another IRI or the same page for different section types, provide the wiki page IRI fragment in the `help` key.</td>
+      </tr>
+    </tbody>
+  </table>
+</figure>
+
+## Fields available in a section
+
+<figure class="table">
+  <table>
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Description</th>
+        <th>Formats</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>name</td>
+        <td>Short name or number of the section, usually automatically handled.</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
+      </tr>
+      <tr>
+        <td>alias</td>
+        <td>An alternative name of the section, usually used to override automatic naming.</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
+      </tr>
+      <tr>
+        <td>number</td>
+        <td>The number of the section.</td>
+        <td>Reserved: number.</td>
+      </tr>
+      <tr>
+        <td>sortno</td>
+        <td>The position of the section within its article.</td>
+        <td>Reserved: number.</td>
+      </tr>
+      <tr>
+        <td>comment</td>
+        <td>Contains personal notes about the section,.</td>
+        <td>Reserved: text. Max. 16,777,215 characters.</td>
+      </tr>
+      <tr>
+        <td>layout_cols</td>
+        <td>Number of grid columns, used to position items with their pos_x field.</td>
+        <td>Reserved: number.</td>
+      </tr>
+      <tr>
+        <td>layout_rows</td>
+        <td>Number of grid rows, used to position items with their pos_y field.</td>
+        <td>Reserved: number.</td>
+      </tr>
+      <tr>
+        <td>articles_id</td>
+        <td>ID field of the article that contains the section.</td>
+        <td>Reserved: id.</td>
+      </tr>
+      <tr>
+        <td>norm_iri</td>
+        <td>Text field. Contains the IRI fragment of the article.</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
+      </tr>
+      <tr>
+        <td>published</td>
+        <td>Publication status. 0 = drafted, 1= in progress, 2 = complete, 3= published,  4 = searchable.</td>
+        <td>Reserved: select.</td>
+      </tr>
+      <tr>
+        <td>created</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of row creation.</td>
+      </tr>
+      <tr>
+        <td>modified</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of the last modification.</td>
+      </tr>
+      <tr>
+        <td>created_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who created the row.</td>
+      </tr>
+      <tr>
+        <td>modified_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who last modified the row.</td>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>Reserved: id.</td>
+        <td>ID of the row.</td>
       </tr>
     </tbody>
   </table>
@@ -566,6 +744,9 @@ The `itemtypes` key contains a keyed list of item type configuration objects. Yo
 **Thumbnail widget**
 
 Given you have configured item types containing images, you can display a thumbnail list preceding the item table.
+You can enlarge the images by clicking a thumbnail. Optionally, tThe image viewer can be used to create image annotations,
+i.e. draw rectangles and polygons on the image.
+
 The image file name or URL must be stored in the `file_name` field of an item.
 Example configuration (the `widgets` key is part of the section view configuration object, see above):
 
@@ -599,12 +780,24 @@ The thumbs widget is configured using the following keys:
         <td>Boolean. Defines whether clicking on the image opens the image viewer.</td>
       </tr>
       <tr>
+        <td>size</td>
+        <td>The thumbnail size, one of 'small', 'medium' or 'large'.</td>
+      </tr>
+      <tr>
         <td>fields</td>
         <td>A list of item field names that provide data to be displayed along the thumbnail.</td>
       </tr>
       <tr>
-        <td>size</td>
-        <td>The thumbnail size, one of 'small', 'medium' or 'large'.</td>
+        <td>itemtype</td>
+        <td>Only images in items of this type are included in the widget.</td>
+      </tr>
+      <tr>
+        <td>annotype</td>
+        <td>Set to an item type to enable image annotations.
+            In the item type, the two fields `file` (set its  format key to `file`) and `content` (omit its format key) need to be configured.
+            In the annotation mode of the image viewer, for the specifi image,
+            an additional annotation item will be created. If it already exists, it will be updated.
+        </td>
       </tr>
       <tr>
         <td>property</td>
@@ -659,7 +852,10 @@ and whether additional functionality (file metadata transfer, geocoding, externa
       <tr>
         <td>display</td>
         <td>Optional. Display options for the item:
-          <ul><li>false: Always hide the item on the frontend.</li>
+          <ul><li>false: Always hide the item on the frontend.
+                  In tables, the item is contained in the output but invisible.
+                  This option, for example, is used for hide image annotation items.
+            </li>
             <li>highlight: Highlight the item (i.e. with a background color).</li>
             <li>addendum: Dim the item (i.e. using a smaller font size).</li>
             <li>more: Tables can grow wide when using the section table template. A more button provides decoupling the item to show all fields vertically in the sidebar or a popup.</li>
@@ -716,7 +912,9 @@ and whether additional functionality (file metadata transfer, geocoding, externa
 
 ## Fields available in an item
 
-Each item contains one data snippet of an article. The items provide several fields, for example, to represent images, annotated text or references to structured properties. The fields typically cover the following use cases:
+Each item contains one data snippet of an article.
+The items provide several fields, for example, to represent images, annotated text or references to structured properties.
+The fields typically cover the following use cases:
 
 - Text and translations including annotations
 - Source information
@@ -729,11 +927,18 @@ Each item contains one data snippet of an article. The items provide several fie
 - Geographic locations in latitude using longitude values
 - Natural-language datings
 
-Although you can use all the different fields in a single item at the same time to represent complex data, it is advised to restrict each item to one proposition that is as simple as possible. For example, store the text to be analysed in one item type and use further items to link the case to properties in a category system. See below for options to generate more complex compound data representations.
+Although you can use all the different fields in a single item at the same time to represent complex data,
+it is advised to restrict each item to one proposition that is as simple as possible. F
+or example, store the text to be analysed in one item type and use further items to link the case to properties in a category system.
+See below for options to generate more complex compound data representations.
 
-Some of the field keys used in the item type field configuration do not directly correspond to the fields in the database. Rather they identify a field bundle. For example, the `date` key bundles the database fields `date_value`, `date_sort`, `date_start` and `date_end`. While a human readable date string (e.g. "13.Jh.") is stored int the `date_value` field when editing an article, the date string is automatically parsed by Epigraf to generate a sort string and to extract a range of years for filter function.
+Some of the field keys used in the item type field configuration do not directly correspond to the fields in the database.
+Rather they identify a field bundle. For example, the `date` key bundles the database fields `date_value`, `date_sort`, `date_start` and `date_end`.
+While a human-readable date string (e.g. "13.Jh.") is stored in the `date_value` field when editing an article,
+the date string is automatically parsed by Epigraf to generate a sort string and to extract a range of years for filter function.
 
-The following field keys are available in item fields configuration objects:
+While you can change the labels for all fields, you can only change the data types for customizable fields.
+Refer to the `format` column in the table below to determine whether a field is reserved or customizable.
 
 <figure class="table">
   <table>
@@ -741,6 +946,7 @@ The following field keys are available in item fields configuration objects:
       <tr>
         <th>Key</th>
         <th>Description</th>
+        <th>Formats</th>
         <th>Database Fields</th>
       </tr>
     </thead>
@@ -748,97 +954,146 @@ The following field keys are available in item fields configuration objects:
       <tr>
         <td>sortno</td>
         <td>Number field. Used for defining a fixed item order within a section.</td>
+        <td>Reserved: number.</td>
         <td>sortno</td>
       </tr>
       <tr>
         <td>itemgroup</td>
         <td>Text field. Used to group items that belong together (see below).</td>
+        <td>Reserved: text. Max. 100 characters.</td>
         <td>itemgroup</td>
-      </tr>
-      <tr>
-        <td>property</td>
-        <td>ID field. Used to refer to a property in the categories, for example to a location property. In addition, the property type (i.e. the used category system) must be specified in the `types` key of the field object.</td>
-        <td>properties_id</td>
       </tr>
       <tr>
         <td>flagged</td>
         <td>0/1 flag. Used to flag content, for example, to indicate that images are intended for publication.</td>
+        <td>Reserved: check.</td>
         <td>flagged</td>
       </tr>
       <tr>
         <td>value</td>
-        <td>Text field. Typically, a single number or a single text value, for example the height of an object. Can contain JSON or XML.</td>
+        <td>Typically, a single number or a single text value, for example the height of an object. Can contain JSON or XML.</td>
+        <td>Customizable: text, xml, json. Max. 1,500 characters.</td>
         <td>value</td>
       </tr>
       <tr>
         <td>content</td>
-        <td>Text field. Typically, the main content. Can contain JSON or XML.</td>
+        <td>Typically, the main content.</td>
+        <td>Customizable: text, xml, json. Max. 16,777,215 characters.</td>
         <td>content</td>
       </tr>
       <tr>
         <td>translation</td>
-        <td>Text field. Typically, the translation of data the content field. Can contain JSON or XML.</td>
+        <td>Typically, the translation of data the content field.</td>
+        <td>Customizable: text, xml, json. Max. 16,777,215 characters.</td>
         <td>translation</td>
       </tr>
       <tr>
         <td>file</td>
         <td>File reference. In the database, the fields file_path (folder of the file), file_name (name of the file), file_online (0/1 flag, whether the file is located on the server or only locally) and file_source (original directory of the file before uploading to Epigraf) are used. You should define a base directory where the file path starts in the `fileroot` key of the field configuration object.</td>
+        <td>Reserved: file.</td>
         <td>file_name, file_path, file_online, file_source</td>
       </tr>
       <tr>
         <td>file_meta</td>
         <td>Text field. Used for storing metadata, typically configured as a JSON field with keys for license, usage rights, creator name etc.</td>
+        <td>Customizable: text, xml, json. Max. 65,535 characters.</td>
         <td>file_meta</td>
       </tr>
       <tr>
         <td>file_copyright</td>
         <td>Deprecated.</td>
+        <td>Customizable: text, xml, json. Max. 65,535 characters.</td>
         <td>file_copyright</td>
       </tr>
       <tr>
         <td>pos</td>
         <td>Number field. Items can be arranged in two- or three-dimensional space. The horizontal and vertical extent of space is stored in the item's section in the `layout_cols` and `layout_rows` fields. The x- and y-axes represent the positions in a flat  grid. The z-axis either indicates a third dimension or simply the order of items within a cell.</td>
+        <td>Reserved: numbers.</td>
         <td>pos_x, pos_y, pos_z</td>
       </tr>
       <tr>
         <td>date</td>
         <td>Dating field. In the database, the fields date_value stores the natural language phrase, e.g. "E. 15.Jh.". From this string, a key for chronological sorting and the range in years covering the period are derived. You can use the derived values, for example, in the article column setup or for later analyses.</td>
+        <td>Reserved: date.</td>
         <td>date_value, date_sort, date_start, date_end</td>
       </tr>
       <tr>
         <td>date_add</td>
         <td>Text field. Additional information on the dating, for example the method used for dating.</td>
+        <td>Customizable: text, xml, json. Max. 65,535 characters.</td>
         <td>date_add</td>
       </tr>
       <tr>
         <td>source_autopsy</td>
         <td>0/1 flag. Typically used to indicate whether the content was produced by the researcher. In the case of transcriptions, for example, it is used to indicate whether the transcription was written by the article author or is copied from another source.</td>
+        <td>Reserved: check.</td>
         <td>source_autopsy</td>
       </tr>
       <tr>
         <td>source_from</td>
         <td>Text field. Typically, contains a source reference for the content. In the case of copied transcriptions, for example, a reference to the source of the transcription.</td>
+        <td>Customizable: text, xml, json. Max. 65,535 characters.</td>
         <td>source_from</td>
       </tr>
       <tr>
         <td>source_addition</td>
         <td>Text field. Typically, contains further information on the source, such as the page numbers within a book.</td>
+        <td>Customizable: text, xml, json. Max. 65,535 characters.</td>
         <td>source_addition</td>
+      </tr>
+      <tr>
+        <td>property</td>
+        <td>ID field. Used to refer to a property in the categories, for example to a location property. In addition, the property type (i.e. the used category system) must be specified in the `types` key of the field object.</td>
+        <td>Reserved: id.</td>
+        <td>properties_id</td>
       </tr>
       <tr>
         <td>links</td>
         <td>Polymorphic ID field. Links an item to another section or another item within the article. In the database, the fields links_tab and links_id are used to hold the target table and entity ID. (The additional fields links_field and links_tagid are not currently used; they may be used in the future for referring to specific target fields and target tags within an entity).</td>
+        <td>Reserved: record.</td>
         <td>links_tab, links_to, links_field, links_tagid</td>
       </tr>
       <tr>
         <td>norm_iri</td>
         <td>Text field. Contains the IRI fragment of the item.</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
         <td>norm_iri</td>
       </tr>
       <tr>
         <td>published</td>
         <td>Publication status. 0 = drafted, 1= in progress, 2 = complete, 3= published,  4 = searchable.</td>
+        <td>Reserved: select.</td>
         <td>published</td>
+      </tr>
+      <tr>
+        <td>created</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of row creation.</td>
+        <td>created</td>
+      </tr>
+      <tr>
+        <td>modified</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of the last modification.</td>
+        <td>modified</td>
+      </tr>
+      <tr>
+        <td>created_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who created the row.</td>
+        <td>created_by</td>
+      </tr>
+      <tr>
+        <td>modified_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who last modified the row.</td>
+        <td>modified_by</td>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>Reserved: id.</td>
+        <td>ID of the row.</td>
+        <td>id</td>
       </tr>
     </tbody>
   </table>
@@ -851,8 +1106,7 @@ In case the fields are not sufficient, there are four mechanisms for modeling mo
 - Deepen the content fields: Text fields can hold JSON data to extend the available fields. You can use dot separated keys to identify nested data and to generate input fields for the single JSON components.
 - Use annotation markup: Text fields can hold XML with arbitrary structures. The user interface in XML fields is configured by the annotations (links and footnotes types).
 - Group by sections: Sections are a means to structure the data within an article. All items within a section are considered to belong together.
-- Group items: Multiple items within a section can be grouped together. Instead of thinking about all items in a section
-as a unit, or you use the `itemgroup` field of an item with a common value for all items forming a logical unit.
+- Group items: Multiple items within a section can be grouped together. Rather than considering all items in a section as a unit, use the `itemgroup` field of an item with a common value for all items forming a logical unit.
 
-Deepening the content fields using JSON or XML or building item groups allows for representing all data structures you can think of. In theory, there are no limits of what kind of data can be stored in Epigraf. Nevertheless, when using a database system such as Epigraf, the aim is to manage structured data in a way that is future-proof. The Relational Article Model of Epigraf has been thouroughly developed and tested in research projects.  It is advised to follow the concepts and start as simple as possible. Try to think of your data as a list of items where items belonging together are grouped by a section. This makes sure you come up with a versatile and easy to process data structure that can be used for both, all kinds of data analyses and all kinds of published documents and archives.
+Deepening the content fields using JSON or XML or building item groups allows for representing all data structures you can think of. In theory, there are no limits of what kind of data can be stored in Epigraf. Nevertheless, when using a database system such as Epigraf, the aim is to manage structured data in a way that is future-proof. The Relational Article Model of Epigraf has been thouroughly developed and tested in research projects.  It is advised to follow the concepts and start as simple as possible. Try to think of your data as a list of items where items belonging together are grouped by a section. This makes sure you come up with a versatile and easy-to-process data structure that can be used for both, all kinds of data analyses and all kinds of published documents and archives.
 

@@ -199,7 +199,7 @@ class NotesControllerTest extends EpiTestCase
 
         $this->get('epi/projects/notes/unlock/2');
         $actual = json_decode($this->_response->getBody(), true);
-        $expected = ['status' => ['success' => false, 'message' => 'Could not unlock the entity']];
+        $expected = ['status' => ['success' => false, 'message' => 'Could not unlock the entity.']];
         $this->assertEquals($expected, $actual);
 
         $this->get('epi/projects/notes/unlock/2?force=1');

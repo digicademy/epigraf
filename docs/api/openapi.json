@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Epigraf API",
+        "description": "API for Epigraf",
+        "version": "0.0.9"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.3",
+            "description": "Local server"
+        }
+    ],
+    "paths": {
+        "/epi/{database}/projects/index.json": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get a collection of projects",
+                "description": "Retrieve list of projects",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/DatabaseParam"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {
+            "DatabaseParam": {
+                "name": "database",
+                "in": "path",
+                "description": "Database name",
+                "required": true,
+                "schema": {
+                    "type": "string",
+                    "example": "movies"
+                }
+            }
+        },
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "Token",
+                "description": "Enter your token (it will be sent as: Authorization: Bearer <token>)"
+            },
+            "QueryToken": {
+                "type": "apiKey",
+                "description": "Fallback only.",
+                "name": "token",
+                "in": "query"
+            }
+        }
+    },
+    "security": [
+        {
+            "BearerAuth": []
+        },
+        {
+            "QueryToken": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "Projects",
+            "description": "Projects"
+        }
+    ]
+}

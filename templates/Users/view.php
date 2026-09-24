@@ -122,7 +122,7 @@ use App\Utilities\Converters\Attributes;
             [
                 'entity_type' => __('Entity Type'),
                 'entity_name' => __('Entity Name'),
-                'entity_id' => __('Entity Id'),
+                'entity_id' => __('Entity ID'),
                 'permission_name' => __('Endpoint'),
                 'user_role' => __('User role'),
                 'user_request' => __('Request'),

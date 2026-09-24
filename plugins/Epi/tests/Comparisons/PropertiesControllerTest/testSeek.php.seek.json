@@ -1,0 +1,89 @@
+[
+    {
+        "class": "node item node-cursor item-level-0 item-haschildren item-first",
+        "data-list-itemof": "epi_properties",
+        "data-id": "10",
+        "data-parent": "",
+        "data-tree-parent": "",
+        "data-level": "0",
+        "data-cursor-id": "10",
+        "data-cursor-dir": "prev",
+        "data-cursor-child": "",
+        "data-cursor-collapsed": "",
+        "data-cursor-action": "\/epi\/projects\/properties\/index\/literature?limit=2&cursor=10&direction=desc&children=0"
+    },
+    {
+        "class": "node item item-level-0 item-haschildren item-first",
+        "data-list-itemof": "epi_properties",
+        "data-id": "10",
+        "data-parent": "",
+        "data-tree-parent": "",
+        "data-level": "0",
+        "data-preceding": "1550"
+    },
+    {
+        "class": "node item node-cursor item-level-1 item-main item-nochildren item-first",
+        "data-list-itemof": "epi_properties",
+        "data-id": "9",
+        "data-parent": "10",
+        "data-tree-parent": "10",
+        "data-level": "1",
+        "data-cursor-id": "9",
+        "data-cursor-dir": "prev",
+        "data-cursor-child": "",
+        "data-cursor-collapsed": "",
+        "data-cursor-action": "\/epi\/projects\/properties\/index\/literature?limit=2&cursor=9&direction=desc&children=0"
+    },
+    {
+        "class": "node item item-level-1 item-main item-nochildren item-first",
+        "data-list-itemof": "epi_properties",
+        "data-id": "9",
+        "data-parent": "10",
+        "data-tree-parent": "10",
+        "data-level": "1"
+    },
+    {
+        "class": "node item item-level-1 item-main item-nochildren item-last reference_to row-selected selected",
+        "data-list-itemof": "epi_properties",
+        "data-id": "8",
+        "data-parent": "10",
+        "data-tree-parent": "10",
+        "data-level": "1",
+        "data-preceding": "9"
+    },
+    {
+        "class": "node item item-level-0 item-nochildren item-last",
+        "data-list-itemof": "epi_properties",
+        "data-id": "815",
+        "data-parent": "",
+        "data-tree-parent": "",
+        "data-level": "0",
+        "data-preceding": "10"
+    },
+    {
+        "class": "node item node-cursor item-level-1 item-main item-nochildren item-last",
+        "data-list-itemof": "epi_properties",
+        "data-id": "815",
+        "data-parent": "815",
+        "data-tree-parent": "815",
+        "data-level": "1",
+        "data-cursor-id": "815",
+        "data-cursor-dir": "next",
+        "data-cursor-child": "1",
+        "data-cursor-collapsed": "",
+        "data-cursor-action": "\/epi\/projects\/properties\/index\/literature?limit=2&cursor=815&direction=asc&children=1"
+    },
+    {
+        "class": "node item node-cursor item-level-0 item-nochildren item-last",
+        "data-list-itemof": "epi_properties",
+        "data-id": "815",
+        "data-parent": "",
+        "data-tree-parent": "",
+        "data-level": "0",
+        "data-cursor-id": "815",
+        "data-cursor-dir": "next",
+        "data-cursor-child": "",
+        "data-cursor-collapsed": "",
+        "data-cursor-action": "\/epi\/projects\/properties\/index\/literature?limit=2&cursor=815&direction=asc&children=0"
+    }
+]

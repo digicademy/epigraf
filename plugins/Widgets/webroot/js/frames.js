@@ -48,6 +48,10 @@ import {BaseForm, BaseModel} from '/js/base.js';
  * - hideButton()
  * - updateNavigation()
  *
+ * @listens app:show:message
+ * @listens app:hide:message
+ * @listens epi:load:content
+ * @listens epi:open:details
  */
 export class BaseFrame extends BaseForm {
 
@@ -78,7 +82,6 @@ export class BaseFrame extends BaseForm {
         this.listenEvent(this.widgetElement, 'epi:load:content', event => this.onLoadContent(event));
         this.listenEvent(this.widgetElement,'epi:open:details', event => this.onOpenDetails(event));
     }
-
 
     /**
      * Show content
@@ -317,7 +320,11 @@ export class BaseFrame extends BaseForm {
                                     self.unlockForm(form.dataset.deleteUrl, true);
                                     event.preventDefault();
                                 } else if (role === 'cancel') {
-                                    self.unlockForm(form.dataset.cancelUrl, true);
+                                    self.confirmCancel().then((confirmed) => {
+                                        if (confirmed) {
+                                            self.unlockForm(form.dataset.cancelUrl, true);
+                                        }
+                                    });
                                     event.preventDefault();
                                 }
                             } else if (role === 'cancel') {
@@ -831,12 +838,15 @@ export class BaseFrame extends BaseForm {
 /**
  * Main content
  *
+ * @listens app:show:message
+ * @listens app:hide:message
  * @listens epi:open:details
+ * @listens epi:load:content
+ * @listens epi:change:form
  */
 export class MainFrame extends BaseFrame {
 
-
-    constructor(options) {
+    constructor(element, name, parent) {
 
         const wrapper = document.querySelector('.content-content');
         super(wrapper, 'content-pane');
@@ -861,6 +871,7 @@ export class MainFrame extends BaseFrame {
      */
     initWidget() {
         this.currentUrl = window.location.toString();
+
         // TODO: Always use document in the main frame?
         this.listenEvent(this.widgetElement,'app:show:message', event => this.showMessage(event));
         this.listenEvent(this.widgetElement,'app:hide:message', event => this.hideMessage(event));
@@ -890,6 +901,7 @@ export class MainFrame extends BaseFrame {
      *
      * @param {string|URL} url
      * @param {Object} options
+     * @fires 'app:open:dialog'
      */
     loadUrl(url, options = {}) {
         if (options.target === 'external') {
@@ -1021,13 +1033,13 @@ export class TabFrame extends BaseFrame {
         //       - sidebar is closed
         //       - tab is not visible
         //       Otherwise delay the loading of the loader
-        //if (!App.sidebarright.isVisible()) {
+        //if (!App.sidebarRight.isVisible()) {
             this.clearWindow();
         //}
 
         // Open
         this.isClosing = false;
-        App.sidebarright.showSidebar(force);
+        App.sidebarRight.showSidebar(force);
 
         /**
          * @type {Tabsheets}
@@ -1066,7 +1078,7 @@ export class TabFrame extends BaseFrame {
 
 
         this.clearData();
-        App.sidebarright.hideSidebar();
+        App.sidebarRight.hideSidebar();
 
         if (this.listenerReload) {
             this.unlistenEvent(this.widgetElement, 'epi:reload:page', this.listenerReload);
@@ -1365,6 +1377,8 @@ export class PopupWindow extends BaseFrame {
     }
 
     /**
+     * Open a popup
+     *
      * @listens epi:reload:page
      */
     openWindow() {
@@ -1556,6 +1570,15 @@ export class PopupWindow extends BaseFrame {
     }
 
     /**
+     * Form change handler
+     *
+     * @param {CustomEvent} event
+     */
+    onChangeForm(event) {
+        event.stopPropagation();
+    }
+
+    /**
      * Open a detail frame: popup, sidebar, new browser tab
      *
      * @param {CustomEvent} event
@@ -1667,8 +1690,8 @@ export class PopupWindow extends BaseFrame {
  */
 export class ConfirmWindow extends PopupWindow {
 
-    constructor(options) {
-        super(options);
+    constructor(element, name, parent) {
+        super();
 
         this.defaults = {
             title: "Confirm",
@@ -2272,8 +2295,6 @@ export class Overlay extends BaseModel {
 
 
 }
-
-
 
 window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['frame'] = TabFrame;

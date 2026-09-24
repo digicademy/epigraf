@@ -57,7 +57,8 @@ class LlmService extends BaseService
                 'headers' => [
                     'Accept' => 'application/json',
                     'Authorization' => 'Bearer ' . ($this->config['access_token'] ?? '')
-                ]
+                ],
+                'timeout' => $this->config['timeout'] ?? 15
             ]
         );
 

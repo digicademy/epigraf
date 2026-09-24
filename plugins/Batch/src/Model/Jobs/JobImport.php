@@ -64,4 +64,13 @@ class JobImport extends Job
         $this->_index =  ['sources' => [], 'targets' => []];
     }
 
+
+    protected function _getOptions()
+    {
+        return [
+            'versions' => __('Init versioning'),
+            'tree' => __('Recover trees'),
+            'new' => __('Create new entities')
+        ];
+    }
 }

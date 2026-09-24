@@ -46,6 +46,6 @@
     $this->Link->addCreateAction(__('Create user'));
     $this->Link->addAction(__('Permissions'),	['controller'=>'permissions','action' => 'index']);
     $this->Link->addAction(__('Endpoints'),	['controller'=>'permissions','action' => 'endpoints']);
-    $this->Link->downloadButtons (null, 'id', 'users');
+    $this->Link->downloadButtons(['parameter' => 'id', 'datalist' => 'users']);
 ?>
 

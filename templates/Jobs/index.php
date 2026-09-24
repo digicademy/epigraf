@@ -35,5 +35,5 @@
     $this->Link->beginActionGroup ('bottom');
 
     $this->Link->addCounter();
-    $this->Link->downloadButtons (null, 'id', 'jobs');
+    $this->Link->downloadButtons(['parameter' => 'id', 'datalist' => 'jobs']);
 ?>

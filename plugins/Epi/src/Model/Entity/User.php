@@ -92,7 +92,9 @@ class User extends RootEntity
      */
     public static $_fields_ids = ['id'];
 
+    // TODO: Why norm_iri, this looks circular?
     protected $_field_iri = 'norm_iri';
+    protected $_prefix_iri = true;
 
     protected $_fields_formats = [
         'id' => 'id',

@@ -28,7 +28,6 @@ use Cake\Routing\Router;
  *
  * # Virtual fields
  * @property string $captionPath
- * @property string $shortname
  * @property string $fullName
  * @property string $internalUrl
  * @property string $externalUrl
@@ -146,8 +145,6 @@ class Project extends RootEntity
         'description' => 'json'
     ];
 
-    protected $_field_iri = FIELD_PROJECTS_SIGNATURE;
-
     /**
      * Get short name of project
      *
@@ -155,10 +152,7 @@ class Project extends RootEntity
      */
     protected function _getCaptionPath()
     {
-        //return implode(' - ',array_filter([$this->signature,$this->name]));
-        $label = $this->name . ' [' . $this->signature . ']';
-
-        return $label;
+        return $this->name . ' [' . $this->signature . ']';
     }
 
     protected function _getFullName()
@@ -235,8 +229,8 @@ class Project extends RootEntity
 
             'norm_iri' => [
                 'caption' => __('IRI fragment'),
-                'help' => __('In combination with the project type, '
-                    . ' identifies the project within the universe and should not be '
+                'help' => __('In combination with the project type,'
+                    . ' identifies the project within the universe and should not be'
                     . ' changed later. Usually the same as the signature.'),
                 'action' => ['edit']
             ],

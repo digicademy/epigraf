@@ -26,14 +26,13 @@ class TaskTransfer extends TaskImport
      * @return int
      * @throws Exception
      */
-    protected function _getLimit($preview = false)
+    protected function getLimit($preview = false)
     {
         if ($this->job->config['table'] === 'articles') {
             return $preview ? 1: 20;
         }
-        else {
-            return $this->job->limit;
-        }
+
+        return parent::getLimit();
     }
 
 
@@ -52,7 +51,7 @@ class TaskTransfer extends TaskImport
         $model = $this->job->getModel($this->job->config['table'], $databank->plugin);
 
         // Recalculate offset from page
-        $options['limit'] = $this->_getLimit($preview);
+        $options['limit'] = $this->getLimit($preview);
         $options['page'] = $options['page'] ?? 1;
         $options['offset'] = ($options['limit']) * ((int)$options['page'] - 1);
 

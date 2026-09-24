@@ -110,7 +110,7 @@ trait FilesTableTrait
     }
 
     /**
-     * Find properties by query parameters
+     * Find properties based on parsed request parameters
      *
      * @param Query $query
      * @param array $options

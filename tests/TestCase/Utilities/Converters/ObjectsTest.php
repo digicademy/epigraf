@@ -563,6 +563,17 @@ class ObjectsTest extends AppTestCase
         );
 
         $this->assertEquals(
+            2.1,
+            $testArticle->getValueNested('sections.0.items.0.geo.lat')
+        );
+
+        $this->assertEquals(
+            [2.1, 4.2, 2.1, 4.2],
+            $testArticle->getValueNested('sections.*.items.*.geo.lat')
+        );
+
+
+        $this->assertEquals(
             null,
             $testArticle->sections[0]->items[0]->getValueNested('geo.type', ['format' => 'html'])
         );

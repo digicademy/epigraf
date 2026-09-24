@@ -70,7 +70,8 @@ abstract class BaseService {
             'headers' => [
                 'Accept' => $this->config['accept'] ?? $this->config['Accept'],
                 'User-Agent' => $this->config['useragent'] ?? $this->config['User-Agent']
-            ]
+            ],
+            'timeout' => $this->config['timeout'] ?? 7
         ]);
     }
 

@@ -5,6 +5,24 @@
     "articles-1-before": {
         "modified_by": 2
     },
+    "footnotes-5-after": {
+        "modified_by": 4
+    },
+    "footnotes-5-before": {
+        "modified_by": 2
+    },
+    "footnotes-6-after": {
+        "modified_by": 4
+    },
+    "footnotes-6-before": {
+        "modified_by": 2
+    },
+    "footnotes-83-after": {
+        "modified_by": 4
+    },
+    "footnotes-83-before": {
+        "modified_by": 2
+    },
     "items-1-after": {
         "modified_by": 4
     },
@@ -60,20 +78,16 @@
         "modified_by": 2
     },
     "items-33-after": {
-        "modified_by": 4,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
+        "modified_by": 4
     },
     "items-33-before": {
-        "modified_by": 2,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
+        "modified_by": 2
     },
     "items-35-after": {
-        "modified_by": 4,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}"
+        "modified_by": 4
     },
     "items-35-before": {
-        "modified_by": 2,
-        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}"
+        "modified_by": 2
     },
     "items-37-after": {
         "modified_by": 4
@@ -98,42 +112,6 @@
     },
     "items-46-before": {
         "modified_by": 2
-    },
-    "items-55-after": {
-        "modified_by": 4
-    },
-    "items-55-before": {
-        "modified_by": 1
-    },
-    "items-56-after": {
-        "modified_by": 4
-    },
-    "items-56-before": {
-        "modified_by": 1
-    },
-    "items-59-after": {
-        "modified_by": 4
-    },
-    "items-59-before": {
-        "modified_by": 1
-    },
-    "items-60-after": {
-        "modified_by": 4
-    },
-    "items-60-before": {
-        "modified_by": 1
-    },
-    "items-68-after": {
-        "modified_by": 4
-    },
-    "items-68-before": {
-        "modified_by": 1
-    },
-    "items-69-after": {
-        "modified_by": 4
-    },
-    "items-69-before": {
-        "modified_by": 1
     },
     "items-749-after": {
         "modified_by": 4
@@ -189,41 +167,41 @@
     "items-769-before": {
         "modified_by": 2
     },
-    "items-79-after": {
+    "items-939-after": {
         "modified_by": 4
     },
-    "items-79-before": {
-        "modified_by": 1
+    "items-939-before": {
+        "modified_by": 2
     },
-    "items-80-after": {
+    "items-941-after": {
         "modified_by": 4
     },
-    "items-80-before": {
-        "modified_by": 1
+    "items-941-before": {
+        "modified_by": 2
     },
-    "items-93-after": {
+    "items-943-after": {
         "modified_by": 4
     },
-    "items-93-before": {
-        "modified_by": 1
+    "items-943-before": {
+        "modified_by": 2
     },
-    "items-94-after": {
+    "links-516-after": {
         "modified_by": 4
     },
-    "items-94-before": {
-        "modified_by": 1
+    "links-516-before": {
+        "modified_by": 2
     },
-    "items-97-after": {
+    "links-518-after": {
         "modified_by": 4
     },
-    "items-97-before": {
-        "modified_by": 1
+    "links-518-before": {
+        "modified_by": 2
     },
-    "items-98-after": {
+    "links-520-after": {
         "modified_by": 4
     },
-    "items-98-before": {
-        "modified_by": 1
+    "links-520-before": {
+        "modified_by": 2
     },
     "sections-1-after": {
         "modified_by": 4

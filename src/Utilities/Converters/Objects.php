@@ -18,7 +18,7 @@ use Cake\Cache\InvalidArgumentException;
 use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
-use Epi\Model\Entity\BaseEntity;
+use App\Model\Entity\BaseEntity;
 
 class Objects extends Hash
 {
@@ -32,12 +32,13 @@ class Objects extends Hash
      *       Implement a restricted version that only allows access to properties
      *       explicitly permitted in the entities.
      *
-     * @param \ArrayAccess|array $data Array of data or object implementing
-     *   \ArrayAccess interface to operate on.
+     * @param array|\ArrayAccess $data Array of data or object implementing
+    *                                 \ArrayAccess interface to operate on.
      * @param array<string>|string|int|null $path The path being searched for. Either a dot
      *   separated string, or an array of path segments.
      * @param mixed $default The return value when the path does not exist
-     * @param array $options Not used yet. Planned to use it for configuring virtual property access. Still undecided if it will be needed.
+     * @param array $options If the format key is not empty and the n-1 extracted part is an BaseEntity,
+     *                       its getValueFormatted() method will be called to get the last value.
      * @return mixed The value fetched from the array, or null.
      * @throws \InvalidArgumentException
      * @link https://book.cakephp.org/4/en/core-libraries/hash.html#Cake\Utility\Hash::get
@@ -69,8 +70,14 @@ class Objects extends Hash
         }
 
 
-        foreach ($parts as $key) {
-            if ((is_array($data) || $data instanceof ArrayAccess) && isset($data[$key])) {
+        $lastIdx = count($parts) - 1;
+        foreach ($parts as $idx => $key) {
+
+            if (($idx === $lastIdx) && ($data instanceof BaseEntity) && !empty($options['format'])) {
+                $data = $data->getValueFormatted($key, $options);
+            }
+
+            else if ((is_array($data) || $data instanceof ArrayAccess) && isset($data[$key])) {
                 $data = $data[$key];
             }
             elseif (is_object($data)) {
@@ -113,7 +120,7 @@ class Objects extends Hash
      * - `{n}.User[username=/^paul/]` Get User elements with username matching `^paul`.
      * - `{n}.User[id=1].name` Get the Users name with id matching `1`.
      *
-     * @param array|\ArrayAccess $data The data to extract from.
+     * @param array|\ArrayAccess|BaseEntity $data The data to extract from.
      * @param string $path The path to extract.
      * @param boolean $toArray Whether to convert result objects to arrays
      * @param array $options Not used
@@ -140,7 +147,7 @@ class Objects extends Hash
 
         // Simple paths.
         if (!preg_match('/[*{\[]/', $path)) {
-            $data = static::get($data, $path);
+            $data = static::get($data, $path, null, $options);
             if ($data !== null && !(is_array($data) || $data instanceof ArrayAccess)) {
                 return $toArray ? [$data] : $data;
             }
@@ -184,8 +191,8 @@ class Objects extends Hash
                     $token = '{*}';
                 }
 
+                // Skip unpublished entities
                 if (($item instanceof BaseEntity) && !$item->getEntityIsVisible($options)) {
-                    // Skip unpublished entities
                     continue;
                 }
 
@@ -285,13 +292,13 @@ class Objects extends Hash
         if (is_array($steps)) {
             return $steps;
         }
-        return Strings::tokenize($steps, '|', '\\');
+        return Strings::tokenize($steps, '|');
     }
 
     /**
      * Augment an extraction key to a column configuration array
      *
-     * The pattern is `<caption>=<key>|<aggregate>`.
+     * The pattern is `<caption>=<format>:<key>|<aggregate>`.
      *
      * Missing values will be replaced by the default configuration and the options if available.
      * The path elements take precedence over the default configuration,
@@ -471,14 +478,18 @@ class Objects extends Hash
      * Process values according to a list of processing instructions
      *
      * The following instructions are supported:
-     * - 'first': Return the first element of an array
-     * - 'last': Return the last element of an array
-     * - 'min': Return the minimum value of an array
-     * - 'max': Return the maximum value of an array
-     * - 'collapse': Flatten an array and return a comma-separated list of values
-     * - 'count': Return the number of elements in an array
-     * - 'split': Split string at new lines and return result as an array
-     * - 'filter': Return only the elements of an array matching a given pattern
+     * - 'add': Add values to an array. The values are extracted from the root object using the instruction options as path.
+     * - 'next': Coalesce, i.e. if the value is null, an empty array or an empty string, replace it with the value extracted from the root object using the instruction options as path.
+     * - 'first': Return the first element of an array.
+     * - 'last': Return the last element of an array.
+     * - 'min': Return the minimum value of an array.
+     * - 'max': Return the maximum value of an array.
+     * - 'collapse': Flatten an array and return a comma-separated list of values.
+     * - 'count': Return the number of elements in an array.
+     * - 'split': Split string at new lines and return result as an array.
+     * - 'filter': Return only the elements of an array matching a given regular expression.
+     *             If no regular expression is provided, return only the non-empty elements.
+     * - 'distinct': Return only the distinct values of an array.
      * - 'strip': Removes a pattern from a string. By default, all HTML tags from a string or an array of string are removed.
      *            Alternatively, provide a regex expression in the instruction options.
      * - 'trim': Trim a string. Be default, whitespace is removed from both ends.
@@ -486,17 +497,17 @@ class Objects extends Hash
      * - 'ltrunc': Remove a prefix from a string.
      *             The prefix is determined by the field value of the root object
      *             as defined in the step options.
-     * - 'json': Extract a json value or a value from a nested array
+     * - 'json': Extract a json value or a value from a nested array.
      * - 'padzero': Pad a number with zeros. The number of digits should be passed as parameter.
      *
      * @param mixed $value Input value
      * @param array $steps A list of processing instructions.
      *                     Each instruction is a string, optionally followed by a colon and options.
-     * @param bool $recursive Whether to process nested arrays
+     * @param bool $reduce Whether to process nested arrays by reducing them to a flat list.
      * @param mixed $root The root value of the current processing step
      * @return mixed
      */
-    public static function processValues($value, $steps = [], $recursive = true, $root = null)
+    public static function processValues($value, $steps = [], $reduce = true, $root = null)
     {
         foreach ($steps as $step) {
             $step = explode(':', $step, 2);
@@ -504,6 +515,16 @@ class Objects extends Hash
             $step = $step[0] ?? '';
 
             if (is_array($value)) {
+                if ($step === 'add') {
+                    $addValue = Objects::extract($root, $options, false);
+                    if (!is_array($addValue)) {
+                        $addValue = [$addValue];
+                    }
+                    if (!is_array($value)) {
+                        $value = [$value];
+                    }
+                    $value = array_merge($value, $addValue);
+                }
                 if ($step === 'first') {
                     $value = reset($value);
                 }
@@ -531,12 +552,26 @@ class Objects extends Hash
                     $value = count($value);
                 }
                 elseif($step === 'filter') {
-                    $value = array_filter($value, function ($elem) use ($options) {
-                        return preg_match("/$options/", $elem);
-                    });
+
+                    if ($options === '') {
+                        $value = array_filter($value, function ($elem) {
+                            return !Attributes::isBlank($elem);
+                        });
+                    } else {
+                        $value = array_filter($value, function ($elem) use ($options) {
+                            return preg_match("/$options/", $elem);
+                        });
+                    }
                 }
-                elseif ($recursive) {
-                    //$value = array_map(fn($x) => Objects::processValues($x, [$step]), $value);
+                elseif ($step === 'distinct') {
+                    $value = array_unique($value);
+                }
+                elseif ($step === 'next') {
+                    if ($value === []) {
+                        $value = Objects::extract($root, $options, false);
+                    }
+                }
+                elseif ($reduce) {
                     $value = array_reduce(
                         $value,
                         function ($carry, $x) use ($step) {
@@ -576,6 +611,12 @@ class Objects extends Hash
 
             elseif ($step === 'padzero') {
                 $value = str_pad($value, intval($options), '0', STR_PAD_LEFT);
+            }
+
+            elseif ($step === 'next') {
+                if (is_null($value) || ($value === '')) {
+                    $value = Objects::extract($root, $options, false);
+                }
             }
             elseif ($step === 'json') {
                 if (is_null($value) || $value === '') {

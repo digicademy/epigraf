@@ -20,10 +20,11 @@ import {BaseWidget} from '/js/base.js';
 export class HighlightText extends BaseWidget {
 
     /**
+     * Constructor
      *
-     * @param element
-     * @param name
-     * @param parent
+     * @param {HTMLElement} element
+     * @param {String} name
+     * @param {BaseWidget} parent
      * @listens epi:save:form
      */
     constructor(element, name, parent) {

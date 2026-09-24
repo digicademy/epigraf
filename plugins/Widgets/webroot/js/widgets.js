@@ -47,41 +47,32 @@ import Utils from '/js/utils.js';
  */
 window.App.initApp = function() {
 
-    if (!App.mainframe && (MainFrame !== undefined)) {
-        App.mainframe = new MainFrame();
-    }
+    // TODO: replace ToggleButtons by switch buttons
+    const componentMap = {
+        mainFrame:     MainFrame,
+        confirmWindow: ConfirmWindow,
+        switchButtons: SwitchButtons,
+        toggleButtons: ToggleButtons,
+        chooseButtons: ChooseButtons,
+        scrollSync:    ScrollSync,
+    };
 
-    if (!App.confirmWindow && (ConfirmWindow !== undefined)) {
-        App.confirmWindow = new ConfirmWindow();
-    }
-
-    // Switch buttons
-    if (typeof SwitchButtons === 'function') {
-        if (App.switchbuttons === undefined) {
-            App.switchbuttons = new SwitchButtons(document);
+    for (const [key, Ctor] of Object.entries(componentMap)) {
+        if (!App[key] && Ctor !== undefined) {
+            const component = new Ctor(document);
+            App[key] = component;
+            component.updateWidget();
         }
-    }
-
-    // Toggle buttons
-    // TODO: replace by switch buttons
-    if (typeof ToggleButtons === 'function') {
-        if (document.widgetToggleButtons === undefined) {
-            new ToggleButtons(document);
-        }
-    }
-
-    // File and folder chooser
-    new ChooseButtons(document, 'filename');
-
-    // Synchronized scrolling (layout.js)
-    if (!App.scrollsync && (ScrollSync !== undefined)) {
-        App.scrollsync = new ScrollSync();
     }
 
     //Sidebars (layout.js)
-    if (typeof ResizableSidebar === 'function') {
-        App.sidebarleft = new ResizableSidebar(document.querySelector('.sidebar-left'), 'left');
-        App.sidebarright = new ResizableSidebar(document.querySelector('.sidebar-right'), 'right');
+    // TODO: make dry, better attach to the DOM element instead of App?
+    if (!App.sidebarLeft && (ResizableSidebar !== undefined)) {
+        App.sidebarLeft = new ResizableSidebar(document.querySelector('.sidebar-left'), 'left');
+    }
+
+    if (!App.sidebarRight && (ResizableSidebar !== undefined)) {
+        App.sidebarRight = new ResizableSidebar(document.querySelector('.sidebar-right'), 'right');
     }
 };
 
@@ -116,25 +107,14 @@ window.App.initWidgets = function(scope=null) {
      */
     for (const [cssName, widgetClass] of Object.entries(window.App.widgetClasses)) {
         Utils.querySelectorAllAndSelfAndContainer(scope,'.widget-' + cssName).forEach(
-            widgetElement => App.createWidget(widgetElement, cssName, scope)
+            widgetElement => App.createWidget(widgetElement, cssName)
         );
     }
 
     // Finally, emit finished event
     App.widgetsInitializing -= 1;
     if (App.widgetsInitializing === 0) {
-        let event = new CustomEvent(
-            'epi:init:widgets',
-            {
-                bubbles: true,
-                cancelable: false,
-                detail: {
-                    data: {},
-                    sender: this
-                }
-            }
-        );
-        document.dispatchEvent(event);
+        App.emitEvent(document, 'epi:init:widgets');
     }
 };
 
@@ -165,7 +145,7 @@ window.App.finishWidgets = function(scope=null) {
 /**
  * Search the widget inside the element and in the element's ancestors
  *
- * @param {Element} element
+ * @param {Element|document} element
  * @param {string} cssName The widget name
  * @return {BaseWidget}
  */
@@ -175,7 +155,9 @@ window.App.findWidget = function(element, cssName) {
     }
 
     let widgetElement = element.querySelector('.widget-' + cssName);
-    widgetElement = widgetElement ? widgetElement : element.closest('.widget-' + cssName);
+    if (!widgetElement && element !== document) {
+        widgetElement = element.closest('.widget-' + cssName);
+    }
 
     if (widgetElement) {
         widgetElement.widgets = widgetElement.widgets || {};
@@ -186,13 +168,15 @@ window.App.findWidget = function(element, cssName) {
 }
 
 /**
- * Get widget of the element by name
+ * Create the widget belonging to an element, if it does not exist yet.
  *
- * @param {HTMLElement} element An element which has widgets attached
- * @param {string} cssName The css name used to initialize the widget
+ * Always calls updateWidget() of the widget, even if it already exists.
+ *
+ * @param {HTMLElement} element The element.
+ * @param {string} cssName The css name used to look up the matching class.
  * @return {BaseWidget|undefined}
  */
-window.App.createWidget = function(element, cssName, scope) {
+window.App.createWidget = function(element, cssName) {
     if (!element) {
         return;
     }
@@ -205,8 +189,10 @@ window.App.createWidget = function(element, cssName, scope) {
         if (widgetClass) {
             widget = new widgetClass(element, cssName);
         }
-    } else {
-        widget.updateWidget(scope);
+    }
+
+    if (widget) {
+        widget.updateWidget();
     }
 
     return widget;
@@ -338,7 +324,7 @@ window.App.openSidebar = function (data, options, parentFrame) {
     }
 
     // Get widget
-    const tabsheetsWidget = App.findWidget(App.sidebarright.widgetElement,'tabsheets');
+    const tabsheetsWidget = App.findWidget(App.sidebarRight.widgetElement,'tabsheets');
     if (!tabsheetsWidget) {
         return;
     }

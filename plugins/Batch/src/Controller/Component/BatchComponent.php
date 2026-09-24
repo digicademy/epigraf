@@ -246,7 +246,11 @@ class BatchComponent extends Component
         $pipelineId = null;
 
         // Create import folder
-        $folder = Configure::read('Data.databases') . $this->controller->activeDatabase['name'] . DS;
+        if (empty($this->controller->activeDatabase)) {
+            $folder = Configure::read('Data.shared');
+        } else {
+            $folder = Configure::read('Data.databases') . $this->controller->activeDatabase['name'] . DS;
+        }
         Files::createFolder($folder . 'import' . DS, true);
 
         // Upload file
@@ -302,8 +306,8 @@ class BatchComponent extends Component
         }
 
         // Create job entity
-        // Delayed jobs will be processed by a worker
-        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+        // Queued jobs will be processed by a worker
+        $queuedJob = !empty(Configure::read('Jobs.delay', false));
 
         $tasksConfig = [];
 
@@ -321,28 +325,37 @@ class BatchComponent extends Component
 
         $treeOption =  $this->request->getData('tree', '1');
         $solvedOption =  $this->request->getData('solved', '0');
+        $newOption =  $this->request->getData('new', $this->request->getQuery('new','0'));
+
+        if (empty($this->controller->activeDatabase)) {
+            $databaseName = DATABASE_MAIN;
+        } else {
+           $databaseName = $this->controller->activeDatabase['caption'];
+        }
 
         $jobConfig = [
             'pipeline_id' => $pipelineId,
             'pipeline_tasks' => $tasksConfig,
 
-            'database' => $this->controller->activeDatabase['caption'],
+            'database' => $databaseName,
             'table' => $tableName,
             'scope' => $scope,
             'inputpath' => $filePath,
             'tree' => $treeOption === '1',
             'solved' => $solvedOption === '1',
+            'new' => $newOption === '1',
             'redirect' => Router::url(
                 [
                     'controller' => $this->request->getParam('controller'),
                     'action' => 'index',
                     ($scope ? $scope : null),
+                    '?' => ['load' => true]
                 ])
         ];
 
         $jobdata = [
             'jobtype' => 'import',
-            'delay' => $delayedJob ? 1 : 0,
+            'delay' => $queuedJob ? 1 : 0,
             'config' => $jobConfig
         ];
         $job = $this->Jobs->newEntity($jobdata)->typedJob;
@@ -403,7 +416,7 @@ class BatchComponent extends Component
      * Transfer records from source to target database
      **
      * @param string $scope The table scope
-     * @param array $params Filter parameters
+     * @param array $params The unparsed query parameters
      *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
@@ -500,11 +513,11 @@ class BatchComponent extends Component
             )
         ];
 
-        // Delayed jobs will be processed by a worker
-        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+        // Queued jobs will be processed by a worker
+        $queuedJob = !empty(Configure::read('Jobs.delay', false));
         $jobdata = [
             'jobtype' => 'transfer',
-            'delay' => $delayedJob ? 1 : 0,
+            'delay' => $queuedJob ? 1 : 0,
             'config' => $jobConfig
         ];
         $job = $this->Jobs->newEntity($jobdata)->typedJob;
@@ -565,7 +578,7 @@ class BatchComponent extends Component
      * - database Based on the location from which a job is created, the current project database name
      * - table Based on the location from which a job is created, the current table name (e.g. 'articles')
      * - scope Based on the location from which a job is created, the current table scope (e.g. the property type within the properties table)
-     * - params The query parameters. A scope and a selection key are added.
+     * - params The unparsed query parameters. A scope and a selection key are added.
      * - selection: Set to 'selected' to limit the export to explicitly selected entities.
      *              Set to 'entity' for a single entity export.
      * - pipeline_id: The pipeline ID corresponding to the pipeline identified by the IRI that ist passed in the pipeline query parameter.
@@ -582,7 +595,7 @@ class BatchComponent extends Component
      * With pipeline ID, the tasks configuration will be added at job execution time.
      *
      * @param string $scope
-     * @param array $params The query parameters. A timeout parameter greater than 0 immediately starts the job.
+     * @param array $params The unparsed query parameters. A timeout parameter greater than 0 immediately starts the job.
      * @return void
      */
     public function export($scope = null, $params = [])
@@ -601,8 +614,8 @@ class BatchComponent extends Component
 
         $timeout = intval($params['timeout'] ?? 0);
 
-        // Delayed jobs will be processed by a worker
-        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+        // Queued jobs will be processed by a worker
+        $queuedJob = !empty(Configure::read('Jobs.delay', false));
         $selection = $params['selection'] ?? 'selected';
 
         // Job name can be passed in the post data or in the query parameters
@@ -614,7 +627,7 @@ class BatchComponent extends Component
         $jobdata = [
             'name' => $jobName,
             'jobtype' => 'export',
-            'delay' =>  $delayedJob ? 1 : 0,
+            'delay' =>  $queuedJob ? 1 : 0,
             'config' => [
                 'server' => Router::url('/', true),
                 'database' => $database,
@@ -719,11 +732,12 @@ class BatchComponent extends Component
      * Manipulate records identified by query parameters
      *
      * @param string $scope The table scope
+     * @params array $params The unparsed query parameters.
      *
      * @return \Cake\Http\Response|null|void
      * @throws BadRequestException if record not found
      */
-    public function mutate($scope = null)
+    public function mutate($scope = null, $params = [])
     {
         if (empty($this->model)) {
             throw new BadRequestException(__('Model not configured'));
@@ -732,7 +746,6 @@ class BatchComponent extends Component
 
         // Prepare job
         $database = BaseTable::getDatabaseName();
-        $params = $this->request->getQueryParams();
 
         if (!empty($scope)) {
             $params['scope'] = $scope;
@@ -740,12 +753,12 @@ class BatchComponent extends Component
 
         $task = $params['task'] ?? '';
 
-        // Delayed jobs will be processed by a worker
-        $delayedJob = !empty(Configure::read('Jobs.delay', false));
+        // Queued jobs will be processed by a worker
+        $queuedJob = !empty(Configure::read('Jobs.delay', false));
 
         $jobdata = [
             'jobtype' => 'mutate',
-            'delay' =>  $delayedJob ? 1 : 0,
+            'delay' =>  $queuedJob ? 1 : 0,
             'config' => [
                 'database' => $database,
                 'table' => $tableName,

@@ -6,10 +6,10 @@
   'job_id' => NULL,
   'published' => NULL,
   'status' => NULL,
-  'created' => '2021-06-14 14:54:36',
+  'created' => '2021-06-14 16:54:36',
   'modified' => '2020-10-29 13:00:58',
   'created_by' => 1,
-  'modified_by' => 4,
+  'modified_by' => 10,
   'sortno' => 7,
   'sortkey' => 'Schriftart 2',
   'propertytype' => 'fonttypes',
@@ -36,7 +36,7 @@
   'splitfrom_id' => NULL,
   'parent_id' => NULL,
   'level' => 0,
-  'lft' => 7,
-  'rght' => 12,
+  'lft' => 11,
+  'rght' => 16,
 ); 
 ?>

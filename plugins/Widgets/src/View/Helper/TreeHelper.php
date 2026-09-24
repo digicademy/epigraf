@@ -72,7 +72,11 @@ class TreeHelper extends Helper
         $group = str_replace('.','_',$model);
         $options['seek'] = $this->_View->getConfig('options')['params']['seek'] ?? null;
         $options['selected'] = $options['selected'] ?? $this->_View->getConfig('options')['params']['selected'] ?? (!empty($options['seek']) ? [$options['seek']] : []);
-        $options['direction'] = $this->_View->getConfig('options')['params']['direction'] ?? 'asc';
+
+        // The direction param may contain an array, but the option is used for cursor pagination
+        // that only supports single field sorting. Make sure to use the first value from the array
+        // in TreeHelper::getNodes()
+        $options['direction'] = $this->_View->getConfig('options')['params']['direction'] ?? ['asc'];
 
         $template = $this->_View->getRequest()->getQuery('template', 'select');
         $options['template'] = $template;
@@ -242,14 +246,15 @@ class TreeHelper extends Helper
                 $content = __('Reference from {0}', $entity['lookup_from']['path']);
             }
             else {
-                $content = ' <label class="text" title="' . $entity->shortname . '">';
+                $nodeCaption = $entity->caption;
+                $content = ' <label class="text" title="' . $nodeCaption . '">';
                 if ($template === 'select') {
                     $content .= '<input class="property" type="checkbox" '
                         . (in_array($entity['id'], $selected) ? 'checked ' : '')
                         . 'value="' . $entity['id'] . '"'
                         . '>';
                 }
-                $content .= $entity->shortname;
+                $content .= $nodeCaption;
                 $content .= '</label>';
             }
         }
@@ -260,7 +265,7 @@ class TreeHelper extends Helper
         // Content
         $out .= '<div class="tree-content">' .$content . '</div>';
 
-        // MEta
+        // Meta
         $out .= '<div class="tree-meta">';
         if (empty($cursor)) {
             foreach ($options['columns'] ?? [] as $columnKey => $columnConfig) {
@@ -297,11 +302,15 @@ class TreeHelper extends Helper
     {
         $nodes = [];
 
+        //TODO: skip cursors if the tree start is complete, i.e. no gaps
         $stack = [];
         $outputCursors = ($options['paginate'] ?? true) === 'cursor';
+
         $cursorDir = $options['direction'] ?? 'asc';
-        //TODO: skip cursors if the tree start is complete, i.e. no gaps
-        $prevCursor = ((($cursorDir === 'desc') || !empty($options['seek'])) && $this->Paginator->hasNext());
+        $cursorDir = is_array($cursorDir) ? ($cursorDir[0] ?? 'asc') : $cursorDir;
+        $prevCursor = (($cursorDir === 'desc') || !empty($options['seek'])) && $this->Paginator->hasNext();
+        $nextCursor = (($cursorDir === 'asc') || !empty($options['seek'])) && $this->Paginator->hasNext();
+
         $collapsed = $options['collapsed'] ?? false;
         $cursorLevel = $this->Paginator->params()['level'] ?? null;
 
@@ -323,7 +332,7 @@ class TreeHelper extends Helper
             }
 
             // Prev cursor
-            if ($prevCursor) {
+            if ($outputCursors && $prevCursor) {
                 $nodes[] = $nodeMethod($model, $entity, 'prev', $options);
             }
 
@@ -338,7 +347,7 @@ class TreeHelper extends Helper
         }
 
         // Closing cursors
-        if (!empty($stack) && (($cursorDir === 'asc') || !empty($options['seek'])) && $this->Paginator->hasNext()) {
+        if (!empty($stack) && $nextCursor) {
             $entity = end($stack);
 
             // Output child cursor, only if not already output before

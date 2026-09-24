@@ -1000,8 +1000,15 @@ class AppController extends Controller
      */
     protected function isAllowedDatabase($databaseName)
     {
-        return ($databaseName !== null) && isset($this->getAllowedDatabases()[Databank::addPrefix($databaseName)]);
+        if (empty($databaseName)) {
+            return false;
+        }
 
+        if ($databaseName === DATABASE_MAIN) {
+            return $this->userHasRole(['admin', 'devel']);
+        }
+
+        return isset($this->getAllowedDatabases()[Databank::addPrefix($databaseName)]);
     }
 
     /**
@@ -1293,7 +1300,7 @@ class AppController extends Controller
 
         if ($jobsTable->save($job)) {
             $this->Answer->success(
-                __('The job was created'),
+                __('The job was created.'),
                 [
                     'plugin' => false,
                     'controller' => 'Jobs',

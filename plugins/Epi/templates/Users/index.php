@@ -33,5 +33,5 @@
 
     $this->Link->addCreateAction(__('Create user'));
 
-    $this->Link->downloadButtons (null, 'users', 'epi_users');
+    $this->Link->downloadButtons(['parameter' => 'users', 'datalist' => 'epi_users']);
 ?>

@@ -42,12 +42,14 @@ by extracting values from sections and items nested within each article object.
 
 Path keys dive into an object by chaining the fields separated by a dot.
 
--   A simple path key contains just the name of the data field or relation. Example: `signature`.
--   A compound path key extracts nested data separated by a dot.
-    Example, starting from an article object: `project.signature`.
--   A compound path key can also go up the object hierarchy. Example to get the article IRI starting from an item: `root.iri`.
--   The path can contain an asterisk * as a placeholder to address a list of objects. This allows values to be extracted from hasMany relations. Example, starting from a section: `items.*.content`.
--   You can also filter when using placeholders. The filter condition is specified in square brackets. Example: `items.*[itemtype=images].file_name`.
+-  A simple path key contains just the name of the data field or relation. Example: `signature`.
+-  A compound path key extracts nested data separated by a dot.
+   Example, starting from an article object: `project.signature`.
+-  A compound path key can also go up the object hierarchy. Example to get the article IRI starting from an item: `root.iri`.
+-  The path can contain an asterisk * as a placeholder to address a list of objects. This allows values to be extracted from hasMany relations. Example, starting from a section: `items.*.content`.
+-  You can also filter when using placeholders. The filter condition is specified in square brackets. Example: `items.*[itemtype=images].file_name`.
+-  A path key can also include a format prefix, followed by a colon. Example: `txt:items.*[itemtype=transcriptions].content`.
+   This is useful to render annotated XML content as plain text.
 
 ## Aggregation keys
 
@@ -56,18 +58,24 @@ Additional processing parameters are added after a colon, multiple parameters ar
 Example:  `items.*[itemtype=images].file_name|collapse:;`
 
 The following path functions are currently available in aggregation keys:
-- collapse: Combines several values into one string
-- first: Returns the first element of a list
-- min: Returns the smallest element of a list
-- max: Returns the largest element of a list
-- count: Returns the number of elements in a list
+
+- collapse: Combines several values into one string.
+- first: Returns the first element of a list.
+- min: Returns the smallest element of a list.
+- max: Returns the largest element of a list.
+- count: Returns the number of elements in a list.
+- distinct: Returns a list of distinct values.
+- add: Extract another value from the root item using the extraction key in the first parameter.
+  Adds the new value to the list of current values.
+- next: Coalesce, i.e. add the value using another extraction key if the current value is empty.
 - split: Split a string at new lines and return the result as an array
-  (that can be processed in further steps, e.g. to select the first value)
+  (that can be processed in further steps, e.g. to select the first value).
 - filter: Return elements of an array matching a given pattern. The pattern is provided as regular expression.
-- strip: Remove all HTML tags from a string or an array of string
+  The regular expression is specified without any delimiters. Example for dropping empty strings: `filter:^.+$`.
+- strip: Remove all HTML tags from a string or an array of string.
 - trim: Remove whitespace from both ends of a string.  You can provide other characters to be trimmed as parameter.
 - ltrunc: Remove a prefix from a string.
-- json: Extract a json value or a value from a nested array by the extraction key provided as first parameter
+- json: Extract a json value or a value from a nested array by the extraction key provided as first parameter.
 - padzero: Pad a number with zeros. The number of digits should be passed as parameter.
 
 ## Placeholder keys

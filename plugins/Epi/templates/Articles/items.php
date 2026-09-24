@@ -14,8 +14,6 @@
  * @var \Epi\Model\Entity\Item[] $entities
  * @var array $items
  */
-
-use App\Utilities\Converters\Attributes;
 ?>
 
 <!-- Breadcrumbs -->
@@ -27,4 +25,4 @@ use App\Utilities\Converters\Attributes;
 <?php $this->Link->beginActionGroup('bottom'); ?>
 <?php $this->Link->addCounter(); ?>
 
-<?php $this->Link->downloadButtons(null, 'items', 'epi_items'); ?>
+<?php $this->Link->downloadButtons(['parameter' => 'items', 'datalist' => 'epi_items']); ?>

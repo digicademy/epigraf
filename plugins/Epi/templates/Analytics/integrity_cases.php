@@ -28,10 +28,10 @@
     <thead>
     <tr>
         <th scope="col"><?= __('Table') ?></th>
-        <th scope="col"><?= __('Id') ?></th>
+        <th scope="col"><?= __('ID') ?></th>
 
         <th scope="col"><?= __('Linked table') ?></th>
-        <th scope="col"><?= __('Linked Id') ?></th>
+        <th scope="col"><?= __('Linked ID') ?></th>
 
         <th scope="col"><?= __('Actions') ?></th>
     </tr>

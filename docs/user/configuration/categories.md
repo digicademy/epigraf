@@ -38,16 +38,31 @@ The configuration for each property type includes the following keys:
       </tr>
       <tr>
         <td>type</td>
-        <td>Deprecated. Instead, configure the parent_id field to indicate a tree structure. Legacy values: A tree structure is used by default (value ´tree`), alternatively a flat list can be used (`flat`).</td>
+        <td>Indicates whether the categories form a hierarchy.
+            A tree structure is assumed by default (value ´tree`),
+            you can collapse it (value `collapsed`) or
+            configure a flat list ( value `flat`).
+            For tree structures, in addition, you must configure the parent_id field.
+        </td>
       </tr>
       <tr>
         <td>displayfield</td>
-        <td>There are two fields that can be used for category labels. The `lemma` field should be used by default
-            and it should be set as displayfield, too.
-            If a category systems is organisized hierarchically, instead, the full lemma `path` can be used as displayfield value.
+        <td>By default, the `lemma` field should be used as displayfield value. This determines the
+            value, for example, displayed in select lists.
             Sometimes you have short and long titles for a property. For example, for manageing literature,
-            you store the full bibliographic reference in the name and a short title in the lemma.
-            Then you can decide to use the `name` instead of the `lemma` field as your displayfield.</td>
+            you store the full bibliographic reference in the `name` field and a short title in the `lemma`.
+            In this case, you can decide to use `name` instead of the `lemma` as your `displayfield`.
+            Alternatively, if a category system is organisized hierarchically, you can use the
+            full path including ancestor lemma values by using `path` as `displayfield` value.
+        </td>
+      </tr>
+      <tr>
+        <td>caption</td>
+        <td>The label displayed, for example, in select lists is determined by the displayfield options.
+            You can output more complex labels by using <a href="../coreconcepts/keys">placeholder keys</a> in the caption value.
+            For example, you can use the following caption value to display the path and the unit of a property:
+            <code>"caption": "{path} ({unit})"</code>.
+        </td>
       </tr>
       <tr>
         <td>level</td>
@@ -84,7 +99,10 @@ The configuration for each property type includes the following keys:
       </tr>
       <tr>
         <td>sort</td>
-        <td>The field used for sorting in mutate operations.</td>
+        <td>Although the order is always fixed in the database, properties can be rearranged using
+            mutate operations or in export pipelines. The `sort` value determines the field used
+            for sorting in mutate operations.
+        </td>
       </tr>
       <tr>
         <td>export</td>
@@ -108,88 +126,176 @@ The configuration for each property type includes the following keys:
 
 # Available fields
 
+Properties include both fields reserved for the [Relational Article Model (RAM)](/user/coreconcepts/model) and fields that can be customized.
+While you can change the labels for all fields, you can only change the data types for customizable fields.
+Refer to the `format` column in the table below to determine whether a field is reserved or customizable.
+
 <figure class="table">
   <table>
     <thead>
       <tr>
         <th>Field Key</th>
+        <th>Formats</th>
         <th>Description</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>parent_id</td>
-        <td>Input field for the parent property.</td>
-      </tr>
-      <tr>
         <td>lemma</td>
-        <td>The ususal property label.</td>
+        <td>Customizable: text, xml. Max. 1,500 characters.</td>
+        <td>The ususal property label.
+            Although you can change the format, it is recommended to use plain text because the value is used
+            widely in the user interface, for example, in select lists.
+        </td>
       </tr>
       <tr>
         <td>name</td>
-        <td>Alternative field for property labels. For example, you can store long bibliographic references in the lemma field and short references in the name field.</td>
+        <td>Customizable: text, xml. Max. 1,500 characters.</td>
+        <td>Alternative field for property labels.
+            For example, you can store long bibliographic references in the lemma field and short references in the name field.
+            Although you can change the format, it is recommended to use plain text because the value is used
+            widely in the user interface, for example, in select lists.
+        </td>
       </tr>
       <tr>
         <td>sortkey</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
         <td>A string used to sort properties with the mutate function or in export stylesheets.</td>
       </tr>
       <tr>
+        <td>signature</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
+        <td>Usually an identifier within your project, for example the number of a brand.
+            You can reinterpret the field by changing its label, but the type is fixed and cannot be changed.
+        </td>
+      </tr>
+      <tr>
+        <td>unit</td>
+        <td>Customizable: text, xml, json. Max. 500 characters.</td>
+        <td>Usually stores the unit of a value.
+            Example: For properties such as measures, a unit such as "cm".
+            You can customize the field and change the field format for other use cases.
+        </td>
+      </tr>
+      <tr>
+        <td>content</td>
+        <td>Customizable: text, json xml. Max. 16,777,215 characters.</td>
+        <td>Usually contains additional data for a property.
+            You can customize the field and change the field format for other use cases.
+            For example, you could store geolocations of places in JSON format.
+        </td>
+      </tr>
+      <tr>
+        <td>elements</td>
+        <td>Customizable: text, json xml. Max. 16,777,215 characters.</td>
+        <td>
+            Usually contains descriptions about the composition of a property,
+            i.e. if properties denote coat of arms.
+            You can customize the field and change the field format for other use cases.
+        </td>
+      </tr>
+      <tr>
+        <td>source_from</td>
+        <td>Customizable: text, json xml. Max. 65,535 characters.</td>
+        <td>
+            Usually contains information about the the data source
+            Example: A literature reference with further details about the property.
+            You can customize the field and change the field format for other use cases.
+        </td>
+      </tr>
+      <tr>
+        <td>comment</td>
+        <td>Customizable: text, json xml. Max. 16,777,215 characters.</td>
+        <td>Usually contains personal notes about a property.
+            You can customize the field and change the field format for other use cases.
+        </td>
+      </tr>
+      <tr>
+        <td>keywords</td>
+        <td>Customizable: text, json xml. Max. 1,500 characters.</td>
+        <td>Usually contains a short comma-separated list of keywords.
+            Although you can change the format, it is recommended to use plain text because the value is used
+            for keyword filters in the user interface.
+        </td>
+      </tr>
+      <tr>
+        <td>file_name</td>
+        <td>Reserved: filename. Max. 1,500 characters.</td>
+        <td>A file name, for example, to attach an image to a property.</td>
+      </tr>
+      <tr>
+        <td>parent_id</td>
+        <td>Reserved: id</td>
+        <td>Input field for the parent property.</td>
+      </tr>
+      <tr>
         <td>related_id</td>
+        <td>Reserved: id</td>
         <td>Reference to another property, for example to identify relationships between persons.
             The type of reference can be categorized by the lemma or a meta-property (see the `properties_id` field).</td>
       </tr>
       <tr>
         <td>properties_id</td>
+        <td>Reserved: id</td>
         <td>A meta-property for classifying a property. For example, used to assign a brand type to a brand.
             Can also be used to provide a relationship type (e.g. "mother of") of references (see the `related_id` field).</td>
       </tr>
       <tr>
-        <td>unit</td>
-        <td>Use the field for whatever you want. Example: For properties such as measures, a unit such as "cm". </td>
-      </tr>
-      <tr>
-        <td>content</td>
-        <td>Use the field for whatever you want. Example: Geolocation of places in JSON format.</td>
-      </tr>
-      <tr>
-        <td>elements</td>
-        <td>Use the field for whatever you want. Example: Describe the composition of a property, i.e. if properties denote coat of arms.</td>
-      </tr>
-      <tr>
-        <td>source_from</td>
-        <td>Use the field for whatever you want. Example: A literature reference with further details about the property.</td>
-      </tr>
-      <tr>
         <td>iscategory</td>
-        <td>Use the field for whatever you want. Usually used to mark a property as structural element in the tree.</td>
+        <td>Reserved: check</td>
+        <td>Usually used to mark a property as structural element in the tree.
+            You can reinterpret the field by changing its label, but the type is fixed and cannot be changed.
+        </td>
       </tr>
       <tr>
         <td>ishidden</td>
-        <td>Use the field for whatever you want. Usually used to mark a property that should be excluded in published documents.</td>
-      </tr>
-      <tr>
-        <td>comment</td>
-        <td>Use the field for whatever you want. Example: Your personal notes.</td>
-      </tr>
-      <tr>
-        <td>signature</td>
-        <td>Use the field for whatever you want. Usually an identifier within your project, for example the number of a brand.</td>
+        <td>Reserved: check</td>
+        <td>
+            Usually used to mark a property that should be excluded in published documents.
+            You can reinterpret the field by changing its label, but the type is fixed and cannot be changed.
+        </td>
       </tr>
       <tr>
         <td>published</td>
-        <td>Publication state of the property. 0 = drafted, 1 = in progress, 2 = completed, 3 = published, 4 = searchable.</td>
+        <td>Reserved: select</td>
+        <td>The publication state of the property. 0 = drafted, 1 = in progress, 2 = completed, 3 = published, 4 = searchable.
+            You can reinterpret the field by changing its label, but the type is fixed and cannot be changed.
+        </td>
       </tr>
       <tr>
         <td>norm_data</td>
+        <td>Reserved: textM. ax. 65,535 characters.</td>
         <td>Authority data, each identifier on one line. You can use namespaces configured in the property type.</td>
       </tr>
       <tr>
         <td>norm_iri</td>
+        <td>Reserved: text. Max. 1,500 characters.</td>
         <td>IRI fragment of the property.</td>
       </tr>
       <tr>
-        <td>file_name</td>
-        <td>A file name, for example, to attach an image to a property.</td>
+        <td>created</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of row creation.</td>
+      </tr>
+      <tr>
+        <td>modified</td>
+        <td>Reserved: timestamp.</td>
+        <td>Timestamp of the last modification.</td>
+      </tr>
+      <tr>
+        <td>created_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who created the row.</td>
+      </tr>
+      <tr>
+        <td>modified_by</td>
+        <td>Reserved: id.</td>
+        <td>ID of the user who last modified the row.</td>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>Reserved: id.</td>
+        <td>ID of the row.</td>
       </tr>
     </tbody>
   </table>
@@ -211,33 +317,33 @@ They are calculated on the fly and can be used in view modes or table columns:
     <tbody>
       <tr>
         <td>ancestors</td>
-        <td>The lemma path. Ususally used together with parent_id. Both can be configured with the same label "Parent lemma", ancestors is used in view mode and parent_id in edit mode to select a parent property.</td>
+        <td>The list of ancestor nodes. Ususally used together with parent_id. Both can be configured with the same label "Parent lemma", ancestors is used in view mode and parent_id in edit mode to select a parent property.</td>
       </tr>
-      <tr>
-        <td>iri</td>
-        <td>The IRI path, consisting of table name, property type and IRI fragment. Usually, used together with norm_iri. While iri generates the full path, norm_iri is used in edit mode to generate an input field for the IRI fragment.</td>
-      </tr>
-      <tr>
-        <td>image</td>
-        <td>Displays the file of a property as image. Usually, used together with file_name. While image shows the image, file_name generates an input field in edit mode.</td>
-      </tr>
-    <tr>
-        <td>path</td>
-        <td>The lemma path</td>
-    </tr>
-    <tr>
-        <td>articles_count</td>
-        <td>Number of articles referring to the property.</td>
-    </tr>
-    <tr>
-        <td>items_count</td>
-        <td>Number of items referring to the property.</td>
-    </tr>
-    <tr>
-        <td>links_count</td>
-        <td>Number of links annotations referring to the property.</td>
-    </tr>
-</tbody>
+        <tr>
+            <td>path</td>
+            <td>The lemma path, including ancestors.</td>
+        </tr>
+        <tr>
+            <td>iri</td>
+            <td>The IRI path, consisting of table name, property type and IRI fragment. Usually, used together with norm_iri. While iri generates the full path, norm_iri is used in edit mode to generate an input field for the IRI fragment.</td>
+        </tr>
+        <tr>
+            <td>image</td>
+            <td>Displays the file of a property as image. Usually, used together with file_name. While image shows the image, file_name generates an input field in edit mode.</td>
+        </tr>
+        <tr>
+            <td>articles_count</td>
+            <td>Number of articles referring to the property.</td>
+        </tr>
+        <tr>
+            <td>items_count</td>
+            <td>Number of items referring to the property.</td>
+        </tr>
+        <tr>
+            <td>links_count</td>
+            <td>Number of links annotations referring to the property.</td>
+        </tr>
+    </tbody>
   </table>
 </figure>
 

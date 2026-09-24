@@ -29,7 +29,7 @@ class PropertiesTransferTest extends EpiTestCase
         'plugin.Epi.Token',
         'plugin.Epi.Locktable',
         'plugin.Epi.Articles',
-		'plugin.Epi.Sections',
+        'plugin.Epi.Sections',
         'plugin.Epi.Items',
         'plugin.Epi.Links',
         'plugin.Epi.TransferPropertiesProjects',
@@ -45,7 +45,7 @@ class PropertiesTransferTest extends EpiTestCase
         'plugin.Epi.TransferPropertiesPublic'
     ];
 
-	/**
+    /**
      * Test transfer method
      *
      * @return void
@@ -79,11 +79,11 @@ class PropertiesTransferTest extends EpiTestCase
 
         // Step 1: Select target database
         $this->loginUser('admin');
-		$this->get('epi/projects/properties/transfer/materials');
+        $this->get('epi/projects/properties/transfer/materials');
 
-		$this->assertHtmlEqualsComparison(true,".content-wrapper",'.1_selecttarget');
+        $this->assertHtmlEqualsComparison(true,".content-wrapper",'.1_selecttarget');
 
-		// Step 2: Preview
+        // Step 2: Preview
         $this->get('epi/projects/properties/transfer/materials?target=public');
         $this->assertRedirect([
             'plugin'=>'epi','database'=> DATABASE_PUBLIC,
@@ -96,7 +96,7 @@ class PropertiesTransferTest extends EpiTestCase
             .'source=projects&snippets=editors,published&stage=preview'
         );
 
-		$this->assertHtmlEqualsComparison(true,".content-wrapper",'.2_preview');
+        $this->assertHtmlEqualsComparison(true,".content-wrapper",'.2_preview');
 
         // Step 3: Transfer
         $this->post(
@@ -188,7 +188,7 @@ class PropertiesTransferTest extends EpiTestCase
         $this->loginUser('admin');
         $this->get('epi/public/properties/transfer/materials');
 
-		$this->assertHtmlEqualsComparison(true,".content-wrapper",'.1_selecttarget');
+        $this->assertHtmlEqualsComparison(true,".content-wrapper",'.1_selecttarget');
 
         // Step 2: Preview
         $this->get('epi/public/properties/transfer/materials?target=projects');
@@ -205,7 +205,7 @@ class PropertiesTransferTest extends EpiTestCase
             'epi/projects/properties/transfer/materials?'
             .'source=public&snippets=editors,published&stage=preview'
         );
-		$this->assertHtmlEqualsComparison(true,".content-wrapper",'.2_preview');
+        $this->assertHtmlEqualsComparison(true,".content-wrapper",'.2_preview');
 
         // Step 3: Transfer
         $this->post(

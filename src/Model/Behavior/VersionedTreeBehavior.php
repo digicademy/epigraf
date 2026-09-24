@@ -332,7 +332,7 @@ class VersionedTreeBehavior extends TreeBehavior
      * Add ancestors to the ancestors property.
      *
      * Used in the PropertiesWithAncestors relation and
-     * the SectionsWithAncestors relation
+     * the SectionsWithAncestors relation.
      *
      * @param Query $query
      * @param array $options

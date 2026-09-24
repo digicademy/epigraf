@@ -249,7 +249,6 @@
     min-height: 1em;
     background-color: var(--table-bg-color-selected-unfocused);
     color: var(--table-font-color-selected-unfocused);
-
 }
 
 .doc-section > .frame-placeholder {
@@ -806,7 +805,7 @@ div.doc-section-link.tag-hover[data-to-id=''] a:hover {
 }
 
 /* File names */
-.content-content .doc-fieldname-file .doc-field-content[data-file-name] {
+.doc-section .doc-fieldname-file .doc-field-content[data-file-name] {
     cursor: pointer;
     color: var(--link-font-color);
 }
@@ -989,6 +988,10 @@ span.xml_tag_nl {
     margin-bottom: 1em;
 }
 
+.doc-section-groups-hide {
+    display: none;
+}
+
 .doc-section-groups-caption {
     width:100%;
 }
@@ -1069,7 +1072,8 @@ span.xml_tag_nl {
 }
 
 .doc-section-groups .doc-section-item .widget-xmleditor,
-.doc-section-groups .doc-section-item .widget-xmleditor.ck-focused {
+.doc-section-groups .doc-section-item .widget-xmleditor.ck-focused,
+.doc-section-groups .doc-section-item .widget-xmleditor.ck-editor__editable_inline {
     margin:0;
     padding:0 0.3em;
     min-height: 1.5em;
@@ -1205,7 +1209,6 @@ span.xml_tag_nl {
 
 .doc-fieldname-content {
     font-family: var(--content-font-family), sans-serif;
-    line-height: 1.7em;
 }
 
 .doc-article:not(.widget-document-edit) .doc-field-content {
@@ -1274,13 +1277,18 @@ table.doc-section-grid-table tr {
 table.doc-section-grid-table td {
     width: 10em;
     height: 8em;
-    border: 1px solid cadetblue;
+    border: 1px solid var(--nav-bg-color-hover-light);
+}
+
+table.doc-section-grid-table td:has(>.active) {
+    box-shadow: inset 0px 0px 2px var(--nav-bg-color-hover-light);
 }
 
 table.doc-section-grid-table .doc-section-item-group {
     display: flex;
     overflow: auto;
     padding: 0.5em;
+    min-height: 100%;
 }
 
 .doc-section-grid-table .doc-section-item {
@@ -1298,6 +1306,10 @@ table.doc-section-grid-table .doc-section-item-group {
     display:flex;
 }
 
+.doc-section-grid-table .doc-section-item.active {
+    outline: 1px solid var(--nav-bg-color-hover-light);
+}
+
 .doc-section-grid-table .doc-section-item[draggable="true"] {
     cursor: grab;
 }
@@ -1305,6 +1317,20 @@ table.doc-section-grid-table .doc-section-item-group {
 .doc-section-grid-table .doc-section-item .doc-field,
 .doc-section-grid-table .doc-section-item .doc-field-content {
     display: inline;
+}
+
+.widget-grid-target .doc-section-item.active .doc-field.doc-fieldname-sortno input {
+    background-color: var(--nav-bg-color-focused);
+}
+
+.widget-grid-target .doc-fieldname-sortno input::-webkit-outer-spin-button,
+.widget-grid-target .doc-fieldname-sortno input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.widget-grid-target .doc-fieldname-sortno input {
+    -moz-appearance: textfield;
 }
 
 /* Article footer */

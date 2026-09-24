@@ -59,7 +59,7 @@
     $this->Link->beginActionGroup('bottom');
     $this->Link->addCounter();
     $this->Link->addCreateAction(__('Create page'));
-    $this->Link->downloadButtons(null, 'id', $model);
+    $this->Link->downloadButtons(['parameter' => 'id', 'datalist' => $model]);
 //    $this->Link->addAction(
 //    __('Move'),
 //        null,

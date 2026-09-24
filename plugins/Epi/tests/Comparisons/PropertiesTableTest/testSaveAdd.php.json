@@ -1,5 +1,5 @@
 {
-    "id": 650,
+    "id": 1712,
     "deleted": 0,
     "version_id": null,
     "job_id": null,
@@ -34,6 +34,6 @@
     "splitfrom_id": null,
     "parent_id": null,
     "level": 0,
-    "lft": 13,
-    "rght": 14
+    "lft": 29,
+    "rght": 30
 }

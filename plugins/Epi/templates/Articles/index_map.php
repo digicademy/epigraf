@@ -7,17 +7,19 @@
  * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
  *
  */
-
-use Epi\Model\Table\BaseTable;
-
 ?>
+
+<?php
+use Epi\Model\Table\BaseTable;
+?>
+
 <?php
 /**
  * @var App\View\AppView $this
  * @var \Epi\Model\Entity\Article[] $entities
  */
-
 ?>
+
 <?php
     // The item types are passed to map.js to query the correct items
     $itemTypes = $this->getConfig('options')['filter']['geodata'] ?? [];

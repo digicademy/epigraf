@@ -1,7 +1,18 @@
 <?php
+/**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+?>
 
+<?php
 use Cake\Routing\Router;
 ?>
+
 <?php
 /**
  * @var App\View\AppView $this
@@ -79,4 +90,24 @@ use Cake\Routing\Router;
     <?php // $this->Table->filterReset("articles") ?>
 
 </div>
+<?php endif; ?>
+
+<?php if ($this->getShowBlock('legend')): ?>
+    <div class="content-legend" data-snippet="legend">
+        <?php $properties =  $this->getConfig('options')['filter']['facets'] ?? []; ?>
+        <?php foreach ($properties ?? [] as $property): ?>
+            <?=
+                $this->Element->outputHtmlElement(
+                    'div',
+                    h($property['path']),
+                    [
+                        'class' => 'content-legend-item',
+                        'style' => empty($property['color']) ? ''  : ('background-color: ' . $property['color'] . ';'),
+                        'data-legend-color' => $property['color'] ?? null,
+                        'data-legend-id' => $property['id'] ?? null
+                    ]
+                )
+            ?>
+        <?php endforeach; ?>
+    </div>
 <?php endif; ?>

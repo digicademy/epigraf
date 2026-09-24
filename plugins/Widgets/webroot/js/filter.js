@@ -79,6 +79,11 @@ export class FilterWidget extends BaseWidget {
         this.listenEvent(document,'click', event => this.resetFilterClick(event));
     }
 
+    /**
+     * Instantiates filter items that don't have their own widget class yet
+     *
+     * @param {HTMLElement} elm
+     */
     registerFilter(elm) {
         if (elm.filterCoordinator) {
             return;
@@ -101,6 +106,10 @@ export class FilterWidget extends BaseWidget {
 
         if (elm.classList.contains('widget-filter-item-map')) {
             new FilterMap(this, elm);
+        }
+
+        if (elm.classList.contains('widget-filter-item-plot')) {
+            new FilterPlot(this, elm);
         }
     }
 
@@ -230,17 +239,35 @@ export class FilterWidget extends BaseWidget {
     }
 
     /**
+     * Get the facets from the first facet widget having a group flag set
+     *
+     * @return {*|null}
+     */
+    async getFacets() {
+        const filters = this.getFilterWidgets();
+
+        for (const facetWidget of filters) {
+            if (typeof facetWidget.hasFlag !== 'function' || !facetWidget.hasFlag('grp')) {
+                continue;
+            }
+
+            if (typeof facetWidget.getFacets === 'function') {
+                return await facetWidget.getFacets();
+            }
+        }
+    }
+
+    /**
      * After data was loaded, widgets may be replaced and
      * event bindings may need updates
      *
-     * @param scope
      */
-    updateWidget(scope) {
+    updateWidget() {
         const filters = this.getFilterWidgets();
 
         filters.forEach(filter => {
             if (typeof filter.updateWidget === 'function') {
-                filter.updateWidget(scope);
+                filter.updateWidget();
             }
         });
     }
@@ -249,47 +276,41 @@ export class FilterWidget extends BaseWidget {
      * Load results based on article and property search options.
      *
      * @param source The filter that called the method
-     * @param {boolean} clear Whether all other parameters should be cleared
+     * @param {boolean} clear Whether all parameters should be cleared
+     * @param {boolean} updateFilters Whether other filters should be updated after loading the data, default: true.
      */
-    updateResults(source, clear=false) {
+    updateResults(source, clear= false, updateFilters = true) {
         App.ajaxQueue.stop();
-        // TODO: jquery in ajax call, fix later
 
         // Collect URL components
         let data = clear ? {'save':true} : this.getUrlParams();
         const segment = this.getPath();
 
         // Build URL
-        const form = $(this.widgetElement);
-        let action = form.attr('data-action');
-        action = !action ? form.attr('action') : action;
+        const form = this.widgetElement;
+        let action = form.getAttribute('data-action') || form.getAttribute('action');
 
         let url = action.split('?')[0];
         url += segment ? '/' + segment : '';
         let params = {...data};
-        //params['show'] = 'content,searchbar';
-        url += '?' + jQuery.param(params);
+        const query = new URLSearchParams(params).toString();
+        url += '?' + query;
 
         // History URL
         let historyUrl = action.split('?')[0];
         historyUrl += segment ? '/' + segment : '';
-        historyUrl += '?' + jQuery.param(data);
+        historyUrl += '?' + new URLSearchParams(data).toString();
 
         // Form URL
-        form.attr('action', historyUrl);
+        form.setAttribute('action', historyUrl);
 
         // Load data
         this.loadData(url, historyUrl);
 
         // Allow filters to update
-        this.emitEvent('epi:update:filter',{source:source});
-
-        // Run callback for all other filters
-        this.filters.forEach(filter => {
-            if (typeof filter.updateFilter === 'function') {
-                filter.updateFilter(source);
-            }
-        });
+        if (updateFilters) {
+            this.emitEvent('epi:update:filter', {source: source});
+        }
     }
 
     loadData(url, historyUrl) {
@@ -314,6 +335,12 @@ export class FilterWidget extends BaseWidget {
                     // html.querySelector(['data-list-seek']);
 
                     App.replaceDataSnippets(data, container);
+
+                    // Although replaceDataSnippets initialises widgets in the replaced snippets,
+                    // it does not update widgets outside the snippets.
+                    // The filter widget is bound to a form element in the search bar which is not replaced.
+                    // Thus, we need to call updateWidget() to give all depending filter item widgets the opportunity
+                    // to recover their element and to update their event bindings if necessary.
                     this.updateWidget();
                 },
                 error: (xhr, textStatus, errorThrown) => {
@@ -391,6 +418,28 @@ class FilterItemWidget extends BaseWidget {
     }
 
     /**
+     * Find the new widget element after results were updated
+     * when the old widget element was replaced
+     *
+     * @param {string} filterItemType The type of the filter item, e.g. "plot".
+     * @return {boolean} True if the widget element was recovered, false if widgetElement does not exist.
+     */
+    recoverWidgetElement(filterItemType) {
+        if (!this.filterGroup) {
+            return false;
+        }
+
+        const newWidgetElement = document.querySelector(
+            '.widget-filter-item-' + filterItemType + '[data-filter-group=' + this.filterGroup + ']'
+        );
+        if (newWidgetElement) {
+            this.widgetElement = newWidgetElement;
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Interface to parent filter component.
      *
      * @param event
@@ -428,15 +477,15 @@ class FilterItemWidget extends BaseWidget {
  * Adds fixed parameters to the URL, e.g. the scope of properties.
  * Add the classes 'widget-filter-item' and 'widget-filter-item-fixed' to an element of your choice.
  * Add the data-filter-group attribute to the filter group name.
+ *
  * Set the data-filter-path property to the fixed URL path value, i.e. the scope.
+ * Set data-filter-param-{paramname} attributes to add fixed query parameters.
  *
  */
 class FilterFixed extends FilterItemWidget {
 
     /**
-     * Return the params to the filter coordinator.
-     *
-     * If a parameter name is set, the value is returned in getUrlParams().
+     * Return fixed path parameter
      *
      * @returns {{}}
      */
@@ -445,6 +494,25 @@ class FilterFixed extends FilterItemWidget {
             const scope = this.widgetElement.dataset.filterPath;
             return scope;
         }
+    }
+
+    /**
+     * Return fixed query parameters
+     *
+     * @return {{}}
+     */
+    getUrlParams() {
+        const data = {};
+        if (this.widgetElement && this.widgetElement.dataset) {
+            for (const attr of this.widgetElement.attributes) {
+                if (attr.name.startsWith('data-filter-param-')) {
+                    const key = attr.name.replace('data-filter-param-', '');
+                    data[key] = attr.value;
+                }
+            }
+        }
+
+        return data;
     }
 }
 
@@ -460,6 +528,8 @@ class FilterColumns extends FilterItemWidget {
     }
 
     /**
+     * Init the pane and listen events
+     *
      * @listens epi:move:row
      */
     initWidget() {
@@ -493,16 +563,13 @@ class FilterColumns extends FilterItemWidget {
         // Bind checkbox click events
         this.listenEvent(this.pane,'click',  event => this.clickCheckbox(event));
 
-        let dragItems = this.pane.querySelector('widget-dragitems');
-        App.initWidgets(dragItems);
-
         this.pane.classList.add('widget-initialized');
     }
 
     /**
-     * Called after click on column checkbox.
+     * Handle clicks on column checkboxes
      *
-     * @param event Click
+     * @param {Event} event Click event
      */
     clickCheckbox(event) {
         if (!event.target.closest('input')) {
@@ -515,7 +582,7 @@ class FilterColumns extends FilterItemWidget {
     /**
      * Called when a row was moved (e.g. in the column selector dropdown)
      *
-     * @param event epi:move:row
+     * @param {CustomEvent} event epi:move:row
      */
     moveRow(event) {
         // The time delay ensures that the click event is processed if there has been no movement.
@@ -525,7 +592,7 @@ class FilterColumns extends FilterItemWidget {
     /**
      * Reset column selection to default.
      *
-     * @param event Click
+     * @param {Event} event Click event
      */
     resetSelection(event) {
         if (!event.target.closest('.selector-reset')) {
@@ -554,6 +621,47 @@ class FilterColumns extends FilterItemWidget {
             .join(',');
 
         return {'columns': columnLists, 'save': true};
+    }
+}
+
+
+class FilterCollapse extends FilterItemWidget {
+
+    /**
+     * Initialize widget and bind event listeners.
+     *
+     */
+    constructor(element, name, parent) {
+        super(element, name, parent);
+    }
+
+    /**
+     * Listen widget events
+     *
+     * @listens click
+     */
+    initWidget() {
+        this.listenEvent(this.widgetElement,'click', event => this.toggleCollapsed(event));
+    }
+
+    /**
+     * Toggle
+     *
+     * @param {Event} event Click event
+     */
+    toggleCollapsed(event) {
+        this.widgetElement.classList.toggle('active');
+        this.updateResults();
+    }
+
+    /**
+     * Interface to parent filter component.
+     *
+     * @returns {Object} Object with the collapsed parameter
+     */
+    getUrlParams() {
+        const isCollapsed = this.widgetElement.classList.contains('active');
+        return {'collapsed': isCollapsed ? 1 : 0};
     }
 }
 
@@ -605,14 +713,13 @@ class FilterSearchBar extends FilterItemWidget {
                 event.preventDefault();
             });
         }
-    }
 
-    /**
-     * Called by App.filter.updateWidget.
-     *
-     */
-    updateWidget(scope) {
-        return true;
+        // Other filters were updated...
+        this.listenEvent(
+            this.coordinator.widgetElement,
+            'epi:update:filter',
+            (event) => this.onFilterUpdated(event)
+        );
     }
 
     /**
@@ -633,12 +740,15 @@ class FilterSearchBar extends FilterItemWidget {
         return data;
     }
 
-    /** Interface to parent filter component.
+    /**
+     * Clear time out after filters were reloaded
      *
-     * @param source The filter that triggered the update
+     * @param {CustomEvent} event Handles the epi:update:filter event.
      */
-    updateFilter(source) {
-        clearTimeout(this.inputTimeout);
+    onFilterUpdated(event) {
+        if (event.detail.data.source !== this) {
+            clearTimeout(this.inputTimeout);
+        }
     }
 
     /**
@@ -706,7 +816,7 @@ class FilterSelector {
         this.clearParameters = widgetElement.dataset.filterClear;
         this.param = widgetElement.dataset.filterParam;
 
-        if (!this.initWidgets()) {
+        if (!this.initFilter()) {
             console.log("Error initializing selector widget.");
             return false;
         }
@@ -720,7 +830,7 @@ class FilterSelector {
      * @returns {boolean} False if no dropdown or checkbox list exists
      * @listens epi:change:dropdown
      */
-    initWidgets() {
+    initFilter() {
         if (!this.coordinator) {
             console.log('Missing coordinator.');
             return;
@@ -737,7 +847,7 @@ class FilterSelector {
         if (newDropdown && (newDropdown !== this.dropdown)) {
             this.dropdown = newDropdown;
             this.dropdown.addEventListener('epi:change:dropdown', event => this.updateResults(event));
-            return true
+            return true;
         }
 
         const newCheckboxList = this.widgetElement ? this.widgetElement.querySelector('.widget-checkboxlist') : undefined;
@@ -756,11 +866,10 @@ class FilterSelector {
      * After the table was reloaded, the button is replaced,
      * therefore rebind events.
      *
-     * @param scope
      * @returns {boolean}
      */
-    updateWidget(scope) {
-        return this.initWidgets();
+    updateWidget() {
+        return this.initFilter();
     }
 
     /**
@@ -829,6 +938,7 @@ class FilterFacetsBase extends FilterItemWidget {
      */
     constructor(element, name, parent) {
         super(element, name, parent);
+        this.resetLoaded();
         this.filterParameter = undefined;
         this.flagsParameter = undefined;
     }
@@ -1063,7 +1173,23 @@ class FilterFacetsBase extends FilterItemWidget {
     }
 
     /**
+     * Promise to indicate whether facets were loaded
+     *
+     * Call resetLoaded() to signal that data is not loaded.
+     * Calls resolveLoaded() to signal that data is loaded.
+     * Await this.loaded to perform actions after facets were loaded.
+     *
+     */
+    resetLoaded() {
+        this.loaded = new Promise((resolve) => {
+            this.resolveLoaded = resolve;
+        });
+    }
+
+
+    /**
      * Load properties
+     *
      * @fires epi:load:facets
      */
     loadFacets() {
@@ -1094,6 +1220,7 @@ class FilterFacetsBase extends FilterItemWidget {
                 success: function (data, textStatus, xhr) {
                     App.replaceDataSnippets(data, self.widgetElement);
                     self.emitEvent('epi:load:facets');
+                    self.resolveLoaded();
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     // If aborted (see above, https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort)
@@ -1113,12 +1240,10 @@ class FilterFacetsBase extends FilterItemWidget {
     /**
      * Get the selected facets
      *
-     * Override in child classes.
-     *
      * @return {{}} An object with the property type name as key and items as value.
      *              Each item is an object with the id and label of the property.
      */
-    getFacets() {
+    async getFacets() {
         return {};
     }
 
@@ -1210,11 +1335,11 @@ class FilterProperties extends FilterFacetsBase {
     /**
      * Get the selected facets
      *
-     * Override in child classes.
-     *
      * @return {{}} An object with the property label, color and id indexed by property id.
      */
-    getFacets() {
+    async getFacets() {
+        await this.loaded;
+
         let data = {};
 
         // Clear legend color
@@ -1312,10 +1437,9 @@ class FilterSort {
     /**
      * Called by App.filter.updateWidget.
      *
-     * @param scope
      * @returns {boolean}
      */
-    updateWidget(scope) {
+    updateWidget() {
 
         if (!this.coordinator) {
             console.log('Missing coordinator.');
@@ -1344,18 +1468,16 @@ class FilterSort {
 
         // TODO: use prefix in paginator
         const prefix = this.prefix;
-        data[prefix + 'sort'] = this.getSortField();
-        data[prefix + 'direction'] = this.getSortDirection();
+        const sortField = this.getSortField();
+        if (sortField) {
+            data[prefix + 'sort'] = sortField;
+        }
+        const sortDirection = this.getSortDirection();
+        if (sortDirection) {
+            data[prefix + 'direction'] = sortDirection;
+        }
 
         return data;
-    }
-
-    /**
-     * Interface to parent filter component.
-     *
-     * @param source The filter that triggered the update
-     */
-    updateFilter(source) {
     }
 
     /**
@@ -1418,7 +1540,7 @@ class FilterTemplate {
         this.template = 'table';
         this.mode = null;
 
-        if (!this.initWidgets()) {
+        if (!this.initFilter()) {
             return false;
         }
 
@@ -1430,7 +1552,7 @@ class FilterTemplate {
      *
      * @returns {boolean} False if widgetElement does not exist
      */
-    initWidgets() {
+    initFilter() {
         if (!this.widgetElement) {
             return false;
         }
@@ -1444,11 +1566,10 @@ class FilterTemplate {
     /**
      * Called by App.filter.updateWidget.
      *
-     * @param scope
      * @returns {boolean} False if widgetElement does not exist
      */
-    updateWidget(scope) {
-        return this.initWidgets();
+    updateWidget() {
+        return this.initFilter();
     }
 
     /**
@@ -1491,7 +1612,7 @@ class FilterMap extends FilterItemWidget {
         this.inputTimeout = null;
         this.widgetMap = null;
 
-        if (!this.initWidgets()) {
+        if (!this.initFilter()) {
             return false;
         }
         this.coordinator.addFilter(this);
@@ -1502,7 +1623,7 @@ class FilterMap extends FilterItemWidget {
      *
      * @returns {boolean} False if widgetElement does not exist
      */
-    initWidgets() {
+    initFilter() {
         if (!this.widgetElement) {
             return false;
         }
@@ -1520,28 +1641,15 @@ class FilterMap extends FilterItemWidget {
         return true;
     }
 
-   /**
+    /**
      * Called by App.filter.updateWidget.
      * After the data was reloaded (by snippet replacement), update the map
      *
-     * @param scope
      * @returns {boolean} False if widgetElement does not exist
      */
 
-    updateWidget(scope) {
-        return this.initWidgets();
-    }
-
-    /**
-     * Called by App.filter after filter conditions changed
-     *
-     * @param source Current filter
-     * @returns {boolean} False if source param is current filter
-     */
-    updateFilter(source) {
-        if (source === this) {
-            return false;
-        }
+    updateWidget() {
+        return this.initFilter();
     }
 
     /**
@@ -1554,7 +1662,88 @@ class FilterMap extends FilterItemWidget {
             return {};
         }
         const mapCenter = this.widgetMap.getCenter();
-        return {'template': 'map', 'lat': mapCenter.lat, 'lng': mapCenter.lng, 'sort': 'distance', 'direction': 'asc'};
+        return {'lat': mapCenter.lat, 'lng': mapCenter.lng, 'sort': 'distance', 'direction': 'asc'};
+    }
+}
+
+
+/**
+ * Plot filter
+ *
+ * Manages the zoom parameter
+ *
+ */
+class FilterPlot extends FilterItemWidget {
+    constructor(coordinator, widgetElement) {
+        super(widgetElement, 'filterplot', coordinator);
+
+        // Init vars
+        this.coordinator = coordinator;
+        this.widgetElement = widgetElement;
+
+        if (!this.initFilter()) {
+            return false;
+        }
+        this.coordinator.addFilter(this);
+    }
+
+
+   /**
+     * Find the new widget element after results were updated
+     * because the old widget element is replaced reloading.
+     *
+     * @returns {boolean} False if widgetElement does not exist
+     */
+   initFilter() {
+       this.recoverWidgetElement('plot');
+
+       if (!this.widgetElement) {
+           return false;
+       }
+
+       if (this.widgetElement.classList.contains('widget-initialized')) {
+           return false;
+       }
+
+       // Zoomed...
+       this.listenEvent(this.widgetElement, 'epi:plot:load', (event) => this.updateResults(event));
+
+       this.widgetElement.classList.add('widget-initialized');
+       return true;
+   }
+
+    /**
+     * Called by App.filter.updateWidget.
+     * After the data was reloaded (by snippet replacement), update the plot
+     *
+     * @param scope
+     * @returns {boolean} False if widgetElement does not exist
+     */
+
+    updateWidget(scope) {
+        return this.initFilter();
+    }
+
+    /**
+     * Load results without reloading filters
+     *
+     * @param {CustomEvent} event
+     */
+    updateResults(event) {
+        this.coordinator.updateResults(this, false, false);
+    }
+
+    /**
+     * Interface to the parent filter component
+     *
+     * @returns {Object} Object that contains URL parameters
+     */
+    getUrlParams() {
+        const widgetPlot = this.getWidget(this.widgetElement, 'plot');
+        if (!widgetPlot) {
+            return {};
+        }
+        return widgetPlot.getUrlParams();
     }
 }
 
@@ -1564,6 +1753,7 @@ class FilterMap extends FilterItemWidget {
 window.App.widgetClasses = window.App.widgetClasses || {};
 window.App.widgetClasses['filter'] = FilterWidget;
 window.App.widgetClasses['filter-item-columns'] = FilterColumns;
+window.App.widgetClasses['filter-item-collapse'] = FilterCollapse;
 window.App.widgetClasses['filter-item-properties'] = FilterProperties;
 window.App.widgetClasses['filter-item-projects'] = FilterProjects;
 window.App.widgetClasses['filter-item-fixed'] = FilterFixed;

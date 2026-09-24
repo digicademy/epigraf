@@ -487,7 +487,8 @@ class ArticlesController extends AppController
      */
     public function mutate()
     {
-        return $this->Batch->mutate();
+        $params = $this->request->getQueryParams();
+        return $this->Batch->mutate(null, $params);
     }
 
 }

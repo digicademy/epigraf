@@ -25,6 +25,12 @@ class TaskBatchMerge extends BaseTaskMutate
     /**
      * Merge all properties with the same lemma path
      *
+     * Proceeds level by level, starting with the lowest level.
+     * * Within each level, follows the order of IDs.
+     * * The task parameters include `cursor`, the ID of a cursor node.
+     * * Proceeds on the cursor node's level with nodes having a higher ID,
+     * * followed by nodes on higher levels. Set `cursor` to 0 to start from the beginning.
+ *
      * @param array $taskParams
      * @param array $dataParams
      * @param int $offset First entity to mutate
@@ -39,13 +45,11 @@ class TaskBatchMerge extends BaseTaskMutate
 
         $dataParams = $model->parseRequestParameters($dataParams);
 
-        // Use cursor based pagination instead of offset
+        // Use cursor-based pagination
         if (($taskParams['cursor'] ?? 0) > 0) {
             $cursorNode = $model->find('all', ['deleted'=>[0,1]])
                 ->where(['id' => $taskParams['cursor']])
                 ->firstOrFail();
-
-//            $cursorNode = $this->get($taskParams['cursor']);
 
             $cursorConditions = [
                 'OR' => [
@@ -59,7 +63,6 @@ class TaskBatchMerge extends BaseTaskMutate
 
         $dataParams['articleCount'] = false;
         $dataParams['ancestors'] = false;
-        $dataParams['treePositions'] = false;
 
         $entities = $model
             ->find('hasParams', $dataParams)
@@ -80,7 +83,7 @@ class TaskBatchMerge extends BaseTaskMutate
             $sourceEntities = $entity->duplicates;
             $sourceIds = $sourceEntities->all()->extract('id')->toArray();
             if (!empty($sourceIds)) {
-                $model->merge($entity->id, $sourceIds, ['concat' => true]);
+                $model->merge($entity->id, $sourceIds, ['concat' => true, 'iri' => true]);
             }
         }
 

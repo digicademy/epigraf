@@ -382,43 +382,48 @@ class User extends BaseEntity
         $fields = [
             'username' => [
                 'caption' => __('Username'),
+                'action' => ['edit', 'add','view'],
                 'help' => __('The username should contain the real name of the person. Maximum length is 100 characters.')
             ],
 
             'role' => [
                 'caption' => __('Role'),
+                'action' => ['edit', 'add', 'view'],
                 'options' => PermissionsTable::$userRoles,
                 'roles' => ['admin', 'devel']
             ],
 
             'name' => [
                 'caption' => __('Name'),
+                'action' => ['edit', 'add','view'],
                 'help' => __('First and last name.')
             ],
 
             'email' => [
                 'caption' => __('Email address'),
+                'action' => ['edit', 'add','view'],
                 'help' => __('Please provide an email address to contact the user.')
             ],
 
             'contact' => [
                 'caption' => __('Contact'),
+                'action' => ['edit', 'add','view'],
                 'help' => __('Please provide additional information about how to contact the user, for example the affiliation.')
             ],
 
             'activation_state' => [
                 'caption' => __('Activation'),
-                'options' => UsersTable::$states,
-                'action' => ['view']
-            ]
+                'action' => ['view'],
+                'options' => UsersTable::$states
+            ],
         ];
 
         $loginConfig = Configure::read('Logins', ['token' => true, 'form' => true]);
         if (!empty($loginConfig['form'])) {
             $fields['password'] = [
                 'caption' => __('Password'),
-                'autocomplete' => "off",
                 'action' => ['edit', 'add'],
+                'autocomplete' => "off",
                 'display' => 'password',
                 'help' => __("Please enter a strong password and remember it well. The password can't be restored. If you loose it, you have to enter a new password.")
                     . " " . __('It must be at least 8 characters long and include an uppercase letter, a lowercase letter, a number, and a special character.')
@@ -439,6 +444,7 @@ class User extends BaseEntity
             'options' => $databanks,
             'empty' => true,
             'caption' => __('Default Database'),
+            'action' => ['edit', 'add','view'],
             'extract' => 'databank.caption',
             'help' => __('Select the database that should open after you login.')
         ];
@@ -449,6 +455,7 @@ class User extends BaseEntity
                 'options' => $pipelines,
                 'empty' => true,
                 'caption' => __('Default Article Pipeline'),
+                'action' => ['edit', 'add','view'],
                 'extract' => 'article_pipeline.name',
                 'help' => __('Only Epigraf-Desktop users: Select the pipeline that exports single articles.')
             ];
@@ -457,6 +464,7 @@ class User extends BaseEntity
                 'options' => $pipelines,
                 'empty' => true,
                 'caption' => __('Default Book Pipeline'),
+                'action' => ['edit', 'add','view'],
                 'extract' => 'book_pipeline.name',
                 'help' => __('Only Epigraf-Desktop users: Select the pipeline that exports a complete book.')
             ];
@@ -467,6 +475,7 @@ class User extends BaseEntity
                 'options' => UsersTable::$locales,
                 'empty' => true,
                 'caption' => __('Language'),
+                'action' => ['edit', 'add','view'],
                 'type' => 'select',
                 'help' => __('The language in which Epigraf talks to you.')
             ],
@@ -474,6 +483,7 @@ class User extends BaseEntity
                 'options' => UsersTable::$themes,
                 'empty' => __('Default'),
                 'caption' => __('Theme'),
+                'action' => ['edit', 'add','view'],
                 'type' => 'select',
                 'help' => __('The user interface appearance.')
             ],
@@ -497,12 +507,12 @@ class User extends BaseEntity
 
             'created' => [
                 'caption' => __('Created'),
-                'action' => 'view'
+                'action' => ['view']
             ],
 
             'modified' => [
                 'caption' => __('Modified'),
-                'action' => 'view'
+                'action' => ['view']
             ],
         ]);
 

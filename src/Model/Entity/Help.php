@@ -66,6 +66,7 @@ class Help extends Entity
                 $parser->url_filter_func = function ($url) use ($baseUrl) {
 
                     if (str_starts_with($url, '/user/')) {
+                        $url = preg_replace('/^\/epigraf\/user\//', '/help/', $url);
                         $url = preg_replace('/^\/user\//', '/help/', $url);
                     }
                     if (!str_starts_with($url, 'http') && !str_starts_with($url, '/')) {

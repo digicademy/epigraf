@@ -85,10 +85,10 @@ class ArticlesControllerTest extends EpiTestCase
         $this->assertEquals(null, $articles->version_id);
 
         $records = [
-            'sections' => 17,
-            'items' => 5,
+            'sections' => 22,
+            'items' => 18,
             'footnotes' => 1,
-            'links' => 7
+            'links' => 10
         ];
 
         // Check that sections, items, footnotes and links exist
@@ -273,6 +273,30 @@ class ArticlesControllerTest extends EpiTestCase
     }
 
     /**
+     * Test search option (HTML file)
+     *
+     * @return void
+     */
+    public function testIndexSearch()
+    {
+        $this->loginUser('admin');
+        $this->get('/epi/projects/articles?articles.term=marke&articles.field=text');
+        $this->assertHtmlEqualsComparison();
+    }
+
+    /**
+     * Test choose template (HTML file)
+     *
+     * @return void
+     */
+    public function testIndexChoose()
+    {
+        $this->loginUser('admin');
+        $this->get('/epi/projects/articles?template=choose&show=content,searchbar&targets_articles=epi-article&targets_footnotes=app1,app2&projects=1');
+        $this->assertHtmlEqualsComparison();
+    }
+
+    /**
      * Test index method (JSON file)
      *
      * @return void
@@ -370,14 +394,14 @@ class ArticlesControllerTest extends EpiTestCase
 
         // From a total of 4 articles, 2 are shown on the first page...
         $this->get('/epi/projects/articles/?limit=2&page=1&total=3');
-        $this->assertResponseContains('<span class="label actions-set-default sandwich-exclude">4 records</span>');
+        $this->assertResponseContains('<span class="label actions-set-default sandwich-exclude">9 records</span>');
         $this->assertResponseContains('data-list-action-next="/epi/projects/articles?limit=2&amp;total=3&amp;page=2"');
 
         $this->assertResponseEqualsComparison('.page1', '.content-main' );
 
         //...and one is shown on the second page
         $this->get('/epi/projects/articles/?limit=2&page=2&total=3');
-        $this->assertResponseContains('<span class="label actions-set-default sandwich-exclude">4 records</span>');
+        $this->assertResponseContains('<span class="label actions-set-default sandwich-exclude">9 records</span>');
         $this->assertResponseContains('data-list-action-next=""');
         $this->assertResponseEqualsComparison('.page2', '.content-main' );
 
@@ -426,12 +450,16 @@ class ArticlesControllerTest extends EpiTestCase
     }
 
     /**
-     * Test fulltext method
+     * Test rebuild dates task
      *
      * @return void
      */
     public function testMutateDates()
     {
+        // Clear dates
+        $conn = $this->Articles->getConnection();
+        $conn->execute('UPDATE items SET date_sort = NULL, date_start = NULL, date_end = NULL')->execute();
+
         $modifiedBefore = $this->Articles
             ->find('all')
             ->select(['id','created','modified'])

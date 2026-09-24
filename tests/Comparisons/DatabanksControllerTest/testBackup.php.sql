@@ -1,5 +1,5 @@
 /*M!999999\- enable the sandbox mode */ 
--- MariaDB dump 10.19-11.8.3-MariaDB, for debian-linux-gnu (x86_64)
+-- MariaDB dump 10.19-11.8.6-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: test_sql    Database: test_projects
 -- ------------------------------------------------------
@@ -64,9 +64,9 @@ CREATE TABLE `articles` (
 -- Dumping data for table `articles`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
-set autocommit=0;
 INSERT INTO `articles` VALUES
 (1,5,0,NULL,NULL,NULL,'2007-08-20 20:00:00','2021-05-01 16:59:54',36,1,'epi-article','dbr.rerik.alt-gaarz.glocke1','',NULL,'neu angelegt',NULL,NULL,NULL,1,'articles','projekt',''),
 (2,5,0,NULL,NULL,NULL,'2007-08-20 20:00:00','2021-05-01 16:59:54',36,1,'epi-article','dbr.rerik.alt-gaarz.glocke2','',NULL,'neu angelegt',NULL,NULL,NULL,2,'articles','projekt',''),
@@ -79,7 +79,8 @@ INSERT INTO `articles` VALUES
 (9,5,0,NULL,NULL,NULL,'2006-10-04 20:00:00','2021-05-01 16:59:54',36,3,'epi-article','dbr.klosterkirche.holztafel-biddet','Balthasar, Herzog; Erich, Herzog; Ursula, Herzogin',NULL,'',NULL,NULL,NULL,9,'articles','projekt','');
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `files`
@@ -117,12 +118,13 @@ CREATE TABLE `files` (
 -- Dumping data for table `files`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `files` WRITE;
 /*!40000 ALTER TABLE `files` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `files` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `footnotes`
@@ -174,12 +176,13 @@ CREATE TABLE `footnotes` (
 -- Dumping data for table `footnotes`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `footnotes` WRITE;
 /*!40000 ALTER TABLE `footnotes` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `footnotes` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `grains`
@@ -222,12 +225,13 @@ CREATE TABLE `grains` (
 -- Dumping data for table `grains`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `grains` WRITE;
 /*!40000 ALTER TABLE `grains` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `grains` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `items`
@@ -297,12 +301,13 @@ CREATE TABLE `items` (
 -- Dumping data for table `items`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `items` WRITE;
 /*!40000 ALTER TABLE `items` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `items` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `links`
@@ -355,12 +360,13 @@ CREATE TABLE `links` (
 -- Dumping data for table `links`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `links` WRITE;
 /*!40000 ALTER TABLE `links` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `links` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `locktable`
@@ -389,12 +395,13 @@ CREATE TABLE `locktable` (
 -- Dumping data for table `locktable`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `locktable` WRITE;
 /*!40000 ALTER TABLE `locktable` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `locktable` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `meta`
@@ -423,14 +430,15 @@ CREATE TABLE `meta` (
 -- Dumping data for table `meta`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `meta` WRITE;
 /*!40000 ALTER TABLE `meta` DISABLE KEYS */;
-set autocommit=0;
 INSERT INTO `meta` VALUES
 (228,0,'2020-08-12 10:18:51','2020-08-12 10:18:51',NULL,NULL,'db_version','4.5');
 /*!40000 ALTER TABLE `meta` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `notes`
@@ -467,12 +475,13 @@ CREATE TABLE `notes` (
 -- Dumping data for table `notes`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `notes` WRITE;
 /*!40000 ALTER TABLE `notes` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `notes` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `projects`
@@ -510,14 +519,15 @@ CREATE TABLE `projects` (
 -- Dumping data for table `projects`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-set autocommit=0;
 INSERT INTO `projects` VALUES
 (1,0,NULL,NULL,NULL,'2021-06-14 18:42:26','2022-06-18 06:13:06',1,1,NULL,NULL,'Testprojekt','TP',NULL,NULL,'bookiri');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `properties`
@@ -584,9 +594,9 @@ CREATE TABLE `properties` (
 -- Dumping data for table `properties`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `properties` WRITE;
 /*!40000 ALTER TABLE `properties` DISABLE KEYS */;
-set autocommit=0;
 INSERT INTO `properties` VALUES
 (23,0,NULL,NULL,NULL,'2008-05-05 16:50:11','2021-12-05 19:07:06',NULL,5,9,'0','alignments',NULL,NULL,NULL,'0','keine Angabe',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,9,10),
 (29,0,NULL,NULL,NULL,'2008-05-05 16:50:11','2021-12-05 19:07:06',NULL,5,37,'circ','alignments',NULL,NULL,NULL,'circ','umlaufend',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,37,38),
@@ -652,7 +662,8 @@ INSERT INTO `properties` VALUES
 (23918,0,NULL,NULL,NULL,'2020-06-02 11:37:17','2021-12-05 19:07:19',5,5,29,'gehauen','techniques',NULL,NULL,NULL,'gehauen','gehauen ',NULL,NULL,NULL,NULL,'',NULL,0,0,NULL,'',NULL,'','',NULL,NULL,NULL,NULL,0,29,46);
 /*!40000 ALTER TABLE `properties` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `sections`
@@ -701,12 +712,13 @@ CREATE TABLE `sections` (
 -- Dumping data for table `sections`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `sections` WRITE;
 /*!40000 ALTER TABLE `sections` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `sections` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `token`
@@ -736,14 +748,15 @@ CREATE TABLE `token` (
 -- Dumping data for table `token`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-set autocommit=0;
 INSERT INTO `token` VALUES
-(1,0,'2020-09-09 10:23:18','2026-04-14 08:21:09',1,1,'TESTTOKENAUTHOR','1234');
+(1,0,'2020-09-09 10:23:18','2020-10-29 12:00:58',1,1,'TESTTOKENAUTHOR','1234');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `types`
@@ -784,12 +797,13 @@ CREATE TABLE `types` (
 -- Dumping data for table `types`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `types` WRITE;
 /*!40000 ALTER TABLE `types` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `types` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 
 --
 -- Table structure for table `users`
@@ -823,12 +837,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
+SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-set autocommit=0;
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-commit;
+COMMIT;
+SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -839,4 +854,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-04-14 10:21:12
+-- Dump completed on 2026-08-22 13:32:10

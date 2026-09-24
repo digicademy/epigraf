@@ -1,0 +1,73 @@
+# LANGUAGE translation of Epigraf
+msgid ""
+msgstr ""
+"Project-Id-Version: Epigraf 5\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-08-15 11:54+0200\n"
+"PO-Revision-Date: 2026-09-20 20:24+0200\n"
+"Last-Translator: Epigraf Team\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.9\n"
+
+#: plugins/Epi/webroot/js/models.js:2275 plugins/Epi/webroot/js/models.js:2276
+msgid "Footnote"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/documents.js:835
+#: plugins/Widgets/webroot/js/documents.js:940
+msgid "Apply"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/documents.js:940
+#: plugins/Widgets/webroot/js/frames.js:1124
+#: plugins/Widgets/webroot/js/frames.js:1125
+msgid "Close"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/frames.js:963
+#: plugins/Widgets/webroot/js/frames.js:1259
+msgid "Reloading document"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/frames.js:1112
+#: plugins/Widgets/webroot/js/frames.js:1113
+msgid "Open in new tab"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/map.js:174
+msgid "verified"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/map.js:176
+msgid "presumed"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/map.js:178
+msgid "unverified"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/services.js:139
+msgid "Stop"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/services.js:141
+msgid "Please stand by, weaving the words may take a minute."
+msgstr ""
+
+#: plugins/Widgets/webroot/js/services.js:148
+#: plugins/Widgets/webroot/js/services.js:433
+msgid "Invalid service data"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/services.js:157
+msgid "Invalid service input"
+msgstr ""
+
+#: plugins/Widgets/webroot/js/services.js:168
+#: plugins/Widgets/webroot/js/services.js:241
+msgid "An error occurred"
+msgstr ""

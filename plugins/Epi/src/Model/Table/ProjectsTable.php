@@ -367,7 +367,7 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
     }
 
     /**
-     * Constructs a database query from request parameters
+     * Find projects based on parsed request parameters
      *
      * //TODO: split into finders, see the implementation in ArticlesTable.php
      *

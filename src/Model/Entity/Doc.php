@@ -191,7 +191,7 @@ class Doc extends BaseEntity implements LockInterface
         if ($this->table->config['norm_iri'] ?? false) {
             $frontendfields = [
                 'norm_iri' => [
-                    'caption' => __('Pretty URL (iri)'),
+                    'caption' => __('Pretty URL (IRI)'),
                     'action' => ['edit', 'add']
                 ],
 

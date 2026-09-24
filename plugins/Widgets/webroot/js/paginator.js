@@ -77,8 +77,6 @@ export class ScrollPaginator extends BaseWidget {
             this.listenEvent(this.tabsheet, 'epi:show:tabsheet', () => this.seekRow());
         }
 
-        this.updateWidget();
-
         // Listen for row updates
         document.addEventListener('epi:cancel:row',(event) => this.onUpdateRow(event));
         document.addEventListener('epi:update:row',(event) => this.onUpdateRow(event));
@@ -88,20 +86,21 @@ export class ScrollPaginator extends BaseWidget {
     }
 
     /**
-     * Init list of scrollbox.
+     * Find the list that should be handled by the paginator
+     *
      */
     initList() {
-        this.dataList = this.widgetElement.querySelector('[data-list-name]');
+        this.dataList = Utils.querySelectorUnnested(this.widgetElement, '.widget-scrollbox', '[data-list-name]')
         this.listName = this.dataList ? this.dataList.dataset.listName : null;
 
         this.modelName = Utils.querySelectorData(this.widgetElement, '[data-model]', 'model', '');
         const tableName = this.modelName.split('.',2);
         this.tableName = tableName.length === 1 ? tableName[0] : tableName[1];
 
-        const treeWidgetElement = this.widgetElement.querySelector('.widget-tree');
+        const treeWidgetElement = Utils.querySelectorUnnested(this.widgetElement, '.widget-scrollbox', '.widget-tree');
         this.treeWidget = this.getWidget(treeWidgetElement, 'tree', false);
 
-        const tableWidgetElement = this.widgetElement.querySelector('.widget-table');
+        const tableWidgetElement = Utils.querySelectorUnnested(this.widgetElement, '.widget-scrollbox', '.widget-table');
         this.tableWidget = this.getWidget(tableWidgetElement, 'table', false);
 
     }
@@ -114,7 +113,7 @@ export class ScrollPaginator extends BaseWidget {
      * Update widget after events, for example when filter widget is updated.
      */
     updateWidget() {
-        this.initList();
+
         this.seekRow();
 
         if (this.treeWidget) {
@@ -133,15 +132,21 @@ export class ScrollPaginator extends BaseWidget {
      * @param event Click
      */
     onHeaderClicked(event) {
-        if (!event.target.closest('thead a') || !this.widgetElement.contains(event.target)) {
+        const link = event.target.closest('thead a');
+        if (!link || !this.widgetElement.contains(event.target)) {
             return;
         }
-
 
         event.preventDefault();
         App.showLoader();
 
-        const url = event.target.closest('thead a').getAttribute('href');
+        // Extend sorting, eventually
+        let url = link.getAttribute('href');
+        const table = event.target.closest('table.recordlist');
+        if (event.shiftKey && table && Utils.isTrue(table.dataset.sortmulti)) {
+            url = this.updateSortParams(url, link);
+        }
+
         this.pushHistory = window.history.pushState && url && !this.isInFrame();
 
         $.ajax({
@@ -178,6 +183,54 @@ export class ScrollPaginator extends BaseWidget {
                 App.hideLoader();
             }
         });
+    }
+
+    /**
+     * Add sort parameters in `url` by reading the corresponding data-attributes of the table
+     *
+     * @param {string} url
+     * @param {HTMLElement} link
+     * @returns {string}
+     */
+    updateSortParams(url, link) {
+
+        const [baseUrl, queryString] = url.split('?');
+        const searchParams = new URLSearchParams(queryString || '');
+        const col = searchParams.get('sort') ?? (link.closest('th').dataset.col ?? '');
+        if (!col) {
+            return url;
+        }
+
+        const table = link.closest('table.recordlist');
+        const sortKeys = table.dataset.sortkey ? table.dataset.sortkey.split(",") : [];
+        const sortDirs = table.dataset.sortdir ? table.dataset.sortdir.split(",") : [];
+
+
+        const sortToggle = {asc: 'desc', desc: 'asc'};
+        const currentPos = sortKeys.findIndex((entry) => {
+            return entry === col;
+        });
+        let currentDir = 'asc';
+        if (currentPos >= 0) {
+            currentDir = sortToggle[sortDirs[currentPos]];
+            sortDirs[currentPos] = currentDir;
+        }
+
+        if (currentPos < 0) {
+            sortKeys.unshift(col);
+            sortDirs.unshift(currentDir);
+        }
+        // Bring this column to the front
+        else {
+            sortKeys.unshift(sortKeys.splice(currentPos, 1)[0]);
+            sortDirs.unshift(sortDirs.splice(currentPos, 1)[0]);
+        }
+
+        searchParams.set('sort', sortKeys.join(','));
+        searchParams.set('direction', sortDirs.join(','));
+
+        return `${baseUrl}?${searchParams.toString()}`;
+
     }
 
     /**
@@ -232,12 +285,14 @@ export class ScrollPaginator extends BaseWidget {
      * @param {boolean} open Open the row
      */
     seekRow(id, open = false) {
+
         this.initList();
         if (!this.dataList) {
             return;
         }
 
         let row;
+
 
         if (id) {
             row = this.dataList.querySelector('[data-id="' + id + '"]');
@@ -626,14 +681,16 @@ export class ScrollPaginator extends BaseWidget {
         items.forEach(item => {
 
             // For child cursors, don't leave the subtree
-            if (item && item.dataset.cursorId &&
-                stopNode && (Number(item.dataset.level) <= Number(stopNode.dataset.level))
-            ) {
-                stopped = true;
-            }
+            if (dir === 'next') {
+                if (item && item.dataset.cursorId &&
+                    stopNode && (Number(item.dataset.level) <= Number(stopNode.dataset.level))
+                ) {
+                    stopped = true;
+                }
 
-            if (stopped) {
-                return;
+                if (stopped) {
+                    return;
+                }
             }
 
             // Skip cursor nodes pointing in the wrong direction
@@ -756,7 +813,8 @@ export class ScrollPaginator extends BaseWidget {
                 if (reference) {
                     reference = this.dataList.insertBefore(item, reference);
                 } else {
-                    reference = this.dataList.prepend(item);
+                    this.dataList.prepend(item);
+                    reference = item;
                 }
             }
 
@@ -765,7 +823,8 @@ export class ScrollPaginator extends BaseWidget {
                 if (reference) {
                     reference = this.dataList.insertBefore(item, reference.nextElementSibling);
                 } else {
-                    reference = this.dataList.append(item);
+                    this.dataList.append(item);
+                    reference = item;
                 }
             }
 

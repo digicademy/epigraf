@@ -27,6 +27,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Hash;
 use Cake\Validation\Validator;
 use Epi\Model\Entity\Property;
 use Epi\Model\Traits\TransferTrait;
@@ -119,7 +120,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         'seek' => 'raw',
         'cursor' => 'raw',
         'direction' => 'raw',
-        'collapsed' => 'raw',
+        'collapsed' => 'boolean',
 //        'level' => 'raw','
 
         'selected' => 'list',
@@ -137,52 +138,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
             'field' => 'raw',
             'term' => 'raw',
             'date' => 'string'
-        ]
-    ];
-
-    /**
-     * Search fields, overrides BaseTable->searchFields
-     *
-     * @var array[]
-     */
-    public $searchFields = [
-        'all' => [
-            'caption' => 'Alle',
-            'scopes' => [
-                'Properties.lemma',
-                'Properties.name',
-                'Properties.keywords',
-                'Properties.norm_iri',
-                'Properties.norm_data',
-                'Properties.id' => ['type' => 'integer', 'operator' => '=']
-            ],
-            'default' => true
-        ],
-        'lemma' => [
-            'caption' => '- Bezeichnung',
-            'scopes' => ['Properties.lemma', 'Properties.name'],
-            'default' => true
-        ],
-        'keywords' => [
-            'caption' => '- Keywords',
-            'scopes' => ['Properties.keywords'],
-            'configurable' => 'true'
-        ],
-        'norm_iri' => [
-            'caption' => '- IRI Fragment',
-            'scopes' => ['Properties.norm_iri'],
-            'default' => true
-        ],
-        'norm_data' => [
-            'caption' => '- Norm data',
-            'scopes' => ['Properties.norm_data']
-        ],
-        'id' => [
-            'caption' => '- ID',
-            'scopes' => ['Properties.id'],
-            'default' => true,
-            'type' => 'integer',
-            'operator' => '='
         ]
     ];
 
@@ -208,7 +163,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         parent::initialize($config);
         $this->setTable('properties');
 
-        $this->addBehavior('Epi.XmlStyles', ['fields' => ['content', 'elements', 'source_from']]);
+        $this->addBehavior('Epi.XmlStyles', ['fields' => ['lemma', 'name', 'content', 'elements', 'source_from']]);
         $this->addBehavior('VersionedTree', [
             'level' => 'level',
             'recoverOrder' => 'lft',
@@ -581,8 +536,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
     {
         $treeTerms = $params['find'] ?? '';
         $treeTerms = str_replace('*', '%', $treeTerms);
-        $treeTerms = str_replace(['›', '-', '~'], '>', $treeTerms);
-        $treeTerms = array_filter(explode('>', $treeTerms));
+        $delimiters = ['-', '~', '>', '›'];
+        $treeTerms = Arrays::explodeEscaped($treeTerms, $delimiters);
 
         $treeField = $this->getDatabase()->types['properties'][$params['propertytype']]['merged']['displayfield'] ?? '';
         if (empty($treeField)) {
@@ -663,7 +618,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
     }
 
     /**
-     * Find properties by query parameters
+     * Find properties based on parsed request parameters
      *
      * @param Query $query
      * @param array $options
@@ -678,6 +633,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
             'id' => null,
             'ancestors' => true,
             'published' => null,
+            'articleCount' => true,
             'articles' => []
         ];
         $params = array_merge($default, $options);
@@ -686,21 +642,16 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         // TODO: Why here? Move to findContain*
         $query = $query->contain(['Types', 'LinksFrom', 'LinksFrom.Properties']);
 
-        //Property type
         $query = $query->where(['Properties.propertytype' => $params['propertytype']]);
+
         $query = $query->find('withRelated', $params);
         $query = $query->find('hasTerm', $params);
         $query = $query->find('hasArticleOptions', $params);
         $query = $query->find('hasIds', $params);
         $query = $query->find('hasPublicationState', $params);
         $query = $query->find('withAncestors', $params);
-
-        if ($options['articleCount'] ?? true) {
-            $query = $query->find('articleCount', $params);
-        }
-        if ($options['treePositions'] ?? true) {
-            $query = $query->find('treePositions');
-        }
+        $query = $query->find('articleCount', $params);
+        $query = $query->find('treePositions', $params);
 
         return $query;
     }
@@ -748,7 +699,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
 
         if (!empty($term) && !empty($field)) {
 
-            $searchConfig = $this->getConfiguredSearchFields($options)[$field] ?? [];
+            $searchConfig = $this->getSearchFields($field, $options['propertytype'] ?? null);
 
             $query = $query->find('term', [
                 'term' => $term,
@@ -815,18 +766,18 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
     }
 
     /**
-     * Find by ID
+     * Find by property IDs
      *
      * @param Query $query
-     * @param array $options Set 'id' to the property ID.
+     * @param array $options Set 'id' to an array of property IDs.
      * @return Query
      */
     public function findHasIds(Query $query, array $options)
     {
-        $propertyId = $options['id'] ?? $options['properties'] ?? null;
-        if ($propertyId !== null) {
+        $ids = $options['id'] ?? $options['properties'] ?? null;
+        if ($ids !== null) {
             $query = $query
-                ->where(['Properties.id IN' => $propertyId])
+                ->where(['Properties.id IN' => $ids])
                 ->contain(['Preceding']);
         }
 
@@ -973,12 +924,18 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
     /**
      * Add article count to query
      *
+     * Adds the article count to properties if the 'articleCount' value of $options is set to true.
+     *
      * @param Query $query
      * @param array $options
      *
      */
     public function findArticleCount(Query $query, array $options)
     {
+        if (empty($options['articleCount'])) {
+            return $query;
+        }
+
         $query = $query->formatResults(
             function (CollectionInterface $results) use ($options) {
                 // Get article count for each result row
@@ -1517,6 +1474,62 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         return $query;
     }
 
+    public function findLegend(Query $query, array $options): Query
+    {
+        // Expand flat array to multidemensional array
+        $properties = $options['properties'] ?? [];
+        if (empty($properties)) {
+            $properties = [];
+        }
+        elseif (!is_array($properties)) {
+            $properties = ['' => $properties];
+        }
+        elseif (!empty($properties) && !is_array(reset($properties))) {
+            $properties = ['' => $properties];
+        }
+
+        // Selected IDs
+        $propertyIds = [];
+        $propertyGrps = [];
+        foreach ($properties as $propertyType => $propertyParams) {
+            if (!empty($propertyParams['selected'])) {
+                $propertyIds = array_merge($propertyIds, $propertyParams['selected']);
+                if (in_array('grp', $propertyParams['flags'] ?? [])) {
+                    $propertyGrps = array_merge($propertyGrps, $propertyParams['selected']);
+                }
+            }
+        }
+
+        $colorPalette = [
+            '#E69F00',
+            '#56B4E9',
+            '#009E73',
+            '#bb3fc3',
+            '#0072B2'
+        ];
+
+        if (empty($propertyIds)) {
+           return $query->where(['1=0']);
+        }
+
+        $query = $query
+            ->find('containAncestors')
+            ->order(['Properties.propertytype' => 'ASC', 'Properties.lft' => 'ASC'])
+            ->where(['Properties.id IN' => $propertyIds])
+            ->formatResults(function (CollectionInterface $results) use ($propertyGrps, $colorPalette) {
+                $colorIdx = 0;
+                return $results->map(function ($item) use ($propertyGrps, $colorPalette, &$colorIdx) {
+                    if (in_array($item['id'], $propertyGrps)) {
+                        $item['color'] = $colorPalette[$colorIdx % count($colorPalette)];
+                        $colorIdx++;
+                    }
+                    return $item;
+                });
+            });
+
+        return $query;
+    }
+
     /**
      * Find the complete property
      *
@@ -1928,7 +1941,10 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
      */
     public function getFilter($params)
     {
-        $filter = parent::getFilter($params);
+        $searchFields = $this->getSearchFields(null, $params['propertytype'] ?? null);
+        $captions = Hash::extract($searchFields, '{*}.caption');
+        $searchFields = array_combine(array_keys($searchFields), $captions);
+        $filter = ['search' => $searchFields];
 
         $projectsTable = TableRegistry::getTableLocator()->get('Epi.Projects');
         $projects = $projectsTable-> find('list')->toArray();
@@ -1937,69 +1953,61 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         return $filter;
     }
 
-    protected function getConfiguredSearchFields($params = []) {
+    /**
+     * Based on the searchFields property of the table,
+     * overwrite the defaults with the types configuration for the given property type.
+     *
+     * @param string|null $fieldName Leave empty to get all, or select a specific field.
+     * @param string|null $typeName The type name to look up in the types configuration for the current table.
+     * @return array[]
+     */
+    protected function getSearchFields($fieldName = null, $typeName = null): array {
 
-        if (!($params['propertytype'] ?? false)) {
-            return $this->searchFields;
-        }
-
-        $fieldsConfig = $this->getDatabase()->types['properties'][$params['propertytype']]['merged']['fields'] ?? [];
-        if (empty($fieldsConfig)) {
-            return $this->searchFields;
-        }
-
-        // default search fields
-        $searchFields = [];
-        foreach ($this->searchFields as $field => $spec) {
-            if ($spec['default'] ?? false) {
-                $candidate = array_slice($spec, 0);
-                if ($fieldsConfig[$field]['caption'] ?? false) {
-                    $candidate['caption'] = '- ' . $fieldsConfig[$field]['caption'];
-                    unset($fieldsConfig[$field]);
-                }
-                else {
-                    if ($fieldsConfig[$field] ?? false) {
-                        $candidate['caption'] = '- '. $fieldsConfig[$field];
-                        unset($fieldsConfig[$field]);
-                    }
-                }
-                $searchFields[$field] = $candidate;
-            }
-        }
-
-        // configured search fields
-        $baseScope = ucfirst($this->getTable());
-        $contentSearchFields = [];
-        foreach($fieldsConfig as $field => $config) {
-            if (($config['caption'] ?? false) && ($config['searchfield'] ?? false)) {
-                $caption = $config['caption'];
-                $contentSearchFields[$field] = [
-                    'caption' => '- '. $caption,
-                    'scopes' => [$baseScope . '.' . $field]
-                ];
-            }
-        }
-
-        //  group configured search fields
-        if (!empty($contentSearchFields)) {
-            $scopeElements = array_column($contentSearchFields, 'scopes');
-            $mergedScopes = array_merge(...$scopeElements);
-            $searchFields['groupedContent'] = [
-                'caption' => 'Inhalt', // __('Content'),
-                'scopes' => Arrays::array_unique_mixed($mergedScopes)
+        // Hard-coded search fields
+        if (empty($this->searchFields)) {
+            $this->searchFields =  [
+                'all' => [
+                    'caption' => __('All'),
+                    'scopes' => [
+                        'Properties.lemma',
+                        'Properties.name',
+                        'Properties.keywords',
+                        'Properties.norm_iri',
+                        'Properties.norm_data',
+                        'Properties.id' => ['type' => 'integer', 'operator' => '=']
+                    ],
+                    'default' => true
+                ],
+                'lemma' => [
+                    'caption' => __('- Lemma'),
+                    'scopes' => ['Properties.lemma', 'Properties.name'],
+                    'default' => true
+                ],
+                'keywords' => [
+                    'caption' => __('- Keywords'),
+                    'scopes' => ['Properties.keywords'],
+                    'configurable' => 'true'
+                ],
+                'norm_iri' => [
+                    'caption' => __('- IRI fragment'),
+                    'scopes' => ['Properties.norm_iri'],
+                    'default' => true
+                ],
+                'norm_data' => [
+                    'caption' => __('- Norm data'),
+                    'scopes' => ['Properties.norm_data']
+                ],
+                'id' => [
+                    'caption' => __('- ID'),
+                    'scopes' => ['Properties.id'],
+                    'default' => true,
+                    'type' => 'integer',
+                    'operator' => '='
+                ]
             ];
         }
-        $searchFields = array_merge($searchFields, $contentSearchFields);
 
-        // set scopes for 'all'
-        if ($searchFields['all'] ?? false) {
-            $scopeElements = array_column($searchFields, 'scopes');
-            $mergedScopes = array_merge(...$scopeElements);
-            $searchFields['all']['scopes'] = Arrays::array_unique_mixed($mergedScopes);
-        }
-
-        return $searchFields;
-
+        return parent::getSearchFields($fieldName, $typeName);
     }
 
     /**
@@ -2189,7 +2197,8 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
 
         // Merge field content
         if ($options['concat'] ?? false) {
-            $propertySources = $this->find('all')
+            $propertySources = $this
+                ->find('all')
                 ->where(['Properties.id IN' => $propertySourceIds]);
 
             // Merge fields
@@ -2226,10 +2235,12 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
             }
 
             // Don't merge IRIs if they are different
-            foreach ($propertySources as $propertySource) {
-                if ($propertySource->norm_iri !== $propertyTarget->norm_iri) {
-                    $propertyTarget->norm_iri = null;
-                    break;
+            if (!Attributes::isBlank($propertyTarget->norm_iri)) {
+                foreach ($propertySources as $propertySource) {
+                    if ($propertySource->norm_iri !== $propertyTarget->norm_iri) {
+                        $propertyTarget->norm_iri = empty($options['iri']) ? null : ('merged~' . $propertyTarget->norm_iri);
+                        break;
+                    }
                 }
             }
         }

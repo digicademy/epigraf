@@ -468,6 +468,27 @@ class Attributes
     }
 
     /**
+     * Convert a regex pattern to an input pattern by adding wildcards if there are no anchors
+     *
+     * @param string $pattern
+     * @return string
+     */
+    public static function regexToInputPattern($pattern) {
+
+        // No starting anchor, so we add a wildcard to allow for additional characters
+        if (!preg_match('/^\^/', $pattern)) {
+            $pattern = '.*' . $pattern;
+        }
+
+        // No closing anchor, so we add a wildcard to allow for additional characters
+        if (!preg_match('/\$$/', $pattern)) {
+            $pattern .= '.*';
+        }
+
+        return $pattern;
+    }
+
+    /**
      * Get key-value-pairs as HTML string to be used in HTML attributes
      *
      * ### Array structure
@@ -662,10 +683,14 @@ class Attributes
      * @param string $id
      * @param string $replacer Character used to replace special characters
      * @param bool $lower Whether to convert to lower case
+     * @param string $specials Additional characters that are allowed and not replaced (directly passed to the regex)
+     *                         TODO: In a former version, this included the dot - necessary for files? $specials = '+_.~-'
      * @return string
      */
-    public static function cleanIdentifier($id, $replacer = '-', $lower = true)
+    public static function cleanIdentifier($id, $replacer = '-', $lower = true, $specials = '+_~-')
     {
+        $id = trim($id);
+
         if ($lower) {
             $id = mb_strtolower($id);
         }
@@ -675,16 +700,33 @@ class Attributes
             'ä' => 'ae',
             'ö' => 'oe',
             'ß' => 'ss',
+            'Ü' => 'Ue',
+            'Ä' => 'Ae',
+            'Ö' => 'Oe',
             '(' => '-',
             ')' => ''
         ];
 
         $id = str_replace(array_keys($replacements), array_values($replacements), $id);
 
-        $id = preg_replace('/[^a-zA-Z0-9+_.~-]/', $replacer, $id);
+        $id = preg_replace('/[^a-zA-Z0-9' . $specials . ']/', $replacer, $id);
         $id = preg_replace('/' . $replacer . '+/', $replacer, $id);
+
+        # TODO: Collapse all specials
         $id = preg_replace('/[.]+/', '.', $id);
+
         return $id;
+    }
+
+    /**
+     * Extract a number from a string.
+     *
+     * @param {string} value The input string that contains the number and additional content.
+     * @returns {string} The first number found in the string or an empty string if no number is found.
+     */
+    public static function extractNumber($value) {
+        $value = preg_match('/\d+/', $value, $matches);
+        return $value ? $matches[0] : '';
     }
 
     /**
@@ -975,8 +1017,8 @@ class Attributes
 
     /**
      * Determine whether a value is a literal or an IRI,
-     * convert them to relative IRIs if necessary
-     * or expand them if necessary.
+     * convert it to a relative IRI if necessary
+     * or expand it if necessary.
      *
      * Literals with '^^' are considered to be typed literals.
      * The type is the part after '^^'.

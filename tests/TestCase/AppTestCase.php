@@ -705,7 +705,7 @@ class AppTestCase extends TestCase
      *
      * @return string
      */
-    public function saveComparisonXml($data, $suffix = '')
+    public function saveComparisonXml($data, $suffix = '', $rootElement = 'ram')
     {
 
         $filename = $this->comparisonFile . $suffix;
@@ -716,7 +716,7 @@ class AppTestCase extends TestCase
             $filename .= '.xml';
         }
 
-        $data = '<response>' . $data . '</response>';
+        $data = '<' . $rootElement . '>' . $data . '</' . $rootElement. '>';
         file_put_contents($filename, $data);
         return $data;
     }

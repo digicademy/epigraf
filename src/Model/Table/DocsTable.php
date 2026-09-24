@@ -313,7 +313,7 @@ class DocsTable extends BaseTable implements ScopedTableInterface
     }
 
     /**
-     * Constructs a database query from request parameters
+     * Find docs based on parsed request parameters
      *
      * @param \Cake\ORM\Query $query
      * @param array $params Request parameters

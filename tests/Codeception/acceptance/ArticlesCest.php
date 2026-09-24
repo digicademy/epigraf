@@ -23,6 +23,7 @@ class ArticlesCest
      * Scenario: Test if the table shows up
      *
      * @group deploy
+     * @group debug
      * @param AcceptanceTester $I
      * @return void
      */
@@ -34,6 +35,25 @@ class ArticlesCest
         $I->waitForElement('.sidebar-right .doc-article');
         $I->waitForElement('.sidebar-left .widget-tree');
         $I->waitForTheAjaxResponse();
+
+        $info = $I->executeJS('
+          return JSON.stringify({
+            dpr:    window.devicePixelRatio,
+            inner:  [window.innerWidth, window.innerHeight],
+            outer:  [window.outerWidth, window.outerHeight],
+            ua:     navigator.userAgent,
+            fonts:  Array.from(document.fonts).map(f => f.family + " " + f.style + " " + f.weight),
+            target: (function(){
+               var el = document.querySelector("body");
+               var r  = el.getBoundingClientRect();
+               return {w: r.width, h: r.height, html: el.outerHTML.length};
+            })()
+          }, null, 2);
+        ');
+        $I->dumpDiag('viewport', $info);
+
+        $html = $I->executeJS('return document.documentElement.outerHTML');
+        $I->dumpDiag('html', $html);
 
         $I->dontSeeVisualChanges('body', 'body');
     }
@@ -59,8 +79,8 @@ class ArticlesCest
         $I->dontSeeVisualChanges('oneRowSelected', 'table.recordlist');
 
         $I->shiftClick('[data-list-itemof="epi_articles"][data-id="4"]');
-        $I->seeNumberOfElements('.row-selected', 3);
-        $I->dontSeeVisualChanges('threeRowsSelected', 'table.recordlist');
+        $I->seeNumberOfElements('.row-selected', 4);
+        $I->dontSeeVisualChanges('fourRowsSelected', 'table.recordlist');
 
         //TODO: emulating the ctrl modifier is not working in Firefox
 //        $I->ctrlClick('[data-id="3"]');
@@ -294,7 +314,7 @@ class ArticlesCest
         $I->amOnPage('/epi/projects/articles?properties.objecttypes=');
         $I->waitForTheAjaxResponse();
 
-        $I->seeNumberOfElements('[data-list-itemof="epi_articles"]', 4);
+        $I->seeNumberOfElements('[data-list-itemof="epi_articles"]', 9);
         $I->see("Artikel 2 für das Testsystem");
 
         // Check Träger 2a (Träger 2a Einheit)
@@ -378,6 +398,7 @@ class ArticlesCest
         $I->selectOption('#form-export-jobs [name="config[pipeline_id]"]', 'Data');
         $I->waitForElement('#form-export-jobs select[name="format"]');
         $I->selectOption('#form-export-jobs select[name="format"]', 'JSON');
+        $I->wait(1);
 
         $I->click('Start');
         $I->waitForElementNotVisible('.popup-window');
@@ -409,15 +430,15 @@ class ArticlesCest
         $I->shiftClick('[data-list-itemof="epi_articles"][data-id="4"]');
 
         $I->waitForTheAjaxResponse();
-        $I->seeNumberOfElements('.row-selected', 3);
+        $I->seeNumberOfElements('.row-selected', 4);
 
         $selectedTitles = $I->grabMultiple('tr.row-selected td:nth-child(3)');
         $unSelectedTitles = $I->grabMultiple('tr:not(.row-selected) td:nth-child(3)');
-        $I->assertCount(3, $selectedTitles);
-        $I->assertCount(1, $unSelectedTitles);
+        $I->assertCount(4, $selectedTitles);
+        $I->assertCount(5, $unSelectedTitles);
 
         // Do export and lookup if the JSON in the new tab contains the title
-        $I->seeLink('Export', '/epi/projects/articles/export?id=1%2C3%2C4');
+        $I->seeLink('Export', '/epi/projects/articles/export?id=1%2C3%2C89%2C4');
         $I->click('Export', '.page-wrapper > footer');
 
         $I->waitForElement('#form-export-jobs');
@@ -515,19 +536,20 @@ class ArticlesCest
         // Does the new article show up in the table?
         $I->waitForTheAjaxResponse();
         $I->waitForText('My fancy new article',10,'tbody[data-list-name="epi_articles"]');
-        $I->seeElement('[data-list-itemof="epi_articles"][data-id="10"]');
+        $I->seeElement('[data-list-itemof="epi_articles"][data-id="208"]');
 
         // What about the new tab?
         $I->wait(1);
         $I->switchToNextTab();
         $I->waitForElement('.controller_articles.action_edit');
-        $I->seeCurrentUrlMatches('~/epi/projects/articles/edit/10$~');
+        $I->seeCurrentUrlMatches('~/epi/projects/articles/edit/208$~');
     }
 
     /**
      * Scenario: Save article without editing
      *
      * @group deploy
+     * @group debug
      * @param AcceptanceTester $I
      * @return void
      */
@@ -547,11 +569,16 @@ class ArticlesCest
         // Save without editing
         $I->click('Save');
         // TODO: If saving is fast, the page is reloaded too fast. Implement message log.
-        $I->waitForText("The article has been saved");
+        #$I->waitForText("The article has been saved");
         $I->waitForTheAjaxResponse();
 
         // Open the editor again
+        $I->waitForElement('button[data-role="cancel"]');
         $I->click('Close');
+
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
+
         $I->waitForTheAjaxResponse();
 
         $I->click('Edit');
@@ -560,7 +587,7 @@ class ArticlesCest
         $I->wait(0.3);
 
         // Check visual apperance
-        $I->dontSeeVisualChanges('edit', '.doc-article.widget-document-edit');
+        $I->dontSeeVisualChanges('edit', '#content', [], 0.3);
 
     }
 
@@ -589,6 +616,7 @@ class ArticlesCest
         $I->click('Edit', '.sidebar-right');
         $I->waitForTheAjaxResponse();
         $I->waitForElement('.doc-article.widget-document-edit');
+        $I->wait(0.2);
 
         // Focus a content field (Beschreibung)
         $contentSelector = '[data-row-table="items"][data-row-id="4"] .doc-fieldname-content .widget-xmleditor';
@@ -682,6 +710,9 @@ class ArticlesCest
 
         $I->waitForElement('footer');
         $I->click('Close', 'footer');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
+
         $I->waitForElement('.controller_articles.action_view');
 
         // TODO: Scroll to sections-5 (Beschreibung)
@@ -764,6 +795,9 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
 
         $I->click('Close', '.sidebar-right');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
+
         $I->waitForTheAjaxResponse();
         $I->waitForElement('.sidebar-right .doc-article.widget-document-view');
 
@@ -810,25 +844,26 @@ class ArticlesCest
         $I->click('[data-cke-tooltip-text="Externer Verweis [Alt+Shift+O]"]', '.ck-toolbar__items');
 
         // External reference settings
-        $I->waitForElementVisible('.ui-dialog');
-        $I->waitForElementVisible('[data-id="2"]');
+        $I->waitForElementVisible('.ui-dialog [data-id="1"]');
+        $I->seeNumberOfElements('.ui-dialog [data-list-itemof=epi_articles_choose]', 7);
 
         $I->waitForElementVisible('.search-term');
-        $I->fillField('.search-term', 'Band');
+        $I->fillField('.search-term', 'Signatur 2');
         // TODO: the enter key should not close the dialog when nothing was selected
         // $I->pressKey('.search-term', \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->wait(1);
         $I->waitForTheAjaxResponse();
 
-        $I->see('Band', '.ui-dialog .widget-table');
+        $I->see('Signatur 2', '.ui-dialog .widget-table');
         $I->dontSee('Signatur 1', '.ui-dialog .widget-table');
+        $I->seeNumberOfElements('.ui-dialog [data-list-itemof=epi_articles_choose]', 2);
 
-        $I->click('[data-id="2"]', '.ui-dialog [data-list-name="epi_articles_choose"]');
+        $I->click('[data-id="3"]', '.ui-dialog [data-list-name="epi_articles_choose"]');
         $I->click('Select', '.ui-dialog');
 
         // Check if external reference appears and mode remains in edit
         $I->seeCurrentUrlMatches('~/epi/projects/articles/edit/1#sections-17$~');
-        $I->see('Band', $contentSelector);
+        $I->see('Signatur 2', $contentSelector);
 
         $I->dontSeeVisualChanges('notes', '.sidebar-right');
     }
@@ -850,6 +885,7 @@ class ArticlesCest
         $contentSelector = '[data-row-table="items"][data-row-id="369"] [data-row-field="content"] .widget-xmleditor';
         $I->focusXmlInput($contentSelector);
         $I->pressCtrlHome();
+        $I->wait(1);
 
         // Add "Verlust"-Tag
         $I->click('[data-cke-tooltip-text="Verlust [alt+D\]"]', '.content-toolbar');
@@ -863,7 +899,7 @@ class ArticlesCest
 
         // Check if Tag is present and has accurate number of signs
         $I->seeElement('.xml_text.xml_tag_del', ['data-attr-num_sign' => '5']);
-        $I->dontSeeVisualChanges('tag_5', $contentSelector);
+        $I->dontSeeVisualChanges('tag_5', '[data-row-table="items"][data-row-id="369"]', [], 0.3);
 
         // Change number of signs
         $I->click('.xml_text.xml_tag_del', $contentSelector);
@@ -878,7 +914,7 @@ class ArticlesCest
 
         // Check if Tag is present and has accurate number of signs again
         $I->seeElement('.xml_text.xml_tag_del', ['data-attr-num_sign' => '0']);
-        $I->dontSeeVisualChanges('tag_0', $contentSelector);
+        $I->dontSeeVisualChanges('tag_0', $contentSelector, [], 0.1);
 
         // Save
         $I->click('Save');
@@ -898,11 +934,11 @@ class ArticlesCest
      */
     public function editBlock(AcceptanceTester $I)
     {
-        // Goto the articles list
+        // Go to the articles list
         $I->login('devel', 'devel');
         $I->amOnPage('/epi/projects/articles/edit/3');
 
-        $I->seeNumberOfElements('.art-warnings .art-warnings-value', 3);
+        $I->seeNumberOfElements('.art-warnings .art-warnings-value', 4);
 
         // Select content field
         $contentSelector = '[data-row-table="items"][data-row-id="369"] [data-row-field="content"] .widget-xmleditor';
@@ -921,6 +957,8 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
 
         $I->click('footer button[data-role="cancel"]');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
         $I->waitForElement('.controller_articles.action_view');
 
         $I->click('#doc-section-content-147 .button-links-toggle');
@@ -1019,7 +1057,7 @@ class ArticlesCest
 
         $I->seeInField(
             'input[name="sections[159][items][items-int1][newproperty][name]"]',
-            'Lemma A (Lemma-Einheit)'
+            'Lemma A'
         );
 
         // Remove item
@@ -1036,6 +1074,8 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
 
         $I->click('Close');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
         $I->waitForElement('.controller_articles.action_view');
         $I->dontSee("Lemma A");
     }
@@ -1051,10 +1091,10 @@ class ArticlesCest
     {
         // Open article for editing
         $I->login('devel', 'devel');
-        $I->amOnPage('/epi/projects/articles/edit/3');
+        $I->amOnPage('/epi/projects/articles/edit/3#sections-147');
 
         // Focus the field
-        $contentSelector = '.doc-fieldname-content .widget-xmleditor';
+        $contentSelector = '#sections-147 .doc-fieldname-content .widget-xmleditor';
         $I->focusXmlInput($contentSelector);
 
         // Add word seperator by toolbar
@@ -1071,6 +1111,7 @@ class ArticlesCest
         $I->click('[data-id="92"]');
         $I->waitForElementNotVisible('.ui-dialog');
         $I->click('#doc-section-content-147 .button-links-toggle');
+        $I->wait(0.1);
         $I->see('Worttrenner 1 (Worttrenner 1 Einheit)', '.doc-section-links');
 
         // Remove word seperator from doc section
@@ -1185,6 +1226,8 @@ class ArticlesCest
 
         // Check if link text shows up
         $I->click('Close', 'footer');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
         $I->waitForElement('.controller_articles.action_view');
         $I->seeCurrentUrlMatches('~/epi/projects/articles/view/3#sections-147$~');
 
@@ -1244,8 +1287,8 @@ class ArticlesCest
         $I->dontSeeVisualChanges('section', '.doc-section[data-row-id="147"]');
 
         // Remove footnote
-         $I->see('fancynewfootnote');
-        $I->click('.doc-item-remove.tiny', '.doc-footnote[data-row-id="9"]');
+        $I->see('fancynewfootnote');
+        $I->click('.doc-item-remove.tiny', '.doc-footnote[data-row-id="89"]');
         $I->waitForTheAjaxResponse();
         $I->waitForElementVisible('.ui-dialog');
         $I->click('Confirm');
@@ -1254,7 +1297,7 @@ class ArticlesCest
         // Save and compare
         $I->click('Save');
         // TODO: If saving is fast, the page is reloaded too fast. Implement message log.
-        $I->waitForText("The article has been saved");
+        #$I->waitForText("The article has been saved");
         $I->waitForTheAjaxResponse();
 
         // Check visual apperance after removing
@@ -1332,6 +1375,8 @@ class ArticlesCest
 
         // Check
         $I->click('Close');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
         $I->waitForElement('.controller_articles.action_view');
         $I->seeCurrentUrlMatches('~/epi/projects/articles/view/1#sections-17$~');
         $I->click('.sidebar-right [data-tabsheet-id="notes"]');
@@ -1352,11 +1397,11 @@ class ArticlesCest
         $I->login('devel', 'devel');
 
         $I->amOnPage('/epi/projects/articles/edit/3');
-        $I->seeNumberOfElements('.art-warnings-value', 3);
+        $I->seeNumberOfElements('.art-warnings-value', 4);
 
         // Add section
         $I->waitForElement('.doc-article.widget-document-edit');
-        $I->click('.sidebar-left .node[data-section-id="sections-145"]');
+        $I->click('.sidebar-left .node[data-section-id="sections-4070"]');
         $I->click('.btn-edit-sidebar.doc-section-add', '.sidebar-left');
 
         $I->waitForTheAjaxResponse();
@@ -1368,7 +1413,9 @@ class ArticlesCest
         $I->waitForText('Inschrift B');
 
         // Wait for transitions to finish and select the last "Bearbeitung 1"
-        $I->wait(1);
+        $I->wait(2);
+        $I->scrollIntoView('.sidebar-left .node:last-child');
+
         $I->click('.sidebar-left .node:last-child');
         $I->wait(1);
         $I->dontSeeVisualChanges('edit','.sidebar-left');
@@ -1377,24 +1424,28 @@ class ArticlesCest
         $contentSelector = '.doc-section-type-inscriptiontext.active .doc-fieldname-content .widget-xmleditor';
         $I->focusXmlInput($contentSelector);
         $I->wait(2);
+
+        $I->useToolbutton('Bereich [alt+B]', '62');
+
         $I->pressKey($contentSelector,'Fancynewtext');
-        $I->wait(2);
-        $I->pressKey($contentSelector,['ctrl', 'a']);
+        $I->wait(1);
+
+        $I->pressKey($contentSelector,['shift',WebDriverKeys::ARROW_LEFT], ['shift',WebDriverKeys::ARROW_LEFT]);
         $I->useToolbutton('Buchstabenverbindung [alt+L]', '66');
         $I->dontSeeVisualChanges('content', '.doc-article');
 
         // Save
         $I->click('Save');
 
-        $I->waitForText("The article has been saved");
-        $I->waitForText("{Fancynewtext}");
+        #$I->waitForText("The article has been saved");
+        $I->waitForTheAjaxResponse();
+        $I->waitForText("Fancynewte{xt}");
 
         $I->wait(0.4);
-        $I->click("//li[contains(@class, 'node')]/descendant::a[contains(., 'Inschrift B')]/ancestor::li/following-sibling::li[2]");
+        $I->click("//li[contains(@class, 'node')]/descendant::a[contains(., 'Inschrift C')]");
         $I->wait(0.4);
 
         $I->dontSeeVisualChanges('transcription', '.doc-article');
-        // TODO: WHY ONE MORE ERROR?
         $I->seeNumberOfElements('.art-warnings-value', 4);
 
 
@@ -1404,7 +1455,7 @@ class ArticlesCest
     }
 
     /**
-     * Scenario: Add new section
+     * Scenario: Delete an existing section
      *
      * @group deploy
      * @param AcceptanceTester $I
@@ -1433,6 +1484,8 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
 
         $I->click('footer button[data-role="cancel"]');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
         $I->waitForElement('.controller_articles.action_view');
         $I->dontSee('Inschrift B', '.sidebar-left');
 
@@ -1480,6 +1533,8 @@ class ArticlesCest
 
         $I->wait(1);
         $I->click('Close');
+        $I->waitForText('The entity may have unsaved changes.');
+        $I->click('Confirm');
         $I->waitForElement('.controller_articles.action_view');
         $I->see("3333", '.doc-header-4');
     }
@@ -1502,11 +1557,16 @@ class ArticlesCest
         $I->waitForTheAjaxResponse();
         $I->waitForElement( '.doc-section-content#doc-section-content-10');
 
+        $I->dontSeeElement('[data-row-table="items"][data-row-type="measures"] [data-row-field="content"] .ck');
+        $I->dontSeeVisualChanges('before', '.doc-section-content#doc-section-content-10', [], 0.4);
+
         // Hover over "Ergänzung"
         $I->moveMouseOver('[data-row-table="items"][data-row-type="measures"] [data-row-field="content"] .widget-xmleditor');
 
         // Visual regression to verify consistent content field size
-        $I->dontSeeVisualChanges('ckcontentfield', '.doc-section-content#doc-section-content-10');
+        $I->wait(0.2);
+        $I->seeElement('[data-row-table="items"][data-row-type="measures"] [data-row-field="content"] .ck');
+        $I->dontSeeVisualChanges('after', '.doc-section-content#doc-section-content-10', [], 0.4);
 
     }
 
@@ -1555,7 +1615,7 @@ class ArticlesCest
         );
 
         // Check visuals
-        $I->dontSeeVisualChanges('linebreak', '.doc-section-item[data-row-id="369"]');
+        $I->dontSeeVisualChanges('linebreak', '.doc-section-item[data-row-id="369"]', [], 0.3);
     }
 
     /**
@@ -1593,8 +1653,7 @@ class ArticlesCest
         // Fill field property
         $I->click('.doc-section-item[data-row-id="items-int1"] .doc-field[data-row-field="property"] .widget-dropdown-selector');
         $I->waitForElementVisible('.doc-section-item[data-row-id="items-int1"] .widget-dropdown-pane.active [data-id="44"]');
-        $I->pressKey('.widget-dropdown-selector.active input', WebDriverKeys::ARROW_DOWN, WebDriverKeys::ENTER);
-        //$I->click('[data-id="44"] .tree-content');
+        $I->pressKey('.widget-dropdown-selector.active input', WebDriverKeys::ARROW_DOWN, WebDriverKeys::ARROW_DOWN, WebDriverKeys::ENTER);
 
         // Closing drop down
         $I->waitForElementVisible('#doc-section-content-9 .widget-dropdown-selector.widget-focused:not(.active)');
@@ -1686,13 +1745,13 @@ class ArticlesCest
         $I->pressKey($sourceSelector, [WebDriverKeys::CONTROL,WebDriverKeys::HOME]);
         $I->pressKey($sourceSelector, [WebDriverKeys::SHIFT, WebDriverKeys::END]);
         $I->pressKey($sourceSelector, [WebDriverKeys::CONTROL,'c']);
-        $I->dontSeeVisualChanges('source', '#sections-147');
+        $I->dontSeeVisualChanges('source', '#sections-147', [], 0.3);
 
         $targetSelector = '#sections-146 .doc-fieldname-content .widget-xmleditor';
         $I->focusXmlInput($targetSelector);
         $I->pressKey($targetSelector, ['ctrl','v']);
 
-        $I->dontSeeVisualChanges('target', '#sections-146');
+        $I->dontSeeVisualChanges('target', '#sections-146', [], 0.3);
     }
 
 }

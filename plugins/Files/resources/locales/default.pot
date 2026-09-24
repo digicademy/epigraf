@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-02-09 12:54+0000\n"
+"POT-Creation-Date: 2026-09-20 10:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -48,7 +48,7 @@ msgid "No valid request."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestComponent.php:830
-msgid "No valid filename, please provide a valid filename"
+msgid "No valid filename, please provide a valid filename."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestComponent.php:836
@@ -89,7 +89,7 @@ msgid "Cleaned file and folder names."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestComponent.php:973
-msgid "Cleaned file and folder names. {} errors occured."
+msgid "Cleaned file and folder names. {0} errors occured."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestComponent.php:1019
@@ -133,11 +133,11 @@ msgid "The folder content has been moved."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestComponent.php:1216
-msgid "The item could not be moved."
+msgid "The resource could not be moved."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestComponent.php:1223
-msgid "The item has been moved."
+msgid "The resource has been moved."
 msgstr ""
 
 #: ./plugins/Files/src/Controller/Component/FilesRequestTrait.php:226
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Origin content could not be moved to target."
 msgstr ""
 
-#: ./plugins/Files/src/View/Helper/FilesHelper.php:109
+#: ./plugins/Files/src/View/Helper/FilesHelper.php:116
 msgid "The image {0} is not available on the server."
 msgstr ""
 

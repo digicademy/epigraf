@@ -491,7 +491,6 @@ class ArticlesTableTest extends EpiTestCase
 	 */
 	public function testGetSearchFields()
 	{
-
 		$searchFields = $this->Articles->getFilter([])['search'] ?? [];
 		$compare = $this->saveComparisonJson($searchFields);
 		$this->assertJsonStringEqualsComparison($compare);

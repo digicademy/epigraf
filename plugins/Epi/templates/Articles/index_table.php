@@ -1,8 +1,23 @@
 <?php
 /**
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @contact    jakob.juenger@adwmainz.de
+ * @license    https://www.gnu.org/licenses/old-licenses/gpl-2.0.html GPL 2.0
+ *
+ */
+?>
+
+<?php
+use App\Utilities\Converters\Arrays;
+?>
+
+<?php
+/**
  * @var App\View\AppView $this
  * @var Epi\Model\Entity\Article[] $entities
-  * @var App\Model\Entity\Databank $database
+ * @var App\Model\Entity\Databank $database
  * @var array $columns
  */
 ?>
@@ -14,6 +29,7 @@
     $params = $this->getConfig('options')['params'] ?? [];
     $selected = $params['selected'] ?? [];
     $detailContent = $params['details'] ?? [];
+    $targets = $params['targets']  ?? [];
 
     // TODO: Do we need this? Refactor
     $searchResults = (($params['term'] ?? '') !== '') && (str_starts_with($params['field'] ?? '', 'text'));
@@ -25,7 +41,7 @@
     // TODO: expand the tree beginning with the second level
 
     $selectTemplate = $this->request->getQuery('template') === 'choose';
-    $detailTargets = !empty(array_diff_key($params['targets'] ?? [], ['articles' => true]));
+    $detailTargets = !empty(array_diff_key($targets, ['articles' => true]));
     $treeDetails =  ($selectTemplate && $detailTargets) ? 'cursor' : false;
 
     if ($treeDetails) {
@@ -54,30 +70,38 @@
   <?php
     $params = $this->getConfig('options')['params'] ?? [];
     $actions = $this->Link->getActions($params['mode'] ?? MODE_DEFAULT, $params);
+
+    // TODO: document
+    $dataParams = [
+        'data-filter-template' => $this->request->getQuery('template', 'table'),
+        'data-filter-mode' => $this->getConfig('options')['params']['mode'] ?? ''
+    ];
+
+    // Add targets to the fixed query parameters
+    foreach ($targets as $key => $value) {
+        $dataParams['data-filter-param-targets_' . $key] = implode(',', $value);
+    }
   ?>
-  <?=
-    $this->Table->filterTable(
+
+    <?= $this->Table->filterTable(
         $tableModel,
         $entities,
         [
             'indent' => empty($showTree), // Add an empty extra column
             'select'=> true,              // Column selector
             'snippet' => false,           // Prevents the column selector to vanish
+            'sort' => 'multi',            // Allows multi column sorting
 
-            'tree' => $showTree,       // Tree rendering: true|false|collapsed
-            'fold' => $treeFold,       // Foldable: fixed|foldable
-            'details' => $treeDetails, // Tree child nodes: true|false|cursor
+            'tree' => $showTree,         // Tree rendering: true|false|collapsed
+            'fold' => $treeFold,         // Foldable: fixed|foldable
+            'details' => $treeDetails,   // Tree child nodes: true|false|cursor
             'content' => $detailContent, // Detail rows (content of tags, e.g. 'items.*.tags.*.content')
-            'targets' => $params['targets'] ?? [],
+            'targets' => $targets,       // Target types indexed by table name (e.g. ['articles'=>'epi-article'])
             'label' => $selectTemplate, // Adds data-labels to the rows that can be used in selectors
 
             // TODO: document
-            'class' => 'widget-filter-item widget-filter-item-template',
-            'data' => [
-                // TODO: document
-                'data-filter-template' => $this->request->getQuery('template', 'table'),
-                'data-filter-mode' => $this->getConfig('options')['params']['mode'] ?? '',
-            ],
+            'class' => 'widget-filter-item widget-filter-item-template widget-filter-item-fixed',
+            'data' => $dataParams,
             'actions' => $actions
         ]
     )

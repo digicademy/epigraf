@@ -39,6 +39,14 @@ class TaskTransformxsl extends BaseTask
         }
     }
 
+    /**
+     * Transform files
+     *
+     * @param array $todo Array of input file paths
+     * @param string $outputPath In file mode, the output file name. In folder mode, the output folder path.
+     * @param string $inputMode Set to 'file' to process a single file or to 'folder to process all files in a folder.
+     * @return array
+     */
     protected function processFiles($todo, $outputPath, $inputMode)
     {
         $out = [];
@@ -72,32 +80,28 @@ class TaskTransformxsl extends BaseTask
      */
     public function preview($options = [])
     {
-        $inputPath = $this->getCurrentInputFilePath();
+        // Only one file
+        if ((($options['page'] ?? 1) !== 1) || (($options['offset'] ?? 0) !== 0)) {
+            return $options;
+        }
+
         $inputMode = $this->getCurrentInputMode();
+        $inputPath = $this->getCurrentInputFilePath();
         $inputFiles = $this->getInputFiles($inputPath, $inputMode);
+        $inputFiles = empty($inputFiles) ? $inputFiles : [$inputFiles[0]];
 
-        if (empty($inputFiles)) {
-            return [];
-        }
+        $outputPath = $this->getCurrentOutputFilePath();
+        $out = $this->processFiles($inputFiles, $outputPath, $inputMode);
 
-        if ($inputMode === 'folder') {
-            $inputFiles = [$inputFiles[0]];
-        }
-
-        if (!empty($inputFiles)) {
-            $outputPath = $this->getCurrentOutputFilePath();
-            $out = $this->processFiles($inputFiles, $outputPath, $inputMode);
-        }
-
+        // Pass first result file to next task
         if (empty($out[0])) {
             return [];
         }
-
         return ['inputpath' => $out[0]];
     }
 
     /**
-     * Concatenate files
+     * Transform files
      *
      * @return bool Return true if the task is finished
      */

@@ -13,6 +13,7 @@
 @import 'image-viewer.css';
 @import 'map.css';
 @import 'dropzone/dropzone.css';
+@import 'annotorious/annotorious.css';
 @import 'documents.css';
 
 /* Widget scrollbox */
@@ -1111,10 +1112,6 @@ form .widget-codeblocks pre code {
     padding: 0 0.2em;
 }
 
-div.textarea + .field-buttons {
-    margin-top:-1em;
-}
-
 .service-answers {
     overflow: auto;
 }
@@ -1141,4 +1138,52 @@ button.tiny.service-answer-select {
 
 .widget-plot {
     flex: 1;
+}
+
+/* Plot container */
+.widget-plot .plot {
+    max-height: 100vh;
+    min-height: 400px;
+    overflow: auto;
+}
+
+/* Plot interactive controls */
+.interactive-controls {
+    margin: 0.25em 0 1em 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Control buttons */
+.interactive-controls button {
+    padding: 6px 12px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    line-height: 1.2;
+}
+
+/* Zoom control container */
+.zoom-control {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+/* Zoom label */
+.zoom-label {
+    font-size: inherit;
+    font-family: inherit;
+    margin-right: 4px;
+    color: var(--button-font-color);
+}
+
+/* Zoom buttons specific styling */
+.zoom-button {
+    min-width: 3em;
 }

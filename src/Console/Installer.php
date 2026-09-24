@@ -146,8 +146,7 @@ class Installer
      */
     public static function buildAssetCompress($rootDir, $io)
     {
-        $command = 'bin/cake asset_compress build';
-        exec($command);
+        exec('bin/cake asset_compress build');
         $io->write('Compressed assets.');
     }
 
@@ -162,13 +161,13 @@ class Installer
     public static function buildWebPack($path, $io)
     {
         //NPM
-        $npm = 'cd ' . $path . ' &&';
+        $npm = 'cd ' . escapeshellarg($path) . ' &&';
         $npm .= ' npm install';
         exec($npm);
         $io->write('Executed npm install in folder ' . $path);
 
         //Webpack
-        $webpack = 'cd ' . $path . ' &&';
+        $webpack = 'cd ' . escapeshellarg($path) . ' &&';
         $webpack .= ' npm run build';
         exec($webpack);
 
@@ -246,10 +245,10 @@ class Installer
     {
         $codeceptFile = $rootDir . '/vendor/bin/codecept';
         if (file_exists($codeceptFile) || is_link($codeceptFile)) {
-            exec('rm ' . $codeceptFile);
+            exec('rm ' . escapeshellarg($codeceptFile));
         }
 
-        exec('ln -s ../codeception/codeception/codecept ' . $codeceptFile);
+        exec('ln -s ' . escapeshellarg('../codeception/codeception/codecept ' . $codeceptFile));
 
         $io->write('Symlink to codecept created.');
 
@@ -344,8 +343,7 @@ class Installer
      */
     public static function clearCache($io)
     {
-        $command = 'bin/cake cache clear_all';
-        exec($command);
+        exec('bin/cake cache clear_all');
         $io->write('Cleared cache.');
     }
 }

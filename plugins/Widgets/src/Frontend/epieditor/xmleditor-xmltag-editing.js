@@ -647,11 +647,14 @@ export class XmleditorXmltagEditing extends Plugin {
         elementAttributes['data-link-target'] = modelElement.getAttribute('data-link-target') || '';
         elementAttributes['data-link-label'] = modelElement.getAttribute('data-link-label') || '';
 
-        if (typeData === undefined) {
+        const keepAttributes = Utils.getValue(typeData, 'config.attributes.*');
+        if (!typeData || keepAttributes) {
             // const msg = 'Missing config for ' + typeName + '. Please check the types table.';
             // this.editor.emitEvent('app:show:message', {'msg' : msg});
 
-            elementAttributes.class = elementAttributes.class + ' xml_notstyled';
+            if (!typeData) {
+                elementAttributes.class = elementAttributes.class + ' xml_notstyled';
+            }
 
             // Add default attributes
             // TODO: make dry, see bracketUpcast()
@@ -854,7 +857,7 @@ export class XmleditorXmltagEditing extends Plugin {
      * Get a tag's attribute value
      *
      * @param editor
-     * @param tag The tag Id
+     * @param tag The tag ID
      * @param attr The attribute name, one of
      *             "value" (usually the visible text) or
      *             "attr-value" (usually attributes used to generate the visible text)
@@ -1210,7 +1213,8 @@ export class XmleditorXmltagEditing extends Plugin {
 
         // ...keep all attributes for unconfigured tags
         // TODO: make dry, see tagCreateElement()
-        if (!typeData) {
+        const keepAttributes = Utils.getValue(typeData, 'config.attributes.*');
+        if (!typeData || keepAttributes) {
             tagData['data-unstyled'] = true;
             const typeAttributes = Array.from(viewElement.getAttributeKeys()).reduce(function(carry, attrKey) {
                 if (attrKey.startsWith('data-attr-')) {

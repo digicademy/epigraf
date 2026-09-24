@@ -71,6 +71,62 @@
         "selected": false,
         "width": null
     },
+    "items_signatures": {
+        "caption": "Alle Signaturen",
+        "key": "items.*[itemtype=signatures].value",
+        "name": "items_signatures",
+        "aggregate": "collapse",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "value",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "signatures",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "collapse"
+        },
+        "search": {
+            "field": "items_signatures.value",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "types": {
+            "epi-article": {
+                "caption": "Alle Signaturen",
+                "key": "items.*[itemtype=signatures].value",
+                "name": "items_signatures",
+                "aggregate": "collapse",
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "value",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "signatures",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "collapse"
+                },
+                "search": {
+                    "field": "items_signatures.value",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
     "name": {
         "caption": "Titel",
         "default": true,
@@ -246,6 +302,64 @@
                 "aggregate": "collapse",
                 "search": {
                     "field": "items_date.date_sort",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "items_date_day": {
+        "caption": "Tagesdatierung",
+        "key": "items.*[itemtype=dates].date_value",
+        "sort": {
+            "table": "items",
+            "foreign": "articles_id",
+            "field": "date_sort",
+            "relation": "hasmany",
+            "conditions": {
+                "itemtype": "dates",
+                "deleted": 0
+            },
+            "order": [
+                "articles_id",
+                "sortno"
+            ],
+            "aggregate": "collapse"
+        },
+        "default": false,
+        "name": "items_date_day",
+        "aggregate": "collapse",
+        "search": {
+            "field": "items_date_day.date_sort",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "types": {
+            "epi-article": {
+                "caption": "Tagesdatierung",
+                "key": "items.*[itemtype=dates].date_value",
+                "sort": {
+                    "table": "items",
+                    "foreign": "articles_id",
+                    "field": "date_sort",
+                    "relation": "hasmany",
+                    "conditions": {
+                        "itemtype": "dates",
+                        "deleted": 0
+                    },
+                    "order": [
+                        "articles_id",
+                        "sortno"
+                    ],
+                    "aggregate": "collapse"
+                },
+                "default": false,
+                "name": "items_date_day",
+                "aggregate": "collapse",
+                "search": {
+                    "field": "items_date_day.date_sort",
                     "type": "string",
                     "operator": "LIKE"
                 }
@@ -2118,6 +2232,34 @@
                 },
                 "search": {
                     "field": "summary_state.value",
+                    "type": "string",
+                    "operator": "LIKE"
+                }
+            }
+        },
+        "selected": false,
+        "width": null
+    },
+    "warnings": {
+        "caption": "Warnungen",
+        "key": "warnings.*.*.msg",
+        "name": "warnings",
+        "sort": {
+            "aggregate": "collapse"
+        },
+        "search": {
+            "field": "warnings.",
+            "type": "string",
+            "operator": "LIKE"
+        },
+        "types": {
+            "epi-article": {
+                "caption": "Warnungen",
+                "key": "warnings.*.*.msg",
+                "name": "warnings",
+                "sort": [],
+                "search": {
+                    "field": "warnings.",
                     "type": "string",
                     "operator": "LIKE"
                 }

@@ -198,7 +198,7 @@ class ReconcileService extends BaseService
      *
      * @param string $path Not used
      * @param array $options
-     * @return array
+     * @return array An array with the keys state, message, provider, result
      * @throws \Exception
      */
     public function query($path = null, array $options = []): array
@@ -241,10 +241,12 @@ class ReconcileService extends BaseService
         }
 
         // Query the service
-        $response = $this->client->post($baseUrl, $data);
+        $response = $this->client->post($baseUrl, $data, ['redirect' => 2]);
+
         $state = $response->getStatusCode() === 200 ? 'SUCCESS' : 'ERROR';
         $task = [
             'state' => $state,
+            'message' => $response->getReasonPhrase(),
             'provider' => $provider
         ];
 

@@ -49,6 +49,7 @@ class BaseTaskData extends BaseTask
     /** @var array Settings to copy images and other files */
     public $copySettings = [];
 
+
     /**
      * Init view according to output format
      *
@@ -223,7 +224,8 @@ class BaseTaskData extends BaseTask
         // Wrapper (getView() must be called before to update the wrap settings)
         $view = $this->getView();
         $view->attachIndex($this->job->getIndex());
-        $filenameTemplate = $this->getCurrentOutputFilePath();
+        $filenamePlaceholders = $this->rowwise ?? false;
+        $filenameTemplate = $this->getCurrentOutputFilePath($filenamePlaceholders);
         $wrap = $this->config['wrap'] ?? false;
 
         if (!$this->rowwise && !empty($this->wrap['prefix']) && ($this->config['offset'] === 0)) {
@@ -289,20 +291,20 @@ class BaseTaskData extends BaseTask
         }
 
         // Wrapper
-        if (!$this->rowwise && !empty($this->wrap['postfix']) && (count($rows) < $this->job->limit)) {
+        if (!$this->rowwise && !empty($this->wrap['postfix']) && (count($rows) < $this->getLimit() )) {
             Files::appendToFile($filenameTemplate, $this->wrap['postfix']);
         }
 
         //Wrapper
         if ($wrap) {
-            if ( (count($rows) < $this->job->limit)) {
+            if ( (count($rows) < $this->getLimit() )) {
                 Files::prependToFile($filenameTemplate, $view->renderProlog([], $options));
                 Files::appendToFile($filenameTemplate, $view->renderEpilog([], $options));
             }
         }
 
         //Finish pipeline element
-        $finished = ($count < $this->job->limit);
+        $finished = ($count < $this->getLimit());
 
         if ($finished) {
             $view->postProcess($filenameTemplate);
@@ -327,7 +329,7 @@ class BaseTaskData extends BaseTask
 
         $dataparams = $this->getDataParams();
         $count = $table->getExportCount($dataparams);
-        $calls = max(1, ceil($count / $this->job->limit));
+        $calls = max(1, ceil($count / $this->getLimit()));
 
         return $calls;
 

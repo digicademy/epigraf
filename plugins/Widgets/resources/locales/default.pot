@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2026-02-09 12:54+0000\n"
+"POT-Creation-Date: 2026-09-20 10:13+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -30,139 +30,147 @@ msgstr ""
 msgid "Toggle section"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1657
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1697
 msgid "{0} {1}"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1677
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1678
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1717
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1718
 msgid "Show more fields"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1787
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1788
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1827
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1828
 msgid "Toggle annotations"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1815
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1816
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1855
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1856
 msgid "Select annotation groups"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1859
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2275
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1899
 msgid "Tag number is missing."
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1918
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:1963
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2320
 msgid "Tag is missing."
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2190
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2235
 #: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:1141
 msgid "Footnotes"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2353
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2354
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2398
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2399
 msgid "Remove footnote"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2468
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2513
 msgid "Caption"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2469
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2514
 msgid "IRI fragment"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2470
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2515
 msgid "Modified"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2699
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2753
 msgid "Are you sure to delete the entity?"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3249
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:2980
+msgid "The value must match the pattern: {0}"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3349
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:527
 msgid "No"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3249
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3349
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:481
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:521
 msgid "Yes"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3486
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3586
 msgid "Task caption"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3499
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3520
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3599
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3620
 msgid "Task can be skipped by user"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3508
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3523
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3526
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3608
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3623
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3626
 msgid "Input file"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3513
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3613
 msgid "Leave empty to use default"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3624
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3724
 msgid "Outputfile"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3632
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3732
 msgid "Leave empty to use the default file name"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3664
+#: ./plugins/Widgets/src/View/Helper/BaseEntityHelper.php:3764
 msgid "Search"
 msgstr ""
 
 #: ./plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:96
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:98
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:115
 #: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:431
 msgid "Content"
 msgstr ""
 
 #: ./plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:100
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:102
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:119
 #: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:285
 #: ./plugins/Widgets/src/View/Helper/EntityMarkdownHelper.php:435
 msgid "Category"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:210
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:222
+#: ./plugins/Widgets/src/View/Helper/EntityHtmlHelper.php:213
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:242
 msgid "Type"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:655
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:657
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:688
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:690
 msgid "Add item"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:693
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:726
 msgid "Folder {0}"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:727
-#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:729
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:740
+msgid "Files"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:760
+#: ./plugins/Widgets/src/View/Helper/EntityInputHelper.php:762
 msgid "Remove item"
 msgstr ""
 
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:111
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1301
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1302
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1303
 #: ./plugins/Widgets/src/View/Helper/TableHelper.php:102
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:478
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:498
 msgid "Actions"
 msgstr ""
 
@@ -175,7 +183,7 @@ msgstr ""
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:435
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:502
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:558
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1602
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1603
 msgid "Cancel"
 msgstr ""
 
@@ -184,7 +192,7 @@ msgid "Edit actions"
 msgstr ""
 
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:283
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1698
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1699
 msgid "Edit"
 msgstr ""
 
@@ -216,91 +224,91 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:645
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:646
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:647
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1016
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:648
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1017
 #: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1018
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1019
 msgid "Help"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:690
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:691
 msgid "Table"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:694
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:695
 msgid "Map"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:699
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:700
 msgid "Tiles"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:703
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:704
 msgid "Graph"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:707
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:708
 msgid "Timeline"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:720
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:721
 msgid "Toggle View"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:757
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:758
 msgid "Read"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:758
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:759
 msgid "Revise"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:768
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:769
 msgid "Toggle Mode"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:843
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:844
 msgid "Download"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:846
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:847
 msgid "CSV"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:850
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:851
 msgid "XML"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:854
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:855
 msgid "JSON"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:862
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:863
 msgid "TTL"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:867
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:868
 msgid "JSON-LD"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:872
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:873
 msgid "RDF"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:933
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:935
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:934
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:936
 msgid "Export"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1069
-msgid " records"
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1070
+msgid "records"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1702
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:731
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:845
+#: ./plugins/Widgets/src/View/Helper/LinkHelper.php:1703
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:762
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:949
 msgid "View"
 msgstr ""
 
@@ -316,58 +324,68 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:497
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:517
 msgid "See more..."
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:629
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:659
 msgid "See"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:638
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:668
 msgid "Reference from:"
 msgstr ""
 
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1116
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1117
+msgid "Expand / collapse all"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1161
 #: ./plugins/Widgets/src/View/Helper/TableHelper.php:1162
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1163
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1164
 msgid "Select columns"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1165
-msgid "Select Columns"
-msgstr ""
-
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1306
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1309
 msgid "Reset filter and columns."
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1526
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1533
 #: ./plugins/Widgets/src/View/Widget/ReferenceWidget.php:85
 msgid "selected"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1672
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1748
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1679
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1755
 msgid "Reset selection"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1857
+#: ./plugins/Widgets/src/View/Helper/TableHelper.php:1864
 msgid "Options"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:115
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:139
+msgid "Browse"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:148
+msgid "Select category"
+msgstr ""
+
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:153
 msgid "Manage"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:131
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:173
 msgid "None"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:200
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:243
 msgid "See {0}"
 msgstr ""
 
-#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:203
+#: ./plugins/Widgets/src/View/Helper/TreeHelper.php:246
 msgid "Reference from {0}"
 msgstr ""
 

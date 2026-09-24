@@ -21,13 +21,13 @@
 <!-- Embed plotly-->
 <?php
     use Cake\I18n\I18n;
-    $this->Html->script('Widgets.plotly/plotly-2.8.3.min.js', ['block' => true]);
+    $this->Html->script('Widgets.plotly/plotly-3.6.0.min.js', ['block' => true]);
 ?>
 
 <?php $this->Html->script('Epi.analytics.js', ['block' => true]); ?>
 
 
-<?php $this->Breadcrumbs->add('Übersicht über den Datenbestand des Projekts'); ?>
+<?php $this->Breadcrumbs->add(__('Type distribution')); ?>
 
 <!--Loop over every Table-->
 <?php foreach ($data as $table): ?>

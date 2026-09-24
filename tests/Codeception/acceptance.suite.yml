@@ -5,14 +5,44 @@
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
 actor: AcceptanceTester
-#coverage:
-#  remote: true
+coverage:
+  remote: true
+  c3_url: 'http://localhost/c3.php'
 modules:
     enabled:
         - WebDriver:
             url: http://localhost
             browser: firefox
             window_size: 1280x800  # Fix for strange screenshot size: 1280x848
+            host: 127.0.0.1
+            port: 4444
+            path: /
+            capabilities:
+              "moz:firefoxOptions":
+                binary: "/usr/bin/firefox"
+                args:
+                  - "-headless"
+                prefs:
+                  layers.acceleration.disabled: true
+
+                  gfx.direct2d.disabled: true
+                  gfx.webrender.all: false
+                  gfx.webrender.enabled: false
+                  gfx.canvas.azure.accelerated: false
+                  gfx.content.azure.accelerated: false
+                  gfx.font_rendering.cleartype_params.pixel_structure: 0
+                  gfx.font_rendering.directwrite.use_gdi_table_loading: false
+                  gfx.font_rendering.cleartype_params.rendering_mode: 1
+                  gfx.downloadable_fonts.disable_cache: true
+                  gfx.use_text_smoothing_setting: true
+                  gfx.text.subpixel-position.force-enabled: false
+                  gfx.color_management.mode: 0
+                  gfx.color_management.enablev4: false
+
+                  canvas.color_management.enabled: false
+                  image.color_management.intent: -1
+                  layout.css.devPixelsPerPx: "1.0"
+                  general.smoothScroll: false
         - VisualCeption:
             maximumDeviation: 0.1             # deviation in percent (mean squared error over all channels, keep it low)
             saveCurrentImageIfFailure: true   # if true, VisualCeption saves the current
@@ -56,14 +86,5 @@ step_decorators: ~
 extensions:
   enabled:
     - Codeception\Extension\RunProcess:
-        0: mkdir /tmp/sessions
-        1: chown -R www-data /tmp/sessions
-        2: bin/cake setup tmp
-        3: bin/cake cache clear_all
-        4: chown -R www-data /tmp/cache
-        #5: export GTK_THEME=Adwaita
-        #6: export GDK_SCALE=1
-        #7: export GDK_DPI_SCALE=1
-        8: xvfb-run -a java -jar -Dwebdriver.chrome.driver="/usr/bin/chromedriver" /opt/selenium/selenium-server-standalone.jar > /dev/null 2>&1 &
+        0: bash tests/Codeception/start-selenium.sh
         sleep: 2
-

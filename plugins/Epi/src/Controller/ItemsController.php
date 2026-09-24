@@ -12,7 +12,7 @@ namespace Epi\Controller;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Response;
-use Epi\Model\Entity\Article;
+use Epi\Model\Entity\Item;
 
 /**
  * Items Controller
@@ -49,7 +49,7 @@ class ItemsController extends AppController
      */
     public function view(string $id)
     {
-        /** @var Article $entity */
+        /** @var Item $entity */
         $entity = $this->Items->get($id);
 
         return $this->redirect([

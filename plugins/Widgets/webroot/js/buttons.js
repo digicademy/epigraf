@@ -30,10 +30,6 @@ import {SelectWindow} from "./frames.js";
 export class SwitchButtons extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
-        if (element) {
-            element.widgetSwitchButtons = this;
-        }
-
         document.addEventListener('click', event => this.switchClick(event));
     }
 
@@ -142,11 +138,6 @@ export class SwitchButtons extends BaseWidget {
 export class ToggleButtons extends BaseWidget {
     constructor(element, name, parent) {
         super(element, name, parent);
-        if (element) {
-            element.widgetToggleButtons = this;
-            this.widgetElement = element;
-        }
-
         document.addEventListener('click', event => this.toggleClick(event));
     }
 

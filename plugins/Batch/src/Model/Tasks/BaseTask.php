@@ -78,9 +78,9 @@ abstract class BaseTask
      * Activate the database
      *
      * @param string $databankName The database name. Leave empty to use the task or job default.
-     * @return Databank
+     * @return Databank|null
      */
-    protected function activateDatabank($databankName = null)
+    protected function activateDatabank($databankName = null): ?Databank
     {
         // TODO: Check permissions for the database.
         if (empty($databankName)) {
@@ -99,6 +99,16 @@ abstract class BaseTask
         return $this->job->dataParams ?? [];
     }
 
+    protected function getLimit()
+    {
+        return min($this->config['limit'] ?? $this->job->limit, 1000);
+    }
+
+    protected function getOffset()
+    {
+        return $this->config['offset'];
+    }
+
     /**
      * Get paging parameters
      *
@@ -106,9 +116,10 @@ abstract class BaseTask
      */
     public function getPagingParams()
     {
-        $offset = $this->config['offset'];
-        $limit = $this->job->limit;
-        return compact('offset', 'limit');
+        return [
+            'offset' => $this->getOffset(),
+            'limit' => $this->getLimit()
+        ];
     }
 
 
@@ -203,30 +214,29 @@ abstract class BaseTask
     /**
      * Get the current output file name
      *
+     * @param bool $allowPlaceholders Whether placeholders are stripped or not
      * @return string
      */
-    public function getCurrentOutputFileName()
+    public function getCurrentOutputFileName($allowPlaceholders = false)
     {
         $filename =  $this->config['outputfile'] ?? '';
         if (empty($filename)) {
             $ext = $this->getCurrentOutputExtension();
-            if (empty($this->job->id)) {
-                $filename = Files::getTempFilename('temp', $ext);
-            } else {
-                $filename = 'job-' . $this->job->id . '.' . $ext;
-            }
+            $filename = 'job-' . ($this->job->id ?? 'tmp') . '.' . $ext;
         }
-        return Files::cleanPath($filename);
+        $filename = Files::cleanPath($filename, true, $allowPlaceholders);
+        return $filename;
     }
 
     /**
      * Get the path of the current output file
      *
+     * @param bool $allowPlaceholders If true, placeholders in the file name will not be stripped.
      * @return string
      */
-    public function getCurrentOutputFilePath()
+    public function getCurrentOutputFilePath($allowPlaceholders = false)
     {
-        $filename = $this->getCurrentOutputFileName();
+        $filename = $this->getCurrentOutputFileName($allowPlaceholders);
 
         $current = $this->config;
         $current['outputfile'] = $filename;

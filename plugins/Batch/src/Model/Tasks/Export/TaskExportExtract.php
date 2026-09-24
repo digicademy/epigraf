@@ -14,13 +14,13 @@ use App\Utilities\Files\Files;
 use Batch\Model\Tasks\BaseTask;
 
 /**
- * Extract content from a file
+ * Extract elements from XML file using XPath
  */
 class TaskExportExtract extends BaseTask
 {
 
     /**
-     * Replace patterns in file
+     * Extract elements from XML file using XPath
      *
      * @return bool Return true if the task is finished
      */

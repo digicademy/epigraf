@@ -50,12 +50,6 @@ use Rest\Entity\LockInterface;
  * @property string $publicIri @deprecated
  * @property string[]|false $normDataParsed Array of parsed norm data lines
  *
- * @property string $importTable The table name in the imported source
- * @property mixed $rowNumber The row number in the imported source table
- * @property array $fieldsImport The fields used for data import
- * @property string $fieldsScope The scope field name
- * @property array $solvedIds In the process of importing data, the array solved Ids
- *
  * @property array $index A lookup index
  * @property array $parsingErrors Parsing errors
  * @property array $linkErrors Link errors
@@ -184,45 +178,14 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     protected $_tags = null;
 
     /**
-     * Fields used for data import
-     *
-     * @var string[]
-     */
-    protected $_fields_import = [];
-
-    /**
-     * Fields containing IDs that will be prefixed with the table name in getDataForExport.
-     * Items with numerical keys (default) will use the current table name.
-     * Items with alphabetical keys will use the given value (not the key) as prefix.
-     * For such alphabetical keys, the prefix value can be an array containing the field names
-     * from which the id should be composed (used for polymorphic links/footnotes)
-     *
-     * @var string[]
-     */
-    public static $_fields_ids = ['id'];
-
-
-    /**
      * The field used to create an IRI.
-     * Optionally, IRIs can be prefixed by the database name
+     * Optionally, IRIs can be prefixed by the database name.
      *
      * @var string $_field_iri
      * @var boolean $_prefix_iri
      */
     protected $_field_iri = 'id';
     protected $_prefix_iri = true;
-
-    /**
-     * Imported IDs, table name and row number
-     */
-    public $_import_ids = [];
-    protected $_import_table = null;
-    protected $_import_id = null;
-    protected $_import_row = null;
-    protected $_import_values = null;
-    public $_import_action = null;
-    public $_import_copyfile = null;
-    public $_import_irimatched = null;
 
     /**
      * Parsing errors
@@ -240,24 +203,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
      * @var null
      */
     protected $_file_properties = null;
-
-    /**
-     * Constructor
-     *
-     * @param array $content
-     * @param array $options
-     */
-    public function __construct(array $content = [], array $options = [])
-    {
-        if ($options['import'] ?? false) {
-            $content = $this->importData($content, $options);
-            $options['useSetters'] = false;
-            //$options['markClean'] = true;
-            $options['markNew'] = empty($content['id']);
-        }
-
-        parent::__construct($content, $options);
-    }
 
 //    Conflicts with the type entity
 //
@@ -610,12 +555,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         return Databank::removePrefix($this->databaseName);
     }
 
-
-    protected function _getShortname()
-    {
-        return $this->captionPath;
-    }
-
     /**
      * Get the URL of the epigraf article
      *
@@ -909,48 +848,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
-     * Get current number of current import row
-     *
-     * @return mixed|null
-     */
-    protected function _getRowNumber()
-    {
-        return $this->_import_row ?? null;
-    }
-
-    /**
-     * Get name of current import table
-     *
-     * @return string
-     */
-    protected function _getImportTable()
-    {
-        return $this->_import_table;
-    }
-
-    /**
-     * Get import fields
-     *
-     * @return array
-     */
-    protected function _getFieldsImport()
-    {
-        $fields = array_values(array_map(fn($x) => is_array($x) ? $x : [$x], $this->_fields_import));
-        $fields = array_merge(...$fields);
-        return $fields;
-    }
-
-    /**
-     * Get the scope field of current table
-     *
-     * @return string
-     */
-    protected function _getFieldsScope()
-    {
-        return $this->table->scopeField;
-    }
-
-    /**
      * Get the base folder for file uploads
      *
      * All article related files are located in the 'articles' folder.
@@ -1120,9 +1017,6 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
         $fieldName = is_array($fieldName) ? $fieldName : explode('.', $fieldName);
 
         $default = $this->_fields_formats[$fieldName[0]] ?? 'raw';
-//        if ($default !== 'raw') {
-//            return $default;
-//        }
 
         $type = $this->type ?? [];
         if (empty($type)) {
@@ -1614,7 +1508,11 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 $fieldKey = $fieldConfig['key'] ?? $oldName;
 
                 $fieldConfig = array_merge($options, $fieldConfig);
-                $fieldConfig['format'] = ($options['formatFields'] ?? false) ? ($options['format'] ?? 'xml') : false;
+                if (empty($options['formatFields'] ?? false)) {
+                    $fieldConfig['format'] = false;
+                } elseif (!isset($fieldConfig['format'])) {
+                    $fieldConfig['format'] = $options['format'] ?? 'xml';
+                }
                 $fieldConfig['aggregate'] = $fieldConfig['aggregate'] ?? 'collapse';
                 $value = $this->getValueNested($fieldKey, $fieldConfig);
             }
@@ -2277,212 +2175,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
     }
 
     /**
-     * Clear contained items.
-     * To be implemented in subclasses.
-     *
-     * @return boolean
-     */
-    public function clear()
-    {
-        return true;
-    }
-
-    /**
-     * Convert imported raw data to the formats expected by the entity.
-     * Overwrite in entity classes for type conversions.
-     *
-     * Remove ids from $content and populate import properties
-     * (_import_table, _import_row, _import_id, _import_ids, _import_action)
-     *
-     * @param $content
-     * @param $options
-     * @return array
-     */
-    public function importData($content, $options)
-    {
-        // Keep import options
-        $this->_import_values = $content;
-        $this->_import_table = $options['table_name'] ?? null;
-        $this->_import_id = $content['id'] ?? null;
-        $this->_import_row = $options['table_row'] ?? null;
-        $this->_import_action = $options['action'] ?? null;
-        $this->_import_copyfile = $content['file_copyfrom'] ?? null;
-
-        // Ignore fields
-        if (!empty($options['fields'])) {
-            $content = array_intersect_key($content, array_flip($options['fields']));
-        }
-
-        foreach ($this->_fields_import as $old => $new) {
-
-            // Rename fields
-            if (is_numeric($old) || ($old === $new) || !isset($content[$old]) || (!is_array($new) && isset($content[$new]))) {
-                continue;
-            }
-
-            //  Split id fields (IRI paths, polymorphic relations)
-            if (is_array($new)) {
-                // IRI path (e.g. properties/languages/de)
-                $value = explode('/', $content[$old]);
-                if (sizeof($value) === 3) {
-                    $content[$new[0]] = $value[0];
-                    $content[$new[1]] = $content[$old];
-                }
-
-                // Polymorphic and combined IDs (e.g. properties-123)
-                else {
-                    $value = explode('-', $content[$old], 2);
-                    $content[$new[0]] = $value[0] ?? null;
-                    $content[$new[1]] = $content[$old];
-                }
-
-            } // Raw value
-            else {
-                $content[$new] = $content[$old];
-                unset($content[$old]);
-            }
-        }
-
-        // Separate ID and content fields
-        $fields_id = static::getIdFields();
-        $fields_content = array_diff($this->fields_import, $fields_id);
-
-        $ids = array_intersect_key($content, array_flip($fields_id));
-        $content = array_intersect_key($content, array_flip($fields_content));
-
-        // Add explicit ID matching the pattern <tablename>-<id> to the index
-        $explicit = array_filter($ids, fn($id) => preg_match('/^[a-z]+-[0-9]+$/', $id ?? ''));
-        foreach ($explicit as $importid) {
-            if (empty($options['index']['targets'][$importid])) {
-                $solvedId = explode('-', $importid);
-                $savedId = [
-                    'model' => $solvedId[0],
-                    'id' => (int)$solvedId[1]
-                ];
-
-                $options['index']['targets'][$importid] = $savedId;
-            }
-        }
-
-        $index = $options['index']['targets'] ?? [];
-
-        // Solve norm_iri
-        if ($index && !empty($content['norm_iri'])) {
-
-            $typeField = $options['type_field'] ?? null;
-            $typeName = ($typeField !== null) ? ($content[$typeField] ?? null) : null;
-
-            $qualifiedIri = implode('/', array_filter([
-                $this->_import_table,
-                $typeName,
-                $content['norm_iri']
-            ]));
-
-            $solvedId = !empty($qualifiedIri) ? ($index[$qualifiedIri] ?? null) : null;
-            if (!empty($solvedId)) {
-                $content['id'] = $solvedId['id'];
-                $this->_import_irimatched = true;
-            }
-
-            if (!empty($solvedId) && !empty($this->_import_id) && empty($options['index']['targets'][$this->_import_id])) {
-                $options['index']['targets'][$this->_import_id] = [
-                    'model' => $solvedId['model'],
-                    'id' => (int)$solvedId['id']
-                ];
-            }
-        }
-
-        // Solve IDs if possible from index (move from ids to content)
-        $this->_import_ids = $ids;
-        $this->solveIds($content, $index);
-
-        // Parse date and time fields
-        // e.g. '2016-02-04T12:58:47+01:00'
-        if (isset($content['created'])) {
-            $content['created'] = new FrozenTime($content['created']);
-        }
-        if (isset($content['modified'])) {
-            $content['modified'] = new FrozenTime($content['modified']);
-        }
-
-        // Add job id
-        if (isset($options['job_id'])) {
-            $content['job_id'] = $options['job_id'];
-        }
-
-        // Fix timestamps
-        if (isset($content['modified']) && empty($content['modified'])) {
-            unset($content['modified']);
-        }
-
-        if (isset($content['created']) && empty($content['created'])) {
-            unset($content['created']);
-        }
-
-        return $content;
-    }
-
-
-    /**
-     * Extract saved ID and add to index
-     *
-     * @param $index
-     */
-    public function indexIds(&$index)
-    {
-
-        foreach ($this->_import_ids as $field => $importedId) {
-            if (empty($importedId)) {
-                continue;
-            }
-
-            // Add the saved entity to targets index, others to sources
-            if ($field === 'id') {
-                $index['targets'][$importedId] = [
-                    'model' => $this->getSource(),
-                    'id' => $this->id
-                ];
-            }
-            else {
-                $index['sources'][$importedId][] = [
-                    'model' => $this->getSource(),
-                    'id' => $this->id,
-                    'field' => $field,
-                    'scope_field' => $this->fields_scope
-                ];
-            }
-        }
-    }
-
-    /**
-     * @param array|Entity $data
-     * @param array $index
-     */
-    public function solveIds(&$data, &$index)
-    {
-        if ($index) {
-            $solved = array_keys(
-                array_intersect_key(
-                    array_flip(
-                        array_filter(
-                            array_unique(
-                                $this->_import_ids
-                            )
-                        )
-                    ),
-                    $index
-                )
-            );
-            $solved = array_intersect($this->_import_ids, $solved);
-            $this->_import_ids = array_diff_key($this->_import_ids, $solved);
-            foreach ($solved as $field => $importid) {
-                $data[$field] = $index[$importid]['id'];
-            }
-        }
-    }
-
-    /**
-     * Index Ids of the entity and all contained entities
+     * Index IDs of the entity and all contained entities
      *
      * @param array $options Needs an index key
      *

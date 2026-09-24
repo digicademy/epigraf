@@ -211,8 +211,18 @@ class JsonView extends ApiView
                 $data = $data->toArray();
             }
 
+            // Generators
+            if ($data instanceof \Generator) {
+                $result = [];
+                foreach ($data as $key => $value) {
+                    $options['level'] = ($options['level'] ?? 0) + 1;
+                    $result[$key] = $this->extractData($value, $options);
+                }
+                $data = $result;
+            }
+
             // Arrays
-            if (is_array($data)) {
+            elseif (is_array($data)) {
                 foreach ($data as $key => &$value) {
                     $options['level'] = ($options['level'] ?? 0) + 1;
                     $value = $this->extractData($value, $options);

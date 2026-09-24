@@ -117,15 +117,16 @@ class TypesHelper extends Helper
     /**
      * Output a css style element containing the styles in the tags' (links and footnotes) config field
      *
-     * The css_style field in the config of a type contains an object with the following structure:
+     * The css_style field in the config of a type contains a single string with all styling rules.
+     * The styling rules consist of CSS selectors and corresponding styles.
+     * Make sure that the selectors address the rendered elements of the type.
      *
-     * "css_style": {
-     *    "default": ".xml_tag_k { color: #1ccaaa; font-size: 1em; font-variant: small-caps }",
-     *    "unadorned": ".xml_group_text_unadorned .xml_tag_k { color: inherit; font-size: inherit; font-variant: inherit; }"
-     * }
+     * Type configurations can contain a group key. In this case, a selector can address
+     * the state of unselected (unadorned) annotation by prefixing it with a selector folling
+     * the pattern `.xml_group_<groupname>_unadorned`.
      *
-     * The field may contain a single string instead of an object,
-     * in which case it is interpreted as equivalent to the default style.
+     * Type configurations can contain a color key. In this case, the annotation boxes are
+     * rendered with the given background color.
      *
      * @return string
      */

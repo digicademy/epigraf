@@ -85,8 +85,14 @@ class HistoricDates
      *
      * @const string ISO_PATTERN Pattern for ISO 8601 date strings (e.g. 2023-10-05T14:30:00)
      */
-    public const ISO_PATTERN = "(?<sign>-|\+)?(?<year>[0-9]{4})-?(?<month>1[0-2]|0[1-9])-?(?<day>3[01]|0[1-9]|[12][0-9])"
-        . "(T(?<hour>[0-1][0-9]|2[0-4]):(?<minute>[0-5][0-9])(:(?<second>[0-5][0-9](\.[0-9]+)?))?)?";
+    public const ISO_PATTERN =
+        "(?<sign>[-+])?(?<year>[0-9]{4})"
+        . "(?:"
+        .   "-(?<month>0[1-9]|1[0-2])-(?<day>0[1-9]|[12][0-9]|3[01])"       // extended
+        . "|"
+        .   "(?<month_b>0[1-9]|1[0-2])(?<day_b>0[1-9]|[12][0-9]|3[01])"     // basic
+        . ")"
+        . "(T(?<hour>[01][0-9]|2[0-3]):(?<minute>[0-5][0-9])(:(?<second>[0-5][0-9](\.[0-9]+)?))?)?";
     /**
      * Date constants
      */
@@ -289,7 +295,15 @@ class HistoricDates
             $dat['unit'] = self::UNIT_DAY;
             $dat['negative'] = $matches['sign'] == '-';
             $dat['number'] = $matches['year'];
+
+            if (isset($matches['month_b']) && ($matches['month_b'] !== '')) {
+                $matches['month'] = $matches['month_b'];
+            }
+            if (isset($matches['day_b']) && ($matches['day_b'] !== '')) {
+                $matches['day'] = $matches['day_b'];
+            }
             $dat['day'] = ['month' => $matches['month'], 'day' => $matches['day']];
+
             if (array_key_exists('hour', $matches)) {
                 $dat['hour']['hour'] = $matches['hour'];
                 $dat['unit'] = self::UNIT_HOUR;

@@ -38,10 +38,13 @@
         <?= $this->EntityHtml->entityForm($entity, 'view'); ?>
     </div>
 
-    <div class="content-box">
-        <h2><?= __('Preview') ?></h2>
-        <?= $this->Files->outputPreview($entity) ?>
-    </div>
+    <?php $preview = $this->Files->outputPreview($entity) ?>
+    <?php if (!empty($preview)): ?>
+        <div class="content-box">
+            <h2><?= __('Preview') ?></h2>
+            <?= $preview ?>
+        </div>
+    <?php endif ?>
 
     <?php $xmp = $entity->xmp ?? []; ?>
     <?php if (!empty($xmp)): ?>

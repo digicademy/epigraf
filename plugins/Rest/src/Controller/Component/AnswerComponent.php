@@ -128,7 +128,7 @@ class AnswerComponent extends Component
         }
 
         if (!empty($this->getController()->getRequest()->getAttribute('identity'))) {
-            $msg = $msg ?? __('You have no access to the requested page.');
+            $msg = $msg ?? __('You are not allowed to access the requested page.');
         } else {
             $msg = $msg ?? __('Please log in to access this location.');
         }

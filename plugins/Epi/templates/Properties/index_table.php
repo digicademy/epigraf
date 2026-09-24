@@ -37,6 +37,7 @@
             $entities,
             [
                 'select'=> true,    // Column selector
+                'collapse' => in_array($type['merged']['type'] ?? 'flat', ['tree', 'collapsed']),  // Collapse button
                 'snippet' => false, // Prevents the column selector to vanish
 
                 'tree' => $type['merged']['type'] ?? 'tree',

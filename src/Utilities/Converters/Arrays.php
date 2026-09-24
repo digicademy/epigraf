@@ -973,79 +973,47 @@ class Arrays
     }
 
     /**
-     * Construct query conditions from a search term
+     * Explode a term, but respect escaped delimiters
      *
-     * Supports OR using the pipe |.
-     * Supports AND using whitespace as separator.
-     * Use quotes to include shitespace in the search term.
-     *
-     * @param array|string $term A search term or an array of search terms
-     * @param array $fields A list of fields already present in the query.
-     * @param string $operator One of 'like' or '='.
-     * @param string $type  One of 'string' or 'integer'. Makes sure to select the right operator on numbers.
-     * @param array $filter Conditions added to each token of the search term, used to select the appropriate full text index
+     * @param string $term Term to be split
+     * @param array $delimiters
+     * @param string $mask Escape character
      * @return array
-     */
-    public static function termConditions($term, $fields, $operator, $type, $filter = [])
-    {
-        // Recurse array
-        if (is_array($term)) {
-            $conditions = [];
-            foreach ($term as $value) {
-                $conditions[] = Arrays::termConditions($value, $fields, $operator, $type, $filter);
+     */public static function explodeEscaped(string $term, $delimiters = ['-', '~', '>', '›'], $mask='\\'): array {
+
+        $tokens = [];
+        $currentToken = '';
+        $i = 0;
+        $length = strlen($term);
+
+        while ($i < $length) {
+            $char = $term[$i];
+
+            // check for masking '\'
+            if ($char === $mask && $i + 1 < $length) {
+                $currentToken .= $term[$i + 1];
+                $i += 2; // skip masked combination
+                continue;
             }
-            return ['AND' => $conditions];
+
+            if (in_array($char, $delimiters, true)) {
+                if ($currentToken !== '') {
+                    $tokens[] = $currentToken;
+                    $currentToken = '';
+                }
+                $i++;
+                continue;
+            }
+
+            $currentToken .= $char;
+            $i++;
         }
 
-        $orTerms = array_filter(explode('|', $term));
+        if ($currentToken !== '') {
+            $tokens[] = $currentToken;
+        }
 
-        $conditions = [
-            'OR' => array_map(
-                function ($andTerm) use ($fields, $operator, $type, $filter) {
-                    $andTerms = Strings::tokenize($andTerm); // user can use quotes to keep words together
-                    $andConditions =  array_map(
-                        function ($term) use ($fields, $operator, $type) {
-                            $or = array_map(
-                                function ($field, $key) use ($term, $operator, $type) {
-
-                                    // Nested operator options
-                                    if (!is_numeric($key)) {
-                                        $operator = $field['operator'] ?? $operator;
-                                        $type = $field['type'] ?? $type;
-                                        $field = $key;
-                                    }
-
-                                    // Assemble condition
-                                    if (($operator === 'LIKE') && ($type === 'string')) {
-                                        return [$field . ' LIKE' => "%$term%"];
-                                    }
-                                    elseif (($operator === '=') && ($type === 'string')) {
-                                        return [$field => $term];
-                                    }
-                                    elseif (($operator === '=') && ($type === 'integer') && (ctype_digit($term))) {
-                                        return [$field => $term];
-                                    }
-                                    else {
-                                        return [];
-                                    }
-                                },
-                                $fields, array_keys($fields)
-                            );
-                            return (['OR' => $or]);
-                        },
-                        $andTerms
-                    );
-
-                    if (!empty($filter)) {
-                        $andConditions[] = $filter;
-                    }
-                    return $andConditions;
-                },
-                $orTerms
-            )
-        ];
-
-        return $conditions;
+        return array_filter($tokens);
     }
 
 }

@@ -69,7 +69,11 @@ class UsersTable extends BaseTable
         USER_ACCOUNT_INACTIVE => 'Inactive'
     ];
 
-    public static $locales = ['de_DE.UTF-8' => 'Deutsch', 'en_EN.UTF-8' => 'English'];
+    public static $locales = [
+        'en_EN.UTF-8' => 'English',
+        'de_DE.UTF-8' => 'Deutsch',
+        'it_IT.UTF-8' => 'Italiano'
+    ];
 
     public static $themes = [
         'light' => 'Light',
@@ -221,7 +225,7 @@ class UsersTable extends BaseTable
     }
 
     /**
-     * Find entities by request parameters
+     * Find user entities based on parsed request parameters
      *
      * @param Query $query
      * @param array $options request parameters

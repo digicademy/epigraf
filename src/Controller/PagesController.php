@@ -63,16 +63,6 @@ class PagesController extends AppController
     public $help = 'administration/pages';
 
     /**
-     * Initialization hook method
-     *
-     * @return void
-     */
-    public function initialize(): void
-    {
-        parent::initialize();
-    }
-
-    /**
      * beforeFilter callback
      *
      * @param EventInterface $event

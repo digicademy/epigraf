@@ -1,3 +1,4 @@
+# LANGUAGE translation of Epigraf
 msgid ""
 msgstr ""
 "POT-Creation-Date: 2023-08-15 11:54+0200\n"
@@ -6,56 +7,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: de\n"
-"Project-Id-Version: \n"
+"Project-Id-Version: Epigraf 5\n"
+"PO-Revision-Date: 2026-05-22 19:00+0200\n"
+"Last-Translator: Jakob Jünger <jakob.juenger@adwmainz.de>\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: plugins/Widgets/webroot/js/documents.js:763
-#: plugins/Widgets/webroot/js/documents.js:861
-msgid "Apply"
-msgstr "Anwenden"
-
-#: plugins/Widgets/webroot/js/jobs.js:409
-msgid "Stop"
-msgstr "Stop"
-
-#: plugins/Widgets/webroot/js/jobs.js:411
-msgid "Please stand by, weaving the words may take a minute."
-msgstr "Bitte warten, das Verweben der Wörte kann eine Minute benötigen."
-
-#: plugins/Widgets/webroot/js/jobs.js:418
-msgid "Invalid service data"
-msgstr "Ungültige Service-Daten"
-
-#: plugins/Widgets/webroot/js/jobs.js:441
-msgid "Invalid service input"
-msgstr "Ungültiger Service-Input"
-
-#: plugins/Widgets/webroot/js/jobs.js:452
-#: plugins/Widgets/webroot/js/jobs.js:472
-msgid "An error occurred"
-msgstr "Es ist eine Fehler aufgetreten"
-
-#: plugins/Epi/webroot/js/models.js:2272
-#: plugins/Epi/webroot/js/models.js:2273
+#: plugins/Epi/webroot/js/models.js:2275
+#: plugins/Epi/webroot/js/models.js:2276
 msgid "Footnote"
 msgstr "Fußnote"
 
-#: plugins/Widgets/webroot/js/frames.js:849
-#: plugins/Widgets/webroot/js/frames.js:1116
+#: plugins/Widgets/webroot/js/documents.js:835
+#: plugins/Widgets/webroot/js/documents.js:940
+msgid "Apply"
+msgstr "Anwenden"
+
+#: plugins/Widgets/webroot/js/documents.js:940
+#: plugins/Widgets/webroot/js/frames.js:1124
+#: plugins/Widgets/webroot/js/frames.js:1125
+msgid "Close"
+msgstr "Schließen"
+
+#: plugins/Widgets/webroot/js/frames.js:963
+#: plugins/Widgets/webroot/js/frames.js:1259
 msgid "Reloading document"
 msgstr "Dokument wird neu geladen"
 
-#: plugins/Widgets/webroot/js/frames.js:993
-#: plugins/Widgets/webroot/js/frames.js:994
+#: plugins/Widgets/webroot/js/frames.js:1112
+#: plugins/Widgets/webroot/js/frames.js:1113
 msgid "Open in new tab"
 msgstr "In neuem Tab öffnen"
 
-#: plugins/Widgets/webroot/js/documents.js:861
-#: plugins/Widgets/webroot/js/frames.js:1005
-#: plugins/Widgets/webroot/js/frames.js:1006
-msgid "Close"
-msgstr "Schließen"
+#: plugins/Widgets/webroot/js/map.js:174
+msgid "verified"
+msgstr "geprüft"
+
+#: plugins/Widgets/webroot/js/map.js:176
+msgid "presumed"
+msgstr "vermutet"
+
+#: plugins/Widgets/webroot/js/map.js:178
+msgid "unverified"
+msgstr "ungeprüft"
+
+#: plugins/Widgets/webroot/js/services.js:139
+msgid "Stop"
+msgstr "Stop"
+
+#: plugins/Widgets/webroot/js/services.js:141
+msgid "Please stand by, weaving the words may take a minute."
+msgstr "Bitte warten, das Vertexten der Wörter kann einige Minuten dauern."
+
+#: plugins/Widgets/webroot/js/services.js:148
+#: plugins/Widgets/webroot/js/services.js:433
+msgid "Invalid service data"
+msgstr "Ungültige Service-Daten"
+
+#: plugins/Widgets/webroot/js/services.js:157
+msgid "Invalid service input"
+msgstr "Ungültiger Service-Input"
+
+#: plugins/Widgets/webroot/js/services.js:168
+#: plugins/Widgets/webroot/js/services.js:241
+msgid "An error occurred"
+msgstr "Es ist ein Fehler aufgetreten"

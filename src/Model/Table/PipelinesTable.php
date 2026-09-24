@@ -71,6 +71,7 @@ class PipelinesTable extends BaseTable
         $this->setTable('pipelines');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
+        $this->addBehavior('Import');
     }
 
     /**

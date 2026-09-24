@@ -1,9 +1,13 @@
-/* Article-specific styles (articles.css)
-   Moved from app.css: styles for doc-section, tables, stacks, annotations, footnotes, xml tags.
-   Assumes variables from app.css are available.
-*/
+/**
+ * Minimalistic article styles used in export pipelines
+ *
+ * Epigraf 5.0
+ *
+ * @author     Epigraf Team
+ * @license    http://www.opensource.org/licenses/mit-license.php MIT
+ *
+ */
 
-/* Entity header box*/
 /* Entity content box*/
 .doc-header, .doc-content {
     border: 1px solid black;
@@ -15,7 +19,6 @@
     align-items: start;
     font-size: .95rem;
 }
-
 
 /* Sections */
 .doc-section {
@@ -90,7 +93,6 @@
     font-size: .85rem;
     padding-right: .5rem
 }
-
 
 /* Table-like grouped view */
 .doc-group-headers {

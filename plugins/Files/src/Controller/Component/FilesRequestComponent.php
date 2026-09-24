@@ -208,7 +208,7 @@ class FilesRequestComponent extends Component
      *
      * Updates controller properties
      *
-     * @param int $id Id of the file record or null
+     * @param int $id ID of the file record or null
      * @param string|null $expect 'file' or 'folder' or null if nothing is expected
      * @param boolean $redirect If true, redirect to the view action if the file is not found
      *
@@ -827,7 +827,7 @@ class FilesRequestComponent extends Component
             $filename = empty($filename) ? basename($url) : $filename;
 
             if (!$filename) {
-                throw new BadRequestException(__('No valid filename, please provide a valid filename'));
+                throw new BadRequestException(__('No valid filename, please provide a valid filename.'));
             }
 
             //TODO: use redirectToCurrentFolder method,  use RedirectException in all methods
@@ -970,7 +970,7 @@ class FilesRequestComponent extends Component
                 $this->controller->Flash->success(__('Cleaned file and folder names.'));
             }
             else {
-                $this->controller->Flash->error(__('Cleaned file and folder names. {} errors occured.', $errors));
+                $this->controller->Flash->error(__('Cleaned file and folder names. {0} errors occured.', $errors));
             }
         }
 
@@ -1213,14 +1213,14 @@ class FilesRequestComponent extends Component
 
                 if (!Files::moveFileOrFolder($item->rootFolder, $sourceName, $targetName, $overwrite)) {
                     $this->controller->Answer->error(
-                        __('The item could not be moved.')
+                        __('The resource could not be moved.')
                     );
 
                 }
                 else {
                     $item->movedto = $target;
                     $this->controller->Answer->success(
-                        __('The item has been moved.'),
+                        __('The resource has been moved.'),
                         [
                             'action' => 'view',
                             $item->id,

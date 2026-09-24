@@ -10,7 +10,7 @@ RUN apt-get update
 ENV TZ=Europe/Berlin
 
 # Gecko driver
-ENV GECKODRIVER_VERSION=0.30.0
+ENV GECKODRIVER_VERSION=0.34.0
 
 # Install required components
 RUN apt-cache search libjpeg
@@ -135,13 +135,16 @@ RUN make install
 # RUN echo 'extension=saxon.so' > "$PHP_INI_DIR/conf.d/saxon.ini"
 RUN docker-php-ext-enable saxon
 
-# Install Chrome and Firefox browser
+# Install Firefox browser
 # TODO fix the FF version to 102.11.0esr-1~deb11u1. Not working anymore.
 WORKDIR /var/tmp
 RUN apt-get update && apt-get install -y \
     wget \
     firefox-esr \
     xvfb
+
+RUN apt-get install -y fonts-dejavu fonts-liberation fontconfig \
+    && fc-cache -f -v
 
 # Install Selenium drivers
 RUN curl -sSL https://github.com/mozilla/geckodriver/releases/download/v$GECKODRIVER_VERSION/geckodriver-v$GECKODRIVER_VERSION-linux64.tar.gz -o download_geckodriver.tar.gz && \
@@ -181,6 +184,23 @@ RUN a2enmod rewrite
 # Delete apt-get lists as the take up space
 RUN apt-get clean && \
   rm -rf /var/lib/apt/lists/*
+
+# Force grayscale antialiasing (no subpixel)
+RUN mkdir -p /etc/fonts/conf.d && cat > /etc/fonts/local.conf <<'EOF'
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+  <match target="font">
+    <edit name="antialias"  mode="assign"><bool>true</bool></edit>
+    <edit name="hinting"    mode="assign"><bool>true</bool></edit>
+    <edit name="hintstyle"  mode="assign"><const>hintslight</const></edit>
+    <edit name="rgba"       mode="assign"><const>none</const></edit>
+    <edit name="lcdfilter"  mode="assign"><const>lcddefault</const></edit>
+    <edit name="autohint"   mode="assign"><bool>false</bool></edit>
+  </match>
+</fontconfig>
+EOF
+RUN fc-cache -fv
 
 WORKDIR /var/www/html
 

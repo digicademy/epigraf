@@ -63,10 +63,10 @@
                             'type' => 'select',
                             'label' => __('Output format'),
                             'options' => [
+                                'xlsx' => __('Excel (xlsx)'),
+                                'csv' => __('CSV'),
                                 'xml' => __('XML'),
                                 'json' => __('JSON'),
-                                'csv' => __('CSV'),
-                                'xlsx' => __('Excel (xlsx)'),
                                 'md' => __('Markdown'),
                                 'plain' => __('HTML'),
                                 'ttl' => __('Turtle'),
@@ -74,11 +74,12 @@
                                 'jsonld' => __('JsonLd'),
                                 'geojson' => __('GeoJSON')
                             ],
-                            'value' => $job->config['format'] ?? 'xml'
+                            'value' => $job->config['format'] ?? 'xlsx'
                         ],
                         'expand' => [
                             'type' => 'checkbox',
                             'label' => __('Full entity data'),
+                            //'help' => __('Be default, the table view is exported. Select full entity data to get the complete records.'),
                             'category' => __('Fields'),
                             'checked' => $job->config['expand'] ?? false
                         ],

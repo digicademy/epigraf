@@ -82,71 +82,69 @@
 <!-- Content area -->
 <div class="content-main widget-scrollbox">
     <div class="widget-entity"><form method="post" accept-charset="utf-8" id="form-edit-types-1" autocomplete="off" data-cancel-url="/epi/projects/types/view/1" data-delete-url="/epi/projects/types/delete/1" action="/epi/projects/types/edit/1"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div><button type="submit" disabled="disabled" style="display:none;" area-hidden="1"></button><input type="hidden" name="lock" data-lock-url="/epi/projects/types/lock/1.json" data-unlock-url="/epi/projects/types/unlock/1.json" value="7"><table class="vertical-table" data-row-table="types" data-row-id="1" data-row-type="default" data-row-model="epi_types" data-root-table="types" data-root-id="1" data-file-basepath="types" data-file-defaultpath="" data-database="projects"><tr class="table-input-select" data-row-field="scope"><th scope="row">Scope</th><td><div class="input select"><select name="scope" id="scope"><option value="projects">projects</option><option value="articles">articles</option><option value="sections">sections</option><option value="items">items</option><option value="links">links</option><option value="footnotes">footnotes</option><option value="properties" selected="selected">properties</option></select></div></td></tr><tr class="table-input-text" data-row-field="name"><th scope="row">Name</th><td><div class="input text required"><input type="text" name="name" required="required" data-validity-message="This field cannot be left empty" oninvalid="this.setCustomValidity(&#039;&#039;); if (!this.value) this.setCustomValidity(this.dataset.validityMessage)" oninput="this.setCustomValidity(&#039;&#039;)" id="name" aria-required="true" value="imagetypes" maxlength="100"></div></td></tr><tr class="table-input-jsoneditor" data-row-field="config"><td colspan="2"><div class="input jsoneditor"><input type="hidden" name="config" value="{
-    &quot;type&quot;: &quot;flat&quot;,
-    &quot;displayfield&quot;: &quot;lemma&quot;,
-    &quot;fields&quot;: {
-        &quot;lemma&quot;: &quot;Bezeichnung&quot;,
-        &quot;sortkey&quot;: {
-            &quot;caption&quot;: &quot;Sortierschl\u00fcssel&quot;,
-            &quot;autofill&quot;: {
-                &quot;source&quot;: &quot;lemma&quot;,
-                &quot;process&quot;: [
-                    &quot;sortkey&quot;
-                ]
-            }
-        },
-        &quot;comment&quot;: &quot;Bemerkung&quot;,
-        &quot;keywords&quot;: &quot;Schl\u00fcsselw\u00f6rter&quot;,
-        &quot;norm_data&quot;: &quot;Normdaten&quot;,
-        &quot;norm_iri&quot;: {
-            &quot;caption&quot;: &quot;IRI-Fragment&quot;,
-            &quot;autofill&quot;: {
-                &quot;source&quot;: &quot;lemma&quot;,
-                &quot;process&quot;: [
-                    &quot;irifragment&quot;
-                ]
-            }
-        },
-        &quot;created&quot;: &quot;Erstellt&quot;,
-        &quot;modified&quot;: &quot;Ge\u00e4ndert&quot;,
-        &quot;created_by&quot;: &quot;Erstellt von&quot;,
-        &quot;modified_by&quot;: &quot;Bearbeitet von&quot;,
-        &quot;id&quot;: &quot;ID&quot;
+  &quot;displayfield&quot;: &quot;lemma&quot;,
+  &quot;sort&quot;: &quot;sortkey&quot;,
+  &quot;fields&quot;: {
+    &quot;lemma&quot;: &quot;Bezeichnung&quot;,
+    &quot;sortkey&quot;: {
+      &quot;caption&quot;: &quot;Sortierschlüssel&quot;,
+      &quot;required&quot;: true,
+      &quot;pattern&quot;: &quot;^[0-9]{2}$&quot;
     },
-    &quot;columns&quot;: {
-        &quot;lemma&quot;: {
-            &quot;caption&quot;: &quot;Bezeichnung&quot;,
-            &quot;default&quot;: true
-        },
-        &quot;sortkey&quot;: &quot;Sortierschl\u00fcssel&quot;,
-        &quot;comment&quot;: &quot;Bemerkung&quot;,
-        &quot;keywords&quot;: &quot;Schl\u00fcsselw\u00f6rter&quot;,
-        &quot;norm_data&quot;: &quot;Normdaten&quot;,
-        &quot;norm_iri&quot;: {
-            &quot;caption&quot;: &quot;IRI-Fragment&quot;,
-            &quot;default&quot;: true
-        },
-        &quot;articles_count&quot;: &quot;Artikel&quot;,
-        &quot;modified&quot;: {
-            &quot;default&quot;: false,
-            &quot;caption&quot;: &quot;Ver\u00e4ndert&quot;
-        },
-        &quot;created&quot;: {
-            &quot;default&quot;: false,
-            &quot;caption&quot;: &quot;Angelegt&quot;
-        },
-        &quot;modifier_name&quot;: {
-            &quot;default&quot;: false,
-            &quot;key&quot;: &quot;modifier.name&quot;,
-            &quot;caption&quot;: &quot;Ver\u00e4ndert von&quot;
-        },
-        &quot;creator_name&quot;: {
-            &quot;default&quot;: false,
-            &quot;key&quot;: &quot;creator.name&quot;,
-            &quot;caption&quot;: &quot;Angelegt von&quot;
-        },
-        &quot;id&quot;: &quot;ID&quot;
-    }
+    &quot;comment&quot;: &quot;Bemerkung&quot;,
+    &quot;keywords&quot;: {
+      &quot;caption&quot;: &quot;Schlüsselwörter&quot;,
+      &quot;searchfield&quot;: true
+    },
+    &quot;norm_data&quot;: &quot;Normdaten&quot;,
+    &quot;norm_iri&quot;: {
+      &quot;caption&quot;: &quot;IRI-Fragment&quot;,
+      &quot;required&quot;: true,
+      &quot;pattern&quot;: &quot;^di_[a-z]+$&quot;
+    },
+    &quot;created&quot;: &quot;Erstellt&quot;,
+    &quot;modified&quot;: &quot;Geändert&quot;,
+    &quot;created_by&quot;: &quot;Erstellt von&quot;,
+    &quot;modified_by&quot;: &quot;Bearbeitet von&quot;,
+    &quot;id&quot;: &quot;ID&quot;
+  },
+  &quot;columns&quot;: {
+    &quot;lemma&quot;: {
+      &quot;caption&quot;: &quot;Bezeichnung&quot;,
+      &quot;default&quot;: true
+    },
+    &quot;sortkey&quot;: &quot;Sortierschlüssel&quot;,
+    &quot;comment&quot;: &quot;Bemerkung&quot;,
+    &quot;keywords&quot;: {
+      &quot;caption&quot;: &quot;Schlüsselwörter&quot;,
+      &quot;default&quot;: true
+    },
+    &quot;norm_data&quot;: &quot;Normdaten&quot;,
+    &quot;norm_iri&quot;: {
+      &quot;caption&quot;: &quot;IRI-Fragment&quot;,
+      &quot;default&quot;: true
+    },
+    &quot;articles_count&quot;: &quot;Artikel&quot;,
+    &quot;modified&quot;: {
+      &quot;default&quot;: false,
+      &quot;caption&quot;: &quot;Verändert&quot;
+    },
+    &quot;created&quot;: {
+      &quot;default&quot;: false,
+      &quot;caption&quot;: &quot;Angelegt&quot;
+    },
+    &quot;modifier_name&quot;: {
+      &quot;default&quot;: false,
+      &quot;key&quot;: &quot;modifier.name&quot;,
+      &quot;caption&quot;: &quot;Verändert von&quot;
+    },
+    &quot;creator_name&quot;: {
+      &quot;default&quot;: false,
+      &quot;key&quot;: &quot;creator.name&quot;,
+      &quot;caption&quot;: &quot;Angelegt von&quot;
+    },
+    &quot;id&quot;: &quot;ID&quot;
+  }
 }"><div class="widget-jsoneditor"></div></div></td></tr><tr class="table-input-select" data-row-field="mode"><th scope="row">Mode</th><td><div class="input select"><select name="mode" id="mode"><option value="default" selected="selected">Default</option><option value="preview">Preview</option><option value="revise">Revise</option><option value="stage">Stage</option></select></div></td></tr><tr class="table-input-text" data-row-field="preset"><th scope="row">Preset</th><td><div class="input text"><input type="text" name="preset" id="preset" value="default" maxlength="50"></div></td></tr><tr class="table-input-text" data-row-field="caption"><th scope="row">Caption</th><td><div class="input text"><input type="text" name="caption" id="caption" value="Abbildungskategorien" maxlength="200"></div></td></tr><tr class="table-input-text" data-row-field="description"><th scope="row">Description</th><td><div class="input textarea"><textarea name="description" id="textarea_content" rows="2" maxlength="500"></textarea></div></td></tr><tr class="table-input-text" data-row-field="category"><th scope="row">Category</th><td><div class="input text"><input type="text" name="category" id="category" value="Vokabulare" maxlength="100"></div></td></tr><tr class="table-input-checkbox" data-row-field="published"><th scope="row">Published</th><td><div class="input checkbox"><input type="hidden" name="published" value="0"><input type="checkbox" name="published" value="1" id="published"></div></td></tr><tr class="table-input-text" data-row-field="sortno"><th scope="row">Number</th><td><div class="input number"><input type="number" name="sortno" id="sortno" value="1"></div></td></tr><tr class="table-input-text" data-row-field="norm_iri"><th scope="row">IRI fragment</th><td><div class="input text"><input type="text" name="norm_iri" id="norm-iri" value="imagetypes" maxlength="500"></div></td></tr></table></form></div></div>
 
 <!-- Actions -->

@@ -11,7 +11,7 @@
 namespace App\Controller;
 
 use App\Utilities\Converters\Attributes;
-use Cake\Http\Exception\NotFoundException;
+use Cake\Event\EventInterface;
 
 /**
  * Pipelines Controller
@@ -40,6 +40,19 @@ class PipelinesController extends AppController
             'editor' => ['*']
         ]
     ];
+
+    /**
+     * beforeFilter callback
+     *
+     * @param EventInterface $event
+     *
+     * @return \Cake\Http\Response|null|void
+     */
+    public function beforeFilter(EventInterface $event)
+    {
+        parent::beforeFilter($event);
+        $this->loadComponent('Batch.Batch', ['model' => 'Pipelines']);
+    }
 
     public $help = 'export/pipelines';
 
@@ -161,6 +174,17 @@ class PipelinesController extends AppController
         }
 
         $this->Answer->addAnswer(compact('entity'));
+    }
+
+    /**
+     * Import docs
+     *
+     * @param string|null $scope
+     * @return void
+     */
+    public function import($scope = null)
+    {
+        $this->Batch->import($scope);
     }
 
     /**

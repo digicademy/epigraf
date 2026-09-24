@@ -108,7 +108,7 @@ trait FilesRequestTrait
     /**
      * Delete a file
      *
-     * @param integer $id File Id
+     * @param integer $id File ID
      *
      * @return \Cake\Http\Response|null|void redirect
      * @throws \Cake\Http\Exception\NotFoundException if file or folder not given or path contains `..`
@@ -159,7 +159,7 @@ trait FilesRequestTrait
     /**
      * Unzip file
      *
-     * @param $id
+     * @param integer $id The file record ID. Alternatively, provide the file path via query string.
      *
      * @return \Cake\Http\Response File for download
      */

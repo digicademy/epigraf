@@ -603,15 +603,14 @@ export class Tabsheets extends BaseWidget {
  * You can manually activate a section by calling the activateLi or activateSection method.
  * The widget listens to the event 'epi:move:row' and updates the section order.
  *
- * @constructor
+ * @listens epi:focus:widgets
+ *
  */
 export class ScrollSync extends BaseWidget {
 
-    /**
-     * @listens epi:focus:widgets
-     */
-    constructor() {
-        super();
+    constructor(element, name, parent) {
+        super(element, name, parent);
+
         this.content = null;
         this.menu = null;
 
@@ -626,7 +625,6 @@ export class ScrollSync extends BaseWidget {
             this.listenEvent(document, 'keydown', event => this.onKeydown(event));
 
             this.initScrollObserver();
-            this.updateWidget();
         }
 
         this.listenEvent(document, 'epi:focus:widgets', (event) => this.focusWidget(event));
@@ -641,9 +639,13 @@ export class ScrollSync extends BaseWidget {
     }
 
     /**
-     * Creates widget.
+     * Update observed sections
+     *
      */
     updateWidget() {
+        if (!this.menu) {
+            return;
+        }
         this.isScrolling += 1;
         const sections = this.getSections();
 
@@ -658,7 +660,6 @@ export class ScrollSync extends BaseWidget {
 
         this.isScrolling -= 1;
     }
-
 
     /**
      * Initialize IntersectionObserver object that observes scrollbox sections.
@@ -691,7 +692,6 @@ export class ScrollSync extends BaseWidget {
                         section.nextElementSibling
                         ) {
                         section = section.nextElementSibling;
-                        // !section.nextElementSibling.classList.contains('widget-scrollsync-section')
                     }
                 } else {
                     while (
@@ -699,7 +699,6 @@ export class ScrollSync extends BaseWidget {
                         section.previousElementSibling
                         ) {
                         section = section.previousElementSibling;
-                        // !section.previousElementSibling.classList.contains('widget-scrollsync-section')
                     }
                 }
             }
@@ -739,7 +738,7 @@ export class ScrollSync extends BaseWidget {
      * Get id of scrollbox section.
      *
      * @param li Scrollbox section
-     * @returns {String} Id of section
+     * @returns {String} ID of section
      */
     getSection(li) {
         return li ? document.getElementById(li.dataset.sectionId) : null;

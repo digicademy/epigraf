@@ -375,13 +375,11 @@ export class DocumentWidget extends BaseDocumentPart {
     /**
      * Get or loose focus
      *
-     * @param {Event} event Leave empty to focus
+     * @param {Event} event An event with one of the following types: focusout, focusin.
      */
     onFocusChanged(event) {
         const sectionElement = event.target.closest('.doc-section');
         if (sectionElement && (event.type === 'focusout')) {
-            sectionElement.dataset.dirty = 'true';
-            // Utils.emitEvent(sectionElement,'epi:save:form');
         }
 
         if (sectionElement && (event.type === 'focusin')) {
@@ -486,13 +484,34 @@ export class DocumentWidget extends BaseDocumentPart {
             this.emitEvent('epi:change:entity', {source: sourceInput});
         }
 
+        // Set dirty
+        Utils.setDirty(sourceInput);
 
-        // Set dirty flag and remove autofill flag on the source input
+        // Disable autofill for the current input after it has been edited manually
         if (sourceInput.dataset.autofill) {
             delete sourceInput.dataset.autofill;
         }
-        sourceInput.dataset.dirty = true;
+
+        // Transfer the value to autofill targets
         this.autofillSource(sourceInput);
+    }
+
+    /**
+     * Return true if form contains unsaved data
+     *
+     * @returns {boolean}
+     */
+    isDirty() {
+        if (super.isDirty()) {
+            return true;
+        }
+
+        for (const part of Object.values(this.satellites)) {
+            if (part.widgetElement.querySelector("[data-dirty=true]")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -536,7 +555,13 @@ export class DocumentWidget extends BaseDocumentPart {
             return;
         }
 
-        let value = sourceInput.value;
+        // Text content of xml editors, input values of all other inputs
+        let value;
+        if (sourceInput.nextSibling && sourceInput.nextSibling.classList.contains('widget-xmleditor')) {
+            value = sourceInput.nextSibling.textContent;
+        } else {
+            value = sourceInput.value;
+        }
 
         const pathSeparator = config.pathSeparator || ' › ';
 
@@ -555,27 +580,28 @@ export class DocumentWidget extends BaseDocumentPart {
                     }
                 }
                 else if (step === 'number') {
-                    value = value.toLowerCase().trim();
                     value = Utils.extractNumber(value);
                 }
                 else if (step === 'sortkey') {
                     value = value.toLowerCase().trim();
                     value = Utils.prefixNumbersWithZero(value, stepConfig?.width ?? 5);
-                    //value = Utils.replaceUmlauts(value);
-                    //value = Utils.removeSpecialCharacters(value);
                     value = Utils.collapseWhitespace(value);
                 }
                 else if (step === 'irifragment') {
-                    value = value.toLowerCase().trim();
-                    value = Utils.replaceUmlauts(value);
-                    value = Utils.removeSpecialCharacters(value);
-                    value = Utils.collapseWhitespace(value);
-                    value = Utils.replaceSpacesWithHyphens(value)
+                    value = Utils.cleanIdentifier(value);
+                }
+                else if (step === 'prefix') {
+                    // TODO: the prefix key is deprecated, use value
+                    value = (stepConfig.value || stepConfig.prefix || '') + value;
+                }
+                else if (step === 'postfix') {
+                    // TODO: the postfix key is deprecated, use value
+                    value = value + (stepConfig.value || stepConfig.postfix || '');
                 }
             }
         }
 
-        targetInput.value = value;
+        Utils.setInputValue(targetInput, value);
         this.autofillSource(targetInput);
     }
 
@@ -632,6 +658,30 @@ export class DocumentWidget extends BaseDocumentPart {
         }
 
         return element;
+    }
+
+    /**
+     * Find elements by selector in the document and its satellites
+     *
+     * @param {String} selector
+     * @return {Array} Array of HTMLElements
+     */
+    findAllInDocument(selector) {
+        if (!selector) {
+            return [];
+        }
+
+        // Check the mother document
+        let elements = Array.from(this.widgetElement.querySelectorAll(selector));
+
+        // Iterate satellites
+        for (let satellite in this.satellites) {
+            if (this.satellites[satellite].widgetElement) {
+                let elementsInSatellite = Array.from(this.satellites[satellite].widgetElement.querySelectorAll(selector));
+                elements = elements.concat(elementsInSatellite);
+            }
+        }
+        return elements;
     }
 
     /**
@@ -755,8 +805,8 @@ export class SectionWidget extends BaseDocument {
 
         // Disable section switch
         const sectionHead = this.widgetElement.querySelector('.doc-section-head');
-        if (App.switchbuttons) {
-            App.switchbuttons.switchButton(sectionHead, true);
+        if (App.switchButtons) {
+            App.switchButtons.switchButton(sectionHead, true);
         }
         sectionHead.classList.toggle('widget-switch', false);
 
@@ -770,7 +820,7 @@ export class SectionWidget extends BaseDocument {
         // Show tab
         if (target === 'tab') {
 
-            const tabsheetsWidget = App.findWidget(App.sidebarright.widgetElement,'tabsheets');
+            const tabsheetsWidget = App.findWidget(App.sidebarRight.widgetElement,'tabsheets');
             if (!tabsheetsWidget) {
                 return;
             }
@@ -875,7 +925,7 @@ export class ItemWidget extends BaseDocument {
         // Show tab
         if (target === 'tab') {
 
-            const tabsheetsWidget = App.findWidget(App.sidebarright.widgetElement,'tabsheets');
+            const tabsheetsWidget = App.findWidget(App.sidebarRight.widgetElement,'tabsheets');
             if (!tabsheetsWidget) {
                 return;
             }
@@ -1113,14 +1163,14 @@ export class AnnoSelectorWidget extends BaseDocument {
 
             // Icon span
             const span = document.createElement('span');
-            span.className = `anno-selector-group anno-selector-group-${Utils.cleanId(group)}`;
+            span.className = `anno-selector-group anno-selector-group-${Utils.cleanIdentifier(group)}`;
 
             // Checkbox
             const input = document.createElement('input');
             input.type = 'checkbox';
             input.name = group;
             input.value = '1';
-            input.id = `${paneId}_${Utils.cleanId(group)}`;
+            input.id = `${paneId}_${Utils.cleanIdentifier(group)}`;
             if (checked) input.checked = true;
 
             // Label
@@ -1412,6 +1462,7 @@ class EntityWidget extends BaseForm {
     constructor(element, name, parent) {
         super(element, name, parent);
     }
+
 }
 
 window.App.widgetClasses = window.App.widgetClasses || {};

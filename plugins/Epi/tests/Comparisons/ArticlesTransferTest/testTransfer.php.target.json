@@ -901,7 +901,7 @@
                         "deleted": 0,
                         "sortkey": "Sortierschl\u00fcssel Hausmarke ",
                         "propertytype": "brandtypes",
-                        "lemma": "Lemma Hausmarke",
+                        "lemma": "Hausmarke",
                         "name": "Name Hausmarke ",
                         "unit": "",
                         "keywords": "",
@@ -1142,9 +1142,264 @@
                 "from_field": "content",
                 "from_tagname": "cpl",
                 "from_tagid": "000004436342019850694444462751"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "sups",
+                "from_tagid": "f7927cd665a141f8a613f753143817f3"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "i",
+                "from_tagid": "bd514c5b7703464cee914a4b35d5e43b"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "sup",
+                "from_tagid": "c8cd15d65a2d424ed8fde71761c8fb56",
+                "to_tab": "properties",
+                "property": {
+                    "deleted": 0,
+                    "sortkey": "Hochgestellt 1",
+                    "propertytype": "verticalalignments",
+                    "lemma": "Hochgestellt 1",
+                    "name": "Hochgestellt 1 ",
+                    "unit": "Hochgestellt 1 Einheit",
+                    "comment": "Hochgestellt 1 Bemerk",
+                    "keywords": "Hochgestellt,Superskript",
+                    "ishidden": 0,
+                    "iscategory": 0,
+                    "norm_data": "Hochgestellt 1 Norm"
+                }
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "quot",
+                "from_tagid": "5651816140c94a31d799c0627251c169"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "ini",
+                "from_tagid": "000004436342334950231481521590"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "chr",
+                "from_tagid": "000004436342339388888888943282"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "kap",
+                "from_tagid": "000004436342344737268518577048"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "vsl",
+                "from_tagid": "000004436342331244212963000975"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "insec",
+                "from_tagid": "000004436342370581018518576494"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "spatium_v",
+                "from_tagid": "000004436342271391203703738522"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "add",
+                "from_tagid": "000004436342304277777777828084"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "oms",
+                "from_tagid": "000004436342299424768518527263"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "oms",
+                "from_tagid": "000004436342296030092592678988"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "cpl",
+                "from_tagid": "000004436342291663194444404939"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "del",
+                "from_tagid": "000004436342276410879629645922"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "ini",
+                "from_tagid": "000004436342606019675925920222"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "vsl",
+                "from_tagid": "000004436342597724537037066064"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "chr",
+                "from_tagid": "000004436342610309027777859800"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "kap",
+                "from_tagid": "000004436342614041666666773306"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "oms",
+                "from_tagid": "000004436342575649305555631787"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "add",
+                "from_tagid": "000004436342582651620370456862"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "spatium_v",
+                "from_tagid": "000004436342550361111111153956"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "del",
+                "from_tagid": "000004436342558008101851960179"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "cpl",
+                "from_tagid": "000004436342570162037037096209"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "insec",
+                "from_tagid": "000004436342633575231481531016"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "bl",
+                "from_tagid": "2c040267fae24a64e16b472d58d6c20f"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "vz",
+                "from_tagid": "ce17be9ff5d74990b0277245626884e4"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "vz",
+                "from_tagid": "4467776ea73942b1d9ee199ee627391a"
+            },
+            {
+                "deleted": 0,
+                "root_tab": "articles",
+                "from_tab": "footnotes",
+                "from_field": "content",
+                "from_tagname": "quot",
+                "from_tagid": "3eedda429ebe41699f4bddb56a636a39"
             }
         ],
         "footnotes": [
+            {
+                "deleted": 0,
+                "content": "Fu\u00dfnote mit Transkriptionsbereich mit Zitation rundum den Block:<quot id=\"3eedda429ebe41699f4bddb56a636a39\"><nl \/><bl id=\"2c040267fae24a64e16b472d58d6c20f\"><vz id=\"ce17be9ff5d74990b0277245626884e4\" \/> Verzeile 1 <vz id=\"4467776ea73942b1d9ee199ee627391a\" \/> Verszeile 2<nl \/> <\/bl><\/quot><nl \/>Hinter dem Block kein Zitat.<nl \/>",
+                "root_tab": "articles",
+                "from_tab": "items",
+                "from_field": "content",
+                "from_tagname": "app1",
+                "from_tagid": "2c88515dc7054c8bb797b47a072556de"
+            },
             {
                 "deleted": 0,
                 "content": "Fu\u00dfnotentext mit &amp;-Zeichen. Und mit spitzer &lt; Klammer.",
@@ -1157,7 +1412,7 @@
             },
             {
                 "deleted": 0,
-                "content": "Numerische Fu\u00dfnote in A.1.1",
+                "content": "Numerische Fu\u00dfnote in A.1.1 mit hochgestelltem kursivierte<sups id=\"f7927cd665a141f8a613f753143817f3\"><i id=\"bd514c5b7703464cee914a4b35d5e43b\">m<\/i><\/sups> Buchstaben",
                 "root_tab": "articles",
                 "from_tab": "items",
                 "from_field": "content",
@@ -1167,7 +1422,7 @@
             },
             {
                 "deleted": 0,
-                "content": "Alphabetische Fu\u00dfnote in A.1.1",
+                "content": "Alphabetische Fu\u00dfnote in A.1.1 mit hochgestelltem kursivierte<sup id=\"c8cd15d65a2d424ed8fde71761c8fb56\"><quot id=\"5651816140c94a31d799c0627251c169\">m<\/quot><\/sup> Zitat-Transkriptions-Buchstaben",
                 "root_tab": "articles",
                 "from_tab": "items",
                 "from_field": "content",
@@ -1461,12 +1716,14 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Standort B1",
+                            "published": 0,
+                            "sortkey": "standort b00001",
                             "propertytype": "locations",
                             "lemma": "Standort B1",
                             "name": "Standort B1 ",
                             "unit": "Standort B1 Einheit",
                             "comment": "Standort B1 Bemerk",
+                            "content": "{\"lat\":\"\",\"lng\":\"\",\"radius\":\"\"}",
                             "keywords": "Standort,Provenienz,Herkunft",
                             "ishidden": 1,
                             "iscategory": 1,
@@ -1511,7 +1768,7 @@
                         "deleted": 0,
                         "itemtype": "literature",
                         "value": "",
-                        "content": "Erg\u00e4nzung 3, Verweis auf <rec_intern id=\"000004456302457709490740746581\" \/>",
+                        "content": "Keine Seite. Verweis auf <rec_intern id=\"000004456302457709490740746581\" \/>.",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -1553,7 +1810,7 @@
                         "deleted": 0,
                         "itemtype": "literature",
                         "value": "",
-                        "content": "ERg\u00e4nzung 4",
+                        "content": "S. 210",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -1623,6 +1880,7 @@
                         "file_online": false,
                         "date_sort": "11234-12-31T23:59:59\/11234-01-01T00:00:00\/11234-12-31T23:59:59\/00\/5",
                         "date_value": "1234",
+                        "date_add": "",
                         "date_start": 1234,
                         "date_end": 1234,
                         "source_autopsy": false,
@@ -1631,16 +1889,11 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Zustand 1",
+                            "sortkey": "traditio1",
                             "propertytype": "conditions",
-                            "lemma": "Zustand 1",
-                            "name": "Zustand 1 ",
-                            "unit": "Zustand 1 einheit",
-                            "comment": "Zustand 1 Bemerk",
-                            "keywords": "Zustand,Kondition",
-                            "ishidden": 1,
-                            "iscategory": 1,
-                            "norm_data": "Zustand 1 Norm",
+                            "lemma": "Objekt und Inschrift erhalten",
+                            "keywords": "",
+                            "norm_data": "",
                             "links": []
                         },
                         "sectionpath": [
@@ -1898,16 +2151,16 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Ma\u00df 1a",
+                            "sortkey": "zwischenhoehe",
                             "propertytype": "measures",
-                            "lemma": "Ma\u00df 1a",
-                            "name": "Ma\u00df 1a ",
-                            "unit": "Ma\u00df 1a einheit",
-                            "comment": "Ma\u00df 1a Bemerk",
-                            "keywords": "Ma\u00dfangaben,Hektoliter",
+                            "lemma": "Zwischenh\u00f6he",
+                            "name": "ZwH",
+                            "unit": "m",
+                            "comment": "Zwischenh\u00f6he in Metern",
+                            "keywords": "Dimensionen",
                             "ishidden": 1,
                             "iscategory": 1,
-                            "norm_data": "Ma\u00df 1a",
+                            "norm_data": "gibtnochkeinq",
                             "links": []
                         },
                         "sectionpath": [
@@ -2011,7 +2264,7 @@
                             "unit": "",
                             "comment": "Notizen Wappen 1",
                             "content": "Schild 1",
-                            "elements": "Oberwappen 1<nl><\/nl>Verweis auf eine Marke: <rec_ma id=\"000004456303270875000000029487\" value=\"hm001.1121\"><\/rec_ma>",
+                            "elements": "Oberwappen 1<nl \/>Verweis auf eine Marke: <rec_ma id=\"000004456303270875000000029487\" \/> und weiterer Verweis: <rec_ma id=\"68582d6af9b94d39ff16d5d3c248e8e1\" \/>",
                             "keywords": "",
                             "source_from": "Nachweis Wappen 1",
                             "ishidden": 0,
@@ -2043,7 +2296,7 @@
                                             "deleted": 0,
                                             "sortkey": "Sortierschl\u00fcssel Hausmarke ",
                                             "propertytype": "brandtypes",
-                                            "lemma": "Lemma Hausmarke",
+                                            "lemma": "Hausmarke",
                                             "name": "Name Hausmarke ",
                                             "unit": "",
                                             "keywords": "",
@@ -2051,6 +2304,24 @@
                                             "iscategory": 0,
                                             "norm_data": ""
                                         }
+                                    }
+                                },
+                                {
+                                    "deleted": 0,
+                                    "root_tab": "properties",
+                                    "from_tab": "properties",
+                                    "from_field": "elements",
+                                    "from_tagname": "rec_ma",
+                                    "from_tagid": "68582d6af9b94d39ff16d5d3c248e8e1",
+                                    "to_tab": "properties",
+                                    "property": {
+                                        "deleted": 0,
+                                        "sortkey": "testmarke00002",
+                                        "propertytype": "brands",
+                                        "signature": "",
+                                        "lemma": "Marke2",
+                                        "name": "test.marke2",
+                                        "keywords": ""
                                     }
                                 }
                             ]
@@ -2103,7 +2374,7 @@
                             "unit": "",
                             "comment": "Notizen Wappen 1",
                             "content": "Schild 1",
-                            "elements": "Oberwappen 1<nl><\/nl>Verweis auf eine Marke: <rec_ma id=\"000004456303270875000000029487\" value=\"hm001.1121\"><\/rec_ma>",
+                            "elements": "Oberwappen 1<nl \/>Verweis auf eine Marke: <rec_ma id=\"000004456303270875000000029487\" \/> und weiterer Verweis: <rec_ma id=\"68582d6af9b94d39ff16d5d3c248e8e1\" \/>",
                             "keywords": "",
                             "source_from": "Nachweis Wappen 1",
                             "ishidden": 0,
@@ -2135,7 +2406,7 @@
                                             "deleted": 0,
                                             "sortkey": "Sortierschl\u00fcssel Hausmarke ",
                                             "propertytype": "brandtypes",
-                                            "lemma": "Lemma Hausmarke",
+                                            "lemma": "Hausmarke",
                                             "name": "Name Hausmarke ",
                                             "unit": "",
                                             "keywords": "",
@@ -2143,6 +2414,24 @@
                                             "iscategory": 0,
                                             "norm_data": ""
                                         }
+                                    }
+                                },
+                                {
+                                    "deleted": 0,
+                                    "root_tab": "properties",
+                                    "from_tab": "properties",
+                                    "from_field": "elements",
+                                    "from_tagname": "rec_ma",
+                                    "from_tagid": "68582d6af9b94d39ff16d5d3c248e8e1",
+                                    "to_tab": "properties",
+                                    "property": {
+                                        "deleted": 0,
+                                        "sortkey": "testmarke00002",
+                                        "propertytype": "brands",
+                                        "signature": "",
+                                        "lemma": "Marke2",
+                                        "name": "test.marke2",
+                                        "keywords": ""
                                     }
                                 }
                             ]
@@ -2184,10 +2473,10 @@
                             "name": "Wappen 2",
                             "unit": "",
                             "comment": "Notizen Wappen 2",
-                            "content": "Schild 2<nl><\/nl>Literaturverweis: <nl><\/nl><rec_lit id=\"000004472261132811342592685794\" value=\"Quelle 1 \"><\/rec_lit>",
+                            "content": "Schild 2<nl \/>Literaturverweis ist hier nicht erlaubt: <nl \/><rec_lit id=\"000004472261132811342592685794\" \/>",
                             "elements": "Oberwappen 2",
                             "keywords": "",
-                            "source_from": "Nachweis Wappen 2",
+                            "source_from": "Nachweis Wappen 2 in <rec_lit id=\"f89b90bd1e4d4ea4c4fe784f640aa576\" \/>",
                             "ishidden": 0,
                             "iscategory": 0,
                             "norm_data": "",
@@ -2199,6 +2488,30 @@
                                     "from_field": "content",
                                     "from_tagname": "rec_lit",
                                     "from_tagid": "000004472261132811342592685794",
+                                    "to_tab": "properties",
+                                    "property": {
+                                        "deleted": 0,
+                                        "sortkey": "Quelle 1",
+                                        "propertytype": "literature",
+                                        "signature": "",
+                                        "file_name": "",
+                                        "lemma": "Quelle 1 mit &",
+                                        "name": "Quelle 1 mit &",
+                                        "unit": "Quelleneinheit 1",
+                                        "comment": "Quelle 1 Bemerkung",
+                                        "keywords": "Karstadt,Ursprung",
+                                        "ishidden": 0,
+                                        "iscategory": 1,
+                                        "norm_data": "Quelle 1 Normdaten"
+                                    }
+                                },
+                                {
+                                    "deleted": 0,
+                                    "root_tab": "properties",
+                                    "from_tab": "properties",
+                                    "from_field": "source_from",
+                                    "from_tagname": "rec_lit",
+                                    "from_tagid": "f89b90bd1e4d4ea4c4fe784f640aa576",
                                     "to_tab": "properties",
                                     "property": {
                                         "deleted": 0,
@@ -2296,7 +2609,7 @@
                                 "deleted": 0,
                                 "sortkey": "Sortierschl\u00fcssel Hausmarke ",
                                 "propertytype": "brandtypes",
-                                "lemma": "Lemma Hausmarke",
+                                "lemma": "Hausmarke",
                                 "name": "Name Hausmarke ",
                                 "unit": "",
                                 "keywords": "",
@@ -2350,7 +2663,7 @@
                                 "deleted": 0,
                                 "sortkey": "Sortierschl\u00fcssel Meisterzeichen ",
                                 "propertytype": "brandtypes",
-                                "lemma": "Lemma Meisterzeichen",
+                                "lemma": "Meisterzeichen",
                                 "name": "Name Meisterzeichen ",
                                 "unit": "Einheit Marke",
                                 "comment": "Bemerkung Marke",
@@ -2407,17 +2720,18 @@
                 "items": [
                     {
                         "deleted": 0,
+                        "published": 3,
                         "itemtype": "images",
                         "value": "",
                         "content": "Vercelli Homily IV 2",
                         "flagged": true,
                         "links_tab": "items",
-                        "file_name": "Vercelli IV 2.PNG",
-                        "file_type": "PNG",
+                        "file_name": "vercelli-1.png",
+                        "file_type": "png",
                         "file_path": "signatur-1",
                         "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
                         "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
-                        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
+                        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}",
                         "file_online": false,
                         "date_value": "",
                         "source_autopsy": false,
@@ -2458,12 +2772,12 @@
                         "content": "Vercelli Soul and Body",
                         "flagged": true,
                         "links_tab": "sections",
-                        "file_name": "Vercelli SB I.PNG",
-                        "file_type": "PNG",
+                        "file_name": "vercelli-2.png",
+                        "file_type": "png",
                         "file_path": "signatur-1",
                         "file_source": "C:\\Users\\Felix Lentge\\Desktop\\stuff\\",
                         "file_copyright": "Biblioteca Capitolare Vercelli Copyright",
-                        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"\"}",
+                        "file_meta": "{\"creator\":\"\",\"source\":\"\",\"licence\":\"\",\"copyright\":\"\",\"usageterms\":\"\",\"credit\":\"\",\"marked\":\"true\"}",
                         "file_online": false,
                         "date_value": "",
                         "source_autopsy": false,
@@ -2531,6 +2845,152 @@
                     }
                 ],
                 "items": [
+                    {
+                        "deleted": 0,
+                        "itemtype": "icons",
+                        "value": "",
+                        "content": "Erg\u00e4nzung Ikonografie 1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Ikonografie 1 ",
+                            "propertytype": "icons",
+                            "lemma": "Ikonografie 1",
+                            "name": "Ikonografie 1 ",
+                            "unit": "",
+                            "keywords": "",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 0,
+                                "siblings": 16,
+                                "number": 1,
+                                "sectiontype": "index",
+                                "name": "Register",
+                                "alias": ""
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "figures",
+                        "content": "",
+                        "file_name": "",
+                        "file_path": "",
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "maria",
+                            "propertytype": "figures",
+                            "lemma": "Maria",
+                            "name": "Maria",
+                            "keywords": "",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 0,
+                                "siblings": 16,
+                                "number": 1,
+                                "sectiontype": "index",
+                                "name": "Register",
+                                "alias": ""
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "manufacturers",
+                        "value": "",
+                        "content": "Erg\u00e4nzung Hersteller 1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Hersteller 1 ",
+                            "propertytype": "manufacturers",
+                            "lemma": "Hersteller 1",
+                            "name": "Hersteller 1 ",
+                            "unit": "",
+                            "keywords": "",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 0,
+                                "siblings": 16,
+                                "number": 1,
+                                "sectiontype": "index",
+                                "name": "Register",
+                                "alias": ""
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "personnames",
+                        "value": "",
+                        "content": "Erg\u00e4nzung Personenname 1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "\u2026Person mit Punkten",
+                            "propertytype": "personnames",
+                            "lemma": "\u2026Person mit Punkten",
+                            "name": "\u2026Person mit Punkten",
+                            "unit": "",
+                            "keywords": "",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 0,
+                                "siblings": 16,
+                                "number": 1,
+                                "sectiontype": "index",
+                                "name": "Register",
+                                "alias": ""
+                            }
+                        ]
+                    },
                     {
                         "deleted": 0,
                         "itemtype": "placenames",
@@ -2650,26 +3110,45 @@
                     },
                     {
                         "deleted": 0,
-                        "itemtype": "personnames",
-                        "value": "",
-                        "content": "Erg\u00e4nzung Personenname 1",
-                        "flagged": false,
+                        "itemtype": "scriptfeatures",
+                        "content": "",
                         "file_name": "",
                         "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Personenname 1 ",
-                            "propertytype": "personnames",
-                            "lemma": "Personenname 1",
-                            "name": "Personenname 1 ",
-                            "unit": "",
+                            "sortkey": "nice type",
+                            "propertytype": "scriptfeatures",
+                            "lemma": "Nice type",
+                            "name": "Nice type",
+                            "keywords": "",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 0,
+                                "siblings": 16,
+                                "number": 1,
+                                "sectiontype": "index",
+                                "name": "Register",
+                                "alias": ""
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "temporals",
+                        "content": "",
+                        "file_name": "",
+                        "file_path": "",
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "long time ago",
+                            "propertytype": "temporals",
+                            "lemma": "Long time ago",
+                            "name": "Long time ago",
                             "keywords": "",
                             "ishidden": 0,
                             "iscategory": 0,
@@ -2725,84 +3204,6 @@
                                 "alias": ""
                             }
                         ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "manufacturers",
-                        "value": "",
-                        "content": "Erg\u00e4nzung Hersteller 1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Hersteller 1 ",
-                            "propertytype": "manufacturers",
-                            "lemma": "Hersteller 1",
-                            "name": "Hersteller 1 ",
-                            "unit": "",
-                            "keywords": "",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 0,
-                                "siblings": 16,
-                                "number": 1,
-                                "sectiontype": "index",
-                                "name": "Register",
-                                "alias": ""
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "icons",
-                        "value": "",
-                        "content": "Erg\u00e4nzung Ikonografie 1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Ikonografie 1 ",
-                            "propertytype": "icons",
-                            "lemma": "Ikonografie 1",
-                            "name": "Ikonografie 1 ",
-                            "unit": "",
-                            "keywords": "",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 0,
-                                "siblings": 16,
-                                "number": 1,
-                                "sectiontype": "index",
-                                "name": "Register",
-                                "alias": ""
-                            }
-                        ]
                     }
                 ]
             },
@@ -2831,7 +3232,7 @@
                         "deleted": 0,
                         "itemtype": "text",
                         "value": "",
-                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.<app1 id=\"000004463586776180555555628924\" \/><nl \/><nl \/><h id=\"000004436160878777777777844048\">Text <\/h>Text Text<nl \/>Text Text Text<nl \/>Text <b id=\"000004436160887138888888933579\">Text <\/b><i id=\"000004436160890414351851976127\">Text<\/i><nl \/><u id=\"000004436160892870370370431668\">Text <\/u><g id=\"000004436160895594907407469796\">Text <\/g><k id=\"000004436160898130787037028136\">Text<\/k><nl \/><a id=\"000004436160901166666666725447\" value=\"LINK\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" \/> <nl \/>Text Text Text<nl \/>Text Text Text<nl \/>Literaturverweis im Text: <rec_lit id=\"000004456302666872685185191153\" \/><nl \/><nl \/>Externe Verweise<nl \/>- auf einen Artikel: <rec_extern id=\"000004489202490501157407418218\" \/><nl \/>- auf eine Inschrift: <rec_extern id=\"000004489202501042824074077622\" \/><nl \/>- auf einen Inschriftenteil: <rec_extern id=\"000004489202513028935185199996\" \/><nl \/>- auf eine Fu\u00dfnote: <rec_extern id=\"000004489202522863425925931578\" \/><nl \/><nl \/>Interne Verweise<nl \/>- auf Inschrift B: <rec_intern id=\"000004489203414346064814810841\" \/><nl \/>- auf Inschriftenteil B2: <rec_intern id=\"000004489202534078703703725732\" \/><nl \/>- auf Fu\u00dfnote a: <rec_intern id=\"000004489204161565972222228987\" \/><nl \/>- auf Fu\u00dfnote 2: <rec_intern id=\"000004489204172635416666673690\" \/><nl \/>- auf Marke: <rec_ma id=\"000004489204491244212962960464\" \/>",
+                        "content": "Dieser Artikel versammelt alle m\u00f6glichen Funktionalit\u00e4ten und wird f\u00fcr das Testsystem ben\u00f6tigt. Er sollte nur nach Absprache mit dem Entwicklungsteam ver\u00e4ndert werden.<app1 id=\"000004463586776180555555628924\" \/><nl \/><nl \/><h id=\"000004436160878777777777844048\">Text <\/h>Text Text<nl \/>Text Text Text<nl \/>Text <b id=\"000004436160887138888888933579\">Text <\/b><i id=\"000004436160890414351851976127\">Text<\/i><nl \/><u id=\"000004436160892870370370431668\">Text <\/u><g id=\"000004436160895594907407469796\">Text <\/g><k id=\"000004436160898130787037028136\">Text<\/k><nl \/><a id=\"000004436160901166666666725447\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" value=\"LINK\" \/> <nl \/>Text Text Text<nl \/>Text Text Text<nl \/>Literaturverweis im Text: <rec_lit id=\"000004456302666872685185191153\" \/><nl \/><nl \/>Externe Verweise<nl \/>- auf einen Artikel: <rec_extern id=\"000004489202490501157407418218\" \/><nl \/>- auf eine Inschrift: <rec_extern id=\"000004489202501042824074077622\" \/><nl \/>- auf einen Inschriftenteil: <rec_extern id=\"000004489202513028935185199996\" \/><nl \/>- auf eine Fu\u00dfnote: <rec_extern id=\"000004489202522863425925931578\" \/><nl \/><nl \/>Interne Verweise<nl \/>- auf Inschrift B: <rec_intern id=\"000004489203414346064814810841\" \/><nl \/>- auf Inschriftenteil B2: <rec_intern id=\"000004489202534078703703725732\" \/><nl \/>- auf Fu\u00dfnote a: <rec_intern id=\"000004489204161565972222228987\" \/><nl \/>- auf Fu\u00dfnote 2: <rec_intern id=\"000004489204172635416666673690\" \/><nl \/>- auf Marke: <rec_ma id=\"000004489204491244212962960464\" \/>",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2890,7 +3291,7 @@
                         "deleted": 0,
                         "itemtype": "text",
                         "value": "",
-                        "content": "<h id=\"000004436161145244212963020598\">TEXT <\/h>TEXT TEXT TEXT <nl \/><b id=\"000004436161152100694444420087\">TEXT <\/b><i id=\"000004436161156358796296327934\">TEXT <\/i><u id=\"000004436161159035879629630111\">TEXT <\/u><g id=\"000004436161161467592592619662\">TEXT <\/g><nl \/><k id=\"000004436161164633101851986162\">TEXT <\/k><a id=\"000004436161167155092592629748\" value=\"LINK \" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" \/> <nl \/><nl \/>TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/><nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>",
+                        "content": "<h id=\"000004436161145244212963020598\">TEXT <\/h>TEXT TEXT TEXT <nl \/><b id=\"000004436161152100694444420087\">TEXT <\/b><i id=\"000004436161156358796296327934\">TEXT <\/i><u id=\"000004436161159035879629630111\">TEXT <\/u><g id=\"000004436161161467592592619662\">TEXT <\/g><nl \/><k id=\"000004436161164633101851986162\">TEXT <\/k><a id=\"000004436161167155092592629748\" href=\"https:\/\/www.snerpa.is\/net\/isl\/laxdal.htm\" value=\"LINK \" \/> <nl \/><nl \/>TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/><nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>TEXT TEXT TEXT TEXT <nl \/>",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -2948,6 +3349,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "texttypes",
+                        "itemgroup": "",
                         "value": "",
                         "content": "ERg\u00e4nzung Textsorte 1",
                         "flagged": false,
@@ -2988,6 +3390,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "texttypes",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Erg\u00e4nzung Textsorte 2a",
                         "flagged": false,
@@ -3042,16 +3445,12 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Schriftart 1",
+                            "sortkey": "mit versal in gotischer majuskel",
                             "propertytype": "fonttypes",
-                            "lemma": "Schriftart 1",
-                            "name": "Schriftart 1 ",
-                            "unit": "Schriftart 1 Einheit",
-                            "comment": "Schriftart 1 Bemerk",
-                            "keywords": "Schriftart,Font",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Schriftart 1 Norm",
+                            "lemma": "mit Versal in gotischer Majuskel",
+                            "name": "mit Versal in gotischer Majuskel",
+                            "keywords": "",
+                            "norm_data": "",
                             "links": []
                         },
                         "sectionpath": [
@@ -3082,16 +3481,16 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Schriftart 1a",
+                            "sortkey": "Versalien in gotischer Majuskel und Versalschrift",
                             "propertytype": "fonttypes",
-                            "lemma": "Schriftart 1a",
-                            "name": "Schriftart 1a",
+                            "lemma": "mit Versalien in gotischer Majuskel und Versalschrift",
+                            "name": "mit Versalien in gotischer Majuskel und Versalschrift",
                             "unit": "Schriftart 1a Einheit",
-                            "comment": "Schriftart 1a Bemerk",
-                            "keywords": "Schriftart",
-                            "ishidden": 1,
-                            "iscategory": 1,
-                            "norm_data": "Schriftart 1a Norm",
+                            "comment": "darf nicht verloren gehen",
+                            "keywords": "versalien, majuskel, versalschrift",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "norm:vers-maj-vers",
                             "links": []
                         },
                         "sectionpath": [
@@ -3108,6 +3507,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "languages",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Erg\u00e4nzung Sprache 1",
                         "flagged": false,
@@ -3148,6 +3548,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "languages",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Erg\u00e4nzung Sprache 2a",
                         "flagged": false,
@@ -3720,6 +4121,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "metres",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Versma\u00dfanzeige in Artikel 1",
                         "flagged": false,
@@ -3760,6 +4162,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "metres",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Versma\u00dfanzeige im Artikel 2a",
                         "flagged": false,
@@ -3904,7 +4307,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004474097580738425925958702\"><nl \/>Zwischenraum von 1: <spatium_v id=\"000004436165070465277777844244\" width=\"1\" \/><nl \/>Unbestimmter Verlust: <del id=\"000004436165076792824074163019\" num_sign=\"0\" \/><nl \/>Erg<cpl id=\"000004436165097621527777892480\">\u00e4nz\u00e9ng<\/cpl> <nl \/>Ausla <oms id=\"000004436165100978009259346871\">ss\u00f0ung<\/oms> <nl \/>Verzeilenumbruh <vz id=\"000004436165037326388888946670\" \/> <nl \/><add id=\"000004436165104023148148146540\">Nachtrag<\/add><nl \/>Abk<abr id=\"000004436165108151620370436103\">\u00fcrzung<\/abr><nl \/><vsl id=\"000004436165110998842592605012\">Ve<\/vsl>rsalie <nl \/>Zeilenumbruch <z id=\"000004436165006240740740742383\" \/><nl \/> <\/bl><nl \/><bl id=\"000004436164974262731481588902\"><nl \/>Hann bj\u00f3 \u00ed Raums <wtr id=\"000004436165051586805555667815\" \/> dal \u00ed Raumsd<all id=\"000004436165061471064814812687\">\u00e6<\/all>lafylk<nl \/> <\/bl><nl \/><bl id=\"000004515581058186342592608309\">Alphabetische Fu\u00dfnote: <app2 id=\"000004489202863265046296394325\" \/><nl \/>Numerische Fu\u00dfnote: <app1 id=\"000004489202875583333333330386\" \/><\/bl>",
+                        "content": "<bl id=\"000004474097580738425925958702\"><nl \/>Zwischenraum von 1: <spatium_v id=\"000004436165070465277777844244\" width=\"1\" \/><nl \/>Unbestimmter Verlust: <del id=\"000004436165076792824074163019\" num_sign=\"0\" \/><nl \/>Erg<cpl id=\"000004436165097621527777892480\">\u00e4nz\u00e9ng<\/cpl> <nl \/>Ausla <oms id=\"000004436165100978009259346871\">ss\u00f0ung<\/oms> <nl \/>Verzeilenumbruh <vz id=\"000004436165037326388888946670\" \/> <nl \/><add id=\"000004436165104023148148146540\">Nachtrag<\/add><nl \/>Abk<abr id=\"000004436165108151620370436103\">\u00fcrzung<\/abr><nl \/><vsl id=\"000004436165110998842592605012\">Ve<\/vsl>rsalie <nl \/>Zeilenumbruch <z id=\"000004436165006240740740742383\" \/><nl \/> <\/bl><nl \/><bl id=\"000004436164974262731481588902\"><nl \/>Hann bj\u00f3 \u00ed Raums <wtr id=\"000004436165051586805555667815\" \/> dal \u00ed Raumsd<all id=\"000004436165061471064814812687\">\u00e6<\/all>lafylk<app1 id=\"2c88515dc7054c8bb797b47a072556de\" \/><nl \/> <\/bl><nl \/><bl id=\"000004515581058186342592608309\">Alphabetische Fu\u00dfnote: <app2 id=\"000004489202863265046296394325\" \/><nl \/>Numerische Fu\u00dfnote: <app1 id=\"000004489202875583333333330386\" \/><\/bl>",
                         "translation": "\u00dcbersetzung Inschrift A - Teil 1 - Bearbeitung 1",
                         "flagged": false,
                         "file_name": "",
@@ -4126,9 +4529,9 @@
                 "items": [
                     {
                         "deleted": 0,
-                        "itemtype": "texttypes",
+                        "itemtype": "epithets",
                         "value": "",
-                        "content": "erg textsort 1",
+                        "content": "Erg Epith 1",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -4141,16 +4544,16 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Textsorte 1",
-                            "propertytype": "texttypes",
-                            "lemma": "Textsorte 1",
-                            "name": "Textsorte 1 ",
-                            "unit": "Textsorte 1 Einheit",
-                            "comment": "Textsorte 1 Bemerk",
-                            "keywords": "Textsorte,Text type",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Textsorte 1 NOrm",
+                            "sortkey": "Epithet 1a",
+                            "propertytype": "epithets",
+                            "lemma": "Epithet 1a",
+                            "name": "Epithet 1a",
+                            "unit": "Epithet 1a Einheit",
+                            "comment": "Epithet 1a Bemerk",
+                            "keywords": "Epithet",
+                            "ishidden": 1,
+                            "iscategory": 1,
+                            "norm_data": "Epithet 1a Norm",
                             "links": []
                         },
                         "sectionpath": [
@@ -4166,9 +4569,9 @@
                     },
                     {
                         "deleted": 0,
-                        "itemtype": "texttypes",
+                        "itemtype": "epithets",
                         "value": "",
-                        "content": "erg textsort 2",
+                        "content": "Erg Epith 2",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -4181,18 +4584,70 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Textsorte 2a",
-                            "propertytype": "texttypes",
-                            "lemma": "Textsorte 2a",
-                            "name": "Textsorte 2a",
-                            "unit": "Textsorte 2a Einheit ",
-                            "comment": "Textsorte 2a Bemerk",
-                            "keywords": "Text type",
+                            "sortkey": "Epithet 2a",
+                            "propertytype": "epithets",
+                            "lemma": "Epithet 2a",
+                            "name": "Epithet 2a",
+                            "unit": "Epithet 2a Einheit",
+                            "comment": "Epithet 2a Bemerk",
+                            "keywords": "Spitzname",
                             "ishidden": 1,
                             "iscategory": 1,
-                            "norm_data": "Textsorte 2a Norm",
+                            "norm_data": "Epithet 2a Norm",
                             "links": []
                         },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "fontheights",
+                        "value": "hoch",
+                        "content": "Erg schrifth 1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "fontheights",
+                        "value": "niedrig",
+                        "content": "Erg schrifth 2",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
                         "sectionpath": [
                             {
                                 "children": 2,
@@ -4271,378 +4726,6 @@
                             "ishidden": 1,
                             "iscategory": 1,
                             "norm_data": "Schriftart 2a Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "languages",
-                        "value": "",
-                        "content": "ErERg\u00e4nzung spreche 1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Sprache 1",
-                            "propertytype": "languages",
-                            "lemma": "Sprache 1",
-                            "name": "Sprache 1 ",
-                            "unit": "Sprache 1 einheit",
-                            "comment": "Sprache 1 Bemerk",
-                            "keywords": "Sprache,Language",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Sprache 1 Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "languages",
-                        "value": "",
-                        "content": "Erg\u00e4nzung sprache 2",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Sprache 2",
-                            "propertytype": "languages",
-                            "lemma": "Sprache 2",
-                            "name": "Sprache 2 ",
-                            "unit": "Sprache 2 Einheit",
-                            "comment": "Sprache 2 Bemerk",
-                            "keywords": "Sprache,Language",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Sprache 2 Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "techniques",
-                        "value": "",
-                        "content": "ERg Ausftech1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Ausf\u00fchrungstechnik 1",
-                            "propertytype": "techniques",
-                            "lemma": "Ausf\u00fchrungstechnik 1",
-                            "name": "Ausf\u00fchrungstechnik 1 ",
-                            "unit": "Ausf\u00fchrungstechnik 1 Einheit",
-                            "comment": "Ausf\u00fchrungstechnik 1 Bemerk",
-                            "keywords": "Ausf\u00fchrungstechnik,Technique",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Ausf\u00fchrungstechnik 1 Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "techniques",
-                        "value": "",
-                        "content": "ERg Ausftech2",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Ausf\u00fchrungstechnik 2",
-                            "propertytype": "techniques",
-                            "lemma": "Ausf\u00fchrungstechnik 2",
-                            "name": "Ausf\u00fchrungstechnik 2 ",
-                            "unit": "Ausf\u00fchrungstechnik 2 Einheit",
-                            "comment": "Ausf\u00fchrungstechnik 2 Bemerk",
-                            "keywords": "Ausf\u00fchrungstechnik,Technique",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Ausf\u00fchrungstechnik 2 Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "fontheights",
-                        "value": "hoch",
-                        "content": "Erg schrifth 1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "fontheights",
-                        "value": "niedrig",
-                        "content": "Erg schrifth 2",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "epithets",
-                        "value": "",
-                        "content": "Erg Epith 1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Epithet 1a",
-                            "propertytype": "epithets",
-                            "lemma": "Epithet 1a",
-                            "name": "Epithet 1a",
-                            "unit": "Epithet 1a Einheit",
-                            "comment": "Epithet 1a Bemerk",
-                            "keywords": "Epithet",
-                            "ishidden": 1,
-                            "iscategory": 1,
-                            "norm_data": "Epithet 1a Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "epithets",
-                        "value": "",
-                        "content": "Erg Epith  2",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Epithet 2a",
-                            "propertytype": "epithets",
-                            "lemma": "Epithet 2a",
-                            "name": "Epithet 2a",
-                            "unit": "Epithet 2a Einheit",
-                            "comment": "Epithet 2a Bemerk",
-                            "keywords": "Spitzname",
-                            "ishidden": 1,
-                            "iscategory": 1,
-                            "norm_data": "Epithet 2a Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "incipits",
-                        "value": "",
-                        "content": "ERg Initien 1",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Initien 1",
-                            "propertytype": "incipits",
-                            "lemma": "Initien 1",
-                            "name": "Initien 1 ",
-                            "unit": "Initien 1 Einheit",
-                            "comment": "Initien 1 Bemerk",
-                            "keywords": "Initien,Anfang",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Initien 1 Norm",
-                            "links": []
-                        },
-                        "sectionpath": [
-                            {
-                                "children": 2,
-                                "siblings": 16,
-                                "number": 2,
-                                "sectiontype": "inscription",
-                                "name": "B",
-                                "alias": "Alias Inschrift B"
-                            }
-                        ]
-                    },
-                    {
-                        "deleted": 0,
-                        "itemtype": "incipits",
-                        "value": "",
-                        "content": "ERg Initien 2",
-                        "flagged": false,
-                        "file_name": "",
-                        "file_path": "",
-                        "file_source": "",
-                        "file_online": false,
-                        "date_value": "",
-                        "source_autopsy": false,
-                        "pos_x": 0,
-                        "pos_y": 0,
-                        "pos_z": 0,
-                        "property": {
-                            "deleted": 0,
-                            "sortkey": "Initien 2",
-                            "propertytype": "incipits",
-                            "lemma": "Initien 2",
-                            "name": "Initien 2 ",
-                            "unit": "Initien 2 Einheit",
-                            "comment": "Initien 2 Bemerk",
-                            "keywords": "Initien,Anfang",
-                            "ishidden": 0,
-                            "iscategory": 0,
-                            "norm_data": "Initien 2 Norm",
                             "links": []
                         },
                         "sectionpath": [
@@ -4738,9 +4821,9 @@
                     },
                     {
                         "deleted": 0,
-                        "itemtype": "sources",
+                        "itemtype": "incipits",
                         "value": "",
-                        "content": "Erg Zit 1",
+                        "content": "ERg Initien 1",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -4753,16 +4836,16 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Zitat 1a",
-                            "propertytype": "sources",
-                            "lemma": "Zitat 1a",
-                            "name": "Zitat 1a",
-                            "unit": "Zitat 1a Einheit",
-                            "comment": "Zitat 1a Bemerk",
-                            "keywords": "Zitat",
-                            "ishidden": 1,
-                            "iscategory": 1,
-                            "norm_data": "Zitat 1a Norm",
+                            "sortkey": "Initien 1",
+                            "propertytype": "incipits",
+                            "lemma": "Initien 1",
+                            "name": "Initien 1 ",
+                            "unit": "Initien 1 Einheit",
+                            "comment": "Initien 1 Bemerk",
+                            "keywords": "Initien,Anfang",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "Initien 1 Norm",
                             "links": []
                         },
                         "sectionpath": [
@@ -4778,9 +4861,9 @@
                     },
                     {
                         "deleted": 0,
-                        "itemtype": "sources",
+                        "itemtype": "incipits",
                         "value": "",
-                        "content": "Erg Zit 2",
+                        "content": "ERg Initien 2",
                         "flagged": false,
                         "file_name": "",
                         "file_path": "",
@@ -4793,16 +4876,16 @@
                         "pos_z": 0,
                         "property": {
                             "deleted": 0,
-                            "sortkey": "Zitat 2",
-                            "propertytype": "sources",
-                            "lemma": "Zitat 2",
-                            "name": "Zitat 2 ",
-                            "unit": "Zitat 2 einheit",
-                            "comment": "Zitat 2 Bemerk",
-                            "keywords": "Zitat,Quote",
+                            "sortkey": "Initien 2",
+                            "propertytype": "incipits",
+                            "lemma": "Initien 2",
+                            "name": "Initien 2 ",
+                            "unit": "Initien 2 Einheit",
+                            "comment": "Initien 2 Bemerk",
+                            "keywords": "Initien,Anfang",
                             "ishidden": 0,
                             "iscategory": 0,
-                            "norm_data": "Zitat 2 Norm",
+                            "norm_data": "Initien 2 Norm",
                             "links": []
                         },
                         "sectionpath": [
@@ -4900,7 +4983,290 @@
                     },
                     {
                         "deleted": 0,
+                        "itemtype": "sources",
+                        "value": "",
+                        "content": "Erg\u00e4nzung: Ave Maria",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "lc. 00001,00028",
+                            "propertytype": "sources",
+                            "lemma": "Lc. 1,28",
+                            "name": "Lc. 1,28",
+                            "keywords": "",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "techniques",
+                        "value": "",
+                        "content": "ERg Ausftech1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Ausf\u00fchrungstechnik 1",
+                            "propertytype": "techniques",
+                            "lemma": "Ausf\u00fchrungstechnik 1",
+                            "name": "Ausf\u00fchrungstechnik 1 ",
+                            "unit": "Ausf\u00fchrungstechnik 1 Einheit",
+                            "comment": "Ausf\u00fchrungstechnik 1 Bemerk",
+                            "keywords": "Ausf\u00fchrungstechnik,Technique",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "Ausf\u00fchrungstechnik 1 Norm",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "techniques",
+                        "value": "",
+                        "content": "ERg Ausftech2",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Ausf\u00fchrungstechnik 2",
+                            "propertytype": "techniques",
+                            "lemma": "Ausf\u00fchrungstechnik 2",
+                            "name": "Ausf\u00fchrungstechnik 2 ",
+                            "unit": "Ausf\u00fchrungstechnik 2 Einheit",
+                            "comment": "Ausf\u00fchrungstechnik 2 Bemerk",
+                            "keywords": "Ausf\u00fchrungstechnik,Technique",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "Ausf\u00fchrungstechnik 2 Norm",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "texttypes",
+                        "itemgroup": "",
+                        "value": "",
+                        "content": "erg textsort 1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Textsorte 1",
+                            "propertytype": "texttypes",
+                            "lemma": "Textsorte 1",
+                            "name": "Textsorte 1 ",
+                            "unit": "Textsorte 1 Einheit",
+                            "comment": "Textsorte 1 Bemerk",
+                            "keywords": "Textsorte,Text type",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "Textsorte 1 NOrm",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "texttypes",
+                        "itemgroup": "",
+                        "value": "",
+                        "content": "erg textsort 2",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Textsorte 2a",
+                            "propertytype": "texttypes",
+                            "lemma": "Textsorte 2a",
+                            "name": "Textsorte 2a",
+                            "unit": "Textsorte 2a Einheit ",
+                            "comment": "Textsorte 2a Bemerk",
+                            "keywords": "Text type",
+                            "ishidden": 1,
+                            "iscategory": 1,
+                            "norm_data": "Textsorte 2a Norm",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "languages",
+                        "itemgroup": "",
+                        "value": "",
+                        "content": "ErERg\u00e4nzung spreche 1",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Sprache 1",
+                            "propertytype": "languages",
+                            "lemma": "Sprache 1",
+                            "name": "Sprache 1 ",
+                            "unit": "Sprache 1 einheit",
+                            "comment": "Sprache 1 Bemerk",
+                            "keywords": "Sprache,Language",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "Sprache 1 Norm",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
+                        "itemtype": "languages",
+                        "itemgroup": "",
+                        "value": "",
+                        "content": "Erg\u00e4nzung sprache 2",
+                        "flagged": false,
+                        "file_name": "",
+                        "file_path": "",
+                        "file_source": "",
+                        "file_online": false,
+                        "date_value": "",
+                        "source_autopsy": false,
+                        "pos_x": 0,
+                        "pos_y": 0,
+                        "pos_z": 0,
+                        "property": {
+                            "deleted": 0,
+                            "sortkey": "Sprache 2",
+                            "propertytype": "languages",
+                            "lemma": "Sprache 2",
+                            "name": "Sprache 2 ",
+                            "unit": "Sprache 2 Einheit",
+                            "comment": "Sprache 2 Bemerk",
+                            "keywords": "Sprache,Language",
+                            "ishidden": 0,
+                            "iscategory": 0,
+                            "norm_data": "Sprache 2 Norm",
+                            "links": []
+                        },
+                        "sectionpath": [
+                            {
+                                "children": 2,
+                                "siblings": 16,
+                                "number": 2,
+                                "sectiontype": "inscription",
+                                "name": "B",
+                                "alias": "Alias Inschrift B"
+                            }
+                        ]
+                    },
+                    {
+                        "deleted": 0,
                         "itemtype": "metres",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Versma\u00dfanzeige im Artiekl 1",
                         "flagged": false,
@@ -4941,6 +5307,7 @@
                     {
                         "deleted": 0,
                         "itemtype": "metres",
+                        "itemgroup": "",
                         "value": "",
                         "content": "Versma\u00dfanzeige im Artiekl 2",
                         "flagged": false,
@@ -5085,7 +5452,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004436342219936342592692857\"><ini id=\"000004436342334950231481521590\">\u00de<\/ini>at <chr id=\"000004436342339388888888943282\">v<\/chr>ar eitt <kap id=\"000004436342344737268518577048\">s<\/kap>umar, <z id=\"000004436342244850694444419672\" \/><nl \/>at <vsl id=\"000004436342331244212963000975\">G<\/vsl>r\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V<all id=\"000004436342356430555555639778\">\u00ed<\/all>k austr <vz id=\"000004436342252387731481570820\" \/><nl \/>eptir <sup id=\"000004436342367437500000062286\">Harald<\/sup> dau<wtr id=\"000004436342265232638888919263\" \/>\u00f0an, <insec id=\"000004436342370581018518576494\">m\u00e1g <\/insec>sinn, <spatium_v id=\"000004436342271391203703738522\" width=\"1\" \/><nl \/>fyrir \u00fev\u00ed <add id=\"000004436342304277777777828084\">at<\/add><oms id=\"000004436342299424768518527263\">hann<\/oms> <oms id=\"000004436342296030092592678988\">\u00e1tti <\/oms> <cpl id=\"000004436342291663194444404939\">\u00fear<\/cpl> m<del id=\"000004436342276410879629645922\" num_sign=\"0\" \/>iklar eignir.<\/bl><nl \/>",
+                        "content": "<bl id=\"000004436342219936342592692857\"><ini id=\"000004436342334950231481521590\">\u00de<\/ini>at <chr id=\"000004436342339388888888943282\">v<\/chr>ar eitt <kap id=\"000004436342344737268518577048\">s<\/kap>umar, <z id=\"000004436342244850694444419672\" \/><nl \/>at <vsl id=\"000004436342331244212963000975\">G<\/vsl>r\u00edmr bj\u00f3 f\u00f6r s\u00edna \u00ed V<all id=\"000004436342356430555555639778\">\u00ed<\/all>k austr <vz id=\"000004436342252387731481570820\" \/><nl \/>eptir <sup id=\"000004436342367437500000062286\">Harald<\/sup> dau<wtr id=\"000004436342265232638888919263\" \/>\u00f0an, <insec id=\"000004436342370581018518576494\">m\u00e1g <\/insec>sinn, <spatium_v id=\"000004436342271391203703738522\" width=\"1\" \/><nl \/>fyrir \u00fev\u00ed <add id=\"000004436342304277777777828084\">at<\/add><oms id=\"000004436342299424768518527263\">hann<\/oms> <oms id=\"000004436342296030092592678988\">\u00e1tti <\/oms> <cpl id=\"000004436342291663194444404939\">\u00fear<\/cpl> m<del id=\"000004436342276410879629645922\" num_sign=\"0\" \/>iklar eignir.<nl \/>Ave Maria<nl \/> <\/bl><nl \/>",
                         "translation": "\u00dcbersetzung Inschrift B Teil 1",
                         "flagged": false,
                         "file_name": "",
@@ -5172,7 +5539,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004489204293021990740747062\"><nl \/><nl \/><\/bl>",
+                        "content": "<bl id=\"000004489204293021990740747062\"><nl \/><nl \/> <\/bl>",
                         "translation": "",
                         "flagged": false,
                         "file_name": "",
@@ -5321,7 +5688,7 @@
                         "deleted": 0,
                         "itemtype": "transcriptions",
                         "value": "",
-                        "content": "<bl id=\"000004436342493348379629644802\"><ini id=\"000004436342606019675925920222\">G<\/ini>r\u00edmr <vsl id=\"000004436342597724537037066064\">u<\/vsl>nni <chr id=\"000004436342610309027777859800\">h<\/chr>enni <kap id=\"000004436342614041666666773306\">m<\/kap>ikit, ok l<all id=\"000004436342619626157407418054\">\u00e6<\/all>tr <oms id=\"000004436342575649305555631787\">hann<\/oms> \u00feat <sup id=\"000004436342629741898148160649\">eptir<\/sup> henni. <z id=\"000004436342516953703703748996\" \/><nl \/>H\u00fan <add id=\"000004436342582651620370456862\">var hverri <\/add>konu v\u00e6nni<spatium_v id=\"000004436342550361111111153956\" width=\"1\" \/> ok betr<del id=\"000004436342558008101851960179\" num_sign=\"0\" \/> at s\u00e9r <cpl id=\"000004436342570162037037096209\">um<\/cpl> alla hluti,<vz id=\"000004436342523789351851958494\" \/><nl \/> \u00feeira<abr id=\"000004436342590993055555669897\"> er<\/abr> \u00ed Nor<wtr id=\"000004436342540800925925924686\" \/>egi v\u00e1ru. <nl \/>\u00deeira f\u00f6r var b\u00fain <insec id=\"000004436342633575231481531016\">vir\u00f0uliga<\/insec>.<\/bl>",
+                        "content": "<bl id=\"000004436342493348379629644802\"><ini id=\"000004436342606019675925920222\">G<\/ini>r\u00edmr <vsl id=\"000004436342597724537037066064\">u<\/vsl>nni <chr id=\"000004436342610309027777859800\">h<\/chr>enni <kap id=\"000004436342614041666666773306\">m<\/kap>ikit, ok l<all id=\"000004436342619626157407418054\">\u00e6<\/all>tr <oms id=\"000004436342575649305555631787\">hann<\/oms> \u00feat <sup id=\"000004436342629741898148160649\">eptir<\/sup> henni. <z id=\"000004436342516953703703748996\" \/><nl \/>H\u00fan <add id=\"000004436342582651620370456862\">var hverri <\/add>konu v\u00e6nni<spatium_v id=\"000004436342550361111111153956\" width=\"1\" \/> ok betr<del id=\"000004436342558008101851960179\" num_sign=\"0\" \/> at s\u00e9r <cpl id=\"000004436342570162037037096209\">um<\/cpl> alla hluti,<vz id=\"000004436342523789351851958494\" \/><nl \/>\u00feeira<abr id=\"000004436342590993055555669897\"> er<\/abr> \u00ed Nor<wtr id=\"000004436342540800925925924686\" \/>egi v\u00e1ru. <nl \/>\u00deeira f\u00f6r var b\u00fain <insec id=\"000004436342633575231481531016\">vir\u00f0uliga<\/insec>.<\/bl>",
                         "translation": "\u00dcbersetzung Inschrift B Teil 2",
                         "flagged": false,
                         "file_name": "",
@@ -5458,19 +5825,18 @@
             "published": 0,
             "projecttype": "epi",
             "name": "Testprojekt 1",
-            "signature": "TP1"
+            "signature": "TP1",
+            "norm_data": ""
         },
         "modifier": {
             "deleted": 0,
             "name": "Jakob J\u00fcnger",
-            "acronym": "jj",
             "userrole": 0
         },
         "creator": {
             "deleted": 0,
             "usertype": "human",
             "name": "Testuser",
-            "acronym": "TU",
             "userrole": 1
         }
     }

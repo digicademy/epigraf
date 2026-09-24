@@ -1,4 +1,4 @@
-<response>
+<ram>
   <article id="articles-1" database="import" norm_iri="awesomeiri" articletype="object">
     <created>2020-10-29T13:00:58+01:00</created>
     <modified>2020-10-29T13:00:58+01:00</modified>
@@ -113,4 +113,4 @@
       </properties>
     </index>
   </indexes>
-</response>
+</ram>

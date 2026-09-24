@@ -9,6 +9,7 @@
  */
 
 import Utils from "./utils.js";
+// import {i18n}  from './lingui.js';
 
 /**
  * Base class for models
@@ -151,8 +152,8 @@ export class BaseModel {
 /**
  * A widget is a model attached to a DOM element
  *
- * initWidget: is called once after all widgets were constructed and are ready to be used.
  * updateWidget: is called each time, a widget is initialized: when it was created and when it is updated.
+ * initWidget: is called once after all widgets were constructed and are ready to be used.
  *
  */
 export class BaseWidget extends BaseModel {
@@ -203,7 +204,8 @@ export class BaseWidget extends BaseModel {
      * Widget initialization: Override in child classes
      *
      * The method is called each time, a widget is initialized:
-     * when it was created and when it is updated.
+     * when it was created directly after the constructor
+     * and when the widget itself calls it after updates.
      */
     updateWidget() {
 
@@ -311,7 +313,8 @@ export class BaseWidget extends BaseModel {
     /**
      * Get or loose focus
      *
-     * @param {Event} event Leave empty to focus
+     * @param {Event} event An event with one of the following types: focusout, focusin.
+     *                      Undefined events and events with other types will be handeled like the focusin event.
      */
     onFocusChanged(event) {
         if (this.widgetElement && this.widgetElement instanceof Element) {
@@ -330,7 +333,7 @@ export class BaseWidget extends BaseModel {
     /**
      * Update the focus attributes
      *
-     * @param {boolean} focus
+     * @param {boolean} focus Whether set or remove the focus flags
      * @fires epi:focus:widgets
      */
     setFocus(focus = true) {
@@ -343,18 +346,6 @@ export class BaseWidget extends BaseModel {
             this.hasFocus = focus;
             this.widgetElement.classList.toggle('widget-focused', this.hasFocus);
             this.emitEvent('epi:focus:widgets', {focus: this.hasFocus});
-
-            // let debugMessage = focus ? 'focus  ' : 'unfocus';
-            // debugMessage = debugMessage + ': ' + this.widgetName + ': ' + this.widgetElement.tagName + ': ' + this.widgetElement.className;
-            //
-            // if (focus) {
-            //     console.log(debugMessage);
-            // } else if (this.widgetName === 'table') {
-            //     console.log(debugMessage);
-            //     if (this.widgetElement.classList.contains('widget-dragitems-enabled')) {
-            //         console.log('WHY');
-            //     }
-            // }
         }
     }
 
@@ -507,6 +498,8 @@ export class BaseDocument extends BaseWidget {
         }
         return this.documentWidget;
     }
+
+
 }
 
 /**
@@ -569,11 +562,33 @@ export class BaseForm extends BaseWidget {
         this.isSaving = false;
     }
 
+
+    initWidget() {
+        this.baseTitle = document.title;
+        this.listenEvent(this.widgetElement, 'input',(event) => this.onInput(event));
+        this.listenEvent(document, 'epi:change:form', event => this.onChangeForm(event));
+    }
+
+    /**
+     * Update the change indicator of the window
+     *
+     * @param {CustomEvent} event
+     */
+    onChangeForm(event) {
+        if (!this.isInFrame()) {
+            document.title = `● ${this.baseTitle}`;
+        }
+    }
+
+    onInput(event) {
+        Utils.setDirty(event.target, true);
+    }
+
     /**
      * Connect the base form widget with the form element and listen the submit event
      *
      * @param {HTMLFormElement} element
-     * @para {boolean} force Whether to attach the form even if it is already attached
+     * @param {boolean} force Whether to attach the form even if it is already attached
      * @listens epi:open:tab
      */
     attachForm(element, force= true) {
@@ -665,7 +680,7 @@ export class BaseForm extends BaseWidget {
      */
     onExit(event) {
         if (!this.isSaving && this.hasLock()) {
-            const msg = "You have opened a dataset. The dataset may stay locked if you don't close it. Do you want to leave the page anyways?";
+            const msg = "You have opened an entity. The entity may stay locked if you don't close it. Do you want to leave the page anyways?";
             event.preventDefault();
             event.returnValue = msg;
             return msg;
@@ -777,7 +792,7 @@ export class BaseForm extends BaseWidget {
     unlockForm(targetUrl, async=false) {
         if (!targetUrl) {
             this.cancelForm(true);
-            return;
+            return true;
         }
 
         let lockId;
@@ -808,29 +823,78 @@ export class BaseForm extends BaseWidget {
             this.loadUrl(targetUrl);
         }
         this.cancelForm(false);
+        return true;
     }
 
     /**
-     * Footer cancel button event handler
+     * Return true if the form contains unsaved data
      *
-     * Bypassed in frames and popups, see attachButtons()
+     * @returns {boolean}
+     */
+    isDirty() {
+        return this.widgetElement.querySelector("[data-dirty=true]");
+    }
+
+    /**
+     * Check for dirty data and prompt confirmation if necessary
+     *
+     * @returns {Promise} A promise that resolves to true or false.
+     */
+    confirmCancel() {
+        return new Promise((resolve, reject) => {
+
+            // Give all listening widgets the chance to downcast their data
+            if (!this.emitEvent('epi:save:form', {}, true)) {
+                resolve(false);
+            }
+
+            let referenceWidget = this.getWidget(this.formElement, 'document');
+            if (!referenceWidget) {
+                referenceWidget = this.getWidget(this.formElement, 'entity');
+            }
+
+            if (referenceWidget && referenceWidget.isDirty()) {
+                // const msg =  i18n.t("The entity has unsaved changes.<br>Do you want to close it?");
+                const msg =  "The entity may have unsaved changes.<br>Do you want to close it?";
+                App.confirmAction(msg)
+                    .then((value) => resolve(value))
+                    .catch((error) => reject(error));
+            }
+            else {
+                resolve(true);
+            }
+        });
+    }
+
+    /**
+     * Footer cancel button click handler
+     *
+     * Bypassed in popups, see attachButtons()
      *
      * @param {Event} event
      */
     onCancelClick(event) {
         if (this.formElement) {
             const url = Utils.decodeHtmlAttribute(this.formElement.dataset.cancelUrl);
-            this.unlockForm(url);
+            this.confirmCancel().then((confirmed) => {
+                if (confirmed) {
+                    this.unlockForm(url);
+                }
+            });
         }
     }
 
+    /**
+     * External button click handler
+     *
+     * @param {Event} event
+     */
     onExternalClick(event) {
         if (this.formElement && event.target.contains(this.formElement)) {
             const url = Utils.decodeHtmlAttribute(this.formElement.dataset.cancelUrl);
             this.unlockForm(url, true);
         }
     }
-
 
     /**
      * Footer delete button event handler
@@ -884,7 +948,7 @@ export class BaseForm extends BaseWidget {
     }
 
     /**
-     * Close the form and emit teh event epi:cancel:row
+     * Close the form and emit the event epi:cancel:row
      *
      * @param {boolean} close Whether to close the window
      * @return {boolean}

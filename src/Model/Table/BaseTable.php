@@ -13,9 +13,9 @@ namespace App\Model\Table;
 use App\Model\Behavior\ModifierBehavior;
 use App\Model\Behavior\VersionBehavior;
 use App\Model\Entity\Databank;
-use App\Utilities\Converters\Arrays;
 use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
+use App\Utilities\Converters\Search;
 use ArrayObject;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
@@ -59,6 +59,14 @@ class BaseTable extends Table
      * @var null|string
      */
     public $scopeField = null;
+
+
+    /**
+     * Type field for scoped queries and IRI paths
+     *
+     * @var null|string
+     */
+    public $typeField = null;
 
     /**
      * Whether to check field types after marshalling and merge JSON data
@@ -206,6 +214,10 @@ class BaseTable extends Table
     /**
      * Search field configuration
      *
+     * The property is just used to cache the configuration.
+     * Override the `getSearchFields()` method to set the configuration,
+     * and call it to retrieve the configuration.
+     *
      * An array of field bundles. Each bundle has a caption, a list of searched fields, and
      * optionally the operator options 'type' and 'operator'.
      *
@@ -219,7 +231,7 @@ class BaseTable extends Table
      *
      * @var array
      */
-    public $searchFields = [];
+    protected $searchFields = [];
 
     /**
      * @var array Options for patching entities in the edit action
@@ -644,7 +656,7 @@ class BaseTable extends Table
             return $query;
         }
 
-        $conditions = Arrays::termConditions($term, $fields, $operator, $type);
+        $conditions = Search::termConditions($term, $fields, $operator, $type);
 
         // Keep selected properties
         if (!empty($selected)) {
@@ -698,7 +710,7 @@ class BaseTable extends Table
     }
 
     /**
-     * Constructs a database query from request parameters
+     * Find entities based on parsed request parameters
      *
      * @param Query $query
      * @param array $options
@@ -948,7 +960,7 @@ class BaseTable extends Table
             $searchTerm = $search[$columnKey] ?? [];
             $searchConfig = $columnConfig['search'] ?? [];
             if (!empty($searchTerm) && !empty($searchConfig)) {
-                $searchConditions = Arrays::termConditions(
+                $searchConditions = Search::termConditions(
                     $searchTerm,
                     [$searchConfig['field']],
                     $searchConfig['operator'],
@@ -1346,8 +1358,22 @@ class BaseTable extends Table
         return $columns;
     }
 
-    protected function getConfiguredSearchFields($params) {
-        return $this->searchFields;
+    /**
+     * Get the search fields
+     *
+     * Override in child classes.
+     *
+     * @param string|null $fieldName Leave empty to get all, or select a specific field.
+     * @param string|null $typeName The type name to look up in the types configuration for the current table.
+     * @return array[]
+     */
+    protected function getSearchFields($fieldName = null, $typeName = null): array {
+        if (empty($fieldName)) {
+            return $this->searchFields ?? [];
+
+        } else {
+            return $this->searchFields[$fieldName] ?? [];
+        }
     }
 
     /**
@@ -1361,7 +1387,7 @@ class BaseTable extends Table
      */
     public function getFilter($params)
     {
-        $searchFields = $this->getConfiguredSearchFields($params);
+        $searchFields = $this->getSearchFields();
         $captions = Hash::extract($searchFields, '{*}.caption');
         $searchFields = array_combine(array_keys($searchFields), $captions);
         return ['search' => $searchFields];
@@ -1417,6 +1443,26 @@ class BaseTable extends Table
         );
 
         return $sortableFields;
+    }
+
+
+    /**
+     * Clear entities (delete section of article, items of section)
+     *
+     * Only entities containing a property `_import_action` with the value "clear" will be processed.
+     * When importing data, the value is passed from the field `_action` in the source data to the `_import_action` field.
+     *
+     * @param array $entities Array of entities.
+     * @return boolean success or failure?
+     */
+    public function clearEntities($entities)
+    {
+        foreach ($entities as $entity) {
+            if ($entity->_import_action === 'clear') {
+                $entity->clear();
+            }
+        }
+        return true;
     }
 
     /**

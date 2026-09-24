@@ -8,7 +8,7 @@ Epigraf supports to retrieve raw data from the Relational Article Model and to g
 
 
 **Pipelines**: Use the pipeline system to generate camera-ready word documents, TEI-files, RDF-triples, Websites
-or other documents for archiving and publication purposes. In a pipeline, data is assebled and transformed to arbitrary target formats.
+or other documents for archiving and publication purposes. In a pipeline, data is assembled and transformed to arbitrary target formats.
 You can also export images using a pipeline.
 The default data pipeline supports export of the collection pages or full entity data in common formats such as CSV, XLSX, JSON, or XML.
 

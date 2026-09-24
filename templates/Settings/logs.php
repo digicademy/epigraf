@@ -10,7 +10,10 @@
 ?>
 
 <?php
-    /** @var array $log */
+    /**
+     * @var \App\View\AppView $this
+     * @var array $log
+     */
 ?>
 
 <!-- Search bar -->
@@ -41,5 +44,6 @@
 <?php
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup('bottom-right');
+    $this->Link->downloadButtons(['actions' => ['logs']]);
     $this->Link->addAction(__('Download'), ['controller'=>'files','action' => 'download', 'database'=>false, '?' => ['root' => 'root', 'path' => 'logs', 'filename'=>'error.log']]);
 ?>

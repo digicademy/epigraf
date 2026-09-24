@@ -116,6 +116,47 @@ class Csv
         return $xlsxContent !== false ? $xlsxContent : false;
     }
 
+    /**
+     * Convert an array to an HTML table
+     *
+     * @param string|array $data A string containing csv data or an already parsed array
+     * @param boolean $hasHeader Whether the first row is treated as a header
+     * @return string
+     */
+    static public function csvToHtml($data, $hasHeader = true) {
+        if (is_string($data)) {
+            $data = str_getcsv($data);
+        }
+
+        $body = '';
+        $header = '';
+
+        foreach ($data as $idx => $row) {
+            if (!is_array($row)) {
+                $row = [$row];
+            }
+
+            $row_html = '<tr>';
+            foreach ($row as $cell) {
+                if (($idx === 0) && $hasHeader) {
+                    $row_html .= '<th>' . htmlspecialchars($cell) . '</th>';
+                } else {
+                    $row_html .= '<td>' . htmlspecialchars($cell) . '</td>';
+                }
+            }
+            $row_html .= '</tr>';
+
+            if (($idx === 0) && $hasHeader) {
+                $header .= $row_html;
+            } else {
+                $body .= $row_html;
+            }
+        }
+
+        return '<table class="csv-table"><thead>' . $header . '</thead><tbody>' . $body . '</tbody></table>';
+
+    }
+
     private static function shortenExcelCell($value, $max = 32760)
     {
         if (!is_string($value)) return $value;

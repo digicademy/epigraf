@@ -39,8 +39,6 @@ export class TreeWidget extends BaseWidget {
         this.isLoading = false;
 
         this.widgetElement.addEventListener('click', event => this.treeItemClicked(event));
-
-        this.updateWidget();
     }
 
     /**

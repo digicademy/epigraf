@@ -100,8 +100,8 @@ export class TableWidget extends BaseWidget {
         this.listenEvent(document,'keydown', event => this.onKeyDown(event));
         this.listenEvent(document,'keyup', event => this.onKeyUp(event));
 
-        this.listenEvent(this.widgetElement,'click', event => this.onClickRow(event));
         this.listenEvent(this.widgetElement, 'dblclick', event => this.onDoubleClickRow(event));
+        this.listenEvent(this.widgetElement,'click', event => this.onClickRow(event));
 
         // Hover effects -> wrap values in links, then they can be opened in new tabs by ctrl+click
         this.listenEvent(this.widgetElement, 'mouseover', event => this.linkAction(event));
@@ -117,10 +117,27 @@ export class TableWidget extends BaseWidget {
     }
 
     /**
-     * TODO: implement
+     * Update sort indicators
      */
     updateWidget() {
 
+        // Mark column headers with sorting icons
+        const sortKeys = (this.widgetElement.dataset['sortkey'] ?? "").split(",");
+        const sortDirs = (this.widgetElement.dataset['sortdir'] ?? "").split(",");
+        if (sortKeys.length < 2) {
+            return;
+        }
+        const links = this.widgetElement.querySelectorAll('th a');
+        links.forEach((link) => {
+            const hrefParams = new URLSearchParams(link.href ?? "");
+            const currentKey = hrefParams.get('sort') ?? (link.closest('th').dataset.col ?? '');
+            const prio = sortKeys.indexOf(currentKey);
+            if (prio >= 0) {
+            const dir = sortDirs[prio] ?? 'asc';
+                link.classList.add(dir);
+                link.dataset.sortOrder = prio + 1;
+            }
+        });
     }
 
     /**
@@ -491,6 +508,7 @@ export class TableWidget extends BaseWidget {
             App.ajaxQueue.stop();
             window.location = url;
         }
+        event.preventDefault();
     }
 
     /**
@@ -777,12 +795,14 @@ export class TableWidget extends BaseWidget {
      * @param event click
      */
     onClickRow(event) {
-        if (event.target.closest('thead') || !event.target.closest('tbody tr') || event.target.closest('.tree-indent')) {
+        // ScrollPaginator handles clicks on table headers
+
+        if (!event.target.closest('tbody tr') || event.target.closest('.tree-indent')) {
             return;
         }
         //App.setFocus(event);
 
-        // Only handle singe clicks.
+        // Only handle single clicks.
         // TODO: not working because double clicks are two single clicks?
         if (event.detail > 1) {
             return;
@@ -803,9 +823,6 @@ export class TableWidget extends BaseWidget {
      */
     initSelection() {
         let row = this.widgetElement.querySelector('tbody tr.row-selected');
-        // if (!row) { //  && App.sidebarright.isVisible()
-        //     row = this.widgetElement.querySelector('tbody tr:not(.actions-noframe, .node-cursor)');
-        // }
         if (row) {
             this.activateRow(row);
         }
@@ -819,7 +836,6 @@ export class TableWidget extends BaseWidget {
      * Focus the entity belonging to a row
      *
      * @param {HTMLTableRowElement} row
-     * @param {boolean} open Perform the row action
      * @fires epi:focus:entity
      */
     activateEntity(row) {
@@ -1227,8 +1243,6 @@ export class DragItemsWidget extends BaseWidget {
         // Switch event
         this.listenEvent(document,'epi:toggle:switch', event => this.onSwitched(event));
         this.listenEvent(document,'click', event => this.onSaveClick(event));
-
-        this.updateWidget();
     }
 
     /**
@@ -1376,7 +1390,7 @@ export class DragItemsWidget extends BaseWidget {
 
             // Switch back
             if (this.switchButton) {
-                App.switchbuttons.switchButton(this.switchButton);
+                App.switchButtons.switchButton(this.switchButton);
             }
         }
     }

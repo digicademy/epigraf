@@ -75,6 +75,7 @@ class AppView extends View
     {
         parent::initialize();
 
+        $this->addHelper('Paginator', ['className' => 'TotalPaginator']);
         $this->addHelper('User');
         $this->addHelper('Widgets.Element');
         $this->addHelper('Widgets.Link');

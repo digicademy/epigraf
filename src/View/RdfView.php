@@ -311,7 +311,7 @@ class RdfView extends XmlView
         $xmlDeclaration = $options['declaration'] ?? $data['_xml_declaration'] ?? static::$_header['_xml_declaration'] ?? '';
         $xml = empty($xmlDeclaration) ? '' : $xmlDeclaration . "\n";
 
-        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? $xmlHeader['_xml_tag'] ?? 'response';
+        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? $xmlHeader['_xml_tag'] ?? 'RDF';
         $rootAttributes = static::renderAttributes($xmlHeader, $xmlHeader['_xml_attributes'] ?? []);
         $xml .= "<{$rootTag}{$rootAttributes}>";
 

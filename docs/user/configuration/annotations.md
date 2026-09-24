@@ -15,11 +15,11 @@ Epigraf implements two types of annotations to be used in XML fields:
 The configuration defines the toolbar to add annotations, how annotations are rendered and how they are stored in the database.
 
 <p class="infobox">
-    🚀 See the <a href="/epigraf/user/configuration/annotations-howto">step-by-step guide</a>
+    🚀 See the <a href="/user/configuration/annotations-howto">step-by-step guide</a>
     to get started with annotation configuration in an example database.
 </p>
 
-# Rendering options
+# Configuration options
 Both annotation types can be rendered as formatting (e.g. italic text),
 as stand-alone tags (e.g. word separators or literature references),
 or as brackets (e.g. indicating text added in a transcription).
@@ -134,35 +134,7 @@ The options are determined by the <a href="https://ckeditor.com/docs/ckeditor5/l
 </tr>
 <tr>
 <td>fields</td>
-<td>Field configration list object. Keys represent field names, values contain a field configuration object including the rendering configuration. Available fields for footnotes:
-<ul>
-    <li>
-        <strong>name</strong>: The name field of a footnote entity contains the footnote number. To render the footnote number, provide an object with the following keys:
-        <ul>
-            <li><code>format</code> must be set to the value `counter`.</li>
-            <li><code>render</code>: Define one of `prefix`, `text` or `postfix` to push the number to the rendering of one of those components.</li>
-            <li><code>counter</code>: The number type, one of the following values:
-                <ul>
-                    <li>numeric: A usual number.</li>
-                    <li>alphabetic: A latin letter (variants: alphabetic-lower, alphabetic-upper)</li>
-                    <li>roman: A roman numeral (variants: roman-lower, roman-upper)</li>
-                    <li>greek: A greek number (variants: greek-lower, greek-upper)</li>
-                </ul>
-            </li>
-        </ul>
-    </li>
-    <li><strong>segment</strong> and <strong>content</strong>: Field configuration objects for the fields holding footnote text and a reference text. The <code>format</code> subkey must be set to "xml". Configure the permitted annotations in the <code>types</code> subkey by providing a list containing annotation names and group names. The <code>caption</code> subkey can be used to set a heading. If the <code>autofill</code> subkey is set to true, the selected text is transferred to this field when a footnote is inserted. Alternatively, autofill can be set to an object with the keys `prefix` (the value is prefixed), `postfix` (the value is suffixed) and `wrap` (a link type name that is used to create an enclosing tag, e.g. `quot`).</li>
-</ul>
-
-Available fields for links:
-<ul><li><strong>to</strong>: The target field configuration restricting what kind of links are allowed. Each link is part of a root entity and has a source. The source is either a tag in an XML field of the root entity (e.g. an article) or in one of its parts (e.g. an item in a section of an article). The target can be any other entity, in the database, the target reference is stored in a pair of `to_tab` and `to_id` columns. Thus, from the perspective of a root entity, there are external links (e.g. a link from article content to a property) and internal links (e.g. a link from one section to another section within the article). The <code>format</code> subkey must be set to "record" for external links and to "relation" for internal links. The <code>required</code> subkey can be set to "true" to force a selection in the editor. The <code>manage</code> subkey can be set to "true" to allow editors to quickly access and manage respective categories. The <code>limit</code> subkey can be set to either "article" opposed to the standard "project" to restrict the annotation selection to entities present in the current article (useful for working with categories such as person names). The <code>targets</code> subkey further specifies what can be referenced:
-  <ul><li>articles: Permitted values are "internal" for internal references and "external" for references to other articles.</li>
-  <li>sections: If the link target should be a section, provide a list of allowed section types.</li>
-  <li>items: If the link target should be an item, provide a list of allowed item types.</li>
-  <li>properties: If the link target should be a property, provide a list of allowed property types.</li>
-  <li>footnotes: If the link target should be a footnote, provide a list of allowed footnote types.</li></ul></li></ul>
-The target value can be rendered in standalone tags as well as opening or closing brackets. Set the <code>render</code> subkey to one of
-`prefix` or `postfix` (for the brackets), or `text` (for tag values).
+<td>Field configuration list object. Keys represent field names, values contain a field configuration object including the rendering configuration. See below for the available fields.
 </td>
 </tr>
 <tr>
@@ -199,19 +171,21 @@ If possible, it is advised to set the default rendering to plain outputs without
 <td>CSS styling embedded in the web page when rendering entities as HTML. See the `html.tag` configuration to determine CSS selectors for styling the annotation.
 <p>Example to create a break after a tag:</p>
 <p><code>.xml_tag_vz:after {content: "\\A" ; white-space: pre;}</code></p>
-<p>Annotation groups can be hidden with the settings button next to input fields. This will not really hide the content of all tags in the group. Instead it adds a css class following the pattern `.xml_group_&lt;groupname&gt;_unadorned` to the container which allows you to provide simplified unobstrusive styling. For example, you can change the color from blue to the default black color. Provide default rendering in the `default` subkey and rendering for the unselected state in the `unadorned` subkey.</p>
+<p>Annotation groups can be hidden with the settings button next to input fields. This will not really hide the content of all tags in the group. Instead, it adds a css class following the pattern `.xml_group_&lt;groupname&gt;_unadorned` to the container which allows you to provide simplified unobstrusive styling. For example, you can change the color from blue to the default black color.</p>
 <p>Example: Small caps configured in a links configuration named `k` that appear as normal text when the text group has been unselected.</p>
 <pre class="plaintext">
-{
-  "default": ".xml_tag_k {
+
+  ".xml_tag_k {
     color: #1ccaaa;
     font-size: 1em;
-    font-variant: small-caps }",
-  "unadorned": ".xml_group_text_unadorned .xml_tag_k {
+    font-variant: small-caps;
+   }
+   .xml_group_text_unadorned .xml_tag_k {
     color: inherit;
     font-size: inherit;
-    font-variant: inherit; }"
-}
+    font-variant: inherit;
+   }"
+
 </pre></td>
 </tr>
 <tr><td>color</td>
@@ -221,64 +195,97 @@ If possible, it is advised to set the default rendering to plain outputs without
 </table>
 </figure>
 
-# Examples
+## Available fields for footnotes
 
-**Example of a checkbox configuration:**
+<figure class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>name</td>
+                <td>The name field of a footnote entity contains the footnote number. To render the footnote number, provide an object with the following keys:
+                <ul>
+                    <li><code>format</code> must be set to the value `counter`.</li>
+                    <li><code>render</code>: Define one of `prefix`, `text` or `postfix` to push the number to the rendering of one of those components.</li>
+                    <li><code>counter</code>: The number type, one of the following values:
+                        <ul>
+                            <li>numeric: A usual number.</li>
+                            <li>alphabetic: A latin letter (variants: alphabetic-lower, alphabetic-upper)</li>
+                            <li>roman: A roman numeral (variants: roman-lower, roman-upper)</li>
+                            <li>greek: A greek number (variants: greek-lower, greek-upper)</li>
+                        </ul>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>content</td>
+                <td>Field configuration object for the field holding the footnote text.
+                 The <code>format</code> subkey must be set to <code>xml</code>.
+                Configure the permitted annotations in the <code>types</code> subkey by providing a list containing annotation
+                names and group names. The <code>caption</code> subkey can be used to set a heading.
+                If the <code>autofill</code> subkey is set to true, the selected text is transferred to this field
+                when a footnote is inserted. Alternatively, autofill can be set to an object with the keys <code>prefix</code>
+                (the value is prefixed), <code>postfix</code> (the value is suffixed) and <code>wrap</code>
+                (a link type name that is used to create an enclosing tag, e.g. <code>quot</code>).
+                </td>
+            </tr>
+            <tr>
+                <td>segment</td>
+                <td>Field configuration objects for the field holding a reference text.
+                    The same options as for the <code>content</code> field are available.
+                    Usually it is cleaner to autofill the <code>segment</code> instead of the <code>content</code> field.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</figure>
 
-``` plaintext
-{
-  "caption": "Line begins within a word: ",
-  "title": "If the new line begins within a word, select \"yes\".",
-  "input": "checkbox",
-  "values": {
-    "yes": "yes",
-    "no": "no"
-  }
-}
-```
-
-**Example of a molecular annotation configuration:**
-
-If an annotation should link to multiple properties, a corresponding link configuration
-without a tool button is first created for each target property type.
-The molecular annotation itself uses them in its attributes configuration.
-In the following example defines a moleculear annotation with two input fields:
-
-``` plaintext
-{
-  "tag_type": "format",
-  "attributes": {
-      "annotations": {
-        "input": "link",
-        "type": "annotations"
-      },
-      "categories": {
-        "input": "link",
-        "type": "categories"
-      }
-  }
-}
-```
-
-The configuration refers to other link configurations in the type keys.
-The respective `annotations` and `categories` annotation are configured without tool button.
-The `tag_type` key must be set to `attribute`:
-
-``` plaintext
-{
-  "group": "annos",
-  "toolbutton": false,
-  "tag_type": "attribute",
-  "fields": {
-    "to": {
-      "format": "record",
-      "targets": {
-        "properties": ["annotations"]
-      }
-    }
-  }
-}
-```
+## Available fields for links
+<figure class="table">
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>to</td>
+                <td>
+                    The target field configuration restricting what kind of links are allowed.
+                    Each link is part of a root entity and has a source.
+                    The source is either a tag in an XML field of the root entity (e.g. an article) or in one of its parts (e.g. an item in a section of an article).
+                    The target can be any other entity, in the database, the target reference is stored in a pair of `to_tab` and `to_id` columns.
+                    Thus, from the perspective of a root entity, there are external links (e.g. a link from article content to a property)
+                    and internal links (e.g. a link from one section to another section within the article).
+                    The <code>format</code> subkey must be set to "record" for external links and to "relation" for internal links.
+                    The <code>required</code> subkey can be set to "true" to force a selection in the editor.
+                    The <code>manage</code> subkey can be set to "true" to allow editors to quickly access and manage respective categories.
+                    The <code>limit</code> subkey can be set to either "article" opposed to the standard "project" to restrict the annotation selection
+                    to entities present in the current article (useful for working with categories such as person names).
+                    The <code>targets</code> subkey further specifies what can be referenced:
+                      <ul>
+                        <li>articles: For external links, the permitted article types.</li>
+                        <li>sections: If the link target should be a section, provide a list of allowed section types.</li>
+                        <li>items: If the link target should be an item, provide a list of allowed item types.</li>
+                        <li>properties: If the link target should be a property, provide a list of allowed property types.</li>
+                        <li>footnotes: If the link target should be a footnote, provide a list of allowed footnote types.</li>
+                    </ul>
+                    The to target value can be rendered in standalone tags as well as opening or closing brackets.
+                    Set the <code>render</code> subkey to one of <code>prefix</code> or <code>postfix</code> (for the brackets),
+                    or <code>text</code> (for tag values).
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</figure>
 
 # Toolbuttons
 
@@ -427,3 +434,63 @@ While the previous fields define the name, the *Config* field configures the beh
 </tbody>
 </table>
 </figure>
+
+
+# Examples
+
+**Example of a checkbox configuration:**
+
+``` plaintext
+{
+  "caption": "Line begins within a word: ",
+  "title": "If the new line begins within a word, select \"yes\".",
+  "input": "checkbox",
+  "values": {
+    "yes": "yes",
+    "no": "no"
+  }
+}
+```
+
+**Example of a molecular annotation configuration:**
+
+If an annotation should link to multiple properties, a corresponding link configuration
+without a tool button is first created for each target property type.
+The molecular annotation itself uses them in its attributes configuration.
+In the following example defines a moleculear annotation with two input fields:
+
+``` plaintext
+{
+  "tag_type": "format",
+  "attributes": {
+      "annotations": {
+        "input": "link",
+        "type": "annotations"
+      },
+      "categories": {
+        "input": "link",
+        "type": "categories"
+      }
+  }
+}
+```
+
+The configuration refers to other link configurations in the type keys.
+The respective `annotations` and `categories` annotation are configured without tool button.
+The `tag_type` key must be set to `attribute`:
+
+``` plaintext
+{
+  "group": "annos",
+  "toolbutton": false,
+  "tag_type": "attribute",
+  "fields": {
+    "to": {
+      "format": "record",
+      "targets": {
+        "properties": ["annotations"]
+      }
+    }
+  }
+}
+```

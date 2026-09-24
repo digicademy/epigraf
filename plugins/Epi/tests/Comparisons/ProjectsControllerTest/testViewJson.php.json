@@ -5,6 +5,24 @@
         "signature": "TP1",
         "norm_iri": "bookiri",
         "projecttype": "epi",
+        "description": {
+            "di_prefix": "di",
+            "di_number": "999",
+            "di_signature": "DI 999",
+            "di_path": "testprojekt1",
+            "urn": "di999g022k0",
+            "author": "Test Tator",
+            "year": 2025,
+            "title": "Die Inschriften von Testates",
+            "images": {
+                "creator": "Tina Toner",
+                "source": "Bildarchiv",
+                "rights": "Tackademie",
+                "usageterms": "CC BY 4.0",
+                "credit": "Tacka",
+                "marked": "True"
+            }
+        },
         "database": "projects"
     }
 }

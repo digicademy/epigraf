@@ -1,6 +1,6 @@
 [
     {
-        "dates": 0,
+        "dates": 11234,
         "locations": "Standort A , Standort A , Standort A , Standort B1 , Standort B1 , Standort B1 ",
         "sortnos": 2,
         "topics_priority": null
@@ -13,14 +13,44 @@
     },
     {
         "dates": null,
-        "locations": null,
-        "sortnos": null,
+        "locations": "Standort B3, Standort B3, Standort B4, Standort B4",
+        "sortnos": 2,
         "topics_priority": null
     },
     {
         "dates": null,
         "locations": null,
         "sortnos": null,
+        "topics_priority": null
+    },
+    {
+        "dates": 11312,
+        "locations": "Standort B1 , Standort B1 , Standort B1 , Standort B1 , Standort B1 , Standort B1 , Standort B2 , Standort B2 , Standort B2 , Standort B2 , Standort B2 , Standort B2 , Standort B4, Standort B4, Standort B4, Standort B4, Standort B4, Standort B4, Standort B3, Standort B3, Standort B3, Standort B3, Standort B3, Standort B3, Standort Verweis, Standort Verweis, Standort Verweis, Standort Verweis, Standort Verweis, Standort Verweis",
+        "sortnos": 5,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": 1,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": 1,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": 1,
+        "topics_priority": null
+    },
+    {
+        "dates": null,
+        "locations": null,
+        "sortnos": 1,
         "topics_priority": null
     }
 ]

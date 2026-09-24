@@ -260,7 +260,7 @@ class Article extends RootEntity
     /**
      * Get the first of the following fields:
      * - signature
-     * - title
+     * - name
      * - id
      *
      * @return string|null
@@ -268,26 +268,6 @@ class Article extends RootEntity
     protected function _getCaption()
     {
         return $this->signature ?: $this->name ?: $this->id;
-    }
-
-    /**
-     * The path of articles is the same as the caption
-     *
-     * @return string|null
-     */
-    protected function _getCaptionPath()
-    {
-        return $this->_getCaption();
-    }
-
-    /**
-     * The external name of an article is the same as the caption
-     *
-     * @return string|null
-     */
-    protected function _getCaptionExt()
-    {
-        return $this->_getCaption();
     }
 
     /**

@@ -1,7 +1,23 @@
-<response>
+<ram>
   <index propertytype="outputoptions">
     <properties>
-      <property id="properties-6" sortno="1" sortkey="Lemma A" propertytype="outputoptions" level="0" lft="1" rght="7" iscategory="0" ishidden="0">
+      <property id="properties-1563" sortkey="übersetzungen abschnittsweise ausgeben" propertytype="outputoptions" level="0" lft="1" rght="2">
+        <lemma>Übersetzungen abschnittsweise ausgeben</lemma>
+        <comment>Wenn Inschriften über Zwischenüberschriften gegliedert sind, die Übersetzungen und Versmaße am Ende des Gliederungsabschnitts ausgeben.</comment>
+        <norm_iri>di_translations_blockwise</norm_iri>
+        <sections>
+          <section id="sections-3616" articles_id="articles-146" />
+        </sections>
+      </property>
+      <property id="properties-1562" sortno="3" sortkey="Bearbeitungen synoptisch darstellen" propertytype="outputoptions" level="0" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>Bearbeitungen synoptisch darstellen</lemma>
+        <name>Bearbeitungen synoptisch darstellen</name>
+        <norm_iri>di_synopsis</norm_iri>
+        <sections>
+          <section id="sections-2171" articles_id="articles-89" />
+        </sections>
+      </property>
+      <property id="properties-6" sortno="1" sortkey="Lemma A" propertytype="outputoptions" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
         <lemma>Lemma A</lemma>
         <name>Lemma A </name>
         <unit>Lemma-Einheit</unit>
@@ -12,7 +28,7 @@
           <section id="sections-17" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-4" parent_id="properties-6" sortno="2" sortkey="Untereintrag A" propertytype="outputoptions" level="1" lft="2" rght="4" iscategory="1" ishidden="1">
+      <property id="properties-4" parent_id="properties-6" sortno="2" sortkey="Untereintrag A" propertytype="outputoptions" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
         <lemma>Untereintrag A</lemma>
         <name>Untereintrag A </name>
         <unit>Untereintrag A</unit>
@@ -20,14 +36,14 @@
         <keywords>Lemma,Lemmy,Schlaglemma,Untereintrag</keywords>
         <norm_data>Untereintrag Normdaten</norm_data>
       </property>
-      <property id="properties-3" parent_id="properties-6" sortno="5" related_id="properties-4" propertytype="outputoptions" level="1" lft="5" rght="6" iscategory="1" ishidden="1">
+      <property id="properties-3" parent_id="properties-6" sortno="5" related_id="properties-4" propertytype="outputoptions" level="1" lft="10" rght="11" iscategory="1" ishidden="1">
         <lemma>siehe</lemma>
         <unit>Untereintrag A II Einheit</unit>
         <comment>Bemerkung Untereintrag A II </comment>
         <keywords>Lemmy,Lemma,Schlaglemma,Untereintrag</keywords>
         <norm_data>Nomunter A II</norm_data>
       </property>
-      <property id="properties-5" sortno="8" sortkey="Lemma B" propertytype="outputoptions" level="0" lft="8" rght="13" iscategory="0" ishidden="0">
+      <property id="properties-5" sortno="8" sortkey="Lemma B" propertytype="outputoptions" level="0" lft="13" rght="18" iscategory="0" ishidden="0">
         <lemma>Lemma B</lemma>
         <name>Lemma B </name>
         <comment>Lemma B Bemerkung</comment>
@@ -41,7 +57,7 @@
   </index>
   <index propertytype="literature">
     <properties>
-      <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="1" lft="2" rght="7" iscategory="1" ishidden="0">
+      <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
         <lemma>Autor 1</lemma>
         <name>Autor 1 </name>
         <unit>Einheit Autor 1</unit>
@@ -52,7 +68,7 @@
           <section id="sections-16" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="2" lft="5" rght="6" iscategory="1" ishidden="1">
+      <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
         <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
         <name>Kurztitel Unterautor 2 mit &#039;</name>
         <unit>Unterautor2 Einheit</unit>
@@ -65,7 +81,81 @@
           <section id="sections-14" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="1" lft="8" rght="13" iscategory="1" ishidden="0">
+      <property id="properties-1488" sortkey="B-Gedruckte Quellen und Literatur" propertytype="literature" level="0" lft="7" rght="28" iscategory="0" ishidden="0">
+        <lemma>Gedruckte Quellen und Literatur</lemma>
+        <name>Literatur</name>
+        <norm_iri>literatur</norm_iri>
+      </property>
+      <property id="properties-1675" parent_id="properties-1488" sortkey="jörn/rasche" propertytype="literature" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>Jörn/Rasche</lemma>
+        <name>Jörn/Rasche</name>
+        <norm_iri>joernrasche</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1696" parent_id="properties-1488" sortkey="jörn / rasche" propertytype="literature" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>Jörn / Rasche</lemma>
+        <name>Jörn / Rasche</name>
+        <norm_iri>joern-rasche</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1678" parent_id="properties-1488" sortkey="jörn, schnabbel" propertytype="literature" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>Jörn, Schnabbel</lemma>
+        <name>Jörn, Schnabbel</name>
+        <norm_iri>joern-schnabbel</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1683" parent_id="properties-1488" sortkey="jörn (hg.)" propertytype="literature" level="1" lft="14" rght="15" iscategory="0" ishidden="0">
+        <lemma>Jörn (Hg.)</lemma>
+        <name>Jörn (Hg.)</name>
+        <norm_iri>joern-hg</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1693" parent_id="properties-1488" sortkey="jörn-rasche" propertytype="literature" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+        <lemma>Jörn-Rasche</lemma>
+        <name>Jörn-Rasche</name>
+        <norm_iri>joern-rasche</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1686" parent_id="properties-1488" sortkey="jörn" propertytype="literature" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+        <lemma>Jörn</lemma>
+        <name>Jörn</name>
+        <norm_iri>joern</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1689" parent_id="properties-1488" sortkey="jorn" propertytype="literature" level="1" lft="20" rght="21" iscategory="0" ishidden="0">
+        <lemma>Jorn</lemma>
+        <name>Jorn</name>
+        <norm_iri>jorn</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1550" sortkey="textbausteine" propertytype="literature" level="0" lft="29" rght="32" iscategory="1" ishidden="1">
+        <lemma>Textbausteine</lemma>
+        <name>Textbausteine</name>
+        <norm_iri>textbausteine</norm_iri>
+      </property>
+      <property id="properties-1553" parent_id="properties-1550" sortkey="grundriss st paulin trier" propertytype="literature" level="1" lft="30" rght="31" iscategory="0" ishidden="1">
+        <lemma>Siehe Grundriss St. Paulin, Nr. 12</lemma>
+        <name>Grundriss St. Paulin Trier</name>
+        <norm_iri>map-trier-paulin</norm_iri>
+        <sections>
+          <section id="sections-981" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
         <lemma>Quelle 1 mit &amp;</lemma>
         <name>Quelle 1 mit &amp;</name>
         <unit>Quelleneinheit 1</unit>
@@ -77,7 +167,7 @@
           <section id="sections-14" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-9" parent_id="properties-10" sortno="9" sortkey="Quelle 1a" propertytype="literature" level="2" lft="9" rght="10" iscategory="0" ishidden="0">
+      <property id="properties-9" parent_id="properties-10" sortno="9" sortkey="Quelle 1a" propertytype="literature" level="1" lft="34" rght="35" iscategory="0" ishidden="0">
         <lemma>Quelle 1a</lemma>
         <name>Quelle 1a </name>
         <unit>Quelle 1a Einheit</unit>
@@ -85,12 +175,51 @@
         <keywords>Quelle,Karstadt,Ursprung</keywords>
         <norm_data>Norm Quelle 1a</norm_data>
       </property>
-      <property id="properties-8" parent_id="properties-10" sortno="11" related_id="properties-9" propertytype="literature" level="2" lft="11" rght="12" iscategory="0" ishidden="0">
+      <property id="properties-8" parent_id="properties-10" sortno="11" related_id="properties-9" propertytype="literature" level="1" lft="36" rght="37" iscategory="0" ishidden="0">
         <lemma>siehe</lemma>
         <unit>Einheit quelle 1b</unit>
         <comment>bemerkung quelle 1b</comment>
         <keywords>Karstadt,Quelle,Ursprung</keywords>
         <norm_data>Normquelle 1b</norm_data>
+      </property>
+      <property id="properties-815" sortkey="quellengruppe-1" propertytype="literature" level="0" lft="39" rght="48" iscategory="0" ishidden="0">
+        <lemma>Quellengruppe 1</lemma>
+        <name>Quellengruppe 1</name>
+        <norm_iri>quellengruppe-1</norm_iri>
+      </property>
+      <property id="properties-821" parent_id="properties-815" sortkey="kohler" propertytype="literature" level="1" lft="40" rght="41" iscategory="0" ishidden="0">
+        <lemma>Autor Köhler Langtitel.</lemma>
+        <name>Autor Köhler</name>
+        <comment>Sortierschlüssel ohne Umlaut, Titel mit Punkt am Ende</comment>
+        <norm_iri>kohler-ohne</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-826" parent_id="properties-815" sortkey="köhler" propertytype="literature" level="1" lft="42" rght="43" iscategory="0" ishidden="0">
+        <lemma>Autor Köhler Langtitel</lemma>
+        <name>Autor Köhler</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohler-mit</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-832" parent_id="properties-815" sortkey="autor lampe" propertytype="literature" level="1" lft="44" rght="45" iscategory="0" ishidden="0">
+        <lemma>Autor Lampe Langtitel</lemma>
+        <name>Autor Lampe</name>
+        <norm_iri>autor-lampe</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-837" parent_id="properties-815" sortkey="autor haller" propertytype="literature" level="1" lft="46" rght="47" iscategory="0" ishidden="0">
+        <lemma>Autor Haupt Langtitel</lemma>
+        <name>Autor Haller</name>
+        <norm_iri>autor-haller</norm_iri>
+        <sections>
+          <section id="sections-979" articles_id="articles-19" />
+        </sections>
       </property>
     </properties>
   </index>
@@ -122,7 +251,7 @@
         <keywords>Standort,Provenienz,Herkunft</keywords>
         <norm_data>Standort A2 Normdaten</norm_data>
       </property>
-      <property id="properties-15" sortno="7" sortkey="Standort B" propertytype="locations" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+      <property id="properties-15" sortno="7" sortkey="Standort B" propertytype="locations" level="0" lft="7" rght="16" iscategory="0" ishidden="0">
         <lemma>Standort B</lemma>
         <name>Standort B </name>
         <unit>Standort B Einheit</unit>
@@ -130,46 +259,95 @@
         <keywords>Standort,Provenienz,Herkunft</keywords>
         <norm_data>Standort B Norm</norm_data>
       </property>
-      <property id="properties-14" parent_id="properties-15" sortno="8" sortkey="Standort B1" propertytype="locations" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+      <property id="properties-14" parent_id="properties-15" sortno="8" sortkey="standort b00001" propertytype="locations" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
         <lemma>Standort B1</lemma>
         <name>Standort B1 </name>
         <unit>Standort B1 Einheit</unit>
         <comment>Standort B1 Bemerk</comment>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
         <keywords>Standort,Provenienz,Herkunft</keywords>
         <norm_data>Standort B1 Norm</norm_data>
         <sections>
           <section id="sections-15" articles_id="articles-1" />
+          <section id="sections-953" articles_id="articles-19" />
         </sections>
+      </property>
+      <property id="properties-13" parent_id="properties-15" sortno="10" sortkey="standort b00002" propertytype="locations" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>Standort B2</lemma>
+        <name>Standort B2 </name>
+        <unit>Standort B2 Einheit</unit>
+        <comment>Standort B2 Bemerk</comment>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <keywords>Herkunft,Provenienz,Standort</keywords>
+        <norm_data>Standort B2 Norm</norm_data>
+        <sections>
+          <section id="sections-953" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-898" parent_id="properties-15" sortkey="standort b00004" propertytype="locations" level="1" lft="12" rght="13">
+        <lemma>Standort B4</lemma>
+        <name>Standort B4</name>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <norm_iri>standort-b4</norm_iri>
+        <sections>
+          <section id="sections-157" articles_id="articles-3" />
+          <section id="sections-953" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-903" parent_id="properties-15" sortkey="standort b00003" propertytype="locations" level="1" lft="14" rght="15">
+        <lemma>Standort B3</lemma>
+        <name>Standort B3</name>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <norm_iri>standort-b3</norm_iri>
+        <sections>
+          <section id="sections-157" articles_id="articles-3" />
+          <section id="sections-953" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1248" sortkey="standort c" propertytype="locations" level="0" lft="17" rght="20">
+        <lemma>Standort C</lemma>
+        <name>Standort C</name>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <norm_iri>standort-c</norm_iri>
+      </property>
+      <property id="properties-1251" parent_id="properties-1248" sortkey="standort c00001" propertytype="locations" level="1" lft="18" rght="19">
+        <lemma>Standort C1</lemma>
+        <name>Standort C1</name>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <norm_iri>standort-c1</norm_iri>
+      </property>
+      <property id="properties-906" sortkey="standort verweis" propertytype="locations" level="0" lft="21" rght="24">
+        <lemma>Standort Verweis</lemma>
+        <name>Standort Verweis</name>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <norm_iri>standort-verweis</norm_iri>
+        <sections>
+          <section id="sections-953" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-908" parent_id="properties-906" sortkey="siehe" related_id="properties-1251" propertytype="locations" level="1" lft="22" rght="23">
+        <lemma>siehe</lemma>
+        <name>Verweis auf Standort C1</name>
+        <content>{&quot;lat&quot;:&quot;&quot;,&quot;lng&quot;:&quot;&quot;,&quot;radius&quot;:&quot;&quot;}</content>
+        <norm_iri>verweis-auf-b1</norm_iri>
       </property>
     </properties>
   </index>
   <index propertytype="conditions">
     <properties>
-      <property id="properties-24" sortno="1" sortkey="Zustand 1" propertytype="conditions" level="0" lft="1" rght="7" iscategory="1" ishidden="1">
-        <lemma>Zustand 1</lemma>
-        <name>Zustand 1 </name>
-        <unit>Zustand 1 einheit</unit>
-        <comment>Zustand 1 Bemerk</comment>
-        <keywords>Zustand,Kondition</keywords>
-        <norm_data>Zustand 1 Norm</norm_data>
+      <property id="properties-1428" sortkey="traditio1" propertytype="conditions" level="0" lft="8" rght="9">
+        <lemma>Objekt und Inschrift erhalten</lemma>
+        <norm_iri>di_traditio1</norm_iri>
         <sections>
           <section id="sections-13" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-23" parent_id="properties-24" sortno="2" sortkey="Zustand 1a" propertytype="conditions" level="1" lft="2" rght="4" iscategory="0" ishidden="0">
-        <lemma>Zustand 1a</lemma>
-        <name>Zustand 1a </name>
-        <unit>Zustand 1a Einheit</unit>
-        <comment>Zustand 1a Bemerk</comment>
-        <keywords>Zustand,Kondition</keywords>
-        <norm_data>Zustand 1a Norm</norm_data>
-      </property>
-      <property id="properties-22" parent_id="properties-24" sortno="5" related_id="properties-23" propertytype="conditions" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
-        <lemma>siehe</lemma>
-        <unit>Zustand 1b Einheit</unit>
-        <comment>Zustand 1b Bemerk</comment>
-        <keywords>Zustand,Kondition</keywords>
-        <norm_data>Zustand 1b Norm</norm_data>
+      <property id="properties-1436" sortkey="traditio4" propertytype="conditions" level="0" lft="14" rght="15">
+        <lemma>(†) Objekt zerstört, aber Inschriftenteile im Original erhalten</lemma>
+        <norm_iri>di_traditio4</norm_iri>
+        <sections>
+          <section id="sections-955" articles_id="articles-19" />
+        </sections>
       </property>
     </properties>
   </index>
@@ -226,6 +404,95 @@
         <comment>Material 2b Bemerk</comment>
         <keywords>Material,Werkstoff</keywords>
         <norm_data>Material 2b Norm</norm_data>
+      </property>
+      <property id="properties-1107" sortkey="kohlermaterial" propertytype="materials" level="0" lft="13" rght="14">
+        <lemma>Köhlermaterial</lemma>
+        <name>Köhlermaterial</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohlermaterial-ohne</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1109" sortkey="köhlermaterial" propertytype="materials" level="0" lft="15" rght="16">
+        <lemma>Köhlermaterial</lemma>
+        <name>Köhlermaterial</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohlermaterial-mit</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1111" sortkey="kohlermaterial" propertytype="materials" level="0" lft="17" rght="18">
+        <lemma>Kohlermaterial</lemma>
+        <name>Kohlermaterial</name>
+        <norm_iri>kohlermaterial-3</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1113" sortkey="lampematerial" propertytype="materials" level="0" lft="19" rght="22">
+        <lemma>Lampematerial</lemma>
+        <name>Lampematerial</name>
+        <norm_iri>lampematerial</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1140" parent_id="properties-1113" sortkey="siehe" related_id="properties-1137" propertytype="materials" level="1" lft="20" rght="21">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-hallerlampematerial</norm_iri>
+      </property>
+      <property id="properties-1115" sortkey="hallermaterial" propertytype="materials" level="0" lft="23" rght="36">
+        <lemma>Hallermaterial</lemma>
+        <name>Hallermaterial</name>
+        <norm_iri>hallermaterial</norm_iri>
+      </property>
+      <property id="properties-1117" parent_id="properties-1115" sortkey="hartes hallermaterial" propertytype="materials" level="1" lft="24" rght="29">
+        <lemma>hartes Hallermaterial</lemma>
+        <name>hartes Hallermaterial</name>
+        <norm_iri>hartes-hallermaterial</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1126" parent_id="properties-1117" sortkey="hallersteinmaterial" propertytype="materials" level="2" lft="25" rght="26">
+        <lemma>Hallersteinmaterial</lemma>
+        <name>Hallersteinmaterial</name>
+        <norm_iri>hallersteinmaterial</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1123" parent_id="properties-1117" sortkey="hallertonmaterial" propertytype="materials" level="2" lft="27" rght="28">
+        <lemma>Hallertonmaterial</lemma>
+        <name>Hallertonmaterial</name>
+        <norm_iri>hallertonmaterial</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1120" parent_id="properties-1115" sortkey="weiches hallermaterial" propertytype="materials" level="1" lft="30" rght="35">
+        <lemma>weiches Hallermaterial</lemma>
+        <name>weiches Hallermaterial</name>
+        <norm_iri>weiches-hallermaterial</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1137" parent_id="properties-1120" sortkey="hallerlampematerial" propertytype="materials" level="2" lft="31" rght="32">
+        <lemma>Hallerlampematerial</lemma>
+        <name>Hallerlampematerial</name>
+        <norm_iri>hallerlampematerial</norm_iri>
+      </property>
+      <property id="properties-1134" parent_id="properties-1120" sortkey="hallerledermaterial" propertytype="materials" level="2" lft="33" rght="34">
+        <lemma>Hallerledermaterial</lemma>
+        <name>Hallerledermaterial</name>
+        <norm_iri>hallerledermaterial</norm_iri>
+        <sections>
+          <section id="sections-959" articles_id="articles-19" />
+        </sections>
       </property>
     </properties>
   </index>
@@ -284,25 +551,146 @@
           <section id="sections-11" articles_id="articles-1" />
         </sections>
       </property>
+      <property id="properties-1143" sortkey="objekttyp 00001" propertytype="objecttypes" level="0" lft="15" rght="28">
+        <lemma>Objekttyp 1</lemma>
+        <name>Objekttyp 1</name>
+        <norm_iri>objekttyp-1</norm_iri>
+      </property>
+      <property id="properties-1147" parent_id="properties-1143" sortkey="köhlerobjekt" propertytype="objecttypes" level="1" lft="16" rght="17">
+        <lemma>Köhlerobjekt</lemma>
+        <name>Köhlerobjekt</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohlerobjekt-mit</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1150" parent_id="properties-1143" sortkey="kohlerobjekt" propertytype="objecttypes" level="1" lft="18" rght="19">
+        <lemma>Köhlerobjekt</lemma>
+        <name>Köhlerobjekt</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohlerobjekt-ohne</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1153" parent_id="properties-1143" sortkey="kohlerobjekt" propertytype="objecttypes" level="1" lft="20" rght="21">
+        <lemma>Kohlerobjekt</lemma>
+        <name>Kohlerobjekt</name>
+        <norm_iri>kohlerobjekt-3</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1156" parent_id="properties-1143" sortkey="lampeobjekt" propertytype="objecttypes" level="1" lft="22" rght="23">
+        <lemma>Lampeobjekt</lemma>
+        <name>Lampeobjekt</name>
+        <norm_iri>lampeobjekt</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1159" parent_id="properties-1143" sortkey="hallerobjekt" propertytype="objecttypes" level="1" lft="24" rght="25">
+        <lemma>Hallerobjekt</lemma>
+        <name>Hallerobjekt</name>
+        <norm_iri>hallerobjekt</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1650" parent_id="properties-1143" sortkey="granitobjekt" propertytype="objecttypes" level="1" lft="26" rght="27">
+        <lemma>Granitobjekt</lemma>
+        <name>Granitobjekt</name>
+        <norm_iri>granitobjekt</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1145" sortkey="objekttyp 00002" propertytype="objecttypes" level="0" lft="29" rght="50">
+        <lemma>Objekttyp 2</lemma>
+        <name>Objekttyp 2</name>
+        <norm_iri>objekttyp-2</norm_iri>
+      </property>
+      <property id="properties-1162" parent_id="properties-1145" sortkey="granitobjekt" propertytype="objecttypes" level="1" lft="30" rght="37">
+        <lemma>Granitobjekt</lemma>
+        <name>Granitobjekt</name>
+        <norm_iri>granitobjekt</norm_iri>
+      </property>
+      <property id="properties-1657" parent_id="properties-1162" related_id="properties-1159" propertytype="objecttypes" level="2" lft="31" rght="32" />
+      <property id="properties-1174" parent_id="properties-1162" sortkey="siehe" related_id="properties-1168" propertytype="objecttypes" level="2" lft="33" rght="34">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-steinobjekt</norm_iri>
+      </property>
+      <property id="properties-1653" parent_id="properties-1162" related_id="properties-1650" propertytype="objecttypes" level="2" lft="35" rght="36" />
+      <property id="properties-1184" parent_id="properties-1145" sortkey="schieferobjekt" propertytype="objecttypes" level="1" lft="38" rght="45">
+        <lemma>Schieferobjekt</lemma>
+        <name>Schieferobjekt</name>
+        <norm_iri>schieferobjekt</norm_iri>
+      </property>
+      <property id="properties-1171" parent_id="properties-1184" sortkey="glimmerschieferobjekt" propertytype="objecttypes" level="2" lft="39" rght="44">
+        <lemma>Glimmerschieferobjekt</lemma>
+        <name>Glimmerschieferobjekt</name>
+        <norm_iri>glimmerschieferobjekt</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1177" parent_id="properties-1171" sortkey="mit bronzeauflage" propertytype="objecttypes" level="3" lft="40" rght="41">
+        <lemma>mit Bronzeauflage</lemma>
+        <name>mit Bronzeauflage</name>
+        <norm_iri>mit-bronzeauflage</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1181" parent_id="properties-1171" sortkey="mit messingauflage" propertytype="objecttypes" level="3" lft="42" rght="43">
+        <lemma>mit Messingauflage</lemma>
+        <name>mit Messingauflage</name>
+        <norm_iri>mit-messingauflage</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1165" parent_id="properties-1145" sortkey="steinobjekt" propertytype="objecttypes" level="1" lft="46" rght="49">
+        <lemma>Steinobjekt</lemma>
+        <name>Steinobjekt</name>
+        <comment>Verweisziel</comment>
+        <norm_iri>steinobjekt</norm_iri>
+      </property>
+      <property id="properties-1168" parent_id="properties-1165" sortkey="granitobjekt" propertytype="objecttypes" level="2" lft="47" rght="48">
+        <lemma>Granitobjekt</lemma>
+        <name>Granitobjekt</name>
+        <norm_iri>granitobjekt</norm_iri>
+        <sections>
+          <section id="sections-961" articles_id="articles-19" />
+        </sections>
+      </property>
     </properties>
   </index>
   <index propertytype="measures">
     <properties>
-      <property id="properties-42" sortno="1" sortkey="Maß 1" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
-        <lemma>Maß 1</lemma>
-        <name>Maß 1 </name>
-        <unit>Maß 1 Einheit</unit>
-        <comment>Maß 1 Bemerk</comment>
-        <keywords>Maßangaben,Meter,Kilometer,Hektoliter</keywords>
-        <norm_data>Maß 1 Norm</norm_data>
+      <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <lemma>Höhe</lemma>
+        <name>H.</name>
+        <unit>m</unit>
+        <comment>Höhe in Metern</comment>
+        <keywords>Meter,Kilometer,Hektoliter</keywords>
+        <norm_data>wd:Q208826</norm_data>
+        <norm_iri>hoehe</norm_iri>
+        <sections>
+          <section id="sections-152" articles_id="articles-3" />
+          <section id="sections-2630" articles_id="articles-109" />
+        </sections>
       </property>
-      <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="Maß 1a" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
-        <lemma>Maß 1a</lemma>
-        <name>Maß 1a </name>
-        <unit>Maß 1a einheit</unit>
-        <comment>Maß 1a Bemerk</comment>
-        <keywords>Maßangaben,Hektoliter</keywords>
-        <norm_data>Maß 1a</norm_data>
+      <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <lemma>Zwischenhöhe</lemma>
+        <name>ZwH</name>
+        <unit>m</unit>
+        <comment>Zwischenhöhe in Metern</comment>
+        <keywords>Dimensionen</keywords>
+        <norm_data>gibtnochkeinq</norm_data>
+        <norm_iri>zwh</norm_iri>
         <sections>
           <section id="sections-10" articles_id="articles-1" />
         </sections>
@@ -340,6 +728,23 @@
         <keywords>Maßangaben,Kilometer,Hektoliter</keywords>
         <norm_data>Maß 2b Norm</norm_data>
       </property>
+      <property id="properties-1005" sortkey="hoehe" propertytype="measures" level="0" lft="13" rght="14">
+        <lemma>Höhe</lemma>
+        <unit>cm</unit>
+        <norm_iri>height</norm_iri>
+        <sections>
+          <section id="sections-957" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1007" sortkey="breite" propertytype="measures" level="0" lft="15" rght="16">
+        <lemma>Breite</lemma>
+        <unit>cm</unit>
+        <norm_iri>width</norm_iri>
+        <sections>
+          <section id="sections-957" articles_id="articles-19" />
+          <section id="sections-2630" articles_id="articles-109" />
+        </sections>
+      </property>
     </properties>
   </index>
   <index propertytype="heraldry">
@@ -348,22 +753,195 @@
         <name>Wappen 1</name>
         <comment>Notizen Wappen 1</comment>
         <content>Schild 1</content>
-        <elements>Oberwappen 1<nl></nl>Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" value="hm001.1121"></rec_ma></elements>
+        <elements>Oberwappen 1<nl />Verweis auf eine Marke: <rec_ma id="000004456303270875000000029487" /> und weiterer Verweis: <rec_ma id="68582d6af9b94d39ff16d5d3c248e8e1" /></elements>
         <file_name>1024px-Nautical_star.svg.png</file_name>
         <source_from>Nachweis Wappen 1</source_from>
         <sections>
           <section id="sections-9" articles_id="articles-1" />
+          <section id="sections-971" articles_id="articles-19" />
+          <section id="sections-6285" articles_id="articles-196" />
         </sections>
       </property>
       <property id="properties-43" sortno="2" sortkey="wappen 002" propertytype="heraldry" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
         <name>Wappen 2</name>
         <comment>Notizen Wappen 2</comment>
-        <content>Schild 2<nl></nl>Literaturverweis: <nl></nl><rec_lit id="000004472261132811342592685794" value="Quelle 1 "></rec_lit></content>
+        <content>Schild 2<nl />Literaturverweis ist hier nicht erlaubt: <nl /><rec_lit id="000004472261132811342592685794" /></content>
         <elements>Oberwappen 2</elements>
         <file_name>15320_0_589.jpg</file_name>
-        <source_from>Nachweis Wappen 2</source_from>
+        <source_from>Nachweis Wappen 2 in <rec_lit id="f89b90bd1e4d4ea4c4fe784f640aa576" /></source_from>
         <sections>
           <section id="sections-9" articles_id="articles-1" />
+          <section id="sections-6365" articles_id="articles-196" />
+        </sections>
+      </property>
+      <property id="properties-1660" sortkey="?00001 (nicht identifiziert)" propertytype="heraldry" level="0" lft="5" rght="6" ishidden="0">
+        <name>?001 (Nicht identifiziert)</name>
+        <content>aber mit Kurzblasonierung und Verweis auf Marke <rec_ma id="81e0b2180881464bc793a32e925bfce6" />.</content>
+        <norm_iri>001-nicht-identifiziert</norm_iri>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1663" sortkey="?00002 (Auch nicht identifiziert ohne blasonierung)" propertytype="heraldry" level="0" lft="7" rght="8" ishidden="0">
+        <name>?002 (Auch nicht identifiziert ohne blasonierung)</name>
+        <comment>und ohne Kurzblasonierung</comment>
+        <norm_iri>002-auch-nicht-identifiziert</norm_iri>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-917" sortkey="wappen kohler" propertytype="heraldry" level="0" lft="9" rght="10" ishidden="1">
+        <name>Wappen Köhler</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <content>Wappenbeschreibung ausblenden: Schild weiß man nicht</content>
+        <elements>Wappenbeschreibung ausblenden: Oberwappen weiß man nicht</elements>
+        <norm_iri>wappen-kohler-ohne</norm_iri>
+        <source_from>Wappenbeschreibung ausblenden: <rec_lit id="61f6ae9468264755f3127c13308b0028" /></source_from>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-919" sortkey="wappen köhler" propertytype="heraldry" level="0" lft="11" rght="12">
+        <name>Wappen Köhler</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>wappen-kohler-mit</norm_iri>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-922" sortkey="wappen kohler" propertytype="heraldry" level="0" lft="13" rght="14">
+        <name>Wappen Kohler</name>
+        <norm_iri>wappen-kohler-3</norm_iri>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-924" sortkey="wappen lampe" propertytype="heraldry" level="0" lft="15" rght="16">
+        <name>Wappen Lampe</name>
+        <norm_iri>wappen-lampe</norm_iri>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-926" sortkey="wappen haller" propertytype="heraldry" level="0" lft="17" rght="18">
+        <name>Wappen Haller</name>
+        <norm_iri>wappen-haller</norm_iri>
+        <sections>
+          <section id="sections-971" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1496" sortkey="ritter00001" propertytype="heraldry" level="0" lft="19" rght="20">
+        <name>Falke-Eber-Tanne-Rad</name>
+        <norm_iri>ritter1</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1498" sortkey="ritter00002" propertytype="heraldry" level="0" lft="21" rght="22">
+        <name>Falke-Eber-Tanne-Bügel</name>
+        <norm_iri>ritter2</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1502" sortkey="ritter00003" propertytype="heraldry" level="0" lft="23" rght="24">
+        <name>Falke-Eber-Ulme-Rad</name>
+        <norm_iri>ritter3</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1505" sortkey="ritter00004" propertytype="heraldry" level="0" lft="25" rght="26">
+        <name>Falke-Eber-Ulme-Bügel</name>
+        <norm_iri>ritter4</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1508" sortkey="ritter00005" propertytype="heraldry" level="0" lft="27" rght="28">
+        <name>Falke-Reh-Tanne-Rad</name>
+        <norm_iri>ritter5</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1511" sortkey="ritter00006" propertytype="heraldry" level="0" lft="29" rght="30">
+        <name>Falke-Reh-Tanne-Bügel</name>
+        <norm_iri>ritter6</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1513" sortkey="ritter00007" propertytype="heraldry" level="0" lft="31" rght="32">
+        <name>Falke-Reh-Ulme-Rad</name>
+        <norm_iri>ritter7</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1515" sortkey="ritter00008" propertytype="heraldry" level="0" lft="33" rght="34">
+        <name>Falke-Reh-Ulme-Bügel</name>
+        <norm_iri>ritter8</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1517" sortkey="ritter00009" propertytype="heraldry" level="0" lft="35" rght="36">
+        <name>Taube-Eber-Tanne-Rad</name>
+        <norm_iri>ritter9</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1519" sortkey="ritter00010" propertytype="heraldry" level="0" lft="37" rght="38">
+        <name>Taube-Eber-Tanne-Bügel</name>
+        <norm_iri>ritter10</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1521" sortkey="ritter00011" propertytype="heraldry" level="0" lft="39" rght="40">
+        <name>Taube-Eber-Ulme-Rad</name>
+        <norm_iri>ritter11</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1523" sortkey="ritter00012" propertytype="heraldry" level="0" lft="41" rght="42">
+        <name>Taube-Eber-Ulme-Bügel</name>
+        <norm_iri>ritter12</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1525" sortkey="ritter00013" propertytype="heraldry" level="0" lft="43" rght="44">
+        <name>Taube-Reh-Tanne-Rad</name>
+        <norm_iri>ritter13</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1527" sortkey="ritter0014" propertytype="heraldry" level="0" lft="45" rght="46">
+        <name>Taube-Reh-Tanne-Bügel</name>
+        <norm_iri>ritter14</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1529" sortkey="ritter00015" propertytype="heraldry" level="0" lft="47" rght="48">
+        <name>Taube-Reh-Ulme-Rad</name>
+        <norm_iri>ritter15</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1531" sortkey="ritter00016" propertytype="heraldry" level="0" lft="49" rght="50">
+        <name>Taube-Reh-Ulme-Bügel</name>
+        <norm_iri>ritter16</norm_iri>
+        <sections>
+          <section id="sections-2644" articles_id="articles-109" />
         </sections>
       </property>
     </properties>
@@ -385,6 +963,48 @@
         <file_name>tp/hm001.1121.svg</file_name>
         <sections>
           <section id="sections-8" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-1444" sortkey="testmarke00001" propertytype="brands" level="0" lft="3" rght="4">
+        <lemma>Marke1</lemma>
+        <name>test.marke1</name>
+        <norm_iri>testmarke1</norm_iri>
+        <sections>
+          <section id="sections-973" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+        <lemma>Marke2</lemma>
+        <name>test.marke2</name>
+        <norm_iri>testmarke2</norm_iri>
+        <sections>
+          <section id="sections-973" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-840" sortkey="testmarkek" propertytype="brands" level="0" lft="7" rght="8">
+        <lemma>Köhlers Marke</lemma>
+        <name>test.markeK</name>
+        <norm_iri>testmarkek</norm_iri>
+        <sections>
+          <section id="sections-973" articles_id="articles-19" />
+          <section id="sections-2646" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-845" sortkey="testmarkel" propertytype="brands" level="0" lft="9" rght="10">
+        <lemma>Lampes Marke</lemma>
+        <name>test.markeL</name>
+        <norm_iri>testmarkel</norm_iri>
+        <sections>
+          <section id="sections-973" articles_id="articles-19" />
+          <section id="sections-2646" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-847" sortkey="testmarkeh" propertytype="brands" level="0" lft="11" rght="12">
+        <lemma>Hallers Marke</lemma>
+        <name>test.markeH</name>
+        <norm_iri>testmarkeh</norm_iri>
+        <sections>
+          <section id="sections-973" articles_id="articles-19" />
         </sections>
       </property>
     </properties>
@@ -419,6 +1039,359 @@
       </property>
     </properties>
   </index>
+  <index propertytype="icons">
+    <properties>
+      <property id="properties-640" sortno="1" sortkey="Ikonografie 1 " propertytype="icons" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Ikonografie 1</lemma>
+        <name>Ikonografie 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-760" sortkey="abraham" propertytype="icons" level="0" lft="3" rght="4">
+        <lemma>Abraham</lemma>
+        <name>Abraham</name>
+        <comment>angelegt nach &quot;Ikonografie 1&quot;</comment>
+        <norm_iri>abraham</norm_iri>
+      </property>
+      <property id="properties-765" sortkey="adam und eva" propertytype="icons" level="0" lft="5" rght="10">
+        <lemma>Adam und Eva</lemma>
+        <name>Adam und Eva</name>
+        <norm_iri>adam-und-eva</norm_iri>
+      </property>
+      <property id="properties-767" parent_id="properties-765" sortkey="adam" propertytype="icons" level="1" lft="6" rght="7">
+        <lemma>Adam</lemma>
+        <name>Adam</name>
+        <norm_iri>adam</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-770" parent_id="properties-765" sortkey="eva" propertytype="icons" level="1" lft="8" rght="9">
+        <lemma>Eva</lemma>
+        <name>Eva</name>
+        <norm_iri>eva</norm_iri>
+      </property>
+      <property id="properties-777" sortkey="eva" propertytype="icons" level="0" lft="11" rght="14">
+        <lemma>Eva</lemma>
+        <name>Eva</name>
+        <norm_iri>eva~1</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-781" parent_id="properties-777" sortkey="siehe" related_id="properties-770" propertytype="icons" level="1" lft="12" rght="13">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-eva</norm_iri>
+      </property>
+      <property id="properties-779" sortkey="stammvater" propertytype="icons" level="0" lft="15" rght="18">
+        <lemma>Stammvater</lemma>
+        <name>Stammvater</name>
+        <norm_iri>stammvater</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-784" parent_id="properties-779" sortkey="siehe" related_id="properties-760" propertytype="icons" level="1" lft="16" rght="17">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-abraham</norm_iri>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="figures">
+    <properties>
+      <property id="properties-660" sortkey="maria" propertytype="figures" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+        <lemma>Maria</lemma>
+        <name>Maria</name>
+        <norm_iri>maria</norm_iri>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-1094" sortkey="köhler ikone" propertytype="figures" level="0" lft="5" rght="6" iscategory="0" ishidden="0">
+        <lemma>Köhler Ikone</lemma>
+        <name>Köhler Ikone</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohler-ikone-1</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1096" sortkey="kohler ikone" propertytype="figures" level="0" lft="7" rght="8" iscategory="0" ishidden="0">
+        <lemma>Köhler Ikone</lemma>
+        <name>Köhler Ikone</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohler-ikone-2</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1099" sortkey="kohler ikone" propertytype="figures" level="0" lft="9" rght="10" iscategory="0" ishidden="0">
+        <lemma>Kohler Ikone</lemma>
+        <name>Kohler Ikone</name>
+        <norm_iri>kohler-ikone-3</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1101" sortkey="lampe ikone" propertytype="figures" level="0" lft="11" rght="12" iscategory="0" ishidden="0">
+        <lemma>Lampe Ikone</lemma>
+        <name>Lampe Ikone</name>
+        <norm_iri>lampe-ikone</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1103" sortkey="haller ikone" propertytype="figures" level="0" lft="13" rght="14" iscategory="0" ishidden="0">
+        <lemma>Haller Ikone</lemma>
+        <name>Haller Ikone</name>
+        <norm_iri>haller-ikone</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="manufacturers">
+    <properties>
+      <property id="properties-639" sortno="1" sortkey="Hersteller 1 " propertytype="manufacturers" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Hersteller 1</lemma>
+        <name>Hersteller 1 </name>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-741" sortkey="färber" propertytype="manufacturers" level="0" lft="3" rght="10" iscategory="0" ishidden="0">
+        <lemma>Färber</lemma>
+        <name>Färber</name>
+        <comment>Sortierschlüssel mit Umlaut; hinter &quot;Hersteller 1&quot; angelegt.</comment>
+        <norm_iri>farber-mit</norm_iri>
+      </property>
+      <property id="properties-749" parent_id="properties-741" sortkey="blaufaerber" propertytype="manufacturers" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>Blaufärber</lemma>
+        <name>Blaufärber</name>
+        <comment>nach &quot;Rotfärber&quot; angelegt</comment>
+        <norm_iri>blaufaerber</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-746" parent_id="properties-741" sortkey="rotfaerber" propertytype="manufacturers" level="1" lft="6" rght="7" iscategory="0" ishidden="0">
+        <lemma>Rotfärber</lemma>
+        <name>Rotfärber</name>
+        <norm_iri>rotfaerber</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1231" parent_id="properties-741" sortkey="gelbfaerber" propertytype="manufacturers" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>Gelbfärber</lemma>
+        <name>Gelbfärber</name>
+        <comment>Nach &quot;Rotfärber&quot; angelegt</comment>
+        <norm_iri>gelbfaerber</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-744" sortkey="farber" propertytype="manufacturers" level="0" lft="11" rght="14" iscategory="0" ishidden="0">
+        <lemma>Färber</lemma>
+        <name>Färber</name>
+        <comment>Sortierschlüssel ohne Umlaut; hinter &quot;Hersteller 1&quot; und &quot;Färber&quot; (1) angelegt.</comment>
+        <norm_iri>farber-ohne</norm_iri>
+      </property>
+      <property id="properties-753" parent_id="properties-744" sortkey="gruenfaerber" propertytype="manufacturers" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>Grünfärber</lemma>
+        <name>Grünfärber</name>
+        <norm_iri>gruenfaerber</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="personnames">
+    <properties>
+      <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>…Person mit Punkten</lemma>
+        <name>…Person mit Punkten</name>
+        <norm_iri>person-mit-punkten</norm_iri>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-864" sortkey="kohler" propertytype="personnames" level="0" lft="3" rght="6" iscategory="0" ishidden="0">
+        <lemma>Köhler</lemma>
+        <name>Köhler</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohler-ohne</norm_iri>
+      </property>
+      <property id="properties-874" parent_id="properties-864" sortkey="joe" propertytype="personnames" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>Joe</lemma>
+        <name>Joe</name>
+        <norm_iri>joe</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-866" sortkey="köhler" propertytype="personnames" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+        <lemma>Köhler</lemma>
+        <name>Köhler</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohler-mit</norm_iri>
+      </property>
+      <property id="properties-877" parent_id="properties-866" sortkey="jim" propertytype="personnames" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>Jim {2}</lemma>
+        <name>Jim {2}</name>
+        <norm_iri>jim-2</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1565" parent_id="properties-866" sortkey="jim" propertytype="personnames" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>Jim {1}</lemma>
+        <name>Jim {1}</name>
+        <norm_iri>jim-1</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-911" sortkey="kohler" propertytype="personnames" level="0" lft="13" rght="22" iscategory="0" ishidden="0">
+        <lemma>Kohler, der ein Komma hat</lemma>
+        <name>Kohler</name>
+        <norm_iri>kohler</norm_iri>
+      </property>
+      <property id="properties-914" parent_id="properties-911" sortkey="jury" propertytype="personnames" level="1" lft="14" rght="15" iscategory="0" ishidden="0">
+        <lemma>Jury</lemma>
+        <name>Jury</name>
+        <norm_iri>jury</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1191" parent_id="properties-911" sortkey="lara" propertytype="personnames" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+        <lemma>Lara, die ein Komma hat</lemma>
+        <name>Lara</name>
+        <norm_iri>lara</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1573" parent_id="properties-911" sortkey="jim {00002}" propertytype="personnames" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+        <lemma>Jim {2}</lemma>
+        <name>Jim {2}</name>
+        <norm_iri>jim-2</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-868" sortkey="lampe" propertytype="personnames" level="0" lft="23" rght="36" iscategory="0" ishidden="0">
+        <lemma>Lampe (der Klammern hat)</lemma>
+        <name>Lampe</name>
+        <norm_iri>lampe</norm_iri>
+      </property>
+      <property id="properties-1194" parent_id="properties-868" sortkey="siehe" related_id="properties-1191" propertytype="personnames" level="1" lft="24" rght="25" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-kohler-lara</norm_iri>
+      </property>
+      <property id="properties-1556" parent_id="properties-868" sortkey="lara" propertytype="personnames" level="1" lft="26" rght="27" iscategory="0" ishidden="0">
+        <lemma>Lara</lemma>
+        <name>Lara</name>
+        <norm_iri>lara</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1699" parent_id="properties-868" sortkey="lara †01533" propertytype="personnames" level="1" lft="28" rght="29" iscategory="0" ishidden="0">
+        <lemma>Lara †1533</lemma>
+        <name>Lara †1533</name>
+        <norm_iri>lara-1533</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1702" parent_id="properties-868" sortkey="lara elisabeth" propertytype="personnames" level="1" lft="30" rght="31" iscategory="0" ishidden="0">
+        <lemma>Lara Elisabeth</lemma>
+        <name>Lara Elisabeth</name>
+        <norm_iri>lara-elisabeth</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1705" parent_id="properties-868" sortkey="lara (†01533)" propertytype="personnames" level="1" lft="32" rght="33" iscategory="0" ishidden="0">
+        <lemma>Lara (†1533)</lemma>
+        <name>Lara (†1533)</name>
+        <norm_iri>lara-1533</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1477" parent_id="properties-868" sortkey="lutz" propertytype="personnames" level="1" lft="34" rght="35" iscategory="0" ishidden="0">
+        <lemma>Lutz (der Klammern hat)</lemma>
+        <name>Lutz</name>
+        <norm_iri>lutz</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-872" sortkey="haller" propertytype="personnames" level="0" lft="37" rght="42" iscategory="0" ishidden="0">
+        <lemma>Haller</lemma>
+        <name>Haller</name>
+        <norm_iri>haller</norm_iri>
+      </property>
+      <property id="properties-883" parent_id="properties-872" sortkey="karl" propertytype="personnames" level="1" lft="38" rght="39" iscategory="0" ishidden="0">
+        <lemma>Karl</lemma>
+        <name>Karl</name>
+        <norm_iri>karl</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-889" parent_id="properties-872" sortkey="herbert" propertytype="personnames" level="1" lft="40" rght="41" iscategory="0" ishidden="0">
+        <lemma>Herbert</lemma>
+        <name>Herbert</name>
+        <norm_iri>herbert</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1483" sortkey="nuber" propertytype="personnames" level="0" lft="43" rght="48" iscategory="0" ishidden="0">
+        <lemma>Nuber</lemma>
+        <name>Nuber</name>
+        <norm_iri>nuber</norm_iri>
+      </property>
+      <property id="properties-886" parent_id="properties-1483" sortkey="lutz" propertytype="personnames" level="1" lft="44" rght="47" iscategory="0" ishidden="0">
+        <lemma>Lutz</lemma>
+        <name>Lutz</name>
+        <norm_iri>lutz</norm_iri>
+      </property>
+      <property id="properties-1480" parent_id="properties-886" sortkey="siehe" related_id="properties-1477" propertytype="personnames" level="2" lft="45" rght="46" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-lampe-lutz</norm_iri>
+      </property>
+      <property id="properties-1470" sortkey="rostrum" propertytype="personnames" level="0" lft="49" rght="52" iscategory="0" ishidden="0">
+        <lemma>Rostrum</lemma>
+        <name>Rostrum</name>
+        <norm_iri>rostrum</norm_iri>
+      </property>
+      <property id="properties-1474" parent_id="properties-1470" sortkey="siehe" related_id="properties-1472" propertytype="personnames" level="1" lft="50" rght="51" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-schnabel</norm_iri>
+      </property>
+      <property id="properties-1472" sortkey="schnabel" propertytype="personnames" level="0" lft="53" rght="54" iscategory="0" ishidden="0">
+        <lemma>Schnabel, mit geschütztem Leerzeichen</lemma>
+        <name>Schnabel</name>
+        <norm_iri>schnabel</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+    </properties>
+  </index>
   <index propertytype="placenames">
     <properties>
       <property id="properties-636" sortno="1" sortkey="Ortsname 1 " propertytype="placenames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
@@ -442,15 +1415,183 @@
           <section id="sections-6" articles_id="articles-1" />
         </sections>
       </property>
+      <property id="properties-849" sortkey="köhlers ort" propertytype="placenames" level="0" lft="7" rght="8">
+        <lemma>Köhlers Ort</lemma>
+        <name>Köhlers Ort</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohlers-ort-mit</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-851" sortkey="kohlers ort" propertytype="placenames" level="0" lft="9" rght="10">
+        <lemma>Köhlers Ort</lemma>
+        <name>Köhlers Ort</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohlers-ort-ohne</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1244" sortkey="kohlers ort" propertytype="placenames" level="0" lft="11" rght="12">
+        <lemma>Kohlers Ort</lemma>
+        <name>Kohlers Ort</name>
+        <norm_iri>kohlers-ort</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1237" sortkey="lampes huette" propertytype="placenames" level="0" lft="13" rght="16">
+        <lemma>Lampes Hütte</lemma>
+        <name>Lampes Hütte</name>
+        <norm_iri>lampes-huette</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1239" parent_id="properties-1237" sortkey="siehe" related_id="properties-853" propertytype="placenames" level="1" lft="14" rght="15">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-lampes-ort</norm_iri>
+      </property>
+      <property id="properties-853" sortkey="lampes ort" propertytype="placenames" level="0" lft="17" rght="18">
+        <lemma>Lampes Ort</lemma>
+        <name>Lampes Ort</name>
+        <norm_iri>lampes-ort</norm_iri>
+      </property>
+      <property id="properties-855" sortkey="hallers ort" propertytype="placenames" level="0" lft="19" rght="20">
+        <lemma>Hallers Ort</lemma>
+        <name>Hallers Ort</name>
+        <norm_iri>hallers-ort</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
     </properties>
   </index>
-  <index propertytype="personnames">
+  <index propertytype="scriptfeatures">
     <properties>
-      <property id="properties-637" sortno="1" sortkey="Personenname 1 " propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
-        <lemma>Personenname 1</lemma>
-        <name>Personenname 1 </name>
+      <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Nice type</lemma>
+        <name>Nice type</name>
+        <norm_iri>nice-type</norm_iri>
         <sections>
           <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-1307" sortkey="schriftgestaltungsgruppe" propertytype="scriptfeatures" level="0" lft="5" rght="16" iscategory="0" ishidden="0">
+        <lemma>Schriftgestaltungsgruppe</lemma>
+        <name>Schriftgestaltungsgruppe</name>
+        <norm_iri>schriftgestaltungsgruppe</norm_iri>
+      </property>
+      <property id="properties-1309" parent_id="properties-1307" sortkey="kohlersche schriftgestaltung" propertytype="scriptfeatures" level="1" lft="6" rght="7" iscategory="0" ishidden="0">
+        <lemma>köhlersche Schriftgestaltung</lemma>
+        <name>köhlersche Schriftgestaltung</name>
+        <norm_iri>kohlersche-schriftgestaltung-ohne</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1312" parent_id="properties-1307" sortkey="köhlersche schriftgestaltung" propertytype="scriptfeatures" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>köhlersche Schriftgestaltung</lemma>
+        <name>köhlersche Schriftgestaltung</name>
+        <norm_iri>koehlersche-schriftgestaltung-mit</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1315" parent_id="properties-1307" sortkey="kohlersche schriftgestaltung" propertytype="scriptfeatures" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>kohlersche Schriftgestaltung</lemma>
+        <name>kohlersche Schriftgestaltung</name>
+        <norm_iri>kohlersche-schriftgestaltung</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1318" parent_id="properties-1307" sortkey="lampesche schriftgestaltung" propertytype="scriptfeatures" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>lampesche Schriftgestaltung</lemma>
+        <name>lampesche Schriftgestaltung</name>
+        <norm_iri>lampesche-schriftgestaltung</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1321" parent_id="properties-1307" sortkey="hallersche schriftgestaltung" propertytype="scriptfeatures" level="1" lft="14" rght="15" iscategory="0" ishidden="0">
+        <lemma>hallersche Schriftgestaltung</lemma>
+        <name>hallersche Schriftgestaltung</name>
+        <norm_iri>hallersche-schriftgestaltung</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="temporals">
+    <properties>
+      <property id="properties-654" sortkey="long time ago" propertytype="temporals" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <lemma>Long time ago</lemma>
+        <name>Long time ago</name>
+        <norm_iri>long-time-ago</norm_iri>
+        <sections>
+          <section id="sections-6" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-1399" sortkey="jahresangabe" propertytype="temporals" level="0" lft="5" rght="16" iscategory="0" ishidden="0">
+        <lemma>Jahresangabe</lemma>
+        <name>Jahresangabe</name>
+        <norm_iri>jahresangabe</norm_iri>
+      </property>
+      <property id="properties-1403" parent_id="properties-1399" sortkey="kohlersche jahresangabe" propertytype="temporals" level="1" lft="6" rght="7" iscategory="0" ishidden="0">
+        <lemma>köhlersche Jahresangabe</lemma>
+        <name>köhlersche Jahresangabe</name>
+        <norm_iri>kohlersche-jahresangabe-ohne</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1405" parent_id="properties-1399" sortkey="köhlersche jahresangabe" propertytype="temporals" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>köhlersche Jahresangabe</lemma>
+        <name>köhlersche Jahresangabe</name>
+        <norm_iri>kohlersche-jahresangabe-mit</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1407" parent_id="properties-1399" sortkey="kohlersche jahresangabe" propertytype="temporals" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>kohlersche Jahresangabe</lemma>
+        <name>kohlersche Jahresangabe</name>
+        <norm_iri>kohlersche-jahresangabe</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1412" parent_id="properties-1399" sortkey="lampesche jahresangabe" propertytype="temporals" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>lampesche Jahresangabe</lemma>
+        <name>lampesche Jahresangabe</name>
+        <norm_iri>lampesche-jahresangabe</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1415" parent_id="properties-1399" sortkey="hallersche jahresangabe" propertytype="temporals" level="1" lft="14" rght="15" iscategory="0" ishidden="0">
+        <lemma>hallersche Jahresangabe</lemma>
+        <name>hallersche Jahresangabe</name>
+        <norm_iri>hallersche-jahresangabe</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1401" sortkey="tagesangabe" propertytype="temporals" level="0" lft="17" rght="20" iscategory="0" ishidden="0">
+        <lemma>Tagesangabe</lemma>
+        <name>Tagesangabe</name>
+        <norm_iri>tagesangabe</norm_iri>
+      </property>
+      <property id="properties-1418" parent_id="properties-1401" sortkey="lampesche tagesangabe" propertytype="temporals" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+        <lemma>lampesche Tagesangabe</lemma>
+        <name>lampesche Tagesangabe</name>
+        <norm_iri>lampesche-tagesangabe</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
         </sections>
       </property>
     </properties>
@@ -464,26 +1605,89 @@
           <section id="sections-6" articles_id="articles-1" />
         </sections>
       </property>
-    </properties>
-  </index>
-  <index propertytype="manufacturers">
-    <properties>
-      <property id="properties-639" sortno="1" sortkey="Hersteller 1 " propertytype="manufacturers" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
-        <lemma>Hersteller 1</lemma>
-        <name>Hersteller 1 </name>
+      <property id="properties-1197" sortkey="notarsachen" propertytype="subjects" level="0" lft="3" rght="14" iscategory="0" ishidden="0">
+        <lemma>Notarsachen</lemma>
+        <name>Notarsachen</name>
+        <norm_iri>notarsachen</norm_iri>
+      </property>
+      <property id="properties-1201" parent_id="properties-1197" sortkey="kohlersachen" propertytype="subjects" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>Köhlersachen</lemma>
+        <name>Köhlersachen</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohlersachen-ohne</norm_iri>
         <sections>
-          <section id="sections-6" articles_id="articles-1" />
+          <section id="sections-977" articles_id="articles-19" />
         </sections>
       </property>
-    </properties>
-  </index>
-  <index propertytype="icons">
-    <properties>
-      <property id="properties-640" sortno="1" sortkey="Ikonografie 1 " propertytype="icons" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
-        <lemma>Ikonografie 1</lemma>
-        <name>Ikonografie 1 </name>
+      <property id="properties-1204" parent_id="properties-1197" sortkey="köhlersachen" propertytype="subjects" level="1" lft="6" rght="7" iscategory="0" ishidden="0">
+        <lemma>Köhlersachen</lemma>
+        <name>Köhlersachen</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohlersachen-mit</norm_iri>
         <sections>
-          <section id="sections-6" articles_id="articles-1" />
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1207" parent_id="properties-1197" sortkey="kohlersachen" propertytype="subjects" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>Kohlersachen</lemma>
+        <name>Kohlersachen</name>
+        <norm_iri>kohlersachen</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1210" parent_id="properties-1197" sortkey="lampesachen" propertytype="subjects" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>Lampesachen</lemma>
+        <name>Lampesachen</name>
+        <norm_iri>lampesachen</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1213" parent_id="properties-1197" sortkey="hallersachen" propertytype="subjects" level="1" lft="12" rght="13" iscategory="0" ishidden="0">
+        <lemma>Hallersachen</lemma>
+        <name>Hallersachen</name>
+        <norm_iri>hallersachen</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1199" sortkey="schrift" propertytype="subjects" level="0" lft="15" rght="26" iscategory="0" ishidden="0">
+        <lemma>Schrift</lemma>
+        <name>Schrift</name>
+        <norm_iri>schrift</norm_iri>
+      </property>
+      <property id="properties-1216" parent_id="properties-1199" sortkey="köhlerschrift" propertytype="subjects" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+        <lemma>Köhlerschrift</lemma>
+        <name>Köhlerschrift</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohlerschrift-mit</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1268" parent_id="properties-1199" sortkey="kohlerschrift" propertytype="subjects" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+        <lemma>Köhlerschrift</lemma>
+        <name>Köhlerschrift</name>
+        <norm_iri>kohlerschrift-ohne</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1271" parent_id="properties-1199" sortkey="lampeschrift" propertytype="subjects" level="1" lft="22" rght="23" iscategory="0" ishidden="0">
+        <lemma>Lampeschrift</lemma>
+        <name>Lampeschrift</name>
+        <norm_iri>lampeschrift</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1274" parent_id="properties-1199" sortkey="hallerschrift" propertytype="subjects" level="1" lft="24" rght="25" iscategory="0" ishidden="0">
+        <lemma>Hallerschrift</lemma>
+        <name>Hallerschrift</name>
+        <norm_iri>hallerschrift</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
         </sections>
       </property>
     </properties>
@@ -496,6 +1700,13 @@
         <norm_iri>di_description</norm_iri>
         <sections>
           <section id="sections-5" articles_id="articles-1" />
+          <section id="sections-951" articles_id="articles-19" />
+          <section id="sections-2139" articles_id="articles-89" />
+          <section id="sections-2624" articles_id="articles-109" />
+          <section id="sections-3584" articles_id="articles-146" />
+          <section id="sections-3642" articles_id="articles-146" />
+          <section id="sections-3652" articles_id="articles-146" />
+          <section id="sections-6265" articles_id="articles-196" />
         </sections>
       </property>
       <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" level="0" lft="29" rght="30">
@@ -504,13 +1715,38 @@
         <norm_iri>di_header1</norm_iri>
         <sections>
           <section id="sections-4" articles_id="articles-1" />
+          <section id="sections-2705" articles_id="articles-109" />
+          <section id="sections-3640" articles_id="articles-146" />
+          <section id="sections-3650" articles_id="articles-146" />
+          <section id="sections-6321" articles_id="articles-196" />
+          <section id="sections-6347" articles_id="articles-196" />
+        </sections>
+      </property>
+      <property id="properties-203" sortkey="Gliederung: Ebene 2" propertytype="captions" level="0" lft="31" rght="32">
+        <lemma>Gliederung: Ebene 2</lemma>
+        <name>Gliederung: Ebene 2</name>
+        <norm_iri>di_header2</norm_iri>
+        <sections>
+          <section id="sections-2707" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-207" sortkey="Kommentar" propertytype="captions" level="0" lft="35" rght="36">
+        <lemma>Kommentar</lemma>
+        <name>Kommentar</name>
+        <norm_iri>di_comment</norm_iri>
+        <sections>
+          <section id="sections-969" articles_id="articles-19" />
+          <section id="sections-2157" articles_id="articles-89" />
+          <section id="sections-2642" articles_id="articles-109" />
+          <section id="sections-3602" articles_id="articles-146" />
+          <section id="sections-6283" articles_id="articles-196" />
         </sections>
       </property>
     </properties>
   </index>
   <index propertytype="texttypes">
     <properties>
-      <property id="properties-116" sortno="1" sortkey="Textsorte 1" propertytype="texttypes" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+      <property id="properties-116" sortno="1" sortkey="Textsorte 1" propertytype="texttypes" level="0" lft="1" rght="20" iscategory="0" ishidden="0">
         <lemma>Textsorte 1</lemma>
         <name>Textsorte 1 </name>
         <unit>Textsorte 1 Einheit</unit>
@@ -537,7 +1773,62 @@
         <keywords>Textsorte</keywords>
         <norm_data>Textsorte 1b Norm</norm_data>
       </property>
-      <property id="properties-113" sortno="7" sortkey="Textsorte 2" propertytype="texttypes" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+      <property id="properties-1364" parent_id="properties-116" sortkey="köhlerscher text" propertytype="texttypes" level="1" lft="6" rght="7">
+        <lemma>köhlerscher Text</lemma>
+        <name>köhlerscher Text</name>
+        <norm_iri>kohlerscher-text-mit</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1367" parent_id="properties-116" sortkey="kohlerscher text" propertytype="texttypes" level="1" lft="8" rght="9">
+        <lemma>köhlerscher Text</lemma>
+        <name>köhlerscher Text</name>
+        <norm_iri>kohlerscher-text-ohne</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1370" parent_id="properties-116" sortkey="kohlerscher text" propertytype="texttypes" level="1" lft="10" rght="11">
+        <lemma>kohlerscher Text</lemma>
+        <name>kohlerscher Text</name>
+        <norm_iri>kohlerscher-text</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1373" parent_id="properties-116" sortkey="lampescher text" propertytype="texttypes" level="1" lft="12" rght="13">
+        <lemma>lampescher Text</lemma>
+        <name>lampescher Text</name>
+        <norm_iri>lampescher-text</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1376" parent_id="properties-116" sortkey="hallescher text" propertytype="texttypes" level="1" lft="14" rght="15">
+        <lemma>hallescher Text</lemma>
+        <name>hallescher Text</name>
+        <norm_iri>hallescher-text</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1379" parent_id="properties-116" sortkey="lampescher verweistext" propertytype="texttypes" level="1" lft="16" rght="19">
+        <lemma>lampescher Verweistext</lemma>
+        <name>lampescher Verweistext</name>
+        <norm_iri>lampescher-verweistext</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1382" parent_id="properties-1379" sortkey="siehe" related_id="properties-1373" propertytype="texttypes" level="2" lft="17" rght="18">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-lampescher-text</norm_iri>
+      </property>
+      <property id="properties-113" sortno="7" sortkey="Textsorte 2" propertytype="texttypes" level="0" lft="21" rght="26" iscategory="0" ishidden="0">
         <lemma>Textsorte 2</lemma>
         <name>Textsorte 2 </name>
         <unit>Textsorte 2 Einheit</unit>
@@ -545,7 +1836,7 @@
         <keywords>Textsorte,Text type</keywords>
         <norm_data>Textsorte 2 Norm</norm_data>
       </property>
-      <property id="properties-112" parent_id="properties-113" sortno="8" sortkey="Textsorte 2a" propertytype="texttypes" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+      <property id="properties-112" parent_id="properties-113" sortno="8" sortkey="Textsorte 2a" propertytype="texttypes" level="1" lft="22" rght="23" iscategory="1" ishidden="1">
         <lemma>Textsorte 2a</lemma>
         <name>Textsorte 2a</name>
         <unit>Textsorte 2a Einheit </unit>
@@ -557,7 +1848,7 @@
           <section id="sections-22" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-111" parent_id="properties-113" sortno="10" related_id="properties-112" propertytype="texttypes" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+      <property id="properties-111" parent_id="properties-113" sortno="10" related_id="properties-112" propertytype="texttypes" level="1" lft="24" rght="25" iscategory="0" ishidden="0">
         <lemma>siehe</lemma>
         <unit>Textsorte 2b Einheit</unit>
         <comment>Textsorte 2b Bemerk</comment>
@@ -568,36 +1859,51 @@
   </index>
   <index propertytype="fonttypes">
     <properties>
-      <property id="properties-122" sortno="1" sortkey="Schriftart 1" propertytype="fonttypes" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
-        <lemma>Schriftart 1</lemma>
-        <name>Schriftart 1 </name>
+      <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+        <lemma>gotische Minuskel</lemma>
+        <name>gotische Minuskel</name>
         <unit>Schriftart 1 Einheit</unit>
-        <comment>Schriftart 1 Bemerk</comment>
-        <keywords>Schriftart,Font</keywords>
-        <norm_data>Schriftart 1 Norm</norm_data>
-        <sections>
-          <section id="sections-3" articles_id="articles-1" />
-        </sections>
+        <comment>Bemerkung zu gotischer Minuskel</comment>
+        <keywords>gotisch,minuskel</keywords>
+        <norm_data>xxx got minusk</norm_data>
+        <norm_iri>gotische-minuskel</norm_iri>
       </property>
-      <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Schriftart 1a" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
-        <lemma>Schriftart 1a</lemma>
-        <name>Schriftart 1a</name>
+      <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+        <lemma>mit Versalien in gotischer Majuskel und Versalschrift</lemma>
+        <name>mit Versalien in gotischer Majuskel und Versalschrift</name>
         <unit>Schriftart 1a Einheit</unit>
-        <comment>Schriftart 1a Bemerk</comment>
-        <keywords>Schriftart</keywords>
-        <norm_data>Schriftart 1a Norm</norm_data>
+        <comment>darf nicht verloren gehen</comment>
+        <keywords>versalien, majuskel, versalschrift</keywords>
+        <norm_data>norm:vers-maj-vers</norm_data>
+        <norm_iri>mit-versalien-in-gotischer-majuskel-und-versalschrift</norm_iri>
         <sections>
           <section id="sections-3" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-120" parent_id="properties-122" sortno="4" related_id="properties-121" propertytype="fonttypes" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+      <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" level="1" lft="4" rght="5">
+        <lemma>mit Versal in gotischer Majuskel</lemma>
+        <name>mit Versal in gotischer Majuskel</name>
+        <norm_iri>mit-versal-in-gotischer-majuskel</norm_iri>
+        <sections>
+          <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-1601" parent_id="properties-122" sortkey="mit versalien in gotischer majuskel" propertytype="fonttypes" level="1" lft="6" rght="7">
+        <lemma>mit Versalien in gotischer Majuskel</lemma>
+        <name>mit Versalien in gotischer Majuskel</name>
+        <norm_iri>mit-versalien-in-gotischer-majuskel</norm_iri>
+        <sections>
+          <section id="sections-2560" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-120" parent_id="properties-122" sortno="4" related_id="properties-121" propertytype="fonttypes" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
         <lemma>siehe</lemma>
         <unit>Schriftart 1b Einheit</unit>
         <comment>Schriftart 1b Bemerk</comment>
         <keywords>Schriftart</keywords>
         <norm_data>Schriftart 1b Norm</norm_data>
       </property>
-      <property id="properties-119" sortno="7" sortkey="Schriftart 2" propertytype="fonttypes" level="0" lft="7" rght="12" iscategory="0" ishidden="0">
+      <property id="properties-119" sortno="7" sortkey="Schriftart 2" propertytype="fonttypes" level="0" lft="11" rght="16" iscategory="0" ishidden="0">
         <lemma>Schriftart 2</lemma>
         <name>Schriftart 2 </name>
         <unit>Schriftart 2 Einheit</unit>
@@ -608,7 +1914,7 @@
           <section id="sections-22" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-118" parent_id="properties-119" sortno="8" sortkey="Schriftart 2a" propertytype="fonttypes" level="1" lft="8" rght="9" iscategory="1" ishidden="1">
+      <property id="properties-118" parent_id="properties-119" sortno="8" sortkey="Schriftart 2a" propertytype="fonttypes" level="1" lft="12" rght="13" iscategory="1" ishidden="1">
         <lemma>Schriftart 2a</lemma>
         <name>Schriftart 2a</name>
         <unit>Schriftart 2a Einheit</unit>
@@ -619,12 +1925,118 @@
           <section id="sections-22" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-117" parent_id="properties-119" sortno="10" related_id="properties-118" propertytype="fonttypes" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+      <property id="properties-117" parent_id="properties-119" sortno="10" related_id="properties-118" propertytype="fonttypes" level="1" lft="14" rght="15" iscategory="0" ishidden="0">
         <lemma>siehe</lemma>
         <unit>Schriftart 2b Einheit</unit>
         <comment>Schriftart 2b Bemerk</comment>
         <keywords>Font</keywords>
         <norm_data>Schriftart 2b Norm</norm_data>
+      </property>
+      <property id="properties-1280" sortkey="majuskel" propertytype="fonttypes" level="0" lft="17" rght="36">
+        <lemma>Majuskel</lemma>
+        <name>Majuskel</name>
+        <norm_iri>majuskel</norm_iri>
+      </property>
+      <property id="properties-1284" parent_id="properties-1280" sortkey="kohlersche majuskel" propertytype="fonttypes" level="1" lft="18" rght="19">
+        <lemma>köhlersche Majuskel</lemma>
+        <name>köhlersche Majuskel</name>
+        <norm_iri>kohlersche-majuskel-ohne</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1287" parent_id="properties-1280" sortkey="köhlersche majuskel" propertytype="fonttypes" level="1" lft="20" rght="21">
+        <lemma>köhlersche Majuskel</lemma>
+        <name>köhlersche Majuskel</name>
+        <norm_iri>kohlersche-majuskel-mit</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1290" parent_id="properties-1280" sortkey="kohlersche majuskel" propertytype="fonttypes" level="1" lft="22" rght="23">
+        <lemma>kohlersche Majuskel</lemma>
+        <name>kohlersche Majuskel</name>
+        <norm_iri>kohlersche-majuskel</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1293" parent_id="properties-1280" sortkey="lampesche majuskel" propertytype="fonttypes" level="1" lft="24" rght="33">
+        <lemma>lampesche Majuskel</lemma>
+        <name>lampesche Majuskel</name>
+        <norm_iri>lampesche-majuskel</norm_iri>
+      </property>
+      <property id="properties-1452" parent_id="properties-1293" sortkey="mit versal" propertytype="fonttypes" level="2" lft="25" rght="28">
+        <lemma>mit Versal</lemma>
+        <name>mit Versal</name>
+        <norm_iri>mit-versal</norm_iri>
+        <sections>
+          <section id="sections-145" articles_id="articles-3" />
+        </sections>
+      </property>
+      <property id="properties-1669" parent_id="properties-1452" sortkey="(00018.jh.)" propertytype="fonttypes" level="3" lft="26" rght="27">
+        <lemma>(18.Jh.)</lemma>
+        <name>(18.Jh.)</name>
+        <norm_iri>18jh</norm_iri>
+        <sections>
+          <section id="sections-2636" articles_id="articles-109" />
+        </sections>
+      </property>
+      <property id="properties-1455" parent_id="properties-1293" sortkey="mit versalien" propertytype="fonttypes" level="2" lft="29" rght="32">
+        <lemma>mit Versalien</lemma>
+        <name>mit Versalien</name>
+        <norm_iri>mit-versalien</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1666" parent_id="properties-1455" sortkey="(00019. jh)" propertytype="fonttypes" level="3" lft="30" rght="31">
+        <lemma>(19. Jh)</lemma>
+        <name>(19. Jh)</name>
+        <norm_iri>19-jh</norm_iri>
+        <sections>
+          <section id="sections-4070" articles_id="articles-3" />
+        </sections>
+      </property>
+      <property id="properties-1296" parent_id="properties-1280" sortkey="hallersche majuskel" propertytype="fonttypes" level="1" lft="34" rght="35">
+        <lemma>hallersche Majuskel</lemma>
+        <name>hallersche Majuskel</name>
+        <norm_iri>hallersche-majuskel</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1282" sortkey="minuskel" propertytype="fonttypes" level="0" lft="37" rght="44">
+        <lemma>Minuskel</lemma>
+        <name>Minuskel</name>
+        <norm_iri>minuskel</norm_iri>
+      </property>
+      <property id="properties-1547" parent_id="properties-1282" sortkey="gotische minuskel" propertytype="fonttypes" level="1" lft="38" rght="39">
+        <lemma>gotische Minuskel</lemma>
+        <name>gotische Minuskel</name>
+        <norm_iri>gotische-minuskel</norm_iri>
+        <sections>
+          <section id="sections-2777" articles_id="articles-19" />
+          <section id="sections-2789" articles_id="articles-19" />
+          <section id="sections-2795" articles_id="articles-19" />
+          <section id="sections-2801" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1299" parent_id="properties-1282" sortkey="lampesche minuskel" propertytype="fonttypes" level="1" lft="40" rght="41">
+        <lemma>lampesche Minuskel</lemma>
+        <name>lampesche Minuskel</name>
+        <norm_iri>lampesche-minuskel</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1302" parent_id="properties-1282" sortkey="hallersche minuskel" propertytype="fonttypes" level="1" lft="42" rght="43">
+        <lemma>hallersche Minuskel</lemma>
+        <name>hallersche Minuskel</name>
+        <norm_iri>hallersche-minuskel</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
       </property>
     </properties>
   </index>
@@ -686,6 +2098,45 @@
         <keywords>Language</keywords>
         <norm_data>Sprache 2b Norm</norm_data>
       </property>
+      <property id="properties-1324" sortkey="deutsch" propertytype="languages" level="0" lft="13" rght="18">
+        <lemma>deutsch</lemma>
+        <name>deutsch</name>
+        <norm_iri>di_deu</norm_iri>
+      </property>
+      <property id="properties-1333" parent_id="properties-1324" sortkey="hochdeutsch" propertytype="languages" level="1" lft="14" rght="15">
+        <lemma>hochdeutsch</lemma>
+        <name>hochdeutsch</name>
+        <norm_iri>di_hds</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1326" sortkey="franzoesisch" propertytype="languages" level="0" lft="19" rght="20">
+        <lemma>französisch</lemma>
+        <name>französisch</name>
+        <norm_iri>di_fra</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1450" sortkey="lateinisch" propertytype="languages" level="0" lft="21" rght="22">
+        <lemma>lateinisch</lemma>
+        <name>lateinisch</name>
+        <norm_iri>lateinisch</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1328" sortkey="daenisch" propertytype="languages" level="0" lft="23" rght="24">
+        <lemma>dänisch</lemma>
+        <name>dänisch</name>
+        <norm_iri>di_dan</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
     </properties>
   </index>
   <index propertytype="techniques">
@@ -745,6 +2196,70 @@
         <comment>Ausführungstechnik 2b Bemerk</comment>
         <keywords>Ausführungstechnik,Technique</keywords>
         <norm_data>Ausführungstechnik 2b Norm</norm_data>
+      </property>
+      <property id="properties-1034" sortkey="geschnitten ausgefuehrt" propertytype="techniques" level="0" lft="13" rght="24">
+        <lemma>geschnitten ausgeführt</lemma>
+        <name>geschnitten ausgeführt</name>
+        <norm_iri>geschnitten-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1036" parent_id="properties-1034" sortkey="erhaben ausgefuehrt" propertytype="techniques" level="1" lft="14" rght="19">
+        <lemma>erhaben ausgeführt</lemma>
+        <name>erhaben ausgeführt</name>
+        <norm_iri>erhaben-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1045" parent_id="properties-1036" sortkey="bemalt ausgefuehrt" propertytype="techniques" level="2" lft="15" rght="16">
+        <lemma>bemalt ausgeführt</lemma>
+        <name>bemalt ausgeführt</name>
+        <norm_iri>bemalt-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1049" parent_id="properties-1036" sortkey="verziert ausgefuehrt" propertytype="techniques" level="2" lft="17" rght="18">
+        <lemma>verziert ausgeführt</lemma>
+        <name>verziert ausgeführt</name>
+        <norm_iri>verziert-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1039" parent_id="properties-1034" sortkey="vertieft ausgefuehrt" propertytype="techniques" level="1" lft="20" rght="21">
+        <lemma>vertieft ausgeführt</lemma>
+        <name>vertieft ausgeführt</name>
+        <norm_iri>vertieft-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1042" parent_id="properties-1034" sortkey="ebenmaeszig ausgefuehrt" propertytype="techniques" level="1" lft="22" rght="23">
+        <lemma>ebenmäßig ausgeführt</lemma>
+        <name>ebenmäßig ausgeführt</name>
+        <norm_iri>ebenmaeszig-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1052" sortkey="geschnitzt ausgefuehrt" propertytype="techniques" level="0" lft="25" rght="28">
+        <lemma>geschnitzt ausgeführt</lemma>
+        <name>geschnitzt ausgeführt</name>
+        <norm_iri>geschnitzt-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1054" parent_id="properties-1052" sortkey="vertieft ausgefuehrt" propertytype="techniques" level="1" lft="26" rght="27">
+        <lemma>vertieft ausgeführt</lemma>
+        <name>vertieft ausgeführt</name>
+        <norm_iri>vertieft-ausgefuehrt</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
       </property>
     </properties>
   </index>
@@ -806,6 +2321,141 @@
         <keywords>Spitzname</keywords>
         <norm_data>Epithet 2b Norm</norm_data>
       </property>
+      <property id="properties-1057" sortkey="lateinisch" propertytype="epithets" level="0" lft="15" rght="30" iscategory="0" ishidden="0">
+        <lemma>lateinisch</lemma>
+        <name>lateinisch</name>
+        <norm_iri>lateinisch</norm_iri>
+      </property>
+      <property id="properties-1076" parent_id="properties-1057" sortkey="amicus" propertytype="epithets" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+        <lemma>amicus</lemma>
+        <name>amicus</name>
+        <norm_iri>amicus</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1073" parent_id="properties-1057" sortkey="ancilla" propertytype="epithets" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+        <lemma>ancilla</lemma>
+        <name>ancilla</name>
+        <norm_iri>ancilla</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1079" parent_id="properties-1057" sortkey="canonicus" propertytype="epithets" level="1" lft="20" rght="21" iscategory="0" ishidden="0">
+        <lemma>canonicus</lemma>
+        <name>canonicus</name>
+        <norm_iri>canonicus</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1082" parent_id="properties-1057" sortkey="baccalaureus" propertytype="epithets" level="1" lft="22" rght="25" iscategory="0" ishidden="0">
+        <lemma>baccalaureus</lemma>
+        <name>baccalaureus</name>
+        <norm_iri>baccalaureus</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1085" parent_id="properties-1082" sortkey="decretorum" propertytype="epithets" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+        <lemma>decretorum</lemma>
+        <name>decretorum</name>
+        <norm_iri>decretorum</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1088" parent_id="properties-1057" sortkey="cognatus" propertytype="epithets" level="1" lft="26" rght="29" iscategory="0" ishidden="0">
+        <lemma>cognatus</lemma>
+        <name>cognatus</name>
+        <norm_iri>cognatus</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1091" parent_id="properties-1088" sortkey="siehe" related_id="properties-1076" propertytype="epithets" level="2" lft="27" rght="28" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-amicus</norm_iri>
+      </property>
+      <property id="properties-1059" sortkey="deutsch" propertytype="epithets" level="0" lft="31" rght="64" iscategory="1" ishidden="1">
+        <lemma>deutsch</lemma>
+        <name>deutsch</name>
+        <norm_iri>deutsch</norm_iri>
+      </property>
+      <property id="properties-1617" parent_id="properties-1059" sortkey="edel" propertytype="epithets" level="1" lft="32" rght="45" iscategory="0" ishidden="0">
+        <lemma>edel</lemma>
+        <name>edel</name>
+        <norm_iri>edel</norm_iri>
+      </property>
+      <property id="properties-1632" parent_id="properties-1617" sortkey="ehrbar" propertytype="epithets" level="2" lft="33" rght="36" iscategory="0" ishidden="0">
+        <lemma>ehrbar</lemma>
+        <name>ehrbar</name>
+        <norm_iri>ehrbar</norm_iri>
+      </property>
+      <property id="properties-1635" parent_id="properties-1632" sortkey="und ehrenfest" propertytype="epithets" level="3" lft="34" rght="35" iscategory="0" ishidden="0">
+        <lemma>und ehrenfest</lemma>
+        <name>und ehrenfest</name>
+        <norm_iri>und-ehrenfest</norm_iri>
+        <sections>
+          <section id="sections-2801" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1620" parent_id="properties-1617" sortkey="gestreng" propertytype="epithets" level="2" lft="37" rght="42" iscategory="0" ishidden="0">
+        <lemma>gestreng</lemma>
+        <name>gestreng</name>
+        <norm_iri>gestreng</norm_iri>
+      </property>
+      <property id="properties-1626" parent_id="properties-1620" sortkey="ehrenfest und mannhaft" propertytype="epithets" level="3" lft="40" rght="41" iscategory="0" ishidden="0">
+        <lemma>ehrenfest und mannhaft</lemma>
+        <name>ehrenfest und mannhaft</name>
+        <norm_iri>ehrenfest-und-mannhaft</norm_iri>
+        <sections>
+          <section id="sections-2801" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1614" parent_id="properties-1059" sortkey="ehrenfest" propertytype="epithets" level="1" lft="46" rght="55" iscategory="0" ishidden="0">
+        <lemma>ehrenfest</lemma>
+        <name>ehrenfest</name>
+        <norm_iri>ehrenfest</norm_iri>
+      </property>
+      <property id="properties-1644" parent_id="properties-1614" related_id="properties-1626" propertytype="epithets" level="2" lft="51" rght="52" iscategory="0" ishidden="0" />
+      <property id="properties-1647" parent_id="properties-1614" related_id="properties-1635" propertytype="epithets" level="2" lft="53" rght="54" iscategory="0" ishidden="0" />
+      <property id="properties-1061" parent_id="properties-1059" sortkey="kohler epitheton" propertytype="epithets" level="1" lft="56" rght="57" iscategory="0" ishidden="0">
+        <lemma>Köhler Epitheton</lemma>
+        <name>Köhler Epitheton</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>kohler-epitheton-1</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1064" parent_id="properties-1059" sortkey="köhler epitheton" propertytype="epithets" level="1" lft="58" rght="59" iscategory="0" ishidden="0">
+        <lemma>Köhler Epitheton</lemma>
+        <name>Köhler Epitheton</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>kohler-epitheton-2</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1067" parent_id="properties-1059" sortkey="lampe epitheton" propertytype="epithets" level="1" lft="60" rght="61" iscategory="0" ishidden="0">
+        <lemma>Lampe Epitheton</lemma>
+        <name>Lampe Epitheton</name>
+        <norm_iri>lampe-epitheton</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1070" parent_id="properties-1059" sortkey="haller epitheton" propertytype="epithets" level="1" lft="62" rght="63" iscategory="0" ishidden="0">
+        <lemma>Haller Epitheton</lemma>
+        <name>Haller Epitheton</name>
+        <norm_iri>haller-epitheton</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
     </properties>
   </index>
   <index propertytype="incipits">
@@ -865,6 +2515,43 @@
         <comment>Initien 2b Bemerk</comment>
         <keywords>Anfang</keywords>
         <norm_data>Initien 2b Norm</norm_data>
+      </property>
+      <property id="properties-801" sortkey="lateinisch" propertytype="incipits" level="0" lft="15" rght="24" iscategory="0" ishidden="0">
+        <lemma>lateinisch</lemma>
+        <name>lateinisch</name>
+        <norm_iri>lateinisch</norm_iri>
+      </property>
+      <property id="properties-803" parent_id="properties-801" sortkey="initium 00001" propertytype="incipits" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+        <lemma>Initium 1</lemma>
+        <name>Initium 1</name>
+        <norm_iri>initium-1</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-806" parent_id="properties-801" sortkey="initium 00002" propertytype="incipits" level="1" lft="18" rght="19" iscategory="0" ishidden="0">
+        <lemma>Initium 2</lemma>
+        <name>Initium 2</name>
+        <norm_iri>initium-2</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-809" parent_id="properties-801" sortkey="initium 00004" propertytype="incipits" level="1" lft="20" rght="21" iscategory="0" ishidden="0">
+        <lemma>Initium 4</lemma>
+        <name>Initium 4</name>
+        <norm_iri>initium-4</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-812" parent_id="properties-801" sortkey="initium 00003" propertytype="incipits" level="1" lft="22" rght="23" iscategory="0" ishidden="0">
+        <lemma>Initium 3</lemma>
+        <name>Initium 3</name>
+        <norm_iri>initium-3</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
       </property>
     </properties>
   </index>
@@ -926,6 +2613,110 @@
         <keywords>Formula</keywords>
         <norm_data>Formel 2b Norm</norm_data>
       </property>
+      <property id="properties-680" sortkey="osterlich" propertytype="formulas" level="0" lft="15" rght="38" iscategory="0" ishidden="0">
+        <lemma>Österlich</lemma>
+        <name>Thema 1</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>osterlich-ohne</norm_iri>
+      </property>
+      <property id="properties-694" parent_id="properties-680" sortkey="albanisch" propertytype="formulas" level="1" lft="16" rght="23" iscategory="0" ishidden="0">
+        <lemma>albanisch</lemma>
+        <name>albanisch</name>
+        <norm_iri>albanisch</norm_iri>
+      </property>
+      <property id="properties-707" parent_id="properties-694" sortkey="häufig" propertytype="formulas" level="2" lft="17" rght="18" iscategory="0" ishidden="0">
+        <lemma>häufig</lemma>
+        <name>häufig</name>
+        <norm_iri>haufig-mit</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-710" parent_id="properties-694" sortkey="haufig" propertytype="formulas" level="2" lft="19" rght="20" iscategory="0" ishidden="0">
+        <lemma>häufig</lemma>
+        <name>häufig</name>
+        <norm_iri>haufig-ohne</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-716" parent_id="properties-694" sortkey="allgemein" propertytype="formulas" level="2" lft="21" rght="22" iscategory="0" ishidden="0">
+        <lemma>allgemein</lemma>
+        <name>allgemein</name>
+        <comment>beim Anlegen nach &quot;häufig&quot; einsortiert</comment>
+        <norm_iri>allgemein</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-687" parent_id="properties-680" sortkey="daenisch" propertytype="formulas" level="1" lft="24" rght="29" iscategory="0" ishidden="0">
+        <lemma>dänisch</lemma>
+        <name>dänisch</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>danisch-ohne</norm_iri>
+      </property>
+      <property id="properties-719" parent_id="properties-687" sortkey="daenische formel 00001" propertytype="formulas" level="2" lft="25" rght="26" iscategory="0" ishidden="0">
+        <lemma>dänische formel 1</lemma>
+        <name>dänische formel 1</name>
+        <norm_iri>daenische-formel-1</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-722" parent_id="properties-687" sortkey="daenische formel 00002" propertytype="formulas" level="2" lft="27" rght="28" iscategory="0" ishidden="0">
+        <lemma>dänische formel 2</lemma>
+        <name>dänische formel 2</name>
+        <norm_iri>daenische-formel-2</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-690" parent_id="properties-680" sortkey="dänisch" propertytype="formulas" level="1" lft="30" rght="33" iscategory="0" ishidden="0">
+        <lemma>dänisch</lemma>
+        <name>dänisch</name>
+        <comment>Sotierschlüssel mit Umlaut</comment>
+        <norm_iri>danisch-mit</norm_iri>
+      </property>
+      <property id="properties-725" parent_id="properties-690" sortkey="daenische alternativformel 00001" propertytype="formulas" level="2" lft="31" rght="32" iscategory="0" ishidden="0">
+        <lemma>dänische alternativformel 1</lemma>
+        <name>dänische alternativformel 1</name>
+        <norm_iri>daenische-alternativformel-1</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-697" parent_id="properties-680" sortkey="deutsch" propertytype="formulas" level="1" lft="34" rght="37" iscategory="0" ishidden="0">
+        <lemma>deutsch</lemma>
+        <name>deutsch</name>
+        <norm_iri>deutsch~1</norm_iri>
+      </property>
+      <property id="properties-728" parent_id="properties-697" sortkey="deutsche formel" propertytype="formulas" level="2" lft="35" rght="36" iscategory="0" ishidden="0">
+        <lemma>deutsche formel</lemma>
+        <name>deutsche formel</name>
+        <norm_iri>deutsche-formel~1</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-682" sortkey="österlich" propertytype="formulas" level="0" lft="39" rght="44" iscategory="0" ishidden="0">
+        <lemma>Österlich</lemma>
+        <name>Österlich</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>osterlich-mit</norm_iri>
+      </property>
+      <property id="properties-703" parent_id="properties-682" sortkey="deutsch" propertytype="formulas" level="1" lft="40" rght="43" iscategory="0" ishidden="0">
+        <lemma>deutsch</lemma>
+        <name>deutsch</name>
+        <norm_iri>deutsch~2</norm_iri>
+      </property>
+      <property id="properties-736" parent_id="properties-703" sortkey="deutsche formel 00002" propertytype="formulas" level="2" lft="41" rght="42" iscategory="0" ishidden="0">
+        <lemma>deutsche formel 2</lemma>
+        <name>deutsche formel 2</name>
+        <norm_iri>deutsche-formel-2</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
     </properties>
   </index>
   <index propertytype="sources">
@@ -948,9 +2739,6 @@
         <comment>Zitat 1a Bemerk</comment>
         <keywords>Zitat</keywords>
         <norm_data>Zitat 1a Norm</norm_data>
-        <sections>
-          <section id="sections-22" articles_id="articles-1" />
-        </sections>
       </property>
       <property id="properties-156" parent_id="properties-158" sortno="5" related_id="properties-157" propertytype="sources" level="1" lft="5" rght="6" iscategory="0" ishidden="0">
         <lemma>siehe</lemma>
@@ -966,9 +2754,6 @@
         <comment>Zitat 2 Bemerk</comment>
         <keywords>Zitat,Quote</keywords>
         <norm_data>Zitat 2 Norm</norm_data>
-        <sections>
-          <section id="sections-22" articles_id="articles-1" />
-        </sections>
       </property>
       <property id="properties-154" parent_id="properties-155" sortno="9" sortkey="Zitat 2a" propertytype="sources" level="1" lft="9" rght="11" iscategory="1" ishidden="1">
         <lemma>Zitat 2a</lemma>
@@ -987,6 +2772,115 @@
         <comment>Zitat 2b Bemerk</comment>
         <keywords>Quote</keywords>
         <norm_data>Zitat 2b norm</norm_data>
+      </property>
+      <property id="properties-928" sortkey="bibeltexte" propertytype="sources" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
+        <lemma>Bibeltexte</lemma>
+        <name>Bibeltexte</name>
+        <norm_iri>bibeltexte</norm_iri>
+      </property>
+      <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
+        <lemma>lateinisch</lemma>
+        <name>lateinisch</name>
+        <norm_iri>lateinisch</norm_iri>
+      </property>
+      <property id="properties-930" parent_id="properties-1581" sortkey="ps 0002100003" propertytype="sources" level="2" lft="17" rght="18" iscategory="0" ishidden="0">
+        <lemma>Ps. 21,3</lemma>
+        <name>Ps. 21,3</name>
+        <norm_iri>ps-213</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-933" parent_id="properties-1581" sortkey="ps 0002300003" propertytype="sources" level="2" lft="19" rght="20" iscategory="0" ishidden="0">
+        <lemma>Ps. 23,3</lemma>
+        <name>Ps. 23,3</name>
+        <norm_iri>ps-233</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-936" parent_id="properties-1581" sortkey="ps 0001900003" propertytype="sources" level="2" lft="21" rght="22" iscategory="0" ishidden="0">
+        <lemma>Ps. 19,3</lemma>
+        <name>Ps. 19,3</name>
+        <norm_iri>ps-193</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+        <lemma>Lc. 1,28</lemma>
+        <name>Lc. 1,28</name>
+        <norm_iri>lc-128</norm_iri>
+        <sections>
+          <section id="sections-22" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-939" sortkey="literatische texte" propertytype="sources" level="0" lft="27" rght="40" iscategory="0" ishidden="0">
+        <lemma>Literarische Texte</lemma>
+        <name>Literatische Texte</name>
+        <norm_iri>literatische-texte</norm_iri>
+      </property>
+      <property id="properties-942" parent_id="properties-939" sortkey="zitat köhler" propertytype="sources" level="1" lft="28" rght="29" iscategory="0" ishidden="0">
+        <lemma>Zitat Köhler</lemma>
+        <name>Zitat Köhler</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>zitat-kohler-1</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-946" parent_id="properties-939" sortkey="zitat kohler" propertytype="sources" level="1" lft="30" rght="31" iscategory="0" ishidden="0">
+        <lemma>Zitat Köhler</lemma>
+        <name>Zitat Köhler</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>zitat-kohler-2</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-950" parent_id="properties-939" sortkey="zitat lampe" propertytype="sources" level="1" lft="32" rght="33" iscategory="0" ishidden="0">
+        <lemma>Zitat Lampe</lemma>
+        <name>Zitat Lampe</name>
+        <norm_iri>zitat-lampe</norm_iri>
+      </property>
+      <property id="properties-953" parent_id="properties-939" sortkey="zitat haller" propertytype="sources" level="1" lft="34" rght="35" iscategory="0" ishidden="0">
+        <lemma>Zitat Haller</lemma>
+        <name>Zitat Haller</name>
+        <norm_iri>zitat-haller</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-956" parent_id="properties-939" sortkey="zitatverweis lampe" propertytype="sources" level="1" lft="36" rght="39" iscategory="0" ishidden="0">
+        <lemma>Zitatverweis Lampe</lemma>
+        <name>Zitatverweis Lampe</name>
+        <norm_iri>zitatverweis-lampe</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-962" parent_id="properties-956" sortkey="siehe" related_id="properties-950" propertytype="sources" level="2" lft="37" rght="38" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-lampe</norm_iri>
+      </property>
+      <property id="properties-1576" sortkey="religiöse texte" propertytype="sources" level="0" lft="41" rght="46" iscategory="1" ishidden="0">
+        <lemma>Religiöse Texte</lemma>
+        <name>Religiöse Texte</name>
+        <norm_iri>religioese-texte</norm_iri>
+      </property>
+      <property id="properties-1578" parent_id="properties-1576" sortkey="ave maria" propertytype="sources" level="1" lft="42" rght="45" iscategory="0" ishidden="0">
+        <lemma>Ave Maria</lemma>
+        <name>Ave Maria</name>
+        <norm_iri>ave-maria</norm_iri>
+        <sections>
+          <section id="sections-4070" articles_id="articles-3" />
+        </sections>
+      </property>
+      <property id="properties-1591" parent_id="properties-1578" sortkey="siehe" related_id="properties-1587" propertytype="sources" level="2" lft="43" rght="44" iscategory="0" ishidden="0">
+        <lemma>siehe</lemma>
+        <name>Religiöse Texte › Ave Maria › siehe</name>
+        <norm_iri>religioese-texte-ave-maria-siehe</norm_iri>
       </property>
     </properties>
   </index>
@@ -1032,6 +2926,56 @@
         <norm_data>Initiale 2a Norm</norm_data>
         <sections>
           <section id="sections-3" articles_id="articles-1" />
+        </sections>
+      </property>
+      <property id="properties-789" sortkey="a r" propertytype="initials" level="0" lft="13" rght="14">
+        <lemma>A R</lemma>
+        <name>A R</name>
+        <norm_iri>a-r</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-791" sortkey="a q" propertytype="initials" level="0" lft="15" rght="16">
+        <lemma>A Q</lemma>
+        <name>A Q</name>
+        <comment>Sortierung unter A invertiert</comment>
+        <norm_iri>a-q</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-793" sortkey="a p" propertytype="initials" level="0" lft="17" rght="18">
+        <lemma>A P</lemma>
+        <name>A P</name>
+        <comment>Sortierung unter A invertiert</comment>
+        <norm_iri>a-p</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-795" sortkey="b p" propertytype="initials" level="0" lft="19" rght="20">
+        <lemma>B P</lemma>
+        <name>B P</name>
+        <norm_iri>b-p</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-797" sortkey="b q" propertytype="initials" level="0" lft="21" rght="22">
+        <lemma>B Q</lemma>
+        <name>B Q</name>
+        <norm_iri>b-q</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-799" sortkey="b r" propertytype="initials" level="0" lft="23" rght="24">
+        <lemma>B R</lemma>
+        <name>B R</name>
+        <norm_iri>b-r</norm_iri>
+        <sections>
+          <section id="sections-1088" articles_id="articles-19" />
         </sections>
       </property>
     </properties>
@@ -1094,243 +3038,623 @@
         <keywords>Meter</keywords>
         <norm_data>Versmaß 2b Norm</norm_data>
       </property>
+      <property id="properties-1385" sortkey="versmasz 00004" propertytype="metres" level="0" lft="15" rght="18">
+        <lemma>Versmaß 4</lemma>
+        <name>Versmaß 4</name>
+        <norm_iri>versmasz-4</norm_iri>
+      </property>
+      <property id="properties-1389" parent_id="properties-1385" sortkey="versmasz 00004a" propertytype="metres" level="1" lft="16" rght="17">
+        <lemma>Versmaß 4a</lemma>
+        <name>Versmaß 4a</name>
+        <norm_iri>versmasz-4a</norm_iri>
+      </property>
+      <property id="properties-1387" sortkey="versmasz 00003" propertytype="metres" level="0" lft="19" rght="20">
+        <lemma>Versmaß 3</lemma>
+        <name>Versmaß 3</name>
+        <norm_iri>versmasz-3</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+          <section id="sections-1088" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1397" sortkey="versmasz 00003a" propertytype="metres" level="0" lft="21" rght="22">
+        <lemma>Versmaß 3a</lemma>
+        <name>Versmaß 3a</name>
+        <norm_iri>versmasz-3a</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1392" sortkey="versmasz 00005" propertytype="metres" level="0" lft="23" rght="26">
+        <lemma>Versmaß 5</lemma>
+        <name>Versmaß 5</name>
+        <norm_iri>versmasz-5</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1394" parent_id="properties-1392" sortkey="siehe" related_id="properties-1389" propertytype="metres" level="1" lft="24" rght="25">
+        <lemma>siehe</lemma>
+        <name>siehe</name>
+        <norm_iri>siehe-vermasz-4a</norm_iri>
+      </property>
     </properties>
   </index>
   <index propertytype="datakeys">
     <properties>
-      <property id="properties-514" sortno="17" sortkey="di_number" propertytype="datakeys" level="0" lft="1" rght="2">
-        <lemma>Grunddaten: Bandnummer</lemma>
-        <norm_iri>di_di_number</norm_iri>
-        <sections>
-          <section id="sections-162" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-518" sortno="63" sortkey="prelim_series" propertytype="datakeys" level="0" lft="5" rght="6">
-        <lemma>Reihe</lemma>
-        <norm_iri>di_prelim_series</norm_iri>
-        <sections>
-          <section id="sections-166" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-520" sortno="69" sortkey="prelim_series_title" propertytype="datakeys" level="0" lft="7" rght="8">
-        <lemma>Reihe: Titel</lemma>
-        <norm_iri>di_prelim_series_title</norm_iri>
-        <sections>
-          <section id="sections-168" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-522" sortno="67" sortkey="prelim_series_number" propertytype="datakeys" level="0" lft="9" rght="10">
-        <lemma>Reihe: Bandnummer</lemma>
-        <norm_iri>di_prelim_series_number</norm_iri>
-        <sections>
-          <section id="sections-170" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-524" sortno="65" sortkey="prelim_series_editor" propertytype="datakeys" level="0" lft="11" rght="12">
-        <lemma>Reihe: Herausgeber</lemma>
-        <norm_iri>di_prelim_series_editor</norm_iri>
-        <sections>
-          <section id="sections-172" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-526" sortno="75" sortkey="prelim_sub_series" propertytype="datakeys" level="0" lft="13" rght="14">
-        <lemma>Reihe: Unterreihe</lemma>
-        <norm_iri>di_prelim_sub_series</norm_iri>
-        <sections>
-          <section id="sections-174" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-528" sortno="77" sortkey="prelim_volume" propertytype="datakeys" level="0" lft="15" rght="16">
+      <property id="properties-528" sortno="9" sortkey="prelim_volume" propertytype="datakeys" level="0" lft="1" rght="2">
         <lemma>Band</lemma>
         <norm_iri>di_prelim_volume</norm_iri>
         <sections>
           <section id="sections-176" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-530" sortno="81" sortkey="prelim_volume_title" propertytype="datakeys" level="0" lft="17" rght="18">
-        <lemma>Band: Titel</lemma>
-        <norm_iri>di_prelim_volume_title</norm_iri>
-        <sections>
-          <section id="sections-178" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-532" sortno="79" sortkey="prelim_volume_subtitle" propertytype="datakeys" level="0" lft="19" rght="20">
-        <lemma>Band: Untertitel</lemma>
-        <norm_iri>di_prelim_volume_subtitle</norm_iri>
-        <sections>
-          <section id="sections-180" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-534" sortno="83" sortkey="prelim_year" propertytype="datakeys" level="0" lft="21" rght="22">
+      <property id="properties-534" sortno="3" sortkey="prelim_year" propertytype="datakeys" level="0" lft="3" rght="4">
         <lemma>Band: Jahr</lemma>
         <norm_iri>di_prelim_year</norm_iri>
         <sections>
           <section id="sections-182" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-536" sortno="59" sortkey="prelim_publisher" propertytype="datakeys" level="0" lft="23" rght="24">
-        <lemma>Titelei: Verlag</lemma>
-        <norm_iri>di_prelim_publisher</norm_iri>
+      <property id="properties-530" sortno="7" sortkey="prelim_volume_title" propertytype="datakeys" level="0" lft="5" rght="6">
+        <lemma>Band: Titel</lemma>
+        <norm_iri>di_prelim_volume_title</norm_iri>
         <sections>
-          <section id="sections-184" articles_id="articles-2" />
+          <section id="sections-178" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-538" sortno="57" sortkey="prelim_print_note" propertytype="datakeys" level="0" lft="25" rght="26">
-        <lemma>Titelei: Druckortvermerk</lemma>
-        <norm_iri>di_prelim_print_note</norm_iri>
+      <property id="properties-532" sortno="5" sortkey="prelim_volume_subtitle" propertytype="datakeys" level="0" lft="7" rght="8">
+        <lemma>Band: Untertitel</lemma>
+        <norm_iri>di_prelim_volume_subtitle</norm_iri>
         <sections>
-          <section id="sections-186" articles_id="articles-2" />
+          <section id="sections-180" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-540" sortno="53" sortkey="prelim_isbn" propertytype="datakeys" level="0" lft="27" rght="28">
-        <lemma>Titelei: ISBN</lemma>
-        <norm_iri>di_prelim_isbn</norm_iri>
-        <sections>
-          <section id="sections-188" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-542" sortno="61" sortkey="prelim_rights" propertytype="datakeys" level="0" lft="29" rght="30">
-        <lemma>Titelei: Rechtevorbehalt</lemma>
-        <norm_iri>di_prelim_rights</norm_iri>
-        <sections>
-          <section id="sections-190" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" level="0" lft="31" rght="32">
-        <lemma>prelim_sponsors</lemma>
-        <norm_iri>di_prelim_sponsors</norm_iri>
-        <sections>
-          <section id="sections-192" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-546" sortno="49" sortkey="preliminaries" propertytype="datakeys" level="0" lft="33" rght="34">
-        <lemma>Titelei</lemma>
-        <norm_iri>di_preliminaries</norm_iri>
-        <sections>
-          <section id="sections-164" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-548" sortno="51" sortkey="prelim_biblio_note" propertytype="datakeys" level="0" lft="35" rght="36">
-        <lemma>Titelei: Deutsche Nationalbibliografie</lemma>
-        <norm_iri>di_prelim_biblio_note</norm_iri>
-        <sections>
-          <section id="sections-196" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-550" sortno="129" sortkey="table_of_content" propertytype="datakeys" level="0" lft="37" rght="38">
-        <lemma>Teile: Inhaltsverzeichnis</lemma>
-        <norm_iri>di_table_of_content</norm_iri>
-        <sections>
-          <section id="sections-198" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-552" sortno="47" sortkey="prefaces" propertytype="datakeys" level="0" lft="39" rght="40">
-        <lemma>Teile: Vorworte</lemma>
-        <norm_iri>di_prefaces</norm_iri>
-        <sections>
-          <section id="sections-200" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-554" sortno="29" sortkey="introduction" propertytype="datakeys" level="0" lft="41" rght="42">
-        <lemma>Teile: Einleitung</lemma>
-        <norm_iri>di_introduction</norm_iri>
-        <sections>
-          <section id="sections-202" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-556" sortno="13" sortkey="csv_table" propertytype="datakeys" level="0" lft="43" rght="44">
-        <lemma>Darstellung: Tabelle</lemma>
-        <norm_iri>di_csv_table</norm_iri>
-        <sections>
-          <section id="sections-242" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-562" sortno="11" sortkey="continuation" propertytype="datakeys" level="0" lft="49" rght="50">
-        <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
-        <norm_iri>di_continuation</norm_iri>
-        <sections>
-          <section id="sections-210" articles_id="articles-2" />
-          <section id="sections-214" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-564" sortno="133" propertytype="datakeys" level="0" lft="51" rght="52">
-        <lemma>empty</lemma>
-        <norm_iri>di_empty</norm_iri>
-        <sections>
-          <section id="sections-234" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-566" sortno="7" sortkey="articles" propertytype="datakeys" level="0" lft="53" rght="54">
-        <lemma>Teile: Katalogartikel</lemma>
-        <norm_iri>di_articles</norm_iri>
-        <sections>
-          <section id="sections-238" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-568" sortno="13" sortkey="csv_table" propertytype="datakeys" level="0" lft="55" rght="56">
-        <lemma>Darstellung: Tabelle</lemma>
-        <norm_iri>di_csv_table</norm_iri>
-        <sections>
-          <section id="sections-208" articles_id="articles-2" />
-          <section id="sections-212" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-570" sortno="27" sortkey="indices" propertytype="datakeys" level="0" lft="57" rght="58">
-        <lemma>Teile: Register</lemma>
-        <norm_iri>di_indices</norm_iri>
-        <sections>
-          <section id="sections-244" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-576" sortno="109" sortkey="properties_personennamen" propertytype="datakeys" level="0" lft="63" rght="64">
-        <lemma>Register: Personennamen</lemma>
-        <norm_iri>di_personnames</norm_iri>
-        <sections>
-          <section id="sections-250" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-578" sortno="93" sortkey="properties_hersteller" propertytype="datakeys" level="0" lft="65" rght="66">
-        <lemma>Register: Hersteller</lemma>
-        <norm_iri>di_manufacturers</norm_iri>
-        <sections>
-          <section id="sections-252" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-580" sortno="107" sortkey="properties_ortsnamen" propertytype="datakeys" level="0" lft="67" rght="68">
-        <lemma>Register: Ortsnamen</lemma>
-        <norm_iri>di_placenames</norm_iri>
-        <sections>
-          <section id="sections-254" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-606" sortno="119" sortkey="properties_technik" propertytype="datakeys" level="0" lft="93" rght="94">
-        <lemma>Register: Ausführungstechniken</lemma>
-        <norm_iri>di_techniques</norm_iri>
-        <sections>
-          <section id="sections-282" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-610" sortno="3" propertytype="datakeys" level="0" lft="97" rght="98">
-        <lemma>Registergruppe</lemma>
-        <norm_iri>di_indexgroup</norm_iri>
-        <sections>
-          <section id="sections-248" articles_id="articles-2" />
-          <section id="sections-276" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-630" sortno="41" sortkey="marks" propertytype="datakeys" level="0" lft="117" rght="118">
-        <lemma>Teile: Markenliste</lemma>
-        <norm_iri>di_brands</norm_iri>
-        <sections>
-          <section id="sections-306" articles_id="articles-2" />
-        </sections>
-      </property>
-      <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" level="0" lft="119" rght="120">
+      <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" level="0" lft="9" rght="10">
         <lemma>Bildtafeln</lemma>
         <norm_iri>di_plates</norm_iri>
         <sections>
           <section id="sections-308" articles_id="articles-2" />
         </sections>
       </property>
+      <property id="properties-634" sortno="23" sortkey="plates_credits" propertytype="datakeys" level="0" lft="11" rght="12">
+        <lemma>Bildtafeln: Bildnachweise</lemma>
+        <norm_iri>di_plates_credits</norm_iri>
+        <sections>
+          <section id="sections-310" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" level="0" lft="15" rght="16">
+        <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
+        <norm_iri>di_continuation</norm_iri>
+        <sections>
+          <section id="sections-210" articles_id="articles-2" />
+          <section id="sections-214" articles_id="articles-2" />
+          <section id="sections-3771" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-568" sortno="91" sortkey="csv_table" propertytype="datakeys" level="0" lft="21" rght="22">
+        <lemma>Darstellung: Tabelle</lemma>
+        <norm_iri>di_csv_table</norm_iri>
+        <sections>
+          <section id="sections-212" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" level="0" lft="23" rght="24">
+        <lemma>Darstellung: Tabelle mit Kopfspalte</lemma>
+        <norm_iri>di_csv_table_vertical</norm_iri>
+        <sections>
+          <section id="sections-208" articles_id="articles-2" />
+          <section id="sections-242" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-564" sortno="133" propertytype="datakeys" level="0" lft="27" rght="28">
+        <lemma>empty</lemma>
+        <norm_iri>di_empty</norm_iri>
+        <sections>
+          <section id="sections-234" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-514" sortno="103" sortkey="di_number" propertytype="datakeys" level="0" lft="29" rght="30">
+        <lemma>Grunddaten: Bandnummer</lemma>
+        <norm_iri>di_di_number</norm_iri>
+        <sections>
+          <section id="sections-162" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" level="0" lft="33" rght="34">
+        <lemma>prelim_sponsors</lemma>
+        <norm_iri>di_prelim_sponsors</norm_iri>
+        <sections>
+          <section id="sections-192" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-606" sortno="121" sortkey="index_technik" propertytype="datakeys" level="0" lft="35" rght="36" iscategory="0" ishidden="0">
+        <lemma>Register: Ausführungstechniken</lemma>
+        <norm_iri>di_techniques</norm_iri>
+        <sections>
+          <section id="sections-282" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-588" sortno="83" sortkey="index_epitheta" propertytype="datakeys" level="0" lft="37" rght="38" iscategory="0" ishidden="0">
+        <lemma>Register: Epitheta</lemma>
+        <norm_iri>di_epithets</norm_iri>
+        <sections>
+          <section id="sections-262" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-592" sortno="81" sortkey="properties_formeln" propertytype="datakeys" level="0" lft="39" rght="40">
+        <lemma>Register: Formeln</lemma>
+        <norm_iri>di_formulas</norm_iri>
+        <sections>
+          <section id="sections-266" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-578" sortno="79" sortkey="index_hersteller" propertytype="datakeys" level="0" lft="41" rght="42" iscategory="0" ishidden="0">
+        <lemma>Register: Hersteller</lemma>
+        <norm_iri>di_manufacturers</norm_iri>
+        <sections>
+          <section id="sections-252" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-616" sortno="77" sortkey="index_ikonografie" propertytype="datakeys" level="0" lft="43" rght="44" iscategory="0" ishidden="0">
+        <lemma>Register: Ikonografie</lemma>
+        <norm_iri>di_icons</norm_iri>
+        <sections>
+          <section id="sections-292" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-620" sortno="75" sortkey="index_initialen" propertytype="datakeys" level="0" lft="45" rght="46" iscategory="0" ishidden="0">
+        <lemma>Register: Initialen</lemma>
+        <norm_iri>di_initials</norm_iri>
+        <sections>
+          <section id="sections-296" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-590" sortno="73" sortkey="properties_initien" propertytype="datakeys" level="0" lft="47" rght="48">
+        <lemma>Register: Initien</lemma>
+        <norm_iri>di_incipits</norm_iri>
+        <sections>
+          <section id="sections-264" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-614" sortno="123" sortkey="properties_materialien" propertytype="datakeys" level="0" lft="49" rght="50">
+        <lemma>Register: Materialien</lemma>
+        <norm_iri>di_materials</norm_iri>
+        <sections>
+          <section id="sections-290" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-600" sortno="67" sortkey="index_objekttypen" propertytype="datakeys" level="0" lft="51" rght="52" iscategory="0" ishidden="0">
+        <lemma>Register: Objekttypen</lemma>
+        <norm_iri>di_objecttypes</norm_iri>
+        <sections>
+          <section id="sections-274" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-580" sortno="65" sortkey="index_ortsnamen" propertytype="datakeys" level="0" lft="53" rght="54" iscategory="0" ishidden="0">
+        <lemma>Register: Ortsnamen</lemma>
+        <norm_iri>di_placenames</norm_iri>
+        <sections>
+          <section id="sections-254" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-576" sortno="63" sortkey="index_personennamen" propertytype="datakeys" level="0" lft="55" rght="56" iscategory="0" ishidden="0">
+        <lemma>Register: Personennamen</lemma>
+        <norm_iri>di_personnames</norm_iri>
+        <sections>
+          <section id="sections-250" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-598" sortno="61" sortkey="properties_quellen" propertytype="datakeys" level="0" lft="57" rght="58">
+        <lemma>Register: Quellen</lemma>
+        <norm_iri>di_sources</norm_iri>
+        <sections>
+          <section id="sections-272" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-612" sortno="59" sortkey="index_sachregister" propertytype="datakeys" level="0" lft="59" rght="60" iscategory="0" ishidden="0">
+        <lemma>Register: Sachregister</lemma>
+        <norm_iri>di_subjects</norm_iri>
+        <sections>
+          <section id="sections-288" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
+        <lemma>Register: Schriftarten</lemma>
+        <norm_iri>di_fonttypes</norm_iri>
+        <sections>
+          <section id="sections-236" articles_id="articles-2" />
+          <section id="sections-278" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-670" sortno="111" sortkey="index_schriftmerkmale" propertytype="datakeys" level="0" lft="63" rght="64" iscategory="0" ishidden="0">
+        <lemma>Register: Schriftmerkmale</lemma>
+        <norm_iri>di_scriptfeatures</norm_iri>
+        <sections>
+          <section id="sections-280" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-572" sortno="55" sortkey="index_standorte" propertytype="datakeys" level="0" lft="65" rght="66" iscategory="0" ishidden="0">
+        <lemma>Register: Standorte</lemma>
+        <norm_iri>di_locations</norm_iri>
+        <sections>
+          <section id="sections-246" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-596" sortno="53" sortkey="properties_textsorten" propertytype="datakeys" level="0" lft="67" rght="68">
+        <lemma>Register: Textsorten</lemma>
+        <norm_iri>di_texttypes</norm_iri>
+        <sections>
+          <section id="sections-270" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-622" sortno="51" sortkey="properties_versmasse" propertytype="datakeys" level="0" lft="69" rght="70">
+        <lemma>Register: Versmaße</lemma>
+        <norm_iri>di_metres</norm_iri>
+        <sections>
+          <section id="sections-298" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-584" sortno="49" sortkey="properties_wappen" propertytype="datakeys" level="0" lft="71" rght="72">
+        <lemma>Register: Wappen</lemma>
+        <norm_iri>di_heraldry</norm_iri>
+        <sections>
+          <section id="sections-258" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-608" sortno="125" sortkey="index_worttrenner" propertytype="datakeys" level="0" lft="73" rght="74" iscategory="0" ishidden="0">
+        <lemma>Register: Worttrenner</lemma>
+        <norm_iri>di_wordseparators</norm_iri>
+        <sections>
+          <section id="sections-284" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-618" sortno="1" propertytype="datakeys" level="0" lft="75" rght="76">
+        <lemma>Register: Zeitangaben</lemma>
+        <norm_iri>di_temporals</norm_iri>
+        <sections>
+          <section id="sections-294" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+        <lemma>Registergruppe</lemma>
+        <norm_iri>di_indexgroup</norm_iri>
+        <sections>
+          <section id="sections-248" articles_id="articles-2" />
+          <section id="sections-256" articles_id="articles-2" />
+          <section id="sections-268" articles_id="articles-2" />
+          <section id="sections-276" articles_id="articles-2" />
+          <section id="sections-286" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-518" sortno="19" sortkey="prelim_series" propertytype="datakeys" level="0" lft="79" rght="80">
+        <lemma>Reihe</lemma>
+        <norm_iri>di_prelim_series</norm_iri>
+        <sections>
+          <section id="sections-166" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-522" sortno="17" sortkey="prelim_series_number" propertytype="datakeys" level="0" lft="81" rght="82">
+        <lemma>Reihe: Bandnummer</lemma>
+        <norm_iri>di_prelim_series_number</norm_iri>
+        <sections>
+          <section id="sections-170" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-524" sortno="13" sortkey="prelim_series_editor" propertytype="datakeys" level="0" lft="83" rght="84">
+        <lemma>Reihe: Herausgeber</lemma>
+        <norm_iri>di_prelim_series_editor</norm_iri>
+        <sections>
+          <section id="sections-172" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-520" sortno="15" sortkey="prelim_series_title" propertytype="datakeys" level="0" lft="85" rght="86">
+        <lemma>Reihe: Titel</lemma>
+        <norm_iri>di_prelim_series_title</norm_iri>
+        <sections>
+          <section id="sections-168" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-526" sortno="11" sortkey="prelim_sub_series" propertytype="datakeys" level="0" lft="87" rght="88">
+        <lemma>Reihe: Unterreihe</lemma>
+        <norm_iri>di_prelim_sub_series</norm_iri>
+        <sections>
+          <section id="sections-174" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-665" sortno="99" sortkey="abbreviations" propertytype="datakeys" level="0" lft="89" rght="90">
+        <lemma>Teile: Abkürzungen</lemma>
+        <norm_iri>di_abbreviations</norm_iri>
+        <sections>
+          <section id="sections-240" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-586" sortno="85" sortkey="index_blasonierungen" propertytype="datakeys" level="0" lft="91" rght="92" iscategory="0" ishidden="0">
+        <lemma>Teile: Blasonierungen</lemma>
+        <norm_iri>di_blazons</norm_iri>
+        <sections>
+          <section id="sections-260" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-554" sortno="45" sortkey="introduction" propertytype="datakeys" level="0" lft="93" rght="94">
+        <lemma>Teile: Einleitung</lemma>
+        <norm_iri>di_introduction</norm_iri>
+        <sections>
+          <section id="sections-202" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-550" sortno="37" sortkey="table_of_content" propertytype="datakeys" level="0" lft="95" rght="96">
+        <lemma>Teile: Inhaltsverzeichnis</lemma>
+        <norm_iri>di_table_of_content</norm_iri>
+        <sections>
+          <section id="sections-198" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-566" sortno="97" sortkey="articles" propertytype="datakeys" level="0" lft="99" rght="100">
+        <lemma>Teile: Katalogartikel</lemma>
+        <norm_iri>di_articles</norm_iri>
+        <sections>
+          <section id="sections-238" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-626" sortno="115" sortkey="di_volumes" propertytype="datakeys" level="0" lft="101" rght="102">
+        <lemma>Teile: Liste bislang erschienener Bände</lemma>
+        <norm_iri>di_di_volumes</norm_iri>
+        <sections>
+          <section id="sections-302" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-630" sortno="113" sortkey="marks" propertytype="datakeys" level="0" lft="103" rght="104">
+        <lemma>Teile: Markenliste</lemma>
+        <norm_iri>di_brands</norm_iri>
+        <sections>
+          <section id="sections-306" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-624" sortno="95" sortkey="biblio" propertytype="datakeys" level="0" lft="105" rght="106">
+        <lemma>Teile: Quellen und Literatur</lemma>
+        <norm_iri>di_biblio</norm_iri>
+        <sections>
+          <section id="sections-300" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-570" sortno="47" sortkey="indices" propertytype="datakeys" level="0" lft="107" rght="108">
+        <lemma>Teile: Register</lemma>
+        <norm_iri>di_indices</norm_iri>
+        <sections>
+          <section id="sections-244" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-552" sortno="41" sortkey="prefaces" propertytype="datakeys" level="0" lft="109" rght="110">
+        <lemma>Teile: Vorworte</lemma>
+        <norm_iri>di_prefaces</norm_iri>
+        <sections>
+          <section id="sections-200" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" level="0" lft="111" rght="112">
+        <lemma>Teile: Zitatonshinweis</lemma>
+        <norm_iri>di_citationnote</norm_iri>
+        <sections>
+          <section id="sections-4887" articles_id="articles-2" />
+          <section id="sections-4719" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-546" sortno="39" sortkey="preliminaries" propertytype="datakeys" level="0" lft="115" rght="116">
+        <lemma>Titelei</lemma>
+        <norm_iri>di_preliminaries</norm_iri>
+        <sections>
+          <section id="sections-164" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-548" sortno="127" sortkey="prelim_biblio_note" propertytype="datakeys" level="0" lft="117" rght="118">
+        <lemma>Titelei: Deutsche Nationalbibliografie</lemma>
+        <norm_iri>di_prelim_biblio_note</norm_iri>
+        <sections>
+          <section id="sections-196" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-538" sortno="137" sortkey="prelim_print_note" propertytype="datakeys" level="0" lft="119" rght="120">
+        <lemma>Titelei: Druckortvermerk</lemma>
+        <norm_iri>di_prelim_print_note</norm_iri>
+        <sections>
+          <section id="sections-186" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-540" sortno="135" sortkey="prelim_isbn" propertytype="datakeys" level="0" lft="123" rght="124">
+        <lemma>Titelei: ISBN</lemma>
+        <norm_iri>di_prelim_isbn</norm_iri>
+        <sections>
+          <section id="sections-188" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-542" sortno="133" sortkey="prelim_rights" propertytype="datakeys" level="0" lft="127" rght="128">
+        <lemma>Titelei: Rechtevorbehalt</lemma>
+        <norm_iri>di_prelim_rights</norm_iri>
+        <sections>
+          <section id="sections-190" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-536" sortno="1" sortkey="prelim_publisher" propertytype="datakeys" level="0" lft="129" rght="130">
+        <lemma>Titelei: Verlag</lemma>
+        <norm_iri>di_prelim_publisher</norm_iri>
+        <sections>
+          <section id="sections-184" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-628" sortno="89" sortkey="drawings" propertytype="datakeys" level="0" lft="131" rght="132">
+        <lemma>Zeichnungen</lemma>
+        <norm_iri>di_drawings</norm_iri>
+        <sections>
+          <section id="sections-304" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-663" sortno="29" sortkey="map" propertytype="datakeys" level="0" lft="133" rght="134">
+        <lemma>Zeichnungen: Karte</lemma>
+        <norm_iri>di_map</norm_iri>
+        <sections>
+          <section id="sections-3122" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-668" sortno="107" sortkey="map_file" propertytype="datakeys" level="0" lft="135" rght="136">
+        <lemma>Zeichnungen: Karte: Bild</lemma>
+        <norm_iri>di_map_file</norm_iri>
+        <sections>
+          <section id="sections-3206" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-669" sortno="109" sortkey="map_concordance" propertytype="datakeys" level="0" lft="137" rght="138">
+        <lemma>Zeichnungen: Karte: Konkordanz</lemma>
+        <norm_iri>di_map_concordance</norm_iri>
+        <sections>
+          <section id="sections-3124" articles_id="articles-2" />
+        </sections>
+      </property>
+      <property id="properties-667" sortno="105" sortkey="map_title" propertytype="datakeys" level="0" lft="139" rght="140">
+        <lemma>Zeichnungen: Karte: Legende</lemma>
+        <norm_iri>di_map_title</norm_iri>
+        <sections>
+          <section id="sections-3208" articles_id="articles-2" />
+        </sections>
+      </property>
     </properties>
-  </index></response>
+  </index>
+  <index propertytype="roles">
+    <properties>
+      <property id="properties-1339" sortkey="rollentyp 00001" propertytype="roles" level="0" lft="1" rght="12" iscategory="0" ishidden="0">
+        <lemma>Rollentyp 1</lemma>
+        <name>Rollentyp 1</name>
+        <norm_iri>rollentyp-1</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1343" parent_id="properties-1339" sortkey="kohlersche rolle" propertytype="roles" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+        <lemma>köhlersche Rolle</lemma>
+        <name>köhlersche Rolle</name>
+        <norm_iri>kohlersche-rolle-ohne</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1345" parent_id="properties-1339" sortkey="köhlersche rolle" propertytype="roles" level="1" lft="4" rght="5" iscategory="0" ishidden="0">
+        <lemma>köhlersche Rolle</lemma>
+        <name>köhlersche Rolle</name>
+        <norm_iri>kohlersche-rolle-mit</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1349" parent_id="properties-1339" sortkey="kohlersche rolle" propertytype="roles" level="1" lft="6" rght="7" iscategory="0" ishidden="0">
+        <lemma>kohlersche Rolle</lemma>
+        <name>kohlersche Rolle</name>
+        <norm_iri>kohlersche-rolle</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1352" parent_id="properties-1339" sortkey="lampesche rolle" propertytype="roles" level="1" lft="8" rght="9" iscategory="0" ishidden="0">
+        <lemma>lampesche Rolle</lemma>
+        <name>lampesche Rolle</name>
+        <norm_iri>lampesche-rolle</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1355" parent_id="properties-1339" sortkey="hallersche rolle" propertytype="roles" level="1" lft="10" rght="11" iscategory="0" ishidden="0">
+        <lemma>hallersche Rolle</lemma>
+        <name>hallersche Rolle</name>
+        <norm_iri>hallersche-rolle</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1341" sortkey="rollentyp 00002" propertytype="roles" level="0" lft="13" rght="18" iscategory="0" ishidden="0">
+        <lemma>Rollentyp 2</lemma>
+        <name>Rollentyp 2</name>
+        <norm_iri>rollentyp-2</norm_iri>
+      </property>
+      <property id="properties-1358" parent_id="properties-1341" sortkey="lampesche rolle 00002" propertytype="roles" level="1" lft="14" rght="15" iscategory="0" ishidden="0">
+        <lemma>lampesche Rolle 2</lemma>
+        <name>lampesche Rolle 2</name>
+        <norm_iri>lampesche-rolle-2</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1361" parent_id="properties-1341" sortkey="hallersche rolle 00002" propertytype="roles" level="1" lft="16" rght="17" iscategory="0" ishidden="0">
+        <lemma>hallersche Rolle 2</lemma>
+        <name>hallersche Rolle 2</name>
+        <norm_iri>hallersche-rolle-2</norm_iri>
+        <sections>
+          <section id="sections-963" articles_id="articles-19" />
+        </sections>
+      </property>
+    </properties>
+  </index>
+  <index propertytype="terms">
+    <properties>
+      <property id="properties-1012" sortkey="wortliste 00001" propertytype="terms" level="0" lft="1" rght="10" iscategory="0">
+        <lemma>Wortliste 1</lemma>
+        <name>Wortliste 1</name>
+        <norm_iri>wortliste-1</norm_iri>
+      </property>
+      <property id="properties-1016" parent_id="properties-1012" sortkey="wort köhler" propertytype="terms" level="1" lft="2" rght="3" iscategory="0">
+        <lemma>Wort Köhler</lemma>
+        <name>Wort Köhler</name>
+        <comment>Sortierschlüssel mit Umlaut</comment>
+        <norm_iri>wort-kohler-1</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1019" parent_id="properties-1012" sortkey="wort kohler" propertytype="terms" level="1" lft="4" rght="5" iscategory="0">
+        <lemma>Wort Köhler</lemma>
+        <name>Wort Köhler</name>
+        <comment>Sortierschlüssel ohne Umlaut</comment>
+        <norm_iri>wort-kohler-2</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1022" parent_id="properties-1012" sortkey="wort lampe" propertytype="terms" level="1" lft="6" rght="7" iscategory="0">
+        <lemma>Wort Lampe</lemma>
+        <name>Wort Lampe</name>
+        <norm_iri>wort-lampe</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1025" parent_id="properties-1012" sortkey="wort hall" propertytype="terms" level="1" lft="8" rght="9" iscategory="0">
+        <lemma>Wort Hall</lemma>
+        <name>Wort Hall</name>
+        <norm_iri>wort-hall</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1014" sortkey="wortliste 00002" propertytype="terms" level="0" lft="11" rght="16" iscategory="0">
+        <lemma>Wortliste 2</lemma>
+        <name>Wortliste 2</name>
+        <norm_iri>wortliste-2</norm_iri>
+      </property>
+      <property id="properties-1028" parent_id="properties-1014" sortkey="wort lange" propertytype="terms" level="1" lft="12" rght="13" iscategory="0">
+        <lemma>Wort Lange</lemma>
+        <name>Wort Lange</name>
+        <norm_iri>wort-lange</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+      <property id="properties-1031" parent_id="properties-1014" sortkey="wort laenge" propertytype="terms" level="1" lft="14" rght="15" iscategory="0">
+        <lemma>Wort Länge</lemma>
+        <name>Wort Länge</name>
+        <comment>Sortierschlüssel mit ae</comment>
+        <norm_iri>wort-laenge</norm_iri>
+        <sections>
+          <section id="sections-977" articles_id="articles-19" />
+        </sections>
+      </property>
+    </properties>
+  </index></ram>

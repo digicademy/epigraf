@@ -13,7 +13,7 @@ The dumps were created with HeidiSQL from the local databases
 - test_projects.sql is a complete dump of epi_test. It can be produced from within the
   php container using mysqldump:
   ```
-  mysqldump --routines --quick -h mysql -u root -proot epi_test > "/var/www/html/tests/Testdata/Databases/test_projects.sql"
+  mysqldump --skip-ssl --routines --quick -h mysql -u root -proot epi_test > "/var/www/html/tests/Testdata/Databases/test_projects.sql"
   ```
   Before creating the dump, it is advised to delete deleted records from the test database:
   ```

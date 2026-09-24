@@ -60,11 +60,7 @@ class TaskDataArticles extends BaseTaskData
      */
     public function getPagingParams()
     {
-        $paging = [
-            'offset' => $this->config['offset'],
-            'limit' => $this->job->limit
-        ];
-
+        $paging = parent::getPagingParams();
 
         if (!empty($this->job->config['params']['sort'])) {
             $sortField = $this->job->config['params']['sort'];

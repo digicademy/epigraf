@@ -10,6 +10,7 @@
 
 namespace App\View;
 
+use App\Model\Interfaces\ExportEntityInterface;
 use App\Utilities\Converters\Attributes;
 use Cake\Datasource\EntityInterface;
 
@@ -134,7 +135,7 @@ class XmlView extends ApiView
         $xmlDeclaration = $options['declaration'] ?? $data['_xml_declaration'] ?? static::$_header['_xml_declaration'] ?? '';
         $xml = empty($xmlDeclaration) ? '' : $xmlDeclaration . "\n";
 
-        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? static::$_header['_xml_tag'] ?? 'response';
+        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? static::$_header['_xml_tag'] ?? 'ram';
         $rootAttributes = static::renderAttributes(static::$_header, static::$_header['_xml_attributes'] ?? []);
         $xml .= "<{$rootTag}{$rootAttributes}>";
 
@@ -150,7 +151,7 @@ class XmlView extends ApiView
      */
     public function renderEpilog($data, $options)
     {
-        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? static::$_header['_xml_tag'] ?? 'response';
+        $rootTag = $options['rootnode'] ?? $data['_xml_tag'] ?? static::$_header['_xml_tag'] ?? 'ram';
         return "\n</{$rootTag}>";
     }
 
@@ -160,20 +161,24 @@ class XmlView extends ApiView
      * Special keys in $data:
      * - _xml_attributes: A list of property keys that will be rendered as attributes instead of elements.
      * - _xml_tag: Rename the element.
+     * - _xml_escape: Whether to escape special characters.
      * - _serialize_fields: Filter elements.
      *
      * @param array|EntityInterface $data
      * @param array $options
      * @param int $level The level of indentation
      * @param bool $pretty Whether to pretty print the XML using indentation
-     * @param bool $escape Whether to escape special characters
-     *                     If false, the values are directly passed to the attributes.
-     *                     and special characters, if necessary, need to be escaped before.
+     * @param bool|string $escape Whether to escape special characters
+     *                            If false, the values are directly passed to the attributes,  and special characters, if necessary, need to be escaped before.
+     *                            Data nested in objects with ExportEntityInterface are never escaped.
  * @return string
      */
-    public function renderContent($data, $options = [], $level = 0, $escape = false)
+    public function renderContent($data, $options = [], $level = 0, $escape = true)
     {
         // Prepare
+        if ((is_object($data) && ($data instanceof ExportEntityInterface)))  {
+            $escape = false;
+        }
         $data = $this->extractData($data, $options);
 
         // Prepare array
@@ -193,6 +198,11 @@ class XmlView extends ApiView
 
             unset($data['_xml_attributes']);
             unset($data['_xml_tag']);
+
+            if (isset($data['_xml_escape'])) {
+                $escape = $data['_xml_escape'];
+                unset($data['_xml_escape']);
+            }
 
             // Remove not allowed fields
             if (isset($data['_serialize_fields'])) {
@@ -219,7 +229,7 @@ class XmlView extends ApiView
                 if ($isSimpleArray && !is_null($childtagname)) {
                     $contentOptions['attributes'] = $attributes;
                 }
-                $content .= $this->renderContent($value, $contentOptions + $options, $nextLevel);
+                $content .= $this->renderContent($value, $contentOptions + $options, $nextLevel, $escape);
             }
 
             if ($isSimpleArray) {
@@ -229,6 +239,12 @@ class XmlView extends ApiView
         }
         else {
             $content = $data;
+            if (is_bool($content)) {
+                $content = $content ? '1' : '0';
+            }
+            elseif (!is_string($content)) {
+                $content = json_encode($content);
+            }
             if ($escape) {
                 $content = htmlspecialchars($content ?? '',  ENT_XML1 | ENT_COMPAT, 'UTF-8');
             }

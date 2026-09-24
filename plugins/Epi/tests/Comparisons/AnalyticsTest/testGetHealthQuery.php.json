@@ -5,5 +5,5 @@
     "clear": "UPDATE links SET deleted = 3 WHERE root_tab IS NULL and root_id IS NULL and from_tab IS NULL and from_id IS NULL AND deleted = 0",
     "type": "Links with null root_tab",
     "target": 0,
-    "no": 30
+    "no": 39
 }

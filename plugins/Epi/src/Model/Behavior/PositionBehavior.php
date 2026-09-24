@@ -284,7 +284,9 @@ class PositionBehavior extends Behavior
 
     /**
      * Add tree positions
-     * (see method  addTreePosition)
+     *
+     * if the 'ancestors' value is set to true in the options,
+     * adds the tree positions to each result node, see method  addTreePosition.
      *
      * @param Query $query
      * @param array $options
@@ -292,6 +294,10 @@ class PositionBehavior extends Behavior
      */
     public function findTreePositions(Query $query, array $options)
     {
+        if (empty($options['ancestors'])) {
+            return $query;
+        }
+
         $query = $query->formatResults(
             function (CollectionInterface $results) use ($options) {
                 return $this->addTreePositions($results);

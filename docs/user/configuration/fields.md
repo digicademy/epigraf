@@ -3,14 +3,27 @@ title: Fields configuration
 permalink: '/user/configuration/fields/'
 ---
 
-For all entity types – articles, sections, items, properties, links, and footnotes – the `fields` key is used along a field configuration object to specify which fields are to be used and how they are labelled.
+For all entity types – articles, sections, items, properties, links, and footnotes –
+the `fields` key contains one or multiple field configuration objects
+to specify which fields are to be used and how they are labelled.
 
 Epigraf provides four kinds of fields:
 
-- *Internal* data management fields should be treated as read-only. You can change their visibility in the frontend, but you must not change their interpretation. Examples include the ID field or the last modified field.
-- Fields *reserved* for the Relational Article Model should also not be reinterpreted. For example, the norm_iri field holds unique identifiers that are used throughout the Epigraf universe to link, transfer, and publish entities. You can configure their labels and their visibility. But you should not reinterpret the fields, and you must not change their data types.
-- *Customizable* fields can be configured to match your use case. They cover different data types and, as long as it is compatible with the underlying database type, the data type of such a field can be further specified. For example, you can use the content field of items to store an annotated transcription as XML, a location as GeoJSON or an image description as plain text. All of those specific types are based on text data which is the data type of the content field.
-- *Virtual fields*  are calculated on the fly, thus, they can't be modified. For example, properties provide a virtual field `path` that displays the lemma path including all ancestor properties.
+- *Internal* data management fields should be treated as read-only.
+  You can change their visibility in the frontend, but you must not change their interpretation.
+  Examples include the `ìd` field or `modified` field that are managed by the database system.
+- Fields *reserved* for the Relational Article Model should also not be reinterpreted.
+  For example, the norm_iri field holds unique identifiers that are used throughout the Epigraf universe
+  to link, transfer, and publish entities. You can configure their labels and their visibility.
+  But you should not reinterpret the fields, and you must not change their data types.
+- *Customizable* fields can be configured to match your use case.
+  They cover different data types and, as long as it is compatible with the underlying database type,
+  the data type of such a field can be further specified.
+  For example, you can use the content field of items to store an annotated transcription as XML,
+  a location as GeoJSON or an image description as plain text.
+   All of those specific types are based on text data which is the data type of the content field.
+- *Virtual fields*  are calculated on the fly, thus, they can't be modified.
+  For example, properties provide a virtual field `path` that displays the lemma path including all ancestor properties.
 
 See the configuration pages for articles and categories or the database model page to find out what fields can be used.
 
@@ -53,6 +66,30 @@ If additional properties are to be configured, an object with the following keys
             <td>The field format, see below.</td>
         </tr>
         <tr>
+            <td>required</td>
+            <td>Determines whether a field may be empty (required is `false`) or not (required is `false`).
+                By default, fields with text content may be empty. Fields linking to other entites (formats record or relation) may not be empty.
+            </td>
+        </tr>
+        <tr>
+            <td>edit</td>
+            <td>Is the field editable or not (true|false)?</td>
+        </tr>
+        <tr>
+            <td>autofocus</td>
+            <td>Should the field be focused in edit mode (true|false)?</td>
+        </tr>
+        <tr>
+            <td>pattern</td>
+            <td>For fields containing text content, you can require the values to follow a pattern. The pattern is a regular expression.</td>
+        </tr>
+        <tr>
+            <td>fulltext</td>
+            <td>The name of an index to which the text is to be added, e.g. "Transcription" or "Notes". For full-text
+                indexing, the fulltext key must also be set in the item.
+            </td>
+        </tr>
+        <tr>
             <td>searchfield</td>
             <td>true|false: Specifies whether the field should be used as a search field. The field then appears in the
                 selection list of search fields. Certain fields are always used as search fields, regardless of the
@@ -61,39 +98,20 @@ If additional properties are to be configured, an object with the following keys
         </tr>
         <tr>
             <td>targets</td>
-            <td>For fields with the formats record or relation, it is specified what can be referenced:
+            <td>For fields with the record or relation format, configure possible reference targets:
                 <ul>
-                    <li>articles: Permitted values are "internal" for internal references and "external" for references
-                        to other articles.
-                    </li>
-                    <li>sections: The permitted section types are specified in a list.</li>
-                    <li>items: The permitted content types are specified in a list.</li>
-                    <li>properties: The permitted category types are specified in a list.</li>
-                    <li>footnotes: The permitted types of apparatus are specified in a list.</li>
+                    <li>articles: The permitted article types for external links.</li>
+                    <li>sections: The permitted section types as a list.</li>
+                    <li>items: The permitted item types as a list.</li>
+                    <li>properties: The permitted property types as a list.</li>
+                    <li>footnotes: The permitted footnote types as a list.</li>
                 </ul>
             </td>
         </tr>
         <tr>
-            <td>required</td>
-            <td>Determines whether a field may be empty (required is `false`) or not (required is `false`).
-                By default, fields with text content may be empty. Fields linking to other entites (formats record or relation) may not be empty.
-            </td>
-        </tr>
-        <tr>
             <td>append</td>
-            <td>In the default setting, only existing categories can be selected for fields with the format record. To
-                be able to create new categories ad hoc, append is set to true.
-            </td>
-        </tr>
-        <tr>
-            <td>baseurl</td>
-            <td>For fields of type <code>imageurl</code>, the file name of the image is formed from the fields file_path
-                and file_name and appended to the baseurl. Example: for a baseurl: <code>https://www.inschriften.net/fileadmin/</code>.
-            </td>
-        </tr>
-        <tr>
-            <td>template</td>
-            <td>For JSON fields, a table is output by default. A compact list is generated using the "list" template.
+            <td>For fields with the `record` format, in the default setting, only existing categories can be selected .
+               Set `append` to `true` to enable creating new ad hoc categories ad hoc.
             </td>
         </tr>
         <tr>
@@ -109,6 +127,19 @@ If additional properties are to be configured, an object with the following keys
                 to be listed in the `types` key of the links or footnotes type.
                 To disable validity checks and to allow any link or footnote within the annotation,
                 the `constrain` key of the field configuration can be set to `false`.
+            </td>
+        </tr>
+        <tr>
+            <td>baseurl</td>
+            <td>For fields of type <code>imageurl</code>, the file name of the image is generated from the fields file_path
+                and file_name. This path is then appended to the baseurl.
+               Example for a baseurl: <code>https://www.inschriften.net/fileadmin/</code>.
+               You can use the http service to proxy files through Epigraf, given users have permission to access the http service: <code>/services/http/get/file?url=https://www.inschriften.net/fileadmin/</code>.
+            </td>
+        </tr>
+        <tr>
+            <td>template</td>
+            <td>For JSON fields, a table is output by default. A compact list is generated using the "list" template.
             </td>
         </tr>
         <tr>
@@ -128,24 +159,12 @@ If additional properties are to be configured, an object with the following keys
             </td>
         </tr>
         <tr>
-            <td>pattern</td>
-            <td>For fields containing text content, you can require the values to follow a pattern. The pattern is a regular expression.</td>
-        </tr>
-        <tr>
-            <td>edit</td>
-            <td>Is the field editable or not (true|false)?</td>
-        </tr>
-        <tr>
-            <td>fulltext</td>
-            <td>The name of an index to which the text is to be added, e.g. "Transcription" or "Notes". For full-text
-                indexing, the fulltext key must also be set in the item.
-            </td>
-        </tr>
-        <tr>
             <td>autofill</td>
             <td>Field contents can be generated automatically from other fields during editing. To do this, the data
                 source is specified as the extraction key in the source key. The extraction key contains the table name,
                 the row type in square brackets, and finally the field name separated by a period.
+                If you omit table name and row type, for example when autofilling property fields,
+                it defaults to the row of the field itself.
                 <p>Content is normally only overwritten if the field is empty and has not been edited manually. The
                     optional force key ensures that the field is locked for manual entry and is overwritten in all
                     cases.</p>
@@ -161,7 +180,7 @@ If additional properties are to be configured, an object with the following keys
 }
 </pre>
                 The values can be transformed during transfer, for example to clean them up. To do this, a list of
-                transformation functions is specified in the process key. Example:
+                transformation functions is specified in the `process` key. Example:
                 <pre class="plaintext">
 "norm_iri": {
   "caption": "IRI-Fragment",
@@ -175,12 +194,20 @@ If additional properties are to be configured, an object with the following keys
 </pre>
                 The following transformations are implemented:
                 <ul>
-                    <li>irifragment: Converts the value to lowercase, replaces spaces with hyphens, and removes all
-                        characters not allowed in IRI fragments (a-z, 0-9, hyphen, underscore, and tilde are retained).
+                    <li>irifragment: Converts the value to a valid IRI fragment.
                     </li>
-                    <li>sortkey: Converts the value to lowercase, removes all special characters (a-z, 0-9, hyphen,
-                        underscore, tilde and space characters are retained) and adds five leading zeros to all numbers.
+                    <li>sortkey: Converts the value to lowercase, trims and collapses whitespace,
+                        and adds five leading zeros to all numbers.
                     </li>
+                    <li>number: Extracts the first number.</li>
+                    <li>path: In properties, add the ancestors' lemma path.
+                        You can override the default path separator using the `pathSeparator` of the autofill object.</li>
+                    <li>prefix: Adds a prefix.
+                        In this case, the processing step must be given as an object with the key `step` set to `prefix`
+                        and the key `value` containing the prefix.</li>
+                    <li>postfix: Adds a postfix.
+                        In this case, the processing step must be given as an object with the key `step` set to `postfix`
+                        and  the key `value` containing the postfix.</li>
                 </ul>
             </td>
         </tr>

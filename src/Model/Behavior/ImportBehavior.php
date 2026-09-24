@@ -14,6 +14,7 @@ use App\Model\Entity\BaseEntity;
 use App\Utilities\Converters\Arrays;
 use Cake\Database\Connection;
 use Cake\Database\Exception\NestedTransactionRollbackException;
+use Cake\Datasource\FactoryLocator;
 use Cake\ORM\Behavior;
 use Cake\ORM\TableRegistry;
 use Epi\Model\Table\BaseTable;
@@ -49,14 +50,18 @@ class ImportBehavior extends Behavior
      * @var array|string[]
      */
     protected array $tableClasses = [
-        'users' => 'Epi.Users',
         'projects' => 'Epi.Projects',
         'articles' => 'Epi.Articles',
         'sections' => 'Epi.Sections',
         'items' => 'Epi.Items',
         'links' => 'Epi.Links',
         'footnotes' => 'Epi.Footnotes',
-        'properties' => 'Epi.Properties'
+        'properties' => 'Epi.Properties',
+        'types' => 'Epi.Types',
+        'users' => 'Epi.Users',
+        'files' => 'Epi.Files',
+        'notes' => 'Epi.Notes',
+        'pipelines' => 'Pipelines'
     ];
 
     /**
@@ -105,6 +110,8 @@ class ImportBehavior extends Behavior
      * ### Options
      * - job_id: The job ID
      * - skipUpdates: Array of table names to skip (create new records, skip updating existing ones)
+     * - asNew: Whether to treat all records as new, except if they are identified by a qualified IRI.
+     *          This allows to import records from another database without using the source IDs.
      *
      * @param array $data
      * @param array $index Pass the index by reference
@@ -153,14 +160,61 @@ class ImportBehavior extends Behavior
         $tables = collection($data)->groupBy('table');
         foreach ($tables as $tableName => $rows) {
 
-            // Merge duplicates
-            $rows = array_reduce($rows, function ($carry, $item) {
-                if (isset($item['id'])) {
-                    $carry[$item['id']] = array_merge($carry[$item['id']] ?? [], $item);
+            $modelName = $this->tableClasses[$tableName] ?? $tableName;
+            $model = FactoryLocator::get('Table')->get($modelName);
+            $entityClass = $model ? $model->getEntityClass() : null;
+
+            // Merge duplicates and replace IDs if necessary
+            if (!empty($options['asNew']) && !empty($entityClass)) {
+                $replaceIdFields = $entityClass::getIdFields();
+            } else {
+                $replaceIdFields = [];
+            }
+
+            $rows = array_reduce($rows, function ($carry, $item) use ($replaceIdFields) {
+
+                // Replace existing IDs with temporary IDs to avoid conflicts with existing records
+                foreach ($replaceIdFields as $idField) {
+                    if (!isset($item[$idField])) {
+                        continue;
+                    }
+
+                    if (preg_match('/^[0-9]+$/', $item[$idField])) {
+                        $item[$idField] = 'tmp' . $item[$idField];
+                    }
+                    elseif (preg_match('/^[a-z]+-[0-9]+$/', $item[$idField])) {
+                        $id = explode('-', $item[$idField]);
+                        $item[$idField] = $id[0] . '-' . 'tmp' . $id[1];
+                    }
+                }
+
+                $item['_fields'] = array_filter(array_map('trim', explode(',', $item['_fields'] ?? '')));
+
+                if (!isset($item['id'])) {
+                    $carry['noid-' . uniqid()] = $item;
                 }
                 else {
-                    $carry[] = $item;
+                    $oldItem = $carry[$item['id']] ?? [];
+
+                    if (empty($oldItem) || empty($item['_action'])) {
+
+                        if (!empty($item['_fields'])) {
+                            $item = array_intersect_key(
+                                $item,
+                                array_flip(array_merge(['id', '_fields', '_action'], $item['_fields']))
+                            );
+                            $item['_fields'] = array_merge(
+                                $oldItem['_fields'] ?? [],
+                                $item['_fields']
+                            );
+                        }
+
+                        $item = array_merge($oldItem, $item);
+                        $carry[$item['id']] = $item;
+                    }
                 }
+
+
                 return ($carry);
             }, []);
 
@@ -176,11 +230,7 @@ class ImportBehavior extends Behavior
             }
 
             // Map job type to Entity
-            $modelName = $defaultmodel->getModelName($tableName, 'Epi');
-            $model = $defaultmodel->getModel($tableName, 'Epi');
-            $entityClass = $model ? $model->getEntityClass() : null;
             $typeField = $model ? $model->typeField : null;
-
             if ($entityClass) {
 
                 foreach ($rows as $idx => $row) {
@@ -197,7 +247,7 @@ class ImportBehavior extends Behavior
                         'table_row' => $row['#'] ?? null,
                         'type_field' => $typeField,
                         'action' => $row['_action'] ?? null,
-                        'fields' => isset($row['_fields']) ? array_map('trim', explode(',', $row['_fields'])) : null,
+                        'fields' => $row['_fields'] ?? null,
                         'index' => &$this->_index
                     ];
 
@@ -325,11 +375,13 @@ class ImportBehavior extends Behavior
      */
     protected function solveIris($tableName, $rows, $options = [])
     {
-        // Get potential IRI fields -> all id fields
-        $model = $this->table()->getModel($tableName, 'Epi');
+        $modelName = $this->tableClasses[$tableName] ?? $tableName;
+        $model = FactoryLocator::get('Table')->get($modelName);
+
         // TODO: move to BaseTable class
         $entityClass = $model ? $model->getEntityClass() : null;
 
+        // Get potential IRI fields -> all id fields
         if ($entityClass) {
             $idFields = $entityClass::getIdFields();
             $typeField = $model->typeField ?? null;
@@ -380,7 +432,9 @@ class ImportBehavior extends Behavior
 
         // Lookup iris and add to index
         foreach ($iriTables as $iriTable => $scopedIris) {
-            $model = $this->table()->getModel($iriTable, 'Epi');
+            $modelName = $this->tableClasses[$iriTable] ?? $iriTable;
+            $model = FactoryLocator::get('Table')->get($modelName);
+
             if (!$model->hasBehavior('Import')) {
                 throw new Exception('The import behavior is not attached to the model.');
             }
@@ -566,7 +620,8 @@ class ImportBehavior extends Behavior
         foreach ($tables as $tableName => $entities) {
             try {
                 $connection->begin();
-                $model = $this->table()->getModel($tableName, 'Epi');
+                $modelName = $this->tableClasses[$tableName] ?? $tableName;
+                $model = FactoryLocator::get('Table')->get($modelName);
 
                 $result = $result && $model->clearEntities($entities);
 
@@ -620,9 +675,12 @@ class ImportBehavior extends Behavior
     }
 
     /**
-     * Save the entities
+     * Save entities with disabled behaviours
      *
-     * Disables the tree behavior and recovers the tree afterwards.
+     * Options:
+     * - versions: Whether to create versions of the entities (default false)
+     * - timestamps: Whether to create timestamps of the entities (default false)
+     * - tree: Whether to recreate the tree (default false)
      *
      * @param BaseEntity[] $entities
      * @param array $config Configuration for the Import behavior

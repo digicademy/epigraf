@@ -39,7 +39,6 @@ class TaskRebuildSortkeys extends BaseTaskMutate
     {
         $dataParams = $model->parseRequestParameters($dataParams);
         $dataParams['ancestors'] = false;
-        $dataParams['treePositions'] = false;
 
         $entities = $model
             ->find('hasParams', $dataParams)
@@ -51,7 +50,7 @@ class TaskRebuildSortkeys extends BaseTaskMutate
 
         foreach ($entities as $entity) {
             /** @var Property $entity */
-            $entity->updateSortKey();
+            $entity->autofill('sortkey');
         }
         $model->saveMany($entities);
 

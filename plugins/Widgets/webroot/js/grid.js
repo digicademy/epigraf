@@ -11,7 +11,7 @@ import {BaseWidget} from '/js/base.js';
 import Utils from '/js/utils.js';
 
 /**
- * Manages the display and editing functionality of items in a grid, for example heraldry items.
+ * Manages the display and editing functionality of items in a grid, for example, heraldry items.
  * The widget is tightly coupled with the corresponding ItemsModel and, therefore,
  * contains properties for the item data container as well as the grid (the visual representation of the data).
  *
@@ -49,6 +49,11 @@ export class GridWidget extends BaseWidget {
          * @type {HTMLElement}
          */
         this.itemContainer = element.closest('.doc-section').querySelector('.doc-section-groups');
+
+        // Disable spinner for sortno field
+        if (this.itemContainer)  {
+            this.itemContainer.classList.add('widget-grid-target');
+        }
     }
 
     /**
@@ -66,8 +71,10 @@ export class GridWidget extends BaseWidget {
             this.listenEvent(this.sectionElement,'epi:remove:item', event => this.onItemRemoved(event));
             this.listenEvent(this.sectionElement,'epi:change:item', event => this.onItemChanged(event));
             this.listenEvent(this.sectionElement,'epi:drop:item', event => this.onGridItemDropped(event));
+            this.listenEvent(this.sectionElement, 'epi:focus:item', event => this.onItemFocused(event));
         }
 
+        this.listenEvent(this.widgetElement.querySelector('.doc-section-grid-table'), 'click', event => this.onClick(event));
         this.listenEvent(this.widgetElement.querySelector('.doc-section-grid-size'), 'change', event => this.onLayoutChanged(event));
     }
 
@@ -131,8 +138,28 @@ export class GridWidget extends BaseWidget {
         if (!event.target.dataset.rowType === this.itemtype) {
             return;
         }
-
         this.updateGridItem(event.target);
+    }
+
+    /**
+     * Activate the item in the grid and the table
+     *
+     * @param {CustomEvent} event
+     */
+    onItemFocused(event) {
+        if (!event.target.dataset.rowType === this.itemtype) {
+            return;
+        }
+
+        const tableItem = event.target.closest('.doc-section-item');
+        if (!tableItem) {
+            return;
+        }
+        const gridItem = this.getGridItem(tableItem.dataset.rowId);
+        if (!gridItem) {
+            return;
+        }
+        this.setActiveCell(gridItem);
     }
 
     /**
@@ -155,13 +182,22 @@ export class GridWidget extends BaseWidget {
     }
 
     /**
+     * Handle click events
+     */
+    onClick(event) {
+        this.setActiveCell(event.target);
+    }
+
+
+
+    /**
      * Get an item in the table by its ID
      *
      * @param {string} id ID of the table item that should be returned
      * @returns {HTMLElement | void} Table item with given ID
      */
     getTableItem(id) {
-        if (!this.itemContainer) {
+        if (!this.itemContainer || !id) {
             return;
         }
 
@@ -227,29 +263,48 @@ export class GridWidget extends BaseWidget {
     }
 
     /**
+     * Get the last item in the grid
+     *
+     * @return {HTMLElement | void} The last grid item or undefined if the grid is empty or not available.
+     */
+    getLastGridItem() {
+        if (!this.gridTable) {
+            return;
+        }
+        const gridItems = this.gridTable.querySelectorAll('.doc-section-item');
+        if (gridItems.length === 0) {
+            return;
+        }
+        return gridItems[gridItems.length - 1];
+    }
+
+    /**
      * Initialize the position of a new item in the grid
-     * behind the last item in the grid.
+     *
+     * If an item is active, the new item will be placed behind.
+     * If no item is active, the new item will be placed in the active cell.
+     * If no cell is active, the new item will be placed behind the last item in the grid.
      *
      * @param {HTMLElement} tableItem The new item in the table
      */
     initPosition(tableItem) {
 
-        const gridItems = this.gridTable.querySelectorAll('.doc-section-item');
-        if (gridItems.length === 0) {
-            return;
+        // Get the active item or cell or the last item as reference for the position of the new item
+        let referenceElement = this.gridTable.querySelector('.doc-section-item.active');
+        if (!referenceElement) {
+            referenceElement = this.gridTable.querySelector('.doc-section-item-group.active');
         }
-        const lastGridItem = gridItems[gridItems.length- 1];
-        const lastTableItem = this.getTableItem(lastGridItem.dataset.rowId);
-        if (!lastTableItem) {
+        if (!referenceElement) {
+            referenceElement = this.getLastGridItem();
+        }
+
+        if (!referenceElement) {
             return;
         }
 
-        // Get position of the last item in the grid
-        const x = parseInt(lastTableItem.querySelector('[data-row-field="pos_x"]').value);
-        const y = parseInt(lastTableItem.querySelector('[data-row-field="pos_y"]').value);
-        const z = parseInt(lastTableItem.querySelector('[data-row-field="pos_z"]').value);
+        const {x, y, z} = this.findPositionInGrid(referenceElement);
 
-        // Set the position of the new item behind the last item
+        // Set the position of the new item
         Utils.setInputValue(tableItem.querySelector('[data-row-field="pos_x"]'), x);
         Utils.setInputValue(tableItem.querySelector('[data-row-field="pos_y"]'), y);
         Utils.setInputValue(tableItem.querySelector('[data-row-field="pos_z"]'), z + 1);
@@ -288,6 +343,7 @@ export class GridWidget extends BaseWidget {
 
         // Move grid item to its position
         this.moveGridItem(gridItem, x, y, z);
+        this.setActiveCell(gridItem);
 
         // Transfer input values from the table to the grid item
         gridItem.querySelectorAll('.doc-field').forEach(
@@ -429,21 +485,31 @@ export class GridWidget extends BaseWidget {
     }
 
     /**
-     * Get x and y index of given item in grid. Indexes start with 1.
+     * Get x, y, and z index of an item in the grid.
      *
-     * @param {string} id Id of the item
-     * @returns {{x: number, y: number}} Object with indexes
+     * Indexes start with 1.
+     * If the element is a cell without items, z will be 0.
+     *
+     * @param {HTMLElement} elm Item or item group in the grid
+     * @returns {{x: number, y: number, z: number}} Object with indexes
      */
-    findPositionInGrid(id) {
+    findPositionInGrid(elm) {
         let x;
         let y;
+        let z = 0;
 
-        y = [...this.gridTable.rows].findIndex(row => {
-            x = [...row.cells].findIndex(cell => cell.querySelector(`[data-row-id="${id}"]`)) + 1;
-            return x !== 0; // Return true if the cell was found, otherwise false
-        }) + 1;
+        if (elm.classList.contains('doc-section-item')) {
+            z = [...elm.parentElement.children].indexOf(elm) + 1;
+        }
 
-        return {x, y};
+        const cell = elm.closest('td');
+        if (cell) {
+            x = [...cell.parentElement.children].indexOf(cell) + 1;
+            y = [...cell.closest('tbody').children].indexOf(cell.closest('tr')) + 1;
+        }
+
+
+        return {x, y, z};
     }
 
     /**
@@ -573,6 +639,54 @@ export class GridWidget extends BaseWidget {
             inputPosZ.value = z;
         }
         this.sortItems();
+    }
+
+    /**
+     * Toggle the active class on the target cell and item
+     *
+     * @param  {HTMLElement} target
+     */
+    setActiveCell(target) {
+        if (!target) {
+            return;
+        }
+
+        // Toggle item group
+        let targetGroup = target.closest('.doc-section-item-group');
+        const targetCell = target.closest('td');
+
+        if (!targetGroup && targetCell) {
+            targetGroup = targetCell.querySelector('.doc-section-item-group');
+        }
+
+        if (targetGroup) {
+            this.widgetElement
+                .querySelectorAll('.doc-section-item')
+                .forEach((item) => item.classList.remove('active'));
+
+            if (this.itemContainer) {
+                this.itemContainer
+                    .querySelectorAll('.doc-section-item')
+                    .forEach((item) => item.classList.remove('active'));
+            }
+
+            this.widgetElement
+                .querySelectorAll('.doc-section-item-group')
+                .forEach((group) => group.classList.remove('active'));
+
+            targetGroup.classList.add('active');
+        }
+
+        // Toggle item
+        const gridItem = target.closest('.doc-section-item');
+        if (gridItem) {
+            gridItem.classList.add('active');
+            const tableItem = this.getTableItem(gridItem.dataset.rowId);
+            if (tableItem) {
+                tableItem.classList.add('active');
+            }
+        }
+
     }
 }
 

@@ -216,9 +216,18 @@ class CsvView extends ApiView
             $data = $data->toArray();
         }
 
+        elseif ($data instanceof \Generator) {
+            $result = [];
+            foreach ($data as $key => $value) {
+                $result[$key] = $value;
+            }
+            $data = $result;
+        }
+
         // Arrays
         if ($isRows && is_array($data)) {
             $rows = [];
+            $options['isRows'] = false;
             foreach ($data as $key => &$value) {
                 $value = $this->_prepareViewData($value, $options, $level + 1);
                 $rows = array_merge($rows, $value);

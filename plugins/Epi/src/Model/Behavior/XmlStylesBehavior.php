@@ -241,7 +241,18 @@ class XmlStylesBehavior extends Behavior
 
         // Attributes
         $attrContent = [];
-        foreach (($style['merged']['attributes'] ?? []) as $attrName => $attrConfig) {
+
+        $attrConfigs = $style['merged']['attributes'] ?? [];
+        if (!empty($style['merged']['attributes']['*'])) {
+            $allAttrs = array_keys(array_diff_key($element['attributes'] ?? [], $reservedAttributes));
+            $attrConfigs = array_merge(array_fill_keys($allAttrs, []), $attrConfigs);
+        }
+
+        foreach ($attrConfigs as $attrName => $attrConfig) {
+
+            if ($attrName === '*') {
+                continue;
+            }
 
             // Set data attributes
             if (($attrConfig['input'] ?? '') !== 'link') {
@@ -553,7 +564,7 @@ class XmlStylesBehavior extends Behavior
             }
 
             // Cleanup (mark.js highlights)
-            if (in_array($element['name'],['mark'])) {
+            if (in_array($element['name'], ['mark'])) {
                 $element['customoutput'] .= $parser->parseCurrentElement();
             }
 

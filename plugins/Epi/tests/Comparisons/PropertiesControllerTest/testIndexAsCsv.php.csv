@@ -1,7 +1,19 @@
-lemma;articles_count
-"Material 1";1
-"Material 1a";0
-siehe;0
-"Material 2";0
-"Material 2a";1
-siehe;0
+lemma;articles_count;keywords;norm_iri
+"Material 1";1;Material,Werkstoff
+"Material 1a";0;Material,Werkstoff
+siehe;0;Material,Werkstoff
+"Material 2";0;Material,Werkstoff
+"Material 2a";1;Material,Werkstoff
+siehe;0;Material,Werkstoff
+Köhlermaterial;1;;kohlermaterial-ohne
+Köhlermaterial;1;;kohlermaterial-mit
+Kohlermaterial;1;;kohlermaterial-3
+Lampematerial;1;;lampematerial
+siehe;0;;siehe-hallerlampematerial
+Hallermaterial;0;;hallermaterial
+"hartes Hallermaterial";1;;hartes-hallermaterial
+Hallersteinmaterial;1;;hallersteinmaterial
+Hallertonmaterial;1;;hallertonmaterial
+"weiches Hallermaterial";1;;weiches-hallermaterial
+Hallerlampematerial;0;;hallerlampematerial
+Hallerledermaterial;1;;hallerledermaterial

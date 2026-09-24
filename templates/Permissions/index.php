@@ -35,5 +35,5 @@
     $this->Link->addAction(__('Users'),	['controller'=>'users','action' => 'index']);
     $this->Link->addAction(__('Endpoints'),	['controller'=>'permissions','action' => 'endpoints']);
 
-    $this->Link->downloadButtons (null, 'id', 'jobs');
+    $this->Link->downloadButtons(['parameter' => 'id', 'datalist' => 'jobs']);
 ?>

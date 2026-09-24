@@ -9,7 +9,7 @@ The endpoints correspond to the URLs that are visible when navigating the pages 
 
 - The **XML** format includes all content on a page and is structured hierarchically.
   For example, article elements contain all sections.
-  XML is also a valuable starting point for [export pipelines](/epigraf/user/export/pipelines).
+  XML is also a valuable starting point for [export pipelines](/user/export/pipelines).
 - The **JSON** format has a hierarchical structure, but is generally more compact than XML and easier to process for other applications.
 - The **CSV** format contains tabular data and is compatible with many statistical programs. Epigraf outputs entities from different hierarchical levels (e.g. articles and their sections) in rows below each other. The hierarchy of entities is stored in id columns.
 
@@ -21,7 +21,7 @@ Example: The article list of a database can be accessed in the browser via [/epi
 - The data is served in XML format via [/epi/public/articles.xml](https://epigraf.inschriften.net/epi/public/articles.xml).
 - A CSV table is generated via [/epi/public/articles.csv](https://epigraf.inschriften.net/epi/public/articles.csv).
 
-Table pages such as the projects table or the articles table are served in a **Hydra-compatible** format, enabling harvesting of collections. If the appropriate [configuration](/epigraf/user/configuration/triples) is set up, articles can be output in RDF-compatible **triple formats**.
+Table pages such as the projects table or the articles table are served in a **Hydra-compatible** format, enabling harvesting of collections. If the appropriate [configuration](/user/configuration/triples) is set up, articles can be output in RDF-compatible **triple formats**.
 
 - **JSON-LD** (jsonld extension)
 - **Turtle** (ttl extension)
@@ -36,9 +36,12 @@ All endpoints return UTF-8 encoded data. Non-printing characters such as the uni
 
 # Access to endpoints
 
-An access token is required to access non-public data and for write access. This token is appended to the URL or sent as a bearer token, for example: `/epi/stage/articles.csv?token=ABCDEFG`. The token is generated in Epigraf's user account.
+An access token is required to access non-public data and for write access.
+The token is sent as a bearer header token or appended to the URL,
+for example: `/epi/stage/articles.csv?token=ABCDEFG`.
+The token is generated in Epigraf's user account.
 
-To use the access token, [API permissions](/epigraf/user/administration/users) must be granted both for accessing the relevant database and for accessing the endpoint. For example, to use the articles/index endpoint with a token, the following permissions are required:
+To use the access token, [API permissions](/user/administration/users) must be granted both for accessing the relevant database and for accessing the endpoint. For example, to use the articles/index endpoint with a token, the following permissions are required:
 
 - User: {username}
 - Role: *remains empty*
@@ -53,7 +56,7 @@ To use the access token, [API permissions](/epigraf/user/administration/users) m
 
 ## Common parameters
 
-In all endpoints, the path parameter `<db>` must be replaced by the selected project database, for example by "public".
+In all endpoints, the path parameter `{db}` must be replaced by the selected project database, for example by "public".
 
 For index and view endpoints, the optional `idents` query parameter determines how IDs are composed in the ID fields:
 
@@ -154,7 +157,7 @@ This parameter excludes using the parameters <code>cursor</code>, <code>collapse
 The **index endpoints** support selecting columns to be returned by using the `columns` parameter. Multiple columns are selected as a comma-separated list.
 
 - If the columns parameter is empty, the default fields will be returned.
-- Additional columns are configured in the [types configuration](/epigraf/user/configuration/articles) by the `columns` key.
+- Additional columns are configured in the [types configuration](/user/configuration/articles) by the `columns` key.
 - Registered users can also request ad hoc columns using extraction keys. An ad hoc column consists of the caption, followed by an equal sign and the extraction key. The parameter must be URL-encoded because it contains an equal sign.
 - Setting the columns parameter to `false` (or `0`) on the index endpoints will result in
   full entity data (e.g. articles and all contained data) being returned instead of just the flat table.
@@ -188,8 +191,8 @@ The options include `frame`, `popup` or `tab`.
 
 All endpoints are structured according to the same pattern. There are two different endpoint routes:
 
-- **Global endpoints** access application level actions. They consist of a controller, which usually corresponds to a database table, the action to be executed and, if necessary, additional parameters: `/<controller>/<action>?<parameter>`
-- **Project endpoints** additionally contain the path segment `epi` and a database name: `<db>`:`/epi/<db>/<controller>/<action>?<parameter>`
+- **Global endpoints** access application level actions. They consist of a controller, which usually corresponds to a database table, the action to be executed and, if necessary, additional parameters: `/{controller}/{action}?{parameters}`
+- **Project endpoints** additionally contain the path segment `epi` and a database name: `/epi/{db}/{controller}/{action}?{parameters}`
 
 To find out the available endpoints, simply browse Epigraf in a webbrowser and pay attention to the adress bar.
 Each URL is an endpoint, consisting of a controller path (e.g. projects, articles, properties) and an action path.
@@ -361,11 +364,13 @@ Depending on the accuracy of the data, points may be approximate and only repres
 Extraction keys are article fields (e.g., `title`) or nested fields with dot notation (e.g., `project.shortname`).
 To access lists, an asterisk placeholder can be used (e.g., `items.{*}.value`).
 Lists can be filtered with conditions in square brackets (e.g., <code>items.{*}[itemtype=conditions].date</code>).
-For further details, see the [extraction key documentation](/epigraf/user/coreconcepts/keys/).</td>
+For further details, see the [extraction key documentation](/user/coreconcepts/keys/).</td>
 </tr>
 <tr>
 <td>published</td>
-<td>Optional. Only articles that meet or exceed the given publication level will be returned:
+<td>Optional. Only articles and that meet or exceed the given publication level will be returned.
+The filter also applies to content of an article.
+If the publication state of a section, item, or property is set to a lower level, it will not be included in the result.
 <ul><li>0 = Drafted</li>
 <li>1 = In progress</li>
 <li>2 = Completed</li>
@@ -385,6 +390,8 @@ hierarchical structure of sections and lemmas.</li>
 <li><em>published</em>: Include the publication status field.</li>
 <li><em>tags</em>: Extract tags from XML fields.</li>
 <li><em>warnings</em>: Output warnings regarding the structure of entity content.</li>
+<li><em>comments</em>: Include the status field.</li>
+<li><em>editors</em>: Include creator, modifier and the dates of creation and last modification .</li>
 </ul></td>
 </tr>
 <tr>
@@ -541,6 +548,18 @@ A collection of categories of a category type.
 <tr>
 <td>&lt;propertytype&gt;</td>
 <td>Mandatory. Name of the category system. You can provide it as path parameter or as query parameter.</td>
+</tr>
+<tr>
+<td>snippets</td>
+<td>Optional. A comma-separated list of snippets to be included in the result.
+A snippet is a predefined compilation of content:
+<ul><li><em>paths</em>: The result contains detailed information on the
+hierarchical structure of sections and lemmas.</li>
+<li><em>iris</em>: Return IRIs.</li>
+<li><em>published</em>: Include the publication status field.</li>
+<li><em>warnings</em>: Output warnings regarding the structure of entity content.</li>
+<li><em>editors</em>: Include creator, modifier and the dates of creation and last modification .</li>
+</ul></td>
 </tr>
 </tbody>
 </table>

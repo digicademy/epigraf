@@ -249,7 +249,10 @@ class PropertiesController extends AppController
         $propertyTargetId = (int)$this->request->getQuery('target', $propertyTargetId);
         $propertySourceIds = Attributes::commaListToIntegerArray($this->request->getQuery('source', $propertySourceIds));
 
-        $mergeOptions = ['concat' => $this->request->getQuery('concat',false)];
+        $mergeOptions = [
+            'concat' => $this->request->getQuery('concat',false),
+            'iri' => $this->request->getQuery('iri',false)
+        ];
 
         if (empty($propertySourceIds)) {
             throw new BadRequestException(__('Missing source properties.'));
@@ -343,7 +346,8 @@ class PropertiesController extends AppController
             throw new BadRequestException('Missing property type.');
         }
 
-        return $this->Batch->export($scope);
+        $params = $this->request->getQueryParams();
+        return $this->Batch->export($scope, $params);
     }
 
     /**
@@ -376,7 +380,8 @@ class PropertiesController extends AppController
             );
         }
 
-        return $this->Batch->mutate($scope);
+        $params = $this->request->getQueryParams();
+        return $this->Batch->mutate($scope, $params);
     }
 
     /**
