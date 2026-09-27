@@ -14,6 +14,7 @@
  * @var App\Model\Entity\User $entity
  */
 use App\Utilities\Converters\Attributes;
+use Cake\Core\Configure;
 
 ?>
 
@@ -54,7 +55,7 @@ use App\Utilities\Converters\Attributes;
     <?php endif; ?>
 </div>
 
-<?php if($entity->hasSqlAccess): ?>
+<?php if(Configure::read('App.epidesktop', false) && $entity->hasSqlAccess): ?>
 <div class="content-section">
 <h2 id="toc-epidesktop" class="widget-scrollsync-section"><?= __('Epigraf Desktop Settings') ?></h2>
 <table class="vertical-table">

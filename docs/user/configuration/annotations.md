@@ -290,10 +290,14 @@ If possible, it is advised to set the default rendering to plain outputs without
 # Toolbuttons
 
 A button is created for each annotation. Their design is defined in the `toolbutton` key.
-Icons (or short labels) for the buttons are configured using Uincode characters in the `symbol` key.
-You can use icons from [Font Awesome](https://fontawesome.com/search?m=free) if you set the `font` subkey to `awesome`.
+Labels for the buttons are configured using Unicode characters in the `symbol` key.
+You can use standard unicode characters or, if you set the `font` subkey to `awesome`,
+icons from [Font Awesome](https://fontawesome.com/search?m=free).
 
-As an alternative, Epigraf ships with a set of SVG icons used for transcriptions. The file name of the SVG graphic can be provided in the `icon` key. For annotations that lack a symbol or icon key, the annotation's IRI fragment is used to refer to an SVG file (which then must be present on the server).
+As an alternative, Epigraf ships with a set of SVG icons used for transcriptions.
+The file name of the SVG graphic can be provided in the `icon` key.
+For annotations that lack a symbol or icon key, the annotation's IRI fragment is used to refer to an SVG file
+(which then must be present on the server).
 
 <figure class="table">
 <table>
@@ -335,7 +339,12 @@ As an alternative, Epigraf ships with a set of SVG icons used for transcriptions
 </tr>
 <tr>
 <td>icon</td>
-<td>The icon key is an alternative to thy symbols key for using SVG icons. The value refers to a predefined SVG file shipped with Epigraf. Currently, it is not possible to upload user-defined SVG files, they can only be integrated by developers.</td>
+<td>
+    The icon key is an alternative to the <code>symbols</code>_code> key for using SVG icons.
+    The value refers to a predefined SVG file shipped with Epigraf.
+    Currently, it is not possible to upload user-defined SVG files, they can only be integrated by developers.
+    The available files can be found in the <a href="https://github.com/digicademy/epigraf/tree/main/resources/icons">resources/icons</a> folder of the Epigraf source code.
+</td>
 </tr>
 </tbody>
 </table>

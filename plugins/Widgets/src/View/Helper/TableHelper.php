@@ -125,11 +125,28 @@ class TableHelper extends Helper
                 $value = $row[$field] ?? '';
 
                 // Format value
-                $value = is_numeric($value) ? Number::format($value) : $value;
-                $value = is_array($value) ? array_filter($value, fn($x) => $x !== '') : $value;
-                $value = (is_array($value) && (count($value) === 1)) ? end($value) : $value;
-                $value = (is_array($value) && (count($value) === 0)) ? '' : $value;
-                $value = !is_string($value) ? json_encode($value) : $value;
+                if (is_array($value)) {
+                    $value = array_filter($value, fn($x) => $x !== '');
+
+                    if (count($value) === 0) {
+                        $value = '';
+                    }
+                    elseif (count($value) === 1) {
+                        $value = end($value);
+                    }
+                    elseif (Arrays::array_is_simple($value)) {
+                        $value = implode(', ', $value);
+                    }
+                }
+
+                if (is_numeric($value)) {
+                    $value = Number::format($value);
+                }
+
+                // Finally, encode as JSON
+                if (!is_string($value) && !is_numeric($value)) {
+                    $value = json_encode($value);
+                }
 
                 $out .= '<td' . $class . '>';
                 if (!empty($options['nowrap'])) {
