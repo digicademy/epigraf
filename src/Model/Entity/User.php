@@ -218,24 +218,6 @@ class User extends BaseEntity
     {
         $access = [];
 
-        // Initialise full array for devel and admin users
-//        if (in_array($this->currentUserRole, ['devel', 'admin'])) {
-//            $databanks = $this->table->getDatabase()->table->find('list');
-//            foreach ($databanks as $id => $name) {
-//                $access[$name] = ['id' => $id, 'database' => $name];
-//                foreach (PermissionsTable::$userRoles as $role => $roleCaption) {
-//                    $access[$name][$role] = [];
-//                }
-//            }
-//
-//            if (in_array($this->userrole, ['admin', 'devel'] )) {
-//                $access['*'] = ['id' => '*', 'database' => '*'];
-//                foreach (PermissionsTable::$userRoles as $role => $roleCaption) {
-//                    $access['*'][$role] = [];
-//                }
-//            }
-//        }
-
         // Permissions table
         foreach ($this->permissions as $permission) {
             if (($permission->entity_type === 'databank') && ($permission->permission_type === 'access')) {
@@ -246,7 +228,9 @@ class User extends BaseEntity
                 $userRole = Attributes::cleanOption($permission->user_role ?? '',
                     array_keys(PermissionsTable::$userRoles), $this->role);
 
-                $access[$entityName][$userRole][] = $userRequest;
+                $requests = array_merge($access[$entityName][$userRole] ?? [], [$userRequest]);
+                $requests = array_unique($requests);
+                $access[$entityName][$userRole] = $requests;
                 $access[$entityName]['database'] = $permission->entity_name;
                 $access[$entityName]['id'] = $access[$permission->entity_name]['id'] ?? $permission->entityId ?? '*';
             }

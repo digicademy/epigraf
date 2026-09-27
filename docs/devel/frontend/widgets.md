@@ -300,7 +300,7 @@ The markup is generated in the backend using CakePHP form helpers.
   They are used to trigger actions on the server side, for example to reconcile data.
   The `ServiceWidget` class handles the client-server interaction.
 
-## Content and Editor Widgets
+## Editor Widgets
 
 Some widgets implement interactivity for specific content types:
 
@@ -313,12 +313,18 @@ Some widgets implement interactivity for specific content types:
   based on zoom and pan actions. In edit mode, markers can be moved by the mouse. The EpiMap widget interacts with an item list
   to update field values based on marke movements and marker positions based on field updates.
 
+## Content Widgets
+
 Epigraf supports storing data formats such as JSON, HTML and XML in database fields based on the field configuration.
 For those fields, wysiwyg editors are used to edit the content:
 
 - `HtmlEditor`: A CKEditor instance for editing HTML in the wiki, help and public pages.
 - `XmlEditor`: A CKEditor instance that renders XML to HTML and back, used for annotations.
 - `JsonEditor`: An AceEditor instance for editing JSON content.
+
+The XmlEditor imports SVG files for the toolbar. To add icons, create a new SVG file in `resources/icons`.
+Import the new icon in `resources/icons/icons.js` and build the assets with `npm run ìcons` or `npm run build`.
+The icons can be referenced in the `icon` property of the [toolbar button configuration](/user/configuration/annotations).
 
 ### Flow of the PlotWidget
 

@@ -30,7 +30,7 @@ import button_italic from './button_italic.svg';
 import button_link from './button_link.svg';
 import button_addendum from './button_addendum.svg';
 import button_newline from './button_newline.svg';
-import button_spalte from './button_spalte.svg';
+import button_column from './button_column.svg';
 import button_spatium from './button_spatium.svg';
 import button_sup from './button_sup.svg';
 import button_superscript from './button_superscript.svg';
@@ -45,7 +45,19 @@ import button_wish from './button_wish.svg';
 import button_line from './button_line.svg';
 import button_quote from './button_quote.svg';
 import button_reference from './button_reference.svg';
-
+import button_space from './button_space.svg';
+import button_strike from './button_strike.svg';
+import button_super from './button_super.svg';
+import button_am from './button_am.svg';
+import button_lb from './button_lb.svg';
+import button_bar from './button_bar.svg';
+import button_subbar from './button_subbar.svg';
+import button_comsuper from './button_comsuper.svg';
+import button_deco from './button_deco.svg';
+import button_erased from './button_erased.svg';
+import button_restored from './button_restored.svg';
+import button_complemented from './button_complemented.svg';
+import button_added from './button_added.svg';
 
 const icons = {
     'abbreviation': button_abbreviation,
@@ -68,7 +80,7 @@ const icons = {
     'addendum': button_addendum,
     'newline': button_newline,
     'reference': button_reference,
-    'button_spalte': button_spalte,
+    'column': button_column,
     'spatium': button_spatium,
     'sup': button_sup,
     'superscript': button_superscript,
@@ -81,7 +93,20 @@ const icons = {
     'wordseparator': button_wordseparator,
     'wish': button_wish,
     'line': button_line,
-    'quote': button_quote
+    'quote': button_quote,
+    'space': button_space,
+    'strike': button_strike,
+    'super': button_super,
+    'am': button_am,
+    'bar': button_bar,
+    'subbar': button_subbar,
+    'comsuper': button_comsuper,
+    'lb': button_lb,
+    'deco': button_deco,
+    'erased': button_erased,
+    'restored': button_restored,
+    'complemented': button_complemented,
+    'added': button_added
 };
 
 export default icons;

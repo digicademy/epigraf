@@ -248,7 +248,7 @@ class Installer
             exec('rm ' . escapeshellarg($codeceptFile));
         }
 
-        exec('ln -s ' . escapeshellarg('../codeception/codeception/codecept ' . $codeceptFile));
+        exec('ln -s ../codeception/codeception/codecept ' . escapeshellarg($codeceptFile));
 
         $io->write('Symlink to codecept created.');
 

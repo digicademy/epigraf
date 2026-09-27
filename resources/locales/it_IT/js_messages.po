@@ -15,59 +15,59 @@ msgstr ""
 
 #: plugins/Epi/webroot/js/models.js:2275 plugins/Epi/webroot/js/models.js:2276
 msgid "Footnote"
-msgstr ""
+msgstr "Nota a piè di pagina"
 
 #: plugins/Widgets/webroot/js/documents.js:835
 #: plugins/Widgets/webroot/js/documents.js:940
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #: plugins/Widgets/webroot/js/documents.js:940
 #: plugins/Widgets/webroot/js/frames.js:1124
 #: plugins/Widgets/webroot/js/frames.js:1125
 msgid "Close"
-msgstr ""
+msgstr "Chiudi"
 
 #: plugins/Widgets/webroot/js/frames.js:963
 #: plugins/Widgets/webroot/js/frames.js:1259
 msgid "Reloading document"
-msgstr ""
+msgstr "Ricaricamento del documento"
 
 #: plugins/Widgets/webroot/js/frames.js:1112
 #: plugins/Widgets/webroot/js/frames.js:1113
 msgid "Open in new tab"
-msgstr ""
+msgstr "Apri in una nuova scheda"
 
 #: plugins/Widgets/webroot/js/map.js:174
 msgid "verified"
-msgstr ""
+msgstr "verificato"
 
 #: plugins/Widgets/webroot/js/map.js:176
 msgid "presumed"
-msgstr ""
+msgstr "presunto"
 
 #: plugins/Widgets/webroot/js/map.js:178
 msgid "unverified"
-msgstr ""
+msgstr "non verificato"
 
 #: plugins/Widgets/webroot/js/services.js:139
 msgid "Stop"
-msgstr ""
+msgstr "Ferma"
 
 #: plugins/Widgets/webroot/js/services.js:141
 msgid "Please stand by, weaving the words may take a minute."
-msgstr ""
+msgstr "Attendere prego, l'elaborazione del testo potrebbe richiedere un minuto."
 
 #: plugins/Widgets/webroot/js/services.js:148
 #: plugins/Widgets/webroot/js/services.js:433
 msgid "Invalid service data"
-msgstr ""
+msgstr "Dati del servizio non validi"
 
 #: plugins/Widgets/webroot/js/services.js:157
 msgid "Invalid service input"
-msgstr ""
+msgstr "Input del servizio non valido"
 
 #: plugins/Widgets/webroot/js/services.js:168
 #: plugins/Widgets/webroot/js/services.js:241
 msgid "An error occurred"
-msgstr ""
+msgstr "Si è verificato un errore"
