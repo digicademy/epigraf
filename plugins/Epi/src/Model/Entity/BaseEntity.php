@@ -659,7 +659,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
             $fullfilename = $downloadpath . '/' . $filename;
 
             $exists = is_file($root . $fullfilename);
-            $preview = (bool)(int)in_array($extension, ['png', 'jpg', 'svg']) * (int)$exists;
+            $preview = (bool)(int)in_array($extension, ['png', 'jpg', 'svg', 'tif']) * (int)$exists;
 
             $viewurl = Router::url([
                 'controller' => 'Files',
@@ -672,15 +672,20 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
                 ]
             ]);
 
+            $displayOptions = [
+                'path' => $downloadpath,
+                'filename' => $filename
+            ];
+            if (!in_array($extension, ['png', 'jpg', 'svg'])) {
+                $displayOptions['format'] = 'jpg';
+            }
+
             $displayurl = Router::url([
                 'controller' => 'Files',
                 'action' => 'display',
                 'database' => Databank::removePrefix($this->databaseName),
                 'plugin' => 'Epi',
-                '?' => [
-                    'path' => $downloadpath,
-                    'filename' => $filename
-                ]
+                '?' => $displayOptions
             ]);
 
             $thumburl = Router::url([
@@ -2447,7 +2452,7 @@ class BaseEntity extends \App\Model\Entity\BaseEntity implements ExportEntityInt
 
         // Convert tif to jpg
         if ($result && in_array($this->file_properties['extension'], ['tif'])) {
-            $result = Files::convertImage(Files::joinPath([$targetFolder, $filename]), 'jpg', true);
+            $result = Files::convertImage(Files::joinPath([$targetFolder, $filename]), 'jpg', null, true);
 
             if ($result !== false) {
                 $filename = pathinfo($result, PATHINFO_BASENAME);

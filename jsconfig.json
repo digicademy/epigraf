@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+        "paths": {
+            "/js/*":         ["htdocs/js/*"],
+            "/msg/*":        ["htdocs/msg/*"],
+            "/widgets/js/*": ["plugins/Widgets/webroot/js/*"],
+            "/epi/js/*":     ["plugins/Epi/webroot/js/*"]
+        }
+    },
+    "include": ["htdocs/js", "plugins/*/webroot/js"],
+    "exclude": ["**/*.min.js", "node_modules"]
+}

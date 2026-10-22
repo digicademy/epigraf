@@ -179,7 +179,8 @@ class Doc extends BaseEntity implements LockInterface
                 ],
             'category' => [
                 'caption' => __('Category'),
-                'action' => ['edit', 'add']
+                'action' => ['edit', 'add'],
+                'help' => __('The menu is generated from the category names. Use a forward slash to separate levels.'),
             ],
             'menu' => [
                 'caption' => __('Add to menu'),

@@ -16,6 +16,7 @@ import XmleditorXmltagCommand from './xmleditor-xmltag-command';
 import {viewToModelPositionOutsideModelElement, toWidget} from '@ckeditor/ckeditor5-widget/src/utils';
 import Utils from '/js/utils.js';
 import UpcastWriter from '@ckeditor/ckeditor5-engine/src/view/upcastwriter';
+import BaseEvent from '@ckeditor/ckeditor5-utils/src/emittermixin';
 
 const XML_TAG = 'xml_text';
 const XML_FORMAT = 'xml_format';
@@ -90,6 +91,19 @@ export class XmleditorXmltagEditing extends Plugin {
             this.viewToModelPositionBracket(this.editor.model)
         );
 
+        // Move outside a format by arrow keys
+        this.editor.keystrokes.set('arrowright', (data, cancel) => {
+            if (this.exitFormat('forward')) {
+                cancel();
+            }
+        }, {priority: 'high'});
+
+        this.editor.keystrokes.set('arrowleft', (data, cancel) => {
+            if (this.exitFormat('backward')) {
+                cancel();
+            }
+        }, {priority: 'high'});
+
         // Listen to model changes (deletion)
         this.editor.model.document.on('change:data', event => this.onDocumentChanged(this.editor, event));
 
@@ -123,6 +137,51 @@ export class XmleditorXmltagEditing extends Plugin {
         return this;
     }
 
+    afterInit() {
+        const editor = this.editor;
+        const model = editor.model;
+        const insertTextCommand = editor.commands.get('insertText');
+
+        if (!insertTextCommand) {
+            return;
+        }
+
+        // Typing: if the browser's target range and the model selection describe
+        // the same visual caret position (e.g. end of a format vs. after the format),
+        // use the model selection. It knows whether the user left the format.
+        this.listenTo(insertTextCommand, 'execute', (evt, args) => {
+            const options = args[0];
+            const docSelection = model.document.selection;
+
+            if (!options || !options.selection || !options.selection.isCollapsed || !docSelection.isCollapsed) {
+                return;
+            }
+
+            const targetPos = options.selection.getFirstPosition();
+            const docPos = docSelection.getFirstPosition();
+
+            if (targetPos.isEqual(docPos) || !targetPos.isTouching(docPos)) {
+                return;
+            }
+
+            // Only correct positions at format boundaries
+            const inFormat = pos => pos.parent.is('element', XML_FORMAT);
+            if (!inFormat(targetPos) && !inFormat(docPos)) {
+                return;
+            }
+
+            // The options object is passed by reference to the command's execute()
+            options.selection = model.createSelection(docPos);
+        }, {priority: 'high'});
+    }
+
+    /**
+     * Inline container elements must never get a block filler (<br> / &nbsp;)
+     */
+    noFiller(viewElement) {
+        viewElement.getFillerOffset = () => null;
+        return viewElement;
+    }
 
     /**
      * Iterate all children and remove the tagid attribute
@@ -137,6 +196,39 @@ export class XmleditorXmltagEditing extends Plugin {
                 this.removeTagidFromView(node, writer);
             }
         }
+    }
+
+    /**
+     * If the collapsed selection is at the end (or start) of a format element,
+     * move it after (or before) the element.
+     *
+     * @param {string} direction 'forward' or 'backward'
+     * @return {boolean} Whether the selection was moved
+     */
+    exitFormat(direction = 'forward') {
+        const model = this.editor.model;
+        const selection = model.document.selection;
+
+        if (!selection.isCollapsed) {
+            return false;
+        }
+
+        const position = selection.getFirstPosition();
+        const format = position.parent;
+
+        if (!format.is('element', XML_FORMAT)) {
+            return false;
+        }
+
+        if (direction === 'forward' ? !position.isAtEnd : !position.isAtStart) {
+            return false;
+        }
+
+        model.change(writer => {
+            writer.setSelection(format, direction === 'forward' ? 'after' : 'before');
+        });
+
+        return true;
     }
 
     viewToModelPositionBracket(model) {
@@ -180,21 +272,41 @@ export class XmleditorXmltagEditing extends Plugin {
     }
 
     /**
+     * Collect the node itself and all its descendants that are tag elements
+     *
+     * @param {ModelNode} node
+     * @return {ModelElement[]}
+     */
+    collectTagElements(node) {
+        const elementTypes = [XML_TAG, XML_FORMAT, XML_BRACKET];
+        const result = [];
+
+        if (!node || !node.is('element')) {
+            return result;
+        }
+
+        // createRangeOn() includes the node itself, getItems() walks all descendants
+        const range = this.editor.model.createRangeOn(node);
+        for (const item of range.getItems()) {
+            if (item.is('element') && elementTypes.includes(item.name)) {
+                result.push(item);
+            }
+        }
+        return result;
+    }
+
+    /**
      * Watch element removals
      *
-     * @param event
+     * @param  {BaseEvent} event
      */
     onDocumentChanged(editor, event) {
-
-        // Get changes
         const differ = event.source.differ;
         if (differ.isEmpty) {
             return;
         }
 
-        const changes = differ.getChanges({
-            includeChangesInGraveyard: true
-        });
+        const changes = differ.getChanges({includeChangesInGraveyard: true});
         if (changes.length === 0) {
             return;
         }
@@ -202,28 +314,52 @@ export class XmleditorXmltagEditing extends Plugin {
         const partialTypes = [XML_BRACKET_OPEN, XML_BRACKET_CLOSE, XML_BRACKET_CONTENT];
         const elementTypes = [XML_TAG, XML_FORMAT, XML_BRACKET];
 
-        // Check partial removements of brackets
-        const partialRemoves = changes.filter(change => (change.type === 'remove' && partialTypes.includes(change.name)));
-        partialRemoves.forEach(change => {
+        // Avoid emitting twice for the same element within one change block
+        const handled = new Set();
+
+        // 1. Inserted / removed elements (including all nested ones)
+        for (const change of changes) {
+            // Don't filter by element name here: the moved node may be e.g. a
+            // XML_BRACKET_CONTENT that contains further tags
+            if (change.type !== 'insert' || change.name === '$text') {
+                continue;
+            }
+
+            const node = change.position.nodeAfter;
+            if (!node) {
+                continue;
+            }
+
+            const inGraveyard = change.position.root.rootName === '$graveyard';
+
+            for (const element of this.collectTagElements(node)) {
+                if (handled.has(element)) {
+                    continue;
+                }
+                handled.add(element);
+
+                if (inGraveyard) {
+                    this.onElementRemoved(editor, element);
+                } else {
+                    this.onElementInserted(editor, element);
+                }
+            }
+        }
+
+        // 2. Partially removed brackets (opening/closing part or content deleted)
+        const partialRemoves = changes.filter(
+            change => change.type === 'remove' && partialTypes.includes(change.name)
+        );
+
+        for (const change of partialRemoves) {
             const bracket = change.position.parent;
-            if (elementTypes.includes(bracket.name)) {
-                this.onElementRemoved(editor, bracket);
+            if (elementTypes.includes(bracket.name) && bracket.root.rootName !== '$graveyard') {
+                // No onElementRemoved() here: removeTag() moves the bracket into the
+                // graveyard, which triggers another change:data event that is
+                // handled by block 1 above.
                 this.removeTag(editor, bracket);
             }
-        });
-
-        // Check if any of the elements was inserted or removed
-        const insertChanges = changes.filter(change => (change.type === 'insert' && elementTypes.includes(change.name)));
-
-        insertChanges.forEach(change => {
-            const node = change.position.nodeAfter;
-            if (node && node.parent && (node.parent.rootName === '$graveyard')) {
-                this.onElementRemoved(editor, node);
-            } else {
-                this.onElementInserted(editor, node);
-            }
-        });
-
+        }
     }
 
     /**
@@ -436,16 +572,13 @@ export class XmleditorXmltagEditing extends Plugin {
 
     // Downcasting XML_BRACKET_CONTENT
     bracketContentDowncast() {
-
         this.editor.conversion
             .for('downcast')
             .elementToElement({
                 model: XML_BRACKET_CONTENT,
-
-                view: {
-                    name: 'span',
-                    classes: 'xml_bracket_content'
-                }
+                view: (modelElement, {writer}) => this.noFiller(
+                    writer.createContainerElement('span', {class: 'xml_bracket_content'})
+                )
             });
     }
 

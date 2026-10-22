@@ -5,23 +5,23 @@ permalink: '/user/configuration/fields/'
 
 For all entity types – articles, sections, items, properties, links, and footnotes –
 the `fields` key contains one or multiple field configuration objects
-to specify which fields are to be used and how they are labelled.
+to specify which fields are to be used and how they are labeled.
 
 Epigraf provides four kinds of fields:
 
 - *Internal* data management fields should be treated as read-only.
   You can change their visibility in the frontend, but you must not change their interpretation.
-  Examples include the `ìd` field or `modified` field that are managed by the database system.
-- Fields *reserved* for the Relational Article Model should also not be reinterpreted.
+  Examples include the `id` field or `modified` field that are managed by the database system.
+- *Reserved* fields are reserved for the Relational Article Model and should also not be reinterpreted.
   For example, the norm_iri field holds unique identifiers that are used throughout the Epigraf universe
   to link, transfer, and publish entities. You can configure their labels and their visibility.
   But you should not reinterpret the fields, and you must not change their data types.
 - *Customizable* fields can be configured to match your use case.
   They cover different data types and, as long as it is compatible with the underlying database type,
-  the data type of such a field can be further specified.
+  their field format can be adapted to your use case.
   For example, you can use the content field of items to store an annotated transcription as XML,
-  a location as GeoJSON or an image description as plain text.
-   All of those specific types are based on text data which is the data type of the content field.
+  a location as GeoJSON, or an image description as plain text.
+  All of those specific field formats are based on text data which is the data type of the content field.
 - *Virtual fields*  are calculated on the fly, thus, they can't be modified.
   For example, properties provide a virtual field `path` that displays the lemma path including all ancestor properties.
 
@@ -68,7 +68,7 @@ If additional properties are to be configured, an object with the following keys
         <tr>
             <td>required</td>
             <td>Determines whether a field may be empty (required is `false`) or not (required is `false`).
-                By default, fields with text content may be empty. Fields linking to other entites (formats record or relation) may not be empty.
+                By default, fields with text content may be empty. Fields linking to other entites (field formats `record` or `relation`) may not be empty.
             </td>
         </tr>
         <tr>
@@ -100,7 +100,7 @@ If additional properties are to be configured, an object with the following keys
             <td>targets</td>
             <td>For fields with the record or relation format, configure possible reference targets:
                 <ul>
-                    <li>articles: The permitted article types for external links.</li>
+                    <li>articles: The permitted article types as a list.</li>
                     <li>sections: The permitted section types as a list.</li>
                     <li>items: The permitted item types as a list.</li>
                     <li>properties: The permitted property types as a list.</li>
@@ -294,11 +294,18 @@ breaks. You can use the namespaces configured in the property or article type. T
 </li>
 </ul>
 
-Further fields are used for relating different entities to each other:
+Further field formats are used for relating different entities to each other:
 
 <ul>
 <li>record: References to entities outside the root entity, e.g. to link from one article to another. Only available for polymophic ID fields that store a target table and a target ID. See the `targets` key.</li>
 <li>relation: References within the root entity, e.g. to link from an item to a section. Only available for polymophic ID fields that store a target table and a target ID. See the `targets` key.</li>
 <li>property: Link to a property. Only available for property ID fields. See the `types` key.</li>
-<li>sectionname: Within articles, to use values from the properties as section names, first, set the key `sectionname.option` in the section type configuration to a property type. Second, set the format of the property field of an item to `sectionname`. Note that this establishes a permanent relation between the item and the property, but (by now) the section name is not automatically updated once the property content changes.</li>
+<li>sectionname: Within articles, to use values from the properties as section names, first,
+     set the key `sectionname.option` in the section type configuration to a property type.
+    Second, create an item type with a property field and set its field format to `sectionname`.
+    Third, add the item type to the section using the section type's `items` key.
+    Note that this establishes a permanent relation between the item and the property.
+    However, by now, the section name is not automatically updated once the property content changes.
+    Instead, the caption of the selected property is stored as section name when saving an article.
+</li>
 </ul>

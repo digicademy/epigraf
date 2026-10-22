@@ -114,6 +114,10 @@ class JobsCommand extends Command
             'required' => true
         ]);
 
+        $parser->addOption('queue', [
+            'help' => 'Queue name for the execute action. Leave empty to use the default queue.',
+        ]);
+
         $parser->addOption('id', [
             'help' => 'Job ID for the execute action.',
         ]);
@@ -176,6 +180,10 @@ class JobsCommand extends Command
         ]);
 
         $queueName = Configure::read('Jobs.queue_name');
+        $queue = $args->getArgument('queue');
+        if (!empty($queue)) {
+            $queueName .= '_' . $queue;
+        }
         $statusName = Configure::read('Jobs.status_name');
 
         while (true) {

@@ -638,9 +638,15 @@ class FilesRequestComponent extends Component
 
         $this->response = $this->controller->getResponse();
 
-        if ($file->isFile && ($this->request->getQuery('format') == 'thumb')) {
-            $size = $this->request->getQuery('size');
-            $size = empty($size) ? 100 : min(600, $size);
+        $format = $this->request->getQuery('format');
+        if ($file->isFile && (!empty($format))) {
+
+            if ($format === 'jpg') {
+                $size = null;
+            } else {
+                $size = $this->request->getQuery('size');
+                $size = empty($size) ? 100 : min(600, $size);
+            }
 
             $thumbPath = Files::getThumb(
                 $file->fullPath,
@@ -676,8 +682,7 @@ class FilesRequestComponent extends Component
 
         }
 
-        else {
-            if ($file->isFile) {
+        elseif ($file->isFile) {
                 //$this->response = $this->response->withCache(filemtime($this->controller->currentFilepath),'+1 week');
                 $this->response = $this->response
                     ->withModified(filemtime($file->fullPath))
@@ -691,10 +696,9 @@ class FilesRequestComponent extends Component
                 $this->response = $this->response->withFile(
                     $file->fullPath,
                     ['download' => $download]);
-            }
-            else {
-                throw new BadRequestException(__('Invalid file type'));
-            }
+        }
+        else {
+            throw new BadRequestException(__('Invalid file type'));
         }
 
         return $this->response;

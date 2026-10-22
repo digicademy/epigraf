@@ -174,6 +174,15 @@ class ItemsTable extends BaseTable
             ]
         );
 
+        $this->belongsTo(
+            'LinkedItem',
+            [
+                'foreignKey' => 'links_id',
+                'conditions' => ['Items.links_tab' => 'items'],
+                'className' => 'Epi.Items',
+                'propertyName' => 'links_item'
+            ]
+        );
 
         // linked by links table
         $this->hasMany(

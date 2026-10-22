@@ -33,7 +33,12 @@ use OpenSpout\Reader\XLSX\Reader as XLSXReader;
 
 class Files
 {
-
+    /**
+     * CSV constants, must match CsvView settings
+     */
+    public const CSV_DELIMITER = ';';
+    public const CSV_ENCLOSURE = '"';
+    public const CSV_ESCAPE = '';
 
     /**
      * Definition of file types
@@ -168,6 +173,8 @@ class Files
 
     static function replaceFile($filename, $content)
     {
+        $folder = dirname($filename);
+        Files::createFolder($folder, true);
         $file = fopen($filename, "w");
         fwrite($file, $content);
         fclose($file);
@@ -1104,9 +1111,9 @@ class Files
 
         $default = [
             'length' => 0,
-            'delimiter' => ';',
-            'enclosure' => '"',
-            'escape' => '\\',
+            'delimiter' => self::CSV_DELIMITER,
+            'enclosure' => self::CSV_ENCLOSURE,
+            'escape' => self::CSV_ESCAPE,
             'excel_bom' => false,
             'alias' => '',
             'rownumbers' => '#',
@@ -1931,20 +1938,23 @@ class Files
     }
 
     /**
-     * Get thumb name
+     * Generate a thumb image
      *
      * @param string $imagefile The full file path of the image
-     * @param integer $size The thumb size in pixels
+     * @param integer $size The thumb size in pixels. If empty, returns the original file, converted to jpg.
      * @param boolean $placeholder Whether a placeholder image should be created if the image file does not exist.
      *
-     * @return mixed|string
+     * @return mixed|string File path of the thumb image.
+     *                      Returns an empty string if the file does not exist and no placeholder is requested.
      * @throws \GmagickException
      */
-    static public function getThumb($imagefile, $size = 100, $placeholder = false)
+    static public function getThumb($imagefile, $size = null, $placeholder = false)
     {
-        //$imagefile = Files::cleanFilename($imagefile);
 
         if (!is_file($imagefile) && $placeholder) {
+            if (empty($size)) {
+                $size = 100;
+            }
             $thumbname = TMP . 'thumbs' . DS . $imagefile . '_' . $size . '_notfound.png';
             if (!is_dir(dirname($thumbname))) {
                 mkdir(dirname($thumbname), 0755, true);
@@ -1961,49 +1971,77 @@ class Files
             $image->writeImage($thumbname);
             $image->clear();
             $image->destroy();
+
+            return $thumbname;
         }
-        else {
-            if (is_file($imagefile)) {
 
-                $thumbname = TMP . 'thumbs' . $imagefile . '_' . filemtime($imagefile) . '_' . $size . '.png';
-                if (!is_dir(dirname($thumbname))) {
-                    mkdir(dirname($thumbname), 0755, true);
-                }
+        if (!is_file($imagefile)) {
+            return '';
+        }
 
-                //throw new NotFoundException('Unsupported imageformat');
-                if (!is_file($thumbname)) {
-                    try {
+        if (!empty($size)) {
 
-                        $file_parts = pathinfo($imagefile);
-                        if ($file_parts['extension'] == 'svg') {
-                            exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . escapeshellarg($imagefile) . ' > ' . escapeshellarg($thumbname));
+            $thumbname = TMP . 'thumbs' . $imagefile . '_' . filemtime($imagefile) . '_' . $size . '.png';
+            if (!is_dir(dirname($thumbname))) {
+                mkdir(dirname($thumbname), 0755, true);
+            }
+
+            if (!is_file($thumbname)) {
+                try {
+
+                    $file_parts = pathinfo($imagefile);
+                    if ($file_parts['extension'] == 'svg') {
+                        exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . escapeshellarg($imagefile) . ' > ' . escapeshellarg($thumbname));
+                    }
+                    else {
+                        if (extension_loaded('imagick')) {
+                            $image = new IMagick($imagefile);
                         }
                         else {
-                            if (extension_loaded('imagick')) {
-                                $image = new IMagick($imagefile);
-                            }
-                            else {
-                                $image = new GMagick($imagefile);
-                            }
-
-                            $image->thumbnailimage($size, $size, true);
-                            $image->setImageFormat("png24");
-                            $image->writeImage($thumbname);
-                            $image->clear();
-                            $image->destroy();
+                            $image = new GMagick($imagefile);
                         }
 
-                    } catch (Exception $e) {
-                        $thumbname = $imagefile;
+                        $image->thumbnailimage($size, $size, true);
+                        $image->setImageFormat("png24");
+                        $image->writeImage($thumbname);
+                        $image->clear();
+                        $image->destroy();
                     }
+
+                } catch (Exception $e) {
+                    $thumbname = $imagefile;
                 }
             }
-            else {
-                $thumbname = '';
-            }
+            return $thumbname;
         }
 
-        return $thumbname;
+        // Convert tif and svg to jpg
+        else {
+
+            $thumbname = TMP . 'thumbs' . $imagefile . '_' . filemtime($imagefile) . '_full.jpg';
+            if (!is_dir(dirname($thumbname))) {
+                mkdir(dirname($thumbname), 0755, true);
+            }
+
+            if (!is_file($thumbname)) {
+                try {
+
+                    $file_parts = pathinfo($imagefile);
+                    if ($file_parts['extension'] !== 'jpg') {
+                        $thumbname = Files::convertImage($imagefile, 'jpg', $thumbname, false);
+                        if (empty($thumbname)) {
+                            throw new Exception('Could not convert file to jpg: ' . $imagefile);
+                        }
+                    } else {
+                        $thumbname = $imagefile;
+                    }
+
+                } catch (Exception $e) {
+                    $thumbname = $imagefile;
+                }
+            }
+            return $thumbname;
+        }
     }
 
     /**
@@ -2026,11 +2064,12 @@ class Files
      *
      * @param string $imagefile The full file path of the image
      * @param string $targetFormat Output format ('jpg', 'png', etc.)*
+     * @param string|null $targetFile The target file path. If null, the original file name will be used with the new extension.
      * @params boolean $removeOriginal Whether to delete the original file after conversion
      * @return string|false New file path or false on failure
      * @throws \GmagickException
      */
-    static public function convertImage($imagefile, $targetFormat = 'jpg', $removeOriginal = false)
+    static public function convertImage($imagefile, $targetFormat = 'jpg', $targetFile = null, $removeOriginal = false)
     {
         if (!is_file($imagefile)) {
             return false;
@@ -2040,12 +2079,14 @@ class Files
 
             // Build output name
             $pathInfo = pathinfo($imagefile);
-            $newFile = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['filename'] . '.' . $targetFormat;
+            if (empty($targetFile)) {
+                $targetFile = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['filename'] . '.' . $targetFormat;
+            }
 
-//            if ($pathInfo['extension'] == 'svg') {
-//                exec("rsvg-convert -a -b white -w " . $size . " -h " . $size . " " . $imagefile . ' > ' . $thumbname);
-//                return $newFile;
-//            }
+            if ($pathInfo['extension'] == 'svg') {
+                exec("rsvg-convert -a -b white " . $imagefile . ' > ' . $targetFile);
+                return $targetFile;
+            }
 
             if (extension_loaded('imagick')) {
                 $gm = new IMagick($imagefile);
@@ -2068,7 +2109,7 @@ class Files
             }
 
             // Write new file
-            $gm->writeimage($newFile);
+            $gm->writeimage($targetFile);
 
             // Clean up
             $gm->clear();
@@ -2078,7 +2119,7 @@ class Files
                 Files::delete($imagefile);
             }
 
-            return $newFile;
+            return $targetFile;
         } catch (Exception $e) {
             return false;
         }

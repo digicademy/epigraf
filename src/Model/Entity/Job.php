@@ -95,6 +95,7 @@ class Job extends BaseEntity
      */
     public int $limit = 30;
     public int $timeout = 1;
+    public string $queue = '';
 
     /**
      * Current database
@@ -239,6 +240,9 @@ class Job extends BaseEntity
         ];
 
         $queueName = Configure::read('Jobs.queue_name');
+        if (!empty($this->queue)) {
+            $queueName .= '_' . $this->queue;
+        }
         $statusName = Configure::read('Jobs.status_name');
 
         $redis = $this->getRedisClient();

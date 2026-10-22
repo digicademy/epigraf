@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use App\Model\Entity\BaseEntity;
+use Exception;
 
 class Objects extends Hash
 {
@@ -123,7 +124,7 @@ class Objects extends Hash
      * @param array|\ArrayAccess|BaseEntity $data The data to extract from.
      * @param string $path The path to extract.
      * @param boolean $toArray Whether to convert result objects to arrays
-     * @param array $options Not used
+     * @param array $options Passed to getEntityIsVisible for filtering unpublished entities.
      * @return array|\ArrayAccess An array of the extracted values.
      *                            Returns an empty array if there are no matches.
      * @link https://book.cakephp.org/4/en/core-libraries/hash.html#Cake\Utility\Hash::extract
@@ -226,6 +227,173 @@ class Objects extends Hash
         }
 
         return $context[$_key];
+    }
+
+    /**
+     * Extract a value by a dot notated path,
+     * format the last extracted component,
+     * and optionally pipe it through processing steps
+     *
+     * TODO: optimize (access properties without toArray-conversion, including virtual fields)
+     * TODO: convert arrays to JSON here instead of in index_table.php?
+     *
+     * ### Options
+     * - format: Target format (xml, json, csv, html, md, ttl, rdf, jsonld, false).
+     *           If the format is set and the extracted value is a BaseEntity,,
+     *           the value is formatted using getValueFormatted().
+     *           Otherwise the function falls back to Objects::extract().
+     *           The extraction key in a field path may be prefixed with a format key, seperated by colon.
+     *           This overrides the format in the options.
+     * - aggregate: Aggregation procedure, defaults to false, i.e. no aggregation.
+     *              Can be a pipe separated string list or an array of processing steps.
+     *              See processValues() for available steps.
+     * - default: The default value if the key is not present in the object, defaults to false.
+     *            TODO: implement or remove, see todo below
+     *
+     * See getValueFormatted() and Objects::extract() for further options.
+     *
+     * @param array|\ArrayAccess|BaseEntity $data The data to extract from.
+     * @param string|array $fieldPath A dot notation path or an array of path elements
+     * @param array $options Options passed to getValueFormatted() and to Objects::extract()
+     * @return array|string|integer|BaseEntity
+     */
+    public static function extractNested($data, $fieldPath, $options = [])
+    {
+
+        // Extract the value without formatting
+        // TODO: can the method be refactored to get rid of this special condition?
+        //       In one of the last revisions, I moved calls of getValueFormatted() to Objects::extract(),
+        //       this, this differentiation should not be necessary any more?
+        if (empty($options['format'])) {
+            $value = Objects::extract($data, $fieldPath, false, $options);
+        }
+
+        // Format the value extracted by the last path component
+        else {
+
+            $fieldPath = is_array($fieldPath) ? $fieldPath : explode('.', $fieldPath);
+            $keyExtract = implode('.', array_slice($fieldPath, 0, -1));
+            $keyField = end($fieldPath);
+
+            if (str_contains($keyField, '*')) {
+                $keyExtract .= '.' . $keyField;
+                $keyField = 'id';
+            }
+
+            // Get everything up to the last component without formatting
+            if (empty($keyExtract)) {
+                $value = $data;
+            }
+            else {
+                $published = $options['published'] ?? null;
+                $value = Objects::extract($data, $keyExtract, false, ['published' => $published]);
+            }
+
+            // Numeric arrays followed by an entity field (e.g. items.*.content)
+            if ((is_array($value) && array_is_list($value))) {
+                foreach ($value as $valueKey => $valueItem) {
+                    if (is_array($valueItem) || $valueItem instanceof ArrayAccess) {
+                        $value[$valueKey] = Objects::extract($valueItem, $keyField, false, $options);
+                    }
+                }
+            }
+
+            // Direct path to field (e.g. projects.name) or nested values (e.g. value.lat)
+            elseif (is_array($value) || ($value instanceof ArrayAccess)) {
+                $value = Objects::extract($value, $keyField, false, $options);
+            }
+
+            // Try to extract value from JSON
+            elseif (is_string($value) && !empty($keyField)) {
+                try {
+                    $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+                    if (is_array($value) || ($value instanceof ArrayAccess)) {
+                        $value = Objects::extract($value, $keyField, false, $options);
+                    }
+                } catch (Exception $e) {
+                    // Not a JSON string, return as is
+                }
+            }
+        }
+
+        // TODO: implement default (check $value array)
+        //        if (($value === null) && ($default !== false)) {
+        //            $value = [$default];
+        //        }
+
+        // Post-processing
+        $steps = $options['aggregate'] ?? false;
+        if (!empty($steps)) {
+            $steps = Objects::parseProcessing($steps);
+            $value = Objects::processValues($value, $steps, true, $data);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Replace a placeholder string with entity values
+     *
+     * See Objects::parsePlaceholder() for examples.
+     *
+     * ### Options
+     * - collapse By default, an array is returned.
+     *   Provide a separator if you want to collapse the value to a single string.
+     *
+     * All other options are passed to extractNested()
+     * with aggregate set to false if not otherwise defined in a placeholder.
+     *
+     * @param array|\ArrayAccess|BaseEntity $data The data to extract from.
+     * @param string|array $key The placeholder string or an array of placeholder strings.
+     * @param array $options Options passed to extractNested(),
+     *                       with aggregate set to false if not otherwise defined in a placeholder.
+     * @return string|array
+     */
+    public static function extractPlaceholder($data, $key, $options= [])
+    {
+
+        $value = [];
+        if (is_array($key)) {
+            foreach ($key as $part) {
+                $loopValue = Objects::extractPlaceholder($data, $part, $options);
+                if (is_array($loopValue)) {
+                    $value = array_merge($value, $loopValue);
+                }
+                else {
+                    if ($loopValue ?? false) {
+                        $value[] = $loopValue;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (!str_contains($key, '{')) {
+                return $key;
+            }
+
+            $value = Objects::parsePlaceholder($key, function ($pathList) use ($options, $data) {
+                $pathList = Objects::parsePathList($pathList);
+                $result = null;
+                foreach ($pathList as $path) {
+                    $path = Objects::parseFieldKey($path, [], ['aggregate' => false]);
+                    $options['aggregate'] = $path['aggregate']; // TODO: do we need to unset collapse here?
+                    $options['format'] = $path['format'] ?? $options['format'] ?? false;
+                    $result = Objects::extractNested($data, $path['key'], $options);
+                    if (!is_null($result) && ($result !== []) && ($result !== '')) {
+                        break;
+                    }
+                }
+                return $result;
+            });
+        }
+
+        if (isset($options['collapse'])) {
+            $value = is_array($value) ? array_map(fn($x) => strval($x), $value) : $value;
+            $value = is_array($value) ? implode($options['collapse'], $value) : $value;
+        }
+
+        return $value;
     }
 
     /**
@@ -571,6 +739,9 @@ class Objects extends Hash
                         $value = Objects::extract($root, $options, false);
                     }
                 }
+                elseif ($step === 'get') {
+                    $value = Objects::extract($value, $options, false);
+                }
                 elseif ($reduce) {
                     $value = array_reduce(
                         $value,
@@ -587,7 +758,11 @@ class Objects extends Hash
             }
 
             elseif($step === 'split') {
-                $value = preg_split("/\r?\n\r?/", $value ?? '');
+                if (empty($options)) {
+                    $value = preg_split("/\r?\n\r?/", $value ?? '');
+                } else {
+                    $value = explode($options, $value ?? '');
+                }
             }
 
             elseif (($step === 'ltrunc') && !empty($root)) {

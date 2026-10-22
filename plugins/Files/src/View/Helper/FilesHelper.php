@@ -195,7 +195,7 @@ class FilesHelper extends Helper
         }
 
         elseif (in_array(strtolower($file['type']), Files::$thumbtypes)) {
-            $url = $this->Url->build([
+            $thumbUrl = $this->Url->build([
                 'action' => 'display',
                 '?' => [
                     'root' => $file['root'],
@@ -206,8 +206,20 @@ class FilesHelper extends Helper
                 ]
             ]);
 
-            $out = '<div class="preview">';
-            $out .= '<img src="' . $url . '" alt="">';
+            $displayUrl = $this->Url->build([
+                'action' => 'display',
+                '?' => [
+                    'root' => $file['root'],
+                    'path' => $file['path'],
+                    'filename' => $file['name'],
+                    'format' => 'jpg'
+                ]
+            ]);
+
+            $out = '<div class="preview widget-image-viewer doc-image">';
+            $out .= '<a href="' . $displayUrl . '" target="_blank">';
+            $out .= '<img src="' . $thumbUrl . '" alt="" data-display="' . $displayUrl . '">';
+            $out .= '</a>';
             $out .= '</div>';
             return $out;
         }

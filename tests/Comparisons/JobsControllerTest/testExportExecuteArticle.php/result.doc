@@ -82,29 +82,6 @@
 <w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/><w:keepNext w:val="on"/></w:pPr><w:r><w:rPr><w:vertAlign w:val="superscript"/></w:rPr><w:t>Signatur 1</w:t></w:r></w:p>
 <!--signatur ende-->
 <!--beschreibung anfang-->
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Dieser Artikel versammelt alle möglichen Funktionalitäten und wird für das Testsystem benötigt. Er sollte nur nach Absprache mit dem Entwicklungsteam verändert werden.</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>1)</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text </w:t></w:r><w:r><w:rPr/><w:t>Text Text</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text Text Text</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text </w:t></w:r><w:r><w:rPr><w:b/></w:rPr><w:t>Text </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-zitat"/></w:rPr><w:t>Text</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>Text </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-gesperrt"/></w:rPr><w:t>Text </w:t></w:r><w:r><w:rPr><w:smallCaps/></w:rPr><w:t>Text</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> HYPERLINK "https://www.snerpa.is/net/isl/laxdal.htm" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:rStyle w:val="Hyperlink"/></w:rPr><w:t>LINK</w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:r><w:rPr/><w:t> </w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text Text Text</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Text Text Text</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Literaturverweis im Text: </w:t></w:r><w:r><w:t>Unterautor 1 mit '</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Externe Verweise</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf einen Artikel: Kat.-Nr. </w:t></w:r><w:r><w:rPr/><w:t>Signatur 2</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf eine Inschrift: Kat.-Nr. </w:t></w:r><w:r><w:rPr/><w:t>Signatur 2[A]</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf einen Inschriftenteil: Kat.-Nr. </w:t></w:r><w:r><w:rPr/><w:t>Signatur 2[A.1]</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf eine Fußnote: Kat.-Nr. </w:t></w:r><w:r><w:t>Signatur 2[1]</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Interne Verweise</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf Inschrift B: </w:t></w:r><w:r><w:t>II</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf Inschriftenteil B2: </w:t></w:r><w:r><w:rPr/><w:t>II.II</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf Fußnote a: </w:t></w:r><w:r><w:t>a</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf Fußnote 2: </w:t></w:r><w:r><w:t>3</w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>- auf Marke: </w:t></w:r></w:p>
 
 <w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
 <!--beschreibung ende-->
@@ -112,21 +89,8 @@
 <w:p><w:pPr><w:pStyle w:val="epi-beschreibung"/></w:pPr><w:r><w:rPr/><w:t>Inschrift </w:t></w:r><w:r><w:t>I2</w:t></w:r><w:r><w:rPr/><w:t> nach Quelle Inschriften Teil 2A, Inschrift </w:t></w:r><w:r><w:t>II2</w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/><w:u w:val="single" w:color="black"/></w:rPr><w:t>a</w:t></w:r><w:r><w:rPr/><w:t> nach Quelle Inschrift B Teil 2.</w:t></w:r><w:r><w:t> – </w:t></w:r><w:r><w:rPr/><w:t>Inschrift </w:t></w:r><w:r><w:t>I1</w:t></w:r><w:r><w:rPr/><w:t> ergänzt nach 1235, Inschrift </w:t></w:r><w:r><w:t>I2</w:t></w:r><w:r><w:rPr/><w:t> ergänzt nach 1400, Inschrift </w:t></w:r><w:r><w:t>II1a</w:t></w:r><w:r><w:rPr/><w:t> ergänzt nach 1069, Inschrift </w:t></w:r><w:r><w:t>II2a</w:t></w:r><w:r><w:rPr/><w:t> ergänzt nach 800.</w:t></w:r></w:p>
 <w:p><w:pPr><w:pStyle w:val="epi-leerzeile-10pt"/></w:pPr></w:p>
 <!--angaben ende-->
-<!--gliederung-1 anfang-->
-<w:p><w:pPr><w:pStyle w:val="epi-gliederung-1"/></w:pPr><w:r><w:rPr/><w:t>TEXT </w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr><w:b/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-zitat"/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:rPr><w:u w:val="single"/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-gesperrt"/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr><w:smallCaps/></w:rPr><w:t>TEXT </w:t></w:r><w:r><w:fldChar w:fldCharType="begin"/></w:r><w:r><w:instrText> HYPERLINK "https://www.snerpa.is/net/isl/laxdal.htm" </w:instrText></w:r><w:r><w:fldChar w:fldCharType="separate"/></w:r><w:r><w:rPr><w:rStyle w:val="Hyperlink"/></w:rPr><w:t>LINK </w:t></w:r><w:r><w:fldChar w:fldCharType="end"/></w:r><w:r><w:rPr/><w:t> </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r><w:r><w:rPr/><w:t>TEXT TEXT TEXT TEXT </w:t></w:r><w:r><w:rPr/><w:t>
-</w:t></w:r></w:p>
-<!--gliederung-1 ende-->
+
+
 <!--transkription anfang--><w:tbl><w:tblPr><w:tblW w:w="7920" w:type="dxa"/><w:tblCellMar><w:left w:w="10" w:type="dxa"/><w:right w:w="10" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid><w:gridCol w:w="370"/><w:gridCol w:w="7358"/></w:tblGrid>
 <w:tr><w:tc><w:tcPr><w:tcW w:w="370" w:type="dxa"/><w:gridSpan w:val="2"/></w:tcPr><w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr><w:r><w:t>I. </w:t><w:t>Alias Inschrift A</w:t></w:r></w:p><w:p><w:pPr><w:pStyle w:val="epi-leerzeile-6pt"/></w:pPr></w:p></w:tc></w:tr><w:tr><w:tc><w:tcPr><w:tcW w:w="370" w:type="dxa"/><w:gridSpan w:val="2"/></w:tcPr><w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr><w:r><w:t>A teil 1 Alias</w:t></w:r></w:p></w:tc></w:tr><w:tr>
 <w:tc>
@@ -142,8 +106,8 @@
 </w:tr><w:tr><w:tc><w:tcPr><w:tcMar><w:right w:w="150" w:type="dxa"/></w:tcMar><w:tcW w:w="350" w:type="dxa"/></w:tcPr>
 <w:p><w:pPr><w:pStyle w:val="epi-zeilennummer"/></w:pPr></w:p></w:tc><w:tc><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:spacing w:left="-60"/></w:pPr>
 <w:r><w:rPr/><w:t> </w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〈</w:t></w:r><w:r><w:rPr/><w:t>Nachtrag</w:t></w:r><w:r><w:rPr><w:rFonts w:ascii="Cambria" w:h-ansi="Cambria"/></w:rPr><w:t>〉</w:t></w:r><w:r><w:rPr/><w:t>Abk(ürzung)</w:t></w:r><w:r><w:rPr/><w:t>Ve</w:t></w:r><w:r><w:rPr/><w:t>rsalie Zeilenumbruch </w:t></w:r><w:r><w:rPr/><w:t>‎⁠Zeilenumbruch 1a Einheit⁠</w:t></w:r><w:r><w:rPr/><w:t> </w:t></w:r></w:p></w:tc>
-</w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Hann bjó í Raums </w:t></w:r><w:r><w:t>Worttrenner 1 Einheit</w:t></w:r><w:r><w:rPr/><w:t> dal í Raumsd</w:t></w:r>æ<w:r><w:rPr/><w:t>lafylk</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>2)</w:t></w:r><w:r><w:rPr/><w:t> </w:t></w:r></w:p>
-<w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Alphabetische Fußnote: </w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/></w:rPr><w:t>a)</w:t></w:r><w:r><w:rPr/><w:t>Numerische Fußnote: </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>3)</w:t></w:r></w:p>
+</w:tr></w:tbl><w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Hann bjó í Raums </w:t></w:r><w:r><w:t>Worttrenner 1 Einheit</w:t></w:r><w:r><w:rPr/><w:t> dal í Raumsd</w:t></w:r>æ<w:r><w:rPr/><w:t>lafylk</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>1)</w:t></w:r><w:r><w:rPr/><w:t> </w:t></w:r></w:p>
+<w:p><w:pPr><w:pStyle w:val="epi-transkription"/><w:ind w:left="350"/></w:pPr><w:r><w:rPr/><w:t>Alphabetische Fußnote: </w:t></w:r><w:r><w:rPr><w:vertAlign w:val="superscript"/></w:rPr><w:t>a)</w:t></w:r><w:r><w:rPr/><w:t>Numerische Fußnote: </w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>2)</w:t></w:r></w:p>
 </w:tc>
 </w:tr>
 <w:tr><w:tc><w:tcPr><w:tcW w:w="370" w:type="dxa"/><w:gridSpan w:val="2"/></w:tcPr><w:p><w:pPr><w:pStyle w:val="epi-transkription"/></w:pPr><w:r><w:t>Alias Inschriftenteil 2 A</w:t></w:r></w:p></w:tc></w:tr><w:tr>
@@ -277,7 +241,7 @@
 <w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar></w:tcPr>
 <w:p>
 <w:pPr><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:ind w:right="100"/></w:pPr>
-<w:r><w:t>Wappen 1</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>4)</w:t></w:r>
+<w:r><w:t>Wappen 1</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>3)</w:t></w:r>
 </w:p>
 </w:tc>
 <w:tc>
@@ -299,7 +263,7 @@
 <w:tcPr><w:tcMar><w:bottom w:w="20" w:type="dxa"/></w:tcMar></w:tcPr>
 <w:p>
 <w:pPr><w:pPr><w:pStyle w:val="epi-wappen"/></w:pPr><w:ind w:left="100"/><w:ind w:right="100"/></w:pPr>
-<w:r><w:t>Wappen 2</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>5)</w:t></w:r>
+<w:r><w:t>Wappen 2</w:t></w:r><w:r><w:rPr><w:rStyle w:val="epi-fussnotenzeichen"/><w:i w:val="off"/></w:rPr><w:t>4)</w:t></w:r>
 </w:p>
 </w:tc>
 </w:tr></w:tbl>

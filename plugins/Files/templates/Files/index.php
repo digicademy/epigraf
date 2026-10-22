@@ -76,7 +76,7 @@
            data-model="files">
 		<thead>
 		<tr>
-			<th data-col="name" scope="col"><?= $this->Link->sortLink('name', __('Name')) ?></th>
+			<th data-col="name" scope="col" data-width="300"><?= $this->Link->sortLink('name', __('Name')) ?></th>
 			<th data-col="thumb" scope="col">Thumbnail</th>
 			<th data-col="modified" scope="col"><?= $this->Link->sortLink('modified', __('Modified')) ?></th>
 			<th data-col="size" scope="col"><?= $this->Link->sortLink('size', __('Size')) ?></th>

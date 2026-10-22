@@ -5,6 +5,7 @@
     "scripts": {
         "build": "webpack --mode production --config webpack.config.js && webpack --mode production --config plugins/Widgets/webpack.config.js && webpack --mode production --config plugins/Epi/webpack.config.js && webpack --mode production --config resources/icons/webpack.config.js && webpack --mode production --config plugins/Widgets/src/Frontend/webpack.config.js",
         "devel": "webpack --mode development --config webpack.config.js && webpack --mode development --config plugins/Widgets/webpack.config.js && webpack --mode development --config plugins/Epi/webpack.config.js && webpack --mode development --config resources/icons/webpack.config.js && webpack --mode development --config plugins/Widgets/src/Frontend/webpack.config.js",
+        "stats": "mkdir -p stats && webpack --mode production --config webpack.config.js --json=stats/main.json && webpack --mode production --config plugins/Widgets/webpack.config.js --json=stats/widgets.json && webpack --mode production --config plugins/Epi/webpack.config.js --json=stats/epi.json && webpack --mode production --config resources/icons/webpack.config.js --json=stats/icons.json && webpack --mode production --config plugins/Widgets/src/Frontend/webpack.config.js --json=stats/frontend.json",
         "watch": "webpack --mode development --config webpack.config.js && webpack --mode development --watch --config plugins/Widgets/webpack.config.js & webpack --mode development --watch --config plugins/Epi/webpack.config.js & webpack --mode development --config resources/icons/webpack.config.js && webpack --mode development --watch --config plugins/Widgets/src/Frontend/webpack.config.js",
         "icons": "webpack --mode development --config resources/icons/webpack.config.js",
         "lingui-extract": "lingui extract",
@@ -12,7 +13,8 @@
         "jest": "jest"
     },
     "dependencies": {
-        "@annotorious/annotorious": "^3.8.3",
+        "@annotorious/annotorious": "^3.9.3",
+        "@annotorious/plugin-tools": "^1.6.0",
         "@ckeditor/ckeditor5-basic-styles": "^37.1.0",
         "@ckeditor/ckeditor5-block-quote": "^37.1.0",
         "@ckeditor/ckeditor5-code-block": "^37.1.0",

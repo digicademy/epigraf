@@ -107,7 +107,7 @@ class TaskGenerateItems extends BaseTaskMutate
         $fields['config.params.userprompt'] = [
             'caption' => __('User prompt'),
             'type' => 'textarea',
-            'help' => __('Leave empty to use the default prompt for the workflow. Alternatively, insert the system prompt. The placeholder {{text}} will be replaced by the input value. The placeholder {{rules}} will be replaced by the rules generated from the selected property type.'),
+            'help' => __('Leave empty to use the default prompt for the workflow. Alternatively, insert the user prompt. The placeholder {{text}} will be replaced by the input value. The placeholder {{rules}} will be replaced by the rules generated from the selected property type.'),
             'value' => $this->job->config['params']['userprompt'] ?? ''
         ];
 

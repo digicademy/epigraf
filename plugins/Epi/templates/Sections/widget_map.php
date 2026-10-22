@@ -48,6 +48,7 @@
             [
                 'class' => 'widget-map',
                 'data-mode' => 'view',
+                'data-role' => 'secondary',
                 'data-row-types' => implode(',', $itemTypes),
                 'data-edit-types' => implode(',', $editTypes),
                 'data-segments' => implode(',', $segmentNames)

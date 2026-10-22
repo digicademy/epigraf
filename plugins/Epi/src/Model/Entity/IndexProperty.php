@@ -84,6 +84,7 @@ class IndexProperty extends Property
         'sortkey',
         'related_id',
         'propertytype',
+        'norm_iri',
         'level',
         'lft',
         'rght',

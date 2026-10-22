@@ -457,28 +457,44 @@ export class ReconcileButtonWidget extends ServiceWidget {
         }
     }
 
-    getTargetData() {
-        const docElement = this.widgetElement.closest('.widget-document');
-        if (!docElement) {
+    getTargetInput() {
+        const fieldElement = this.widgetElement.closest('[data-row-field]');
+        if (!fieldElement) {
             return;
         }
 
-        const fieldElement = docElement.querySelector('[data-row-field=norm_data] textarea');
-        return Utils.getInputValue(fieldElement);
+        return fieldElement.querySelector('textarea, input[type="text"]');
+    }
+
+    getTargetFieldName() {
+        const fieldElement = this.widgetElement.closest('[data-row-field]');
+        if (!fieldElement) {
+            return;
+        }
+        return fieldElement.dataset.rowField;
+    }
+
+    getTargetData() {
+        const fieldInput = this.getTargetInput();
+        if (!fieldInput) {
+            return;
+        }
+        return Utils.getInputValue(fieldInput);
     }
 
     setTargetData(value) {
-        const docElement = this.widgetElement.closest('.widget-document');
-        if (!docElement) {
+        const fieldInput = this.getTargetInput();
+        if (!fieldInput) {
             return;
         }
 
-        const fieldElement = docElement.querySelector('[data-row-field=norm_data] textarea');
-        return Utils.setInputValue(fieldElement, value);
+        // const fieldElement = docElement.querySelector('[data-row-field=norm_data] textarea');
+        return Utils.setInputValue(fieldInput, value);
     }
 
     openPopup(serviceConfig) {
 
+        // Todo: Pass database name, propertytype name, and field name
         let url = '/services/reconcile?q='
             + encodeURIComponent(this.getTerm(serviceConfig))
             + '&provider=' + serviceConfig['provider']
@@ -498,24 +514,34 @@ export class ReconcileButtonWidget extends ServiceWidget {
 
             selectOnClick: true,
             onSelect: (button) => {
-                this.applyValue(button.dataset.value);
+                this.applyValue(button);
             }
         };
 
         new SelectWindow(options, this.getFrame());
     }
 
-    applyValue(value) {
-        let normData = this.getTargetData();
+    mergeValue(value) {
+        let old = this.getTargetData();
+
         const prefix = Utils.getPrefix(value);
 
-        normData = normData.split('\n').filter(line =>
+        old = old.split('\n').filter(line =>
             line !== '' && !line.startsWith(prefix + ':')
         );
-        normData.push(value);
-        normData = normData.join('\n');
+        old.push(value);
+        old = old.join('\n');
+        return old;
+    }
 
-        this.setTargetData(normData);
+    applyValue(button) {
+        let value = button.dataset.value;
+
+        const targetFieldName = this.getTargetFieldName();
+        if (targetFieldName === 'norm_data') {
+            value = this.mergeValue(value);
+        }
+        this.setTargetData(value);
     }
 
 }

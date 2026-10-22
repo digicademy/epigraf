@@ -30,65 +30,53 @@
       <articles_count>0</articles_count>
       <keywords>Material,Werkstoff</keywords>
     </property>
-    <property>
+    <property norm_iri="kohlermaterial-ohne">
       <lemma>Köhlermaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>kohlermaterial-ohne</norm_iri>
     </property>
-    <property>
+    <property norm_iri="kohlermaterial-mit">
       <lemma>Köhlermaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>kohlermaterial-mit</norm_iri>
     </property>
-    <property>
+    <property norm_iri="kohlermaterial-3">
       <lemma>Kohlermaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>kohlermaterial-3</norm_iri>
     </property>
-    <property>
+    <property norm_iri="lampematerial">
       <lemma>Lampematerial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>lampematerial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="siehe-hallerlampematerial">
       <lemma>siehe</lemma>
       <articles_count>0</articles_count>
-      <norm_iri>siehe-hallerlampematerial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="hallermaterial">
       <lemma>Hallermaterial</lemma>
       <articles_count>0</articles_count>
-      <norm_iri>hallermaterial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="hartes-hallermaterial">
       <lemma>hartes Hallermaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>hartes-hallermaterial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="hallersteinmaterial">
       <lemma>Hallersteinmaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>hallersteinmaterial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="hallertonmaterial">
       <lemma>Hallertonmaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>hallertonmaterial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="weiches-hallermaterial">
       <lemma>weiches Hallermaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>weiches-hallermaterial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="hallerlampematerial">
       <lemma>Hallerlampematerial</lemma>
       <articles_count>0</articles_count>
-      <norm_iri>hallerlampematerial</norm_iri>
     </property>
-    <property>
+    <property norm_iri="hallerledermaterial">
       <lemma>Hallerledermaterial</lemma>
       <articles_count>1</articles_count>
-      <norm_iri>hallerledermaterial</norm_iri>
     </property>
   </properties>
   <pagination>

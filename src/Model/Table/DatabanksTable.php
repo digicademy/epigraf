@@ -13,6 +13,7 @@ namespace App\Model\Table;
 use App\Model\Entity\Databank;
 use Cake\Core\Plugin;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Exception\BadRequestException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\Validation\Validator;
@@ -242,13 +243,11 @@ class DatabanksTable extends BaseTable
     }
 
     /**
-     * Activates the given project database for further queries.
+     * Activates the given project database for further queries
      *
-     * Returns the databank entity.
-     * Throws a BadRequestException if the database is not available.
-     *
-     * @param $dbname
-     * @return Databank
+     * @param string $dbname
+     * @throws BadRequestException Throws a BadRequestException if the database is not available.
+     * @return Databank Returns the databank entity.
      */
     public function activateDatabase($dbname)
     {

@@ -206,8 +206,8 @@ class XmlMunge
      * Unnest tags
      *
      *
-     * Move tags up if they are the last child of their parent
-     * and the parent has the same tag name.
+     * Remove nested elements that have the same tag name as their parent,
+     * keeping their content in place (e.g. a 'quot' tag inside a 'quot' tag).
      *
      * Remove all empty tags.
      *
@@ -243,12 +243,13 @@ class XmlMunge
                             $element->parentNode->removeChild($element);
                         }
 
-                        // Move nested elements up
-                        elseif (($element->nextSibling == null) && ($element->parentNode->nodeName === $element->nodeName)) {
-                            $element->parentNode->parentNode->insertBefore($element, $element->parentNode->nextSibling);
-                            if (!$element->parentNode->hasChildNodes()) {
-                                $element->parentNode->parentNode->removeChild($element->parentNode);
+                        // Unwrap nested elements with the same name as their parent, even if not the last child
+                        elseif ($element->parentNode->nodeName === $element->nodeName) {
+                            $parent = $element->parentNode;
+                            while ($element->firstChild) {
+                                $parent->insertBefore($element->firstChild, $element);
                             }
+                            $parent->removeChild($element);
                         }
                     }
                 }

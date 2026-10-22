@@ -110,6 +110,36 @@ Make sure to configure the articles and items to show geo data. For example, if 
 
 Make sure to configure the namespaces within the property type configuration to generate links.
 
+## Example: Linking Zotero
+
+On Zotero, create a new group with your literature.
+Set the group ID (you will find it in the URL of the group) as the type value.
+Get an API accesstoken by adding an Application on https://www.zotero.org/settings/security.
+Set your Zotero API access token in the accesstoken value.
+
+The result will be entered into the field with the service configuration.
+Therefore, place services for norm_data fields in the norm_data field configuration.
+If you want to fill a field such as lemma with the composed bibliographic reference,
+add a service configuration to the respective target field. Set the key to `preview` for retrieving the preview instead of the ID.
+
+
+``` plaintext
+ "services": {
+        "zotero": {
+          "caption": "Reconcile AAT",
+          "service": "reconcile",
+          "provider": "zotero",
+          "type": "6681077",
+          "input": "name",
+          "key": "value",
+          "style": "apa",
+          "accesstoken": "YOUR_ACCESS_TOKEN"
+        }
+  }
+```
+
+Make sure to configure the namespaces within the property type configuration to generate links.
+
 # How to configure a service for article data?
 
 Epigraf implements summarising, coding and annotating text using a Large Language Model.

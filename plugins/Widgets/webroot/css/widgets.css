@@ -13,7 +13,7 @@
 @import 'image-viewer.css';
 @import 'map.css';
 @import 'dropzone/dropzone.css';
-@import 'annotorious/annotorious.css';
+@import 'annotorious/annotorious.bundle.css';
 @import 'documents.css';
 
 /* Widget scrollbox */

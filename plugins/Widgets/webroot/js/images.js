@@ -7,7 +7,8 @@
  *
  */
 
-import {createImageAnnotator} from './annotorious/annotorious.bundle.js';
+import {createImageAnnotator, mountAnnotoriousTools} from './annotorious/annotorious.bundle.js';
+
 import {BaseWidget} from '/js/base.js';
 import {Accordion, ResizableSidebar} from './layout.js';
 import Utils from "/js/utils.js";
@@ -72,6 +73,7 @@ export class ImagesWidget extends BaseWidget {
         this.loader = undefined;
 
         // State
+        this.sourceImageList = undefined;
         this.items = undefined;
         this.currentPosition = undefined;
         this.options = {title: "Image viewer"};
@@ -127,7 +129,7 @@ export class ImagesWidget extends BaseWidget {
             '        <div class="overlay-header-buttons overlay-header-buttons-right"></div>\n' +
             '    </div>\n' +
             '    <div class="overlay-content widget-accordion">\n' +
-            '        <nav class="sidebar sidebar-left sidebar-size-2 accordion-item ' + leftsidebar + '" data-accordion-item="overlay-sidebar-left">\n' +
+            '        <nav class="sidebar sidebar-left sidebar-size-2 accordion-item ' + leftsidebar + '" data-accordion-item="overlay-sidebar-left" data-ui-key="images-sidebar-left">\n' +
             '            <div class="sidebar-content"></div>\n' +
             '        </nav>\n' +
             '\n' +
@@ -137,10 +139,10 @@ export class ImagesWidget extends BaseWidget {
             '                <img alt="" src="" class="">\n' +
             '                <div class="loader"></div>\n' +
             '            </div>\n' +
-            '            <div class="overlay-image-next fontawesome">\uf054</div>"\n' +
+            '            <div class="overlay-image-next fontawesome">\uf054</div>\n' +
             '        </div>\n' +
-            '        <div class="metadata-container sidebar sidebar-right accordion-item" data-accordion-item="overlay-sidebar-right">\n' +
-            '            <div class="metadata-content"></div>\n' +
+            '        <div class="metadata-container sidebar sidebar-right accordion-item" data-accordion-item="overlay-sidebar-right" data-ui-key="images-sidebar-right">\n' +
+            '            <div class="sidebar-content"></div>\n' +
             '        </div>\n' +
             '    </div>\n' +
             '    <footer class="overlay-footer">\n' +
@@ -162,6 +164,24 @@ export class ImagesWidget extends BaseWidget {
         Utils.listenEvent(document, 'keyup', event => this.onKeyUp(event));
 
         return overlay;
+    }
+
+
+    /**
+     * Get the container for image annotations in the metadata sidebar.
+     *
+     * @return {*}
+     */
+    getMetadataContainer(purpose) {
+        let elm = this.overlay.querySelector('.metadata-container .sidebar-content .metadata-content-' + purpose);
+        if (!elm) {
+            const container = this.overlay.querySelector('.metadata-container .sidebar-content');
+            if (!container) {
+                return;
+            }
+            elm = container.appendChild(Utils.spawnFromString('<div class="metadata-content-' + purpose + '"></div>'));
+        }
+        return elm;
     }
 
     /**
@@ -227,8 +247,8 @@ export class ImagesWidget extends BaseWidget {
      * @param {Event} event
      */
     onKeyUp(event) {
-        // Don't handle keys if typing in a text field
-        if (event.target.closest('textarea, input, [contenteditable]')) return;
+        // Don't handle keys if typing in a form field
+        if (event.target.closest('textarea, input, select, [contenteditable]')) return;
 
         // "A" key: cycle annotation mode ──
         if (event.key === 'a' || event.key === 'A') {
@@ -289,15 +309,16 @@ export class ImagesWidget extends BaseWidget {
             this.showOverlay();
 
             // Construct image list
-            const imageList = selected.closest(this.config.containerSelector);
-            if (imageList) {
-                this.loadItems(imageList);
-                const siblings = imageList.querySelectorAll(this.config.imageSelector);
+            this.sourceImageList = selected.closest(this.config.containerSelector);
+            if (this.sourceImageList) {
+                this.loadItems(this.sourceImageList);
+                const siblings = this.sourceImageList.querySelectorAll(this.config.imageSelector);
                 this.currentPosition = Array.from(siblings).findIndex(elm => selected === elm);
             } else {
                 this.currentPosition = 0;
                 this.items = [selected];
             }
+            this.updateNavigation();
         }
 
         // Load image
@@ -439,6 +460,9 @@ export class ImagesWidget extends BaseWidget {
                 }
             }
             this.annotator.loadAnnotations(data);
+            if (this.config.edit && Utils.isWideScreen()) {
+                this.sideBarRight.showSidebar();
+            }
         }
 
         this.overlay.classList.toggle('annotation-allowed', this.annoType !== undefined);
@@ -480,6 +504,9 @@ export class ImagesWidget extends BaseWidget {
         }
     }
 
+    /**
+     * Start annotation mode.
+     */
     startAnnotationMode() {
         this.navigator.disable();
         this.annotator.enable();
@@ -540,10 +567,16 @@ export class ImagesWidget extends BaseWidget {
             btn.classList.toggle('tool-active', btn.dataset.tool === currentTool);
         });
 
-        // Also toggle the main annotate button
+        // Toggle the main annotate button
         const annotateBtn = this.overlay.querySelector('.btn-annotate');
         if (annotateBtn) {
             annotateBtn.classList.toggle('tool-active', this.annotator.isActive());
+        }
+
+        // Label visibility
+        const labelBtn = this.overlay.querySelector('.btn-toggle-labels');
+        if (labelBtn) {
+            labelBtn.classList.toggle('tool-active', this.annotator.showLabels);
         }
     }
 
@@ -557,6 +590,7 @@ export class ImagesWidget extends BaseWidget {
      * - title: A string to be shown as the image title
      * - footer: A string to be shown in the footer (e.g. copyright)
      * - element: An HTMLElement to be shown in the metadata sidebar
+     * - article: An HTMLElement with article data to be shown in the metadata sidebar
      *
      * @param {HTMLElement} selected
      * @return {{}}
@@ -569,6 +603,7 @@ export class ImagesWidget extends BaseWidget {
         if (metadataElm) {
             data['title'] = metadataElm.querySelector('[data-row-field="file"]').textContent;
             data['element'] = metadataElm.cloneNode(true);
+            data['article'] = this.createMetatableForArticle(selected);
             return data;
         }
 
@@ -581,18 +616,21 @@ export class ImagesWidget extends BaseWidget {
         // Title and footer
         let header = '';
         header += img.getAttribute('alt') || '';
-        header += '. ' + img.getAttribute('title') || '';
+        const title = img.getAttribute('title');
+        if (title) {
+            header += '. ' + title;
+        }
         data['title'] = header;
 
         if (img.dataset.copyright) {
             data['footer'] = img.dataset.copyright || '';
         }
 
-        // Metadata
+        // Image metadata from the data attribute
         if (img.dataset.metadata) {
             try {
                 const metadata = JSON.parse(img.dataset.metadata);
-                data['element'] = this.createMetaTable(metadata);
+                data['element'] = this.createMetatableForImage(metadata);
             } catch (e) {
                 console.error('Invalid JSON:', e);
             }
@@ -602,47 +640,74 @@ export class ImagesWidget extends BaseWidget {
     }
 
     /**
-     * Create a table from an object
+     * Create a table for image metadata
      *
      * @param {Object} data An object with keys/value pairs to be displayed in a table
-     * @returns {HTMLTableElement} The generated table
+     * @returns {HTMLElement} The generated table
      */
-    createMetaTable(data) {
-        const table = document.createElement('table');
-        table.classList.add('doc-image-metadata');
-        const tbody = document.createElement('tbody');
-        table.appendChild(tbody);
+    createMetatableForImage(data) {
 
-        // Iterate over own enumerable properties only
-        for (const key in data) {
-            if (Object.prototype.hasOwnProperty.call(data, key)) {
-                const row = document.createElement('tr');
+        const editor = new MetadataEditor(
+            {},
+            {
+                inputs: false,
+                autoFields: true,
+                hidden: false,
+                editable: false,
+                tableClass: 'doc-image-metadata'
+            }
+        );
 
-                const keyCell = document.createElement('td');
-                keyCell.textContent = key;
-                row.appendChild(keyCell);
+        editor.setValues(data);
+        return editor.getElement();
+    }
 
-                const valueCell = document.createElement('td');
+    /**
+     * Create a table with article information
+     *
+     * @param {HTMLElement} selected The selected image
+     * @return {HTMLElement} The generated table
+     */
+    createMetatableForArticle(selected) {
+        const editor = new MetadataEditor(
+            {},
+            {
+                inputs: false,
+                autoFields: true,
+                hidden: false,
+                editable: false,
+                tableClass: 'doc-image-metadata'
+            }
+        );
 
-                // Convert value to string
-                let value = data[key];
-                if (value === null || value === undefined) {
-                    valueCell.textContent = '';
-                } else if (typeof value === 'object') {
-                    // For objects/arrays, stringify prettily
-                    valueCell.textContent = JSON.stringify(value, null, 2);
-                } else {
-                    valueCell.textContent = value.toString();
+        let data = {};
+        if (this.sourceImageList) {
+            /** @type {DocumentWidget} */
+            const docWidget = this.getWidget(this.sourceImageList, 'document');
+            if (docWidget) {
+                // TODO: get keys from config, use PEL keys
+                const extractKeys = {
+                    'Transcriptions' : '[data-row-table="items"][data-row-type="dio-inscriptions-raw"] [data-row-field="content"] .doc-field-content'
                 }
-                row.appendChild(valueCell);
 
-                tbody.appendChild(row);
+                for (const [label, key]  of Object.entries(extractKeys)) {
+                    const valuesList = docWidget.extractValues(key);
+                    data[label] = valuesList.join("<br>") || "";
+
+                }
             }
         }
 
-        return table;
+        editor.setValues(data);
+        return editor.getElement();
     }
 
+
+    /**
+     * Show metadata in the overlay
+     *
+     * @param {HTMLElement} selected The selected image
+     */
     showMetadata(selected) {
         const metadata = this.getMetadata(selected);
 
@@ -663,11 +728,18 @@ export class ImagesWidget extends BaseWidget {
             footerElement.innerText = metadata['footer'] || '';
         }
 
-        // Change detail view
-        const metadataElement = this.overlay.querySelector('.metadata-content');
-        if (metadataElement && metadata['element']) {
-            metadataElement.replaceChildren(metadata['element']);
-        } else {
+        // Change detail view for image metadata
+        let hasMetadata = false;
+        if (this.metadataImageContainer && metadata['element']) {
+            hasMetadata = true;
+            this.metadataImageContainer.replaceChildren(metadata['element']);
+        }
+        if (this.metadataArticleContainer  && metadata['article']) {
+            hasMetadata = true;
+            this.metadataArticleContainer.replaceChildren(metadata['article']);
+        }
+
+        if (!hasMetadata) {
             this.sideBarRight.hideSidebar(true);
         }
 
@@ -753,6 +825,9 @@ export class ImagesWidget extends BaseWidget {
         this.image_viewport = this.overlay.querySelector('.image-viewport');
         this.image_image = this.overlay.querySelector('img');
         this.loader = this.overlay.querySelector('.loader');
+        this.metadataImageContainer = this.getMetadataContainer('image');
+        this.metadataAnnoContainer = this.getMetadataContainer('annos');
+        this.metadataArticleContainer = this.getMetadataContainer('article');
 
         // Sidebars
         const rightSidebarElement = this.overlay.querySelector('.metadata-container');
@@ -778,7 +853,10 @@ export class ImagesWidget extends BaseWidget {
 
         // Attach sub-components
         this.navigator.attach(this.image_container, this.image_viewport, this.image_image);
-        this.annotator.attach(this.image_viewport, this.image_image, (data) => this.saveAnnotations(data));
+        this.annotator.attach(
+            this.image_viewport, this.image_image, this.metadataAnnoContainer,
+            (data) => this.saveAnnotations(data)
+        );
 
         // Image load → fit + re-init annotation layer
         this.image_image.addEventListener('load', () => this.onImageLoad());
@@ -909,6 +987,18 @@ export class ImagesWidget extends BaseWidget {
                     this.updateToolButtons();
                 }
             },
+            'drawpath': {
+                class: 'btn-draw-line annotation-tool',
+                title: 'Draw path (`a` key to cycle)',
+                ariaLabel: 'Path tool',
+                symbol: '\uf4d7',
+                position: 'bottom',
+                data: {tool: 'path'},
+                click: () => {
+                    this.annotator.setDrawingTool('path');
+                    this.updateToolButtons();
+                }
+            },
             'deleteselected': {
                 class: 'btn-delete-annotation annotation-tool',
                 title: 'Delete selected annotation (Del or Backspace)',
@@ -929,6 +1019,18 @@ export class ImagesWidget extends BaseWidget {
             //         }
             //     }
             // },
+
+            'togglelabels': {
+                class: 'btn-toggle-labels annotation-tool',
+                title: 'Show/hide annotation labels',
+                ariaLabel: 'Toggle annotation labels',
+                symbol: '\uf02b',          // FontAwesome tag
+                position: 'bottom',
+                click: () => {
+                    this.annotator.setLabelsVisible();
+                    this.updateToolButtons();
+                }
+            },
 
             // Navigation tools (delegated to navigator) ──
             'rotateleft': {
@@ -1309,11 +1411,18 @@ export class ImageAnnotator {
         this.viewport = null;
         this.image = null;
         this.saveCallback = null;
+        this.selectCallback = null;
         this.editable = true;
 
         this.annotator = null;
         this.active = false;
         this.currentData = {};
+
+        this.annoContainer = null;
+        this.metadataEditor = this.createMetatableForAnnotation();
+
+        // When true, committed values are not propagated to the save callback
+        this._suppressSave = false;
 
         this._savedImgStyle = null;
         this._savedViewportStyle = null;
@@ -1321,14 +1430,34 @@ export class ImageAnnotator {
         this.selectedAnnotation = null;
 
         //Tool cycling
-        this.tools = ['rectangle', 'polygon'];
+        this.tools = ['rectangle', 'polygon', 'path'];
         this.currentTool = null;
+
+        // Annotation labels
+        this.labelLayer = null;      // Overlay div holding the tags
+        this.showLabels = true;      // Toggled by the toolbar button
+        this.labelField = 'text';    // Which metadata field to display
+        this.labelMaxLength = 24;    // Truncate longer values
     }
 
-    attach(viewport, image, saveCallback) {
+    /**
+     * Attach the image annotator to the image viewer
+     *
+     * @param {HTMLElement} viewport
+     * @param {HTMLElement} image
+     * @param {HTMLElement} annoContainer Container for the metadata form (right sidebar)
+     * @param {Function} saveCallback     Called with the annotation list whenever it changes
+     * @param {Function} [selectCallback] Called with the selected annotation (or null)
+     */
+    attach(viewport, image, annoContainer, saveCallback, selectCallback = null) {
         this.viewport = viewport;
         this.image = image;
+        this.annoContainer = annoContainer;
         this.saveCallback = saveCallback;
+        this.selectCallback = selectCallback;
+
+        this.metadataEditor.setEditable(this.editable);
+        this.metadataEditor.attach(annoContainer);
     }
 
     isActive() {
@@ -1354,6 +1483,8 @@ export class ImageAnnotator {
      */
     disable() {
         if (!this.active) return;
+
+        this.flushMetadata(false);
         this.saveAnnotations();
         this._destroyAnnotorious();
         this.active = false;
@@ -1418,6 +1549,7 @@ export class ImageAnnotator {
         this.active = false;
         this.viewport = null;
         this.image = null;
+        this.metadataEditor.destroy();
     }
 
 
@@ -1429,9 +1561,12 @@ export class ImageAnnotator {
     deleteSelected() {
         if (!this.annotator || !this.selectedAnnotation) return false;
 
+        this.metadataEditor.cancelPending();
         this.annotator.removeAnnotation(this.selectedAnnotation);
         this.selectedAnnotation = null;
-        if (this.annotator) this._downcastAnnotorious();
+        this.closeMetadata();
+        this._downcastAnnotorious();
+        this.saveAnnotations();
         return true;
     }
 
@@ -1440,9 +1575,13 @@ export class ImageAnnotator {
      */
     deleteAll() {
         if (!this.annotator) return;
+
+        this.metadataEditor.cancelPending();
         this.annotator.clearAnnotations();
         this.selectedAnnotation = null;
-        if (this.annotator) this._downcastAnnotorious();
+        this.closeMetadata();
+        this._downcastAnnotorious();
+        this.saveAnnotations();
     }
 
     /**
@@ -1456,9 +1595,61 @@ export class ImageAnnotator {
 
 
     /**
-     * Open annotation metadata input
+     * Create the metadata editor for the annotation fields
      *
-     * @return {boolean}
+     * @return {MetadataEditor}
+     */
+    createMetatableForAnnotation() {
+
+        // The available annotation fields, rendered by the MetadataEditor
+        // TODO: Get from types config
+        this.annoFields = {
+            type : {
+                caption: "Annotation type",
+                input: "select",
+                options: {"region" : "Region", "line": "Line", "baseline": "Baseline", "glyph": "Glyph"}
+            },
+            order: {
+                caption : "Reading order",
+                input : "input"
+            },
+            text: {
+                caption : "Recognized text",
+                input : "textarea",
+                rows: 3
+            },
+            comment: {
+                caption : "Comments",
+                input : "textarea",
+                rows: 3
+            }
+
+        };
+
+        // The purpose used to store the field values in the annotation body
+        this.metadataPurpose = 'metadata';
+
+        const editor = new MetadataEditor(
+            this.annoFields,
+            {
+                tableClass: 'doc-image-metadata',
+                editable: this.editable,
+                autoCommitDelay: 1000,
+            }
+        );
+
+        editor.onChange = (values) => this.commitMetadata(values);
+        return editor;
+    }
+
+    //
+    // ── Metadata ───────────────────────────────────────────────────────
+    //
+
+    /**
+     * Show the metadata form and load the values of the selected annotation
+     *
+     * @return {boolean} Whether the form is shown
      */
     editMetadata() {
         if (!this.annotator || !this.selectedAnnotation) {
@@ -1466,19 +1657,78 @@ export class ImageAnnotator {
             return false;
         }
 
+        const editor = this.metadataEditor;
+        if (!editor.isAttached()) {
+            editor.attach(this.annoContainer);
+        }
+        if (!editor.isAttached()) {
+            return false;
+        }
+
+        editor.setEditable(this.editable);
+        editor.setValues(
+            this.getMetadata(this.selectedAnnotation, this.metadataPurpose),
+            this.selectedAnnotation.id
+        );
+        editor.show();
+
+        if (this.annoContainer) {
+            this.annoContainer.classList.add('has-annotation');
+        }
+        return true;
     }
 
     /**
-     * Close annotation metadata input
+     * Hide the metadata form
      */
     closeMetadata() {
+        this.metadataEditor.hide();
+        this.metadataEditor.clear();
 
+        if (this.annoContainer) {
+            this.annoContainer.classList.remove('has-annotation');
+        }
+    }
+
+    /**
+     * Write the values of the metadata form into the selected annotation
+     *
+     * Called by the editor whenever the values changed.
+     *
+     * @param {Object} values
+     * @return {boolean} Whether the annotation was changed
+     */
+    commitMetadata(values) {
+        if (!this.annotator || !this.selectedAnnotation || !this.editable) return false;
+
+        if (!this.updateMetadata(values, this.metadataPurpose)) {
+            return false;
+        }
+
+        this._downcastAnnotorious();
+        if (!this._suppressSave) {
+            this.saveAnnotations();
+        }
+        return true;
+    }
+
+    /**
+     * Commit pending edits, e.g. before the selection or the image changes
+     *
+     * @param {boolean} [save] Whether to propagate the change to the save callback
+     */
+    flushMetadata(save = true) {
+        this._suppressSave = !save;
+        this.metadataEditor.flush();
+        this._suppressSave = false;
     }
 
     /**
      * Add or replace metadata on the selected annotation
      *
-     * @param {Object} fields  e.g. { label: 'Tree', note: 'old oak' }
+     * @param {Object} fields e.g. {type: 'glyph', text: 'ABC'}
+     * @param {string} purpose
+     * @return {boolean} Whether the annotation was changed
      */
     updateMetadata(fields, purpose = 'metadata') {
         if (!this.annotator || !this.selectedAnnotation) return false;
@@ -1488,13 +1738,20 @@ export class ImageAnnotator {
         // Remove old metadata for the given purpose
         const annoBody = (anno.body || []).filter(b => b.purpose !== purpose);
 
-        annoBody.push({
-            type: 'TextualBody',
-            purpose: purpose,
-            value: JSON.stringify(fields)
-        });
+        if (fields && Object.keys(fields).length) {
+            annoBody.push({
+                type: 'TextualBody',
+                purpose: purpose,
+                value: JSON.stringify(fields)
+            });
+        }
 
-        const updated = { ...anno, body: annoBody };
+        // Nothing changed? Don't touch Annotorious (avoids re-render / deselect)
+        if (JSON.stringify(anno.body || []) === JSON.stringify(annoBody)) {
+            return false;
+        }
+
+        const updated = {...anno, body: annoBody};
 
         this.annotator.updateAnnotation(updated);
         this.selectedAnnotation = updated;
@@ -1503,11 +1760,46 @@ export class ImageAnnotator {
 
     /**
      * Read metadata back from an annotation
+     *
+     * @param {Object} annotation
+     * @param {string} purpose
+     * @return {Object}
      */
     getMetadata(annotation, purpose = 'metadata') {
-        const body = (annotation.body || []).find(b => b.purpose === purpose);
+        const body = (annotation?.body || []).find(b => b.purpose === purpose);
         if (!body) return {};
-        try { return JSON.parse(body.value); } catch { return {}; }
+        try {
+            const data = JSON.parse(body.value);
+            return (data && (typeof data === 'object')) ? data : {};
+        } catch {
+            return {};
+        }
+    }
+
+    //
+    // ── Selection ──────────────────────────────────────────────────────
+    //
+
+    /**
+     * Track the selection and update the metadata form
+     *
+     * @param {Object|null} annotation
+     * @private
+     */
+    _selectAnnotation(annotation) {
+        // Commit edits belonging to the previously selected annotation
+        if (!this.selectedAnnotation || !annotation || (this.selectedAnnotation.id !== annotation.id)) {
+            this.flushMetadata();
+        }
+
+        this.selectedAnnotation = annotation || null;
+        this._renderLabels();
+
+        if (this.selectCallback) {
+            this.selectCallback(this.selectedAnnotation);
+        }
+
+        this.editMetadata();
     }
 
     /**
@@ -1528,27 +1820,44 @@ export class ImageAnnotator {
      *
      * Saves the current annotations and loads the new ones.
      *
-     * @param {string} key
      * @param {Object} data
      */
     loadAnnotations(data) {
         if (this.annotator) {
+            this.flushMetadata(false);
             this.saveAnnotations();
             this._destroyAnnotorious();
         }
 
         this.currentData = data;
         this.selectedAnnotation = null;
+        this.closeMetadata();
     }
 
+    /**
+     * Set the editable state of the image
+     *
+     * @param {boolean} editable
+     */
     setEditable(editable) {
-        if (!this.annotator) {
-            return;
-        }
+        if (!this.annotator) return;
 
         this.editable = editable;
+        this.metadataEditor.setEditable(editable);
         this.annotator.setDrawingEnabled(editable);
         this.annotator.setUserSelectAction(editable ? 'EDIT' : 'NONE');
+    }
+
+    /**
+     * Show or hide the annotation labels
+     *
+     * @param {boolean} [visible] Omit to toggle
+     * @return {boolean} The new state
+     */
+    setLabelsVisible(visible) {
+        this.showLabels = (visible === undefined) ? !this.showLabels : !!visible;
+        this._renderLabels();
+        return this.showLabels;
     }
 
     /**
@@ -1588,6 +1897,8 @@ export class ImageAnnotator {
             drawingEnabled: this.editable,
             userSelectAction: this.editable ? 'EDIT' : 'NONE'
         });
+        mountAnnotoriousTools(this.annotator);
+        // console.log(this.annotator.listDrawingTools());
 
         // Position wrapper where the image was
         const wrapper = img.parentElement;
@@ -1600,23 +1911,37 @@ export class ImageAnnotator {
             wrapper.style.overflow = 'visible';
         }
 
+        // Label overlay
+        this._createLabelLayer();
+
         // Track selection
         this.selectedAnnotation = null;
+        this.closeMetadata();
 
         this.annotator.on('selectionChanged', (annotations) => {
-            this.selectedAnnotation = (annotations && annotations.length > 0)
-                ? annotations[0]
-                : null;
-
-            this.editMetadata();
+            this._selectAnnotation((annotations && annotations.length > 0) ? annotations[0] : null);
         });
 
-        // Load & auto-save
         this._upcastAnnotorious();
-        this.annotator.on('createAnnotation', () => this._downcastAnnotorious());
-        this.annotator.on('updateAnnotation', () => this._downcastAnnotorious());
+        this._renderLabels();
+
+        this.annotator.on('createAnnotation', (annotation) => {
+            this._downcastAnnotorious();
+            this._selectAnnotation(annotation || this.selectedAnnotation);
+            this.saveAnnotations();
+            this.metadataEditor.focus();
+        });
+
+        this.annotator.on('updateAnnotation', (annotation) => {
+            if (annotation && this.selectedAnnotation && (annotation.id === this.selectedAnnotation.id)) {
+                this.selectedAnnotation = annotation;
+            }
+            this._downcastAnnotorious();
+        });
+
         this.annotator.on('deleteAnnotation', () => {
             this.selectedAnnotation = null;
+            this.closeMetadata();
             this._downcastAnnotorious();
         });
 
@@ -1636,8 +1961,13 @@ export class ImageAnnotator {
     _destroyAnnotorious() {
         if (!this.annotator) return;
 
+        // Keep unsaved form input
+        this.flushMetadata(false);
+
         this._downcastAnnotorious();
+        this._destroyLabelLayer();
         this.selectedAnnotation = null;
+        this.closeMetadata();
 
         const img = this.image;
         const vp = this.viewport;
@@ -1685,6 +2015,7 @@ export class ImageAnnotator {
         } else {
             this.currentData = this.annotator.getAnnotations();
         }
+        this._renderLabels();
     }
 
     /**
@@ -1697,6 +2028,807 @@ export class ImageAnnotator {
         if (this.currentData && this.currentData.length) {
             this.annotator.setAnnotations(this.currentData);
         }
+    }
+
+    /**
+     * Create the overlay that holds the annotation tags
+     *
+     * Lives inside the Annotorious wrapper, so it shares the image's
+     * coordinate system and is removed together with the annotator.
+     *
+     * @private
+     */
+    _createLabelLayer() {
+        this._destroyLabelLayer();
+
+        const wrapper = this.image ? this.image.parentElement : null;
+        if (!wrapper) return;
+
+        const layer = document.createElement('div');
+        layer.className = 'anno-label-layer';
+
+        // Inline essentials so the layer works even without the stylesheet
+        layer.style.position = 'absolute';
+        layer.style.left = '0';
+        layer.style.top = '0';
+        layer.style.width = '100%';
+        layer.style.height = '100%';
+        layer.style.pointerEvents = 'none';
+        layer.style.overflow = 'visible';
+
+        wrapper.appendChild(layer);
+        this.labelLayer = layer;
+    }
+
+    /**
+     * Remove the label overlay
+     *
+     * @private
+     */
+    _destroyLabelLayer() {
+        if (this.labelLayer) {
+            this.labelLayer.remove();
+            this.labelLayer = null;
+        }
+    }
+
+    /**
+     * Redraw all labels from the current annotation list
+     *
+     * @private
+     */
+    _renderLabels() {
+        const layer = this.labelLayer;
+        const img = this.image;
+        if (!layer || !img) return;
+
+        if (!this.showLabels) {
+            layer.replaceChildren();
+            return;
+        }
+
+        const naturalW = img.naturalWidth;
+        const naturalH = img.naturalHeight;
+        if (!naturalW || !naturalH) return;
+
+        // Annotation coordinates are natural image pixels
+        const scaleX = img.offsetWidth / naturalW;
+        const scaleY = img.offsetHeight / naturalH;
+
+        const annotations = this.annotator ? (this.annotator.getAnnotations() || []) : [];
+        const selectedId = this.selectedAnnotation ? this.selectedAnnotation.id : null;
+        const fragment = document.createDocumentFragment();
+
+        annotations.forEach(annotation => {
+            const text = this._getLabelText(annotation);
+            if (!text) return;
+
+            const bounds = this._getAnnotationBounds(annotation);
+            if (!bounds) return;
+
+            const tag = document.createElement('span');
+            tag.className = 'anno-label';
+            if (annotation.id === selectedId) {
+                tag.classList.add('anno-label-selected');
+            }
+
+            tag.textContent = (text.length > this.labelMaxLength)
+                ? text.slice(0, this.labelMaxLength - 1) + '\u2026'
+                : text;
+            tag.title = text;
+
+            tag.style.position = 'absolute';
+            tag.style.left = (bounds.minX * scaleX) + 'px';
+            tag.style.top = (bounds.minY * scaleY) + 'px';
+
+            fragment.append(tag);
+        });
+
+        layer.replaceChildren(fragment);
+    }
+
+    /**
+     * Get the bounding box of an annotation in natural image coordinates
+     *
+     * Handles the different geometry shapes (rectangle, polygon, path, ellipse).
+     *
+     * @param {Object} annotation
+     * @return {{minX: number, minY: number, maxX: number, maxY: number}|null}
+     * @private
+     */
+    _getAnnotationBounds(annotation) {
+        const selector = annotation?.target?.selector;
+        const geometry = Array.isArray(selector) ? selector[0]?.geometry : selector?.geometry;
+        if (!geometry) return null;
+
+        // Annotorious normally precomputes bounds
+        if (geometry.bounds) {
+            return geometry.bounds;
+        }
+
+        // Polygon / polyline / path
+        if (Array.isArray(geometry.points) && geometry.points.length) {
+            const xs = geometry.points.map(p => p[0]);
+            const ys = geometry.points.map(p => p[1]);
+            return {
+                minX: Math.min(...xs), minY: Math.min(...ys),
+                maxX: Math.max(...xs), maxY: Math.max(...ys)
+            };
+        }
+
+        // Rectangle
+        if (geometry.x !== undefined) {
+            return {
+                minX: geometry.x,
+                minY: geometry.y,
+                maxX: geometry.x + (geometry.w || 0),
+                maxY: geometry.y + (geometry.h || 0)
+            };
+        }
+
+        // Ellipse
+        if (geometry.cx !== undefined) {
+            return {
+                minX: geometry.cx - geometry.rx, minY: geometry.cy - geometry.ry,
+                maxX: geometry.cx + geometry.rx, maxY: geometry.cy + geometry.ry
+            };
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the label text of an annotation
+     *
+     * @param {Object} annotation
+     * @return {string}
+     * @private
+     */
+    _getLabelText(annotation) {
+        const metadata = this.getMetadata(annotation, this.metadataPurpose);
+        const value = metadata[this.labelField];
+        if ((value === undefined) || (value === null)) return '';
+        return String(value).replace(/\s+/g, ' ').trim();
+    }
+
+
+}
+
+/**
+ * Metadata editor — builds a table from a field definition
+ *
+ * The editor is decoupled from its data source: it only maps a plain
+ * key/value object to table rows and back, and notifies the owner
+ * whenever the values changed.
+ *
+ * The generated markup is a table with one row per field,
+ * the caption in the first and the value in the second cell:
+ *
+ * <form class="metadata-editor">
+ *     <table class="metadata-editor-table">
+ *         <caption>Title</caption>
+ *         <tbody>
+ *             <tr><td><label>Caption</label></td><td><input></td></tr>
+ *         </tbody>
+ *     </table>
+ * </form>
+ *
+ * Set the option `inputs` to false to render plain text cells
+ * instead of input elements (read only table).
+ *
+ * Field definitions are keyed by the field name, e.g.:
+ *
+ * {
+ *     type: {caption: 'Annotation type', input: 'select', options: {region: 'Region'}},
+ *     text: {caption: 'Recognized text', input: 'textarea', rows: 4}
+ * }
+ *
+ * Supported field properties:
+ *
+ * - caption:     Label text (defaults to the field key)
+ * - input:       'text' | 'textarea' | 'select' | 'checkbox' | any <input> type
+ * - options:     Value/caption pairs for select inputs
+ * - empty:       Caption of the empty option for select inputs
+ * - rows:        Number of rows for textarea inputs
+ * - placeholder: Placeholder text
+ * - hint:        Additional description shown below the input
+ *
+ * Callbacks:
+ *
+ * - onChange(values, editor)  Committed values (on change, blur or after the debounce delay)
+ * - onInput(key, editor)      Every keystroke, before committing
+ */
+export class MetadataEditor {
+
+    /**
+     * @param {Object} fields    Field definitions
+     * @param {Object} [options] Editor options
+     */
+    constructor(fields = {}, options = {}) {
+        this.fields = Object.assign({}, fields);
+
+        this.options = Object.assign({
+            title: '',                      // Table caption, empty = no caption
+            tableClass: 'doc-image-metadata', // Class of the table
+            formClass: '',                    // Class of the form element, defaults to tableClass + '-form'
+            hiddenClass: 'hidden',
+            hidden: true,                   // Whether the form is hidden after rendering
+            inputs: true,                   // False = plain text cells
+            autoFields: false,              // Create missing fields from the data keys
+            editable: true,
+            autoCommitDelay: 1000,          // ms, 0 = only commit on change/blur
+        }, options);
+
+        if (!this.options.formClass) {
+            this.options.formClass = this.options.tableClass + '-editor';
+        }
+
+        // DOM
+        this.container = null;
+        this.element = null;            // <form>
+        this.table = null;              // <table>
+        this.tbody = null;              // <tbody>
+        this.inputs = {};               // Field key => input element
+        this.cells = {};                // Field key => value cell
+        this.fieldCounter = 0;
+
+        // State
+        this.editable = this.options.editable;
+        this.values = {};               // Last values passed to setValues()
+        this.context = null;            // Identifies the object currently edited
+        this._committed = null;         // Serialized values of the last commit
+        this._timer = null;
+
+        // Callbacks
+        this.onChange = null;
+        this.onInput = null;
+    }
+
+    //
+    // ── Mounting ───────────────────────────────────────────────────────
+    //
+
+    /**
+     * Render the form and append it to the given container
+     *
+     * @param {HTMLElement} container
+     * @return {HTMLElement|undefined} The form element
+     */
+    attach(container) {
+        if (!container) return;
+
+        this.container = container;
+        const element = this.getElement();
+        if (element.parentElement !== container) {
+            container.append(element);
+        }
+        return element;
+    }
+
+    /**
+     * Remove the form from the DOM, keeping the instance reusable
+     */
+    detach() {
+        this.cancelPending();
+        if (this.element) {
+            this.element.remove();
+        }
+        this.container = null;
+    }
+
+    /**
+     * Remove the form and drop all references
+     */
+    destroy() {
+        this.detach();
+        this.element = null;
+        this.table = null;
+        this.tbody = null;
+        this.inputs = {};
+        this.cells = {};
+        this.onChange = null;
+        this.onInput = null;
+    }
+
+    /**
+     * Whether the form is mounted in the document
+     *
+     * @return {boolean}
+     */
+    isAttached() {
+        return !!(this.element && this.element.isConnected);
+    }
+
+    /**
+     * Get the form element, rendering it on first access
+     *
+     * @return {HTMLFormElement}
+     */
+    getElement() {
+        if (!this.element) {
+            this.render();
+        }
+        return this.element;
+    }
+
+    //
+    // ── Markup ─────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Build the form and the table from the field definitions
+     *
+     * @return {HTMLFormElement}
+     */
+    render() {
+        const form = document.createElement('form');
+        form.className = this.options.formClass;
+        if (this.options.hidden) {
+            form.classList.add(this.options.hiddenClass);
+        }
+        if (!this.editable) {
+            form.classList.add('readonly');
+        }
+        form.addEventListener('submit', event => event.preventDefault());
+
+        // Table
+        const table = document.createElement('table');
+        table.className = this.options.tableClass;
+
+        // Caption
+        if (this.options.title) {
+            const caption = document.createElement('caption');
+            caption.textContent = this.options.title;
+            table.append(caption);
+        }
+
+        const tbody = document.createElement('tbody');
+        table.append(tbody);
+        form.append(table);
+
+        this.element = form;
+        this.table = table;
+        this.tbody = tbody;
+
+        // Rows
+        this.inputs = {};
+        this.cells = {};
+        for (const [key, field] of Object.entries(this.fields)) {
+            tbody.append(this.createField(key, field));
+        }
+
+        return form;
+    }
+
+    /**
+     * Replace the field definitions and rebuild the table
+     *
+     * @param {Object} fields
+     */
+    setFields(fields) {
+        this.fields = Object.assign({}, fields);
+
+        if (!this.element) return;
+
+        this.inputs = {};
+        this.cells = {};
+        this.tbody.replaceChildren();
+        for (const [key, field] of Object.entries(this.fields)) {
+            this.tbody.append(this.createField(key, field));
+        }
+    }
+
+    /**
+     * Add a single field definition and append its row
+     *
+     * @param {string} key
+     * @param {Object} [field]
+     */
+    addField(key, field = {}) {
+        this.fields[key] = field;
+        if (this.tbody) {
+            this.tbody.append(this.createField(key, field));
+        }
+    }
+
+    /**
+     * Create a table row for a single field
+     *
+     * The first cell contains the caption, the second cell either
+     * an input element or the plain value.
+     *
+     * @param {string} key
+     * @param {Object} field
+     * @return {HTMLTableRowElement}
+     */
+    createField(key, field) {
+        const row = document.createElement('tr');
+        row.className = this.options.formClass + '-field ' + this.options.formClass + '-field-' + key;
+
+        const keyCell = document.createElement('td');
+        keyCell.className = this.options.formClass + '-caption';
+
+        const valueCell = document.createElement('td');
+        valueCell.className = this.options.formClass + '-value';
+
+        const caption = field.caption || key;
+
+        if (this.options.inputs) {
+            const input = this.createInput(key, field);
+
+            const label = document.createElement('label');
+            label.textContent = caption;
+            label.htmlFor = input.id;
+
+            keyCell.append(label);
+            valueCell.append(input);
+
+            if (field.hint) {
+                const hint = document.createElement('p');
+                hint.className = this.options.formClass + '-hint';
+                hint.textContent = field.hint;
+                valueCell.append(hint);
+            }
+
+            this.inputs[key] = input;
+        } else {
+            keyCell.textContent = caption;
+            valueCell.textContent = this.formatValue(this.values[key], field);
+        }
+
+        this.cells[key] = valueCell;
+
+        row.append(keyCell, valueCell);
+        return row;
+    }
+
+    /**
+     * Create the input element for a single field
+     *
+     * @param {string} key
+     * @param {Object} field
+     * @return {HTMLElement}
+     */
+    createInput(key, field) {
+        let input;
+
+        switch (field.input) {
+            case 'select':
+                input = document.createElement('select');
+                input.append(this.createOption('', field.empty || ''));
+                for (const [value, caption] of Object.entries(field.options || {})) {
+                    input.append(this.createOption(value, caption));
+                }
+                break;
+
+            case 'textarea':
+                input = document.createElement('textarea');
+                input.rows = field.rows || 3;
+                break;
+
+            case 'checkbox':
+                input = document.createElement('input');
+                input.type = 'checkbox';
+                break;
+
+            default:
+                input = document.createElement('input');
+                input.type = field.input || 'text';
+        }
+
+        input.id = this.options.formClass + '-' + key + '-' + (++this.fieldCounter);
+        input.name = key;
+        input.dataset.field = key;
+        input.disabled = !this.editable;
+
+        if (field.placeholder) {
+            input.placeholder = field.placeholder;
+        }
+
+        // Commit on change/blur, debounce while typing
+        input.addEventListener('change', () => this.commit());
+        input.addEventListener('input', () => {
+            if (this.onInput) this.onInput(key, this);
+            this.scheduleCommit();
+        });
+
+        // Don't let the viewer shortcuts (a, arrows, Esc) fire while editing
+        input.addEventListener('keyup', event => event.stopPropagation());
+        input.addEventListener('keydown', event => event.stopPropagation());
+
+        return input;
+    }
+
+    /**
+     * Create an option element
+     *
+     * @param {string} value
+     * @param {string} caption
+     * @return {HTMLOptionElement}
+     */
+    createOption(value, caption) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = caption;
+        return option;
+    }
+
+    //
+    // ── Visibility ─────────────────────────────────────────────────────
+    //
+
+    show() {
+        if (this.element) {
+            this.element.classList.remove(this.options.hiddenClass);
+        }
+    }
+
+    hide() {
+        this.cancelPending();
+        if (this.element) {
+            this.element.classList.add(this.options.hiddenClass);
+        }
+    }
+
+    isVisible() {
+        return !!(this.element && !this.element.classList.contains(this.options.hiddenClass));
+    }
+
+    /**
+     * Whether the focus is currently inside the form
+     *
+     * @return {boolean}
+     */
+    isFocused() {
+        return !!(this.element && this.element.contains(document.activeElement));
+    }
+
+    /**
+     * Focus the first enabled input
+     */
+    focus() {
+        const input = Object.values(this.inputs).find(elm => !elm.disabled);
+        if (input) input.focus();
+    }
+
+    //
+    // ── Values ─────────────────────────────────────────────────────────
+    //
+
+    /**
+     * Fill the table
+     *
+     * If the values belong to the object that is already being edited and the
+     * user is typing, the form is left untouched to avoid losing input.
+     *
+     * @param {Object} values   Key/value pairs
+     * @param {*} [context]     Identifies the edited object (e.g. an annotation id)
+     * @param {boolean} [force] Overwrite the form even while it has focus
+     * @return {boolean} Whether the table was filled
+     */
+    setValues(values, context = null, force = false) {
+        const sameContext = (context !== null) && (context === this.context);
+
+        if (sameContext && this.isFocused() && !force) {
+            return false;
+        }
+
+        this.cancelPending();
+        this.context = context;
+        this.values = Object.assign({}, values);
+
+        this.getElement();
+
+        // Create rows for unknown keys
+        if (this.options.autoFields) {
+            for (const key of Object.keys(this.values)) {
+                if (!Object.prototype.hasOwnProperty.call(this.fields, key)) {
+                    this.addField(key);
+                }
+            }
+        }
+
+        for (const [key, field] of Object.entries(this.fields)) {
+            const value = this.values[key];
+            if (this.options.inputs) {
+                this.setInputValue(this.inputs[key], field, value);
+            } else if (this.cells[key]) {
+                this.cells[key].textContent = this.formatValue(value, field);
+            }
+        }
+
+        this._committed = JSON.stringify(this.getValues());
+        return true;
+    }
+
+    /**
+     * Read the values
+     *
+     * @param {boolean} [includeEmpty] Include empty strings and unchecked boxes
+     * @return {Object}
+     */
+    getValues(includeEmpty = false) {
+        const values = {};
+
+        for (const [key, field] of Object.entries(this.fields)) {
+            const value = this.options.inputs
+                ? this.getInputValue(this.inputs[key], field)
+                : this.values[key];
+
+            if (includeEmpty || ((value !== '') && (value !== false) && (value !== null) && (value !== undefined))) {
+                values[key] = value;
+            }
+        }
+        return values;
+    }
+
+    /**
+     * Reset the table
+     */
+    clear() {
+        this.cancelPending();
+        this.context = null;
+        this.values = {};
+
+        for (const [key, field] of Object.entries(this.fields)) {
+            if (this.options.inputs) {
+                this.setInputValue(this.inputs[key], field, undefined);
+            } else if (this.cells[key]) {
+                this.cells[key].textContent = '';
+            }
+        }
+
+        this._committed = JSON.stringify(this.getValues());
+    }
+
+    /**
+     * Convert a value to its string representation
+     *
+     * @param {*} value
+     * @param {Object} [field]
+     * @return {string}
+     */
+    formatValue(value, field) {
+        if ((value === null) || (value === undefined)) {
+            return '';
+        }
+        if (typeof value === 'object') {
+            return JSON.stringify(value, null, 2);
+        }
+        if ((typeof value === 'boolean') && field && field.options) {
+            return field.options[String(value)] || String(value);
+        }
+        if (field && field.options && (field.options[value] !== undefined)) {
+            return field.options[value];
+        }
+        return value.toString();
+    }
+
+    /**
+     * Write a single value into an input element
+     *
+     * @param {HTMLElement} input
+     * @param {Object} field
+     * @param {*} value
+     */
+    setInputValue(input, field, value) {
+        if (!input) return;
+
+        if (field && (field.input === 'checkbox')) {
+            input.checked = !!value && (value !== 'false') && (value !== '0');
+            return;
+        }
+        input.value = ((value === undefined) || (value === null)) ? '' : String(value);
+    }
+
+    /**
+     * Read a single value from an input element
+     *
+     * @param {HTMLElement} input
+     * @param {Object} field
+     * @return {*}
+     */
+    getInputValue(input, field) {
+        if (!input) return '';
+
+        if (field && (field.input === 'checkbox')) {
+            return input.checked;
+        }
+
+        const value = (input.value || '').trim();
+
+        if (field && (field.input === 'number')) {
+            return value === '' ? '' : Number(value);
+        }
+        return value;
+    }
+
+    //
+    // ── Editable state ─────────────────────────────────────────────────
+    //
+
+    /**
+     * Enable or disable all inputs
+     *
+     * @param {boolean} editable
+     */
+    setEditable(editable) {
+        editable = !!editable;
+        if (this.editable === editable) return;
+
+        this.editable = editable;
+        Object.values(this.inputs).forEach(input => input.disabled = !editable);
+        if (this.element) {
+            this.element.classList.toggle('readonly', !editable);
+        }
+    }
+
+    //
+    // ── Committing ─────────────────────────────────────────────────────
+    //
+
+    /**
+     * Notify the owner about changed values
+     *
+     * @param {boolean} [force] Commit even if nothing changed
+     * @return {boolean} Whether onChange was called
+     */
+    commit(force = false) {
+        this.cancelPending();
+
+        if (!this.options.inputs || !this.editable || !this.onChange) return false;
+
+        const values = this.getValues();
+        const serialized = JSON.stringify(values);
+        if (!force && (serialized === this._committed)) {
+            return false;
+        }
+
+        this._committed = serialized;
+        this.values = values;
+        this.onChange(values, this);
+        return true;
+    }
+
+    /**
+     * Commit after the configured delay (while typing)
+     */
+    scheduleCommit() {
+        if (!this.options.autoCommitDelay) return;
+        this.cancelPending();
+        this._timer = setTimeout(() => {
+            this._timer = null;
+            this.commit();
+        }, this.options.autoCommitDelay);
+    }
+
+    /**
+     * Commit pending changes immediately, e.g. before switching the context
+     *
+     * @return {boolean}
+     */
+    flush() {
+        if (!this.isVisible()) return false;
+        return this.commit();
+    }
+
+    /**
+     * Discard a scheduled commit
+     */
+    cancelPending() {
+        if (this._timer) {
+            clearTimeout(this._timer);
+            this._timer = null;
+        }
+    }
+
+    /**
+     * Whether the values differ from the last committed state
+     *
+     * @return {boolean}
+     */
+    isDirty() {
+        return JSON.stringify(this.getValues()) !== this._committed;
     }
 }
 

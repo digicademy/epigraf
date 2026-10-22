@@ -461,7 +461,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
                 'sort' => 'lft',
                 'sortableFields' => ['lft'],
                 'limit' => 100,
-                'maxLimit' => 100
+                'maxLimit' => 500
             ] + $pagination;
     }
 

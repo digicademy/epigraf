@@ -15,7 +15,7 @@ Epigraf implements two types of annotations to be used in XML fields:
 The configuration defines the toolbar to add annotations, how annotations are rendered and how they are stored in the database.
 
 <p class="infobox">
-    🚀 See the <a href="/user/configuration/annotations-howto">step-by-step guide</a>
+    🚀 See the <a href="/epigraf/user/configuration/annotations-howto">step-by-step guide</a>
     to get started with annotation configuration in an example database.
 </p>
 

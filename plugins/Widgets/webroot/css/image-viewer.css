@@ -59,7 +59,7 @@
 
 .metadata-content {
     margin: 1em;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 
@@ -104,16 +104,16 @@
     width: 100%;
 }
 
-.sidebar .doc-image.selected {
+.sidebar-left .doc-image.selected {
   background-color: var(--nav-bg-color-active);
     color:white;
 }
 
-.sidebar .doc-image.selected a {
+.sidebar-left .doc-image.selected a {
     color:var(--button-font-color);
 }
 
-.sidebar .doc-image-content {
+.sidebar-left .doc-image-content {
     display: none;
 }
 
@@ -306,4 +306,42 @@ button.button-next,
     stroke: rgba(255, 255, 0, 1);
     stroke-width: 1;
     fill: transparent;
+}
+
+/** Annotation labels **/
+.anno-label-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 10;            /* above the a9s SVG layer */
+}
+
+.anno-label {
+    position: absolute;
+    transform: translateY(-100%);   /* sit above the shape's top edge */
+    margin-top: -2px;
+
+    max-width: 20ch;
+    padding: 1px 4px;
+
+    font-size: 10px;
+    line-height: 1.3;
+    font-family: system-ui, sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    color: #fff;
+    background: rgba(0, 0, 0, .72);
+    border-radius: 2px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.anno-label-selected {
+    background: #1a73e8;
+    font-weight: 600;
 }

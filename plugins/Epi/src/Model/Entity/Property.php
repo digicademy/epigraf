@@ -78,6 +78,7 @@ use Epi\Model\Traits\TreeTrait;
  * @property string $path
  * @property string $parentPath
  * @property Property $parentNode
+ * @property string $pathField
  *
  * # Relations
  * @property Query $articles
@@ -187,6 +188,7 @@ class Property extends RootEntity
         'sortkey',
         'related_id',
         'propertytype',
+        'norm_iri',
         'level',
         'lft',
         'rght',
@@ -226,20 +228,6 @@ class Property extends RootEntity
     public static $_tables_ids = [
         'links' => Link::class
     ];
-
-    /**
-     * Field for TreeTrait
-     *
-     * @var string
-     */
-    protected $_path_field = 'lemma';
-
-    /**
-     * Field for TreeTrait
-     *
-     * @var string
-     */
-    protected $_path_separator = ' › ';
 
     /**
      * Fields used for data import
@@ -390,16 +378,6 @@ class Property extends RootEntity
     protected function _getLeaf()
     {
         return $this->caption;
-    }
-
-    /**
-     * Get indentation
-     *
-     * @return string
-     */
-    protected function _getIndentation()
-    {
-        return str_repeat($this->_path_separator, $this->level);
     }
 
     /**
@@ -752,7 +730,7 @@ class Property extends RootEntity
             }
         }
 
-        if (($this->type['merged']['type'] ?? 'tree') !== 'tree') {
+        if (!in_array($this->type['merged']['type'] ?? 'tree', ['tree','collapsed'])) {
             unset($fields['reference_pos']['options']['parent']);
         }
 

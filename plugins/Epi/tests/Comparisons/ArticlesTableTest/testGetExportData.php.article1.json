@@ -9197,6 +9197,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -9425,6 +9426,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -9823,6 +9825,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -10167,6 +10170,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -10562,6 +10566,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -10891,6 +10896,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -11294,6 +11300,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -11646,6 +11653,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -11987,6 +11995,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -12343,6 +12352,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -12636,6 +12646,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -13018,6 +13029,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -13349,6 +13361,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -13735,6 +13748,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -14050,6 +14064,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -14895,6 +14910,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": {
                             "id": 3,
                             "deleted": 0,
@@ -15677,6 +15693,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -16442,6 +16459,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": {
                             "id": 2,
                             "deleted": 0,
@@ -17019,6 +17037,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -17447,6 +17466,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": {
                             "id": 22,
                             "deleted": 0,
@@ -17823,6 +17843,51 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": {
+                            "id": 30,
+                            "deleted": 0,
+                            "version_id": null,
+                            "job_id": null,
+                            "published": null,
+                            "status": null,
+                            "created": "2021-06-14T14:42:46+02:00",
+                            "modified": "2026-05-08T17:17:39+02:00",
+                            "created_by": 1,
+                            "modified_by": 2,
+                            "sortno": 1,
+                            "itemtype": "heraldry",
+                            "itemgroup": null,
+                            "properties_id": 44,
+                            "value": "",
+                            "content": "Anmerkungen Wappen 1",
+                            "translation": null,
+                            "flagged": false,
+                            "links_id": 3,
+                            "links_tab": "sections",
+                            "links_field": "",
+                            "links_tagid": "",
+                            "file_name": "",
+                            "file_type": null,
+                            "file_path": "",
+                            "file_source": "",
+                            "file_copyright": null,
+                            "file_meta": null,
+                            "file_online": false,
+                            "date_sort": null,
+                            "date_value": "",
+                            "date_add": null,
+                            "date_start": null,
+                            "date_end": null,
+                            "source_autopsy": false,
+                            "source_from": null,
+                            "source_addition": null,
+                            "pos_x": 1,
+                            "pos_y": 1,
+                            "pos_z": 1,
+                            "norm_iri": null,
+                            "articles_id": 1,
+                            "sections_id": 9
+                        },
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -18139,6 +18204,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": {
                             "id": 2,
                             "deleted": 0,
@@ -18664,6 +18730,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -18947,6 +19014,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -19133,6 +19201,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -19451,6 +19520,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -19726,6 +19796,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -20001,6 +20072,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -20276,6 +20348,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -20559,6 +20632,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -20842,6 +20916,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -21127,6 +21202,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -21492,6 +21568,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -21848,6 +21925,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -22291,6 +22369,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -22598,6 +22677,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -22906,6 +22986,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -23211,6 +23292,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -23386,6 +23468,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -23605,6 +23688,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -23872,6 +23956,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -24177,6 +24262,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -24289,6 +24375,7 @@
                         "articles_id": 1,
                         "sections_id": 3,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -24399,6 +24486,7 @@
                         "articles_id": 1,
                         "sections_id": 3,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -24687,6 +24775,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -25018,6 +25107,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -25307,6 +25397,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -25637,6 +25728,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -25933,6 +26025,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -26270,6 +26363,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -26558,6 +26652,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -26887,6 +26982,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -27147,6 +27243,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -27448,6 +27545,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -27712,6 +27810,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -28020,6 +28119,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -28252,6 +28352,7 @@
                         "articles_id": 1,
                         "sections_id": 2,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -28504,6 +28605,7 @@
                         "articles_id": 1,
                         "sections_id": 1,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -28813,6 +28915,7 @@
                         "articles_id": 1,
                         "sections_id": 24,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -29065,6 +29168,7 @@
                         "articles_id": 1,
                         "sections_id": 23,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -29654,6 +29758,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -29985,6 +30090,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -30097,6 +30203,7 @@
                         "articles_id": 1,
                         "sections_id": 22,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -30207,6 +30314,7 @@
                         "articles_id": 1,
                         "sections_id": 22,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -30469,6 +30577,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -30774,6 +30883,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -31070,6 +31180,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -31366,6 +31477,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -31655,6 +31767,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -31944,6 +32057,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -32245,6 +32359,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -32505,6 +32620,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -32874,6 +32990,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -33138,6 +33255,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -33402,6 +33520,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -33665,6 +33784,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -33972,6 +34092,7 @@
                                 }
                             ]
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -34150,6 +34271,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -34328,6 +34450,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -34595,6 +34718,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -34862,6 +34986,7 @@
                             },
                             "ancestors": []
                         },
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -35094,6 +35219,7 @@
                         "articles_id": 1,
                         "sections_id": 21,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -35346,6 +35472,7 @@
                         "articles_id": 1,
                         "sections_id": 20,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -35681,6 +35808,7 @@
                         "articles_id": 1,
                         "sections_id": 378,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -35990,6 +36118,7 @@
                         "articles_id": 1,
                         "sections_id": 19,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -36242,6 +36371,7 @@
                         "articles_id": 1,
                         "sections_id": 18,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {
@@ -36577,6 +36707,7 @@
                         "articles_id": 1,
                         "sections_id": 377,
                         "property": null,
+                        "links_item": null,
                         "links_section": null,
                         "links_article": null,
                         "type": {

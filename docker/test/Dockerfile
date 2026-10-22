@@ -1,4 +1,4 @@
-FROM php:8.3-apache
+FROM php:8.3.36-apache
 LABEL org.opencontainers.image.authors="jakob.juenger@adwmainz.de"
 
 WORKDIR /var/www/html

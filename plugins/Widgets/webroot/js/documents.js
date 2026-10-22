@@ -738,6 +738,28 @@ export class DocumentWidget extends BaseDocumentPart {
     }
 
     /**
+     * Get a value from the document by a path extraction key
+     *
+     * By now, path extraction keys are not supported yet.
+     * The key has to be a CSS selector targeting an input.
+     *
+     * TODO: Parse and use PEL keys.
+     *
+     * @param {Object} key
+     * @return {Array} An array of values
+     */
+    extractValues(key) {
+
+        const targetValues = [];
+        const targetInputs = this.findAllInDocument(key);
+        for (const fieldInput of targetInputs) {
+            const value = Utils.getInputValue(fieldInput);
+            targetValues.push(value);
+        }
+        return targetValues;
+    }
+
+    /**
      * Show an article in the sidebar
      *
      * @param id

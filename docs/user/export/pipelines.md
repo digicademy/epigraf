@@ -34,7 +34,7 @@ click the button, select the data pipeline and, optionally, check the options:
   The default set, for example, does not include date and time of modifications
   and the names of users who created or modified the entities.
   Depending on the endpoint (e.g. articles, properties, projects), different snippets are available.
-  See the snippets parameter of the [API endpoints](/user/coreconcepts/api) for available options.
+  See the snippets parameter of the [API endpoints](/epigraf/user/coreconcepts/api) for available options.
   By selecting a snippet, only the fields defined in the snippet are exported.
 - Preset: The database configuration supports multiple types with different settings.
   For example, you can create a configuration for exporting articles into a specific knowledge graph format.
@@ -335,7 +335,7 @@ The *attribute* column refers to the [Extensible Metadata Platform](https://en.w
 
 To transfer metadata into image files, you need to create an export pipeline
 that puts all images into a ZIP-archive.
-In the [item type configuration](/user/configuration/articles#item-type-configuration) for images you can explicitly define metadata input fields.
+In the [item type configuration](/epigraf/user/configuration/articles#item-type-configuration) for images you can explicitly define metadata input fields.
 In the article export task, contained in a pipeline, you use placeholder strings to map article data (including image items
 and project data) to specific metadata attributes.
 

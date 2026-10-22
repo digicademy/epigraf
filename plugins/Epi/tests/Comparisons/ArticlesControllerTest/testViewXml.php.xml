@@ -81,10 +81,9 @@ Interne Verweise
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-197" sortkey="Beschreibung" propertytype="captions" level="0" lft="25" rght="26">
+            <property id="properties-197" sortkey="Beschreibung" propertytype="captions" norm_iri="di_description" level="0" lft="25" rght="26">
               <lemma>Beschreibung</lemma>
               <name>Beschreibung</name>
-              <norm_iri>di_description</norm_iri>
             </property>
           </item>
         </items>
@@ -178,9 +177,8 @@ Interne Verweise
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-1428" sortkey="traditio1" propertytype="conditions" level="0" lft="8" rght="9">
+            <property id="properties-1428" sortkey="traditio1" propertytype="conditions" norm_iri="di_traditio1" level="0" lft="8" rght="9">
               <lemma>Objekt und Inschrift erhalten</lemma>
-              <norm_iri>di_traditio1</norm_iri>
             </property>
           </item>
         </items>
@@ -208,23 +206,21 @@ Interne Verweise
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+            <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" norm_iri="zwh" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
               <lemma>Zwischenhöhe</lemma>
               <name>ZwH</name>
               <unit>m</unit>
               <comment>Zwischenhöhe in Metern</comment>
               <keywords>Dimensionen</keywords>
               <norm_data>gibtnochkeinq</norm_data>
-              <norm_iri>zwh</norm_iri>
               <ancestors>
-                <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+                <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" norm_iri="hoehe" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
                   <lemma>Höhe</lemma>
                   <name>H.</name>
                   <unit>m</unit>
                   <comment>Höhe in Metern</comment>
                   <keywords>Meter,Kilometer,Hektoliter</keywords>
                   <norm_data>wd:Q208826</norm_data>
-                  <norm_iri>hoehe</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -411,18 +407,16 @@ Interne Verweise
                     <name>hm001.1121</name>
                     <signature>Nummer 1 im Band</signature>
                     <file_name>tp/hm001.1121.svg</file_name>
-                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                       <lemma>Hausmarke</lemma>
                       <name>Name Hausmarke </name>
-                      <norm_iri>di_masonmark</norm_iri>
                     </property>
                   </property>
                 </link>
                 <link id="links-275" to_id="properties-1446" to_value="test.marke2" from_id="properties-44" from_field="elements" from_tagname="rec_ma" from_tagid="68582d6af9b94d39ff16d5d3c248e8e1" root_id="properties-44">
-                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
                     <lemma>Marke2</lemma>
                     <name>test.marke2</name>
-                    <norm_iri>testmarke2</norm_iri>
                   </property>
                 </link>
               </links>
@@ -449,18 +443,16 @@ Interne Verweise
                     <name>hm001.1121</name>
                     <signature>Nummer 1 im Band</signature>
                     <file_name>tp/hm001.1121.svg</file_name>
-                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                       <lemma>Hausmarke</lemma>
                       <name>Name Hausmarke </name>
-                      <norm_iri>di_masonmark</norm_iri>
                     </property>
                   </property>
                 </link>
                 <link id="links-275" to_id="properties-1446" to_value="test.marke2" from_id="properties-44" from_field="elements" from_tagname="rec_ma" from_tagid="68582d6af9b94d39ff16d5d3c248e8e1" root_id="properties-44">
-                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
                     <lemma>Marke2</lemma>
                     <name>test.marke2</name>
-                    <norm_iri>testmarke2</norm_iri>
                   </property>
                 </link>
               </links>
@@ -483,25 +475,23 @@ Interne Verweise
               <source_from>Nachweis Wappen 2 in <rec_lit id="f89b90bd1e4d4ea4c4fe784f640aa576" data-link-target="properties-10" data-link-iri="properties/literature/quelle-1-mit-" data-link-value="Quelle 1 mit &amp;" /></source_from>
               <links>
                 <link id="links-65" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
-                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
                     <lemma>Quelle 1 mit &amp;</lemma>
                     <name>Quelle 1 mit &amp;</name>
                     <unit>Quelleneinheit 1</unit>
                     <comment>Quelle 1 Bemerkung</comment>
                     <keywords>Karstadt,Ursprung</keywords>
                     <norm_data>Quelle 1 Normdaten</norm_data>
-                    <norm_iri>quelle-1-mit-</norm_iri>
                   </property>
                 </link>
                 <link id="links-512" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="source_from" from_tagname="rec_lit" from_tagid="f89b90bd1e4d4ea4c4fe784f640aa576" root_id="properties-43">
-                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
                     <lemma>Quelle 1 mit &amp;</lemma>
                     <name>Quelle 1 mit &amp;</name>
                     <unit>Quelleneinheit 1</unit>
                     <comment>Quelle 1 Bemerkung</comment>
                     <keywords>Karstadt,Ursprung</keywords>
                     <norm_data>Quelle 1 Normdaten</norm_data>
-                    <norm_iri>quelle-1-mit-</norm_iri>
                   </property>
                 </link>
               </links>
@@ -549,10 +539,9 @@ TEXT TEXT TEXT TEXT</content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" level="0" lft="29" rght="30">
+            <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" norm_iri="di_header1" level="0" lft="29" rght="30">
               <lemma>Gliederung: Ebene 1</lemma>
               <name>Gliederung: Ebene 1</name>
-              <norm_iri>di_header1</norm_iri>
             </property>
           </item>
         </items>
@@ -623,19 +612,17 @@ TEXT TEXT TEXT TEXT</content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" level="1" lft="4" rght="5">
+            <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" norm_iri="mit-versal-in-gotischer-majuskel" level="1" lft="4" rght="5">
               <lemma>mit Versal in gotischer Majuskel</lemma>
               <name>mit Versal in gotischer Majuskel</name>
-              <norm_iri>mit-versal-in-gotischer-majuskel</norm_iri>
               <ancestors>
-                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" norm_iri="gotische-minuskel" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
                   <lemma>gotische Minuskel</lemma>
                   <name>gotische Minuskel</name>
                   <unit>Schriftart 1 Einheit</unit>
                   <comment>Bemerkung zu gotischer Minuskel</comment>
                   <keywords>gotisch,minuskel</keywords>
                   <norm_data>xxx got minusk</norm_data>
-                  <norm_iri>gotische-minuskel</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -648,23 +635,21 @@ TEXT TEXT TEXT TEXT</content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+            <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" norm_iri="mit-versalien-in-gotischer-majuskel-und-versalschrift" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
               <lemma>mit Versalien in gotischer Majuskel und Versalschrift</lemma>
               <name>mit Versalien in gotischer Majuskel und Versalschrift</name>
               <unit>Schriftart 1a Einheit</unit>
               <comment>darf nicht verloren gehen</comment>
               <keywords>versalien, majuskel, versalschrift</keywords>
               <norm_data>norm:vers-maj-vers</norm_data>
-              <norm_iri>mit-versalien-in-gotischer-majuskel-und-versalschrift</norm_iri>
               <ancestors>
-                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" norm_iri="gotische-minuskel" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
                   <lemma>gotische Minuskel</lemma>
                   <name>gotische Minuskel</name>
                   <unit>Schriftart 1 Einheit</unit>
                   <comment>Bemerkung zu gotischer Minuskel</comment>
                   <keywords>gotisch,minuskel</keywords>
                   <norm_data>xxx got minusk</norm_data>
-                  <norm_iri>gotische-minuskel</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -1496,20 +1481,17 @@ Hochgestellt</content>
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+            <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" norm_iri="lc-128" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
               <lemma>Lc. 1,28</lemma>
               <name>Lc. 1,28</name>
-              <norm_iri>lc-128</norm_iri>
               <ancestors>
-                <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
+                <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" norm_iri="lateinisch" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
                   <lemma>lateinisch</lemma>
                   <name>lateinisch</name>
-                  <norm_iri>lateinisch</norm_iri>
                 </property>
-                <property id="properties-928" sortkey="bibeltexte" propertytype="sources" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
+                <property id="properties-928" sortkey="bibeltexte" propertytype="sources" norm_iri="bibeltexte" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
                   <lemma>Bibeltexte</lemma>
                   <name>Bibeltexte</name>
-                  <norm_iri>bibeltexte</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -1926,10 +1908,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
               <name>hm001.1121</name>
               <signature>Nummer 1 im Band</signature>
               <file_name>tp/hm001.1121.svg</file_name>
-              <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+              <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                 <lemma>Hausmarke</lemma>
                 <name>Name Hausmarke </name>
-                <norm_iri>di_masonmark</norm_iri>
               </property>
             </property>
           </item>
@@ -1945,13 +1926,12 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
               <name>hm002.2211</name>
               <signature>Nummer 2 im Band</signature>
               <file_name>tp/hm002.2211.svg</file_name>
-              <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+              <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" norm_iri="di_mastermark" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
                 <lemma>Meisterzeichen</lemma>
                 <name>Name Meisterzeichen </name>
                 <unit>Einheit Marke</unit>
                 <comment>Bemerkung Marke</comment>
                 <norm_data>xyz:mzexample</norm_data>
-                <norm_iri>di_mastermark</norm_iri>
               </property>
             </property>
           </item>
@@ -2068,10 +2048,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <property id="properties-660" sortkey="maria" propertytype="figures" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+            <property id="properties-660" sortkey="maria" propertytype="figures" norm_iri="maria" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
               <lemma>Maria</lemma>
               <name>Maria</name>
-              <norm_iri>maria</norm_iri>
             </property>
           </item>
           <item id="items-750" itemtype="manufacturers" sortno="3" sections_id="sections-6" articles_id="articles-1">
@@ -2095,10 +2074,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+            <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" norm_iri="person-mit-punkten" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
               <lemma>…Person mit Punkten</lemma>
               <name>…Person mit Punkten</name>
-              <norm_iri>person-mit-punkten</norm_iri>
             </property>
           </item>
           <item id="items-753" itemtype="placenames" sortno="5" sections_id="sections-6" articles_id="articles-1">
@@ -2141,20 +2119,18 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+            <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" norm_iri="nice-type" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
               <lemma>Nice type</lemma>
               <name>Nice type</name>
-              <norm_iri>nice-type</norm_iri>
             </property>
           </item>
           <item id="items-943" itemtype="temporals" sortno="9" sections_id="sections-6" articles_id="articles-1">
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <property id="properties-654" sortkey="long time ago" propertytype="temporals" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+            <property id="properties-654" sortkey="long time ago" propertytype="temporals" norm_iri="long-time-ago" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
               <lemma>Long time ago</lemma>
               <name>Long time ago</name>
-              <norm_iri>long-time-ago</norm_iri>
             </property>
           </item>
           <item id="items-751" itemtype="subjects" sortno="10" sections_id="sections-6" articles_id="articles-1">
@@ -2194,14 +2170,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
               <lemma>Quelle 1 mit &amp;</lemma>
               <name>Quelle 1 mit &amp;</name>
               <unit>Quelleneinheit 1</unit>
               <comment>Quelle 1 Bemerkung</comment>
               <keywords>Karstadt,Ursprung</keywords>
               <norm_data>Quelle 1 Normdaten</norm_data>
-              <norm_iri>quelle-1-mit-</norm_iri>
             </property>
           </item>
           <item id="items-10" itemtype="literature" sortno="2" sections_id="sections-14" articles_id="articles-1">
@@ -2212,14 +2187,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" norm_iri="kurztitel-unterautor-2-mit-" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
               <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
               <name>Kurztitel Unterautor 2 mit &#039;</name>
               <unit>Unterautor2 Einheit</unit>
               <comment>Unterautor 2 Bemerkung</comment>
               <keywords>Autor,Karstadt,Ursprung</keywords>
               <norm_data>Unterautor 2 Normdaten</norm_data>
-              <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
               <ancestors>
                 <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
                   <lemma>Autor 1</lemma>
@@ -2274,14 +2248,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" norm_iri="kurztitel-unterautor-2-mit-" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
               <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
               <name>Kurztitel Unterautor 2 mit &#039;</name>
               <unit>Unterautor2 Einheit</unit>
               <comment>Unterautor 2 Bemerkung</comment>
               <keywords>Autor,Karstadt,Ursprung</keywords>
               <norm_data>Unterautor 2 Normdaten</norm_data>
-              <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
               <ancestors>
                 <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
                   <lemma>Autor 1</lemma>
@@ -2759,14 +2732,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
       </link>
       <link id="links-49" to_value="Zeile" from_id="items-37" from_field="content" from_tagname="z" from_tagid="000004436342484450231481550611" root_id="articles-1" />
       <link id="links-50" to_id="properties-11" to_value="Unterautor 1 mit &#039;" from_id="items-4" from_field="content" from_tagname="rec_lit" from_tagid="000004456302666872685185191153" root_id="articles-1">
-        <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" norm_iri="unterautor-1-mit-" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
           <lemma>Unterautor 1 mit &#039;</lemma>
           <name>Unterautor 1 mit &#039;</name>
           <unit>Unterauteinheit 1</unit>
           <comment>Unterautorbemerkung 1</comment>
           <keywords>Autor,Quelle</keywords>
           <norm_data>Unterautornorm 1</norm_data>
-          <norm_iri>unterautor-1-mit-</norm_iri>
           <ancestors>
             <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
               <lemma>Autor 1</lemma>
@@ -2780,14 +2752,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
         </property>
       </link>
       <link id="links-51" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="items-14" from_field="content" from_tagname="rec_lit" from_tagid="000004456302493517361111115062" root_id="articles-1">
-        <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+        <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
           <lemma>Quelle 1 mit &amp;</lemma>
           <name>Quelle 1 mit &amp;</name>
           <unit>Quelleneinheit 1</unit>
           <comment>Quelle 1 Bemerkung</comment>
           <keywords>Karstadt,Ursprung</keywords>
           <norm_data>Quelle 1 Normdaten</norm_data>
-          <norm_iri>quelle-1-mit-</norm_iri>
         </property>
       </link>
       <link id="links-52" to_id="articles-1" to_value="Signatur 1" from_id="items-14" from_field="content" from_tagname="rec_extern" from_tagid="000004456302482934027777780186" root_id="articles-1">
@@ -2837,10 +2808,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <name>hm001.1121</name>
           <signature>Nummer 1 im Band</signature>
           <file_name>tp/hm001.1121.svg</file_name>
-          <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+          <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
             <lemma>Hausmarke</lemma>
             <name>Name Hausmarke </name>
-            <norm_iri>di_masonmark</norm_iri>
           </property>
         </property>
       </link>
@@ -2967,39 +2937,36 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <section id="sections-16" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" norm_iri="unterautor-1-mit-" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
           <lemma>Unterautor 1 mit &#039;</lemma>
           <name>Unterautor 1 mit &#039;</name>
           <unit>Unterauteinheit 1</unit>
           <comment>Unterautorbemerkung 1</comment>
           <keywords>Autor,Quelle</keywords>
           <norm_data>Unterautornorm 1</norm_data>
-          <norm_iri>unterautor-1-mit-</norm_iri>
           <sections>
             <section id="sections-5" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+        <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" norm_iri="kurztitel-unterautor-2-mit-" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
           <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
           <name>Kurztitel Unterautor 2 mit &#039;</name>
           <unit>Unterautor2 Einheit</unit>
           <comment>Unterautor 2 Bemerkung</comment>
           <keywords>Autor,Karstadt,Ursprung</keywords>
           <norm_data>Unterautor 2 Normdaten</norm_data>
-          <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
           <sections>
             <section id="sections-16" articles_id="articles-1" />
             <section id="sections-14" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+        <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
           <lemma>Quelle 1 mit &amp;</lemma>
           <name>Quelle 1 mit &amp;</name>
           <unit>Quelleneinheit 1</unit>
           <comment>Quelle 1 Bemerkung</comment>
           <keywords>Karstadt,Ursprung</keywords>
           <norm_data>Quelle 1 Normdaten</norm_data>
-          <norm_iri>quelle-1-mit-</norm_iri>
           <sections>
             <section id="sections-15" articles_id="articles-1" />
             <section id="sections-14" articles_id="articles-1" />
@@ -3075,9 +3042,8 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="conditions">
       <properties>
-        <property id="properties-1428" sortkey="traditio1" propertytype="conditions" level="0" lft="8" rght="9">
+        <property id="properties-1428" sortkey="traditio1" propertytype="conditions" norm_iri="di_traditio1" level="0" lft="8" rght="9">
           <lemma>Objekt und Inschrift erhalten</lemma>
-          <norm_iri>di_traditio1</norm_iri>
           <sections>
             <section id="sections-13" articles_id="articles-1" />
           </sections>
@@ -3160,14 +3126,13 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <keywords>Medium,Träger</keywords>
           <norm_data>Träger 1b</norm_data>
         </property>
-        <property id="properties-34" parent_id="properties-36" sortno="2" sortkey="Träger 1a" propertytype="objecttypes" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+        <property id="properties-34" parent_id="properties-36" sortno="2" sortkey="Träger 1a" propertytype="objecttypes" norm_iri="traeger1a" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
           <lemma>Träger 1a</lemma>
           <name>Träger 1a </name>
           <unit>Träger 1a Einheit</unit>
           <comment>Träger 1a Bemerk</comment>
           <keywords>Träger,Medium</keywords>
           <norm_data>Träger 1a</norm_data>
-          <norm_iri>traeger1a</norm_iri>
         </property>
         <property id="properties-35" sortno="7" sortkey="Träger 2" propertytype="objecttypes" level="0" lft="9" rght="14" iscategory="1" ishidden="1">
           <lemma>Träger 2</lemma>
@@ -3199,23 +3164,21 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="measures">
       <properties>
-        <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+        <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" norm_iri="hoehe" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
           <lemma>Höhe</lemma>
           <name>H.</name>
           <unit>m</unit>
           <comment>Höhe in Metern</comment>
           <keywords>Meter,Kilometer,Hektoliter</keywords>
           <norm_data>wd:Q208826</norm_data>
-          <norm_iri>hoehe</norm_iri>
         </property>
-        <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" norm_iri="zwh" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
           <lemma>Zwischenhöhe</lemma>
           <name>ZwH</name>
           <unit>m</unit>
           <comment>Zwischenhöhe in Metern</comment>
           <keywords>Dimensionen</keywords>
           <norm_data>gibtnochkeinq</norm_data>
-          <norm_iri>zwh</norm_iri>
           <sections>
             <section id="sections-10" articles_id="articles-1" />
           </sections>
@@ -3271,18 +3234,16 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
                 <name>hm001.1121</name>
                 <signature>Nummer 1 im Band</signature>
                 <file_name>tp/hm001.1121.svg</file_name>
-                <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+                <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                   <lemma>Hausmarke</lemma>
                   <name>Name Hausmarke </name>
-                  <norm_iri>di_masonmark</norm_iri>
                 </property>
               </property>
             </link>
             <link id="links-275" to_id="properties-1446" to_value="test.marke2" from_id="properties-44" from_field="elements" from_tagname="rec_ma" from_tagid="68582d6af9b94d39ff16d5d3c248e8e1" root_id="properties-44">
-              <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+              <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
                 <lemma>Marke2</lemma>
                 <name>test.marke2</name>
-                <norm_iri>testmarke2</norm_iri>
               </property>
             </link>
           </links>
@@ -3299,25 +3260,23 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <source_from>Nachweis Wappen 2 in <rec_lit id="f89b90bd1e4d4ea4c4fe784f640aa576" data-link-target="properties-10" data-link-iri="properties/literature/quelle-1-mit-" data-link-value="Quelle 1 mit &amp;" /></source_from>
           <links>
             <link id="links-65" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
-              <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+              <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
                 <lemma>Quelle 1 mit &amp;</lemma>
                 <name>Quelle 1 mit &amp;</name>
                 <unit>Quelleneinheit 1</unit>
                 <comment>Quelle 1 Bemerkung</comment>
                 <keywords>Karstadt,Ursprung</keywords>
                 <norm_data>Quelle 1 Normdaten</norm_data>
-                <norm_iri>quelle-1-mit-</norm_iri>
               </property>
             </link>
             <link id="links-512" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="source_from" from_tagname="rec_lit" from_tagid="f89b90bd1e4d4ea4c4fe784f640aa576" root_id="properties-43">
-              <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+              <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
                 <lemma>Quelle 1 mit &amp;</lemma>
                 <name>Quelle 1 mit &amp;</name>
                 <unit>Quelleneinheit 1</unit>
                 <comment>Quelle 1 Bemerkung</comment>
                 <keywords>Karstadt,Ursprung</keywords>
                 <norm_data>Quelle 1 Normdaten</norm_data>
-                <norm_iri>quelle-1-mit-</norm_iri>
               </property>
             </link>
           </links>
@@ -3333,13 +3292,12 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <name>hm002.2211</name>
           <signature>Nummer 2 im Band</signature>
           <file_name>tp/hm002.2211.svg</file_name>
-          <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+          <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" norm_iri="di_mastermark" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
             <lemma>Meisterzeichen</lemma>
             <name>Name Meisterzeichen </name>
             <unit>Einheit Marke</unit>
             <comment>Bemerkung Marke</comment>
             <norm_data>xyz:mzexample</norm_data>
-            <norm_iri>di_mastermark</norm_iri>
           </property>
           <sections>
             <section id="sections-8" articles_id="articles-1" />
@@ -3350,10 +3308,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <name>hm001.1121</name>
           <signature>Nummer 1 im Band</signature>
           <file_name>tp/hm001.1121.svg</file_name>
-          <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+          <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
             <lemma>Hausmarke</lemma>
             <name>Name Hausmarke </name>
-            <norm_iri>di_masonmark</norm_iri>
           </property>
           <sections>
             <section id="sections-9" articles_id="articles-1" />
@@ -3361,10 +3318,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
             <section id="sections-5" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+        <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
           <lemma>Marke2</lemma>
           <name>test.marke2</name>
-          <norm_iri>testmarke2</norm_iri>
           <sections>
             <section id="sections-9" articles_id="articles-1" />
           </sections>
@@ -3373,23 +3329,21 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="brandtypes">
       <properties>
-        <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
           <lemma>Hausmarke</lemma>
           <name>Name Hausmarke </name>
-          <norm_iri>di_masonmark</norm_iri>
           <sections>
             <section id="sections-9" articles_id="articles-1" />
             <section id="sections-8" articles_id="articles-1" />
             <section id="sections-5" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+        <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" norm_iri="di_mastermark" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
           <lemma>Meisterzeichen</lemma>
           <name>Name Meisterzeichen </name>
           <unit>Einheit Marke</unit>
           <comment>Bemerkung Marke</comment>
           <norm_data>xyz:mzexample</norm_data>
-          <norm_iri>di_mastermark</norm_iri>
           <sections>
             <section id="sections-8" articles_id="articles-1" />
           </sections>
@@ -3439,10 +3393,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="figures">
       <properties>
-        <property id="properties-660" sortkey="maria" propertytype="figures" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+        <property id="properties-660" sortkey="maria" propertytype="figures" norm_iri="maria" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
           <lemma>Maria</lemma>
           <name>Maria</name>
-          <norm_iri>maria</norm_iri>
           <sections>
             <section id="sections-6" articles_id="articles-1" />
           </sections>
@@ -3462,10 +3415,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="personnames">
       <properties>
-        <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" norm_iri="person-mit-punkten" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
           <lemma>…Person mit Punkten</lemma>
           <name>…Person mit Punkten</name>
-          <norm_iri>person-mit-punkten</norm_iri>
           <sections>
             <section id="sections-6" articles_id="articles-1" />
           </sections>
@@ -3499,10 +3451,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="scriptfeatures">
       <properties>
-        <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" norm_iri="nice-type" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
           <lemma>Nice type</lemma>
           <name>Nice type</name>
-          <norm_iri>nice-type</norm_iri>
           <sections>
             <section id="sections-6" articles_id="articles-1" />
           </sections>
@@ -3511,10 +3462,9 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="temporals">
       <properties>
-        <property id="properties-654" sortkey="long time ago" propertytype="temporals" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <property id="properties-654" sortkey="long time ago" propertytype="temporals" norm_iri="long-time-ago" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
           <lemma>Long time ago</lemma>
           <name>Long time ago</name>
-          <norm_iri>long-time-ago</norm_iri>
           <sections>
             <section id="sections-6" articles_id="articles-1" />
           </sections>
@@ -3534,18 +3484,16 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="captions">
       <properties>
-        <property id="properties-197" sortkey="Beschreibung" propertytype="captions" level="0" lft="25" rght="26">
+        <property id="properties-197" sortkey="Beschreibung" propertytype="captions" norm_iri="di_description" level="0" lft="25" rght="26">
           <lemma>Beschreibung</lemma>
           <name>Beschreibung</name>
-          <norm_iri>di_description</norm_iri>
           <sections>
             <section id="sections-5" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" level="0" lft="29" rght="30">
+        <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" norm_iri="di_header1" level="0" lft="29" rght="30">
           <lemma>Gliederung: Ebene 1</lemma>
           <name>Gliederung: Ebene 1</name>
-          <norm_iri>di_header1</norm_iri>
           <sections>
             <section id="sections-4" articles_id="articles-1" />
           </sections>
@@ -3645,31 +3593,28 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
     </index>
     <index propertytype="fonttypes">
       <properties>
-        <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+        <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" norm_iri="gotische-minuskel" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
           <lemma>gotische Minuskel</lemma>
           <name>gotische Minuskel</name>
           <unit>Schriftart 1 Einheit</unit>
           <comment>Bemerkung zu gotischer Minuskel</comment>
           <keywords>gotisch,minuskel</keywords>
           <norm_data>xxx got minusk</norm_data>
-          <norm_iri>gotische-minuskel</norm_iri>
         </property>
-        <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+        <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" norm_iri="mit-versalien-in-gotischer-majuskel-und-versalschrift" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
           <lemma>mit Versalien in gotischer Majuskel und Versalschrift</lemma>
           <name>mit Versalien in gotischer Majuskel und Versalschrift</name>
           <unit>Schriftart 1a Einheit</unit>
           <comment>darf nicht verloren gehen</comment>
           <keywords>versalien, majuskel, versalschrift</keywords>
           <norm_data>norm:vers-maj-vers</norm_data>
-          <norm_iri>mit-versalien-in-gotischer-majuskel-und-versalschrift</norm_iri>
           <sections>
             <section id="sections-3" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" level="1" lft="4" rght="5">
+        <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" norm_iri="mit-versal-in-gotischer-majuskel" level="1" lft="4" rght="5">
           <lemma>mit Versal in gotischer Majuskel</lemma>
           <name>mit Versal in gotischer Majuskel</name>
-          <norm_iri>mit-versal-in-gotischer-majuskel</norm_iri>
           <sections>
             <section id="sections-3" articles_id="articles-1" />
           </sections>
@@ -4066,38 +4011,32 @@ Hún var hverri konu vænni ok betr at sér um alla hluti,
           <keywords>Quote</keywords>
           <norm_data>Zitat 2b norm</norm_data>
         </property>
-        <property id="properties-928" sortkey="bibeltexte" propertytype="sources" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
+        <property id="properties-928" sortkey="bibeltexte" propertytype="sources" norm_iri="bibeltexte" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
           <lemma>Bibeltexte</lemma>
           <name>Bibeltexte</name>
-          <norm_iri>bibeltexte</norm_iri>
         </property>
-        <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
+        <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" norm_iri="lateinisch" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
           <lemma>lateinisch</lemma>
           <name>lateinisch</name>
-          <norm_iri>lateinisch</norm_iri>
         </property>
-        <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+        <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" norm_iri="lc-128" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
           <lemma>Lc. 1,28</lemma>
           <name>Lc. 1,28</name>
-          <norm_iri>lc-128</norm_iri>
           <sections>
             <section id="sections-22" articles_id="articles-1" />
           </sections>
         </property>
-        <property id="properties-1576" sortkey="religiöse texte" propertytype="sources" level="0" lft="41" rght="46" iscategory="1" ishidden="0">
+        <property id="properties-1576" sortkey="religiöse texte" propertytype="sources" norm_iri="religioese-texte" level="0" lft="41" rght="46" iscategory="1" ishidden="0">
           <lemma>Religiöse Texte</lemma>
           <name>Religiöse Texte</name>
-          <norm_iri>religioese-texte</norm_iri>
         </property>
-        <property id="properties-1578" parent_id="properties-1576" sortkey="ave maria" propertytype="sources" level="1" lft="42" rght="45" iscategory="0" ishidden="0">
+        <property id="properties-1578" parent_id="properties-1576" sortkey="ave maria" propertytype="sources" norm_iri="ave-maria" level="1" lft="42" rght="45" iscategory="0" ishidden="0">
           <lemma>Ave Maria</lemma>
           <name>Ave Maria</name>
-          <norm_iri>ave-maria</norm_iri>
         </property>
-        <property id="properties-1591" parent_id="properties-1578" sortkey="siehe" related_id="properties-1587" propertytype="sources" level="2" lft="43" rght="44" iscategory="0" ishidden="0">
+        <property id="properties-1591" parent_id="properties-1578" sortkey="siehe" related_id="properties-1587" propertytype="sources" norm_iri="religioese-texte-ave-maria-siehe" level="2" lft="43" rght="44" iscategory="0" ishidden="0">
           <lemma>siehe</lemma>
           <name>Religiöse Texte › Ave Maria › siehe</name>
-          <norm_iri>religioese-texte-ave-maria-siehe</norm_iri>
         </property>
       </properties>
     </index>

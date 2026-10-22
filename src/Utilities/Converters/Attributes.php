@@ -658,20 +658,46 @@ class Attributes
      * TODO: is this the same functionality as in getValuePlaceholder() ?
      *
      * Placeholders are enclosed in curly brackets, e.g. {id}.
-     * The corresponding data is taken from the array with the key 'id'.
+     * The corresponding data is taken from the array, e.g. the value keyed with 'id'.
      *
-     * @param string $haystack
+     * @param string|array $haystack If a string is provided, the placeholders will be replaced in the string.
+     *                              If an array is provided, the placeholders will be replaced in all string values.
      * @param array|\ArrayAccess $data
+     * @param bool $double Whether single or double curly brackets are used for the placeholders. If double is true, the placeholders should be in the format {{id}}.
      */
-    public static function replacePlaceholders($haystack, $data)
+    public static function replacePlaceholders($haystack, $data, $double = false)
     {
-        // Extract placeholders from $haystack
-        preg_match_all('/\{([a-zA-Z0-9._-]+)\}/', $haystack, $matches);
+        // Handle array
+        if (is_array($haystack)) {
+            foreach ($haystack as $key => $value) {
+                if (is_string($value)) {
+                    $haystack[$key] = Attributes::replacePlaceholders($value, $data, $double);
+                }
+            }
+            return $haystack;
+        }
 
-        // Iterate over placholders and replace them in $haystack
+        // Extract placeholders from $haystack
+        $plOpen = $double ? '{{' : '{';
+        $plClose = $double ? '}}' : '}';
+
+        preg_match_all('/' . preg_quote($plOpen) . '([^}]+)' . preg_quote($plClose) . '/', $haystack, $matches);
+
+        // Iterate over placeholders and replace them in $haystack
         foreach ($matches[1] as $match) {
-            $value = implode(',', Objects::extract($data, $match));
-            $haystack = str_replace('{' . $match . '}', $value, $haystack);
+            $value = Objects::extractPlaceholder($data, '{' . $match . '}');
+
+            if (is_array($value)) {
+                $value = implode(',', $value);
+            } elseif (is_bool($value)) {
+                $value = $value ? '1' : '0';
+            } elseif ($value === null) {
+                $value = '';
+            } else {
+                $value = (string) $value;
+            }
+            $replacement = $plOpen . $match . $plClose;
+            $haystack = str_replace($replacement, $value, $haystack);
         }
 
         return $haystack;
@@ -1103,4 +1129,3 @@ class Attributes
     }
 
 }
-

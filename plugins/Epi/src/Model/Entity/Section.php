@@ -125,6 +125,7 @@ class Section extends BaseEntity
         'number',
         'siblings',
         'sectiontype',
+        'norm_iri',
         'name',
         'alias',
         'layout_cols',
@@ -153,6 +154,7 @@ class Section extends BaseEntity
         'layout_cols',
         'layout_rows',
         'sectiontype',
+        'norm_iri',
         'name',
         'alias'
     ];
@@ -397,12 +399,12 @@ class Section extends BaseEntity
                 'sortno',
                 'number',
                 'sectiontype',
+                'norm_iri',
                 'name',
                 'alias'
             ];
 
             if (($options['format'] ?? '') ===  'transfer') {
-                $fields[] = 'norm_iri';
                 $fields[] = 'article';
             }
         }

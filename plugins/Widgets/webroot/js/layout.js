@@ -36,12 +36,15 @@ export class ResizableSidebar extends BaseWidget {
         this.collapsed = collapsed || (element ? element.classList.contains('sidebar-init-collapsed') : true);
         this.closeButton = element ? element.querySelector('.btn-close, .btn-apply') : undefined;
         this.empty = element ? element.classList.contains('sidebar-empty') : false;
-        this.width = undefined;
 
         // Set ui key for saving settings
-        if (!this.getFrame()) {
+        if (!this.getFrame() && !this.widgetElement.dataset.uiKey) {
             this.widgetElement.dataset.uiKey = this.getController() + '-' + this.getAction() + '-sidebar-' + orientation;
         }
+
+        this.width = undefined;
+        // TODO: Load initial width from the user settings
+        // this.width = this.getSetting('width');
 
         // Add elements
         const resizerHtml = '<div class="sidebar-resizer sidebar-resizer-' + this.orientation + '"></div>';

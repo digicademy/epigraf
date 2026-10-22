@@ -27,6 +27,14 @@ export class GridWidget extends BaseWidget {
         super(element, name, parent);
 
         /**
+         * Indicates whether the grid is currently being sorted to prevent multiple simultaneous sorting operations.
+         *
+         * @type {boolean}
+         */
+        this.isSorting = false;
+
+
+        /**
          * The item types managed by this widget (for example "heraldry")
          * @type {string}
          */
@@ -422,36 +430,47 @@ export class GridWidget extends BaseWidget {
      * Sort items according to their grid position
      */
     sortItems() {
-        const focusedElement =  document.activeElement;
-
-        const headerItem = this.itemContainer.querySelector('.doc-group-headers');
-        const items = this.gridTable.querySelectorAll('[data-row-table="items"][data-row-id]');
-        for (let i=items.length-1; i >= 0; i--) {
-            const tableItem = this.getTableItem(items[i].dataset.rowId);
-            const itemInput = tableItem ? tableItem.querySelector('.doc-fieldname-sortno input') : undefined;
-            if (itemInput) {
-                itemInput.value = i+1;
-            }
-
-            const gridItem = items[i];
-            const fieldSortno = gridItem.querySelector('[data-row-field="sortno"] .doc-field-content');
-            if (fieldSortno) {
-                fieldSortno.innerHTML = i+1;
-            }
-
-            // Move the table item
-            if (headerItem && tableItem) {
-                headerItem.insertAdjacentElement('afterend', tableItem);
-                tableItem.classList.remove('doc-section-item-first');
-            }
+        if (this.isSorting) {
+            return;
         }
+        this.isSorting = true;
 
-        const firstTableItem = this.itemContainer.querySelector('[data-row-table="items"][data-row-id]');
-        if (firstTableItem) {
-            firstTableItem.classList.add('doc-section-item-first');
+        try {
+
+            const focusedElement = document.activeElement;
+
+            const headerItem = this.itemContainer.querySelector('.doc-group-headers');
+            const items = this.gridTable.querySelectorAll('[data-row-table="items"][data-row-id]');
+            for (let i = items.length - 1; i >= 0; i--) {
+                const tableItem = this.getTableItem(items[i].dataset.rowId);
+                const itemInput = tableItem ? tableItem.querySelector('.doc-fieldname-sortno input') : undefined;
+                if (itemInput) {
+                    itemInput.value = i + 1;
+                }
+
+                const gridItem = items[i];
+                const fieldSortno = gridItem.querySelector('[data-row-field="sortno"] .doc-field-content');
+                if (fieldSortno) {
+                    fieldSortno.innerHTML = i + 1;
+                }
+
+                // Move the table item
+                if (headerItem && tableItem) {
+                    headerItem.insertAdjacentElement('afterend', tableItem);
+                    tableItem.classList.remove('doc-section-item-first');
+                }
+            }
+
+            const firstTableItem = this.itemContainer.querySelector('[data-row-table="items"][data-row-id]');
+            if (firstTableItem) {
+                firstTableItem.classList.add('doc-section-item-first');
+            }
+
+            focusedElement.focus();
         }
-
-        focusedElement.focus();
+        finally {
+            this.isSorting = false;
+        }
     }
 
     /**

@@ -320,9 +320,9 @@ export class BaseFrame extends BaseForm {
                                     self.unlockForm(form.dataset.deleteUrl, true);
                                     event.preventDefault();
                                 } else if (role === 'cancel') {
-                                    self.confirmCancel().then((confirmed) => {
+                                    self.confirmCancel(form).then(({confirmed, proceedUrl}) => {
                                         if (confirmed) {
-                                            self.unlockForm(form.dataset.cancelUrl, true);
+                                            self.unlockForm(proceedUrl, true);
                                         }
                                     });
                                     event.preventDefault();
@@ -937,7 +937,7 @@ export class MainFrame extends BaseFrame {
      * Update the page
      *
      * @implements BaseForm.onSaveProceed()
-     * @param {string} data Data returned from the request
+     * @param {string|Object} data Data returned from the request
      * @param {XMLHttpRequest} xhr The XMLHttpRequest object
      */
     onSaveProceed(data, xhr) {
@@ -1235,7 +1235,7 @@ export class TabFrame extends BaseFrame {
      * Update the page
      *
      * @implements BaseForm.onSaveProceed()
-     * @param {string} data Data returned from the request
+     * @param {string|Object} data Data returned from the request
      * @param {XMLHttpRequest} xhr The XMLHttpRequest object
      */
     onSaveProceed(data, xhr) {
@@ -1613,7 +1613,7 @@ export class PopupWindow extends BaseFrame {
      * Update the page or open a new tab
      *
      * @implements BaseForm.onSaveProceed()
-     * @param {string} data Data returned from the request
+     * @param {string|Object} data Data returned from the request
      * @param {XMLHttpRequest} xhr The XMLHttpRequest object
      */
     onSaveProceed(data, xhr) {
@@ -2203,6 +2203,9 @@ export class DetachedTab extends TabFrame {
     }
 }
 
+/**
+ * Overlay for narrow devices
+ */
 export class Overlay extends BaseModel {
     constructor(pane) {
         super();

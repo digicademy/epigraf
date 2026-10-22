@@ -6,7 +6,7 @@
       <name>Future books</name>
     </project>
     <sections>
-      <section id="sections-1" articles_id="articles-1" sortno="1" level="1" children="1" siblings="2" layout_cols="0" layout_rows="0" sectiontype="text">
+      <section id="sections-1" articles_id="articles-1" sortno="1" level="1" children="1" siblings="2" layout_cols="0" layout_rows="0" sectiontype="text" norm_iri="datasectioniri">
         <comment>Not finished yet</comment>
         <path>
           <section id="sections-1" articles_id="articles-1" sectiontype="text" sortno="1" level="1" children="1" siblings="2" />
@@ -41,10 +41,9 @@
               <section id="sections-2" parent_id="sections-1" articles_id="articles-1" sectiontype="newsectiontype" sortno="2" level="2" children="0" siblings="1" />
             </sectionpath>
             <content>Better read this one.</content>
-            <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="2" rght="3">
+            <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" norm_iri="gooddoi" level="1" lft="2" rght="3">
               <lemma>Good</lemma>
               <name>Good book</name>
-              <norm_iri>gooddoi</norm_iri>
               <ancestors>
                 <property id="properties-3" propertytype="literature" level="0" lft="1" rght="6">
                   <lemma>Books</lemma>
@@ -95,10 +94,9 @@
           <lemma>Books</lemma>
           <name>Book collection</name>
         </property>
-        <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" level="1" lft="2" rght="3">
+        <property id="properties-1" parent_id="properties-3" sortno="2" propertytype="literature" norm_iri="gooddoi" level="1" lft="2" rght="3">
           <lemma>Good</lemma>
           <name>Good book</name>
-          <norm_iri>gooddoi</norm_iri>
           <sections>
             <section id="sections-2" articles_id="articles-1" />
           </sections>

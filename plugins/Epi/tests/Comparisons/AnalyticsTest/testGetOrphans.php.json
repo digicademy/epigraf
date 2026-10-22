@@ -23,7 +23,7 @@
         "sql": "FROM sections WHERE articles_id IS NULL  AND deleted = 0",
         "sql_count": "SELECT COUNT(*)",
         "sql_records": "SELECT \"sections\", id, \"articles\", NULL",
-        "clean": "UPDATE sections SET deleted = 3 WHERE articles_id IS NULL  AND deleted = 0",
+        "clear": "UPDATE sections SET deleted = 3 WHERE articles_id IS NULL  AND deleted = 0",
         "type": "Sections with null Article",
         "target": 0,
         "no": 3,

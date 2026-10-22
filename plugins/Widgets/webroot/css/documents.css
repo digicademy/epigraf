@@ -853,6 +853,11 @@ div.doc-section-link.tag-hover[data-to-id=''] a:hover {
     display: none;
 }
 
+/* Links */
+.doc-fieldname-links input.input-reference-text {
+    min-width: 7em;
+}
+
 /* Text */
 
 span.xml_tag_nl {

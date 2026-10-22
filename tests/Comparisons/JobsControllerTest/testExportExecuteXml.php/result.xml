@@ -124,11 +124,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-514" sortno="103" sortkey="di_number" propertytype="datakeys" level="0" lft="29" rght="30">
+            <property id="properties-514" sortno="103" sortkey="di_number" propertytype="datakeys" norm_iri="di_di_number" level="0" lft="29" rght="30">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Grunddaten: Bandnummer</lemma>
-              <norm_iri>di_di_number</norm_iri>
             </property>
           </item>
         </items>
@@ -150,11 +149,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-546" sortno="39" sortkey="preliminaries" propertytype="datakeys" level="0" lft="115" rght="116">
+            <property id="properties-546" sortno="39" sortkey="preliminaries" propertytype="datakeys" norm_iri="di_preliminaries" level="0" lft="115" rght="116">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Titelei</lemma>
-              <norm_iri>di_preliminaries</norm_iri>
             </property>
           </item>
         </items>
@@ -178,11 +176,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-518" sortno="19" sortkey="prelim_series" propertytype="datakeys" level="0" lft="79" rght="80">
+            <property id="properties-518" sortno="19" sortkey="prelim_series" propertytype="datakeys" norm_iri="di_prelim_series" level="0" lft="79" rght="80">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Reihe</lemma>
-              <norm_iri>di_prelim_series</norm_iri>
             </property>
           </item>
         </items>
@@ -209,11 +206,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-520" sortno="15" sortkey="prelim_series_title" propertytype="datakeys" level="0" lft="85" rght="86">
+            <property id="properties-520" sortno="15" sortkey="prelim_series_title" propertytype="datakeys" norm_iri="di_prelim_series_title" level="0" lft="85" rght="86">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Reihe: Titel</lemma>
-              <norm_iri>di_prelim_series_title</norm_iri>
             </property>
           </item>
         </items>
@@ -240,11 +236,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-522" sortno="17" sortkey="prelim_series_number" propertytype="datakeys" level="0" lft="81" rght="82">
+            <property id="properties-522" sortno="17" sortkey="prelim_series_number" propertytype="datakeys" norm_iri="di_prelim_series_number" level="0" lft="81" rght="82">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Reihe: Bandnummer</lemma>
-              <norm_iri>di_prelim_series_number</norm_iri>
             </property>
           </item>
         </items>
@@ -271,11 +266,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-524" sortno="13" sortkey="prelim_series_editor" propertytype="datakeys" level="0" lft="83" rght="84">
+            <property id="properties-524" sortno="13" sortkey="prelim_series_editor" propertytype="datakeys" norm_iri="di_prelim_series_editor" level="0" lft="83" rght="84">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Reihe: Herausgeber</lemma>
-              <norm_iri>di_prelim_series_editor</norm_iri>
             </property>
           </item>
         </items>
@@ -300,11 +294,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-526" sortno="11" sortkey="prelim_sub_series" propertytype="datakeys" level="0" lft="87" rght="88">
+            <property id="properties-526" sortno="11" sortkey="prelim_sub_series" propertytype="datakeys" norm_iri="di_prelim_sub_series" level="0" lft="87" rght="88">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Reihe: Unterreihe</lemma>
-              <norm_iri>di_prelim_sub_series</norm_iri>
             </property>
           </item>
         </items>
@@ -328,11 +321,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-528" sortno="9" sortkey="prelim_volume" propertytype="datakeys" level="0" lft="1" rght="2">
+            <property id="properties-528" sortno="9" sortkey="prelim_volume" propertytype="datakeys" norm_iri="di_prelim_volume" level="0" lft="1" rght="2">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Band</lemma>
-              <norm_iri>di_prelim_volume</norm_iri>
             </property>
           </item>
         </items>
@@ -358,11 +350,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-530" sortno="7" sortkey="prelim_volume_title" propertytype="datakeys" level="0" lft="5" rght="6">
+            <property id="properties-530" sortno="7" sortkey="prelim_volume_title" propertytype="datakeys" norm_iri="di_prelim_volume_title" level="0" lft="5" rght="6">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Band: Titel</lemma>
-              <norm_iri>di_prelim_volume_title</norm_iri>
             </property>
           </item>
         </items>
@@ -389,11 +380,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-532" sortno="5" sortkey="prelim_volume_subtitle" propertytype="datakeys" level="0" lft="7" rght="8">
+            <property id="properties-532" sortno="5" sortkey="prelim_volume_subtitle" propertytype="datakeys" norm_iri="di_prelim_volume_subtitle" level="0" lft="7" rght="8">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Band: Untertitel</lemma>
-              <norm_iri>di_prelim_volume_subtitle</norm_iri>
             </property>
           </item>
         </items>
@@ -416,11 +406,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-182" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="Jahr" number="13" sortno="13" level="3" children="0" siblings="9" />
             </sectionpath>
-            <property id="properties-534" sortno="3" sortkey="prelim_year" propertytype="datakeys" level="0" lft="3" rght="4">
+            <property id="properties-534" sortno="3" sortkey="prelim_year" propertytype="datakeys" norm_iri="di_prelim_year" level="0" lft="3" rght="4">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Band: Jahr</lemma>
-              <norm_iri>di_prelim_year</norm_iri>
             </property>
           </item>
         </items>
@@ -443,11 +432,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-184" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="Verlag" number="14" sortno="14" level="3" children="0" siblings="9" />
             </sectionpath>
-            <property id="properties-536" sortno="1" sortkey="prelim_publisher" propertytype="datakeys" level="0" lft="129" rght="130">
+            <property id="properties-536" sortno="1" sortkey="prelim_publisher" propertytype="datakeys" norm_iri="di_prelim_publisher" level="0" lft="129" rght="130">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Titelei: Verlag</lemma>
-              <norm_iri>di_prelim_publisher</norm_iri>
             </property>
           </item>
         </items>
@@ -470,11 +458,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-186" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="Druck" number="15" sortno="15" level="3" children="0" siblings="9" />
             </sectionpath>
-            <property id="properties-538" sortno="137" sortkey="prelim_print_note" propertytype="datakeys" level="0" lft="119" rght="120">
+            <property id="properties-538" sortno="137" sortkey="prelim_print_note" propertytype="datakeys" norm_iri="di_prelim_print_note" level="0" lft="119" rght="120">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Titelei: Druckortvermerk</lemma>
-              <norm_iri>di_prelim_print_note</norm_iri>
             </property>
           </item>
         </items>
@@ -497,11 +484,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-188" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="ISBN" number="16" sortno="16" level="3" children="0" siblings="9" />
             </sectionpath>
-            <property id="properties-540" sortno="135" sortkey="prelim_isbn" propertytype="datakeys" level="0" lft="123" rght="124">
+            <property id="properties-540" sortno="135" sortkey="prelim_isbn" propertytype="datakeys" norm_iri="di_prelim_isbn" level="0" lft="123" rght="124">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Titelei: ISBN</lemma>
-              <norm_iri>di_prelim_isbn</norm_iri>
             </property>
           </item>
         </items>
@@ -524,11 +510,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-190" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="Rechte" number="17" sortno="17" level="3" children="0" siblings="9" />
             </sectionpath>
-            <property id="properties-542" sortno="133" sortkey="prelim_rights" propertytype="datakeys" level="0" lft="127" rght="128">
+            <property id="properties-542" sortno="133" sortkey="prelim_rights" propertytype="datakeys" norm_iri="di_prelim_rights" level="0" lft="127" rght="128">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Titelei: Rechtevorbehalt</lemma>
-              <norm_iri>di_prelim_rights</norm_iri>
             </property>
           </item>
         </items>
@@ -551,11 +536,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-192" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="Förderung" number="18" sortno="18" level="3" children="1" siblings="9" />
             </sectionpath>
-            <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" level="0" lft="33" rght="34">
+            <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" norm_iri="di_prelim_sponsors" level="0" lft="33" rght="34">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>prelim_sponsors</lemma>
-              <norm_iri>di_prelim_sponsors</norm_iri>
             </property>
           </item>
         </items>
@@ -601,11 +585,10 @@
               <section id="sections-176" parent_id="sections-164" articles_id="articles-2" sectiontype="chapter" name="Band" number="10" sortno="10" level="2" children="9" siblings="3" />
               <section id="sections-196" parent_id="sections-176" articles_id="articles-2" sectiontype="chapter" name="Biblio" number="20" sortno="20" level="3" children="0" siblings="9" />
             </sectionpath>
-            <property id="properties-548" sortno="127" sortkey="prelim_biblio_note" propertytype="datakeys" level="0" lft="117" rght="118">
+            <property id="properties-548" sortno="127" sortkey="prelim_biblio_note" propertytype="datakeys" norm_iri="di_prelim_biblio_note" level="0" lft="117" rght="118">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Titelei: Deutsche Nationalbibliografie</lemma>
-              <norm_iri>di_prelim_biblio_note</norm_iri>
             </property>
           </item>
         </items>
@@ -627,11 +610,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-550" sortno="37" sortkey="table_of_content" propertytype="datakeys" level="0" lft="95" rght="96">
+            <property id="properties-550" sortno="37" sortkey="table_of_content" propertytype="datakeys" norm_iri="di_table_of_content" level="0" lft="95" rght="96">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Inhaltsverzeichnis</lemma>
-              <norm_iri>di_table_of_content</norm_iri>
             </property>
           </item>
         </items>
@@ -653,11 +635,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-552" sortno="41" sortkey="prefaces" propertytype="datakeys" level="0" lft="109" rght="110">
+            <property id="properties-552" sortno="41" sortkey="prefaces" propertytype="datakeys" norm_iri="di_prefaces" level="0" lft="109" rght="110">
               <created>2022-06-29T01:02:11+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Vorworte</lemma>
-              <norm_iri>di_prefaces</norm_iri>
             </property>
           </item>
         </items>
@@ -697,11 +678,10 @@
               <section id="sections-4887" parent_id="sections-200" articles_id="articles-2" sectiontype="chapter" name="Zitierhinweis" number="24" sortno="24" level="2" children="0" siblings="2" />
             </sectionpath>
             <content>DI 999, Testband, Vorwort (Frau Vorworterin)</content>
-            <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" level="0" lft="111" rght="112">
+            <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" norm_iri="di_citationnote" level="0" lft="111" rght="112">
               <created>2025-12-19T02:55:55+01:00</created>
               <modified>2025-12-19T02:56:11+01:00</modified>
               <lemma>Teile: Zitatonshinweis</lemma>
-              <norm_iri>di_citationnote</norm_iri>
             </property>
           </item>
         </items>
@@ -724,11 +704,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-554" sortno="45" sortkey="introduction" propertytype="datakeys" level="0" lft="93" rght="94">
+            <property id="properties-554" sortno="45" sortkey="introduction" propertytype="datakeys" norm_iri="di_introduction" level="0" lft="93" rght="94">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Einleitung</lemma>
-              <norm_iri>di_introduction</norm_iri>
             </property>
           </item>
         </items>
@@ -773,11 +752,10 @@
               <section id="sections-4719" parent_id="sections-204" articles_id="articles-2" sectiontype="chapter" name="Zitationshinweis" number="27" sortno="27" level="3" children="0" siblings="4" />
             </sectionpath>
             <content>DI 999, Testband, Vorbemerkungen (von anderen Autor:innen)</content>
-            <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" level="0" lft="111" rght="112">
+            <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" norm_iri="di_citationnote" level="0" lft="111" rght="112">
               <created>2025-12-19T02:55:55+01:00</created>
               <modified>2025-12-19T02:56:11+01:00</modified>
               <lemma>Teile: Zitatonshinweis</lemma>
-              <norm_iri>di_citationnote</norm_iri>
             </property>
           </item>
         </items>
@@ -831,10 +809,9 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" level="0" lft="23" rght="24">
+            <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" norm_iri="di_csv_table_vertical" level="0" lft="23" rght="24">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Darstellung: Tabelle mit Kopfspalte</lemma>
-              <norm_iri>di_csv_table_vertical</norm_iri>
             </property>
           </item>
         </items>
@@ -861,11 +838,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" level="0" lft="15" rght="16">
+            <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" norm_iri="di_continuation" level="0" lft="15" rght="16">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
-              <norm_iri>di_continuation</norm_iri>
             </property>
           </item>
         </items>
@@ -894,11 +870,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-568" sortno="91" sortkey="csv_table" propertytype="datakeys" level="0" lft="21" rght="22">
+            <property id="properties-568" sortno="91" sortkey="csv_table" propertytype="datakeys" norm_iri="di_csv_table" level="0" lft="21" rght="22">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Darstellung: Tabelle</lemma>
-              <norm_iri>di_csv_table</norm_iri>
             </property>
           </item>
         </items>
@@ -925,11 +900,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" level="0" lft="15" rght="16">
+            <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" norm_iri="di_continuation" level="0" lft="15" rght="16">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
-              <norm_iri>di_continuation</norm_iri>
             </property>
           </item>
         </items>
@@ -1169,11 +1143,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-564" sortno="133" propertytype="datakeys" level="0" lft="27" rght="28">
+            <property id="properties-564" sortno="133" propertytype="datakeys" norm_iri="di_empty" level="0" lft="27" rght="28">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>empty</lemma>
-              <norm_iri>di_empty</norm_iri>
             </property>
           </item>
         </items>
@@ -1197,11 +1170,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
+            <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" norm_iri="di_fonttypes" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Schriftarten</lemma>
-              <norm_iri>di_fonttypes</norm_iri>
             </property>
           </item>
         </items>
@@ -1220,11 +1192,10 @@
             <sectionpath>
               <section id="sections-238" articles_id="articles-2" sectiontype="chapter" name="Katalog der Inschriften" number="39" sortno="39" level="1" children="0" siblings="14" />
             </sectionpath>
-            <property id="properties-566" sortno="97" sortkey="articles" propertytype="datakeys" level="0" lft="99" rght="100">
+            <property id="properties-566" sortno="97" sortkey="articles" propertytype="datakeys" norm_iri="di_articles" level="0" lft="99" rght="100">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Katalogartikel</lemma>
-              <norm_iri>di_articles</norm_iri>
             </property>
           </item>
         </items>
@@ -1246,10 +1217,9 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-665" sortno="99" sortkey="abbreviations" propertytype="datakeys" level="0" lft="89" rght="90">
+            <property id="properties-665" sortno="99" sortkey="abbreviations" propertytype="datakeys" norm_iri="di_abbreviations" level="0" lft="89" rght="90">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Abkürzungen</lemma>
-              <norm_iri>di_abbreviations</norm_iri>
             </property>
           </item>
         </items>
@@ -1271,10 +1241,9 @@
               <section id="sections-242" parent_id="sections-240" articles_id="articles-2" sectiontype="chapter" name="Tabelle" number="41" sortno="41" level="2" children="0" siblings="2" />
             </sectionpath>
             <content>Abb.#Abbildung<nl />ADB#Allgemeine Deutsche Biographie<nl />AHW#Archiv der Hansestadt Wismar<nl />Bd.#Band<nl />Bef.-Nr.#Befund-Nummer<nl />Bl.#Blatt <nl />Br.#Breite <nl />Bu.#Buchstabenhöhe <nl /></content>
-            <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" level="0" lft="23" rght="24">
+            <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" norm_iri="di_csv_table_vertical" level="0" lft="23" rght="24">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Darstellung: Tabelle mit Kopfspalte</lemma>
-              <norm_iri>di_csv_table_vertical</norm_iri>
             </property>
           </item>
         </items>
@@ -1295,11 +1264,10 @@
               <section id="sections-3771" parent_id="sections-240" articles_id="articles-2" sectiontype="chapter" name="Fortsetzung" number="42" sortno="42" level="2" children="0" siblings="2" />
             </sectionpath>
             <content>Hinweise zu Abkürzungen mit korrekter <sups id="22382116ef1b451cab2454edb982e67f" data-link-target="" data-link-iri="" data-link-value="Hochstellung im Text">Hochstellung</sups> und <sup id="b1810b98e39e42bbda621ba740fd4275" data-link-target="properties-74" data-link-iri="properties/verticalalignments/projects~74" data-link-value="Hochgestellt 1">Hochstellung</sup> durch Transkriptionswerkzeug.</content>
-            <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" level="0" lft="15" rght="16">
+            <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" norm_iri="di_continuation" level="0" lft="15" rght="16">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
-              <norm_iri>di_continuation</norm_iri>
             </property>
           </item>
         </items>
@@ -1318,11 +1286,10 @@
             <sectionpath>
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
             </sectionpath>
-            <property id="properties-570" sortno="47" sortkey="indices" propertytype="datakeys" level="0" lft="107" rght="108">
+            <property id="properties-570" sortno="47" sortkey="indices" propertytype="datakeys" norm_iri="di_indices" level="0" lft="107" rght="108">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Register</lemma>
-              <norm_iri>di_indices</norm_iri>
             </property>
           </item>
         </items>
@@ -1343,11 +1310,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-246" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="1. Standorte" number="44" sortno="44" level="2" children="0" siblings="10" />
             </sectionpath>
-            <property id="properties-572" sortno="55" sortkey="index_standorte" propertytype="datakeys" level="0" lft="65" rght="66" iscategory="0" ishidden="0">
+            <property id="properties-572" sortno="55" sortkey="index_standorte" propertytype="datakeys" norm_iri="di_locations" level="0" lft="65" rght="66" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Standorte</lemma>
-              <norm_iri>di_locations</norm_iri>
             </property>
           </item>
         </items>
@@ -1371,11 +1337,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" norm_iri="di_indexgroup" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Registergruppe</lemma>
-              <norm_iri>di_indexgroup</norm_iri>
             </property>
           </item>
         </items>
@@ -1401,11 +1366,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-576" sortno="63" sortkey="index_personennamen" propertytype="datakeys" level="0" lft="55" rght="56" iscategory="0" ishidden="0">
+            <property id="properties-576" sortno="63" sortkey="index_personennamen" propertytype="datakeys" norm_iri="di_personnames" level="0" lft="55" rght="56" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Personennamen</lemma>
-              <norm_iri>di_personnames</norm_iri>
             </property>
           </item>
         </items>
@@ -1431,11 +1395,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-578" sortno="79" sortkey="index_hersteller" propertytype="datakeys" level="0" lft="41" rght="42" iscategory="0" ishidden="0">
+            <property id="properties-578" sortno="79" sortkey="index_hersteller" propertytype="datakeys" norm_iri="di_manufacturers" level="0" lft="41" rght="42" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Hersteller</lemma>
-              <norm_iri>di_manufacturers</norm_iri>
             </property>
           </item>
         </items>
@@ -1461,11 +1424,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-580" sortno="65" sortkey="index_ortsnamen" propertytype="datakeys" level="0" lft="53" rght="54" iscategory="0" ishidden="0">
+            <property id="properties-580" sortno="65" sortkey="index_ortsnamen" propertytype="datakeys" norm_iri="di_placenames" level="0" lft="53" rght="54" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Ortsnamen</lemma>
-              <norm_iri>di_placenames</norm_iri>
             </property>
           </item>
         </items>
@@ -1486,11 +1448,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-256" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="3. Wappen und Marken" number="49" sortno="49" level="2" children="2" siblings="10" />
             </sectionpath>
-            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" norm_iri="di_indexgroup" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Registergruppe</lemma>
-              <norm_iri>di_indexgroup</norm_iri>
             </property>
           </item>
         </items>
@@ -1513,11 +1474,10 @@
               <section id="sections-256" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="3. Wappen und Marken" number="49" sortno="49" level="2" children="2" siblings="10" />
               <section id="sections-258" parent_id="sections-256" articles_id="articles-2" sectiontype="chapter" name="3a. Wappen- und Markenträger" number="50" sortno="50" level="3" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-584" sortno="49" sortkey="properties_wappen" propertytype="datakeys" level="0" lft="71" rght="72">
+            <property id="properties-584" sortno="49" sortkey="properties_wappen" propertytype="datakeys" norm_iri="di_heraldry" level="0" lft="71" rght="72">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Wappen</lemma>
-              <norm_iri>di_heraldry</norm_iri>
             </property>
           </item>
         </items>
@@ -1540,11 +1500,10 @@
               <section id="sections-256" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="3. Wappen und Marken" number="49" sortno="49" level="2" children="2" siblings="10" />
               <section id="sections-260" parent_id="sections-256" articles_id="articles-2" sectiontype="chapter" name="3b. Wappenbeschreibungen" number="51" sortno="51" level="3" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-586" sortno="85" sortkey="index_blasonierungen" propertytype="datakeys" level="0" lft="91" rght="92" iscategory="0" ishidden="0">
+            <property id="properties-586" sortno="85" sortkey="index_blasonierungen" propertytype="datakeys" norm_iri="di_blazons" level="0" lft="91" rght="92" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Blasonierungen</lemma>
-              <norm_iri>di_blazons</norm_iri>
             </property>
           </item>
         </items>
@@ -1565,11 +1524,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-262" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="4. Berufe, Stände, Titel, Verwandtschaften, Attribute" number="52" sortno="52" level="2" children="0" siblings="10" />
             </sectionpath>
-            <property id="properties-588" sortno="83" sortkey="index_epitheta" propertytype="datakeys" level="0" lft="37" rght="38" iscategory="0" ishidden="0">
+            <property id="properties-588" sortno="83" sortkey="index_epitheta" propertytype="datakeys" norm_iri="di_epithets" level="0" lft="37" rght="38" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Epitheta</lemma>
-              <norm_iri>di_epithets</norm_iri>
             </property>
           </item>
         </items>
@@ -1590,11 +1548,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-264" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="5. Initien" number="53" sortno="53" level="2" children="0" siblings="10" />
             </sectionpath>
-            <property id="properties-590" sortno="73" sortkey="properties_initien" propertytype="datakeys" level="0" lft="47" rght="48">
+            <property id="properties-590" sortno="73" sortkey="properties_initien" propertytype="datakeys" norm_iri="di_incipits" level="0" lft="47" rght="48">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Initien</lemma>
-              <norm_iri>di_incipits</norm_iri>
             </property>
           </item>
         </items>
@@ -1615,11 +1572,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-266" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="6. Formeln und besondere Wendungen" number="54" sortno="54" level="2" children="0" siblings="10" />
             </sectionpath>
-            <property id="properties-592" sortno="81" sortkey="properties_formeln" propertytype="datakeys" level="0" lft="39" rght="40">
+            <property id="properties-592" sortno="81" sortkey="properties_formeln" propertytype="datakeys" norm_iri="di_formulas" level="0" lft="39" rght="40">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Formeln</lemma>
-              <norm_iri>di_formulas</norm_iri>
             </property>
           </item>
         </items>
@@ -1640,11 +1596,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-268" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="7. Texttypen und Inschriftenarten, Nachweise" number="55" sortno="55" level="2" children="2" siblings="10" />
             </sectionpath>
-            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" norm_iri="di_indexgroup" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Registergruppe</lemma>
-              <norm_iri>di_indexgroup</norm_iri>
             </property>
           </item>
         </items>
@@ -1667,11 +1622,10 @@
               <section id="sections-268" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="7. Texttypen und Inschriftenarten, Nachweise" number="55" sortno="55" level="2" children="2" siblings="10" />
               <section id="sections-270" parent_id="sections-268" articles_id="articles-2" sectiontype="chapter" name="7a. Texttypen und Inschriftenarten" number="56" sortno="56" level="3" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-596" sortno="53" sortkey="properties_textsorten" propertytype="datakeys" level="0" lft="67" rght="68">
+            <property id="properties-596" sortno="53" sortkey="properties_textsorten" propertytype="datakeys" norm_iri="di_texttypes" level="0" lft="67" rght="68">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Textsorten</lemma>
-              <norm_iri>di_texttypes</norm_iri>
             </property>
           </item>
         </items>
@@ -1694,11 +1648,10 @@
               <section id="sections-268" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="7. Texttypen und Inschriftenarten, Nachweise" number="55" sortno="55" level="2" children="2" siblings="10" />
               <section id="sections-272" parent_id="sections-268" articles_id="articles-2" sectiontype="chapter" name="7b. Nachweise von Zitaten und Paraphrasen" number="57" sortno="57" level="3" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-598" sortno="61" sortkey="properties_quellen" propertytype="datakeys" level="0" lft="57" rght="58">
+            <property id="properties-598" sortno="61" sortkey="properties_quellen" propertytype="datakeys" norm_iri="di_sources" level="0" lft="57" rght="58">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Quellen</lemma>
-              <norm_iri>di_sources</norm_iri>
             </property>
           </item>
         </items>
@@ -1719,11 +1672,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-274" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="8. Inschriftenträger" number="58" sortno="58" level="2" children="0" siblings="10" />
             </sectionpath>
-            <property id="properties-600" sortno="67" sortkey="index_objekttypen" propertytype="datakeys" level="0" lft="51" rght="52" iscategory="0" ishidden="0">
+            <property id="properties-600" sortno="67" sortkey="index_objekttypen" propertytype="datakeys" norm_iri="di_objecttypes" level="0" lft="51" rght="52" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Objekttypen</lemma>
-              <norm_iri>di_objecttypes</norm_iri>
             </property>
           </item>
         </items>
@@ -1747,11 +1699,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" norm_iri="di_indexgroup" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Registergruppe</lemma>
-              <norm_iri>di_indexgroup</norm_iri>
             </property>
           </item>
         </items>
@@ -1774,11 +1725,10 @@
               <section id="sections-276" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="9. Schrift" number="59" sortno="59" level="2" children="2" siblings="10" />
               <section id="sections-278" parent_id="sections-276" articles_id="articles-2" sectiontype="chapter" name="9a. Schriftarten" number="60" sortno="60" level="3" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
+            <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" norm_iri="di_fonttypes" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Schriftarten</lemma>
-              <norm_iri>di_fonttypes</norm_iri>
             </property>
           </item>
         </items>
@@ -1804,10 +1754,9 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-670" sortno="111" sortkey="index_schriftmerkmale" propertytype="datakeys" level="0" lft="63" rght="64" iscategory="0" ishidden="0">
+            <property id="properties-670" sortno="111" sortkey="index_schriftmerkmale" propertytype="datakeys" norm_iri="di_scriptfeatures" level="0" lft="63" rght="64" iscategory="0" ishidden="0">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Schriftmerkmale</lemma>
-              <norm_iri>di_scriptfeatures</norm_iri>
             </property>
           </item>
         </items>
@@ -1835,11 +1784,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-606" sortno="121" sortkey="index_technik" propertytype="datakeys" level="0" lft="35" rght="36" iscategory="0" ishidden="0">
+            <property id="properties-606" sortno="121" sortkey="index_technik" propertytype="datakeys" norm_iri="di_techniques" level="0" lft="35" rght="36" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Ausführungstechniken</lemma>
-              <norm_iri>di_techniques</norm_iri>
             </property>
           </item>
         </items>
@@ -1864,11 +1812,10 @@
               <section id="sections-280" parent_id="sections-276" articles_id="articles-2" sectiontype="chapter" name="9b. Ausführung, Gestaltung, Layout" number="61" sortno="61" level="3" children="2" siblings="2" />
               <section id="sections-284" parent_id="sections-280" articles_id="articles-2" sectiontype="chapter" name="Worttrenner und Satzzeichen" number="63" sortno="63" level="4" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-608" sortno="125" sortkey="index_worttrenner" propertytype="datakeys" level="0" lft="73" rght="74" iscategory="0" ishidden="0">
+            <property id="properties-608" sortno="125" sortkey="index_worttrenner" propertytype="datakeys" norm_iri="di_wordseparators" level="0" lft="73" rght="74" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Worttrenner</lemma>
-              <norm_iri>di_wordseparators</norm_iri>
             </property>
           </item>
         </items>
@@ -1889,11 +1836,10 @@
               <section id="sections-244" articles_id="articles-2" sectiontype="chapter" name="Register" number="43" sortno="43" level="1" children="10" siblings="14" />
               <section id="sections-286" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="10. Sachregister" number="64" sortno="64" level="2" children="5" siblings="10" />
             </sectionpath>
-            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+            <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" norm_iri="di_indexgroup" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Registergruppe</lemma>
-              <norm_iri>di_indexgroup</norm_iri>
             </property>
           </item>
         </items>
@@ -1916,11 +1862,10 @@
               <section id="sections-286" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="10. Sachregister" number="64" sortno="64" level="2" children="5" siblings="10" />
               <section id="sections-288" parent_id="sections-286" articles_id="articles-2" sectiontype="chapter" name="10a. Allgemeines" number="65" sortno="65" level="3" children="1" siblings="5" />
             </sectionpath>
-            <property id="properties-612" sortno="59" sortkey="index_sachregister" propertytype="datakeys" level="0" lft="59" rght="60" iscategory="0" ishidden="0">
+            <property id="properties-612" sortno="59" sortkey="index_sachregister" propertytype="datakeys" norm_iri="di_subjects" level="0" lft="59" rght="60" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Sachregister</lemma>
-              <norm_iri>di_subjects</norm_iri>
             </property>
           </item>
         </items>
@@ -1945,11 +1890,10 @@
               <section id="sections-288" parent_id="sections-286" articles_id="articles-2" sectiontype="chapter" name="10a. Allgemeines" number="65" sortno="65" level="3" children="1" siblings="5" />
               <section id="sections-290" parent_id="sections-288" articles_id="articles-2" sectiontype="chapter" name="Material der Inschriftenträger" number="66" sortno="66" level="4" children="0" siblings="1" />
             </sectionpath>
-            <property id="properties-614" sortno="123" sortkey="properties_materialien" propertytype="datakeys" level="0" lft="49" rght="50">
+            <property id="properties-614" sortno="123" sortkey="properties_materialien" propertytype="datakeys" norm_iri="di_materials" level="0" lft="49" rght="50">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Materialien</lemma>
-              <norm_iri>di_materials</norm_iri>
             </property>
           </item>
         </items>
@@ -1972,11 +1916,10 @@
               <section id="sections-286" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="10. Sachregister" number="64" sortno="64" level="2" children="5" siblings="10" />
               <section id="sections-292" parent_id="sections-286" articles_id="articles-2" sectiontype="chapter" name="10b. Heilige, biblische Personen, Allegorien, Mythologie in Text und Bild – Ikonografie" number="67" sortno="67" level="3" children="0" siblings="5" />
             </sectionpath>
-            <property id="properties-616" sortno="77" sortkey="index_ikonografie" propertytype="datakeys" level="0" lft="43" rght="44" iscategory="0" ishidden="0">
+            <property id="properties-616" sortno="77" sortkey="index_ikonografie" propertytype="datakeys" norm_iri="di_icons" level="0" lft="43" rght="44" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Ikonografie</lemma>
-              <norm_iri>di_icons</norm_iri>
             </property>
           </item>
         </items>
@@ -1999,11 +1942,10 @@
               <section id="sections-286" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="10. Sachregister" number="64" sortno="64" level="2" children="5" siblings="10" />
               <section id="sections-294" parent_id="sections-286" articles_id="articles-2" sectiontype="chapter" name="10c. Besonderheiten der Zeitangabe" number="68" sortno="68" level="3" children="0" siblings="5" />
             </sectionpath>
-            <property id="properties-618" sortno="1" propertytype="datakeys" level="0" lft="75" rght="76">
+            <property id="properties-618" sortno="1" propertytype="datakeys" norm_iri="di_temporals" level="0" lft="75" rght="76">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Zeitangaben</lemma>
-              <norm_iri>di_temporals</norm_iri>
             </property>
           </item>
         </items>
@@ -2026,11 +1968,10 @@
               <section id="sections-286" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="10. Sachregister" number="64" sortno="64" level="2" children="5" siblings="10" />
               <section id="sections-296" parent_id="sections-286" articles_id="articles-2" sectiontype="chapter" name="10d. Initialen" number="69" sortno="69" level="3" children="0" siblings="5" />
             </sectionpath>
-            <property id="properties-620" sortno="75" sortkey="index_initialen" propertytype="datakeys" level="0" lft="45" rght="46" iscategory="0" ishidden="0">
+            <property id="properties-620" sortno="75" sortkey="index_initialen" propertytype="datakeys" norm_iri="di_initials" level="0" lft="45" rght="46" iscategory="0" ishidden="0">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Initialen</lemma>
-              <norm_iri>di_initials</norm_iri>
             </property>
           </item>
         </items>
@@ -2053,11 +1994,10 @@
               <section id="sections-286" parent_id="sections-244" articles_id="articles-2" sectiontype="chapter" name="10. Sachregister" number="64" sortno="64" level="2" children="5" siblings="10" />
               <section id="sections-298" parent_id="sections-286" articles_id="articles-2" sectiontype="chapter" name="10e. Versformen" number="70" sortno="70" level="3" children="0" siblings="5" />
             </sectionpath>
-            <property id="properties-622" sortno="51" sortkey="properties_versmasse" propertytype="datakeys" level="0" lft="69" rght="70">
+            <property id="properties-622" sortno="51" sortkey="properties_versmasse" propertytype="datakeys" norm_iri="di_metres" level="0" lft="69" rght="70">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Register: Versmaße</lemma>
-              <norm_iri>di_metres</norm_iri>
             </property>
           </item>
         </items>
@@ -2076,11 +2016,10 @@
             <sectionpath>
               <section id="sections-300" articles_id="articles-2" sectiontype="chapter" name="Quellen und Literatur" number="71" sortno="71" level="1" children="0" siblings="14" />
             </sectionpath>
-            <property id="properties-624" sortno="95" sortkey="biblio" propertytype="datakeys" level="0" lft="105" rght="106">
+            <property id="properties-624" sortno="95" sortkey="biblio" propertytype="datakeys" norm_iri="di_biblio" level="0" lft="105" rght="106">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Quellen und Literatur</lemma>
-              <norm_iri>di_biblio</norm_iri>
             </property>
           </item>
         </items>
@@ -2099,11 +2038,10 @@
             <sectionpath>
               <section id="sections-302" articles_id="articles-2" sectiontype="chapter" name="Die Deutschen Inschriften – Verzeichnis der bisher erschienenen Bände" number="72" sortno="72" level="1" children="0" siblings="14" />
             </sectionpath>
-            <property id="properties-626" sortno="115" sortkey="di_volumes" propertytype="datakeys" level="0" lft="101" rght="102">
+            <property id="properties-626" sortno="115" sortkey="di_volumes" propertytype="datakeys" norm_iri="di_di_volumes" level="0" lft="101" rght="102">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Liste bislang erschienener Bände</lemma>
-              <norm_iri>di_di_volumes</norm_iri>
             </property>
           </item>
         </items>
@@ -2122,11 +2060,10 @@
             <sectionpath>
               <section id="sections-304" articles_id="articles-2" sectiontype="chapter" name="Zeichnungen" number="73" sortno="73" level="1" children="2" siblings="14" />
             </sectionpath>
-            <property id="properties-628" sortno="89" sortkey="drawings" propertytype="datakeys" level="0" lft="131" rght="132">
+            <property id="properties-628" sortno="89" sortkey="drawings" propertytype="datakeys" norm_iri="di_drawings" level="0" lft="131" rght="132">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Zeichnungen</lemma>
-              <norm_iri>di_drawings</norm_iri>
             </property>
           </item>
         </items>
@@ -2150,11 +2087,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-630" sortno="113" sortkey="marks" propertytype="datakeys" level="0" lft="103" rght="104">
+            <property id="properties-630" sortno="113" sortkey="marks" propertytype="datakeys" norm_iri="di_brands" level="0" lft="103" rght="104">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Teile: Markenliste</lemma>
-              <norm_iri>di_brands</norm_iri>
             </property>
           </item>
         </items>
@@ -2174,10 +2110,9 @@
               <section id="sections-304" articles_id="articles-2" sectiontype="chapter" name="Zeichnungen" number="73" sortno="73" level="1" children="2" siblings="14" />
               <section id="sections-3122" parent_id="sections-304" articles_id="articles-2" sectiontype="chapter" name="Kirchengrundriss mit Grabplatten: St. Paulin" number="75" sortno="75" level="2" children="3" siblings="2" />
             </sectionpath>
-            <property id="properties-663" sortno="29" sortkey="map" propertytype="datakeys" level="0" lft="133" rght="134">
+            <property id="properties-663" sortno="29" sortkey="map" propertytype="datakeys" norm_iri="di_map" level="0" lft="133" rght="134">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Zeichnungen: Karte</lemma>
-              <norm_iri>di_map</norm_iri>
             </property>
           </item>
         </items>
@@ -2200,10 +2135,9 @@
               <section id="sections-3124" parent_id="sections-3122" articles_id="articles-2" sectiontype="chapter" name="Konkordanz" number="76" sortno="76" level="3" children="0" siblings="3" />
             </sectionpath>
             <content>Grundriss St. Paulin, Trier</content>
-            <property id="properties-669" sortno="109" sortkey="map_concordance" propertytype="datakeys" level="0" lft="137" rght="138">
+            <property id="properties-669" sortno="109" sortkey="map_concordance" propertytype="datakeys" norm_iri="di_map_concordance" level="0" lft="137" rght="138">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Zeichnungen: Karte: Konkordanz</lemma>
-              <norm_iri>di_map_concordance</norm_iri>
             </property>
           </item>
         </items>
@@ -2225,10 +2159,9 @@
               <section id="sections-3122" parent_id="sections-304" articles_id="articles-2" sectiontype="chapter" name="Kirchengrundriss mit Grabplatten: St. Paulin" number="75" sortno="75" level="2" children="3" siblings="2" />
               <section id="sections-3206" parent_id="sections-3122" articles_id="articles-2" sectiontype="chapter" name="Bild" number="77" sortno="77" level="3" children="0" siblings="3" />
             </sectionpath>
-            <property id="properties-668" sortno="107" sortkey="map_file" propertytype="datakeys" level="0" lft="135" rght="136">
+            <property id="properties-668" sortno="107" sortkey="map_file" propertytype="datakeys" norm_iri="di_map_file" level="0" lft="135" rght="136">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Zeichnungen: Karte: Bild</lemma>
-              <norm_iri>di_map_file</norm_iri>
             </property>
           </item>
         </items>
@@ -2251,10 +2184,9 @@
               <section id="sections-3208" parent_id="sections-3122" articles_id="articles-2" sectiontype="chapter" name="Bildlegende" number="78" sortno="78" level="3" children="0" siblings="3" />
             </sectionpath>
             <content>Grundriss St. Paulin mit Lage der Inschriftenträger</content>
-            <property id="properties-667" sortno="105" sortkey="map_title" propertytype="datakeys" level="0" lft="139" rght="140">
+            <property id="properties-667" sortno="105" sortkey="map_title" propertytype="datakeys" norm_iri="di_map_title" level="0" lft="139" rght="140">
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Zeichnungen: Karte: Legende</lemma>
-              <norm_iri>di_map_title</norm_iri>
             </property>
           </item>
         </items>
@@ -2276,11 +2208,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" level="0" lft="9" rght="10">
+            <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" norm_iri="di_plates" level="0" lft="9" rght="10">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Bildtafeln</lemma>
-              <norm_iri>di_plates</norm_iri>
             </property>
           </item>
         </items>
@@ -2301,11 +2232,10 @@
               <section id="sections-308" articles_id="articles-2" sectiontype="chapter" name="Bildtafeln" number="79" sortno="79" level="1" children="2" siblings="14" />
               <section id="sections-310" parent_id="sections-308" articles_id="articles-2" sectiontype="chapter" name="Bildnachweise" number="80" sortno="80" level="2" children="0" siblings="2" />
             </sectionpath>
-            <property id="properties-634" sortno="23" sortkey="plates_credits" propertytype="datakeys" level="0" lft="11" rght="12">
+            <property id="properties-634" sortno="23" sortkey="plates_credits" propertytype="datakeys" norm_iri="di_plates_credits" level="0" lft="11" rght="12">
               <created>2022-06-29T01:02:12+02:00</created>
               <modified>2025-12-19T01:55:55+01:00</modified>
               <lemma>Bildtafeln: Bildnachweise</lemma>
-              <norm_iri>di_plates_credits</norm_iri>
             </property>
           </item>
         </items>
@@ -2542,21 +2472,19 @@
       <link id="links-489" to_id="properties-970" to_value="nicht eingerückt" from_id="items-497" from_field="content" from_tagname="vz" from_tagid="d4625aa3c9f447faeaf26a152730b2fa" root_id="articles-2">
         <created>2025-12-14T17:10:41+01:00</created>
         <modified>2025-12-14T17:10:41+01:00</modified>
-        <property id="properties-970" sortkey="nicht eingerueckt" propertytype="indentations" level="0" lft="17" rght="18">
+        <property id="properties-970" sortkey="nicht eingerueckt" propertytype="indentations" norm_iri="di_none" level="0" lft="17" rght="18">
           <created>2025-10-27T15:56:19+01:00</created>
           <modified>2025-10-27T16:56:19+01:00</modified>
           <lemma>nicht eingerückt</lemma>
-          <norm_iri>di_none</norm_iri>
         </property>
       </link>
       <link id="links-491" to_id="properties-968" to_value="eingerückt" from_id="items-497" from_field="content" from_tagname="vz" from_tagid="caf0a717bb284c53ee1ae742fcd9c253" root_id="articles-2">
         <created>2025-12-14T17:10:41+01:00</created>
         <modified>2025-12-14T17:10:41+01:00</modified>
-        <property id="properties-968" sortkey="eingerueckt" propertytype="indentations" level="0" lft="15" rght="16">
+        <property id="properties-968" sortkey="eingerueckt" propertytype="indentations" norm_iri="di_indent" level="0" lft="15" rght="16">
           <created>2025-10-27T15:56:00+01:00</created>
           <modified>2025-10-27T16:56:19+01:00</modified>
           <lemma>eingerückt</lemma>
-          <norm_iri>di_indent</norm_iri>
         </property>
       </link>
       <link id="links-493" to_value="Seitenzahlenanker" from_id="items-497" from_field="content" from_tagname="anchor" from_tagid="ebf96a7f101e48e6e819d4aa6a7d7bd1" root_id="articles-2">
@@ -2566,19 +2494,17 @@
       <link id="links-495" to_id="properties-832" to_value="Autor Lampe" from_id="footnotes-49" from_field="content" from_tagname="rec_lit" from_tagid="a68ce010c5f54a6cbf11e10b629f130d" root_id="articles-2">
         <created>2025-12-14T17:18:27+01:00</created>
         <modified>2025-12-14T17:18:27+01:00</modified>
-        <property id="properties-832" parent_id="properties-815" sortkey="autor lampe" propertytype="literature" level="1" lft="44" rght="45" iscategory="0" ishidden="0">
+        <property id="properties-832" parent_id="properties-815" sortkey="autor lampe" propertytype="literature" norm_iri="autor-lampe" level="1" lft="44" rght="45" iscategory="0" ishidden="0">
           <created>2025-10-27T09:04:57+01:00</created>
           <modified>2026-02-22T14:24:37+01:00</modified>
           <lemma>Autor Lampe Langtitel</lemma>
           <name>Autor Lampe</name>
-          <norm_iri>autor-lampe</norm_iri>
           <ancestors>
-            <property id="properties-815" sortkey="quellengruppe-1" propertytype="literature" level="0" lft="39" rght="48" iscategory="0" ishidden="0">
+            <property id="properties-815" sortkey="quellengruppe-1" propertytype="literature" norm_iri="quellengruppe-1" level="0" lft="39" rght="48" iscategory="0" ishidden="0">
               <created>2025-10-27T08:54:11+01:00</created>
               <modified>2026-02-22T14:24:37+01:00</modified>
               <lemma>Quellengruppe 1</lemma>
               <name>Quellengruppe 1</name>
-              <norm_iri>quellengruppe-1</norm_iri>
             </property>
           </ancestors>
         </property>
@@ -2743,7 +2669,7 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" norm_iri="kurztitel-unterautor-2-mit-" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
               <created>2021-06-12T16:12:51+02:00</created>
               <modified>2026-02-22T14:24:37+01:00</modified>
               <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
@@ -2752,7 +2678,6 @@
               <comment>Unterautor 2 Bemerkung</comment>
               <keywords>Autor,Karstadt,Ursprung</keywords>
               <norm_data>Unterautor 2 Normdaten</norm_data>
-              <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
               <ancestors>
                 <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
                   <created>2021-06-12T16:12:52+02:00</created>
@@ -2856,7 +2781,7 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
               <created>2021-06-12T16:12:52+02:00</created>
               <modified>2026-02-22T14:24:37+01:00</modified>
               <lemma>Quelle 1 mit &amp;</lemma>
@@ -2865,7 +2790,6 @@
               <comment>Quelle 1 Bemerkung</comment>
               <keywords>Karstadt,Ursprung</keywords>
               <norm_data>Quelle 1 Normdaten</norm_data>
-              <norm_iri>quelle-1-mit-</norm_iri>
             </property>
           </item>
           <item id="items-10" itemtype="literature" sortno="2" sections_id="sections-14" articles_id="articles-1">
@@ -2878,7 +2802,7 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+            <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" norm_iri="kurztitel-unterautor-2-mit-" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
               <created>2021-06-12T16:12:51+02:00</created>
               <modified>2026-02-22T14:24:37+01:00</modified>
               <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
@@ -2887,7 +2811,6 @@
               <comment>Unterautor 2 Bemerkung</comment>
               <keywords>Autor,Karstadt,Ursprung</keywords>
               <norm_data>Unterautor 2 Normdaten</norm_data>
-              <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
               <ancestors>
                 <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
                   <created>2021-06-12T16:12:52+02:00</created>
@@ -2927,11 +2850,10 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-1428" sortkey="traditio1" propertytype="conditions" level="0" lft="8" rght="9">
+            <property id="properties-1428" sortkey="traditio1" propertytype="conditions" norm_iri="di_traditio1" level="0" lft="8" rght="9">
               <created>2025-10-28T13:53:53+01:00</created>
               <modified>2025-10-28T15:00:40+01:00</modified>
               <lemma>Objekt und Inschrift erhalten</lemma>
-              <norm_iri>di_traditio1</norm_iri>
             </property>
           </item>
         </items>
@@ -3082,7 +3004,7 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+            <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" norm_iri="zwh" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
               <created>2021-06-13T18:27:21+02:00</created>
               <modified>2025-10-27T17:15:49+01:00</modified>
               <lemma>Zwischenhöhe</lemma>
@@ -3091,9 +3013,8 @@
               <comment>Zwischenhöhe in Metern</comment>
               <keywords>Dimensionen</keywords>
               <norm_data>gibtnochkeinq</norm_data>
-              <norm_iri>zwh</norm_iri>
               <ancestors>
-                <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+                <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" norm_iri="hoehe" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
                   <created>2021-06-13T18:27:22+02:00</created>
                   <modified>2025-10-27T17:15:49+01:00</modified>
                   <lemma>Höhe</lemma>
@@ -3102,7 +3023,6 @@
                   <comment>Höhe in Metern</comment>
                   <keywords>Meter,Kilometer,Hektoliter</keywords>
                   <norm_data>wd:Q208826</norm_data>
-                  <norm_iri>hoehe</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -3182,24 +3102,22 @@
                     <name>hm001.1121</name>
                     <signature>Nummer 1 im Band</signature>
                     <file_name>tp/hm001.1121.svg</file_name>
-                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                       <created>2022-01-02T01:45:42+01:00</created>
                       <modified>2025-10-27T17:14:53+01:00</modified>
                       <lemma>Hausmarke</lemma>
                       <name>Name Hausmarke </name>
-                      <norm_iri>di_masonmark</norm_iri>
                     </property>
                   </property>
                 </link>
                 <link id="links-275" to_id="properties-1446" to_value="test.marke2" from_id="properties-44" from_field="elements" from_tagname="rec_ma" from_tagid="68582d6af9b94d39ff16d5d3c248e8e1" root_id="properties-44">
                   <created>2025-10-30T13:55:17+01:00</created>
                   <modified>2025-10-30T14:00:32+01:00</modified>
-                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
                     <created>2025-10-30T13:53:28+01:00</created>
                     <modified>2025-10-30T12:53:28+01:00</modified>
                     <lemma>Marke2</lemma>
                     <name>test.marke2</name>
-                    <norm_iri>testmarke2</norm_iri>
                   </property>
                 </link>
               </links>
@@ -3234,24 +3152,22 @@
                     <name>hm001.1121</name>
                     <signature>Nummer 1 im Band</signature>
                     <file_name>tp/hm001.1121.svg</file_name>
-                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+                    <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                       <created>2022-01-02T01:45:42+01:00</created>
                       <modified>2025-10-27T17:14:53+01:00</modified>
                       <lemma>Hausmarke</lemma>
                       <name>Name Hausmarke </name>
-                      <norm_iri>di_masonmark</norm_iri>
                     </property>
                   </property>
                 </link>
                 <link id="links-275" to_id="properties-1446" to_value="test.marke2" from_id="properties-44" from_field="elements" from_tagname="rec_ma" from_tagid="68582d6af9b94d39ff16d5d3c248e8e1" root_id="properties-44">
                   <created>2025-10-30T13:55:17+01:00</created>
                   <modified>2025-10-30T14:00:32+01:00</modified>
-                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+                  <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
                     <created>2025-10-30T13:53:28+01:00</created>
                     <modified>2025-10-30T12:53:28+01:00</modified>
                     <lemma>Marke2</lemma>
                     <name>test.marke2</name>
-                    <norm_iri>testmarke2</norm_iri>
                   </property>
                 </link>
               </links>
@@ -3280,7 +3196,7 @@
                 <link id="links-65" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
                   <created>2022-06-10T16:40:32+02:00</created>
                   <modified>2022-06-18T12:07:41+02:00</modified>
-                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
                     <created>2021-06-12T16:12:52+02:00</created>
                     <modified>2026-02-22T14:24:37+01:00</modified>
                     <lemma>Quelle 1 mit &amp;</lemma>
@@ -3289,13 +3205,12 @@
                     <comment>Quelle 1 Bemerkung</comment>
                     <keywords>Karstadt,Ursprung</keywords>
                     <norm_data>Quelle 1 Normdaten</norm_data>
-                    <norm_iri>quelle-1-mit-</norm_iri>
                   </property>
                 </link>
                 <link id="links-512" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="source_from" from_tagname="rec_lit" from_tagid="f89b90bd1e4d4ea4c4fe784f640aa576" root_id="properties-43">
                   <created>2026-02-22T14:43:10+01:00</created>
                   <modified>2026-02-22T14:43:10+01:00</modified>
-                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+                  <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
                     <created>2021-06-12T16:12:52+02:00</created>
                     <modified>2026-02-22T14:24:37+01:00</modified>
                     <lemma>Quelle 1 mit &amp;</lemma>
@@ -3304,7 +3219,6 @@
                     <comment>Quelle 1 Bemerkung</comment>
                     <keywords>Karstadt,Ursprung</keywords>
                     <norm_data>Quelle 1 Normdaten</norm_data>
-                    <norm_iri>quelle-1-mit-</norm_iri>
                   </property>
                 </link>
               </links>
@@ -3338,12 +3252,11 @@
               <name>hm001.1121</name>
               <signature>Nummer 1 im Band</signature>
               <file_name>tp/hm001.1121.svg</file_name>
-              <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+              <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                 <created>2022-01-02T01:45:42+01:00</created>
                 <modified>2025-10-27T17:14:53+01:00</modified>
                 <lemma>Hausmarke</lemma>
                 <name>Name Hausmarke </name>
-                <norm_iri>di_masonmark</norm_iri>
               </property>
             </property>
           </item>
@@ -3363,7 +3276,7 @@
               <name>hm002.2211</name>
               <signature>Nummer 2 im Band</signature>
               <file_name>tp/hm002.2211.svg</file_name>
-              <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+              <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" norm_iri="di_mastermark" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
                 <created>2022-01-02T01:45:42+01:00</created>
                 <modified>2025-10-27T17:15:23+01:00</modified>
                 <lemma>Meisterzeichen</lemma>
@@ -3371,7 +3284,6 @@
                 <unit>Einheit Marke</unit>
                 <comment>Bemerkung Marke</comment>
                 <norm_data>xyz:mzexample</norm_data>
-                <norm_iri>di_mastermark</norm_iri>
               </property>
             </property>
           </item>
@@ -3492,12 +3404,11 @@
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <property id="properties-660" sortkey="maria" propertytype="figures" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+            <property id="properties-660" sortkey="maria" propertytype="figures" norm_iri="maria" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
               <created>2025-05-25T21:13:11+02:00</created>
               <modified>2025-10-27T18:10:56+01:00</modified>
               <lemma>Maria</lemma>
               <name>Maria</name>
-              <norm_iri>maria</norm_iri>
             </property>
           </item>
           <item id="items-750" itemtype="manufacturers" sortno="3" sections_id="sections-6" articles_id="articles-1">
@@ -3527,12 +3438,11 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+            <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" norm_iri="person-mit-punkten" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
               <created>2022-06-29T03:06:04+02:00</created>
               <modified>2025-12-13T18:59:01+01:00</modified>
               <lemma>…Person mit Punkten</lemma>
               <name>…Person mit Punkten</name>
-              <norm_iri>person-mit-punkten</norm_iri>
             </property>
           </item>
           <item id="items-753" itemtype="placenames" sortno="5" sections_id="sections-6" articles_id="articles-1">
@@ -3589,12 +3499,11 @@
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+            <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" norm_iri="nice-type" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
               <created>2025-05-25T21:10:34+02:00</created>
               <modified>2025-10-28T11:54:30+01:00</modified>
               <lemma>Nice type</lemma>
               <name>Nice type</name>
-              <norm_iri>nice-type</norm_iri>
             </property>
           </item>
           <item id="items-943" itemtype="temporals" sortno="9" sections_id="sections-6" articles_id="articles-1">
@@ -3603,12 +3512,11 @@
             <sectionpath>
               <section id="sections-6" articles_id="articles-1" sectiontype="index" name="Register" number="1" sortno="23" level="1" children="0" siblings="16" />
             </sectionpath>
-            <property id="properties-654" sortkey="long time ago" propertytype="temporals" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+            <property id="properties-654" sortkey="long time ago" propertytype="temporals" norm_iri="long-time-ago" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
               <created>2025-05-25T21:11:10+02:00</created>
               <modified>2025-10-28T12:30:06+01:00</modified>
               <lemma>Long time ago</lemma>
               <name>Long time ago</name>
-              <norm_iri>long-time-ago</norm_iri>
             </property>
           </item>
           <item id="items-751" itemtype="subjects" sortno="10" sections_id="sections-6" articles_id="articles-1">
@@ -3649,12 +3557,11 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-197" sortkey="Beschreibung" propertytype="captions" level="0" lft="25" rght="26">
+            <property id="properties-197" sortkey="Beschreibung" propertytype="captions" norm_iri="di_description" level="0" lft="25" rght="26">
               <created>2022-03-27T21:05:33+02:00</created>
               <modified>2025-11-17T13:13:12+01:00</modified>
               <lemma>Beschreibung</lemma>
               <name>Beschreibung</name>
-              <norm_iri>di_description</norm_iri>
             </property>
           </item>
         </items>
@@ -3678,12 +3585,11 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" level="0" lft="29" rght="30">
+            <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" norm_iri="di_header1" level="0" lft="29" rght="30">
               <created>2022-03-27T21:05:33+02:00</created>
               <modified>2025-11-21T01:13:17+01:00</modified>
               <lemma>Gliederung: Ebene 1</lemma>
               <name>Gliederung: Ebene 1</name>
-              <norm_iri>di_header1</norm_iri>
             </property>
           </item>
         </items>
@@ -3761,14 +3667,13 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" level="1" lft="4" rght="5">
+            <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" norm_iri="mit-versal-in-gotischer-majuskel" level="1" lft="4" rght="5">
               <created>2025-12-13T11:52:55+01:00</created>
               <modified>2025-12-13T10:53:51+01:00</modified>
               <lemma>mit Versal in gotischer Majuskel</lemma>
               <name>mit Versal in gotischer Majuskel</name>
-              <norm_iri>mit-versal-in-gotischer-majuskel</norm_iri>
               <ancestors>
-                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" norm_iri="gotische-minuskel" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
                   <created>2021-06-14T16:54:37+02:00</created>
                   <modified>2025-12-13T10:53:51+01:00</modified>
                   <lemma>gotische Minuskel</lemma>
@@ -3777,7 +3682,6 @@
                   <comment>Bemerkung zu gotischer Minuskel</comment>
                   <keywords>gotisch,minuskel</keywords>
                   <norm_data>xxx got minusk</norm_data>
-                  <norm_iri>gotische-minuskel</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -3792,7 +3696,7 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+            <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" norm_iri="mit-versalien-in-gotischer-majuskel-und-versalschrift" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
               <created>2021-06-14T16:54:36+02:00</created>
               <modified>2025-12-13T10:58:57+01:00</modified>
               <lemma>mit Versalien in gotischer Majuskel und Versalschrift</lemma>
@@ -3801,9 +3705,8 @@
               <comment>darf nicht verloren gehen</comment>
               <keywords>versalien, majuskel, versalschrift</keywords>
               <norm_data>norm:vers-maj-vers</norm_data>
-              <norm_iri>mit-versalien-in-gotischer-majuskel-und-versalschrift</norm_iri>
               <ancestors>
-                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+                <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" norm_iri="gotische-minuskel" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
                   <created>2021-06-14T16:54:37+02:00</created>
                   <modified>2025-12-13T10:53:51+01:00</modified>
                   <lemma>gotische Minuskel</lemma>
@@ -3812,7 +3715,6 @@
                   <comment>Bemerkung zu gotischer Minuskel</comment>
                   <keywords>gotisch,minuskel</keywords>
                   <norm_data>xxx got minusk</norm_data>
-                  <norm_iri>gotische-minuskel</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -4691,26 +4593,23 @@
             <pos_x>0</pos_x>
             <pos_y>0</pos_y>
             <pos_z>0</pos_z>
-            <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+            <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" norm_iri="lc-128" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
               <created>2025-12-13T02:17:06+01:00</created>
               <modified>2025-12-13T02:17:17+01:00</modified>
               <lemma>Lc. 1,28</lemma>
               <name>Lc. 1,28</name>
-              <norm_iri>lc-128</norm_iri>
               <ancestors>
-                <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
+                <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" norm_iri="lateinisch" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
                   <created>2025-12-13T02:16:29+01:00</created>
                   <modified>2025-12-13T01:17:06+01:00</modified>
                   <lemma>lateinisch</lemma>
                   <name>lateinisch</name>
-                  <norm_iri>lateinisch</norm_iri>
                 </property>
-                <property id="properties-928" sortkey="bibeltexte" propertytype="sources" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
+                <property id="properties-928" sortkey="bibeltexte" propertytype="sources" norm_iri="bibeltexte" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
                   <created>2025-10-27T13:34:25+01:00</created>
                   <modified>2025-12-13T02:35:40+01:00</modified>
                   <lemma>Bibeltexte</lemma>
                   <name>Bibeltexte</name>
-                  <norm_iri>bibeltexte</norm_iri>
                 </property>
               </ancestors>
             </property>
@@ -5632,7 +5531,7 @@
       <link id="links-50" to_id="properties-11" to_value="Unterautor 1 mit &#039;" from_id="items-4" from_field="content" from_tagname="rec_lit" from_tagid="000004456302666872685185191153" root_id="articles-1">
         <created>2022-01-02T01:39:58+01:00</created>
         <modified>2022-11-27T02:45:53+01:00</modified>
-        <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+        <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" norm_iri="unterautor-1-mit-" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
           <created>2021-06-12T16:12:52+02:00</created>
           <modified>2026-02-22T14:24:37+01:00</modified>
           <lemma>Unterautor 1 mit &#039;</lemma>
@@ -5641,7 +5540,6 @@
           <comment>Unterautorbemerkung 1</comment>
           <keywords>Autor,Quelle</keywords>
           <norm_data>Unterautornorm 1</norm_data>
-          <norm_iri>unterautor-1-mit-</norm_iri>
           <ancestors>
             <property id="properties-12" sortno="2" sortkey="Autor 1" propertytype="literature" level="0" lft="1" rght="6" iscategory="1" ishidden="0">
               <created>2021-06-12T16:12:52+02:00</created>
@@ -5659,7 +5557,7 @@
       <link id="links-51" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="items-14" from_field="content" from_tagname="rec_lit" from_tagid="000004456302493517361111115062" root_id="articles-1">
         <created>2022-01-02T01:39:58+01:00</created>
         <modified>2022-06-18T12:07:41+02:00</modified>
-        <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+        <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
           <created>2021-06-12T16:12:52+02:00</created>
           <modified>2026-02-22T14:24:37+01:00</modified>
           <lemma>Quelle 1 mit &amp;</lemma>
@@ -5668,7 +5566,6 @@
           <comment>Quelle 1 Bemerkung</comment>
           <keywords>Karstadt,Ursprung</keywords>
           <norm_data>Quelle 1 Normdaten</norm_data>
-          <norm_iri>quelle-1-mit-</norm_iri>
         </property>
       </link>
       <link id="links-52" to_id="articles-1" to_value="Signatur 1" from_id="items-14" from_field="content" from_tagname="rec_extern" from_tagid="000004456302482934027777780186" root_id="articles-1">
@@ -5766,12 +5663,11 @@
           <name>hm001.1121</name>
           <signature>Nummer 1 im Band</signature>
           <file_name>tp/hm001.1121.svg</file_name>
-          <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+          <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
             <created>2022-01-02T01:45:42+01:00</created>
             <modified>2025-10-27T17:14:53+01:00</modified>
             <lemma>Hausmarke</lemma>
             <name>Name Hausmarke </name>
-            <norm_iri>di_masonmark</norm_iri>
           </property>
         </property>
       </link>
@@ -6021,244 +5917,210 @@
   </article>
   <index propertytype="datakeys">
     <properties>
-      <property id="properties-528" sortno="9" sortkey="prelim_volume" propertytype="datakeys" level="0" lft="1" rght="2">
+      <property id="properties-528" sortno="9" sortkey="prelim_volume" propertytype="datakeys" norm_iri="di_prelim_volume" level="0" lft="1" rght="2">
         <lemma>Band</lemma>
-        <norm_iri>di_prelim_volume</norm_iri>
         <sections>
           <section id="sections-176" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-534" sortno="3" sortkey="prelim_year" propertytype="datakeys" level="0" lft="3" rght="4">
+      <property id="properties-534" sortno="3" sortkey="prelim_year" propertytype="datakeys" norm_iri="di_prelim_year" level="0" lft="3" rght="4">
         <lemma>Band: Jahr</lemma>
-        <norm_iri>di_prelim_year</norm_iri>
         <sections>
           <section id="sections-182" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-530" sortno="7" sortkey="prelim_volume_title" propertytype="datakeys" level="0" lft="5" rght="6">
+      <property id="properties-530" sortno="7" sortkey="prelim_volume_title" propertytype="datakeys" norm_iri="di_prelim_volume_title" level="0" lft="5" rght="6">
         <lemma>Band: Titel</lemma>
-        <norm_iri>di_prelim_volume_title</norm_iri>
         <sections>
           <section id="sections-178" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-532" sortno="5" sortkey="prelim_volume_subtitle" propertytype="datakeys" level="0" lft="7" rght="8">
+      <property id="properties-532" sortno="5" sortkey="prelim_volume_subtitle" propertytype="datakeys" norm_iri="di_prelim_volume_subtitle" level="0" lft="7" rght="8">
         <lemma>Band: Untertitel</lemma>
-        <norm_iri>di_prelim_volume_subtitle</norm_iri>
         <sections>
           <section id="sections-180" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" level="0" lft="9" rght="10">
+      <property id="properties-632" sortno="43" sortkey="plates" propertytype="datakeys" norm_iri="di_plates" level="0" lft="9" rght="10">
         <lemma>Bildtafeln</lemma>
-        <norm_iri>di_plates</norm_iri>
         <sections>
           <section id="sections-308" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-634" sortno="23" sortkey="plates_credits" propertytype="datakeys" level="0" lft="11" rght="12">
+      <property id="properties-634" sortno="23" sortkey="plates_credits" propertytype="datakeys" norm_iri="di_plates_credits" level="0" lft="11" rght="12">
         <lemma>Bildtafeln: Bildnachweise</lemma>
-        <norm_iri>di_plates_credits</norm_iri>
         <sections>
           <section id="sections-310" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" level="0" lft="15" rght="16">
+      <property id="properties-562" sortno="93" sortkey="continuation" propertytype="datakeys" norm_iri="di_continuation" level="0" lft="15" rght="16">
         <lemma>Darstellung: Fortsetzung des Abschnitts</lemma>
-        <norm_iri>di_continuation</norm_iri>
         <sections>
           <section id="sections-210" articles_id="articles-2" />
           <section id="sections-214" articles_id="articles-2" />
           <section id="sections-3771" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-568" sortno="91" sortkey="csv_table" propertytype="datakeys" level="0" lft="21" rght="22">
+      <property id="properties-568" sortno="91" sortkey="csv_table" propertytype="datakeys" norm_iri="di_csv_table" level="0" lft="21" rght="22">
         <lemma>Darstellung: Tabelle</lemma>
-        <norm_iri>di_csv_table</norm_iri>
         <sections>
           <section id="sections-212" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" level="0" lft="23" rght="24">
+      <property id="properties-673" sortkey="csv_table_vertical" propertytype="datakeys" norm_iri="di_csv_table_vertical" level="0" lft="23" rght="24">
         <lemma>Darstellung: Tabelle mit Kopfspalte</lemma>
-        <norm_iri>di_csv_table_vertical</norm_iri>
         <sections>
           <section id="sections-208" articles_id="articles-2" />
           <section id="sections-242" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-564" sortno="133" propertytype="datakeys" level="0" lft="27" rght="28">
+      <property id="properties-564" sortno="133" propertytype="datakeys" norm_iri="di_empty" level="0" lft="27" rght="28">
         <lemma>empty</lemma>
-        <norm_iri>di_empty</norm_iri>
         <sections>
           <section id="sections-234" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-514" sortno="103" sortkey="di_number" propertytype="datakeys" level="0" lft="29" rght="30">
+      <property id="properties-514" sortno="103" sortkey="di_number" propertytype="datakeys" norm_iri="di_di_number" level="0" lft="29" rght="30">
         <lemma>Grunddaten: Bandnummer</lemma>
-        <norm_iri>di_di_number</norm_iri>
         <sections>
           <section id="sections-162" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" level="0" lft="33" rght="34">
+      <property id="properties-544" sortno="73" sortkey="prelim_sponsors" propertytype="datakeys" norm_iri="di_prelim_sponsors" level="0" lft="33" rght="34">
         <lemma>prelim_sponsors</lemma>
-        <norm_iri>di_prelim_sponsors</norm_iri>
         <sections>
           <section id="sections-192" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-606" sortno="121" sortkey="index_technik" propertytype="datakeys" level="0" lft="35" rght="36" iscategory="0" ishidden="0">
+      <property id="properties-606" sortno="121" sortkey="index_technik" propertytype="datakeys" norm_iri="di_techniques" level="0" lft="35" rght="36" iscategory="0" ishidden="0">
         <lemma>Register: Ausführungstechniken</lemma>
-        <norm_iri>di_techniques</norm_iri>
         <sections>
           <section id="sections-282" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-588" sortno="83" sortkey="index_epitheta" propertytype="datakeys" level="0" lft="37" rght="38" iscategory="0" ishidden="0">
+      <property id="properties-588" sortno="83" sortkey="index_epitheta" propertytype="datakeys" norm_iri="di_epithets" level="0" lft="37" rght="38" iscategory="0" ishidden="0">
         <lemma>Register: Epitheta</lemma>
-        <norm_iri>di_epithets</norm_iri>
         <sections>
           <section id="sections-262" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-592" sortno="81" sortkey="properties_formeln" propertytype="datakeys" level="0" lft="39" rght="40">
+      <property id="properties-592" sortno="81" sortkey="properties_formeln" propertytype="datakeys" norm_iri="di_formulas" level="0" lft="39" rght="40">
         <lemma>Register: Formeln</lemma>
-        <norm_iri>di_formulas</norm_iri>
         <sections>
           <section id="sections-266" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-578" sortno="79" sortkey="index_hersteller" propertytype="datakeys" level="0" lft="41" rght="42" iscategory="0" ishidden="0">
+      <property id="properties-578" sortno="79" sortkey="index_hersteller" propertytype="datakeys" norm_iri="di_manufacturers" level="0" lft="41" rght="42" iscategory="0" ishidden="0">
         <lemma>Register: Hersteller</lemma>
-        <norm_iri>di_manufacturers</norm_iri>
         <sections>
           <section id="sections-252" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-616" sortno="77" sortkey="index_ikonografie" propertytype="datakeys" level="0" lft="43" rght="44" iscategory="0" ishidden="0">
+      <property id="properties-616" sortno="77" sortkey="index_ikonografie" propertytype="datakeys" norm_iri="di_icons" level="0" lft="43" rght="44" iscategory="0" ishidden="0">
         <lemma>Register: Ikonografie</lemma>
-        <norm_iri>di_icons</norm_iri>
         <sections>
           <section id="sections-292" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-620" sortno="75" sortkey="index_initialen" propertytype="datakeys" level="0" lft="45" rght="46" iscategory="0" ishidden="0">
+      <property id="properties-620" sortno="75" sortkey="index_initialen" propertytype="datakeys" norm_iri="di_initials" level="0" lft="45" rght="46" iscategory="0" ishidden="0">
         <lemma>Register: Initialen</lemma>
-        <norm_iri>di_initials</norm_iri>
         <sections>
           <section id="sections-296" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-590" sortno="73" sortkey="properties_initien" propertytype="datakeys" level="0" lft="47" rght="48">
+      <property id="properties-590" sortno="73" sortkey="properties_initien" propertytype="datakeys" norm_iri="di_incipits" level="0" lft="47" rght="48">
         <lemma>Register: Initien</lemma>
-        <norm_iri>di_incipits</norm_iri>
         <sections>
           <section id="sections-264" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-614" sortno="123" sortkey="properties_materialien" propertytype="datakeys" level="0" lft="49" rght="50">
+      <property id="properties-614" sortno="123" sortkey="properties_materialien" propertytype="datakeys" norm_iri="di_materials" level="0" lft="49" rght="50">
         <lemma>Register: Materialien</lemma>
-        <norm_iri>di_materials</norm_iri>
         <sections>
           <section id="sections-290" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-600" sortno="67" sortkey="index_objekttypen" propertytype="datakeys" level="0" lft="51" rght="52" iscategory="0" ishidden="0">
+      <property id="properties-600" sortno="67" sortkey="index_objekttypen" propertytype="datakeys" norm_iri="di_objecttypes" level="0" lft="51" rght="52" iscategory="0" ishidden="0">
         <lemma>Register: Objekttypen</lemma>
-        <norm_iri>di_objecttypes</norm_iri>
         <sections>
           <section id="sections-274" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-580" sortno="65" sortkey="index_ortsnamen" propertytype="datakeys" level="0" lft="53" rght="54" iscategory="0" ishidden="0">
+      <property id="properties-580" sortno="65" sortkey="index_ortsnamen" propertytype="datakeys" norm_iri="di_placenames" level="0" lft="53" rght="54" iscategory="0" ishidden="0">
         <lemma>Register: Ortsnamen</lemma>
-        <norm_iri>di_placenames</norm_iri>
         <sections>
           <section id="sections-254" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-576" sortno="63" sortkey="index_personennamen" propertytype="datakeys" level="0" lft="55" rght="56" iscategory="0" ishidden="0">
+      <property id="properties-576" sortno="63" sortkey="index_personennamen" propertytype="datakeys" norm_iri="di_personnames" level="0" lft="55" rght="56" iscategory="0" ishidden="0">
         <lemma>Register: Personennamen</lemma>
-        <norm_iri>di_personnames</norm_iri>
         <sections>
           <section id="sections-250" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-598" sortno="61" sortkey="properties_quellen" propertytype="datakeys" level="0" lft="57" rght="58">
+      <property id="properties-598" sortno="61" sortkey="properties_quellen" propertytype="datakeys" norm_iri="di_sources" level="0" lft="57" rght="58">
         <lemma>Register: Quellen</lemma>
-        <norm_iri>di_sources</norm_iri>
         <sections>
           <section id="sections-272" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-612" sortno="59" sortkey="index_sachregister" propertytype="datakeys" level="0" lft="59" rght="60" iscategory="0" ishidden="0">
+      <property id="properties-612" sortno="59" sortkey="index_sachregister" propertytype="datakeys" norm_iri="di_subjects" level="0" lft="59" rght="60" iscategory="0" ishidden="0">
         <lemma>Register: Sachregister</lemma>
-        <norm_iri>di_subjects</norm_iri>
         <sections>
           <section id="sections-288" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
+      <property id="properties-604" sortno="57" sortkey="index_schriftarten" propertytype="datakeys" norm_iri="di_fonttypes" level="0" lft="61" rght="62" iscategory="0" ishidden="0">
         <lemma>Register: Schriftarten</lemma>
-        <norm_iri>di_fonttypes</norm_iri>
         <sections>
           <section id="sections-236" articles_id="articles-2" />
           <section id="sections-278" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-670" sortno="111" sortkey="index_schriftmerkmale" propertytype="datakeys" level="0" lft="63" rght="64" iscategory="0" ishidden="0">
+      <property id="properties-670" sortno="111" sortkey="index_schriftmerkmale" propertytype="datakeys" norm_iri="di_scriptfeatures" level="0" lft="63" rght="64" iscategory="0" ishidden="0">
         <lemma>Register: Schriftmerkmale</lemma>
-        <norm_iri>di_scriptfeatures</norm_iri>
         <sections>
           <section id="sections-280" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-572" sortno="55" sortkey="index_standorte" propertytype="datakeys" level="0" lft="65" rght="66" iscategory="0" ishidden="0">
+      <property id="properties-572" sortno="55" sortkey="index_standorte" propertytype="datakeys" norm_iri="di_locations" level="0" lft="65" rght="66" iscategory="0" ishidden="0">
         <lemma>Register: Standorte</lemma>
-        <norm_iri>di_locations</norm_iri>
         <sections>
           <section id="sections-246" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-596" sortno="53" sortkey="properties_textsorten" propertytype="datakeys" level="0" lft="67" rght="68">
+      <property id="properties-596" sortno="53" sortkey="properties_textsorten" propertytype="datakeys" norm_iri="di_texttypes" level="0" lft="67" rght="68">
         <lemma>Register: Textsorten</lemma>
-        <norm_iri>di_texttypes</norm_iri>
         <sections>
           <section id="sections-270" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-622" sortno="51" sortkey="properties_versmasse" propertytype="datakeys" level="0" lft="69" rght="70">
+      <property id="properties-622" sortno="51" sortkey="properties_versmasse" propertytype="datakeys" norm_iri="di_metres" level="0" lft="69" rght="70">
         <lemma>Register: Versmaße</lemma>
-        <norm_iri>di_metres</norm_iri>
         <sections>
           <section id="sections-298" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-584" sortno="49" sortkey="properties_wappen" propertytype="datakeys" level="0" lft="71" rght="72">
+      <property id="properties-584" sortno="49" sortkey="properties_wappen" propertytype="datakeys" norm_iri="di_heraldry" level="0" lft="71" rght="72">
         <lemma>Register: Wappen</lemma>
-        <norm_iri>di_heraldry</norm_iri>
         <sections>
           <section id="sections-258" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-608" sortno="125" sortkey="index_worttrenner" propertytype="datakeys" level="0" lft="73" rght="74" iscategory="0" ishidden="0">
+      <property id="properties-608" sortno="125" sortkey="index_worttrenner" propertytype="datakeys" norm_iri="di_wordseparators" level="0" lft="73" rght="74" iscategory="0" ishidden="0">
         <lemma>Register: Worttrenner</lemma>
-        <norm_iri>di_wordseparators</norm_iri>
         <sections>
           <section id="sections-284" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-618" sortno="1" propertytype="datakeys" level="0" lft="75" rght="76">
+      <property id="properties-618" sortno="1" propertytype="datakeys" norm_iri="di_temporals" level="0" lft="75" rght="76">
         <lemma>Register: Zeitangaben</lemma>
-        <norm_iri>di_temporals</norm_iri>
         <sections>
           <section id="sections-294" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
+      <property id="properties-610" sortno="25" sortkey="indexgruppe" propertytype="datakeys" norm_iri="di_indexgroup" level="0" lft="77" rght="78" iscategory="0" ishidden="0">
         <lemma>Registergruppe</lemma>
-        <norm_iri>di_indexgroup</norm_iri>
         <sections>
           <section id="sections-248" articles_id="articles-2" />
           <section id="sections-256" articles_id="articles-2" />
@@ -6267,192 +6129,165 @@
           <section id="sections-286" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-518" sortno="19" sortkey="prelim_series" propertytype="datakeys" level="0" lft="79" rght="80">
+      <property id="properties-518" sortno="19" sortkey="prelim_series" propertytype="datakeys" norm_iri="di_prelim_series" level="0" lft="79" rght="80">
         <lemma>Reihe</lemma>
-        <norm_iri>di_prelim_series</norm_iri>
         <sections>
           <section id="sections-166" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-522" sortno="17" sortkey="prelim_series_number" propertytype="datakeys" level="0" lft="81" rght="82">
+      <property id="properties-522" sortno="17" sortkey="prelim_series_number" propertytype="datakeys" norm_iri="di_prelim_series_number" level="0" lft="81" rght="82">
         <lemma>Reihe: Bandnummer</lemma>
-        <norm_iri>di_prelim_series_number</norm_iri>
         <sections>
           <section id="sections-170" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-524" sortno="13" sortkey="prelim_series_editor" propertytype="datakeys" level="0" lft="83" rght="84">
+      <property id="properties-524" sortno="13" sortkey="prelim_series_editor" propertytype="datakeys" norm_iri="di_prelim_series_editor" level="0" lft="83" rght="84">
         <lemma>Reihe: Herausgeber</lemma>
-        <norm_iri>di_prelim_series_editor</norm_iri>
         <sections>
           <section id="sections-172" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-520" sortno="15" sortkey="prelim_series_title" propertytype="datakeys" level="0" lft="85" rght="86">
+      <property id="properties-520" sortno="15" sortkey="prelim_series_title" propertytype="datakeys" norm_iri="di_prelim_series_title" level="0" lft="85" rght="86">
         <lemma>Reihe: Titel</lemma>
-        <norm_iri>di_prelim_series_title</norm_iri>
         <sections>
           <section id="sections-168" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-526" sortno="11" sortkey="prelim_sub_series" propertytype="datakeys" level="0" lft="87" rght="88">
+      <property id="properties-526" sortno="11" sortkey="prelim_sub_series" propertytype="datakeys" norm_iri="di_prelim_sub_series" level="0" lft="87" rght="88">
         <lemma>Reihe: Unterreihe</lemma>
-        <norm_iri>di_prelim_sub_series</norm_iri>
         <sections>
           <section id="sections-174" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-665" sortno="99" sortkey="abbreviations" propertytype="datakeys" level="0" lft="89" rght="90">
+      <property id="properties-665" sortno="99" sortkey="abbreviations" propertytype="datakeys" norm_iri="di_abbreviations" level="0" lft="89" rght="90">
         <lemma>Teile: Abkürzungen</lemma>
-        <norm_iri>di_abbreviations</norm_iri>
         <sections>
           <section id="sections-240" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-586" sortno="85" sortkey="index_blasonierungen" propertytype="datakeys" level="0" lft="91" rght="92" iscategory="0" ishidden="0">
+      <property id="properties-586" sortno="85" sortkey="index_blasonierungen" propertytype="datakeys" norm_iri="di_blazons" level="0" lft="91" rght="92" iscategory="0" ishidden="0">
         <lemma>Teile: Blasonierungen</lemma>
-        <norm_iri>di_blazons</norm_iri>
         <sections>
           <section id="sections-260" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-554" sortno="45" sortkey="introduction" propertytype="datakeys" level="0" lft="93" rght="94">
+      <property id="properties-554" sortno="45" sortkey="introduction" propertytype="datakeys" norm_iri="di_introduction" level="0" lft="93" rght="94">
         <lemma>Teile: Einleitung</lemma>
-        <norm_iri>di_introduction</norm_iri>
         <sections>
           <section id="sections-202" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-550" sortno="37" sortkey="table_of_content" propertytype="datakeys" level="0" lft="95" rght="96">
+      <property id="properties-550" sortno="37" sortkey="table_of_content" propertytype="datakeys" norm_iri="di_table_of_content" level="0" lft="95" rght="96">
         <lemma>Teile: Inhaltsverzeichnis</lemma>
-        <norm_iri>di_table_of_content</norm_iri>
         <sections>
           <section id="sections-198" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-566" sortno="97" sortkey="articles" propertytype="datakeys" level="0" lft="99" rght="100">
+      <property id="properties-566" sortno="97" sortkey="articles" propertytype="datakeys" norm_iri="di_articles" level="0" lft="99" rght="100">
         <lemma>Teile: Katalogartikel</lemma>
-        <norm_iri>di_articles</norm_iri>
         <sections>
           <section id="sections-238" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-626" sortno="115" sortkey="di_volumes" propertytype="datakeys" level="0" lft="101" rght="102">
+      <property id="properties-626" sortno="115" sortkey="di_volumes" propertytype="datakeys" norm_iri="di_di_volumes" level="0" lft="101" rght="102">
         <lemma>Teile: Liste bislang erschienener Bände</lemma>
-        <norm_iri>di_di_volumes</norm_iri>
         <sections>
           <section id="sections-302" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-630" sortno="113" sortkey="marks" propertytype="datakeys" level="0" lft="103" rght="104">
+      <property id="properties-630" sortno="113" sortkey="marks" propertytype="datakeys" norm_iri="di_brands" level="0" lft="103" rght="104">
         <lemma>Teile: Markenliste</lemma>
-        <norm_iri>di_brands</norm_iri>
         <sections>
           <section id="sections-306" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-624" sortno="95" sortkey="biblio" propertytype="datakeys" level="0" lft="105" rght="106">
+      <property id="properties-624" sortno="95" sortkey="biblio" propertytype="datakeys" norm_iri="di_biblio" level="0" lft="105" rght="106">
         <lemma>Teile: Quellen und Literatur</lemma>
-        <norm_iri>di_biblio</norm_iri>
         <sections>
           <section id="sections-300" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-570" sortno="47" sortkey="indices" propertytype="datakeys" level="0" lft="107" rght="108">
+      <property id="properties-570" sortno="47" sortkey="indices" propertytype="datakeys" norm_iri="di_indices" level="0" lft="107" rght="108">
         <lemma>Teile: Register</lemma>
-        <norm_iri>di_indices</norm_iri>
         <sections>
           <section id="sections-244" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-552" sortno="41" sortkey="prefaces" propertytype="datakeys" level="0" lft="109" rght="110">
+      <property id="properties-552" sortno="41" sortkey="prefaces" propertytype="datakeys" norm_iri="di_prefaces" level="0" lft="109" rght="110">
         <lemma>Teile: Vorworte</lemma>
-        <norm_iri>di_prefaces</norm_iri>
         <sections>
           <section id="sections-200" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" level="0" lft="111" rght="112">
+      <property id="properties-1672" sortkey="teile: zitatonshinweis" propertytype="datakeys" norm_iri="di_citationnote" level="0" lft="111" rght="112">
         <lemma>Teile: Zitatonshinweis</lemma>
-        <norm_iri>di_citationnote</norm_iri>
         <sections>
           <section id="sections-4887" articles_id="articles-2" />
           <section id="sections-4719" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-546" sortno="39" sortkey="preliminaries" propertytype="datakeys" level="0" lft="115" rght="116">
+      <property id="properties-546" sortno="39" sortkey="preliminaries" propertytype="datakeys" norm_iri="di_preliminaries" level="0" lft="115" rght="116">
         <lemma>Titelei</lemma>
-        <norm_iri>di_preliminaries</norm_iri>
         <sections>
           <section id="sections-164" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-548" sortno="127" sortkey="prelim_biblio_note" propertytype="datakeys" level="0" lft="117" rght="118">
+      <property id="properties-548" sortno="127" sortkey="prelim_biblio_note" propertytype="datakeys" norm_iri="di_prelim_biblio_note" level="0" lft="117" rght="118">
         <lemma>Titelei: Deutsche Nationalbibliografie</lemma>
-        <norm_iri>di_prelim_biblio_note</norm_iri>
         <sections>
           <section id="sections-196" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-538" sortno="137" sortkey="prelim_print_note" propertytype="datakeys" level="0" lft="119" rght="120">
+      <property id="properties-538" sortno="137" sortkey="prelim_print_note" propertytype="datakeys" norm_iri="di_prelim_print_note" level="0" lft="119" rght="120">
         <lemma>Titelei: Druckortvermerk</lemma>
-        <norm_iri>di_prelim_print_note</norm_iri>
         <sections>
           <section id="sections-186" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-540" sortno="135" sortkey="prelim_isbn" propertytype="datakeys" level="0" lft="123" rght="124">
+      <property id="properties-540" sortno="135" sortkey="prelim_isbn" propertytype="datakeys" norm_iri="di_prelim_isbn" level="0" lft="123" rght="124">
         <lemma>Titelei: ISBN</lemma>
-        <norm_iri>di_prelim_isbn</norm_iri>
         <sections>
           <section id="sections-188" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-542" sortno="133" sortkey="prelim_rights" propertytype="datakeys" level="0" lft="127" rght="128">
+      <property id="properties-542" sortno="133" sortkey="prelim_rights" propertytype="datakeys" norm_iri="di_prelim_rights" level="0" lft="127" rght="128">
         <lemma>Titelei: Rechtevorbehalt</lemma>
-        <norm_iri>di_prelim_rights</norm_iri>
         <sections>
           <section id="sections-190" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-536" sortno="1" sortkey="prelim_publisher" propertytype="datakeys" level="0" lft="129" rght="130">
+      <property id="properties-536" sortno="1" sortkey="prelim_publisher" propertytype="datakeys" norm_iri="di_prelim_publisher" level="0" lft="129" rght="130">
         <lemma>Titelei: Verlag</lemma>
-        <norm_iri>di_prelim_publisher</norm_iri>
         <sections>
           <section id="sections-184" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-628" sortno="89" sortkey="drawings" propertytype="datakeys" level="0" lft="131" rght="132">
+      <property id="properties-628" sortno="89" sortkey="drawings" propertytype="datakeys" norm_iri="di_drawings" level="0" lft="131" rght="132">
         <lemma>Zeichnungen</lemma>
-        <norm_iri>di_drawings</norm_iri>
         <sections>
           <section id="sections-304" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-663" sortno="29" sortkey="map" propertytype="datakeys" level="0" lft="133" rght="134">
+      <property id="properties-663" sortno="29" sortkey="map" propertytype="datakeys" norm_iri="di_map" level="0" lft="133" rght="134">
         <lemma>Zeichnungen: Karte</lemma>
-        <norm_iri>di_map</norm_iri>
         <sections>
           <section id="sections-3122" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-668" sortno="107" sortkey="map_file" propertytype="datakeys" level="0" lft="135" rght="136">
+      <property id="properties-668" sortno="107" sortkey="map_file" propertytype="datakeys" norm_iri="di_map_file" level="0" lft="135" rght="136">
         <lemma>Zeichnungen: Karte: Bild</lemma>
-        <norm_iri>di_map_file</norm_iri>
         <sections>
           <section id="sections-3206" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-669" sortno="109" sortkey="map_concordance" propertytype="datakeys" level="0" lft="137" rght="138">
+      <property id="properties-669" sortno="109" sortkey="map_concordance" propertytype="datakeys" norm_iri="di_map_concordance" level="0" lft="137" rght="138">
         <lemma>Zeichnungen: Karte: Konkordanz</lemma>
-        <norm_iri>di_map_concordance</norm_iri>
         <sections>
           <section id="sections-3124" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-667" sortno="105" sortkey="map_title" propertytype="datakeys" level="0" lft="139" rght="140">
+      <property id="properties-667" sortno="105" sortkey="map_title" propertytype="datakeys" norm_iri="di_map_title" level="0" lft="139" rght="140">
         <lemma>Zeichnungen: Karte: Legende</lemma>
-        <norm_iri>di_map_title</norm_iri>
         <sections>
           <section id="sections-3208" articles_id="articles-2" />
         </sections>
@@ -6581,16 +6416,14 @@
         <keywords>verse line break</keywords>
         <norm_data>Verszeilenumbruch 2b Norma</norm_data>
       </property>
-      <property id="properties-968" sortkey="eingerueckt" propertytype="indentations" level="0" lft="15" rght="16">
+      <property id="properties-968" sortkey="eingerueckt" propertytype="indentations" norm_iri="di_indent" level="0" lft="15" rght="16">
         <lemma>eingerückt</lemma>
-        <norm_iri>di_indent</norm_iri>
         <sections>
           <section id="sections-230" articles_id="articles-2" />
         </sections>
       </property>
-      <property id="properties-970" sortkey="nicht eingerueckt" propertytype="indentations" level="0" lft="17" rght="18">
+      <property id="properties-970" sortkey="nicht eingerueckt" propertytype="indentations" norm_iri="di_none" level="0" lft="17" rght="18">
         <lemma>nicht eingerückt</lemma>
-        <norm_iri>di_none</norm_iri>
         <sections>
           <section id="sections-230" articles_id="articles-2" />
         </sections>
@@ -6677,39 +6510,36 @@
           <section id="sections-16" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+      <property id="properties-11" parent_id="properties-12" sortno="3" sortkey="Unterautor 1" propertytype="literature" norm_iri="unterautor-1-mit-" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
         <lemma>Unterautor 1 mit &#039;</lemma>
         <name>Unterautor 1 mit &#039;</name>
         <unit>Unterauteinheit 1</unit>
         <comment>Unterautorbemerkung 1</comment>
         <keywords>Autor,Quelle</keywords>
         <norm_data>Unterautornorm 1</norm_data>
-        <norm_iri>unterautor-1-mit-</norm_iri>
         <sections>
           <section id="sections-5" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+      <property id="properties-7" parent_id="properties-12" sortno="5" sortkey="Unterautor 2" propertytype="literature" norm_iri="kurztitel-unterautor-2-mit-" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
         <lemma>Langtitel Unterautor 2 mit &#039;</lemma>
         <name>Kurztitel Unterautor 2 mit &#039;</name>
         <unit>Unterautor2 Einheit</unit>
         <comment>Unterautor 2 Bemerkung</comment>
         <keywords>Autor,Karstadt,Ursprung</keywords>
         <norm_data>Unterautor 2 Normdaten</norm_data>
-        <norm_iri>kurztitel-unterautor-2-mit-</norm_iri>
         <sections>
           <section id="sections-16" articles_id="articles-1" />
           <section id="sections-14" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+      <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
         <lemma>Quelle 1 mit &amp;</lemma>
         <name>Quelle 1 mit &amp;</name>
         <unit>Quelleneinheit 1</unit>
         <comment>Quelle 1 Bemerkung</comment>
         <keywords>Karstadt,Ursprung</keywords>
         <norm_data>Quelle 1 Normdaten</norm_data>
-        <norm_iri>quelle-1-mit-</norm_iri>
         <sections>
           <section id="sections-15" articles_id="articles-1" />
           <section id="sections-14" articles_id="articles-1" />
@@ -6731,15 +6561,13 @@
         <keywords>Karstadt,Quelle,Ursprung</keywords>
         <norm_data>Normquelle 1b</norm_data>
       </property>
-      <property id="properties-815" sortkey="quellengruppe-1" propertytype="literature" level="0" lft="39" rght="48" iscategory="0" ishidden="0">
+      <property id="properties-815" sortkey="quellengruppe-1" propertytype="literature" norm_iri="quellengruppe-1" level="0" lft="39" rght="48" iscategory="0" ishidden="0">
         <lemma>Quellengruppe 1</lemma>
         <name>Quellengruppe 1</name>
-        <norm_iri>quellengruppe-1</norm_iri>
       </property>
-      <property id="properties-832" parent_id="properties-815" sortkey="autor lampe" propertytype="literature" level="1" lft="44" rght="45" iscategory="0" ishidden="0">
+      <property id="properties-832" parent_id="properties-815" sortkey="autor lampe" propertytype="literature" norm_iri="autor-lampe" level="1" lft="44" rght="45" iscategory="0" ishidden="0">
         <lemma>Autor Lampe Langtitel</lemma>
         <name>Autor Lampe</name>
-        <norm_iri>autor-lampe</norm_iri>
         <sections>
           <section id="sections-230" articles_id="articles-2" />
         </sections>
@@ -6870,9 +6698,8 @@
   </index>
   <index propertytype="conditions">
     <properties>
-      <property id="properties-1428" sortkey="traditio1" propertytype="conditions" level="0" lft="8" rght="9">
+      <property id="properties-1428" sortkey="traditio1" propertytype="conditions" norm_iri="di_traditio1" level="0" lft="8" rght="9">
         <lemma>Objekt und Inschrift erhalten</lemma>
-        <norm_iri>di_traditio1</norm_iri>
         <sections>
           <section id="sections-13" articles_id="articles-1" />
         </sections>
@@ -6955,14 +6782,13 @@
         <keywords>Medium,Träger</keywords>
         <norm_data>Träger 1b</norm_data>
       </property>
-      <property id="properties-34" parent_id="properties-36" sortno="2" sortkey="Träger 1a" propertytype="objecttypes" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
+      <property id="properties-34" parent_id="properties-36" sortno="2" sortkey="Träger 1a" propertytype="objecttypes" norm_iri="traeger1a" level="1" lft="4" rght="5" iscategory="1" ishidden="1">
         <lemma>Träger 1a</lemma>
         <name>Träger 1a </name>
         <unit>Träger 1a Einheit</unit>
         <comment>Träger 1a Bemerk</comment>
         <keywords>Träger,Medium</keywords>
         <norm_data>Träger 1a</norm_data>
-        <norm_iri>traeger1a</norm_iri>
       </property>
       <property id="properties-35" sortno="7" sortkey="Träger 2" propertytype="objecttypes" level="0" lft="9" rght="14" iscategory="1" ishidden="1">
         <lemma>Träger 2</lemma>
@@ -6994,23 +6820,21 @@
   </index>
   <index propertytype="measures">
     <properties>
-      <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
+      <property id="properties-42" sortno="1" sortkey="hoehe" propertytype="measures" norm_iri="hoehe" level="0" lft="1" rght="6" iscategory="0" ishidden="0">
         <lemma>Höhe</lemma>
         <name>H.</name>
         <unit>m</unit>
         <comment>Höhe in Metern</comment>
         <keywords>Meter,Kilometer,Hektoliter</keywords>
         <norm_data>wd:Q208826</norm_data>
-        <norm_iri>hoehe</norm_iri>
       </property>
-      <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
+      <property id="properties-38" parent_id="properties-42" sortno="2" sortkey="zwischenhoehe" propertytype="measures" norm_iri="zwh" level="1" lft="2" rght="3" iscategory="1" ishidden="1">
         <lemma>Zwischenhöhe</lemma>
         <name>ZwH</name>
         <unit>m</unit>
         <comment>Zwischenhöhe in Metern</comment>
         <keywords>Dimensionen</keywords>
         <norm_data>gibtnochkeinq</norm_data>
-        <norm_iri>zwh</norm_iri>
         <sections>
           <section id="sections-10" articles_id="articles-1" />
         </sections>
@@ -7066,18 +6890,16 @@
               <name>hm001.1121</name>
               <signature>Nummer 1 im Band</signature>
               <file_name>tp/hm001.1121.svg</file_name>
-              <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+              <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
                 <lemma>Hausmarke</lemma>
                 <name>Name Hausmarke </name>
-                <norm_iri>di_masonmark</norm_iri>
               </property>
             </property>
           </link>
           <link id="links-275" to_id="properties-1446" to_value="test.marke2" from_id="properties-44" from_field="elements" from_tagname="rec_ma" from_tagid="68582d6af9b94d39ff16d5d3c248e8e1" root_id="properties-44">
-            <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+            <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
               <lemma>Marke2</lemma>
               <name>test.marke2</name>
-              <norm_iri>testmarke2</norm_iri>
             </property>
           </link>
         </links>
@@ -7094,25 +6916,23 @@
         <source_from>Nachweis Wappen 2 in <rec_lit id="f89b90bd1e4d4ea4c4fe784f640aa576" data-link-target="properties-10" data-link-iri="properties/literature/quelle-1-mit-" data-link-value="Quelle 1 mit &amp;" /></source_from>
         <links>
           <link id="links-65" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="content" from_tagname="rec_lit" from_tagid="000004472261132811342592685794" root_id="properties-43">
-            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
               <lemma>Quelle 1 mit &amp;</lemma>
               <name>Quelle 1 mit &amp;</name>
               <unit>Quelleneinheit 1</unit>
               <comment>Quelle 1 Bemerkung</comment>
               <keywords>Karstadt,Ursprung</keywords>
               <norm_data>Quelle 1 Normdaten</norm_data>
-              <norm_iri>quelle-1-mit-</norm_iri>
             </property>
           </link>
           <link id="links-512" to_id="properties-10" to_value="Quelle 1 mit &amp;" from_id="properties-43" from_field="source_from" from_tagname="rec_lit" from_tagid="f89b90bd1e4d4ea4c4fe784f640aa576" root_id="properties-43">
-            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
+            <property id="properties-10" sortno="8" sortkey="Quelle 1" propertytype="literature" norm_iri="quelle-1-mit-" level="0" lft="33" rght="38" iscategory="1" ishidden="0">
               <lemma>Quelle 1 mit &amp;</lemma>
               <name>Quelle 1 mit &amp;</name>
               <unit>Quelleneinheit 1</unit>
               <comment>Quelle 1 Bemerkung</comment>
               <keywords>Karstadt,Ursprung</keywords>
               <norm_data>Quelle 1 Normdaten</norm_data>
-              <norm_iri>quelle-1-mit-</norm_iri>
             </property>
           </link>
         </links>
@@ -7128,13 +6948,12 @@
         <name>hm002.2211</name>
         <signature>Nummer 2 im Band</signature>
         <file_name>tp/hm002.2211.svg</file_name>
-        <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+        <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" norm_iri="di_mastermark" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
           <lemma>Meisterzeichen</lemma>
           <name>Name Meisterzeichen </name>
           <unit>Einheit Marke</unit>
           <comment>Bemerkung Marke</comment>
           <norm_data>xyz:mzexample</norm_data>
-          <norm_iri>di_mastermark</norm_iri>
         </property>
         <sections>
           <section id="sections-8" articles_id="articles-1" />
@@ -7145,10 +6964,9 @@
         <name>hm001.1121</name>
         <signature>Nummer 1 im Band</signature>
         <file_name>tp/hm001.1121.svg</file_name>
-        <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+        <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
           <lemma>Hausmarke</lemma>
           <name>Name Hausmarke </name>
-          <norm_iri>di_masonmark</norm_iri>
         </property>
         <sections>
           <section id="sections-9" articles_id="articles-1" />
@@ -7156,10 +6974,9 @@
           <section id="sections-5" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" level="0" lft="5" rght="6">
+      <property id="properties-1446" sortkey="testmarke00002" propertytype="brands" norm_iri="testmarke2" level="0" lft="5" rght="6">
         <lemma>Marke2</lemma>
         <name>test.marke2</name>
-        <norm_iri>testmarke2</norm_iri>
         <sections>
           <section id="sections-9" articles_id="articles-1" />
         </sections>
@@ -7168,23 +6985,21 @@
   </index>
   <index propertytype="brandtypes">
     <properties>
-      <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+      <property id="properties-184" sortno="1" sortkey="Sortierschlüssel Hausmarke " propertytype="brandtypes" norm_iri="di_masonmark" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
         <lemma>Hausmarke</lemma>
         <name>Name Hausmarke </name>
-        <norm_iri>di_masonmark</norm_iri>
         <sections>
           <section id="sections-9" articles_id="articles-1" />
           <section id="sections-8" articles_id="articles-1" />
           <section id="sections-5" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+      <property id="properties-183" sortno="3" sortkey="Sortierschlüssel Meisterzeichen " propertytype="brandtypes" norm_iri="di_mastermark" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
         <lemma>Meisterzeichen</lemma>
         <name>Name Meisterzeichen </name>
         <unit>Einheit Marke</unit>
         <comment>Bemerkung Marke</comment>
         <norm_data>xyz:mzexample</norm_data>
-        <norm_iri>di_mastermark</norm_iri>
         <sections>
           <section id="sections-8" articles_id="articles-1" />
         </sections>
@@ -7234,10 +7049,9 @@
   </index>
   <index propertytype="figures">
     <properties>
-      <property id="properties-660" sortkey="maria" propertytype="figures" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
+      <property id="properties-660" sortkey="maria" propertytype="figures" norm_iri="maria" level="0" lft="3" rght="4" iscategory="0" ishidden="0">
         <lemma>Maria</lemma>
         <name>Maria</name>
-        <norm_iri>maria</norm_iri>
         <sections>
           <section id="sections-6" articles_id="articles-1" />
         </sections>
@@ -7257,10 +7071,9 @@
   </index>
   <index propertytype="personnames">
     <properties>
-      <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+      <property id="properties-637" sortno="1" sortkey="…Person mit Punkten" propertytype="personnames" norm_iri="person-mit-punkten" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
         <lemma>…Person mit Punkten</lemma>
         <name>…Person mit Punkten</name>
-        <norm_iri>person-mit-punkten</norm_iri>
         <sections>
           <section id="sections-6" articles_id="articles-1" />
         </sections>
@@ -7294,10 +7107,9 @@
   </index>
   <index propertytype="scriptfeatures">
     <properties>
-      <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+      <property id="properties-650" sortkey="nice type" propertytype="scriptfeatures" norm_iri="nice-type" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
         <lemma>Nice type</lemma>
         <name>Nice type</name>
-        <norm_iri>nice-type</norm_iri>
         <sections>
           <section id="sections-6" articles_id="articles-1" />
         </sections>
@@ -7306,10 +7118,9 @@
   </index>
   <index propertytype="temporals">
     <properties>
-      <property id="properties-654" sortkey="long time ago" propertytype="temporals" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
+      <property id="properties-654" sortkey="long time ago" propertytype="temporals" norm_iri="long-time-ago" level="0" lft="1" rght="2" iscategory="0" ishidden="0">
         <lemma>Long time ago</lemma>
         <name>Long time ago</name>
-        <norm_iri>long-time-ago</norm_iri>
         <sections>
           <section id="sections-6" articles_id="articles-1" />
         </sections>
@@ -7329,18 +7140,16 @@
   </index>
   <index propertytype="captions">
     <properties>
-      <property id="properties-197" sortkey="Beschreibung" propertytype="captions" level="0" lft="25" rght="26">
+      <property id="properties-197" sortkey="Beschreibung" propertytype="captions" norm_iri="di_description" level="0" lft="25" rght="26">
         <lemma>Beschreibung</lemma>
         <name>Beschreibung</name>
-        <norm_iri>di_description</norm_iri>
         <sections>
           <section id="sections-5" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" level="0" lft="29" rght="30">
+      <property id="properties-201" sortkey="Gliederung: Ebene 1" propertytype="captions" norm_iri="di_header1" level="0" lft="29" rght="30">
         <lemma>Gliederung: Ebene 1</lemma>
         <name>Gliederung: Ebene 1</name>
-        <norm_iri>di_header1</norm_iri>
         <sections>
           <section id="sections-4" articles_id="articles-1" />
         </sections>
@@ -7440,31 +7249,28 @@
   </index>
   <index propertytype="fonttypes">
     <properties>
-      <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
+      <property id="properties-122" sortno="1" sortkey="gotische Minuskel" propertytype="fonttypes" norm_iri="gotische-minuskel" level="0" lft="1" rght="10" iscategory="0" ishidden="0">
         <lemma>gotische Minuskel</lemma>
         <name>gotische Minuskel</name>
         <unit>Schriftart 1 Einheit</unit>
         <comment>Bemerkung zu gotischer Minuskel</comment>
         <keywords>gotisch,minuskel</keywords>
         <norm_data>xxx got minusk</norm_data>
-        <norm_iri>gotische-minuskel</norm_iri>
       </property>
-      <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
+      <property id="properties-121" parent_id="properties-122" sortno="2" sortkey="Versalien in gotischer Majuskel und Versalschrift" propertytype="fonttypes" norm_iri="mit-versalien-in-gotischer-majuskel-und-versalschrift" level="1" lft="2" rght="3" iscategory="0" ishidden="0">
         <lemma>mit Versalien in gotischer Majuskel und Versalschrift</lemma>
         <name>mit Versalien in gotischer Majuskel und Versalschrift</name>
         <unit>Schriftart 1a Einheit</unit>
         <comment>darf nicht verloren gehen</comment>
         <keywords>versalien, majuskel, versalschrift</keywords>
         <norm_data>norm:vers-maj-vers</norm_data>
-        <norm_iri>mit-versalien-in-gotischer-majuskel-und-versalschrift</norm_iri>
         <sections>
           <section id="sections-3" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" level="1" lft="4" rght="5">
+      <property id="properties-1598" parent_id="properties-122" sortkey="mit versal in gotischer majuskel" propertytype="fonttypes" norm_iri="mit-versal-in-gotischer-majuskel" level="1" lft="4" rght="5">
         <lemma>mit Versal in gotischer Majuskel</lemma>
         <name>mit Versal in gotischer Majuskel</name>
-        <norm_iri>mit-versal-in-gotischer-majuskel</norm_iri>
         <sections>
           <section id="sections-3" articles_id="articles-1" />
         </sections>
@@ -7861,38 +7667,32 @@
         <keywords>Quote</keywords>
         <norm_data>Zitat 2b norm</norm_data>
       </property>
-      <property id="properties-928" sortkey="bibeltexte" propertytype="sources" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
+      <property id="properties-928" sortkey="bibeltexte" propertytype="sources" norm_iri="bibeltexte" level="0" lft="15" rght="26" iscategory="1" ishidden="0">
         <lemma>Bibeltexte</lemma>
         <name>Bibeltexte</name>
-        <norm_iri>bibeltexte</norm_iri>
       </property>
-      <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
+      <property id="properties-1581" parent_id="properties-928" sortkey="lateinisch" propertytype="sources" norm_iri="lateinisch" level="1" lft="16" rght="25" iscategory="1" ishidden="0">
         <lemma>lateinisch</lemma>
         <name>lateinisch</name>
-        <norm_iri>lateinisch</norm_iri>
       </property>
-      <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
+      <property id="properties-1587" parent_id="properties-1581" sortkey="lc. 00001,00028" propertytype="sources" norm_iri="lc-128" level="2" lft="23" rght="24" iscategory="0" ishidden="0">
         <lemma>Lc. 1,28</lemma>
         <name>Lc. 1,28</name>
-        <norm_iri>lc-128</norm_iri>
         <sections>
           <section id="sections-22" articles_id="articles-1" />
         </sections>
       </property>
-      <property id="properties-1576" sortkey="religiöse texte" propertytype="sources" level="0" lft="41" rght="46" iscategory="1" ishidden="0">
+      <property id="properties-1576" sortkey="religiöse texte" propertytype="sources" norm_iri="religioese-texte" level="0" lft="41" rght="46" iscategory="1" ishidden="0">
         <lemma>Religiöse Texte</lemma>
         <name>Religiöse Texte</name>
-        <norm_iri>religioese-texte</norm_iri>
       </property>
-      <property id="properties-1578" parent_id="properties-1576" sortkey="ave maria" propertytype="sources" level="1" lft="42" rght="45" iscategory="0" ishidden="0">
+      <property id="properties-1578" parent_id="properties-1576" sortkey="ave maria" propertytype="sources" norm_iri="ave-maria" level="1" lft="42" rght="45" iscategory="0" ishidden="0">
         <lemma>Ave Maria</lemma>
         <name>Ave Maria</name>
-        <norm_iri>ave-maria</norm_iri>
       </property>
-      <property id="properties-1591" parent_id="properties-1578" sortkey="siehe" related_id="properties-1587" propertytype="sources" level="2" lft="43" rght="44" iscategory="0" ishidden="0">
+      <property id="properties-1591" parent_id="properties-1578" sortkey="siehe" related_id="properties-1587" propertytype="sources" norm_iri="religioese-texte-ave-maria-siehe" level="2" lft="43" rght="44" iscategory="0" ishidden="0">
         <lemma>siehe</lemma>
         <name>Religiöse Texte › Ave Maria › siehe</name>
-        <norm_iri>religioese-texte-ave-maria-siehe</norm_iri>
       </property>
     </properties>
   </index>

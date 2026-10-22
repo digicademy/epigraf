@@ -22,7 +22,6 @@ export default class XmleditorRemoveFormatCommand extends Command {
                 editingPlugin.removeTag(this.editor, range.start.parent);
             } else {
                 this.editor.model.change(writer => {
-                    // console.log(range);
 
                     // Flat ranges are defined as ranges with the same start and end parent
                     for (const flatRange of range.getMinimalFlatRanges()) {

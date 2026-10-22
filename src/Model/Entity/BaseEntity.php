@@ -258,6 +258,7 @@ class BaseEntity extends Entity
         $fields_content = array_diff($this->fields_import, $fields_id);
 
         $ids = array_intersect_key($content, array_flip($fields_id));
+        $ids = array_filter($ids, fn($id) => !is_array($id));
         $content = array_intersect_key($content, array_flip($fields_content));
 
         // Add explicit ID matching the pattern <tablename>-<id> to the index
@@ -815,68 +816,18 @@ class BaseEntity extends Entity
 
         return $value;
     }
+
     /**
      * Replace a placeholder string with entity values
      *
-     * See Objects::parsePlaceholder() for examples.
-     *
-     * ### Options
-     * - collapse By default, an array is returned.
-     *   Provide a separator if you want to collapse the value to a single string.
-     *
-     * All other options are passed to getValueNested()
-     * with aggregate set to false if not otherwise defined in a placeholder.
-     *
      * @param string|array $key The placeholder string or an array of placeholder strings.
-     * @param array $options Options passed to getValueNested(),
-     *                       with aggregate set to false if not otherwise defined in a placeholder.
+     * @param array $options Options passed to extractPlaceholder().
      * @return string|array
      */
     public function getValuePlaceholder($key, $options= [])
     {
-
-        $value = [];
-        if (is_array($key)) {
-            foreach ($key as $part) {
-                $loopValue = $this->getValuePlaceholder($part, $options);
-                if (is_array($loopValue)) {
-                    $value = array_merge($value, $loopValue);
-                }
-                else {
-                    if ($loopValue ?? false) {
-                        $value[] = $loopValue;
-                    }
-                }
-            }
-        }
-        else
-        {
-            if (!str_contains($key, '{')) {
-                return $key;
-            }
-
-            $value = Objects::parsePlaceholder($key, function ($pathList) use ($options) {
-                $pathList = Objects::parsePathList($pathList);
-                $result = null;
-                foreach ($pathList as $path) {
-                    $path = Objects::parseFieldKey($path, [], ['aggregate' => false]);
-                    $options['aggregate'] = $path['aggregate']; // TODO: do we need to unset collapse here?
-                    $options['format'] = $path['format'] ?? $options['format'] ?? false;
-                    $result = $this->getValueNested($path['key'], $options);
-                    if (!is_null($result) && ($result !== []) && ($result !== '')) {
-                        break;
-                    }
-                }
-                return $result;
-            });
-        }
-
-        if (isset($options['collapse'])) {
-            $value = is_array($value) ? array_map(fn($x) => strval($x), $value) : $value;
-            $value = is_array($value) ? implode($options['collapse'], $value) : $value;
-        }
-
-        return $value;
+        $options['published'] = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
+        return Objects::extractPlaceholder($this, $key, $options);
     }
 
     /**
@@ -884,100 +835,14 @@ class BaseEntity extends Entity
      * format the last extracted component,
      * and optionally pipe it through processing steps
      *
-     * TODO: optimize (access properties without toArray-conversion, including virtual fields)
-     * TODO: convert arrays to JSON here instead of in index_table.php?
-     *
-     * ### Options
-     * - format: Target format (xml, json, csv, html, md, ttl, rdf, jsonld, false).
-     *           If the format is set and the extracted value is a BaseEntity,,
-     *           the value is formatted using getValueFormatted().
-     *           Otherwise the function falls back to Objects::extract().
-     *           The extraction key in a field path may be prefixed with a format key, seperated by colon.
-     *           This overrides the format in the options.
-     * - aggregate: Aggregation procedure, defaults to false, i.e. no aggregation.
-     *              Can be a pipe separated string list or an array of processing steps.
-     *              See processValues() for available steps.
-     * - default: The default value if the key is not present in the object, defaults to false.
-     *            TODO: implement or remove, see todo below
-     *
-     * See getValueFormatted() and Objects::extract() for further options.
-     *
      * @param string|array $fieldPath A dot notation path or an array of path elements
-     * @param array $options Options passed to getValueFormatted() and to Objects::extract()
+     * @param array $options Options passed to Objects::extractNested().
      * @return array|string|integer|BaseEntity
      */
     public function getValueNested($fieldPath, $options = [])
     {
-
-        // Extract the value without formatting
-        // TODO: can the method be refactored to get rid of this special condition?
-        //       In one of the last revisions, I moved calls of getValueFormatted() to Objects::extract(),
-        //       this, this differentiation should not be necessary any more?
-        if (empty($options['format'])) {
-            $value = Objects::extract($this, $fieldPath, false, $options);
-        }
-
-        // Format the value extracted by the last path component
-        else {
-
-            $fieldPath = is_array($fieldPath) ? $fieldPath : explode('.', $fieldPath);
-            $keyExtract = implode('.', array_slice($fieldPath, 0, -1));
-            $keyField = end($fieldPath);
-
-            if (str_contains($keyField, '*')) {
-                $keyExtract .= '.' . $keyField;
-                $keyField = 'id';
-            }
-
-            // Get everything up to the last component without formatting
-            if (empty($keyExtract)) {
-                $value = $this;
-            }
-            else {
-                $published = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
-                $value = Objects::extract($this, $keyExtract, false, ['published' => $published]);
-            }
-
-            // Numeric arrays followed by an entity field (e.g. items.*.content)
-            if ((is_array($value) && array_is_list($value))) {
-                foreach ($value as $valueKey => $valueItem) {
-                  if (is_array($valueItem) || $valueItem instanceof ArrayAccess) {
-                      $value[$valueKey] = Objects::extract($valueItem, $keyField, false, $options);
-                  }
-                }
-            }
-
-            // Direct path to field (e.g. projects.name) or nested values (e.g. value.lat)
-            elseif (is_array($value) || ($value instanceof ArrayAccess)) {
-                $value = Objects::extract($value, $keyField, false, $options);
-            }
-
-            // Try to extract value from JSON
-            elseif (is_string($value) && !empty($keyField)) {
-                try {
-                    $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
-                    if (is_array($value) || ($value instanceof ArrayAccess)) {
-                        $value = Objects::extract($value, $keyField, false, $options);
-                    }
-                } catch (Exception $e) {
-                    // Not a JSON string, return as is
-                }
-            }
-        }
-
-        // TODO: implement default (check $value array)
-        //        if (($value === null) && ($default !== false)) {
-        //            $value = [$default];
-        //        }
-
-        // Post-processing
-        $steps = $options['aggregate'] ?? false;
-        if (!empty($steps)) {
-            $steps = Objects::parseProcessing($steps);
-            $value = Objects::processValues($value, $steps, true, $this);
-        }
-
-        return $value;
+        $options['published'] = $options['published'] ?? $options['params']['published'] ?? \App\Model\Table\BaseTable::$requestPublished;
+        return Objects::extractNested($this, $fieldPath, $options);
     }
 
 
@@ -1171,9 +1036,9 @@ class BaseEntity extends Entity
             try {
                 if ($outputFormat === 'html') {
                     return \App\Utilities\Converters\Csv::csvToHtml($raw);
-                }
-                else if (is_string($raw)) {
-                    $value = str_getcsv($raw);
+//                }
+//                else if (is_string($raw)) {
+//                    $value = str_getcsv($raw);
                 } else {
                     $value = $raw;
                 }
@@ -1253,18 +1118,20 @@ class BaseEntity extends Entity
             $links_id = $this->get($fieldName[0] . '_id');
             $value = empty($links_id) ? '' : ($links_tab . '-' . $links_id);
 
-            // TODO: output footnote
-            // TODO: return caption of external links, footnotes, brands...
-            if (!empty($links_id) && ($links_tab === 'sections')) {
-                $section = $this->root->getSection($links_id);
-                return $section['caption_path'] ?? $section['caption'] ?? $value;
+            // TODO: return caption of external links and footnotes
+            if (!empty($links_id)) {
+                if ($links_tab === 'items') {
+                    return $this->links_item->captionPath ?? $value;
+                }
+                elseif ($links_tab === 'sections') {
+                    $target = $this->root->getSection($links_id);
+                    return $target['caption_path'] ?? $target['caption'] ?? $value;
+                }
+                elseif ($links_tab === 'articles') {
+                    return ($links_id === $this->root->id) ? __('Article') : $this->links_article->captionPath;
+                }
             }
-            elseif (!empty($links_id) && ($links_tab === 'articles')) {
-                return ($links_id === $this->root->id) ? __('Article') : $this->links_article->captionPath;
-            }
-            else {
-                return $value;
-            }
+            return $value;
         }
 
         elseif ($fieldFormat === 'select') {

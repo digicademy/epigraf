@@ -12,7 +12,7 @@ All of those components are called entities.
 The root entity is the article which contains section, item, link and footnote entities.
 
 <p class="infobox">
-    🚀 See the <a href="/user/configuration/articles-howto">step-by-step guide</a>
+    🚀 See the <a href="/epigraf/user/configuration/articles-howto">step-by-step guide</a>
     to get started with article configuration in an example database.
 </p>
 

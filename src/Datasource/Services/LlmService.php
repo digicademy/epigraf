@@ -65,55 +65,6 @@ class LlmService extends BaseService
     }
 
     /**
-     * Activate database
-     *
-     * @param $dbname
-     * @return Databank
-     */
-    public function setDatabank($dbname) : Databank
-    {
-        $this->oldDatabaseName = EpiBaseTable::getDatabaseName();
-        BaseTable::setDatabase($dbname);
-
-        $databanks = TableRegistry::getTableLocator()->get('Databanks');
-        return $databanks->activateDatabase($dbname);
-    }
-
-    public function resetDatabank()
-    {
-        if (!empty($this->oldDatabaseName)) {
-            EpiBaseTable::setDatabase($this->oldDatabaseName);
-        }
-    }
-
-    public function withDatabank($databaseName, $callback)
-    {
-        if (empty($databaseName)) {
-            throw new RecordNotFoundException(__('Database name is missing.'));
-        }
-
-        $databank = $this->setDatabank($databaseName);
-        try {
-            return $callback($databank);
-        } finally {
-            $this->resetDatabank();
-        }
-    }
-
-    public function withTable($databaseName, $modelName, $callback)
-    {
-        return $this->withDatabank($databaseName,
-            function($databank) use ($modelName, $callback) {
-                $table = TableRegistry::getTableLocator()->get($modelName);
-                if (!$table instanceof \App\Model\Interfaces\ExportTableInterface) {
-                    throw new RecordNotFoundException(__('Table does not support data export.'));
-                }
-                return $callback($databank, $table);
-            }
-        );
-    }
-
-    /**
      * Get the configured property type for a given annotation (=links) or item (=items) type
      *
      * ### Options

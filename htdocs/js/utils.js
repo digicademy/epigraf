@@ -496,9 +496,27 @@ class Utils {
         }
     }
 
+    /**
+     * Get the value from inputs and other elements
+     *
+     * For form elements, their value is returned.
+     * For other elements, the text content is returned.
+     *
+     * @param {HTMLElement} element
+     * @param defaultValue
+     * @return {*|number}
+     */
     static getInputValue(element, defaultValue) {
         if (!element) {
             return defaultValue;
+        }
+
+        const formTags = new Set([
+            "INPUT", "SELECT", "TEXTAREA", "BUTTON", "OUTPUT", "PROGRESS", "METER"
+        ]);
+
+        if (!formTags.has(element.tagName)) {
+            return element.textContent;
         }
 
         if (element.type === "checkbox") {

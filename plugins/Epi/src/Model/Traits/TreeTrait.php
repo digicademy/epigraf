@@ -13,16 +13,47 @@ namespace Epi\Model\Traits;
 use Cake\Datasource\EntityInterface;
 
 /**
- * Adds the to magic fields path and parent_path to tree entitites.
- * You need to declare the properties $_path_field (e.g. lemma) and
- * $_path_separator (e.g. '.') in the entity class.
+ * Adds the magic fields path, parentPath, and indentation to tree entities.
+ *
  */
 trait TreeTrait
 {
 
+
+    /**
+     * Default field for path elements
+     *
+     * @var string
+     */
+    protected $_path_field = 'lemma';
+
+    /**
+     * Default path separator
+     *
+     * @var string
+     */
+    protected $_path_separator = ' › ';
+
     protected function _getHasChildren()
     {
         return ($this->rght - $this->lft) > 1;
+    }
+
+    /**
+     * Get the field to construct the display path
+     *
+     * By default, the lemma field is used. You can change the field
+     * in the displayfield property of the types configuration.
+     * To prevent recursion, the 'path' value is changed to 'lemma'.
+     *
+     * @return string
+     */
+    protected function _getPathField () {
+        $value = $this->type['merged']['displayfield'] ?? $this->_path_field;
+        if ($value === 'path') {
+            $value = $this->_path_field;
+        }
+        return $value;
     }
 
     /**
@@ -32,7 +63,7 @@ trait TreeTrait
      */
     protected function _getParentPath()
     {
-        $path = $this->getValueNested('ancestors.{*}.' . $this->_path_field, ['aggregate' => false]) ?? [];
+        $path = $this->getValueNested('ancestors.{*}.' . $this->pathField, ['aggregate' => false]) ?? [];
         $path = array_reverse($path);
         return implode($this->_path_separator, $path);
     }
@@ -44,11 +75,21 @@ trait TreeTrait
      */
     protected function _getPath()
     {
-        $path = $this->getValueNested('ancestors.{*}.' . $this->_path_field, ['aggregate' => false]);
+        $path = $this->getValueNested('ancestors.{*}.' . $this->pathField, ['aggregate' => false]);
         $path = empty($path) ? [] : $path;
         $path = array_reverse($path);
-        $path[] = $this->{$this->_path_field};
+        $path[] = $this->{$this->pathField};
         return implode($this->_path_separator, $path);
+    }
+
+    /**
+     * Get indentation
+     *
+     * @return string
+     */
+    protected function _getIndentation()
+    {
+        return str_repeat($this->_path_separator, $this->level);
     }
 
     protected function _getParentNode()

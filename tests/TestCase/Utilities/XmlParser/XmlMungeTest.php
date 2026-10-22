@@ -66,4 +66,39 @@ class XmlMungeTest extends TestCase
         $this->assertContainsHtml('testvalue',$xml_parsed);
     }
 
+    /**
+     * Test unnestTags method
+     *
+     * @return void
+     */
+    public function testUnnestTags(): void
+    {
+        $tags = [['name' => 'quot']];
+
+        // Nested tag that is not the last child is unwrapped
+        $input = 'beforetext<quot id="111">first level<quot id="222">unnecescearily nested</quot>aftertext</quot>more';
+        $expected = 'beforetext<quot id="111">first levelunnecescearily nestedaftertext</quot>more';
+        $this->assertSame($expected, XmlMunge::unnestTags($input, $tags));
+
+        // Double nested tags are unwrapped
+        $input = 'beforetext<quot id="111">first level<quot id="222">un<quot id="333">ne</quot>cescearily nested</quot>aftertext</quot>more';
+        $expected = 'beforetext<quot id="111">first levelunnecescearily nestedaftertext</quot>more';
+        $this->assertSame($expected, XmlMunge::unnestTags($input, $tags));
+
+        // Tags in nested tags remain
+        $input = 'beforetext<quot id="111">first level<quot id="222">un<b>ne</b>cescearily nested</quot>aftertext</quot>more';
+        $expected = 'beforetext<quot id="111">first levelun<b>ne</b>cescearily nestedaftertext</quot>more';
+        $this->assertSame($expected, XmlMunge::unnestTags($input, $tags));
+
+        // Nested tag that is the last child is unwrapped
+        $input = '<quot id="111">first<quot id="222">nested</quot></quot>';
+        $expected = '<quot id="111">firstnested</quot>';
+        $this->assertSame($expected, XmlMunge::unnestTags($input, $tags));
+
+        // Empty elements are removed
+        $input = '<quot id="111">text<quot id="222" /></quot>';
+        $expected = '<quot id="111">text</quot>';
+        $this->assertSame($expected, XmlMunge::unnestTags($input, $tags));
+    }
+
 }

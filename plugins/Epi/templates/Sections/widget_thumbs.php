@@ -64,7 +64,8 @@ use Cake\Routing\Router;
             $edit ? 'widget-image-viewer-edit' : null,
             'doc-imagelist',
             'doc-imagelist-' . $tileSize
-        ]
+        ],
+        'data' => ['role' => 'secondary']
     ]) ?>
         <?php foreach ($items as $item): ?>
 

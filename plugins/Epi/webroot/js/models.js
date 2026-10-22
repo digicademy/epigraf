@@ -35,6 +35,67 @@ class BaseDocumentModel extends BaseModel {
     }
 
     /**
+     * Get the name of an entity, to be used in select boxes.
+     *
+     * Override in child classes.
+     *
+     * @param {HTMLElement} entity
+     * @return {String}
+     */
+    getName(entity) {
+        return `${entity.dataset.rowTable}-${entity.dataset.rowId}`;
+    }
+
+    /**
+     * For hierarchical models, get the name path of an entity
+     *
+     * @param {HTMLElement} entity
+     * @return {String}
+     */
+    getPath(entity) {
+        return this.getName(entity);
+    }
+
+    /**
+     * Get the caption of an entity
+     *
+     * @param {HTMLElement} entity
+     * @return {String}
+     */
+    getTitle(entity) {
+        return this.getName(entity);
+    }
+
+    /**
+     * Get the config from the type configuration of an element.
+     * Falls back to the elements json encoded data-row-config attribute.
+     *
+     * @param {HTMLElement} entityElement
+     * @return {Object}
+     */
+    getConfig(entityElement) {
+        let entityConfig;
+
+        const rowTable = entityElement.dataset.rowTable;
+        if (rowTable) {
+            const tableTypes = Utils.getValue(this.modelParent.models.types._types, rowTable, {});
+            entityConfig = tableTypes[entityElement.dataset?.rowType];
+        }
+
+        // Fall back to the data-row-config attribute if present
+        if (!entityConfig) {
+            try {
+                return JSON.parse(decodeURI(entityElement.dataset.rowConfig));
+            } catch (e) {
+                entityConfig = {};
+                console.log('Could not parse entity configuration.')
+            }
+        }
+
+        return entityConfig;
+    }
+
+    /**
      * Enable inputs within an element to make sure they are saved on form submission.
      *
      * @param {HTMLElement} element
@@ -75,6 +136,11 @@ export class ProjectsModel extends BaseDocumentModel {
  */
 export class ArticlesModel extends BaseDocumentModel {
 
+
+    getName(entity) {
+        return 'Article'; // TODO: translate
+    }
+
     /**
      * Get the article and all child nodes filtered by the targets configuration
      *
@@ -86,27 +152,29 @@ export class ArticlesModel extends BaseDocumentModel {
         let nodes = [];
 
         // Add the article if requested in targets
-        const article = this.modelParent.widgetElement;
-        if (targets && targets.articles && Array.isArray(targets.articles) && targets.articles.includes(article.dataset.rowType)) {
+        const entity = this.modelParent.widgetElement;
+        if (targets && targets.articles && Array.isArray(targets.articles) && targets.articles.includes(entity.dataset.rowType)) {
             nodes.push({
-                table: article.dataset.rowTable,
-                id: article.dataset.rowId,
-                treeId: article.dataset.rowTable + "-" + article.dataset.rowId,
+                table: entity.dataset.rowTable,
+                id: entity.dataset.rowId,
+                treeId: entity.dataset.rowTable + "-" + entity.dataset.rowId,
                 treeParent: null,
                 treeLevel: 0,
-                labelName: "Article", // TODO: translate
-                labelPath: "Article"  // TODO: translate
+                labelText: this.getPath(entity),
+                labelName: this.getName(entity),
+                labelPath: this.getTitle(entity),
+                searchText: this.getPath(entity)
             });
         }
 
-        // Add sections
+        // Add sections (which will add items)
         if (targets && targets.sections) {
-            nodes.push(...this.doc.models.sections.getTree(targets, article));
+            nodes.push(...this.doc.models.sections.getTree(targets, entity));
         }
 
         // Add footnotes
         if (targets && targets.footnotes) {
-            nodes.push(...this.doc.models.footnotes.getTree(targets, article));
+            nodes.push(...this.doc.models.footnotes.getTree(targets, entity));
         }
 
         return nodes;
@@ -207,7 +275,7 @@ export class SectionsModel extends BaseDocumentModel {
                 });
             }
 
-            // Add sections
+            // Add items
             if (targets.items) {
                 nodes.push(...this.doc.models.items.getTree(targets, section));
             }
@@ -286,6 +354,50 @@ export class SectionsModel extends BaseDocumentModel {
         return section.querySelector('.doc-section-name').dataset.rowName;
     }
 
+
+    /**
+     * Get the joined names of the section and its ancestors
+     *
+     * @param {HTMLElement} section
+     * @return {string}
+     */
+    getPath(section) {
+        let ancestors = [this.getName(section)];
+
+        try {
+
+            // Only within the same table ('sections')
+            const rowTable = section.dataset.rowTable;
+
+            // Only when using the path is configured in the section type
+            let sectionConfig = {};
+            let usePath = false;
+            if (rowTable === 'sections') {
+                sectionConfig = this.getConfig(section);
+                usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
+            }
+
+            let prevSibling = section.previousElementSibling;
+            while (usePath && prevSibling && (prevSibling.dataset.rowTable === rowTable)) {
+                if (prevSibling.dataset.rowId === section.dataset.rowParentId) {
+                    ancestors.push(this.getName(prevSibling));
+
+                    section = prevSibling;
+                    if (rowTable === 'sections') {
+                        sectionConfig = this.getConfig(section);
+                        usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
+                    }
+                }
+                prevSibling = prevSibling.previousElementSibling;
+            }
+
+        } catch (error) {
+            console.error("Error finding the path: ", error);
+        }
+
+        return ancestors.reverse().join('.');
+    }
+
     /**
      * Get the title of a section as configured in the section type
      *
@@ -296,7 +408,6 @@ export class SectionsModel extends BaseDocumentModel {
      */
     getTitle(section) {
         return Utils.getElementText(section.querySelector('.doc-section-name [data-value="name"]'));
-        // return Utils.getInputValue(section.querySelector('.doc-section-name [data-value="name"]'));
     }
 
     /**
@@ -329,64 +440,6 @@ export class SectionsModel extends BaseDocumentModel {
         return siblings.length + 1;
     }
 
-    /**
-     * Get the joined names of the section and its ancestors
-     *
-     * @param {HTMLElement} section
-     * @return {string}
-     */
-    getPath(section) {
-        let ancestors = [this.getName(section)];
-
-        try {
-
-            // Only within the same table ('sections')
-            const rowTable = section.dataset.rowTable;
-
-            // Only when using the path is configured in the section type
-            let sectionTypes = {};
-            let sectionConfig = {};
-            let usePath = false;
-            if (rowTable === 'sections') {
-                sectionTypes = Utils.getValue(this.modelParent.models.types._types, rowTable, {});
-                sectionConfig = sectionTypes[section.dataset?.rowType] || this.getConfig(section);
-                usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
-            }
-
-            let prevSibling = section.previousElementSibling;
-            while (usePath && prevSibling && (prevSibling.dataset.rowTable === rowTable)) {
-                if (prevSibling.dataset.rowId === section.dataset.rowParentId) {
-                    ancestors.push(this.getName(prevSibling));
-
-                    section = prevSibling;
-                    if (rowTable === 'sections') {
-                        sectionConfig = sectionTypes[section.dataset?.rowType] || this.getConfig(section);
-                        usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
-                    }
-                }
-                prevSibling = prevSibling.previousElementSibling;
-            }
-
-        } catch (error) {
-            console.error("Error finding the path: ", error);
-        }
-
-        return ancestors.reverse().join('.');
-    }
-
-    /**
-     * Get the section config from its json encoded data-row-config attribute
-     *
-     * @param {HTMLElement} section
-     * @return {Object}
-     */
-    getConfig(section) {
-        try {
-            return JSON.parse(decodeURI(section.dataset.rowConfig));
-        } catch (e) {
-            return {};
-        }
-    }
 
     /**
      * Move sections to match the positions of the menu.
@@ -513,7 +566,7 @@ export class SectionsModel extends BaseDocumentModel {
                 }
 
                 // Step 1: Get numeric section number (number field in the database)
-                const sectionConfig = sectionTypes[section.dataset?.rowType] || this.getConfig(section);
+                const sectionConfig = this.getConfig(section);
                 let useNumber = Utils.getValue(sectionConfig, 'config.name.number');
                 const usePath = Utils.getValue(sectionConfig, 'config.name.path', false);
                 const useScope = Utils.getValue(sectionConfig, 'config.name.scoped', false);
@@ -854,6 +907,24 @@ export class ItemsModel extends BaseDocumentModel {
         this.listenEvent(document, 'epi:patch:item', event => this.onPatchItem(event));
     }
 
+    getName(entity) {
+        let value = `Item ${entity.dataset.rowId}`;
+
+        try {
+            const entityConfig = this.getConfig(entity);
+            const sortNoElement = entity.querySelector('[data-row-field=sortno] input');
+            if (sortNoElement) {
+                value = entityConfig.caption || `Item`;
+                const sortno = Utils.getInputValue(sortNoElement);
+                value = value + " #" + sortno;
+            }
+        } catch (error) {
+            console.error("Error finding the name: ", error);
+        }
+
+        return value;
+    }
+
     /**
      * Get all items within a section filtered by the targets configuration
      *
@@ -865,23 +936,28 @@ export class ItemsModel extends BaseDocumentModel {
     getTree(targets, section) {
         let nodes = [];
 
-        const items = section.querySelectorAll('.doc-section-item');
-        items.forEach(item => {
+        if (targets.items && Array.isArray(targets.items)) {
 
-            // Add the item if requested in targets
-            if (targets.items && Array.isArray(targets.items) && targets.items.includes(item.dataset.rowType)) {
-                nodes.push({
-                    table: item.dataset.rowTable,
-                    id: item.dataset.rowId,
-                    treeId: item.dataset.rowTable + "-" + item.dataset.rowId,
-                    treeParent: section.dataset.rowId ? section.dataset.rowTable + "-" + section.dataset.rowId : null,
-                    treeLevel: parseInt(section.dataset.rowLevel || '0') + 2,
-                    labelText: `Item ${item.dataset.rowId}`, //TODO: this.getName(item),
-                    labelName: `Item ${item.dataset.rowId}`, //TODO: this.getName(item),
-                    labelPath: `Item ${item.dataset.rowId}`, //TODO: this.getName(item),
-                });
-            }
-        });
+            const items = section.querySelectorAll('.doc-section-item');
+            items.forEach(item => {
+
+                // Add the item if requested in targets
+                if (!item.closest('[data-role=secondary]') && targets.items.includes(item.dataset.rowType)) {
+                    nodes.push({
+                        table: item.dataset.rowTable,
+                        id: item.dataset.rowId,
+                        treeId: item.dataset.rowTable + "-" + item.dataset.rowId,
+                        treeParent: section.dataset.rowId ? section.dataset.rowTable + "-" + section.dataset.rowId : null,
+                        treeLevel: parseInt(section.dataset.rowLevel || '0') + 2,
+
+                        labelText: this.getPath(item),
+                        labelName: this.getName(item),
+                        labelPath: this.getTitle(item),
+                        searchText: this.getPath(item)
+                    });
+                }
+            });
+        }
 
         return nodes;
     }

@@ -61,6 +61,13 @@ class CsvView extends ApiView
 {
 
     /**
+     * CSV constants, must match Files::loadCsv() settings
+     */
+    public const CSV_DELIMITER = ';';
+    public const CSV_ENCLOSURE = '"';
+    public const CSV_ESCAPE = '';
+
+    /**
      * The name of the layout file to render the view inside of. The name
      * specified is the filename of the layout in /src/Template/Layout without
      * the .php extension. The file is only rendered, if the serialize option is not set.
@@ -125,8 +132,9 @@ class CsvView extends ApiView
         'footer' => null,
         'header' => null,
         'serialize' => null,
-        'delimiter' => ';',
-        'enclosure' => '"',
+        'delimiter' => self::CSV_DELIMITER,
+        'enclosure' => self::CSV_ENCLOSURE,
+        'escape' => self::CSV_ESCAPE,
         'newline' => "\n",
         'eol' => PHP_EOL,
         'null' => '',
@@ -386,6 +394,7 @@ class CsvView extends ApiView
 
         $delimiter = $this->getConfig('delimiter');
         $enclosure = $this->getConfig('enclosure');
+        $escape = $this->getConfig('escape');
         $newline = $this->getConfig('newline');
 
         // Convert arrays to JSON
@@ -407,7 +416,7 @@ class CsvView extends ApiView
             }
         }
         else {
-            if (fputcsv($fp, $row, $delimiter, $enclosure, "") === false) {
+            if (fputcsv($fp, $row, $delimiter, $enclosure, $escape) === false) {
                 return false;
             }
         }

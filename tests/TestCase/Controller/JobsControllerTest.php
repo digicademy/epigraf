@@ -363,7 +363,7 @@ class JobsControllerTest extends AppTestCase
             'projects=1&articles=1&pipeline=19&sort=location',
             'result.doc',
             'job-3.doc',
-            '71911',
+            '66782',
             'application/msword'
 
         );
@@ -382,7 +382,7 @@ class JobsControllerTest extends AppTestCase
             'projects=1&articles=1&pipeline=21',
             'result.doc',
             'job-3.doc',
-            '40513',
+            '36143',
             'application/msword'
         );
     }
@@ -400,7 +400,7 @@ class JobsControllerTest extends AppTestCase
             'projects=1&articles=1&pipeline=16',
             'result.xml',
             'job-3.xml',
-            '538637',
+            '534341',
             'application/xml; charset=UTF-8'
         );
     }

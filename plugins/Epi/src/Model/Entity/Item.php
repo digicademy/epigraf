@@ -179,6 +179,7 @@ class Item extends BaseEntity
         'id',
         'to_id',
         'itemtype',
+        'norm_iri',
         'itemgroup',
         'published',
         'sortno',
@@ -598,7 +599,7 @@ class Item extends BaseEntity
             }
 
             if (!empty($this->links_id) || !empty($this->links_tab)) {
-                if (empty($this->links_article) && empty($this->links_section)) {
+                if (empty($this->links_article) && empty($this->links_section)  && empty($this->links_item)) {
                     $warning = [
                         'type' => 'missing-target',
                         'to_tab' => $this->links_tab,

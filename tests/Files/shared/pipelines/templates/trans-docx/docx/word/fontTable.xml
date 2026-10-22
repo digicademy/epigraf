@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:fonts xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+    xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+
+    <w:font w:name="Times New Roman">
+        <w:panose1 w:val="02020404030301010803"/>
+        <w:charset w:val="00"/>
+        <w:family w:val="roman"/>
+        <w:pitch w:val="variable"/>
+        <w:sig w:usb0="00000287" w:usb1="00000000" w:usb2="00000000" w:usb3="00000000" w:csb0="0000009F" w:csb1="00000000"/>
+    </w:font>
+    <w:font w:name="Courier New">
+        <w:panose1 w:val="02070409020205020404"/>
+        <w:charset w:val="00"/>
+        <w:family w:val="modern"/>
+        <w:notTrueType/>
+        <w:pitch w:val="fixed"/>
+        <w:sig w:usb0="00000003" w:usb1="00000000" w:usb2="00000000" w:usb3="00000000" w:csb0="00000001" w:csb1="00000000"/>
+    </w:font>
+    <!-- ligaturbögen -->
+    <w:font w:name="Araldo">
+        <w:panose1 w:val="02020404030301010803"/>
+        <w:charset w:val="00"/>
+        <w:family w:val="roman"/>
+        <w:pitch w:val="variable"/>
+        <w:sig w:usb0="00000003" w:usb1="00000000" w:usb2="00000000" w:usb3="00000000" w:csb0="00000001" w:csb1="00000000"/>
+    </w:font>
+    <!-- spitze klammern -->
+    <w:font w:name="Cambria">
+        <w:panose1 w:val="02040503050406030204"/>
+        <w:charset w:val="00"/>
+        <w:family w:val="roman"/>
+        <w:pitch w:val="variable"/>
+        <w:sig w:usb0="E00002FF" w:usb1="400004FF" w:usb2="00000000" w:usb3="00000000" w:csb0="0000019F" w:csb1="00000000"/>
+    </w:font>
+</w:fonts>

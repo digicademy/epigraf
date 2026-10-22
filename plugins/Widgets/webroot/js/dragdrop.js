@@ -153,6 +153,10 @@ export class DragAndDrop extends BaseWidget {
      * @param {DragEvent} event Drop
      */
     cancelDrop(event) {
+        if (!this.dragOrigin) {
+            return;
+        }
+
         this.dragOrigin.insertBefore(this.draggedItem, this.dragOrigin.children[this.draggedItem.position]);
         event.stopPropagation();
     }

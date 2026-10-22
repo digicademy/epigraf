@@ -62,7 +62,7 @@ use App\Utilities\Converters\Arrays;
 <?php if (!empty($items) || ($edit ?? false)): ?>
     <?= $this->Element->openHtmlElement(
         'div',
-        ['class' => ['widget-grid', $edit ? 'widget-dragdrop' : null], 'data-itemtype'=>$itemtype]
+        ['class' => ['widget-grid', $edit ? 'widget-dragdrop' : null], 'data-itemtype'=>$itemtype, 'data-role' => 'secondary']
     ) ?>
         <?php if ($edit && ($template_section['edit'] ?? $template_article['edit'] ?? true)): ?>
             <div class="doc-section-grid-size">

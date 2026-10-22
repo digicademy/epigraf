@@ -784,6 +784,7 @@ export class BaseForm extends BaseWidget {
 
     /**
      * Send a post request including the lock id to the target URL
+     *
      * This unlocks the entity.
      *
      * @param {string} targetUrl The URL that should be requested
@@ -838,32 +839,26 @@ export class BaseForm extends BaseWidget {
     /**
      * Check for dirty data and prompt confirmation if necessary
      *
+     * @param {HTMLFormElement} formElement A form element with cancel and save URLs in the data attributes
      * @returns {Promise} A promise that resolves to true or false.
      */
-    confirmCancel() {
-        return new Promise((resolve, reject) => {
+    confirmCancel(formElement) {
+        const proceedUrl = Utils.decodeHtmlAttribute(formElement.dataset.cancelUrl);
 
-            // Give all listening widgets the chance to downcast their data
-            if (!this.emitEvent('epi:save:form', {}, true)) {
-                resolve(false);
-            }
+        if (!this.emitEvent('epi:save:form', {}, true)) {
+            return Promise.resolve({ confirmed: false, proceedUrl });
+        }
 
-            let referenceWidget = this.getWidget(this.formElement, 'document');
-            if (!referenceWidget) {
-                referenceWidget = this.getWidget(this.formElement, 'entity');
-            }
+        const referenceWidget = this.getWidget(formElement, 'document')
+            || this.getWidget(formElement, 'entity');
 
-            if (referenceWidget && referenceWidget.isDirty()) {
-                // const msg =  i18n.t("The entity has unsaved changes.<br>Do you want to close it?");
-                const msg =  "The entity may have unsaved changes.<br>Do you want to close it?";
-                App.confirmAction(msg)
-                    .then((value) => resolve(value))
-                    .catch((error) => reject(error));
-            }
-            else {
-                resolve(true);
-            }
-        });
+        if (!referenceWidget || !referenceWidget.isDirty()) {
+            return Promise.resolve({ confirmed: true, proceedUrl });
+        }
+
+        const msg = "The entity may have unsaved changes.<br>Do you want to close it?";
+
+        return App.confirmAction(msg).then((confirmed) => ({confirmed, proceedUrl}));
     }
 
     /**
@@ -875,10 +870,9 @@ export class BaseForm extends BaseWidget {
      */
     onCancelClick(event) {
         if (this.formElement) {
-            const url = Utils.decodeHtmlAttribute(this.formElement.dataset.cancelUrl);
-            this.confirmCancel().then((confirmed) => {
+            this.confirmCancel(this.formElement).then(({confirmed, proceedUrl}) => {
                 if (confirmed) {
-                    this.unlockForm(url);
+                    this.unlockForm(proceedUrl, false);
                 }
             });
         }
@@ -906,7 +900,7 @@ export class BaseForm extends BaseWidget {
     onDeleteClick(event) {
         if (this.formElement) {
             const url = Utils.decodeHtmlAttribute(this.formElement.dataset.deleteUrl);
-            this.unlockForm(url);
+            this.unlockForm(url, false);
         }
     }
 
@@ -1164,7 +1158,6 @@ export class BaseForm extends BaseWidget {
         // Update entities
         const contentType = xhr.getResponseHeader("content-type");
 
-        let entityState;
         let createdIds = [];
         let updatedIds = [];
         let deletedIds = [];
@@ -1230,8 +1223,12 @@ export class BaseForm extends BaseWidget {
     }
 
     /**
-     * @param data
-     * @param xhr
+     * Show messages after the save request succeeded
+     *
+     * Overwrite in child classes to redirect to the next action.
+     *
+     * @param {string|Object} data Data returned from the request
+     * @param {XMLHttpRequest} xhr The XMLHttpRequest object
      * @fires app:show:message
      * @returns {boolean}
      */

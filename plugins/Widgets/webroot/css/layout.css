@@ -549,6 +549,10 @@
     padding: 0.5em 0.5em;
 }
 
+.widget-tabsheets-selectors-manage button.btn-apply {
+    height: 3.2em;
+}
+
 .widget-tabsheets-selectors-manage button.btn-add:hover {
     background-color: var(--button-add-bg-color);
 }

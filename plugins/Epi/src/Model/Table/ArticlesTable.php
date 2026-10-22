@@ -1107,6 +1107,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             if (in_array('targets', $snippets)) {
                 $contain[] = 'Items.LinkedArticle';
                 $contain[] = 'Items.LinkedSection';
+                $contain[] = 'Items.LinkedItem';
             }
         }
 
@@ -1446,6 +1447,7 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             'Items.LinkedArticle',
             'Items.LinkedArticle.Projects',
             'Items.LinkedSection',
+            'Items.LinkedItem',
 
             'Items.PropertiesWithAncestors',
             'Items.PropertiesWithAncestors.Types',
@@ -1890,12 +1892,13 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
         $sortableFields = $this->getSortableFields($columns);
 
         $limit = $byTile ? 1000 : 100;
+        $maxLimit = $byTile ? 1000 : 500;
 
         return [
                 'order' => $defaultOrder,
                 'sortableFields' => $sortableFields,
                 'limit' => $limit,
-                'maxLimit' => $byTile ? 1000 : 500
+                'maxLimit' => $maxLimit
             ] + $pagination;
     }
 

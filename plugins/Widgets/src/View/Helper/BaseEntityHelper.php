@@ -887,8 +887,19 @@ class BaseEntityHelper extends Helper
         return $out;
     }
 
+    /**
+     * Get a service button
+     *
+     * @param Item $item
+     * @param string $serviceName
+     * @param array $serviceOptions
+     * @return string
+     */
     public function itemServiceButton($item, $serviceName, $serviceOptions)
     {
+        //TODO: Mask options such as access tokens
+        unset($serviceOptions['accesstoken']);
+
         $out = '';
         $serviceOptions['database'] = $item->databaseName;
         $out .= $this->Element->openHtmlElement(
@@ -2715,7 +2726,11 @@ class BaseEntityHelper extends Helper
         $out .= $this->Element->closeHtmlElement('div');
 
 
-        if (!$entity->isNew() && !in_array($entity->currentUserRole, ['guest','reader'])) {
+        if (
+            !$entity->isNew() &&
+            !in_array($entity->currentUserRole, ['guest','reader']) &&
+            in_array($action, ['view','edit'])
+        ) {
             $out =  $out . $this->docWarnings($entity) ;
         }
 
@@ -3420,11 +3435,22 @@ class BaseEntityHelper extends Helper
     }
 
 
+    /**
+     * Create a service button
+     *
+     * @param BaseEntity $entity
+     * @param array $services
+     * @return string
+     */
     public function entityFieldServiceButton($entity, $services)
     {
         $out = '';
 
         foreach ($services ?? [] as $serviceName => $serviceOptions) {
+
+            //TODO: Mask options such as access tokens
+            unset($serviceOptions['accesstoken']);
+
             // TODO: Think about the naming scheme, widget-service-button would be better but is already taken
             $out .= $this->Element->openHtmlElement(
                 'div',
