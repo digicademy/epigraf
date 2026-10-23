@@ -244,7 +244,7 @@ class FilesControllerTest extends EpiTestCase
     public function testNewFolder()
     {
         $this->loginUser('author');
-        $this->get('epi/projects/files/newfolder');
+        $this->get('epi/projects/files/add');
 
         $this->assertHtmlEqualsComparison();
 

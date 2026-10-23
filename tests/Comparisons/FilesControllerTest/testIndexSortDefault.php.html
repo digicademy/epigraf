@@ -58,28 +58,26 @@
         <!-- Left sidebar -->
         
             
-            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Mounts</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">            <div class="frame-title">
-            <div class="frame-title-caption">Mounts</div>
-            <div class="frame-title-manage">
-                <button class="btn-close"
-                        title="Close"
-                        aria-label="Close"></button>
+            <div class="sidebar sidebar-left sidebar-size-2 sidebar-init-expanded accordion-item" data-accordion-item="sidebar-left" data-snippet="sidebar-left"><div class="sidebar-content"><div class="widget-tabsheets simple"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"><div class="widget-tabsheets-button" data-tabsheet-id="sidebar-menu"><button class="caption">Mounts</button></div></div><div class="widget-tabsheets-selectors-manage"><button class="btn-apply show-small" title="Apply filter" aria-label="Apply filter" >✓</button></div></div><div class="widget-tabsheets-sheets"><div class="widget-tabsheets-sheet" data-tabsheet-id="sidebar-menu">
+            <div class="frame-title">
+                <div class="frame-title-caption">Mounts</div>
+                <div class="frame-title-manage">
+                    <button class="btn-close"
+                            title="Close"
+                            aria-label="Close"></button>
+                </div>
             </div>
+
+        <div class="frame-content">
+                <div class="widget-scrollbox">
+                <ul class="side-nav">
+                                            <li class="active"><a href="/files?root=shared">shared</a> </li>
+                                            <li class=""><a href="/files?root=root">root</a> </li>
+                                    </ul>
+                </div>
+
         </div>
-    
-    <div class="frame-content">
-                    <div class="widget-scrollbox">
-            <ul class="side-nav">
-                                    <li class="active"><a href="/files?root=shared">shared</a> </li>
-                                    <li class=""><a href="/files?root=root">root</a> </li>
-                            </ul>
-            </div>
-            </div>
-
-    <div class="frame-footer">
-        <form enctype="multipart/form-data" method="post" accept-charset="utf-8" class="widget-upload" data-redirect="/files/index/?path=downloads" data-target-list-name="files" action="/files/upload?root=shared&amp;path=downloads"><div style="display:none;"><input type="hidden" name="_method" value="POST"></div><div class="dz-message">You can drop multiple files here or click here to upload.</div><input type="hidden" name="File[path]" id="file-path" value="downloads"></form>    </div>
-
-</div></div></div></div></div>        
+    </div></div></div></div></div>        
         <!-- Content -->
                     <div id="content" class="accordion-item accordion-main content" data-accordion-item="main">
 
@@ -100,78 +98,75 @@
 <!-- Breadcrumbs -->
 
 <!-- Sidebars -->
-
-
+    
+    
 <!-- Paginator -->
 
 
-<div class="content-main widget-scrollbox">
-	<table class="recordlist widget-table actions-toframe"
-           data-snippet="rows"
-           data-model="files">
-		<thead>
-		<tr>
-			<th data-col="name" scope="col" data-width="300"><a href="/files?sort=name&amp;direction=asc&amp;path=downloads">Name</a></th>
-			<th data-col="thumb" scope="col">Thumbnail</th>
-			<th data-col="modified" scope="col"><a href="/files?sort=modified&amp;direction=asc&amp;path=downloads">Modified</a></th>
-			<th data-col="size" scope="col"><a href="/files?sort=size&amp;direction=asc&amp;path=downloads">Size</a></th>
-						<th data-col="permissions" scope="col"><a href="/files?sort=permissions&amp;direction=asc&amp;path=downloads">Permissions</a></th>
-						<th scope="col" class="actions">Actions</th>
-		</tr>
-		</thead>
-		<tbody data-list-name="files"
-               data-list-action-next=""
-               data-list-action-get="/files/index?path=downloads">
+<div class="content-main">
+    <div class="content-main-section widget-scrollbox">
+        <table class="recordlist widget-table actions-toframe"
+               data-snippet="rows"
+               data-model="files">
+            <thead>
+            <tr>
+                <th data-col="name" scope="col" data-width="300"><a href="/files?sort=name&amp;direction=asc&amp;path=downloads">Name</a></th>
+                <th data-col="thumb" scope="col">Thumbnail</th>
+                <th data-col="modified" scope="col"><a href="/files?sort=modified&amp;direction=asc&amp;path=downloads">Modified</a></th>
+                <th data-col="size" scope="col"><a href="/files?sort=size&amp;direction=asc&amp;path=downloads">Size</a></th>
+                                <th data-col="permissions" scope="col"><a href="/files?sort=permissions&amp;direction=asc&amp;path=downloads">Permissions</a></th>
+                                <th scope="col" class="actions">Actions</th>
+            </tr>
+            </thead>
+            <tbody data-list-name="files"
+                   data-list-action-next=""
+                   data-list-action-get="/files/index?path=downloads">
 
-					<tr class="files-folder actions-noframe">
-				<td><span class="ui-icon ui-icon-folder-collapsed"></span> ..</td>
-				<td></td>
-				<td></td>
-				<td></td>
-								<td></td>
-								<td class="actions">
-					<a href="/files?root=shared&amp;path=">Open</a>				</td>
-			</tr>
+                            <tr class="files-folder actions-noframe">
+                    <td><span class="ui-icon ui-icon-folder-collapsed"></span> ..</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                                        <td></td>
+                                        <td class="actions">
+                        <a href="/files?root=shared&amp;path=">Open</a>                    </td>
+                </tr>
 
-		
-					<!-- Files -->
-			                <tr class="files-file" data-list-itemof="files"  data-id="2">
-					<td class="">test_private.doc</td>
-					<td class="thumb">
-											</td>
-					<td>#TIME#</td>
-					<td>32.6 kB</td>
-										<td>#PERMISSIONS</td>
-										<td class="actions">
-						<a href="/files/view/2?root=shared">Details</a>						<a href="/files/download?root=shared&amp;path=downloads&amp;filename=test_private.doc">Download</a>					</td>
-				</tr>
+            
+                            <!-- Files -->
+                                    <tr class="files-file" data-list-itemof="files" data-id="2">
+                        <td class="">test_private.doc</td>
+                        <td class="thumb">
+                                                    </td>
+                        <td>#TIME#</td>
+                        <td>32.6 kB</td>
+                                                <td>#PERMISSIONS</td>
+                                                <td class="actions">
+                            <a href="/files/view/2?root=shared">Open</a>                        </td>
+                    </tr>
 
-				<!-- Folders -->
-								<!-- Files -->
-			                <tr class="files-file" data-list-itemof="files"  data-id="3">
-					<td class="">test_published.doc</td>
-					<td class="thumb">
-											</td>
-					<td>#TIME#</td>
-					<td>42.4 kB</td>
-										<td>#PERMISSIONS</td>
-										<td class="actions">
-						<a href="/files/view/3?root=shared">Details</a>						<a href="/files/download?root=shared&amp;path=downloads&amp;filename=test_published.doc">Download</a>					</td>
-				</tr>
+                <!-- Folders -->
+                                            <!-- Files -->
+                                    <tr class="files-file" data-list-itemof="files" data-id="3">
+                        <td class="">test_published.doc</td>
+                        <td class="thumb">
+                                                    </td>
+                        <td>#TIME#</td>
+                        <td>42.4 kB</td>
+                                                <td>#PERMISSIONS  </td>
+                                                <td class="actions">
+                            <a href="/files/view/3?root=shared">Open</a>                        </td>
+                    </tr>
 
-				<!-- Folders -->
-					
-		</tbody>
-	</table>
+                <!-- Folders -->
+                            
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content-main-fixed">
+        <form enctype="multipart/form-data" method="post" accept-charset="utf-8" class="widget-upload" data-redirect="/files/index/?path=downloads" data-target-list-name="files" action="/files/upload?root=shared&amp;path=downloads"><div style="display:none;"><input type="hidden" name="_method" value="POST"></div><div class="dz-message">You can drop multiple files here or click here to upload.</div><input type="hidden" name="File[path]" id="file-path" value="downloads"></form>    </div>
 </div>
-
-
-	<div class="content-description">
-		<p>
-            			    Download folder            		</p>
-
-        	</div>
-
 
 <!-- Actions -->
 
@@ -186,6 +181,6 @@
                     <div class="sidebar sidebar-right sidebar-size-5 sidebar-init-expanded accordion-item sidebar-empty" data-accordion-item="sidebar-right" data-snippet="sidebar-right"><div class="sidebar-content"><div class="widget-tabsheets empty"><div class="widget-tabsheets-selectors"><div class="widget-tabsheets-selectors-tabs"></div><div class="widget-tabsheets-selectors-manage"><button class="btn-close" title="Close" aria-label="Close"></button></div></div><div class="widget-tabsheets-sheets"></div></div></div></div>            </div>
 
     <!-- Footer -->
-            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><a href="/files/newfolder?root=shared&amp;path=downloads" data-role="add" class="">Create folder</a></li><li><a href="/files/edit?root=shared&amp;path=downloads" data-shortcuts="F2" title="Edit (F2)" aria-label="Edit" aria-keyshortcuts="F2" class="widget-shortcut">Edit</a></li><li><a href="/files/move/1/item?root=shared&amp;path=downloads" class="">Move folder</a></li><li><a href="/files/move?root=shared&amp;path=downloads" class="">Move content</a></li><li><a href="/files/clearthumbs?root=shared&amp;path=downloads" class="">Clear thumbs</a></li><li><a href="/files/clean?root=shared&amp;path=downloads" class="">Clean names</a></li><li><a href="/files/sync?root=shared&amp;path=downloads" class="" data-confirm-message="This will recurse all files and folders and will stress the server. Are you ready  to proceed?" onclick="if (confirm(this.dataset.confirmMessage)) { return true; } return false;">Sync</a></li><li><a href="/files/fetch?root=shared&amp;path=downloads" class="">Fetch file</a></li></ul></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li><a href="/files/download?root=shared&amp;path=downloads&amp;find=latest" class="">Download latest file</a></li><li><a href="/files/download/1" class="">Zip</a></li><li class="action-group action-group-help"><a href="/help/administration/files" class="frame help-button" data-frame-target="help" data-frame-title="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
+            <footer><nav class="actions-bottom widget-sandwich-source widget-sandwich-items-bottom" data-snippet="actions-bottom" data-sandwich-source="bottom"><ul class="action-menu"><li><a href="/files/add" data-shortcuts="Ctrl+M" title="Create folder (Ctrl+M)" aria-label="Create folder" aria-keyshortcuts="Ctrl+M" class="popup actions-set-default widget-shortcut" data-role="add" action="add" 1="1" popup="1" data-popup-modal="1">Create folder</a></li></ul></nav><nav class="actions-bottom-right widget-sandwich-source widget-sandwich-items-footer" data-snippet="actions-bottom-right" data-sandwich-source="bottom-right"><ul class="action-menu"><li class="action-group action-group-help"><a href="/help/administration/files" class="frame help-button" data-frame-target="help" data-frame-title="Help" title="Help" aria-label="Help">?</a></li></ul></nav><nav class="widget-sandwich hidden" data-sandwich-sources=".widget-sandwich-items-footer, .widget-sandwich-items-bottom"><button class="widget-dropdown widget-dropdown-toggle" data-toggle="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" data-pane-align-to-y="footer" title="Actions" aria-label="Actions"></button><div class="widget-dropdown-pane-header">Actions</div><div id="actions-widget-sandwich-items-footer-widget-sandwich-items-bottom-sandwich-pane" class="widget-dropdown-pane dropdown-menu" data-widget-dropdown-position="topright"></div></nav></footer>    
 </div>
 </body></html>

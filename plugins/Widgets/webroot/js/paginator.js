@@ -869,7 +869,7 @@ export class ScrollPaginator extends BaseWidget {
         const isNew = event.type === 'epi:create:row';
         const isDeleted = event.type === 'epi:delete:row';
         const isMoved = event.type === 'epi:move:row';
-            const isCanceled = event.type === 'epi:cancel:row';
+        const isCanceled = event.type === 'epi:cancel:row';
 
         if (rowTab && rowId &&  (rowTab === this.tableName)) {
             if (isDeleted) {

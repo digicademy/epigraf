@@ -2754,6 +2754,23 @@
                             "norm_data": "Kategorie 1 Norm",
                             "links": []
                         },
+                        "links_item": {
+                            "deleted": 0,
+                            "itemtype": "heraldry",
+                            "value": "",
+                            "content": "Anmerkungen Wappen 1",
+                            "flagged": false,
+                            "links_tab": "sections",
+                            "file_name": "",
+                            "file_path": "",
+                            "file_source": "",
+                            "file_online": false,
+                            "date_value": "",
+                            "source_autopsy": false,
+                            "pos_x": 1,
+                            "pos_y": 1,
+                            "pos_z": 1
+                        },
                         "sectionpath": [
                             {
                                 "children": 0,

@@ -273,6 +273,9 @@ class PropertiesController extends AppController
             // Otherwise it returns null
             // In case the merge did not succeed, the function throws an exception
             $entity = $this->Properties->merge($propertyTargetId, $propertySourceIds, $mergeOptions);
+            if (!empty($entity)) {
+                $entity->deleted = 1;
+            }
             $this->Answer->success(__('The properties have been merged.'));
             $this->Answer->addAnswer(compact( 'entity'));
         }

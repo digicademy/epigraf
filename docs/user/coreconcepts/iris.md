@@ -44,7 +44,7 @@ In the example, the IRI path is `items/text/di~di-103-1~description~1`.
 
 To make sure that IRI fragments from different databases do not conflict,
 it is advised to include the **database name** in the IRI fragment.
-The [transfer function of Epigraf](/epigraf/user/export/transfer) creates IRI fragments automatically if the corresponding field is empty.
+The [transfer function of Epigraf](/user/export/transfer) creates IRI fragments automatically if the corresponding field is empty.
 For example, the section with the ID 18 in the epi_nrw database automatically receives the IRI fragment `nrw~18`.
 Assuming it is a section of type "locations", the full IRI would be `http://epigraf.inschriften.net/iri/sections/locations/nrw~18`
 and it can no longer be confused with IRIs from other databases on the same server.
@@ -145,7 +145,7 @@ This IRI is made up of the following parts:
 
 - The **IRI path** `articles/epi-article/1` following the pattern `<table>/<type>/<irifragment>` as described above.
   The first part corresponds to the database table (e.g. `articles`, `sections`, `properties`),
-  followed by the [entity type](/epigraf/user/configuration) (e.g. property types such as `fonttypes` or `locations`)
+  followed by the [entity type](/user/configuration) (e.g. property types such as `fonttypes` or `locations`)
   and finally the IRI fragment.
 - The **IRI endpoint** `https://epigraf.inschriften.net/iri/` ensures that the IRI can be resolved.
   This IRI endpoint resolves to the public database on the server.

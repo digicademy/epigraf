@@ -59,17 +59,17 @@ class FilesController extends AppController
             'coder' => ['download', 'display'],
             'desktop' => [
                 'download','display','index','view','select',
-                'upload','delete','edit','newfolder',
+                'upload','delete','edit','add',
                 'unzip','move'
             ],
             'author' => [
                 'download','display','index','view','select',
-                'upload','delete','edit','newfolder',
+                'upload','delete','edit','add',
                 'unzip','move'
             ],
             'editor' => [
                 'download','display','index','view','select',
-                'upload','delete','edit','newfolder',
+                'upload','delete','edit','add',
                 'unzip','move'
             ]
         ]

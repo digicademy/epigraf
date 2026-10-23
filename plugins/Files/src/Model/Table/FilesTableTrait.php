@@ -20,6 +20,7 @@ use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
+use Files\Model\Entity\FileRecord;
 
 /**
  * Trait FilesTableTrait
@@ -156,48 +157,22 @@ trait FilesTableTrait
     /**
      * Create records for the folder and all subfolders
      *
-     * @param $rootfolder
-     * @param $root
-     * @param $folder
+     * @param FileRecord $entity
      *
-     * @return true
      * @return bool|\Cake\Datasource\EntityInterface[]|\Cake\Datasource\ResultSetInterface|iterable
      * @throws \Exception
      */
-    public function createFolder($rootfolder, $root, $folder)
+    public function createFolder($entity)
     {
-        if (empty($folder)) {
+        if (empty($entity['name'])) {
             return true;
         }
 
-        $folder = explode('/', $folder);
-        $path_segments = [];
-        $missing = [];
-        while (!empty($folder)) {
-            $name = array_shift($folder);
-            $path = implode('/', $path_segments);
-
-            if (!$this->find('all')
-                ->where(['root' => $root, 'path' => $path, 'name' => $name, 'isfolder' => 1])
-                ->count()) {
-                $missing[] = [
-                    'name' => $name,
-                    'root' => $root,
-                    'path' => $path,
-                    'isfolder' => 1
-                ];
-            }
-
-            $path_segments[] = $name;
+        if (!$entity->createPath()) {
+            return false;
         }
 
-        if (!empty($missing)) {
-            return $this->saveMany($this->newEntities($missing));
-        }
-        else {
-            return true;
-        }
-
+        return $this->save($entity);
     }
 
     /**
@@ -325,7 +300,6 @@ trait FilesTableTrait
         }
 
         // Get database content
-        // TODO: convert isfolder database field to boolean
         $files = $this
             ->find('files', ['root' => $root, 'path' => $folder]);
 

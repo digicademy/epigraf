@@ -126,7 +126,7 @@ The configuration for each property type includes the following keys:
 
 # Available fields
 
-Properties include both fields reserved for the [Relational Article Model (RAM)](/epigraf/user/coreconcepts/model) and fields that can be customized.
+Properties include both fields reserved for the [Relational Article Model (RAM)](/user/coreconcepts/model) and fields that can be customized.
 While you can change the labels for all fields, you can only change the data types for customizable fields.
 Refer to the `format` column in the table below to determine whether a field is reserved or customizable.
 

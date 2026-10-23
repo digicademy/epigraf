@@ -634,7 +634,7 @@ export class TableWidget extends BaseWidget {
             }
         }
 
-        // Jumb to first or last row
+        // Jump to first or last row
         else if (key === 'Home') {
             const firstRow = this.getFirstVisibleRow();
             if (event.shiftKey) {

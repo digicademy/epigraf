@@ -35,7 +35,7 @@ When working on the developer documentation, you can use a jekyll container to d
   Include an image description.
   For image paths, the `/user/` path element is necessary for the Jekyll generated documentation.
   It is automatically replaced by `/help/` when the user documentation is rendered in the Epigraf help section.
-  Example: `![Image showing the RAM](/epigraf/user/assets/ram_simple.png)`.
+  Example: `![Image showing the RAM](/user/assets/ram_simple.png)`.
 - To adjust the image sizes, use HTML markup.
   Add a `<figure>` element around the `<img>` element.
   Then use the `style` attribute of the figure element to set the width and optionally a bottom margin,

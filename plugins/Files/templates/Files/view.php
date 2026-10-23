@@ -55,7 +55,7 @@
     <?php endif; ?>
 
     <?php $items = $entity->getItems(); ?>
-    <?php if (!empty($items)): ?>
+    <?php if (empty($entity['isfolder']) && !empty($items)): ?>
         <div class="content-box">
             <h2><?= __('Used in articles') ?></h2>
             <ul>
@@ -74,10 +74,37 @@
 <?php
     $this->setShowBlock(['footer']);
     $this->Link->beginActionGroup ('bottom');
+
+    if ($entity['isfolder']) {
+        $this->Link->addAction(
+            __('Open'),
+            ['action' => 'index', $entity['id'], '?' => ['root' => $root]],
+            ['data-target'=>'main','data-role' => 'open']
+        );
+    }
+
     $this->Link->addAction(__('Edit'),['action' => 'edit', $entity['id'],'?' => ['root'=>$root]],['shortcuts' => ['F2']]);
     $this->Link->addAction(__('Move'),['action' => 'move', $entity['id'],'item','?' => ['root'=>$root]]);
-    $this->Link->addAction(__('Download'),['action' => 'download', '?' => ['root' => $root, 'path' => $entity['path'], 'filename' => $entity['name']]],['data-target'=>'main']);
+
+    if ($entity['isfolder']) {
+        $this->Link->addAction(__('Move content'),
+            ['action' => 'move', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
+
+        $this->Link->addAction(__('Download latest file'),
+            ['action' => 'download', '?' => ['root' => $root, 'path' => $entity->relativePath, 'find' => 'latest']]);
+    }
+
     if (($entity['type'] ?? '') == 'zip') {
         $this->Link->addAction(__('Unzip'),['action' => 'unzip', '?' => ['root' => $root, 'path' => $entity['path'], 'filename' => $entity['name']]],['roles'=>['devel']]);
+    }
+
+    if ($entity['isfolder'] && $this->User->hasRole(['devel']) && !empty($entity->relativePath)) {
+            $this->Link->addAction(__('Clear thumbs'),['action' => 'clearthumbs', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
+            $this->Link->addAction(__('Clean names'),['action' => 'clean', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
+            $this->Link->addAction(__('Sync'),['action' => 'sync', '?' => ['root' => $root, 'path' => $entity->relativePath]],['confirm'=>__('This will recurse all files and folders and will stress the server. Are you ready  to proceed?')]);
+    }
+
+    if ($entity['isfolder'] && !empty($entity['config'])) {
+        $this->Link->addAction(__('Pull from origin'),['action' => 'fetch', '?' => ['root' => $root, 'path' => $entity->relativePath]]);
     }
 ?>

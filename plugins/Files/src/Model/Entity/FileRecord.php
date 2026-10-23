@@ -547,14 +547,14 @@ class FileRecord extends BaseEntity
         if ($this['isfolder']) {
             unset($fields['published']);
             unset($fields['data']);
-            if (
-                !$this->hasDatabaseField('config') ||
-                (($this->currentUserRole ?? 'guest') !== 'devel')
-            ) {
-                unset($fields['config']);
-            }
+
         }
-        else {
+
+        if (
+            !$this['isfolder'] ||
+            !$this->hasDatabaseField('config') ||
+            (($this->currentUserRole ?? 'guest') !== 'devel')
+        ) {
             unset($fields['config']);
         }
 
@@ -750,5 +750,43 @@ class FileRecord extends BaseEntity
             // $this->type = pathinfo($this->fullPath, PATHINFO_EXTENSION) ?? null;
             $this->type = explode('/',mime_content_type($this->fullPath))[1] ?? null;
         }
+    }
+
+    /**
+     * Create the entities of the ancestor path
+     *
+     * @return bool|\Cake\Datasource\EntityInterface[]|iterable
+     * @throws \Exception
+     */
+    public function createPath()
+    {
+        $root = $this['root'];
+        $folder = explode('/', $this['path'] ?? '');
+        $model = $this->getTable();
+
+        $path_segments = [];
+        $missing = [];
+        while (!empty($folder)) {
+            $name = array_shift($folder);
+            $path = implode('/', $path_segments);
+
+            if (!$model->find('all')
+                ->where(['root' => $root, 'path' => $path, 'name' => $name, 'isfolder' => 1])
+                ->count()) {
+                $missing[] = [
+                    'name' => $name,
+                    'root' => $root,
+                    'path' => $path,
+                    'isfolder' => 1
+                ];
+            }
+
+            $path_segments[] = $name;
+        }
+
+        if (!empty($missing)) {
+            return $model->saveMany($this->newEntities($missing));
+        }
+        return true;
     }
 }

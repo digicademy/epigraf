@@ -802,8 +802,8 @@ export class BaseFrame extends BaseForm {
                 self.updatePage(data, options);
             },
             error: function (xhr, status, error) {
-                const errorContent = 'Error loading data:' + xhr.responseText;
-                self.emitEvent('app:show:message', {'msg' : errorContent, 'status': 'error'});
+                const errorContent = xhr.responseText;
+                // self.emitEvent('app:show:message', {'msg' : errorContent, 'status': 'error'});
                 self.updatePage(errorContent, options);
 
                 // Try again
@@ -1644,11 +1644,13 @@ export class PopupWindow extends BaseFrame {
             // Check for a close parameter in the response URL
             // Check submit buttons
             const closeParam = responseUrl.searchParams.get('close');
-            const hasSubmitButton = htmlData.querySelector('input[data-role="submit"],button[data-role="submit"]');
+            if (closeParam !== '0') {
+                const hasSubmitButton = htmlData.querySelector('input[data-role="submit"],button[data-role="submit"]');
 
-            // Only close if explicitly requested by the close parameter
-            // or if there are no submit buttons and no proceed URL and no open URL
-            doClose = Boolean(Number(closeParam || !(hasSubmitButton || proceedUrl || openUrl)));
+                // Only close if explicitly requested by the close parameter
+                // or if there are no submit buttons and no proceed URL and no open URL
+                doClose = Boolean(Number(closeParam || !(hasSubmitButton || proceedUrl || openUrl)));
+            }
         }
 
         if (openUrl) {

@@ -138,9 +138,9 @@ trait FilesRequestTrait
      *
      * //TODO: rename to add action
      */
-    public function newfolder()
+    public function add()
     {
-        $this->FilesRequest->newfolder();
+        $this->FilesRequest->add();
     }
 
     /**
@@ -222,17 +222,7 @@ trait FilesRequestTrait
      */
     public function clearthumbs()
     {
-        if (Files::clearThumbs()) {
-            $this->Flash->success(__('The thumb cache has been cleared.'));
-        }
-        else {
-            $this->Flash->error(__('The thumb cache could not be cleared. Please try again.'));
-        }
-
-        return $this->redirect([
-            'action' => 'index',
-            '?' => ['root' => $this->root, 'path' => $this->currentFolderSegment]
-        ]);
+        return $this->FilesRequest->clearthumbs();
     }
 
 }

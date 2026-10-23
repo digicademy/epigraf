@@ -29,6 +29,11 @@
 	min-width: 3rem;
 }
 
+.widget-table th[data-target-width='300'] {
+    width: 300px;
+}
+
+
 table.recordlist.widget-table td,
 table.recordlist.widget-table th {
     box-sizing: border-box;

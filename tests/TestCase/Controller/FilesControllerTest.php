@@ -723,7 +723,7 @@ class FilesControllerTest extends AppTestCase
     public function testNewfolder(): void
     {
         $this->loginUser('admin');
-        $this->get("files/newfolder");
+        $this->get("files/add");
 
         $this->assertHtmlEqualsComparison();
 
@@ -734,7 +734,7 @@ class FilesControllerTest extends AppTestCase
         // Test post request
         $data =['name'=>'newfolder'];
 
-        $this->post('files/newfolder', $data);
+        $this->post('files/add', $data);
         $this->assertResponseCode(302);
 
         // Assert the folder exists

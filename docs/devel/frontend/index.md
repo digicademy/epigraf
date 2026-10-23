@@ -14,4 +14,4 @@ that attaches JavaScript classes to HTML elements.
 Bundling JavaScript files, CSS files, language resources and images is done using Webpack.
 All bundles can be generated at once by calling `npm run build`.
 
-![Epigraf Editor](/epigraf/devel/assets/img/epigraf-editor.png)
+![Epigraf Editor](/devel/assets/img/epigraf-editor.png)

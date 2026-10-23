@@ -22,9 +22,12 @@
 <?php $this->Breadcrumbs->add($entity->name); ?>
 
 <!-- Content area -->
-<div class="message danger">
-    <?= __('Danger zone! Operations on this page may severely damage content. Data can get lost forever!') ?>
-</div>
+
+<?php if (empty($entity->deleted)): ?>
+    <div class="message danger">
+        <?= __('Danger zone! Operations on this page may severely damage content. Data can get lost forever!') ?>
+    </div>
+<?php endif; ?>
 
 <?php
     if (!$entity->deleted) {
@@ -39,5 +42,8 @@
         $formOptions = [];
     }
 ?>
+
+
 <?= $this->EntityInput->entityForm($entity, 'delete', $formOptions) ?>
+
 

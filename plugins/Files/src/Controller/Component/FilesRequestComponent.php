@@ -79,16 +79,15 @@ class FilesRequestComponent extends Component
      * - find Instead of providing a filename, set find=latest to find the latest file in the folder
      *
      * ### Controller properties
-     * - rootFolder           Absolute root folder path
-     * - currentFolder        Absolute folder path
-     *
-     * - currentFolderSegment Relative folder path, relative to root (or '')
-     * - parentFolderSegment  Relative parent folder path (used to add ..) (or '')
-     * - currentFolderName    Name of the Folder (or '' in case of files)
-     *
-     * - currentFilePath      Absolute file name (or '' in case of folders)
-     * - currentFilename      Filename without path (or '' in case of folders)
-     * - currentFileExtension The extension of the file (or '' in case of folders)
+     * - currentFile Array with current root/folder/file state:
+     *   - rootFolder           Absolute root folder path
+     *   - currentFolder        Absolute folder path
+     *   - currentFolderSegment Relative folder path, relative to root (or '')
+     *   - parentFolderSegment  Relative parent folder path (used to add ..) (or '')
+     *   - currentFolderName    Name of the Folder (or '' in case of files)
+     *   - currentFilePath      Absolute file name (or '' in case of folders)
+     *   - currentFilename      Filename without path (or '' in case of folders)
+     *   - currentFileExtension The extension of the file (or '' in case of folders)
      *
      * - root                 Mount name used as root (mapped to folder paths in the component config).
      * - mounts Array of available mount names that can be used as root (mapped to folder paths in the component config).
@@ -113,17 +112,17 @@ class FilesRequestComponent extends Component
 
         // TODO: path, file, and folder should be initialized as empty strings (?), see warnings.
         // TODO: Init controller properties in a trait
-        // Absolute paths
-        $this->controller->rootFolder = false;
-        $this->controller->currentFolder = false;
-        $this->controller->currentFilepath = false;
-
-        // Relative paths
-        $this->controller->currentFilename = false;
-        $this->controller->currentFolderSegment = false;
-        $this->controller->parentFolderSegment = false;
-        $this->controller->currentFolderName = false;
-        $this->controller->currentFileExtension = false;
+        // Absolute and relative root/folder/file state
+        $this->controller->currentFile = [
+            'rootFolder' => false,
+            'currentFolder' => false,
+            'currentFilepath' => false,
+            'currentFilename' => false,
+            'currentFolderSegment' => false,
+            'parentFolderSegment' => false,
+            'currentFolderName' => false,
+            'currentFileExtension' => false,
+        ];
 
         // Set root dir
         $this->controller->mounts = $this->getConfig('mounts');
@@ -163,14 +162,14 @@ class FilesRequestComponent extends Component
         if (
             $autocreatedir &&
             in_array($action, ['index', 'select']) &&
-            !is_dir($this->controller->currentFolder) &&
-            !empty($this->controller->currentFolderSegment)
+            !is_dir($this->controller->currentFile['currentFolder']) &&
+            !empty($this->controller->currentFile['currentFolderSegment'])
         ) {
             $this->controller->Flash->error(__('The folder does not exist yet. Create the folder before adding files.'));
             $this->redirectCreateFolder();
         }
 
-        if (!is_dir($this->controller->currentFolder)) {
+        if (!is_dir($this->controller->currentFile['currentFolder'])) {
             throw new NotFoundException('The requested path does not exist.');
         }
 
@@ -178,8 +177,8 @@ class FilesRequestComponent extends Component
         $find = $this->request->getQuery('find');
         if (empty($filename) && (!empty($find) && ($find == 'latest'))) {
             $filename = Files::getLatestFile(
-                $this->controller->rootFolder . DS .
-                $this->controller->currentFolderSegment
+                $this->controller->currentFile['rootFolder'] . DS .
+                $this->controller->currentFile['currentFolderSegment']
             );
             if ($filename === '') {
                 throw new NotFoundException('No file found.');
@@ -305,11 +304,11 @@ class FilesRequestComponent extends Component
     public function getFileFromQuery()
     {
         //Folder
-        if ($this->controller->currentFilename == '') {
+        if ($this->controller->currentFile['currentFilename'] == '') {
             return $this->model->getFile(
                 $this->controller->root,
-                $this->controller->parentFolderSegment,
-                $this->controller->currentFolderName
+                $this->controller->currentFile['parentFolderSegment'],
+                $this->controller->currentFile['currentFolderName']
             );
         }
 
@@ -317,8 +316,8 @@ class FilesRequestComponent extends Component
         else {
             return $this->model->getFile(
                 $this->controller->root,
-                $this->controller->currentFolderSegment,
-                $this->controller->currentFilename
+                $this->controller->currentFile['currentFolderSegment'],
+                $this->controller->currentFile['currentFilename']
             );
         }
     }
@@ -338,7 +337,7 @@ class FilesRequestComponent extends Component
             throw new BadRequestException('No valid root folder.');
         }
 
-        $this->controller->rootFolder = rtrim($this->controller->mounts[$mount], DS);
+        $this->controller->currentFile['rootFolder'] = rtrim($this->controller->mounts[$mount], DS);
     }
 
     /**
@@ -350,12 +349,14 @@ class FilesRequestComponent extends Component
      */
     public function updatePropertiesFolder($path)
     {
-        $this->controller->currentFolder = empty($path) ? $this->controller->rootFolder : $this->controller->rootFolder . DS . $path;
-        $this->controller->currentFolderSegment = trim($path, '/');
-        $this->controller->parentFolderSegment = dirname($path);
-        $this->controller->currentFolderName = basename($path);
-        if ($this->controller->parentFolderSegment == '.') {
-            $this->controller->parentFolderSegment = '';
+        $this->controller->currentFile['currentFolder'] = empty($path)
+            ? $this->controller->currentFile['rootFolder']
+            : $this->controller->currentFile['rootFolder'] . DS . $path;
+        $this->controller->currentFile['currentFolderSegment'] = trim($path, '/');
+        $this->controller->currentFile['parentFolderSegment'] = dirname($path);
+        $this->controller->currentFile['currentFolderName'] = basename($path);
+        if ($this->controller->currentFile['parentFolderSegment'] == '.') {
+            $this->controller->currentFile['parentFolderSegment'] = '';
         }
     }
 
@@ -369,14 +370,14 @@ class FilesRequestComponent extends Component
     public function updatePropertiesFile($filename)
     {
         if (!empty($filename)) {
-            $this->controller->currentFilepath = $this->controller->currentFolder . DS . $filename;
-            $this->controller->currentFilename = $filename;
-            $this->controller->currentFileExtension = pathinfo($filename, PATHINFO_EXTENSION);
+            $this->controller->currentFile['currentFilepath'] = $this->controller->currentFile['currentFolder'] . DS . $filename;
+            $this->controller->currentFile['currentFilename'] = $filename;
+            $this->controller->currentFile['currentFileExtension'] = pathinfo($filename, PATHINFO_EXTENSION);
         }
         else {
-            $this->controller->currentFilepath = '';
-            $this->controller->currentFilename = '';
-            $this->controller->currentFileExtension = '';
+            $this->controller->currentFile['currentFilepath'] = '';
+            $this->controller->currentFile['currentFilename'] = '';
+            $this->controller->currentFile['currentFileExtension'] = '';
         }
     }
 
@@ -420,8 +421,8 @@ class FilesRequestComponent extends Component
     {
         $this->controller->set('mounts', array_keys($this->controller->mounts));
         $this->controller->set('root', $this->controller->root);
-        $this->controller->set('path', $this->controller->currentFolderSegment);
-        $this->controller->set('parent_path', $this->controller->parentFolderSegment);
+        $this->controller->set('path', $this->controller->currentFile['currentFolderSegment']);
+        $this->controller->set('parent_path', $this->controller->currentFile['parentFolderSegment']);
         $this->controller->set('thumbtypes', Files::$thumbtypes);
     }
 
@@ -434,11 +435,11 @@ class FilesRequestComponent extends Component
      */
     public function redirectCreateFolder()
     {
-        $parent_dir = dirname($this->controller->currentFolderSegment);
-        $child_dir = basename($this->controller->currentFolderSegment);
+        $parent_dir = dirname($this->controller->currentFile['currentFolderSegment']);
+        $child_dir = basename($this->controller->currentFile['currentFolderSegment']);
         $parent_dir = ($parent_dir == '.') ? '' : $parent_dir;
 
-        while (!empty($parent_dir) && !is_dir($this->controller->rootFolder . DS . $parent_dir)) {
+        while (!empty($parent_dir) && !is_dir($this->controller->currentFile['rootFolder'] . DS . $parent_dir)) {
             $child_dir = basename($parent_dir) . DS . $child_dir;
             $parent_dir = dirname($parent_dir);
             $parent_dir = ($parent_dir == '.') ? '' : $parent_dir;
@@ -452,7 +453,7 @@ class FilesRequestComponent extends Component
         $this->controller->Answer->redirect(
             [
                 'plugin' => $this->request->getParam('plugin'),
-                'action' => 'newfolder',
+                'action' => 'add',
                 'database' => $this->request->getParam('database'),
                 '?' => [
                     'root' => $this->controller->root,
@@ -476,7 +477,7 @@ class FilesRequestComponent extends Component
             'action' => 'index',
             '?' => [
                 'root' => $this->controller->root,
-                'path' => $this->controller->currentFolderSegment
+                'path' => $this->controller->currentFile['currentFolderSegment']
             ],
         ]);
     }
@@ -492,8 +493,7 @@ class FilesRequestComponent extends Component
      */
     public function redirectOnSuccess($message, $root, $path, $basepath, $filename = '')
     {
-        $successAction = ($filename !== '') ? 'view' : 'index';
-        $successAction = $this->request->getQuery('redirect', $successAction);
+        $successAction = $this->request->getQuery('redirect', 'view');
         if (!in_array($successAction, ['index', 'select', 'view'])) {
             $successAction = 'index';
         }
@@ -539,7 +539,6 @@ class FilesRequestComponent extends Component
         // Update database on first page requests
         if ($this->request->getQuery('page', '1') === '1') {
             $entity->syncDatabase();
-            //$this->model->syncDatabase($folder->root, $folder->relativeFolder);
         }
 
         // Get content
@@ -573,15 +572,15 @@ class FilesRequestComponent extends Component
         // Get file/folder record
         $entity = $this->getFileEntity($id, null, true);
 
-        if ($entity->isFolder ?? false) {
-            $this->controller->Answer->redirect(
-                [
-                    'action' => 'index',
-                    $entity->id,
-                    '?' => ['root' => $entity->root, 'path' => $entity->relativeFolder]
-                ]
-            );
-        }
+//        if ($entity->isFolder ?? false) {
+//            $this->controller->Answer->redirect(
+//                [
+//                    'action' => 'index',
+//                    $entity->id,
+//                    '?' => ['root' => $entity->root, 'path' => $entity->relativeFolder]
+//                ]
+//            );
+//        }
 
         $this->controller->Answer->addAnswer(compact('entity'));
         $this->renderDefault();
@@ -658,7 +657,7 @@ class FilesRequestComponent extends Component
             }
 
             //Caching
-            //$this->response = $this->response->withCache(filemtime($this->controller->currentFilepath),'+1 week');
+            //$this->response = $this->response->withCache(filemtime($this->controller->currentFile['currentFilepath']),'+1 week');
             $this->response = $this->response
                 ->withModified(filemtime($thumbPath))
                 ->withExpires('+1 week')
@@ -683,7 +682,7 @@ class FilesRequestComponent extends Component
         }
 
         elseif ($file->isFile) {
-                //$this->response = $this->response->withCache(filemtime($this->controller->currentFilepath),'+1 week');
+                //$this->response = $this->response->withCache(filemtime($this->controller->currentFile['currentFilepath']),'+1 week');
                 $this->response = $this->response
                     ->withModified(filemtime($file->fullPath))
                     ->withExpires('+1 week')
@@ -725,7 +724,7 @@ class FilesRequestComponent extends Component
             $this->controller->Answer->redirect(
                 [
                     'action' => 'index',
-                    '?' => ['root' => $this->controller->root, 'path' => $this->controller->currentFolderSegment]
+                    '?' => ['root' => $this->controller->root, 'path' => $this->controller->currentFile['currentFolderSegment']]
                 ]
             );
         }
@@ -733,7 +732,7 @@ class FilesRequestComponent extends Component
         $files = [];
 
         if ($this->request->is('post')) {
-            $uploadpath = $this->controller->currentFolder;
+            $uploadpath = $this->controller->currentFile['currentFolder'];
 
             // The dropzone plugin uses FileData as field name
             // Other payload data such as the file path will be nested in the File array.
@@ -820,7 +819,7 @@ class FilesRequestComponent extends Component
     public function fetch()
     {
         if ($this->request->is('post')) {
-            $folder = $this->controller->currentFolder;
+            $folder = $this->controller->currentFile['currentFolder'];
 
             $url = $this->request->getData('File.url');
 
@@ -840,7 +839,7 @@ class FilesRequestComponent extends Component
                     __('The file was fetched.'),
                     [
                         'action' => 'index',
-                        '?' => ['root' => $this->controller->root, 'path' => $this->controller->currentFolderSegment]
+                        '?' => ['root' => $this->controller->root, 'path' => $this->controller->currentFile['currentFolderSegment']]
                     ]
                 );
 
@@ -850,7 +849,7 @@ class FilesRequestComponent extends Component
                     __('The file could not be fetched.'),
                     [
                         'action' => 'index',
-                        '?' => ['root' => $this->controller->root, 'path' => $this->controller->currentFolderSegment]
+                        '?' => ['root' => $this->controller->root, 'path' => $this->controller->currentFile['currentFolderSegment']]
                     ]
                 );
             }
@@ -875,15 +874,15 @@ class FilesRequestComponent extends Component
             $this->updateProperties($file);
         }
 
-        if (empty($this->controller->currentFilepath)) {
+        if (empty($this->controller->currentFile['currentFilepath'])) {
             throw new NotFoundException(__('File not found'));
         }
 
-        if ($this->controller->currentFileExtension != 'zip') {
+        if ($this->controller->currentFile['currentFileExtension'] != 'zip') {
             throw new BadRequestException(__('The file is not a zip archive.'));
         }
 
-        if (Files::unzipFile($this->controller->currentFilepath)) {
+        if (Files::unzipFile($this->controller->currentFile['currentFilepath'])) {
             $this->controller->Flash->success(__('File unzipped.'));
         }
         else {
@@ -893,9 +892,9 @@ class FilesRequestComponent extends Component
         return $this->redirectOnSuccess(
             false,
             $this->controller->root,
-            $this->controller->currentFolderSegment,
+            $this->controller->currentFile['currentFolderSegment'],
             '',
-            $this->controller->currentFilename,
+            $this->controller->currentFile['currentFilename'],
         );
     }
 
@@ -908,43 +907,46 @@ class FilesRequestComponent extends Component
      *
      * //todo refactor using $id of parent folder
      */
-    public function newfolder()
+    public function add()
     {
         //$parentFolder = $this->getFileEntity($id, 'folder');
+        //$path = str_replace('\\', '/', $path);
 
-        $folder = $this->model->newEntity([
+        /** @var FileRecord $entity */
+        $entity = $this->model->newEntity([
             'name' => $this->request->getQuery('foldername'),
             'root' => $this->controller->root,
-            'path' => $this->controller->currentFolderSegment,
+            'path' => $this->controller->currentFile['currentFolderSegment'],
             'isfolder' => 1
         ]);
 
         if ($this->request->is('post')) {
-            $folder = $this->model->patchEntity($folder, $this->request->getData());
-            $newfolder = $folder['name'];
-            $newfolder = preg_replace('/[^a-zA-Z0-9_.\/-]/', '', $newfolder);
-            $success = !empty($newfolder);
+            $entity = $this->model->patchEntity($entity, $this->request->getData());
+            $entity['name'] = preg_replace('/[^a-zA-Z0-9_.\/-]/', '', $entity['name']);
             $message = null;
 
-            if (!$success) {
-                $message = __('The folder could not be created, please provide a valid name.');
+            if (empty($entity['name'])) {
+                $this->Answer->error(__('The folder could not be created, please provide a valid name.'));
             }
-            else {
-                // TODO: implement entity method
-                $success = Files::createFolder($this->controller->currentFolder . DS . $newfolder);
+
+            // TODO: Move Files::createFolder() into the entity method
+            $success = Files::createFolder($this->controller->currentFile['currentFolder'] . DS . $entity['name']);
+            if ($success) {
+                $success = $this->model->createFolder($entity);
             }
 
             if ($success) {
-                $path = empty($this->controller->currentFolderSegment) ? $newfolder : $this->controller->currentFolderSegment . DS . $newfolder;
-                $path = str_replace('\\', '/', $path);
-                $basepath = $this->request->getQuery('basepath', '');
-                $success = $this->model->createFolder($this->controller->rootFolder, $this->controller->root, $path);
-            }
+                $successAction = $this->request->getQuery('redirect');
+                if (empty($successAction)) {
+                    $redirect = ['action' => 'view', $entity->id];
+                } else {
+                    $redirect = ['action' => $successAction, $entity->id, '?' => ['close' => '0']];
+                }
 
-            if ($success) {
-                $this->redirectOnSuccess(
+                $this->Answer->success(
                     __('The folder has been created.'),
-                    $this->controller->root, $path, $basepath
+                    $redirect,
+                    ['id' => $entity->id]
                 );
             }
             else {
@@ -953,7 +955,7 @@ class FilesRequestComponent extends Component
             }
         }
 
-        $this->controller->set(compact('folder'));
+        $this->controller->set(compact('entity'));
         $this->renderDefault();
     }
 
@@ -968,8 +970,8 @@ class FilesRequestComponent extends Component
      */
     public function clean($id = null)
     {
-        if (!empty($this->controller->currentFolderSegment)) {
-            $errors = Files::cleanFolder($this->controller->currentFolder);
+        if (!empty($this->controller->currentFile['currentFolderSegment'])) {
+            $errors = Files::cleanFolder($this->controller->currentFile['currentFolder']);
             if (empty($errors)) {
                 $this->controller->Flash->success(__('Cleaned file and folder names.'));
             }
@@ -978,13 +980,13 @@ class FilesRequestComponent extends Component
             }
         }
 
-        $this->model->syncDatabase($this->controller->root, $this->controller->currentFolderSegment);
+        $this->model->syncDatabase($this->controller->root, $this->controller->currentFile['currentFolderSegment']);
 
         return $this->controller->redirect([
             'action' => 'index',
             '?' => [
                 'root' => $this->controller->root,
-                'path' => $this->controller->currentFolderSegment
+                'path' => $this->controller->currentFile['currentFolderSegment']
             ]
         ]);
     }
@@ -1000,7 +1002,7 @@ class FilesRequestComponent extends Component
     public function sync($id = null)
     {
 
-        $folders = [$this->controller->currentFolderSegment];
+        $folders = [$this->controller->currentFile['currentFolderSegment']];
         $count = 1;
 
         //Find files and update database if neccessary
@@ -1026,7 +1028,7 @@ class FilesRequestComponent extends Component
             'action' => 'index',
             '?' => [
                 'root' => $this->controller->root,
-                'path' => $this->controller->currentFolderSegment
+                'path' => $this->controller->currentFile['currentFolderSegment']
             ]
         ]);
     }
@@ -1039,7 +1041,7 @@ class FilesRequestComponent extends Component
      */
     public function edit($id = null)
     {
-        $entity = $this->getFileEntity($id, '', true);
+        $entity = $this->getFileEntity($id, null, true);
 
         if (empty($entity->name)) {
             throw new BadRequestException('File or folder name is missing');
@@ -1072,7 +1074,7 @@ class FilesRequestComponent extends Component
                     $this->controller->Answer->error(__('The file type of the uploaded file is not compatible with the file extension. Please change the filename or the uploaded file.'));
                 }
 
-                $uploadpath = $this->controller->currentFolder;
+                $uploadpath = $this->controller->currentFile['currentFolder'];
                 $files = Files::saveUploadedFile($uploadpath, $data, true, $entity->name);
                 $proceed = empty($files['error']);
 
@@ -1131,6 +1133,7 @@ class FilesRequestComponent extends Component
 
         if ($this->request->is(['delete'])) {
             $success = $entity->delete();
+            $entity->deleted = 1;
 
             if ($success) {
                 $this->controller->Answer->success(
@@ -1241,4 +1244,23 @@ class FilesRequestComponent extends Component
         $this->renderDefault();
     }
 
+    public function clearthumbs()
+    {
+        if (Files::clearThumbs()) {
+            $this->controller->Answer->success(__('The thumb cache has been cleared.'));
+        }
+        else {
+            $this->controller->Answer->error(__('The thumb cache could not be cleared. Please try again.'));
+        }
+
+        return $this->controller->Answer->redirect(
+            [
+                'action' => 'index',
+                '?' => [
+                    'root' => $this->controller->root,
+                    'path' => $this->controller->currentFile['currentFolderSegment']
+                ]
+            ]
+        );
+    }
 }

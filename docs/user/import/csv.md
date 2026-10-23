@@ -11,7 +11,7 @@ Adapt the file for your own import. Alternatively, the R and Python packages sup
 
 # Structure of CSV import files
 
-Understanding the [Relational Article Model](/epigraf/user/import) is crucial for preparing the CSV files.
+Understanding the [Relational Article Model](/user/import) is crucial for preparing the CSV files.
 The default database table into which a CSV file is imported depends on the page where the import is started.
 For example, on the categories page, entities are imported into the `properties` table. The selected category system is used as default `propertytype`. On the article page, articles are imported along with their associated sections and items.
 
@@ -77,5 +77,5 @@ The target table for each row is either derived from the `id` of the entity or f
 
 In the example, the target table for the article and the section entity is defined twice for each entity.
 It is contained both in the temporary ID and, additionally, in the `table` column.
-In contrast to the example, we recommend to always work with [IRI paths](/epigraf/user/import), that also contain the table.
+In contrast to the example, we recommend to always work with [IRI paths](/user/import), that also contain the table.
 IRI paths have the advantage that entities can be updated and not only created.

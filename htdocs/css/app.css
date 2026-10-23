@@ -530,6 +530,18 @@ div.content-footer {
     font-size: 0.8em;
 }
 
+.content-main-section {
+    flex:1;
+}
+
+.content-main-fixed .dropzone {
+    min-height: 3em;
+    max-width: 15em;
+}
+.content-main-fixed .widget-upload .dz-message {
+    margin:0;
+}
+
 .nopadding {
     padding: 0;
 }

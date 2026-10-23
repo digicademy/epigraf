@@ -58,7 +58,7 @@ class FilesController extends AppController
                 'upload',
                 'delete',
                 'edit',
-                'newfolder',
+                'add',
                 'select',
                 'move'
             ],
@@ -76,7 +76,7 @@ class FilesController extends AppController
                 'upload',
                 'delete',
                 'edit',
-                'newfolder',
+                'add',
                 'select',
                 'move'
             ],
@@ -88,7 +88,7 @@ class FilesController extends AppController
                 'upload',
                 'delete',
                 'edit',
-                'newfolder',
+                'add',
                 'select',
                 'move'
             ]
