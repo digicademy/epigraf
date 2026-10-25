@@ -38,7 +38,7 @@ RUN apt-get update \
     icu-devtools \
     libxslt1-dev \
     libonig-dev \
-    graphicsmagick \
+    #graphicsmagick \
     zip \
     unzip \
     librsvg2-bin \

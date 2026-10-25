@@ -33,7 +33,7 @@ RUN apt-get install -y --no-install-recommends \
     icu-devtools \
     libxslt1-dev \
     libonig-dev \
-    graphicsmagick \
+    #graphicsmagick \
     zip \
     unzip \
     librsvg2-bin \
@@ -58,22 +58,22 @@ RUN	docker-php-ext-install -j "$(nproc)" \
         xsl
 
 # Install Gmagick
-RUN apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends \
-    libgraphicsmagick1-dev \
-    libpng16-16 \
-    libjpeg-dev \
-    subversion
-
-RUN pecl install gmagick-2.0.6RC1 \
-    && docker-php-ext-enable gmagick \
-    && rm -rf /tmp/pear
+#RUN apt-get update \
+#    && apt-get install -y --force-yes --no-install-recommends \
+#    libgraphicsmagick1-dev \
+#    libpng16-16 \
+#    libjpeg-dev \
+#    subversion
+#
+#RUN pecl install gmagick-2.0.6RC1 \
+#    && docker-php-ext-enable gmagick \
+#    && rm -rf /tmp/pear
 
 # Install ImageMagick
-#RUN apt-get update && apt-get install -y \
-#    imagemagick libmagickwand-dev --no-install-recommends \
-#    && pecl install imagick \
-#    && docker-php-ext-enable imagick
+RUN apt-get update && apt-get install -y \
+    imagemagick libmagickwand-dev --no-install-recommends \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
 
 # Install composer globally
 RUN curl -sSL https://getcomposer.org/installer | php
