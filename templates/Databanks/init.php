@@ -18,9 +18,11 @@ use App\Model\Entity\Databank;
  * @var Databank $entity
  */
 ?>
+
 <div class="message danger">
-	<?= __('Danger zone! Operations on this page may severely damage content. Data can get lost forever!') ?>
+    <?= __('Danger zone! Operations on this page may severely damage content. Data can get lost forever!') ?>
 </div>
+
 
 <!-- Breadcrumbs -->
 <?php $this->Breadcrumbs->add(__('Databanks'), ['action' => 'index', 'controller' => 'Databanks', 'database' => $this->request->getParam('database')]); ?>
@@ -32,7 +34,7 @@ use App\Model\Entity\Databank;
     <fieldset>
         <?= $this->Form->hidden('id'); ?>
         <p>
-            <?= __('This will init the database {0} on the server with a blank table structure. Are you sure?', $entity->name) ?>
+            <?= __('This will init the database {0} on the server. If missing, the database is created. If empty, a blank table structure will be created. If missing, the database folder will be created. Are you sure?', $entity->name) ?>
         </p>
     </fieldset>
     <?= $this->Form->end() ?>
@@ -41,15 +43,16 @@ use App\Model\Entity\Databank;
 <!-- Actions -->
 <?php $this->Link->beginActionGroup ('content'); ?>
 <?php
-$this->Link->addAction(
-    __('Cancel'),
-    ['controller' => 'Databanks', 'action' => 'view', $entity->id],
-    ['class' => 'button button_cancel']
-);
+    $this->Link->addAction(
+        __('Cancel'),
+        ['controller' => 'Databanks', 'action' => 'view', $entity->id],
+        ['class' => 'button button_cancel']
+    );
 
-$this->Link->addAction(
-    __('Yes'),
-    [],
-    ['linktype' => 'submit', 'form' => 'form-init-databanks-' . $entity->id]
-);
+
+    $this->Link->addAction(
+        __('Yes'),
+        [],
+        ['linktype' => 'submit', 'form' => 'form-init-databanks-' . $entity->id]
+    );
 ?>

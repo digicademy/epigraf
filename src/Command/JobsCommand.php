@@ -45,6 +45,13 @@ use Predis\Connection\ConnectionException;
  * Process a single job by its ID:
  * bin/cake jobs execute --id=JOB_ID
  *
+ * # Add a job
+ *
+ * Example:
+ * ```
+ * bin/cake jobs add --type import --config='{"pipeline_tasks":[["type":"import","inputpath":"/var/www/data/databases/epi_movies/import/xml"], "database":"epi_movies", "table":"articles"}'
+ *```
+ *
  * # Queued jobs (=background jobs)
  *
  * Start a worker that processes jobs from the queue:
@@ -102,15 +109,16 @@ class JobsCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
-        $parser->setDescription('Starts a worker that processes jobs.');
+        $parser->setDescription('Processes jobs (worker, scheduled, single) or adds a new job.');
 
         $parser->addArgument('action', [
             'help' => [
-                "process: Start processing jobs from the queue managed by Redis.\n" .
+                "process: Start processing jobs from the queue.\n" .
                 "trigger: Start processing scheduled jobs.\n" .
-                "execute: Execute a specific job by its ID.\n"
+                "execute: Execute a specific job by its ID.\n" .
+                "add: Add a new job.\n"
             ],
-            'choices' => ['process','trigger','execute'],
+            'choices' => ['process','trigger','execute','add'],
             'required' => true
         ]);
 
@@ -128,6 +136,28 @@ class JobsCommand extends Command
 
         $parser->addOption('stepwise', [
             'help' => 'Set to 1 to execute just one step in the execute action or to 0 to process all steps. Defaults to 0.',
+        ]);
+
+
+        $parser->addOption('type', [
+            'help' => 'Job type (import, export, mutate, transfer). Defaults to import.',
+        ]);
+        $parser->addOption('config', [
+            'help' => 'The job config (JSON object).',
+        ]);
+        $parser->addOption('name', [
+            'help' => 'Job name.',
+        ]);
+        $parser->addOption('role', [
+            'help' => 'User role stored in the job config, defaults to admin.',
+        ]);
+        $parser->addOption('queue', [
+            'help' => 'Queue the job for a worker. Defaults to false.',
+            'boolean' => true
+        ]);
+        $parser->addOption('execute', [
+            'help' => 'Whether to immedeately execute the added job. Defaults to false.',
+            'boolean' => true
         ]);
 
         return $parser;
@@ -156,6 +186,9 @@ class JobsCommand extends Command
         }
         elseif ($action == 'execute') {
            $this->actionExecute($args, $io);
+        }
+        elseif ($action == 'add') {
+           $this->actionAdd($args, $io);
         }
     }
 
@@ -279,10 +312,77 @@ class JobsCommand extends Command
 
         try {
             $io->out("Executing job: {$jobId}");
-            $this->processJob($jobId, $stepwise, $reset);
+            $this->processJob($jobId, $stepwise, $reset, $io);
             $io->out("Finished job: {$jobId}");
         } catch (\Exception $e) {
-            $io->error("Error executing job: {$jobId} - " . $e->getMessage());
+            $io->abort("Error executing job: {$jobId} - " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Add a new job
+     *
+     * @param Arguments $args
+     * @param ConsoleIo $io
+     * @return void
+     */
+    protected function actionAdd(Arguments $args, ConsoleIo $io)
+    {
+        // Job type must be a known job class
+        $jobType = $args->getOption('type');
+        if (!isset($this->Jobs::$jobTypes[$jobType])) {
+            $io->error('Invalid job type "' . $jobType . '". Allowed: ' . implode(', ', array_keys($this->Jobs::$jobTypes)));
+            return;
+        }
+
+        // Job config (JSON)
+        $jobConfig = $args->getOption('config');
+        if (!empty($jobConfig)) {
+            $jobConfig = json_decode($jobConfig, true);
+            if (!is_array($jobConfig)) {
+                $io->error('Invalid JSON payload.');
+                return;
+            }
+        } else {
+            $jobConfig = [];
+        }
+
+        $jobName = $args->getOption('name');
+        $queuedJob = $args->getOption('delay') ?? false;
+
+        // Set user context so beforeSave fills the user_role/user_id config
+        $role = $args->getOption('role') ?? 'admin';
+        BaseTable::$userRole = $role;
+        BaseTable::$userId = null;
+        $this->Jobs::$userRole = $role;
+        $this->Jobs::$userId = null;
+
+        $jobdata = [
+            'name' => $jobName,
+            'jobtype' => $jobType,
+            'delay' => $queuedJob ? 1 : 0,
+            'config' => $jobConfig
+        ];
+
+        $job = $this->Jobs->newEntity($jobdata)->typedJob;
+
+        if ($this->Jobs->save($job)) {
+            $io->out('Created job ' . $job->id);
+
+            $doExecute = $args->getOption('execute') ?? false;
+            if ($doExecute) {
+                try {
+                    $io->out("Executing job: {$job->id}");
+                    $this->processJob($job->id);
+                    $io->out("Finished job: {$job->id}");
+                } catch (\Exception $e) {
+                    $io->abort("Error executing job: {$job->id} - " . $e->getMessage());
+                }
+            } else {
+                $io->out('Execute with: bin/cake jobs execute --id=' . $job->id);
+            }
+        } else {
+            $io->abort('The job could not be created.');
         }
     }
 
@@ -290,16 +390,17 @@ class JobsCommand extends Command
      * Process a job by its ID
      *
      * @param integer $jobId
-     * @param boolean $stepwise Set to true to process only one step of the job
+     * @param boolean $stepwise Set to true to process only one step of the job.
+     *                          Otherwise the job will be processed until finished or canceled.
      * @param boolean $reset Whether to reset the job before execution
      * @return void
      */
-    protected function processJob($jobId, $stepwise = false, $reset = false) {
+    protected function processJob($jobId, $stepwise = false, $reset = false, $io = false) {
 
         // TODO: Lock jobs
 
         /** @var Job $job */
-        $job = $this->Jobs->get($jobId);
+        $job = $this->Jobs->get($jobId)->typedJob;
 
         if ($reset) {
             $job->reset();
@@ -315,10 +416,16 @@ class JobsCommand extends Command
             Router::fullBaseUrl($baseUrl);
         }
 
-        // TODO: Implement 'cancel' status in addition to redis cancel flag
         // TODO: Implement timeout handling
-        while (!in_array($job->status, ['finish', 'error']) && (!$job->isCanceled)) {
+        while (!$job->isFinished && !$job->isCanceled) {
             $job = $job->execute();
+
+            if (!empty($io)) {
+                $current = $job['progress'] ?? 'NA';
+                $max = $job['progressmax'] ?? 'NA';
+                $io->out("Progress {$current} / {$max}, state {$job['status']}");
+            }
+
             if (!$this->Jobs->save($job)) {
                 $job->error = __('The job could not be saved. Please try again.');
                 break;

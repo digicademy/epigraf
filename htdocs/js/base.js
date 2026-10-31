@@ -1161,6 +1161,7 @@ export class BaseForm extends BaseWidget {
         let createdIds = [];
         let updatedIds = [];
         let deletedIds = [];
+        let mergedIds = [];
         let movedIds = [];
 
         if (xhr.method !== 'GET') {
@@ -1179,29 +1180,34 @@ export class BaseForm extends BaseWidget {
                 if (entityDoc) {
                     newEntityId = entityDoc.dataset.rootTable + '-' + entityDoc.dataset.rootId;
 
+                    // The returned entity was deleted
                     if (entityDoc.dataset.deleted === '1') {
                         deletedIds.push(newEntityId);
                     }
 
+                    // The returned entity is the result of a merge operation
                     if (entityDoc.dataset.mergedIds) {
-                        const mergedIds = entityDoc.dataset.mergedIds
+                        mergedIds = entityDoc.dataset.mergedIds
                             .split(',')
                             .map(id => entityDoc.dataset.rootTable + '-' + id);
-                        deletedIds = deletedIds.concat(mergedIds);
+                        createdIds.push(newEntityId);
                     }
 
+                    // The returned entity was moved
                     if (entityDoc.dataset.moved === '1') {
                         movedIds.push(newEntityId);
                     }
                 }
             }
 
-            if (entityId && !deletedIds.includes(entityId) && !movedIds.includes(entityId)) {
+            // By default, entities are updated
+            if (entityId &&
+                !createdIds.includes(newEntityId) &&
+                !deletedIds.includes(entityId) &&
+                !mergedIds.includes(entityId) &&
+                !movedIds.includes(entityId)
+            ) {
                 updatedIds.push(entityId);
-            }
-
-            if (entityId && newEntityId && (entityId !== newEntityId)) {
-                updatedIds.push(newEntityId);
             }
 
             if (!entityId && newEntityId) {
@@ -1214,10 +1220,11 @@ export class BaseForm extends BaseWidget {
             }
         }
 
+        deletedIds.forEach((id) => this.emitEvent('epi:delete:row', {row: id, sender: this}));
+        mergedIds.forEach((id) => this.emitEvent('epi:merge:row', {row: id, sender: this}));
+        movedIds.forEach((id) => this.emitEvent('epi:move:row', {row: id, sender: this}));
         updatedIds.forEach((id) => this.emitEvent('epi:update:row', {row: id, sender: this}));
         createdIds.forEach((id) => this.emitEvent('epi:create:row', {row: id, sender: this}));
-        movedIds.forEach((id) => this.emitEvent('epi:move:row', {row: id, sender: this}));
-        deletedIds.forEach((id) => this.emitEvent('epi:delete:row', {row: id, sender: this}));
 
         return this.onSaveProceed(data, xhr);
     }

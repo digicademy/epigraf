@@ -187,7 +187,7 @@
         "parent_id": null,
         "level": 0,
         "lft": 9,
-        "rght": 14
+        "rght": 12
     },
     {
         "id": 36,
@@ -300,8 +300,8 @@
         "splitfrom_id": null,
         "parent_id": null,
         "level": 0,
-        "lft": 15,
-        "rght": 28
+        "lft": 13,
+        "rght": 26
     },
     {
         "id": 1145,
@@ -338,8 +338,8 @@
         "splitfrom_id": null,
         "parent_id": null,
         "level": 0,
-        "lft": 29,
-        "rght": 50
+        "lft": 27,
+        "rght": 48
     },
     {
         "id": 1147,
@@ -376,8 +376,8 @@
         "splitfrom_id": null,
         "parent_id": 1143,
         "level": 1,
-        "lft": 16,
-        "rght": 17
+        "lft": 14,
+        "rght": 15
     },
     {
         "id": 1150,
@@ -414,8 +414,8 @@
         "splitfrom_id": null,
         "parent_id": 1143,
         "level": 1,
-        "lft": 18,
-        "rght": 19
+        "lft": 16,
+        "rght": 17
     },
     {
         "id": 1153,
@@ -452,8 +452,8 @@
         "splitfrom_id": null,
         "parent_id": 1143,
         "level": 1,
-        "lft": 20,
-        "rght": 21
+        "lft": 18,
+        "rght": 19
     },
     {
         "id": 1156,
@@ -490,8 +490,8 @@
         "splitfrom_id": null,
         "parent_id": 1143,
         "level": 1,
-        "lft": 22,
-        "rght": 23
+        "lft": 20,
+        "rght": 21
     },
     {
         "id": 1159,
@@ -528,8 +528,8 @@
         "splitfrom_id": null,
         "parent_id": 1143,
         "level": 1,
-        "lft": 24,
-        "rght": 25
+        "lft": 22,
+        "rght": 23
     },
     {
         "id": 1162,
@@ -566,8 +566,8 @@
         "splitfrom_id": null,
         "parent_id": 1145,
         "level": 1,
-        "lft": 30,
-        "rght": 37
+        "lft": 28,
+        "rght": 35
     },
     {
         "id": 1165,
@@ -604,8 +604,8 @@
         "splitfrom_id": null,
         "parent_id": 1145,
         "level": 1,
-        "lft": 46,
-        "rght": 49
+        "lft": 44,
+        "rght": 47
     },
     {
         "id": 1168,
@@ -642,8 +642,8 @@
         "splitfrom_id": null,
         "parent_id": 1165,
         "level": 2,
-        "lft": 47,
-        "rght": 48
+        "lft": 45,
+        "rght": 46
     },
     {
         "id": 1171,
@@ -680,8 +680,8 @@
         "splitfrom_id": null,
         "parent_id": 1184,
         "level": 2,
-        "lft": 39,
-        "rght": 44
+        "lft": 37,
+        "rght": 42
     },
     {
         "id": 1174,
@@ -718,8 +718,8 @@
         "splitfrom_id": null,
         "parent_id": 1162,
         "level": 2,
-        "lft": 33,
-        "rght": 34
+        "lft": 31,
+        "rght": 32
     },
     {
         "id": 1177,
@@ -756,8 +756,8 @@
         "splitfrom_id": null,
         "parent_id": 1171,
         "level": 3,
-        "lft": 40,
-        "rght": 41
+        "lft": 38,
+        "rght": 39
     },
     {
         "id": 1181,
@@ -794,8 +794,8 @@
         "splitfrom_id": null,
         "parent_id": 1171,
         "level": 3,
-        "lft": 42,
-        "rght": 43
+        "lft": 40,
+        "rght": 41
     },
     {
         "id": 1184,
@@ -832,8 +832,8 @@
         "splitfrom_id": null,
         "parent_id": 1145,
         "level": 1,
-        "lft": 38,
-        "rght": 45
+        "lft": 36,
+        "rght": 43
     },
     {
         "id": 1650,
@@ -870,8 +870,8 @@
         "splitfrom_id": null,
         "parent_id": 1143,
         "level": 1,
-        "lft": 26,
-        "rght": 27
+        "lft": 24,
+        "rght": 25
     },
     {
         "id": 1653,
@@ -908,8 +908,8 @@
         "splitfrom_id": null,
         "parent_id": 1162,
         "level": 2,
-        "lft": 35,
-        "rght": 36
+        "lft": 33,
+        "rght": 34
     },
     {
         "id": 1657,
@@ -946,8 +946,8 @@
         "splitfrom_id": null,
         "parent_id": 1162,
         "level": 2,
-        "lft": 31,
-        "rght": 32
+        "lft": 29,
+        "rght": 30
     },
     {
         "id": 1712,

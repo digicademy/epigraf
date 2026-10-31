@@ -176,6 +176,9 @@ export class TreeWidget extends BaseWidget {
      * @returns {HTMLElement|undefined} First child of parentItem
      */
     treeGetFirstChild(parentItem) {
+        if (!parentItem) {
+            return this.widgetElement.querySelector('[data-list-itemof], .node');
+        }
         const children = this.treeGetChildren(parentItem);
         return children.length > 0 ? children[0] : undefined;
     }
@@ -328,6 +331,16 @@ export class TreeWidget extends BaseWidget {
     }
 
     /**
+     * Prepend a new item to the beginning of the tree.
+     *
+     * @param {HTMLElement} newItem The new item to prepend
+     * @returns {HTMLElement} The prepended item
+     */
+    treePrepend(newItem) {
+        return this.treePrependChild(this.datalist, newItem);
+    }
+
+    /**
      * Prepend new child as first child of the parent
      *
      * @param parentItem Parent item where to prepend new child
@@ -338,6 +351,9 @@ export class TreeWidget extends BaseWidget {
         let nextItem;
         if (parentItem && (parentItem !== this.datalist)) {
             nextItem = this.treeGetFirstChild(parentItem);
+        } else {
+            nextItem = this.treeGetFirstChild();
+            parentItem = this.datalist;
         }
 
         if (nextItem) {
@@ -345,7 +361,7 @@ export class TreeWidget extends BaseWidget {
             newItem = nextItem.previousElementSibling;
 
             newItem.treeParent = parentItem;
-            newItem.treeLevel = parentItem.treeLevel + 1;
+            newItem.treeLevel = (parentItem && (parentItem !== this.datalist)) ? parentItem.treeLevel + 1 : 0;
 
         }
         else {

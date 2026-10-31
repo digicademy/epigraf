@@ -246,6 +246,7 @@ class PropertiesController extends AppController
      */
     public function merge($propertySourceIds = null, $propertyTargetId = null)
     {
+        $stage = 'select';
         $propertyTargetId = (int)$this->request->getQuery('target', $propertyTargetId);
         $propertySourceIds = Attributes::commaListToIntegerArray($this->request->getQuery('source', $propertySourceIds));
 
@@ -267,17 +268,20 @@ class PropertiesController extends AppController
 
         // Perform the merge
         // TODO: Lock table
-        if ($this->request->is('post') && !empty($propertyTargetId)) {
+        $perform = $this->request->is('post') || $this->request->is('put');
+        if ($perform && !empty($propertyTargetId)) {
 
-            // The merge function returns the merged entity if concat was set to true
-            // Otherwise it returns null
-            // In case the merge did not succeed, the function throws an exception
+            // Data changed in the preview window will be used in the new entity
+            $mergeOptions['data']  = $this->request->getData();
+
+            // The merge function returns the merged entity if concat was set to true.
+            // Otherwise, it returns null.
+            // In case the merge did not succeed, the function throws an exception.
             $entity = $this->Properties->merge($propertyTargetId, $propertySourceIds, $mergeOptions);
-            if (!empty($entity)) {
-                $entity->deleted = 1;
-            }
+
             $this->Answer->success(__('The properties have been merged.'));
             $this->Answer->addAnswer(compact( 'entity'));
+            $stage = 'result';
         }
 
         // Preview the merge
@@ -293,15 +297,17 @@ class PropertiesController extends AppController
             $this->Answer->addAnswer(compact('propertySources'));
 
             if (!empty($propertyTargetId) && !empty($propertySourceIds)) {
-                 $propertyTarget = $this->Properties->get($propertyTargetId, ['finder' => 'containAncestors']);
-//                 $this->Lock->getLock($propertyTarget, true);
-                 $this->Answer->addAnswer(compact( 'propertyTarget'));
+                $stage = 'preview';
+                $propertyTarget = $this->Properties->get($propertyTargetId, ['finder' => 'containAncestors']);
+                //  $this->Lock->getLock($propertyTarget, true);
+                $this->Answer->addAnswer(compact( 'propertyTarget'));
 
                 $mergeOptions['preview'] = true;
                 $entity = $this->Properties->merge($propertyTargetId, $propertySourceIds, $mergeOptions);
                 $this->Answer->addAnswer(compact( 'entity'));
             }
         }
+        $this->Answer->addAnswer(compact('stage'));
     }
 
     /**

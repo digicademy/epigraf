@@ -55,6 +55,7 @@ export class ScrollPaginator extends BaseWidget {
      * @listens epi:update:row
      * @listens epi:cancel:row
      * @listens epi:delete:row
+     * @listens epi:merge:row
      * @listens epi:move:row
      */
     constructor(element, name, parent) {
@@ -83,6 +84,7 @@ export class ScrollPaginator extends BaseWidget {
         document.addEventListener('epi:move:row',(event) => this.onUpdateRow(event));
         document.addEventListener('epi:create:row',(event) => this.onUpdateRow(event));
         document.addEventListener('epi:delete:row',(event) => this.onUpdateRow(event));
+        document.addEventListener('epi:merge:row',(event) => this.onUpdateRow(event));
     }
 
     /**
@@ -380,7 +382,7 @@ export class ScrollPaginator extends BaseWidget {
      * @param {boolean} clear Clear the list before updating
      * @returns {boolean} False if there is no url provided to reload data.
      */
-    updateRow(id, focus = false, open=false, clear = false) {
+    updateRow(id, focus = false, open= false, clear = false) {
         // Check datalist and listname properties
         if (!this.dataList || !this.listName) {
             return false;
@@ -391,6 +393,7 @@ export class ScrollPaginator extends BaseWidget {
             return false;
         }
 
+        // Get existing row
         const row = this.dataList.querySelector('[data-id="' + id + '"]');
         if (row) {
             row.classList.add('row-stale');
@@ -398,11 +401,16 @@ export class ScrollPaginator extends BaseWidget {
 
         url = new URL(url, App.baseUrl);
 
+        url.searchParams.delete('save');
+        url.searchParams.delete('load');
         if (clear) {
             url.searchParams.set('seek', id);
             url.searchParams.delete('find');
         } else {
             url.searchParams.set('id', id);
+            if (!row) {
+                url.searchParams.set('childred', '1');
+            }
         }
         url = url.toString();
 
@@ -694,7 +702,7 @@ export class ScrollPaginator extends BaseWidget {
             }
 
             // Skip cursor nodes pointing in the wrong direction
-            if (item.dataset.cursorDir && (item.dataset.cursorDir !== dir)) {
+            if (item.dataset.cursorDir && (item.dataset.cursorDir !== dir) && (dir !== 'mount')) {
                 return;
             }
 
@@ -767,45 +775,49 @@ export class ScrollPaginator extends BaseWidget {
                 }
             }
 
-            // Find parent and preceding sibling and add to the tree
-            // but skip cursors
+            // Add new nodes to the tree
             // TODO: handle virtual nodes (references from)
             if (dir === 'mount') {
-                if (!item.dataset.cursorId) {
-                    const parentId = item.dataset.parent;
-                    const precedingId = item.dataset.preceding;
-                    let referenceNode;
 
-                    // Add after a reference node
-                    if (precedingId) {
-                        referenceNode = this.dataList.querySelector('[data-id="' + precedingId + '"]');
+                // if (item.dataset.cursorId) {
+                //     return;
+                // }
 
-                        if (referenceNode && this.treeWidget) {
-                            this.treeWidget.treeAppendAfter(referenceNode, item);
-                        } else if (referenceNode) {
-                            this.dataList.insertBefore(item, referenceNode.nextElementSibling);
-                        }
-                    }
+                // Find parent and preceding sibling
+                const parentId = item.dataset.parent;
+                const precedingId = item.dataset.preceding;
+                let referenceNode;
 
-                    // Add as first child
-                    else if (parentId) {
-                        referenceNode = this.dataList.querySelector('[data-id="' + parentId + '"]');
-                        if (referenceNode && this.treeWidget) {
-                            this.treeWidget.treePrependChild(referenceNode, item);
-                        } else if (referenceNode) {
-                            this.dataList.insertBefore(item, referenceNode.nextElementSibling);
-                        }
-                    }
+                // Add after a reference node
+                if (precedingId) {
+                    referenceNode = this.dataList.querySelector('[data-id="' + precedingId + '"]');
 
-                    // Add to empty tree
-                    else if (!parentId && !precedingId) {
-                        if (this.treeWidget) {
-                            this.treeWidget.treeAppendChild(this.dataList, item);
-                        } else {
-                            this.dataList.prepend(item);
-                        }
+                    if (referenceNode && this.treeWidget) {
+                        this.treeWidget.treeAppendAfter(referenceNode, item);
+                    } else if (referenceNode) {
+                        this.dataList.insertBefore(item, referenceNode.nextElementSibling);
                     }
                 }
+
+                // Add as first child
+                else if (parentId) {
+                    referenceNode = this.dataList.querySelector('[data-id="' + parentId + '"]');
+                    if (referenceNode && this.treeWidget) {
+                        this.treeWidget.treePrependChild(referenceNode, item);
+                    } else if (referenceNode) {
+                        this.dataList.insertBefore(item, referenceNode.nextElementSibling);
+                    }
+                }
+
+                // Add as first item
+                else if (!parentId && !precedingId) {
+                    if (this.treeWidget) {
+                        this.treeWidget.treePrepend(item);
+                    } else {
+                        this.dataList.prepend(item);
+                    }
+                }
+
             }
 
             // Prepend new items
@@ -866,20 +878,25 @@ export class ScrollPaginator extends BaseWidget {
         const rowValue = event.detail.data.row.split('-');
         const rowTab = rowValue[0] || '';
         const rowId = rowValue.slice(1).join('-');
-        const isNew = event.type === 'epi:create:row';
-        const isDeleted = event.type === 'epi:delete:row';
-        const isMoved = event.type === 'epi:move:row';
-        const isCanceled = event.type === 'epi:cancel:row';
 
         if (rowTab && rowId &&  (rowTab === this.tableName)) {
-            if (isDeleted) {
-                this.deleteRow(rowId, true, true);
-            } else if (isMoved) {
-                this.updateRow(rowId, true, true, true);
-            } else if (isCanceled) {
+            if (event.type === 'epi:cancel:row') {
                 this.seekRow(rowId, false);
-            } else {
-                this.updateRow(rowId, true, isNew);
+            }
+            else if (event.type === 'epi:delete:row') {
+                this.deleteRow(rowId, true, true);
+            }
+            else if (event.type === 'epi:merge:row') {
+                this.deleteRow(rowId, false, false);
+            }
+            else if (event.type === 'epi:move:row') {
+                this.updateRow(rowId, true, true, true);
+            }
+            else if (event.type === 'epi:create:row') {
+                this.updateRow(rowId, true, true, false);
+            }
+            else {
+                this.updateRow(rowId, true, false, false);
             }
         }
     }

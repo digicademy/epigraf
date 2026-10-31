@@ -158,7 +158,6 @@ class ProjectsTable extends BaseTable implements ExportTableInterface
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
-        parent::afterSave($event, $entity, $options);
         $this->Articles->clearCache();
     }
 

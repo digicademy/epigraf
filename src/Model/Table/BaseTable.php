@@ -10,6 +10,7 @@
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\CacheBehavior;
 use App\Model\Behavior\ModifierBehavior;
 use App\Model\Behavior\VersionBehavior;
 use App\Model\Entity\Databank;
@@ -17,7 +18,6 @@ use App\Utilities\Converters\Attributes;
 use App\Utilities\Converters\Objects;
 use App\Utilities\Converters\Search;
 use ArrayObject;
-use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Event\EventInterface;
@@ -39,6 +39,7 @@ use PDOException;
  * # Behaviors
  * @mixin ModifierBehavior
  * @mixin VersionBehavior
+ * @mixin CacheBehavior
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class BaseTable extends Table
@@ -193,7 +194,7 @@ class BaseTable extends Table
      *
      * @var null
      */
-    protected $_cacheConfigName = null;
+    public $_cacheConfigName = null;
 
     protected $_pluginName = '';
 
@@ -252,6 +253,7 @@ class BaseTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('Modifier', ['user' => 'userId']);
         $this->addBehavior('Version');
+        $this->addBehavior('Cache');
     }
 
     /**
@@ -307,21 +309,7 @@ class BaseTable extends Table
         }
     }
 
-    /**
-     * Clear the caches after saving
-     *
-     * @param EventInterface $event
-     * @param EntityInterface $entity
-     * @param $options
-     *
-     * @return void
-     */
-    public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
-    {
-        $this->clearCache();
-    }
-
-    /**
+     /**
      * Check whether a field is virtual or in the database
      *
      * @param string $fieldName
@@ -539,46 +527,6 @@ class BaseTable extends Table
     public function getDefaultScope()
     {
         return '';
-    }
-
-    /**
-     * Initialize the cache config and return its name.
-     *
-     * @param string $conn The database connection name, default is 'projects'.
-     * @return string Name of the cache configuration
-     */
-    public function initResultCache($conn = 'projects')
-    {
-        if (empty($this->_cacheConfigName)) {
-            $configName = 'epi_results_' . Databank::addPrefix($this->getDatabaseName($conn)) . '_' . $this->_table;
-            $this->_cacheConfigName = $configName;
-            Cache::initCache($configName, 'results');
-        }
-
-        if (Configure::read('debug')) {
-            Cache::clear($this->_cacheConfigName);
-        }
-
-        return $this->_cacheConfigName;
-    }
-
-    /**
-     * Clear cache
-     *
-     * @param string $conn
-     * @return void
-     */
-    public function clearCache($conn = 'projects')
-    {
-        // Result cache
-        $cacheConfig = $this->initResultCache($conn);
-        Cache::clear($cacheConfig);
-
-        // View cache
-        // @var string $configName The configuration name used in the controller ($this->plugin . '_' . $this->name);
-        $configName = 'epi_views_Epi_Articles';
-        Cache::initCache($configName, 'views');
-        Cache::clear($configName);
     }
 
     /**

@@ -251,13 +251,13 @@ class Pipeline extends BaseEntity
         $fields = [
             'name' => [
                 'caption' => __('Name'),
-                'action' => ['edit', 'add']
+                'action' => ['edit', 'add', 'view']
             ],
             'type' => [
                 'caption' => __('Type'),
                 'type' => 'select',
                 'options' => PipelinesTable::$pipelineTypes,
-                'action' => ['edit', 'add']
+                'action' => ['edit', 'add', 'view']
             ],
             'description' => [
                 'layout' => 'stacked',

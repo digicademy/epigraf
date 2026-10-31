@@ -7,135 +7,6 @@ use Cake\Database\Driver\Mysql;
 use Cake\Log\Engine\FileLog;
 use Cake\Mailer\Transport\MailTransport;
 
-/**
- * Choose cache engine based on environment variable REDIS_HOST
- */
-
-$redisServer = env('REDIS_HOST', false);
-
-if (!empty($redisServer)) {
-    $cacheConfig = [
-        'default' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_default_',
-            'duration' => '+1 year'
-        ],
-
-        '_cake_core_' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_cake_core_',
-            'duration' => '+1 year'
-        ],
-
-        '_cake_model_' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_model_',
-            'duration' => '+1 year'
-        ],
-
-        '_cake_routes_' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_routes_',
-            'duration' => '+1 year'
-        ],
-
-        'index' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_index_',
-            'duration' => '+1 day',
-        ],
-
-        'views' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_views_',
-            'duration' => '+1 day'
-        ],
-
-        'results' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_results_',
-            'duration' => '+1 day'
-        ],
-
-        'services' => [
-            'className' => RedisEngine::class,
-            'server' => $redisServer,
-            'prefix' => 'epi_services_',
-            'duration' => '+1 year'
-        ]
-    ];
-} else {
-    $cacheConfig = [
-        'default' => [
-            'className' => FileEngine::class,
-            'path' => CACHE,
-            'url' => env('CACHE_DEFAULT_URL', null),
-        ],
-
-        '_cake_core_' => [
-            'className' => FileEngine::class,
-            'prefix' => 'myapp_cake_core_',
-            'path' => CACHE . 'persistent/',
-            'serialize' => true,
-            'duration' => '+2 minutes',
-            'url' => env('CACHE_CAKECORE_URL', null),
-        ],
-
-        '_cake_model_' => [
-            'className' => FileEngine::class,
-            'prefix' => 'myapp_cake_model_',
-            'path' => CACHE . 'models/',
-            'serialize' => true,
-            'duration' => '+2 minutes',
-            'url' => env('CACHE_CAKEMODEL_URL', null),
-        ],
-
-        '_cake_routes_' => [
-            'className' => FileEngine::class,
-            'prefix' => 'myapp_cake_routes_',
-            'path' => CACHE,
-            'serialize' => true,
-            'duration' => '+1 years',
-            'url' => env('CACHE_CAKEROUTES_URL', null),
-        ],
-
-        'index' => [
-            'className' => FileEngine::class,
-            'prefix' => 'myapp_cake_index_',
-            'path' => CACHE . 'index/',
-            'serialize' => true,
-            'duration' => '+30 minutes',
-            //'url' => env('CACHE_CAKEMODEL_URL', null),
-        ],
-
-        'views' => [
-                'className' => 'File',
-                'path' => CACHE . 'views' . DS,
-                'prefix' => 'epi_views_',
-                'duration' => '+1 day'
-            ],
-
-        'results' => [
-                'className' => 'File',
-                'path' => CACHE . 'results' . DS,
-                'prefix' => 'epi_results_',
-                'duration' => '+1 day'
-        ],
-        'services' => [
-            'className' => 'File',
-            'path' => CACHE . 'services' . DS,
-            'prefix' => 'epi_services_',
-            'duration' => '+1 year'
-        ]
-    ];
-}
 
 // App configuration
 return [
@@ -316,8 +187,44 @@ return [
 
     /**
      * Configure the cache adapters.
-     */
-    'Cache' => $cacheConfig,
+     *
+     * Uses Redis if REDIS_HOST is set, otherwise files in tmp/cache.
+     * Columns: prefix, path (File only), duration File, duration Redis
+     * */
+    'Cache' => (function () {
+        $redis = env('REDIS_HOST', false);
+
+        $caches = [
+            'default'       => ['epi_default_',    '',                '+1 hour',    '+1 year'],
+            '_cake_core_'   => ['epi_cake_core_',  'persistent' . DS, '+2 minutes', '+1 year'],
+            '_cake_model_'  => ['epi_model_',      'models' . DS,     '+2 minutes', '+1 year'],
+            '_cake_routes_' => ['epi_routes_',     '',                '+1 year',    '+1 year'],
+            'index'         => ['epi_index_',      'index' . DS,      '+30 minutes','+1 day'],
+            'views'         => ['epi_views_',      'views' . DS,      '+1 day',     '+1 day'],
+            'results'       => ['epi_results_',    'results' . DS,    '+1 day',     '+1 day'],
+            'services'      => ['epi_services_',   'services' . DS,   '+1 year',    '+1 year'],
+        ];
+
+        $config = [];
+        foreach ($caches as $name => [$prefix, $path, $fileDuration, $redisDuration]) {
+            $config[$name] = $redis
+                ? [
+                    'className' => RedisEngine::class,
+                    'server' => $redis,
+                    'prefix' => $prefix,
+                    'duration' => $redisDuration,
+                ]
+                : [
+                    'className' => FileEngine::class,
+                    'path' => CACHE . $path,
+                    'prefix' => $prefix,
+                    'duration' => $fileDuration,
+                    'serialize' => true,
+                ];
+        }
+
+        return $config;
+    })(),
 
     /**
      * Configure the Error and Exception handlers used by your application.

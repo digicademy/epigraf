@@ -298,9 +298,9 @@ class JobsController extends AppController
         }
 
         $job = $job->cancel();
-//        if (!$this->Jobs->save($job)) {
-//            $job->error = __('The job could not be canceled. Please try again.');
-//        }
+        if (!$this->Jobs->save($job)) {
+            $job->error = __('The job could not be canceled. Please try again.');
+        }
 
         $this->Answer->addAnswer(compact('job'));
     }

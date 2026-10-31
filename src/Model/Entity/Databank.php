@@ -43,6 +43,7 @@ use PDOException;
  *
  * @property bool $available
  * @property bool $isempty
+ * @property bool $hasfolders
  * @property bool $versionok
  * @property bool $isready
  * @property array $status
@@ -95,25 +96,32 @@ class Databank extends BaseEntity
     public $plugins = [DATABASE_CURRENT_VERSION => 'Epi'];
 
     /**
-     * Is database connected?
+     * Is the database connected?
      *
      * @var bool
      */
     protected $_available = false;
 
     /**
-     * Is database version valid?
+     * Is the database version valid?
      *
      * @var bool
      */
     protected $_versionok = false;
 
     /**
-     * Is database empty?
+     * Is the database empty?
      *
      * @var bool
      */
     protected $_isempty = true;
+
+    /**
+     * Does the database have corresponding folders on the server?
+     *
+     * @var bool
+     */
+    protected $_hasfolders = false;
 
     /**
      * Content of the types table, grouped by scope and name
@@ -175,8 +183,8 @@ class Databank extends BaseEntity
     /**
      * Check database connectivity
      *
-     * Only checked once and then saved in $this->>available.
-     * Changes the database for subsequent queries.
+     * This method checks if the database is accessible.
+     * It is only checked once and then saved in $this->>available.
      *
      * @return bool
      */
@@ -201,6 +209,16 @@ class Databank extends BaseEntity
         }
 
         return ($this->_available);
+    }
+
+    protected function _getHasfolders()
+    {
+        if (empty($this->_hasfolders)) {
+            $root = Configure::read('Data.databases') . $this->name . DS;
+            $this->_hasfolders = is_dir($root);
+        }
+
+        return $this->_hasfolders;
     }
 
     /**
@@ -228,9 +246,6 @@ class Databank extends BaseEntity
     /**
      * Check database version
      *
-     * Changes the database for subsequent queries
-     * TODO: don't change the active database, use activateDatabase() instead
-     *
      * @return bool
      */
     protected function _getVersionok()
@@ -241,13 +256,11 @@ class Databank extends BaseEntity
     /**
      * Check whether the database is ready
      *
-     * Can we connect to the database and
-     * does it have a correct version record in the meta table?
-     * Only checked once and then saved in $this->_versionok
+     * The database is ready...
+     * - if we can we connect to the database
+     * - the correct version record exists in the meta table
      *
-     * Changes the database for subsequent queries
-     *
-     * TODO: don't change the active database, use activateDatabase() instead
+     * Only checked once and then saved in $this->_versionok.
      *
      * @return bool
      */
@@ -257,10 +270,10 @@ class Databank extends BaseEntity
             return false;
         }
 
+        // Return cached state
         if (!empty($this->_versionok)) {
             return $this->_versionok;
         }
-
         $this->_versionok = false;
 
         //Check connection
@@ -268,14 +281,11 @@ class Databank extends BaseEntity
             return false;
         }
 
-        //Check if meta table exists
+        //Check if the `meta` table exists
         $old = EpiBaseTable::getDatabaseName();
         try {
             $db = EpiBaseTable::setDatabase($this->name);
-            //TableRegistry::getTableLocator()->clear();
-            //Cache::clear('_cake_model_');
 
-            // Has meta table?
             $collection = $db->getSchemaCollection();
             $tables = $collection->listTables();
             if (!in_array('meta', $tables)) {
@@ -341,6 +351,10 @@ class Databank extends BaseEntity
 
         elseif (!$this->versionok) {
             $msg = __('The version of the database is not supported.');
+        }
+
+        elseif (!$this->hasfolders) {
+            $msg = __('The database folders are missing.');
         }
 
         else {
@@ -833,6 +847,25 @@ class Databank extends BaseEntity
     }
 
     /**
+     * Initialize database folders
+     *
+     * @return bool
+     */
+    public function initFolders()
+    {
+        if ($this->hasfolders) {
+            return false;
+        }
+
+        $created = $this->createFolders();
+        $success = ($created['created'] > 0) && ($created['created'] == $created['missing']);
+        if (!$success) {
+            $success =  ($created['missing'] > 0);
+        }
+        return $success;
+    }
+
+    /**
      * Initialize database
      *
      * If the preset property is set, the sql dump from the preset folder will be imported.
@@ -979,11 +1012,11 @@ class Databank extends BaseEntity
         }
 
         $result = EpiBaseTable::loadSql($filename, $this->name);
-        $this->clearCache();
+        $this->clearArticlesCache();
         return $result;
     }
 
-    public function clearCache()
+    public function clearArticlesCache()
     {
         if (!$this->activateDatabase()) {
             return;

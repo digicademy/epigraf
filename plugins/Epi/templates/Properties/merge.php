@@ -16,6 +16,7 @@
  * @var \Epi\Model\Entity\Property[] $propertySources
  * @var \Epi\Model\Entity\Property $propertyTarget
  * @var \App\Model\Entity\Databank $database
+ * @var string $stage The current stage of the merge process: 'select', 'preview', or 'result'
  */
 ?>
 
@@ -29,13 +30,9 @@
 <?php  $divAttributes = ['class' => 'widget-entity']; ?>
 <?= $this->Element->openHtmlElement('div',$divAttributes) ?>
 
-<?php if (!empty($entity) && ($entity instanceof \Epi\Model\Entity\Property)
-    && !empty($entity->merged_ids) && empty($propertySources)): ?>
-    <?= $this->element('../Properties/merge_result') ?>
-<?php elseif (!empty($entity) && !empty($propertySources)): ?>
-    <?= $this->element('../Properties/merge_preview') ?>
-<?php elseif (!empty($propertySources)): ?>
-    <?= $this->element('../Properties/merge_select') ?>
+<?php $stage = \App\Utilities\Converters\Attributes::cleanOption($stage, ['select', 'preview', 'result'], 'select'); ?>
+<?php if (!empty($stage)): ?>
+    <?= $this->element('../Properties/merge_' . $stage) ?>
 <?php endif; ?>
 
 <?= $this->Element->closeHtmlElement('div') ?>

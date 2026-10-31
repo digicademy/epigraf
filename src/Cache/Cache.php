@@ -21,7 +21,7 @@ class Cache extends \Cake\Cache\Cache
      *
      * @param string $name The shard within the base cache configuration.
      * @param string $scope Name of the cache configuration to use as a base.
-     * @return void
+     * @return array
      */
     static public function initCache($name, $scope = 'views')
     {
@@ -33,6 +33,7 @@ class Cache extends \Cake\Cache\Cache
             );
             Cache::setConfig($name, $cacheConfig);
         }
+        return $cacheConfig;
     }
 
     /**

@@ -142,6 +142,11 @@ class LinkHelper extends Helper
      */
     public function addAction(string $title, $url, array $options = [])
     {
+        $request = $this->_View->getRequest();
+        if (empty($options['ajax'] ?? true) && !$request->is('ajax')) {
+            return;
+    }
+
         $position = $this->currentPosition;
         $group = $this->currentGroup;
 
@@ -374,6 +379,7 @@ class LinkHelper extends Helper
         // Cancel
         $options =  [
             'linktype' => 'button',
+            'ajax' => false,
             'type' => 'button',
             'form' => $form,
             'data-role' => 'cancel',
@@ -397,15 +403,9 @@ class LinkHelper extends Helper
      */
     public function addSaveCancelDeleteButton($entity, $options=[])
     {
+        $action = $options['action'] ?? 'edit';
         $target = $entity->tableName . '-' . $entity->id;
-        $form = 'form-' . ($options['action'] ?? 'edit') . '-' . $target;
-
-//        $options =  [
-//            'linktype' => 'submit',
-//            'form' => 'form-edit-' . $target,
-//            'data-target' => $target
-//        ];
-//        $this->addAction(__('Save'), ['?' => ['redirect' => 'edit']], $options + ['shortcuts' => ['Ctrl+S'], 'data-role' => 'save']);
+        $form = 'form-' . $action . '-' . $target;
 
         // Save and close
         $buttonOptions =  [
@@ -437,6 +437,9 @@ class LinkHelper extends Helper
 
         // Delete
         if (($entity instanceof RootEntity) && $entity->hasDependencies) {
+            $options['delete'] = false;
+        }
+        if ($action !== 'edit') {
             $options['delete'] = false;
         }
 
@@ -518,13 +521,13 @@ class LinkHelper extends Helper
     public function addMergeConfirmButtons($entity)
     {
         $this->addAction(
-            __('Yes'),
+            __('Save'),
             [],
             ['linktype' => 'submit', 'form' => 'form-merge-properties']
         );
 
         $this->addAction(
-            __('No'),
+            __('Cancel'),
             ['controller' => 'Properties', 'action' => 'view', $entity->id],
             [
                 'data-role' => 'cancel',
@@ -1510,6 +1513,7 @@ class LinkHelper extends Helper
         $queryparams['direction'] = $direction === 'prev' ? 'desc' : 'asc';
         $queryparams['children'] = $direction === 'child';
         unset($queryparams['seek']);
+        unset($queryparams['id']);
 
         if ($options['collapsed'] ?? false) {
             $queryparams['collapsed'] = 1;

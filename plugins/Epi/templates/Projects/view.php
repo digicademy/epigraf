@@ -31,8 +31,8 @@
     $this->Link->addActionGroupLabel(__('Context Actions'));
     $this->Link->addAction(
         __('Show articles'),
-        ['plugin'=>'epi','controller'=>'articles','action' => 'index','?'=>['projects'=>$entity->id,'load'=>true]],
-        ['data-target'=>'main','data-role' => 'open']
+        ['plugin'=>'epi', 'controller'=>'articles', 'action' => 'index', '?' => ['projects'=>$entity->id, 'load'=>true]],
+        ['data-target'=>'main', 'data-role' => 'open']
     );
 
     $this->Link->addEditButtons($entity);

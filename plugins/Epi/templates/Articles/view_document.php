@@ -194,7 +194,7 @@ use App\Utilities\Converters\Attributes;
             $this->Link->addAction(
                 __('Open article'),
                 $url,
-                ['data-target'=>'external','data-role' => 'open']
+                ['data-target' => 'external', 'data-role' => 'open']
             );
         }
 
@@ -204,7 +204,7 @@ use App\Utilities\Converters\Attributes;
                 $this->Link->addAction(
                     $norm_data['button'],
                     $norm_data['url'],
-                    ['data-target'=>'external','data-role' => 'open']
+                    ['data-target' => 'external', 'data-role' => 'open']
                 );
             }
         }

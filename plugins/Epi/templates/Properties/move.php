@@ -24,7 +24,7 @@
 <?php $entity->prepareRoot(); ?>
 
 <div class="content-large">
-    <?= $this->EntityInput->entityForm($entity, 'move', [], false) ?>
+    <?= $this->EntityInput->entityForm($entity, 'move') ?>
 </div>
 
 <!-- Actions -->

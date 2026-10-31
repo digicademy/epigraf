@@ -412,8 +412,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
-        parent::afterSave($event, $entity, $options);
-
         $this->Items->Articles->clearCache();
     }
 
@@ -779,6 +777,10 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
             $query = $query
                 ->where(['Properties.id IN' => $ids])
                 ->contain(['Preceding']);
+
+            if ($options['children'] ?? false) {
+                $query = $query->find('descendants', ['ids' => $ids]);
+            }
         }
 
         return $query;
@@ -2128,7 +2130,6 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         );
 
         // Change references of the merged property
-        // TODO: update lft/rght
         $this->updateAllWithVersion(
             ['parent_id' => $propertyTargetId],
             ['parent_id IN' => $propertySourceIds, 'deleted' => 0]
@@ -2145,11 +2146,43 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
         );
 
         // Delete merged property
-        // TODO: update lft/rght
-        return $this->updateAllWithVersion(
+        $affectedRows = $this->updateAllWithVersion(
             ['deleted' => 1, 'mergedto_id' => $propertyTargetId],
             ['id IN' => $propertySourceIds, 'deleted' => 0]
         );
+
+        $this->recoverTree(array_unique(array_merge([$propertyTargetId], $propertySourceIds)));
+
+        return $affectedRows;
+    }
+
+    /**
+     * Recover MPTT fields for all scopes that contain the given properties.
+     *
+     * @param array $propertyIds
+     * @return void
+     */
+    protected function recoverTree(array $propertyIds): void
+    {
+        if (!$this->behaviors()->has('VersionedTree') || empty($propertyIds)) {
+            return;
+        }
+
+        $currentScope = $this->scopeValue;
+        $scopes = $this->find()
+            ->select(['propertytype'])
+            ->where(['id IN' => $propertyIds])
+            ->distinct(['propertytype'])
+            ->all()
+            ->extract('propertytype')
+            ->toArray();
+
+        foreach ($scopes as $scope) {
+            $this->setScope($scope);
+            $this->recover();
+        }
+
+        $this->setScope($currentScope);
     }
 
     /**
@@ -2177,6 +2210,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
      * ### Options:
      * - preview: (bool) Whether to preview or actually perform the merge (default false).
      * - concat: (bool) Whether to combine the content of all properties (default false).
+     * - data: (array) Values used for the new property. This allows for changing the values in the preview.
      *
      * @param integer $propertyTargetId The ID of the target property.
      * @param integer[] $propertySourceIds A list of source properties.
@@ -2186,20 +2220,23 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
      */
     public function merge($propertyTargetId, $propertySourceIds, $options)
     {
-        if (($options['concat'] ?? false) || ($options['preview'] ?? false)) {
+        // Get the current data if data should be updated
+        $propertyTarget = null;
+        if (($options['preview'] ?? false) || ($options['concat'] ?? false) || (!empty($options['data'] ?? false))) {
             /** @var Property $propertyTarget */
             $propertyTarget = $this->get($propertyTargetId);
             $propertyTarget->merged_ids = $propertySourceIds;
         }
-        else {
-            $propertyTarget = null;
-        }
 
         // Merge field content
+        $propertySources = null;
         if ($options['concat'] ?? false) {
             $propertySources = $this
                 ->find('all')
                 ->where(['Properties.id IN' => $propertySourceIds]);
+        }
+
+        if (($options['concat'] ?? false) || (!empty($options['data'] ?? false))) {
 
             // Merge fields
             $concatFields = [
@@ -2223,15 +2260,20 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
                     $separator = ' / ';
                 }
 
-                $mergedValues = [trim($propertyTarget[$fieldName] ?? '')];
-                foreach ($propertySources as $propertySource) {
-                    $sourceValue = trim($propertySource[$fieldName] ?? '');
-                    if (!in_array(mb_strtolower($sourceValue), array_map('mb_strtolower', $mergedValues))) {
-                        $mergedValues[] = $propertySource[$fieldName];
-                    }
+                if (isset($options['data'][$fieldName])) {
+                    $propertyTarget[$fieldName] = $options['data'][$fieldName];
                 }
-                $mergedValues = implode($separator, array_unique(array_filter($mergedValues)));
-                $propertyTarget[$fieldName] = $mergedValues;
+                elseif (!empty($propertySources)) {
+                    $mergedValues = [trim($propertyTarget[$fieldName] ?? '')];
+                    foreach ($propertySources as $propertySource) {
+                        $sourceValue = trim($propertySource[$fieldName] ?? '');
+                        if (!in_array(mb_strtolower($sourceValue), array_map('mb_strtolower', $mergedValues))) {
+                            $mergedValues[] = $propertySource[$fieldName];
+                        }
+                    }
+                    $mergedValues = implode($separator, array_unique(array_filter($mergedValues)));
+                    $propertyTarget[$fieldName] = $mergedValues;
+                }
             }
 
             // Don't merge IRIs if they are different
@@ -2256,6 +2298,7 @@ class PropertiesTable extends BaseTable implements ScopedTableInterface, ExportT
 
                     $propertySourceIds[] = $propertyTargetId;
                     $propertyTarget = $this->createCopy($propertyTarget);
+                    $propertyTarget['merged_ids'] = $propertySourceIds;
                     if (empty($propertyTarget)) {
                         throw new Exception(__('Could not create merged property'));
                     }

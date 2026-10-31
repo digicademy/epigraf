@@ -121,51 +121,52 @@ class DatabanksController extends AppController
             }
             else {
                 if ($this->Databanks->save($entity)) {
-                    $flash = [];
-                    $flash['success'][] = __('The database connection has been saved.');
 
-                    //Create folder
-                    $created = $entity->createFolders();
-                    if (($created['created'] > 0) && ($created['created'] == $created['missing'])) {
-                        $flash['success'][] = __('The database folders have been created.');
-                    }
-                    else {
-                        if (($created['missing'] > 0)) {
-                            $flash['error'][] = __('The database folders could not be created. Please, try again.');
-                        }
-                    }
+                    $success = true;
 
-                    //Create database
+                    // Create database
                     if (!$entity->available) {
-                        if ($entity->createDatabase()) {
-                            $flash['success'][] = __('The database has been created.');
-                        }
-                        else {
-                            $flash['error'][] = __('The database could not be created. Please, check your permissions.');
-                        }
-                    }
-
-                    // Init database
-                    if ($entity->isempty) {
-                        if ($entity->initDatabase()) {
-                            $flash['success'][] = __('The database has been initialized.');
-                        }
-                        else {
-                            $flash['error'][] = __('The database could not be initialized. Please, check your permissions.');
+                        if (!$entity->createDatabase()) {
+                            $success = false;
+                            $this->Answer->error(
+                                __('The database could not be created. Please, check your permissions and check the database name.'),
+                                ['action' => 'view', $entity->id]
+                            );
                         }
                     }
 
-                    // Flash messages
-                    if (!empty($flash['error'])) {
-                        $this->Answer->error(implode(' ', $flash['error']), ['action' => 'view', $entity->id]);
+                    // Init database structure
+                    if ($success && $entity->isempty) {
+                        if (!$entity->initDatabase()) {
+                            $success = false;
+                            $this->Answer->error(
+                                __('The database could not be initialized. Please, try again.'),
+                                ['action' => 'view', $entity->id]
+                            );
+                        }
                     }
-                    if (!empty($flash['success'])) {
-                        $this->Answer->success(implode(' ', $flash['success']), ['action' => 'view', $entity->id]);
+
+                    // Init database folders
+                    if ($success && !$entity->hasfolders) {
+                        if (!$entity->initFolders()) {
+                            $success = false;
+                            $this->Answer->error(
+                                __('The database folders could not be created. Please, check the folder permissions.'),
+                                ['action' => 'view', $entity->id]
+                            );
+                        }
+                    }
+
+                    if ($success) {
+                        $this->Answer->success(
+                            __('The database has been created.'),
+                            ['action' => 'view', $entity->id]
+                        );
                     }
                 }
                 else {
                     $this->Answer->error(
-                        __('The database connection could not be saved. Please, try again.'),
+                        __('The database entity could not be saved. Please, try again.'),
                         [],
                         $entity->getErrors()
                     );
@@ -237,19 +238,43 @@ class DatabanksController extends AppController
      *
      * @param string|null $id Database id
      *
-     * @return \Cake\Http\Response|void redirects on successful import, renders view otherwise
-     * @throws \Cake\Http\Exception\NotFoundException if record not found
+     * @return \Cake\Http\Response|void Redirects to the view action on succuss.
+     * @throws \Cake\Http\Exception\NotFoundException If the database record is not found.
      */
     public function init(string $id = null)
     {
         $entity = $this->Databanks->get($id, ['contain' => []]);
 
         if ($this->request->is(['post', 'put'])) {
-            if ($entity->initDatabase()) {
-                $this->Answer->success(__('The database has been initialized.', ['action' => 'view', $id]));
+
+            $success = true;
+
+            // Create database
+            if (!$entity->available) {
+                if (!$entity->createDatabase()) {
+                    $success = false;
+                    $this->Answer->error(__('The database could not be created. Please, check your permissions and check the database name.'));
+                }
             }
-            else {
-                $this->Answer->error(__('The database could not be initialized. Please, try again.'));
+
+            // Init database structure
+            if ($success && $entity->isempty) {
+                if (!$entity->initDatabase()) {
+                    $success = false;
+                    $this->Answer->error(__('The database could not be initialized. Please, try again.'));
+                }
+            }
+
+            // Init database folders
+            if ($success && !$entity->hasfolders) {
+                if (!$entity->initFolders()) {
+                    $success = false;
+                    $this->Answer->error(__('The database folders could not be created. Please, check the folder permissions.'));
+                }
+            }
+
+            if ($success) {
+                $this->Answer->success(__('The database has been initialized.'), ['action' => 'view', $entity->id]);
             }
         }
 
@@ -268,36 +293,6 @@ class DatabanksController extends AppController
     }
 
     /**
-     * Create database
-     *
-     * @param string|null $id database id
-     * @return \Cake\Http\Response|void redirects on successful create, renders view otherwise
-     * @throws \Cake\Http\Exception\NotFoundException if record not found
-     * @var \App\Model\Entity\Databank $databank
-     *
-     */
-    public function create(string $id = null)
-    {
-        $entity = $this->Databanks->get($id, ['contain' => []]);
-
-        if ($this->request->is(['post', 'put'])) {
-            if (!$entity->createDatabase()) {
-                $this->Answer->error(__('The database could not be created. Please, check your permissions and check the database name.'));
-            }
-            else {
-                if (!$entity->initDatabase()) {
-                    $this->Answer->error(__('The database could not be initialized. Please, try again.'));
-                }
-                else {
-                    $this->Answer->success(__('The database has been created and initialized.'), ['action' => 'view', $id]);
-                }
-            }
-        }
-
-        $this->Answer->addAnswer(compact('entity'));
-    }
-
-    /**
      * Drop a database.
      *
      * @param string|null $id database id
@@ -310,7 +305,7 @@ class DatabanksController extends AppController
         $entity = $this->Databanks->get($id, ['contain' => []]);
         if ($this->request->is(['post', 'put'])) {
             if ($entity->dropDatabase()) {
-                $this->Answer->success(__('The database has been dropped.', ['action' => 'view', $id, 'database' => false]));
+                $this->Answer->success(__('The database has been dropped.'), ['action' => 'view', $id, 'database' => false]);
             }
             else {
                 $this->Answer->error(__('The database could not be dropped. Please, try again.'));

@@ -30,33 +30,8 @@
 ?>
 <?= $this->Form->create(null, $options) ?>
 <fieldset>
-    <p class="merge">
-        <?= __('Are you sure you want to merge the two properties? Data of the source property will be merged into the target and the source property will be deleted. This is a permanent operation that cannot be reverted!') ?>
-    </p>
-
     <div class="content-tight">
-
-        <h2><?= __('Preview') ?></h2>
         <?= $this->EntityInput->entityForm($entity, 'merge') ?>
-
-        <!--h2><?= __('Target') ?></h2-->
-        <?php // $this->EntityInput->entityForm($propertyTarget, 'view') ?>
-
-        <!--h2><?= __('Sources') ?></h2-->
-        <?php
-        // $this->Table->filterTable(
-//            'sources',
-//            $propertySources,
-//            [
-//                'columns' => [
-//                    'path'=>['caption'=>__('Path'), 'default'=>true],
-//                    'norm_iri'=>['caption'=>__('IRI fragment'), 'default'=>true],
-//                    'modified'=>['caption'=>__('Modified'), 'default'=>true]
-//                ],
-//                'actions' => ['view' => false]
-//            ])
-        ?>
-
     </div>
 
     <!-- Actions -->

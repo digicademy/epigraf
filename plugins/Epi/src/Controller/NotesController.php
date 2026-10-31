@@ -156,8 +156,6 @@ class NotesController extends AppController
     /**
      * Add a new note
      *
-     * * //TODO: when created from a single page, show the new page afterwards
-     *
      * @return void
      */
     public function add()
@@ -165,7 +163,7 @@ class NotesController extends AppController
         $default = [
             'format' => 'html'
         ];
-        $this->Actions->add(null, $default, ['sidemenu' => 'category']);
+        $this->Actions->add(null, $default, ['sidemenu' => 'category', 'open' => 'edit']);
         $this->render('/Docs/' . $this->request->getParam('action'));
     }
 
