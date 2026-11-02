@@ -4,9 +4,9 @@
 The docker files differ in the way Epigraf comes to life:
 
 - **apache/Dockerfile**: An Apache webserver configured to run Epigraf.
-  The image is used in the docker-compose.yml in combination with a PHP FPM container.
+  The image is used in the php/compose.yml in combination with a PHP FPM container.
 - **php/Dockerfile**: A PHP FPM image containing everything needed to run Epigraf.
-  The image is used in the docker-compose.yml in combination with an Apache webserver.
+  The image is used in the php/compose.yml in combination with an Apache webserver.
 - **deploy/Dockerfile**: This docker file is used to build the image for deployment.
   It includes the Epigraf source code, Epigraf is directly installed into the image.
   Based on the Apache/PHP 8.3 FPM image, a webserver and a database server
@@ -18,12 +18,13 @@ The docker files differ in the way Epigraf comes to life:
 
 What's included in the images:
 
-| Dockerfile | Epigraf | Apache | PHP     | MariaDB | Redis |
-|------------|---------|:-------|:--------|:--------|:------|
-| **deploy** | Yes     | No     | 8.3 FPM | No      | No    |
-| **php**    | No      | No     | 8.3 FPM | No      | No    |
-| **apache** | No      | Yes    | No      | No      | No    |
-| **test**   | No      | Yes    | 8.3     | No      | No    |
+| Dockerfile     | Epigraf | Apache | PHP     | MariaDB | Redis |
+|----------------|---------|:-------|:--------|:--------|:------|
+| **standalone** | Yes     | Yes    | 8.3 | No      | No    |
+| **deploy**     | Yes     | No     | 8.3 FPM | No      | No    |
+| **php**        | No      | No     | 8.3 FPM | No      | No    |
+| **apache**     | No      | Yes    | No      | No      | No    |
+| **test**       | No      | Yes    | 8.3     | No      | No    |
 
 Images including the Epigraf application code can be run without further installation steps.
 Images without the application code require installation steps:
