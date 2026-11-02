@@ -265,7 +265,7 @@ class Job extends BaseEntity
     }
 
     /**
-     * Cancel the job
+     * Cancel a queued job
      *
      * @return Job
      */
@@ -276,21 +276,28 @@ class Job extends BaseEntity
             $redis->hset($statusName, $this->id, "canceled");
         }
 
+        $this->status = 'canceled';
+
         return $this;
     }
 
 
     /**
-     * Check whether the job is canceled
+     * Check whether a job is canceled
+     *
+     * For queued jobs, checks the status in redis.
+     * If not canceled in redis, returns whether the job's status field is set to 'canceled'.
      *
      * @return bool
      */
     protected function _getIsCanceled(): bool {
-        if (!Configure::read('Jobs.delay')) {
-            return false;
+        if (Configure::read('Jobs.delay')) {
+            $statusName = Configure::read('Jobs.status_name');
+            if ($this->getRedisClient()->hget($statusName, $this->id) === 'canceled') {
+                $this->status = 'canceled';
+            }
         }
-        $statusName = Configure::read('Jobs.status_name');
-        return $this->getRedisClient()->hget($statusName, $this->id) === 'canceled';
+        return $this->status === 'canceled';
     }
 
     /**

@@ -822,9 +822,10 @@ class ActionsComponent extends Component
      *
      * ### Options
      * - sidemenu: Optionally, set to the parameter that should be used for the sidemenu handling, e.g. `category`. Disable by null (default).
-     * - save: Optionally, parameters passed to the save method, e.g.  ['associated' => ['Sections', 'Sections.Items']]
+     * - save: Optionally, parameters passed to the save method, e.g.  ['associated' => ['Sections', 'Sections.Items']].
      * - sections: Set to true for articles. Calls addDefaultSections() if the entity is new.
-     * - open: To open the new entity in a new tab, set the action, e.g. 'edit'
+     * - open: To open the new entity in a new tab, set the action, e.g. 'edit'.
+     * - redirect: URL array to redirect after saving.
      *
      * @param array $default Default values for the entity
      * @param array $options

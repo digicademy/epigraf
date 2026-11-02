@@ -2564,7 +2564,7 @@ class BaseEntityHelper extends Helper
         }
 
         if (!empty($entity->merged_ids)) {
-            $data['data-merged-ids'] = $entity->merged_ids;
+            $data['data-merged-ids'] = implode(',', $entity->merged_ids ?? []);
         }
 
         if (!empty($entity->moved)) {
@@ -2614,6 +2614,10 @@ class BaseEntityHelper extends Helper
      * // TODO: Can we output all the forms with $doc = true?
      * // TODO: Use entityForm() for article rendering
      *
+     * ## Options
+     * - confirm (string) A question to ask before performing the action.
+     * - type (string) Set to 'file' for file upload forms.
+     *
      * @param BaseEntity $entity
      * @param string $action view|edit|add|delete|merge
      * @param array $options Options passed to the form helper
@@ -2626,7 +2630,7 @@ class BaseEntityHelper extends Helper
             $entity->prepareRoot();
         }
 
-        $edit = in_array($action, ['edit', 'add', 'delete', 'move']);
+        $edit = in_array($action, ['edit', 'add', 'delete', 'move', 'merge']);
         $confirmQuestion = (($action === 'delete') && !$entity->deleted) || !empty($options['confirm']);
         $divAttributes = ['class' => 'widget-entity'];
 
@@ -2653,7 +2657,7 @@ class BaseEntityHelper extends Helper
         // Note: new entities (add mode) have no id yet
         $entityId = $entity->id ?? $entity->newId;
 
-        if (in_array($action, ['edit', 'add', 'delete', 'move']) || $confirmQuestion) {
+        if (in_array($action, ['edit', 'add', 'delete', 'move', 'merge']) || $confirmQuestion) {
             $options['id'] = trim('form-' . $action . '-' . $entity->table_name . '-' . $entityId, '-');
             $options['autocomplete'] = 'off';
 
@@ -2679,7 +2683,8 @@ class BaseEntityHelper extends Helper
             }
 
             $out .= $this->Form->create($entity, $options);
-            //Prevent implicit submission of the form
+
+            //Prevent implicit form submission
             $out .= $this->Form->button('',
                 ['type' => 'submit', 'disabled' => 'disabled', 'style' => 'display:none;', 'area-hidden' => true]);
 
@@ -2864,12 +2869,12 @@ class BaseEntityHelper extends Helper
         $type = $fieldOptions['type'] ?? 'text';
 
         $rowClasses = [];
-        $rowClasses[] = in_array($action, ['edit', 'add', 'move', 'grant']) ? ('table-input-' . $type) : '';
+        $rowClasses[] = in_array($action, ['edit', 'add', 'move', 'grant', 'merge']) ? ('table-input-' . $type) : '';
         $rowClasses = array_filter($rowClasses);
 
         $cellClass = empty($fieldOptions['cellClass']) ? '' : (' class="' . $fieldOptions['cellClass'] . '"');
 
-        $edit = in_array($action, ['edit', 'add', 'move', 'grant']);
+        $edit = in_array($action, ['edit', 'add', 'move', 'grant', 'merge']);
 
         $fieldLayout = $fieldOptions['layout'] ?? 'row';
         unset($fieldOptions['layout']);
@@ -2941,8 +2946,11 @@ class BaseEntityHelper extends Helper
         $fieldFormat = is_object($entity) ? $entity->getFieldFormat($fieldName) : 'raw';
         $inputType = $fieldOptions['type'] ?? 'text';
 
-        $edit = $fieldOptions['edit'] ?? in_array($action, ['edit', 'add', 'move', 'grant']);
-        $services = $fieldOptions['services'] ?? [];
+        $edit = $fieldOptions['edit'] ?? in_array($action, ['edit', 'add', 'move', 'grant', 'merge']);
+        $services = [];
+        if ($action === 'edit') {
+            $services = $fieldOptions['services'] ?? [];
+        }
         unset($fieldOptions['services']);
 
 
@@ -3796,4 +3804,3 @@ class BaseEntityHelper extends Helper
     }
 
 }
-

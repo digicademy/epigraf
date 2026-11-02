@@ -101,7 +101,6 @@ class FilesTable extends BaseTable
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
-        parent::afterSave($event, $entity, $options);
         $this->Articles->clearCache();
     }
 

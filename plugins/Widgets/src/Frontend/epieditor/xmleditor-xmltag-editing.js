@@ -17,6 +17,7 @@ import {viewToModelPositionOutsideModelElement, toWidget} from '@ckeditor/ckedit
 import Utils from '/js/utils.js';
 import UpcastWriter from '@ckeditor/ckeditor5-engine/src/view/upcastwriter';
 import BaseEvent from '@ckeditor/ckeditor5-utils/src/emittermixin';
+import {CKEditorError} from 'ckeditor5/src/utils';
 
 const XML_TAG = 'xml_text';
 const XML_FORMAT = 'xml_format';
@@ -75,6 +76,11 @@ export class XmleditorXmltagEditing extends Plugin {
         this.initXmlFormat();
         this.initXmlBracket();
         this.initXmlTag();
+
+        // Remove formats that became empty (e.g. after deleting their content by keyboard).
+        // The removal moves the element into the graveyard, so onDocumentChanged()
+        // picks it up and emits tag:remove.
+        this.editor.model.document.registerPostFixer(writer => this.removeEmptyFormats(writer));
 
         // Map positions of empty model tags (view contains text, model attribute)
         this.editor.editing.mapper.on(
@@ -140,39 +146,73 @@ export class XmleditorXmltagEditing extends Plugin {
     afterInit() {
         const editor = this.editor;
         const model = editor.model;
-        const insertTextCommand = editor.commands.get('insertText');
-
-        if (!insertTextCommand) {
-            return;
-        }
 
         // Typing: if the browser's target range and the model selection describe
         // the same visual caret position (e.g. end of a format vs. after the format),
         // use the model selection. It knows whether the user left the format.
-        this.listenTo(insertTextCommand, 'execute', (evt, args) => {
-            const options = args[0];
+        const insertTextCommand = editor.commands.get('insertText');
+        if (insertTextCommand) {
+            this.listenTo(insertTextCommand, 'execute', (evt, args) => {
+                const options = args[0];
+                const docSelection = model.document.selection;
+
+                if (!options || !options.selection || !options.selection.isCollapsed || !docSelection.isCollapsed) {
+                    return;
+                }
+
+                const targetPos = options.selection.getFirstPosition();
+                const docPos = docSelection.getFirstPosition();
+
+                if (targetPos.isEqual(docPos) || !targetPos.isTouching(docPos)) {
+                    return;
+                }
+
+                // Only correct positions at format boundaries
+                const inFormat = pos => pos.parent.is('element', XML_FORMAT);
+                if (!inFormat(targetPos) && !inFormat(docPos)) {
+                    return;
+                }
+
+                // The options object is passed by reference to the command's execute()
+                options.selection = model.createSelection(docPos);
+            }, {priority: 'high'});
+        }
+
+        // Deleting: if the caret is directly after (before) a format, move it to the
+        // end (start) of the format content first. Otherwise the first keystroke
+        // only moves the caret into the format without deleting anything.
+        const deleteHandler = direction => (evt, args) => {
+            const options = args[0] || {};
             const docSelection = model.document.selection;
 
-            if (!options || !options.selection || !options.selection.isCollapsed || !docSelection.isCollapsed) {
+            if (!docSelection.isCollapsed) {
+                return;
+            }
+            if (options.selection && !options.selection.isCollapsed) {
                 return;
             }
 
-            const targetPos = options.selection.getFirstPosition();
-            const docPos = docSelection.getFirstPosition();
-
-            if (targetPos.isEqual(docPos) || !targetPos.isTouching(docPos)) {
+            const position = options.selection ? options.selection.getFirstPosition() : docSelection.getFirstPosition();
+            const target = this.findPositionInAdjacentFormat(position, direction);
+            if (!target) {
                 return;
             }
 
-            // Only correct positions at format boundaries
-            const inFormat = pos => pos.parent.is('element', XML_FORMAT);
-            if (!inFormat(targetPos) && !inFormat(docPos)) {
-                return;
+            model.change(writer => writer.setSelection(target));
+            if (options.selection) {
+                options.selection = model.createSelection(target);
             }
+        };
 
-            // The options object is passed by reference to the command's execute()
-            options.selection = model.createSelection(docPos);
-        }, {priority: 'high'});
+        const deleteCommand = editor.commands.get('delete');
+        if (deleteCommand) {
+            this.listenTo(deleteCommand, 'execute', deleteHandler('backward'), {priority: 'high'});
+        }
+
+        const deleteForwardCommand = editor.commands.get('deleteForward');
+        if (deleteForwardCommand) {
+            this.listenTo(deleteForwardCommand, 'execute', deleteHandler('forward'), {priority: 'high'});
+        }
     }
 
     /**
@@ -181,6 +221,41 @@ export class XmleditorXmltagEditing extends Plugin {
     noFiller(viewElement) {
         viewElement.getFillerOffset = () => null;
         return viewElement;
+    }
+
+    /**
+     * Post-fixer: remove XML_FORMAT elements whose content was deleted
+     *
+     * @param {Writer} writer
+     * @return {boolean} Whether the model was changed
+     */
+    removeEmptyFormats(writer) {
+        const changes = this.editor.model.document.differ.getChanges();
+        const emptyFormats = new Set();
+
+        for (const change of changes) {
+            if (change.type !== 'remove') {
+                continue;
+            }
+
+            const parent = change.position.parent;
+            if (
+                parent &&
+                parent.is('element', XML_FORMAT) &&
+                parent.isEmpty &&
+                parent.isAttached()
+            ) {
+                emptyFormats.add(parent);
+            }
+        }
+
+        for (const format of emptyFormats) {
+            writer.remove(format);
+        }
+
+        // Returning true re-runs the post-fixers. This also handles nested
+        // formats: if the outer format is now empty, it is removed in the next pass.
+        return emptyFormats.size > 0;
     }
 
     /**
@@ -812,10 +887,11 @@ export class XmleditorXmltagEditing extends Plugin {
         }
 
         // Create the element in the editor
-        return viewWriter.createContainerElement(
+        // Inline containers must never get a block filler (<br>)
+        return this.noFiller(viewWriter.createContainerElement(
             Utils.getValue(typeData, 'config.html.tag') || Utils.getValue(typeData, 'config.html_tag') || Utils.getValue(typeData, 'config.tag') || 'span',
             elementAttributes
-        );
+        ));
     }
 
     /**
@@ -1252,6 +1328,32 @@ export class XmleditorXmltagEditing extends Plugin {
                 }
             }
         }
+    }
+
+    /**
+     * If a format element is directly before (backward) or after (forward) the position,
+     * return the position at the end (start) of its content. Descends into nested formats.
+     *
+     * @param {ModelPosition} position
+     * @param {string} direction 'backward' or 'forward'
+     * @return {ModelPosition|null}
+     */
+    findPositionInAdjacentFormat(position, direction) {
+        const model = this.editor.model;
+        let node = direction === 'backward' ? position.nodeBefore : position.nodeAfter;
+
+        if (!node || !node.is('element', XML_FORMAT)) {
+            return null;
+        }
+
+        // Descend into nested formats at the boundary
+        let child = direction === 'backward' ? node.getChild(node.childCount - 1) : node.getChild(0);
+        while (child && child.is('element', XML_FORMAT)) {
+            node = child;
+            child = direction === 'backward' ? node.getChild(node.childCount - 1) : node.getChild(0);
+        }
+
+        return model.createPositionAt(node, direction === 'backward' ? 'end' : 0);
     }
 
     /**

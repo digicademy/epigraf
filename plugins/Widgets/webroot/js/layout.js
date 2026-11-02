@@ -944,7 +944,7 @@ export class ScrollSync extends BaseWidget {
     }
 
     /**
-     * Add classed and change data attributes for all section related elements
+     * Add classes and change data attributes for all section-related elements
      *
      * @param {HTMLElement} section The section element
      */

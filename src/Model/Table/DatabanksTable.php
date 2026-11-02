@@ -459,6 +459,13 @@ class DatabanksTable extends BaseTable
                 'align' => 'center',
                 'type' => 'test'
             ],
+            'hasfolders' => [
+               'caption' => __('Folders'),
+               'width' => 50,
+               'default' => true,
+               'align' => 'center',
+               'type' => 'test'
+            ],
             'published' => [
                 'caption' => __('Published'),
                 'sort ' => 'published',

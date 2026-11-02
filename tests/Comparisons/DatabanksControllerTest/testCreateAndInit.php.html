@@ -32,7 +32,7 @@
     <!-- Additional JS -->
         </head>
 
-<body class="plugin_ controller_databanks action_create template_default theme_default userrole_admin">
+<body class="plugin_ controller_databanks action_init template_default theme_default userrole_admin">
 
 <div class="page-wrapper widget-accordion">
 
@@ -75,20 +75,25 @@
                 <div class="content-flash"></div>
 
                 <div class="content-content widget-scrollsync-content">
-                    <!-- Breadcrumbs -->
+                    
+<div class="message danger">
+    Danger zone! Operations on this page may severely damage content. Data can get lost forever!</div>
+
+
+<!-- Breadcrumbs -->
 
 <!-- Content area -->
 <div class="content-extratight">
-    <form method="post" accept-charset="utf-8" id="form-create-databanks-2" action="/databanks/create/2"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div>    <fieldset>
+    <form method="post" accept-charset="utf-8" id="form-init-databanks-2" action="/databanks/init/2"><div style="display:none;"><input type="hidden" name="_method" value="PUT"></div>    <fieldset>
         <input type="hidden" name="id" value="2">        <p>
-            This will create the database test_newprojects on the server. Are you sure?        </p>
+            This will init the database test_newprojects on the server. If missing, the database is created. If empty, a blank table structure will be created. If missing, the database folder will be created. Are you sure?        </p>
     </fieldset>
     </form></div>
 
-    <!-- Actions -->
+<!-- Actions -->
 
                                             <nav class="actions-content" data-snippet="actions-content">
-                            <ul class="action-menu"><li><a href="/databanks" class="button button_cancel">Cancel</a></li><li><button form="form-create-databanks-2" data-role="submit" class="" type="submit">Yes</button></li></ul>                        </nav>
+                            <ul class="action-menu"><li><a href="/databanks/view/2" class="button button_cancel">Cancel</a></li><li><button form="form-init-databanks-2" data-role="submit" class="" type="submit">Yes</button></li></ul>                        </nav>
                                     </div>
 
                 <div class="content-footer"></div>

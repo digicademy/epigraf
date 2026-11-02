@@ -11,7 +11,6 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\Job;
-use App\Utilities\Converters\Attributes;
 use Cake\Database\Query;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventInterface;
@@ -193,8 +192,6 @@ class JobsTable extends BaseTable
      */
     public function afterSave(EventInterface $event, EntityInterface $entity, $options = [])
     {
-        parent::afterSave($event, $entity, $options);
-
         if ($entity->isNew() && !empty($entity->delay)) {
             $entity->toQueue();
         }

@@ -10,12 +10,15 @@
 ?>
 <?php
     use App\Model\Entity\Databank;
+    use App\View\AppView;
 ?>
 <?php
 /**
+ * @var AppView $this
  * @var Databank $entity
  */
 ?>
+
 <div class="message danger">
 	<?= __('Danger zone! Operations on this page may severely damage content. Data can get lost forever!') ?>
 </div>
@@ -39,16 +42,17 @@
 
 <!-- Actions -->
 <?php $this->Link->beginActionGroup ('content'); ?>
-<?php $this->Link->addAction(
-    __('Cancel'),
-    ['controller' => 'Databanks', 'action' => 'view', $entity->id],
-    ['class' => 'button button_cancel']
-);
+<?php
+    $this->Link->addAction(
+        __('Cancel'),
+        ['controller' => 'Databanks', 'action' => 'view', $entity->id],
+        ['class' => 'button button_cancel']
+    );
 ?>
 <?php
-$this->Link->addAction(
-    __('Yes'),
-    [],
-    ['linktype' => 'submit', 'form' => 'form-drop-databanks-' . $entity->id]
-);
+    $this->Link->addAction(
+        __('Yes'),
+        [],
+        ['linktype' => 'submit', 'form' => 'form-drop-databanks-' . $entity->id]
+    );
 ?>

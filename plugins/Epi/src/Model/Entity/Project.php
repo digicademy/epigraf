@@ -207,7 +207,7 @@ class Project extends RootEntity
             'name' => ['caption' => __('Name')],
 
             FIELD_PROJECTS_SIGNATURE => [
-                'caption' => __('Shortname'),
+                'caption' => __('Signature'),
                 'help' => __('An abbreviation that only contains letters and numbers,'
                     . ' no whitespace or special characters.')
             ],
@@ -223,8 +223,8 @@ class Project extends RootEntity
                 'rows' => 15,
                 'format' => 'json',
                 'layout' => 'nested',
-                'type' => 'jsoneditor'
-                //'action' => 'edit'
+                'type' => 'jsoneditor',
+                'action' => ['view', 'edit']
             ],
 
             'norm_iri' => [

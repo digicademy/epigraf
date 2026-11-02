@@ -34,24 +34,16 @@ use App\Model\Entity\Databank;
         $this->Link->addAction(
             __('Show articles'),
             ['plugin'=>'epi','controller'=>'articles','action' => 'index','database' => $entity->caption],
-            ['data-target'=>'main','data-role' => 'open']
+            ['data-target' => 'main', 'data-role' => 'open']
         );
     }
     $this->Link->addEditButtons($entity);
 
-    if (!$entity->available) {
-        $this->Link->addAction(
-            __('Create database'),
-            ['action' => 'create', $entity->id],
-            ['data-role'=>'add']
-        );
-    }
-    if ($entity->available && $entity->isempty) {
+    if (!$entity->available || $entity->isempty || !$entity->hasfolders) {
         $this->Link->addAction(
             __('Init Database'),
             ['action' => 'init', $entity->id]
         );
-
     }
 
     if ($entity->available) {
@@ -59,7 +51,6 @@ use App\Model\Entity\Databank;
             __('Backup Database'),
             ['action' => 'backup', $entity->id]
         );
-
 
         $this->Link->addAction(
             __('Import Backup'),
@@ -76,7 +67,4 @@ use App\Model\Entity\Databank;
             ['plugin' =>'epi','database'=>$entity->caption,'controller'=>'projects','action' => 'import']
         );
     }
-
-    // TODO: implement download buttons
-    //$this->Link->downloadButtons();
 ?>

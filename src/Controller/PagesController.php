@@ -187,7 +187,7 @@ class PagesController extends AppController
             'norm_iri' => $iri,
             'name' => $this->request->getQuery('data-name', Inflector::humanize(str_replace('-', '_', $iri ?? '')))
         ];
-        $this->Actions->add(null, $default, ['sidemenu' => 'category']);
+        $this->Actions->add(null, $default, ['sidemenu' => 'category', 'open' => 'edit']);
         $this->render('/Docs/' . $this->request->getParam('action'));
     }
 

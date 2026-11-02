@@ -387,7 +387,7 @@ class DatabanksControllerTest extends AppTestCase
         $this->assertEquals(true, (bool)$result);
 
         // Test create view
-        $this->get("databanks/create/" . $databank->id);
+        $this->get("databanks/init/" . $databank->id);
         $this->assertHtmlEqualsComparison(true, ".content-wrapper");
 
         // Test database doesn't exist yet
@@ -395,7 +395,7 @@ class DatabanksControllerTest extends AppTestCase
         $this->assertNotContains('test_newprojects', $databanks);
 
         // Create and init database
-        $this->post('databanks/create/' . $databank->id);
+        $this->post('databanks/init/' . $databank->id);
         $this->assertResponseCode(302);
 
         // Check database content

@@ -312,14 +312,14 @@ class ArticlesCest
     {
         $I->login('devel', 'devel');
         $I->amOnPage('/epi/projects/articles?properties.objecttypes=');
-        $I->waitForTheAjaxResponse();
+        $I->waitForTheAjaxResponse(10, 2);
 
         $I->seeNumberOfElements('[data-list-itemof="epi_articles"]', 9);
         $I->see("Artikel 2 für das Testsystem");
 
         // Check Träger 2a (Träger 2a Einheit)
         $I->checkOption("[data-list-itemof='epi_properties_select'][data-id='32']");
-        $I->waitForTheAjaxResponse(10,0.7);
+        $I->waitForTheAjaxResponse(10,2);
 
         $I->seeNumberOfElements('[data-list-itemof="epi_articles"]', 1);
         $I->see("Artikel 1 für das Testsystem", 'tr[data-id="1"]');
@@ -1174,6 +1174,82 @@ class ArticlesCest
         $I->dontSeeVisualChanges('withoutbracket', '#doc-section-content-147');
     }
 
+    /**
+     * Scenario: Format text, then delete the formatted text by backspace.
+     *           Tests that the format tag and its annotation are removed.
+     *
+     * @group deploy
+     * @param AcceptanceTester $I
+     * @return void
+     */
+    public function addAndRemoveFormat(AcceptanceTester $I)
+    {
+        // Open article for editing
+        $I->login('devel', 'devel');
+
+        $sectionSelector = '#sections-147';
+        $I->amOnPage('/epi/projects/articles/edit/3' . $sectionSelector);
+
+        // Focus the field and go to the end
+        $contentSelector = $sectionSelector . ' .doc-fieldname-content .widget-xmleditor';
+        $I->focusXmlInput($contentSelector);
+        $I->pressKey($contentSelector, [WebDriverKeys::CONTROL, WebDriverKeys::END]);
+        $I->wait(0.5);
+
+        // Type text and select the last word
+        $normalText = 'Normal';
+        $formattedText = 'Bold';
+        $I->pressKey($contentSelector, $normalText . $formattedText);
+        $I->wait(0.5);
+        $I->pressKey(
+            $contentSelector,
+            ...array_fill(0, mb_strlen($formattedText), [WebDriverKeys::SHIFT, WebDriverKeys::ARROW_LEFT])
+        );
+
+        // Apply the format
+        $I->click('[data-cke-tooltip-text^="Fett"]', '.ck-toolbar__items');
+        $I->waitForTheAjaxResponse();
+
+        // Get the tag ID of the new format element
+        $tagId = $I->executeJS('
+            const formats = document.querySelectorAll(arguments[0] + " .xml_format");
+            const format = Array.from(formats).find(
+                elm => elm.textContent.replace(/\u200b/g, "").trim() === arguments[1]
+            );
+            return format ? format.dataset.tagid : null;
+        ', [$contentSelector, $formattedText]);
+        $I->assertNotEmpty($tagId, 'Format element was not created');
+
+        // Check that the annotation box appears
+        $annoSelector = $sectionSelector . ' .doc-section-link[data-from-tagid="' . $tagId . '"]';
+        $tagSelector = $contentSelector . ' .xml_format[data-tagid="' . $tagId . '"]';
+
+        $I->click($sectionSelector . ' .button-links-toggle');
+        $I->waitForElementVisible($annoSelector, 5);
+
+        $I->wait(1);
+        $I->dontSeeVisualChanges('formatted', $sectionSelector);
+
+        // Move the caret to the end and delete the formatted text by backspace
+        $I->focusXmlInput($contentSelector);
+        $I->pressKey($contentSelector, [WebDriverKeys::CONTROL, WebDriverKeys::END]);
+        $I->wait(0.5);
+
+        $I->pressKey(
+            $contentSelector,
+            ...array_fill(0, mb_strlen($formattedText), WebDriverKeys::BACKSPACE)
+        );
+        $I->wait(0.5);
+
+        // Check that the format element is removed (no empty format with a <br> filler).
+        // The annotation box should have the deleted flag set
+        $I->dontSeeElementInDOM($tagSelector);
+        $I->see($normalText, $contentSelector);
+        $I->dontSeeElement($annoSelector);
+        $I->seeElementInDOM($annoSelector. '[data-deleted="1"]' );
+
+        $I->dontSeeVisualChanges('unformatted', $sectionSelector);
+    }
 
     /**
      * Scenario: Add and remove a link (tests the attribute window)

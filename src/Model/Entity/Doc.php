@@ -174,7 +174,7 @@ class Doc extends BaseEntity implements LockInterface
                     'rows' => 20,
                     'type' => $this->format === 'html' ? 'htmleditor' : 'text',
                     'escape' => false,
-                    'action' => ['edit', 'add'],
+                    'action' => ['edit'],
                     'layout' => 'stacked'
                 ],
             'category' => [
@@ -185,7 +185,7 @@ class Doc extends BaseEntity implements LockInterface
             'menu' => [
                 'caption' => __('Add to menu'),
                 'type' => 'checkbox',
-                'action' => ['edit', 'add']
+                'action' => ['edit']
             ]
         ];
 
@@ -193,18 +193,18 @@ class Doc extends BaseEntity implements LockInterface
             $frontendfields = [
                 'norm_iri' => [
                     'caption' => __('Pretty URL (IRI)'),
-                    'action' => ['edit', 'add']
+                    'action' => ['edit']
                 ],
 
                 'sortkey' => [
                     'caption' => __('Sort key'),
-                    'action' => ['edit', 'add']
+                    'action' => ['edit']
                 ],
 
                 'published' => [
                     'caption' => __('Published'),
                     'type' => 'checkbox',
-                    'action' => ['edit', 'add']
+                    'action' => ['edit']
                 ]
             ];
 

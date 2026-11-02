@@ -207,8 +207,14 @@ class VersionBehavior extends Behavior
             return true;
         }
         else {
+            $removedBehaviours = [];
             if ($this->table()->hasBehavior('XmlStyles')) {
                 $this->table()->disableRendering();
+            }
+
+            if ($this->table()->hasBehavior('Cache')) {
+                $this->table()->removeBehavior('Cache');
+                $removedBehaviours[] = 'Cache';
             }
 
             $data = $this->extractData($entity);
@@ -226,6 +232,10 @@ class VersionBehavior extends Behavior
 
             if ($version->hasErrors()) {
                 $entity->setErrors($version->getErrors());
+            }
+
+            foreach ($removedBehaviours as $removedBehaviour) {
+                $this->table()->addBehavior($removedBehaviour);
             }
 
             if ($this->table()->hasBehavior('XmlStyles')) {
@@ -252,7 +262,6 @@ class VersionBehavior extends Behavior
         if ($this->table()->hasBehavior('XmlStyles')) {
             $this->table()->disableRendering();
         }
-
 
         if ($this->table()->hasBehavior('VersionedTree')) {
             $this->table()->disableTreeBehavior();

@@ -367,7 +367,7 @@ class User extends BaseEntity
             'username' => [
                 'caption' => __('Username'),
                 'action' => ['edit', 'add','view'],
-                'help' => __('The username should contain the real name of the person. Maximum length is 100 characters.')
+                'help' => __('The username should contain the real name of the person in lower case. It is recommended to use the first letter of the first name followed by the last name, without any special characters or whitespace. Maximum length is 100 characters.')
             ],
 
             'role' => [
@@ -406,7 +406,7 @@ class User extends BaseEntity
         if (!empty($loginConfig['form'])) {
             $fields['password'] = [
                 'caption' => __('Password'),
-                'action' => ['edit', 'add'],
+                'action' => ['edit'],
                 'autocomplete' => "off",
                 'display' => 'password',
                 'help' => __("Please enter a strong password and remember it well. The password can't be restored. If you loose it, you have to enter a new password.")
@@ -439,7 +439,7 @@ class User extends BaseEntity
                 'options' => $pipelines,
                 'empty' => true,
                 'caption' => __('Default Article Pipeline'),
-                'action' => ['edit', 'add','view'],
+                'action' => ['edit','view'],
                 'extract' => 'article_pipeline.name',
                 'help' => __('Only Epigraf-Desktop users: Select the pipeline that exports single articles.')
             ];
@@ -448,7 +448,7 @@ class User extends BaseEntity
                 'options' => $pipelines,
                 'empty' => true,
                 'caption' => __('Default Book Pipeline'),
-                'action' => ['edit', 'add','view'],
+                'action' => ['edit','view'],
                 'extract' => 'book_pipeline.name',
                 'help' => __('Only Epigraf-Desktop users: Select the pipeline that exports a complete book.')
             ];

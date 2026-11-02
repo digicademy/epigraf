@@ -201,7 +201,7 @@ class Type extends RootEntity
     protected function _getSubtypes()
     {
         if (!isset($this->_fields['subtypes']) && ($this->getSource() === 'Epi.Types')) {
-            $this->_fields['subtypes'] = $this->table->getDatabase()->types[$this->scope][$this->name]['subtypes'];
+            $this->_fields['subtypes'] = $this->table->getDatabase()->types[$this->scope][$this->name]['subtypes'] ?? [];
         }
 
         return $this->_fields['subtypes'] ?? [];

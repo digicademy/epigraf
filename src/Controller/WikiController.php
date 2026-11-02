@@ -195,12 +195,16 @@ class WikiController extends AppController
      */
     public function add($iri = null)
     {
+        $name =  Inflector::humanize(str_replace('-', '_', $iri ?? ''));
+        $name = $this->request->getQuery('data-name', $name);
+
         $default = [
             'format' => 'html',
             'norm_iri' => $iri,
-            'name' => $this->request->getQuery('data-name', Inflector::humanize(str_replace('-', '_', $iri ?? '')))
+            'name' => $name
         ];
-        $this->Actions->add(null, $default, ['sidemenu' => 'category']);
+
+        $this->Actions->add(null, $default, ['sidemenu' => 'category', 'open' => 'edit']);
         $this->render('/Docs/' . $this->request->getParam('action'));
     }
 

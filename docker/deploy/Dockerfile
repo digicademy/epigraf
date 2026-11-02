@@ -36,10 +36,13 @@ RUN apt-get install -y --no-install-recommends \
     #graphicsmagick \
     zip \
     unzip \
+    rsync \
     librsvg2-bin \
     nano \
     exiftool \
-    cron
+    cron \
+    xmlstarlet \
+    libsaxonhe-java
 
 # Install redis
 RUN apt-get update && apt-get install -y --no-install-recommends \

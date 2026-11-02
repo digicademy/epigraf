@@ -413,9 +413,6 @@ class ArticlesTable extends BaseTable implements ExportTableInterface
             $this->Sections->setScope($entity->id);
             $this->Sections->recover();
         }
-
-        parent::afterSave($event, $entity, $options);
-        $this->clearCache();
     }
 
     /**

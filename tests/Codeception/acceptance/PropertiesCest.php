@@ -335,8 +335,6 @@ class PropertiesCest
     /**
      * Merge two properties
      *
-     * @group incomplete
-     *
      * @param AcceptanceTester $I
      * @return void
      */
@@ -348,8 +346,40 @@ class PropertiesCest
         // Check if recordlist shows up
         $I->seeElement('.recordlist [data-list-name="epi_properties"]');
 
-        // Choose property
-        $I->testOpensInSidebar('epi_properties', 36);
+        // Select a property (Träger 1b)
+        $I->testOpensInSidebar('epi_properties', 643);
+        $I->seeElement('.content-main [data-list-name="epi_properties"] [data-id="643"]');
+
+        // Click merge button
+        $I->click('Merge', '.sidebar-right');
+        $I->waitForElementVisible('.sidebar-right .widget-dropdown-selector' );
+
+        // Select target category (Träger 2)
+        $I->click('.widget-dropdown-selector','.sidebar-right');
+        $I->wait(1);
+        $I->click('[data-id="35"]','.sidebar-right .widget-dropdown-selector.active');
+        $I->wait(0.5);
+
+        // Preview
+        $I->click('Preview', '.sidebar-right');
+        $I->waitForElementVisible('.sidebar-right form#form-merge-properties');
+
+        // Confirm
+        $I->click('Yes', '.sidebar-right');
+        $I->waitForTheAjaxResponse();
+
+        // Check result in the sidebar
+        $I->waitForElementNotVisible('.sidebar-right form' );
+        $I->waitForElementVisible('.sidebar-right .widget-document' );
+        $I->see('Träger 2 / Träger 1b', '.sidebar-right .widget-document');
+        $I->dontSeeVisualChanges('sidebar', '.sidebar-right');
+
+        // Check result in the table
+        $I->waitForText('Träger 2 / Träger 1b', 5, '.content-main [data-list-name="epi_properties"]');
+        $I->dontSeeElement('.content-main [data-list-name="epi_properties"] [data-id="643"]');
+        $I->dontSeeElement('.content-main [data-list-name="epi_properties"] [data-id="35"]');
+
+        $I->dontSeeVisualChanges('table', '.content-main');
     }
 
     /**

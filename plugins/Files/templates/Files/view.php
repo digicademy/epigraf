@@ -79,7 +79,7 @@
         $this->Link->addAction(
             __('Open'),
             ['action' => 'index', $entity['id'], '?' => ['root' => $root]],
-            ['data-target'=>'main','data-role' => 'open']
+            ['data-target'=>'main', 'data-role' => 'open']
         );
     }
 
